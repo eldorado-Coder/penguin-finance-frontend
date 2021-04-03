@@ -9,7 +9,7 @@ describe('Parser', () => {
       is_active: false,
       name: 'BLINk (BLK)',
       address: '0x44a9Cc8463EC00937242b660BF65B10365d99baD',
-      sub_title: 'Online games on Oasis',
+      sub_title: 'Online games on avax',
       description:
         'BLINk enables AVAX holders to enjoy gaming experiences that WINk users on Tron have been enjoying for over two years.',
       project_url: 'https://blink.wink.org',
@@ -30,7 +30,7 @@ describe('Parser', () => {
       is_active: false,
       name: 'BLINk (BLK)',
       address: '0x44a9Cc8463EC00937242b660BF65B10365d99baD',
-      sub_title: 'Online games on Oasis',
+      sub_title: 'Online games on avax',
       description:
         'BLINk enables AVAX holders to enjoy gaming experiences that WINk users on Tron have been enjoying for over two years.',
       project_url: 'https://blink.wink.org',
@@ -103,7 +103,7 @@ describe('Parser', () => {
         isActive: false,
         address: '0x44a9Cc8463EC00937242b660BF65B10365d99baD',
         name: 'BLINk (BLK)',
-        subTitle: 'Online games on Oasis',
+        subTitle: 'Online games on avax',
         description:
           'BLINk enables AVAX holders to enjoy gaming experiences that WINk users on Tron have been enjoying for over two years.',
         launchDate: '2020-11-20',

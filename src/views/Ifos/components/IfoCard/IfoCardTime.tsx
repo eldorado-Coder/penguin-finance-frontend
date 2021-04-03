@@ -49,7 +49,7 @@ const IfoCardTime: React.FC<IfoCardTimeProps> = ({ isLoading, status, secondsUnt
   return (
     <Details>
       <Countdown>{`${timeUntil.days}d, ${timeUntil.hours}h, ${timeUntil.minutes}m until ${suffix}`}</Countdown>
-      <Link href={`https://bscscan.com/block/countdown/${block}`} target="blank" rel="noopener noreferrer" ml="8px">
+      <Link href={`https://cchain.explorer.avax.network.com/block/countdown/${block}`} target="blank" rel="noopener noreferrer" ml="8px">
         (blocks)
       </Link>
     </Details>

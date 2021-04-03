@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { Text, Flex, Link, LinkExternal } from '@penguinfinance/uikit'
 
 export interface ExpandableSectionProps {
-  bscScanAddress?: string
+  avaxScanAddress?: string
   removed?: boolean
   totalValueFormated?: string
   lpLabel?: string
@@ -31,7 +31,7 @@ const StyledLinkExternal = styled(LinkExternal)`
 `
 
 const DetailsSection: React.FC<ExpandableSectionProps> = ({
-  bscScanAddress,
+  avaxScanAddress,
   removed,
   totalValueFormated,
   lpLabel,
@@ -52,7 +52,7 @@ const DetailsSection: React.FC<ExpandableSectionProps> = ({
         </Flex>
       )}
       <Flex justifyContent="flex-start">
-        <Link external href={bscScanAddress} bold={false}>
+        <Link external href={avaxScanAddress} bold={false}>
           {TranslateString(356, 'View on BscScan')}
         </Link>
       </Flex>

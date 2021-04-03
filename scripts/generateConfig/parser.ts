@@ -36,8 +36,7 @@ export const getPools = (data) => {
       stakingLimit: pool?.quote_token?.decimals,
       stakingTokenAddress: pool?.quote_token?.mainnet_address,
       contractAddress: {
-        128: pool.contract_address,
-        256: '0xd3af5fe61dbaf8f73149bfcfa9fb653ff096029a',
+        43114: pool.contract_address,
       },
       poolCategory: pool.category,
       projectLink: pool.project_url,
@@ -57,12 +56,12 @@ export const getFarms = (data) => {
       pid: farm.pid,
       lpSymbol: farm.lp_symbol,
       lpAddresses: {
-        128: farm.lp_mainnet_address,
+        43114: farm.lp_mainnet_address,
         256: '0xE66790075ad839978fEBa15D4d8bB2b415556a1D',
       },
       tokenSymbol: farm?.token?.symbol,
       tokenAddresses: {
-        128: farm?.token?.mainnet_address,
+        43114: farm?.token?.mainnet_address,
         256: '0xa35062141fa33bca92ce69fed37d0e8908868aae',
       },
       quoteTokenSymbol: farm?.quote_token?.symbol,

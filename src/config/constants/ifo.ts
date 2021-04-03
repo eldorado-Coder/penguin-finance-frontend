@@ -6,9 +6,9 @@ const ifos: Ifo[] = [
     address: '0x5d028cE3435B2bB9AceBfaC599EEbA1ccD63d7dd',
     isActive: true,
     name: 'Berry',
-    subTitle: 'A decentralized oracle network on Oasis',
+    subTitle: 'A decentralized oracle network on avax',
     description:
-      'Berry Data is a transparent community-veriﬁed price oracle on Oasis. Berry Data provides a trustless and decentralized alternative for off-chain data. As the governance token for Berry Data, BRY allows holders to pay for Berry Data feeds, vote on governance issues, validate data through staking, and build the Berry ecosystem.',
+      'Berry Data is a transparent community-veriﬁed price oracle on avax. Berry Data provides a trustless and decentralized alternative for off-chain data. As the governance token for Berry Data, BRY allows holders to pay for Berry Data feeds, vote on governance issues, validate data through staking, and build the Berry ecosystem.',
     launchDate: 'Feb. 16',
     launchTime: '5PM SGT',
     saleAmount: '2,000,000 BRY',
@@ -26,7 +26,7 @@ const ifos: Ifo[] = [
     address: '0x9C21123D94b93361a29B2C2EFB3d5CD8B17e0A9e',
     isActive: false,
     name: 'Soteria',
-    subTitle: 'A blockchain based mutual to share the risk of DeFi on Oasis Paratime',
+    subTitle: 'A blockchain based mutual to share the risk of DeFi on avax Paratime',
     description:
       'Soteria allows users to buy insurance cover to greatly diminish or reduce the financial risk of hacks. It replaces the idea of a traditional insurance company, because it is wholly owned by the members. The model encourages engagement as members receive economic incentives for participating in Risk Assessment, Claims Assessment and Governance.',
     launchDate: 'Jan. 21',
@@ -48,7 +48,7 @@ const ifos: Ifo[] = [
     name: 'Helmet.insure (Helmet)',
     subTitle: 'Crypto-assets insurance trading platform',
     description:
-      'Helmet is a peer-to-peer insurance protocol written with options trading logic, which allows anyone to create any insurance policy easily in the market. Helmet aims to enable DeFi users to be protected against the risk of price fluctuations by providing price-shield insurance for Oasis assets. They provide suppliers with a range of insurance types to sell, giving a variety of hedging strategies to the market.',
+      'Helmet is a peer-to-peer insurance protocol written with options trading logic, which allows anyone to create any insurance policy easily in the market. Helmet aims to enable DeFi users to be protected against the risk of price fluctuations by providing price-shield insurance for avax assets. They provide suppliers with a range of insurance types to sell, giving a variety of hedging strategies to the market.',
     launchDate: 'Jan. 13',
     launchTime: '5PM SGT',
     saleAmount: '10,000,000 Helmet',
@@ -106,7 +106,7 @@ const ifos: Ifo[] = [
     address: '0x44a9Cc8463EC00937242b660BF65B10365d99baD',
     isActive: false,
     name: 'BLINk (BLK)',
-    subTitle: 'Online games on Oasis',
+    subTitle: 'Online games on avax',
     description:
       'BLINk enables AVAX holders to enjoy gaming experiences that WINk users on Tron have been enjoying for over two years.',
     launchDate: 'Nov. 20',

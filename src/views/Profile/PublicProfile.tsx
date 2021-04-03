@@ -97,7 +97,7 @@ const PublicProfile = () => {
               <Content>
                 <Username>{`@${profile.username}`}</Username>
                 <Flex alignItems="center">
-                  <AddressLink href={`https://bscscan.com/address/${account}`} color="text" external>
+                  <AddressLink href={`https://cchain.explorer.avax.network.com/address/${account}`} color="text" external>
                     {account}
                   </AddressLink>
                   <OpenNewIcon ml="4px" />
