@@ -5,7 +5,7 @@ import { provider } from 'web3-core'
 import penguinABI from 'config/abi/penguin.json'
 import { getContract } from 'utils/web3'
 import { getTokenBalance } from 'utils/erc20'
-import { getCakeAddress } from 'utils/addressHelpers'
+import { getPefiAddress } from 'utils/addressHelpers'
 import useRefresh from './useRefresh'
 
 const useTokenBalance = (tokenAddress: string) => {
@@ -33,8 +33,8 @@ export const useTotalSupply = () => {
 
   useEffect(() => {
     async function fetchTotalSupply() {
-      const cakeContract = getContract(penguinABI, getCakeAddress())
-      const supply = await cakeContract.methods.totalSupply().call()
+      const penguinContract = getContract(penguinABI, getPefiAddress())
+      const supply = await penguinContract.methods.totalSupply().call()
       setTotalSupply(new BigNumber(supply))
     }
 

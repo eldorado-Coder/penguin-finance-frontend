@@ -242,7 +242,7 @@
   },
   {
     "inputs": [],
-    "name": "cake",
+    "name": "penguin",
     "outputs": [
       {
         "internalType": "contract CakeToken",

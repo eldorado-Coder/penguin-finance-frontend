@@ -48,8 +48,8 @@ const Ifo = () => {
           <Title as="h2">{TranslateString(592, 'How to take part')}</Title>
           <Heading mb="16px">{TranslateString(594, 'Before Sale')}:</Heading>
           <List>
-            <li>{TranslateString(596, 'Buy PEFI and BNB tokens')}</li>
-            <li>{TranslateString(598, 'Get PEFI-BNB LP tokens by adding PEFI and BNB liquidity')}</li>
+            <li>{TranslateString(596, 'Buy PEFI and AVAX tokens')}</li>
+            <li>{TranslateString(598, 'Get PEFI-AVAX LP tokens by adding PEFI and AVAX liquidity')}</li>
           </List>
           <Flex mb="16px">
             <LinkExternal href="https://exchange.penguinfinance.io/#/swap" mr="16px">

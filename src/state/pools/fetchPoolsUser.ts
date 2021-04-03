@@ -10,9 +10,9 @@ import { getWeb3 } from 'utils/web3'
 import BigNumber from 'bignumber.js'
 
 // Pool 0, Cake / Cake is a different kind of contract (master chef)
-// BNB pools use the native BNB token (wrapping ? unwrapping is done at the contract level)
-const nonBnbPools = poolsConfig.filter((p) => p.stakingTokenName !== QuoteToken.BNB)
-const bnbPools = poolsConfig.filter((p) => p.stakingTokenName === QuoteToken.BNB)
+// AVAX pools use the native AVAX token (wrapping ? unwrapping is done at the contract level)
+const nonBnbPools = poolsConfig.filter((p) => p.stakingTokenName !== QuoteToken.AVAX)
+const bnbPools = poolsConfig.filter((p) => p.stakingTokenName === QuoteToken.AVAX)
 const nonMasterPools = poolsConfig.filter((p) => p.sousId !== 0)
 const web3 = getWeb3()
 const masterChefContract = new web3.eth.Contract((masterChefABI as unknown) as AbiItem, getMasterChefAddress())
@@ -32,7 +32,7 @@ export const fetchPoolsAllowance = async (account) => {
 }
 
 export const fetchUserBalances = async (account) => {
-  // Non BNB pools
+  // Non AVAX pools
   const calls = nonBnbPools.map((p) => ({
     address: p.stakingTokenAddress,
     name: 'balanceOf',
@@ -44,7 +44,7 @@ export const fetchUserBalances = async (account) => {
     {},
   )
 
-  // BNB pools
+  // AVAX pools
   const bnbBalance = await web3.eth.getBalance(account)
   const bnbBalances = bnbPools.reduce(
     (acc, pool) => ({ ...acc, [pool.sousId]: new BigNumber(bnbBalance).toJSON() }),

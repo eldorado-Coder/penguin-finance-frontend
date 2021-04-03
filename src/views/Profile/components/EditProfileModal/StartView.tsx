@@ -5,7 +5,7 @@ import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { Button, Flex, Text, InjectedModalProps } from '@penguinfinance/uikit'
 import { getFullDisplayBalance } from 'utils/formatBalance'
 import { getPancakeProfileAddress } from 'utils/addressHelpers'
-import { useCake } from 'hooks/useContract'
+import { usePenguin } from 'hooks/useContract'
 import useI18n from 'hooks/useI18n'
 import { useProfile } from 'state/hooks'
 import useGetProfileCosts from 'views/Profile/hooks/useGetProfileCosts'
@@ -37,7 +37,7 @@ const StartPage: React.FC<StartPageProps> = ({ goToApprove, goToChange, goToRemo
   const hasMinimumCakeRequired = useHasCakeBalance(profile.isActive ? numberCakeToUpdate : numberCakeToReactivate)
   const TranslateString = useI18n()
   const { account } = useWallet()
-  const cakeContract = useCake()
+  const penguinContract = usePenguin()
   const cost = profile.isActive ? numberCakeToUpdate : numberCakeToReactivate
 
   /**
@@ -46,7 +46,7 @@ const StartPage: React.FC<StartPageProps> = ({ goToApprove, goToChange, goToRemo
    */
   useEffect(() => {
     const checkApprovalStatus = async () => {
-      const response = await cakeContract.methods.allowance(account, getPancakeProfileAddress()).call()
+      const response = await penguinContract.methods.allowance(account, getPancakeProfileAddress()).call()
       const currentAllowance = new BigNumber(response)
       setNeedsApproval(currentAllowance.lt(cost))
     }
@@ -54,7 +54,7 @@ const StartPage: React.FC<StartPageProps> = ({ goToApprove, goToChange, goToRemo
     if (account) {
       checkApprovalStatus()
     }
-  }, [account, cost, setNeedsApproval, cakeContract])
+  }, [account, cost, setNeedsApproval, penguinContract])
 
   if (!profile) {
     return null

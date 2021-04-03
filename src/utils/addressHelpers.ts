@@ -2,13 +2,13 @@ import addresses from 'config/constants/contracts'
 import { Address } from 'config/constants/types'
 
 export const getAddress = (address: Address): string => {
-  const mainNetChainId = 56
+  const mainNetChainId = 43114
   const chainId = process.env.REACT_APP_CHAIN_ID
   return address[chainId] ? address[chainId] : address[mainNetChainId]
 }
 
-export const getCakeAddress = () => {
-  return getAddress(addresses.cake)
+export const getPefiAddress = () => {
+  return getAddress(addresses.pefi)
 }
 export const getMasterChefAddress = () => {
   return getAddress(addresses.masterChef)
@@ -16,8 +16,8 @@ export const getMasterChefAddress = () => {
 export const getMulticallAddress = () => {
   return getAddress(addresses.mulltiCall)
 }
-export const getWbnbAddress = () => {
-  return getAddress(addresses.wbnb)
+export const getWavaxAddress = () => {
+  return getAddress(addresses.wavax)
 }
 export const getLotteryAddress = () => {
   return getAddress(addresses.lottery)

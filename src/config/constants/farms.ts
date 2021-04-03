@@ -4,18 +4,18 @@ import { FarmConfig, QuoteToken } from './types'
 const farms: FarmConfig[] = [
   {
     pid: 0,
-    lpSymbol: 'Test ERC20 1',
+    lpSymbol: 'TT 1',
     lpAddresses: {
-      256: '0xEAd13805ef3057673516d1e9cA96622e4dC0ACCb',
-      128: '0xEAd13805ef3057673516d1e9cA96622e4dC0ACCb',
+      43113: '0x494Dd9f783dAF777D3fb4303da4de795953592d0',
+      43114: '0x494Dd9f783dAF777D3fb4303da4de795953592d0',
     },
     tokenSymbol: 'TT2',
     tokenAddresses: {
-      256: '0xEAd13805ef3057673516d1e9cA96622e4dC0ACCb',
-      128: '0xEAd13805ef3057673516d1e9cA96622e4dC0ACCb',
+      43113: '0x494Dd9f783dAF777D3fb4303da4de795953592d0',
+      43114: '0x494Dd9f783dAF777D3fb4303da4de795953592d0',
     },
-    quoteTokenSymbol: QuoteToken.BNB,
-    quoteTokenAdresses: contracts.wbnb,
+    quoteTokenSymbol: QuoteToken.AVAX,
+    quoteTokenAdresses: contracts.wavax,
   },
   // {
   //   pid: 1,
@@ -29,7 +29,7 @@ const farms: FarmConfig[] = [
   //     256: '0xEAd13805ef3057673516d1e9cA96622e4dC0ACCb',
   //     128: '0xEAd13805ef3057673516d1e9cA96622e4dC0ACCb',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   // },
   // {
@@ -44,13 +44,13 @@ const farms: FarmConfig[] = [
   //     256: '0x0743ABCF8F9b49d5eDE659011658076CF789E9c2',
   //     128: '0x0743ABCF8F9b49d5eDE659011658076CF789E9c2',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   //   isCommunity: false,
   // },
   // {
   //   pid: 76,
-  //   lpSymbol: 'SWINGBY-BNB LP',
+  //   lpSymbol: 'SWINGBY-AVAX LP',
   //   lpAddresses: {
   //     256: '',
   //     128: '0x4576C456AF93a37a096235e5d83f812AC9aeD027',
@@ -60,13 +60,13 @@ const farms: FarmConfig[] = [
   //     256: '',
   //     128: '0x71DE20e0C4616E7fcBfDD3f875d568492cBE4739',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   //   isCommunity: false,
   // },
   // {
   //   pid: 75,
-  //   lpSymbol: 'BRY-BNB LP',
+  //   lpSymbol: 'BRY-AVAX LP',
   //   lpAddresses: {
   //     256: '',
   //     128: '0x5E3CD27F36932Bc0314aC4e2510585798C34a2fC',
@@ -76,13 +76,13 @@ const farms: FarmConfig[] = [
   //     256: '',
   //     128: '0xf859Bf77cBe8699013d6Dbc7C2b926Aaf307F830',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   //   isCommunity: false,
   // },
   // {
   //   pid: 74,
-  //   lpSymbol: 'ZEE-BNB LP',
+  //   lpSymbol: 'ZEE-AVAX LP',
   //   lpAddresses: {
   //     256: '',
   //     128: '0xb5ab3996808c7e489dcdc0f1af2ab212ae0059af',
@@ -92,13 +92,13 @@ const farms: FarmConfig[] = [
   //     256: '',
   //     128: '0x44754455564474a89358b2c2265883df993b12f0',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   //   isCommunity: false,
   // },
   // {
   //   pid: 73,
-  //   lpSymbol: 'SWGb-BNB LP',
+  //   lpSymbol: 'SWGb-AVAX LP',
   //   lpAddresses: {
   //     256: '',
   //     128: '0xc1800c29cf91954357cd0bf3f0accaada3d0109c',
@@ -108,7 +108,7 @@ const farms: FarmConfig[] = [
   //     256: '',
   //     128: '0xe40255c5d7fa7ceec5120408c78c787cecb4cfdb',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   //   isCommunity: false,
   // },
@@ -130,7 +130,7 @@ const farms: FarmConfig[] = [
   // },
   // {
   //   pid: 71,
-  //   lpSymbol: 'SFP-BNB LP',
+  //   lpSymbol: 'SFP-AVAX LP',
   //   lpAddresses: {
   //     256: '',
   //     128: '0xcbe2cf3bd012e9c1ade2ee4d41db3dac763e78f3',
@@ -140,7 +140,7 @@ const farms: FarmConfig[] = [
   //     256: '',
   //     128: '0xd41fdb03ba84762dd66a0af1a6c8540ff1ba5dfb',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   //   isCommunity: false,
   // },
@@ -178,7 +178,7 @@ const farms: FarmConfig[] = [
   // },
   // {
   //   pid: 68,
-  //   lpSymbol: 'LIT-BNB LP',
+  //   lpSymbol: 'LIT-AVAX LP',
   //   lpAddresses: {
   //     256: '',
   //     128: '0x60bB03D1010b99CEAdD0dd209b64bC8bd83da161',
@@ -188,13 +188,13 @@ const farms: FarmConfig[] = [
   //     256: '',
   //     128: '0xb59490ab09a0f526cc7305822ac65f2ab12f9723',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   //   isCommunity: false,
   // },
   // {
   //   pid: 67,
-  //   lpSymbol: 'HGET-BNB LP',
+  //   lpSymbol: 'HGET-AVAX LP',
   //   lpAddresses: {
   //     256: '',
   //     128: '0x66b9e1eac8a81f3752f7f3a5e95de460688a17ee',
@@ -204,13 +204,13 @@ const farms: FarmConfig[] = [
   //     256: '',
   //     128: '0xc7d8d35eba58a0935ff2d5a33df105dd9f071731',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   //   isCommunity: false,
   // },
   // {
   //   pid: 66,
-  //   lpSymbol: 'BDO-BNB LP',
+  //   lpSymbol: 'BDO-AVAX LP',
   //   lpAddresses: {
   //     256: '',
   //     128: '0x74690f829fec83ea424ee1f1654041b2491a7be9',
@@ -220,13 +220,13 @@ const farms: FarmConfig[] = [
   //     256: '',
   //     128: '0x190b589cf9fb8ddeabbfeae36a813ffb2a702454',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   //   isCommunity: false,
   // },
   // {
   //   pid: 65,
-  //   lpSymbol: 'EGLD-BNB LP',
+  //   lpSymbol: 'EGLD-AVAX LP',
   //   lpAddresses: {
   //     256: '',
   //     128: '0x3ef4952c7a9afbe374ea02d1bf5ed5a0015b7716',
@@ -236,7 +236,7 @@ const farms: FarmConfig[] = [
   //     256: '',
   //     128: '0xbF7c81FFF98BbE61B40Ed186e4AfD6DDd01337fe',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   //   isCommunity: false,
   // },
@@ -322,7 +322,7 @@ const farms: FarmConfig[] = [
   // },
   // {
   //   pid: 58,
-  //   lpSymbol: 'wSOTE-BNB LP',
+  //   lpSymbol: 'wSOTE-AVAX LP',
   //   lpAddresses: {
   //     256: '',
   //     128: '0xffb9e2d5ce4378f1a89b29bf53f80804cc078102',
@@ -332,13 +332,13 @@ const farms: FarmConfig[] = [
   //     256: '',
   //     128: '0x541e619858737031a1244a5d0cd47e5ef480342c',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   //   isCommunity: false,
   // },
   // {
   //   pid: 57,
-  //   lpSymbol: 'FRONT-BNB LP',
+  //   lpSymbol: 'FRONT-AVAX LP',
   //   lpAddresses: {
   //     256: '',
   //     128: '0x36b7d2e5c7877392fb17f9219efad56f3d794700',
@@ -348,13 +348,13 @@ const farms: FarmConfig[] = [
   //     256: '',
   //     128: '0x928e55daB735aa8260AF3cEDadA18B5f70C72f1b',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   //   isCommunity: false,
   // },
   // {
   //   pid: 56,
-  //   lpSymbol: 'Helmet-BNB LP',
+  //   lpSymbol: 'Helmet-AVAX LP',
   //   lpAddresses: {
   //     256: '',
   //     128: '0x6411310c07d8c48730172146fd6f31fa84034a8b',
@@ -364,13 +364,13 @@ const farms: FarmConfig[] = [
   //     256: '',
   //     128: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   //   isCommunity: false,
   // },
   // {
   //   pid: 55,
-  //   lpSymbol: 'BTCST-BNB LP',
+  //   lpSymbol: 'BTCST-AVAX LP',
   //   lpAddresses: {
   //     256: '',
   //     128: '0x91589786D36fEe5B27A5539CfE638a5fc9834665',
@@ -380,13 +380,13 @@ const farms: FarmConfig[] = [
   //     256: '',
   //     128: '0x78650b139471520656b9e7aa7a5e9276814a38e9',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   //   isCommunity: false,
   // },
   // {
   //   pid: 54,
-  //   lpSymbol: 'LTC-BNB LP',
+  //   lpSymbol: 'LTC-AVAX LP',
   //   lpAddresses: {
   //     256: '',
   //     128: '0xbc765fd113c5bdb2ebc25f711191b56bb8690aec',
@@ -396,7 +396,7 @@ const farms: FarmConfig[] = [
   //     256: '',
   //     128: '0x4338665cbb7b2485a8855a139b75d5e34ab0db94',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   //   isCommunity: false,
   // },
@@ -434,7 +434,7 @@ const farms: FarmConfig[] = [
   // },
   // {
   //   pid: 51,
-  //   lpSymbol: 'BSCX-BNB LP',
+  //   lpSymbol: 'BSCX-AVAX LP',
   //   lpAddresses: {
   //     256: '',
   //     128: '0x20781bc3701c5309ac75291f5d09bdc23d7b7fa8',
@@ -444,13 +444,13 @@ const farms: FarmConfig[] = [
   //     256: '',
   //     128: '0x5ac52ee5b2a633895292ff6d8a89bb9190451587',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   //   isCommunity: false,
   // },
   // {
   //   pid: 50,
-  //   lpSymbol: 'TEN-BNB LP',
+  //   lpSymbol: 'TEN-AVAX LP',
   //   lpAddresses: {
   //     256: '',
   //     128: '0x01ecc44ddd2d104f44d2aa1a2bd9dfbc91ae8275',
@@ -460,13 +460,13 @@ const farms: FarmConfig[] = [
   //     256: '',
   //     128: '0xdff8cb622790b7f92686c722b02cab55592f152c',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   //   isCommunity: false,
   // },
   // {
   //   pid: 49,
-  //   lpSymbol: 'bALBT-BNB LP',
+  //   lpSymbol: 'bALBT-AVAX LP',
   //   lpAddresses: {
   //     256: '',
   //     128: '0xbe14f3a89a4f7f279af9d99554cf12e8c29db921',
@@ -476,13 +476,13 @@ const farms: FarmConfig[] = [
   //     256: '',
   //     128: '0x72faa679e1008ad8382959ff48e392042a8b06f7',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   //   isCommunity: false,
   // },
   // {
   //   pid: 46,
-  //   lpSymbol: 'OG-BNB LP',
+  //   lpSymbol: 'OG-AVAX LP',
   //   lpAddresses: {
   //     256: '',
   //     128: '0x64373608f2e93ea97ad4d8ca2cce6b2575db2f55',
@@ -492,13 +492,13 @@ const farms: FarmConfig[] = [
   //     256: '',
   //     128: '0xf05e45ad22150677a017fbd94b84fbb63dc9b44c',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   //   isCommunity: false,
   // },
   // {
   //   pid: 47,
-  //   lpSymbol: 'ASR-BNB LP',
+  //   lpSymbol: 'ASR-AVAX LP',
   //   lpAddresses: {
   //     256: '',
   //     128: '0xd6b900d5308356317299dafe303e661271aa12f1',
@@ -508,13 +508,13 @@ const farms: FarmConfig[] = [
   //     256: '',
   //     128: '0x80d5f92c2c8c682070c95495313ddb680b267320',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   //   isCommunity: false,
   // },
   // {
   //   pid: 48,
-  //   lpSymbol: 'ATM-BNB LP',
+  //   lpSymbol: 'ATM-AVAX LP',
   //   lpAddresses: {
   //     256: '',
   //     128: '0xd5b3ebf1a85d32c73a82b40f75e1cd929caf4029',
@@ -524,13 +524,13 @@ const farms: FarmConfig[] = [
   //     256: '',
   //     128: '0x25e9d05365c867e59c1904e7463af9f312296f9e',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   //   isCommunity: false,
   // },
   // {
   //   pid: 45,
-  //   lpSymbol: 'REEF-BNB LP',
+  //   lpSymbol: 'REEF-AVAX LP',
   //   lpAddresses: {
   //     256: '',
   //     128: '0x58B58cab6C5cF158f63A2390b817710826d116D0',
@@ -540,13 +540,13 @@ const farms: FarmConfig[] = [
   //     256: '',
   //     128: '0xf21768ccbc73ea5b6fd3c687208a7c2def2d966e',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   //   isCommunity: false,
   // },
   // {
   //   pid: 44,
-  //   lpSymbol: 'Ditto-BNB LP',
+  //   lpSymbol: 'Ditto-AVAX LP',
   //   lpAddresses: {
   //     256: '',
   //     128: '0x470bc451810b312bbb1256f96b0895d95ea659b1',
@@ -556,13 +556,13 @@ const farms: FarmConfig[] = [
   //     256: '',
   //     128: '0x233d91A0713155003fc4DcE0AFa871b508B3B715',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   //   isCommunity: false,
   // },
   // {
   //   pid: 43,
-  //   lpSymbol: 'JUV-BNB LP',
+  //   lpSymbol: 'JUV-AVAX LP',
   //   lpAddresses: {
   //     256: '',
   //     128: '0x51a2ffa5b7de506f9a22549e48b33f6cf0d9030e',
@@ -572,13 +572,13 @@ const farms: FarmConfig[] = [
   //     256: '',
   //     128: '0xc40c9a843e1c6d01b7578284a9028854f6683b1b',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   //   isCommunity: false,
   // },
   // {
   //   pid: 42,
-  //   lpSymbol: 'PSG-BNB LP',
+  //   lpSymbol: 'PSG-AVAX LP',
   //   lpAddresses: {
   //     256: '',
   //     128: '0x9c4f6a5050cf863e67a402e8b377973b4e3372c1',
@@ -588,13 +588,13 @@ const farms: FarmConfig[] = [
   //     256: '',
   //     128: '0xbc5609612b7c44bef426de600b5fd1379db2ecf1',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   //   isCommunity: false,
   // },
   // {
   //   pid: 39,
-  //   lpSymbol: 'UNFI-BNB LP',
+  //   lpSymbol: 'UNFI-AVAX LP',
   //   lpAddresses: {
   //     256: '',
   //     128: '0xbEA35584b9a88107102ABEf0BDeE2c4FaE5D8c31',
@@ -604,7 +604,7 @@ const farms: FarmConfig[] = [
   //     256: '',
   //     128: '0x728C5baC3C3e370E372Fc4671f9ef6916b814d8B',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   //   multiplier: '1X',
   //   isCommunity: false,
@@ -627,7 +627,7 @@ const farms: FarmConfig[] = [
   // },
   // {
   //   pid: 40,
-  //   lpSymbol: 'BLK-BNB LP',
+  //   lpSymbol: 'BLK-AVAX LP',
   //   lpAddresses: {
   //     256: '',
   //     128: '0xC743Dc05F03D25E1aF8eC5F8228f4BD25513c8d0',
@@ -637,13 +637,13 @@ const farms: FarmConfig[] = [
   //     256: '',
   //     128: '0x63870A18B6e42b01Ef1Ad8A2302ef50B7132054F',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   //   isCommunity: false,
   // },
   // {
   //   pid: 37,
-  //   lpSymbol: 'HARD-BNB LP',
+  //   lpSymbol: 'HARD-AVAX LP',
   //   lpAddresses: {
   //     256: '0xE66790075ad839978fEBa15D4d8bB2b415556a1D',
   //     128: '0x9f40e8a2fcaa267a0c374b6c661e0b372264cc3d',
@@ -653,13 +653,13 @@ const farms: FarmConfig[] = [
   //     256: '0xE02dF9e3e622DeBdD69fb838bB799E3F168902c5',
   //     128: '0xf79037f6f6be66832de4e7516be52826bc3cbcc4',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   //   isCommunity: false,
   // },
   // {
   //   pid: 2,
-  //   lpSymbol: 'BUSD-BNB LP',
+  //   lpSymbol: 'BUSD-AVAX LP',
   //   lpAddresses: {
   //     256: '0x2f7682b64b88149ba3250aee32db712964de5fa9',
   //     128: '0x1b96b92314c44b159149f7e0303511fb2fc4774f',
@@ -669,12 +669,12 @@ const farms: FarmConfig[] = [
   //     256: '0xe9e7cea3dedca5984780bafc599bd69add087d56',
   //     128: '0xe9e7cea3dedca5984780bafc599bd69add087d56',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   // },
   // {
   //   pid: 3,
-  //   lpSymbol: 'ADA-BNB LP',
+  //   lpSymbol: 'ADA-AVAX LP',
   //   lpAddresses: {
   //     256: '0xcbe3282a562e23b8c61ed04bb72ffdbb9233b1ce',
   //     128: '0xba51d1ab95756ca4eab8737ecd450cd8f05384cf',
@@ -684,12 +684,12 @@ const farms: FarmConfig[] = [
   //     256: '0xE02dF9e3e622DeBdD69fb838bB799E3F168902c5',
   //     128: '0x3ee2200efb3400fabb9aacf31297cbdd1d435d47',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   // },
   // {
   //   pid: 4,
-  //   lpSymbol: 'BAND-BNB LP',
+  //   lpSymbol: 'BAND-AVAX LP',
   //   lpAddresses: {
   //     256: '0xcbe3282a562e23b8c61ed04bb72ffdbb9233b1ce',
   //     128: '0xc639187ef82271d8f517de6feae4faf5b517533c',
@@ -699,12 +699,12 @@ const farms: FarmConfig[] = [
   //     256: '0xE02dF9e3e622DeBdD69fb838bB799E3F168902c5',
   //     128: '0xad6caeb32cd2c308980a548bd0bc5aa4306c6c18',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   // },
   // {
   //   pid: 5,
-  //   lpSymbol: 'DOT-BNB LP',
+  //   lpSymbol: 'DOT-AVAX LP',
   //   lpAddresses: {
   //     256: '0xE66790075ad839978fEBa15D4d8bB2b415556a1D',
   //     128: '0xbcd62661a6b1ded703585d3af7d7649ef4dcdb5c',
@@ -714,12 +714,12 @@ const farms: FarmConfig[] = [
   //     256: '0xE02dF9e3e622DeBdD69fb838bB799E3F168902c5',
   //     128: '0x7083609fce4d1d8dc0c979aab8c869ea2c873402',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   // },
   // {
   //   pid: 6,
-  //   lpSymbol: 'EOS-BNB LP',
+  //   lpSymbol: 'EOS-AVAX LP',
   //   lpAddresses: {
   //     256: '0xE66790075ad839978fEBa15D4d8bB2b415556a1D',
   //     128: '0x981d2ba1b298888408d342c39c2ab92e8991691e',
@@ -729,12 +729,12 @@ const farms: FarmConfig[] = [
   //     256: '0xE02dF9e3e622DeBdD69fb838bB799E3F168902c5',
   //     128: '0x56b6fb708fc5732dec1afc8d8556423a2edccbd6',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   // },
   // {
   //   pid: 7,
-  //   lpSymbol: 'LINK-BNB LP',
+  //   lpSymbol: 'LINK-AVAX LP',
   //   lpAddresses: {
   //     256: '0xE66790075ad839978fEBa15D4d8bB2b415556a1D',
   //     128: '0xaebe45e3a03b734c68e5557ae04bfc76917b4686',
@@ -744,7 +744,7 @@ const farms: FarmConfig[] = [
   //     256: '0xE02dF9e3e622DeBdD69fb838bB799E3F168902c5',
   //     128: '0xf8a0bf9cf54bb92f17374d9e9a321e6a111a51bd',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   // },
   // {
@@ -764,7 +764,7 @@ const farms: FarmConfig[] = [
   // },
   // {
   //   pid: 12,
-  //   lpSymbol: 'TWT-BNB LP',
+  //   lpSymbol: 'TWT-AVAX LP',
   //   lpAddresses: {
   //     256: '0xE66790075ad839978fEBa15D4d8bB2b415556a1D',
   //     128: '0x610e7a287c27dfFcaC0F0a94f547Cc1B770cF483',
@@ -774,12 +774,12 @@ const farms: FarmConfig[] = [
   //     256: '0xE02dF9e3e622DeBdD69fb838bB799E3F168902c5',
   //     128: '0x4b0f1812e5df2a09796481ff14017e6005508003',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   // },
   // {
   //   pid: 13,
-  //   lpSymbol: 'XVS-BNB LP',
+  //   lpSymbol: 'XVS-AVAX LP',
   //   lpAddresses: {
   //     256: '0xE66790075ad839978fEBa15D4d8bB2b415556a1D',
   //     128: '0x41182c32F854dd97bA0e0B1816022e0aCB2fc0bb',
@@ -789,12 +789,12 @@ const farms: FarmConfig[] = [
   //     256: '0xE02dF9e3e622DeBdD69fb838bB799E3F168902c5',
   //     128: '0xcf6bb5389c92bdda8a3747ddb454cb7a64626c63',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   // },
   // {
   //   pid: 14,
-  //   lpSymbol: 'ETH-BNB LP',
+  //   lpSymbol: 'ETH-AVAX LP',
   //   lpAddresses: {
   //     256: '0xE66790075ad839978fEBa15D4d8bB2b415556a1D',
   //     128: '0x70D8929d04b60Af4fb9B58713eBcf18765aDE422',
@@ -804,12 +804,12 @@ const farms: FarmConfig[] = [
   //     256: '0xE02dF9e3e622DeBdD69fb838bB799E3F168902c5',
   //     128: '0x2170ed0880ac9a755fd29b2688956bd959f933f8',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   // },
   // {
   //   pid: 15,
-  //   lpSymbol: 'BTCB-BNB LP',
+  //   lpSymbol: 'BTCB-AVAX LP',
   //   lpAddresses: {
   //     256: '0xE66790075ad839978fEBa15D4d8bB2b415556a1D',
   //     128: '0x7561EEe90e24F3b348E1087A005F78B4c8453524',
@@ -819,12 +819,12 @@ const farms: FarmConfig[] = [
   //     256: '0xE02dF9e3e622DeBdD69fb838bB799E3F168902c5',
   //     128: '0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   // },
   // {
   //   pid: 16,
-  //   lpSymbol: 'ALPHA-BNB LP',
+  //   lpSymbol: 'ALPHA-AVAX LP',
   //   lpAddresses: {
   //     256: '0xE66790075ad839978fEBa15D4d8bB2b415556a1D',
   //     128: '0x4e0f3385d932F7179DeE045369286FFa6B03d887',
@@ -834,12 +834,12 @@ const farms: FarmConfig[] = [
   //     256: '0xE02dF9e3e622DeBdD69fb838bB799E3F168902c5',
   //     128: '0xa1faa113cbe53436df28ff0aee54275c13b40975',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   // },
   // {
   //   pid: 17,
-  //   lpSymbol: 'USDT-BNB LP',
+  //   lpSymbol: 'USDT-AVAX LP',
   //   lpAddresses: {
   //     256: '0xE66790075ad839978fEBa15D4d8bB2b415556a1D',
   //     128: '0x20bcc3b8a0091ddac2d0bc30f68e6cbb97de59cd',
@@ -849,12 +849,12 @@ const farms: FarmConfig[] = [
   //     256: '0xE02dF9e3e622DeBdD69fb838bB799E3F168902c5',
   //     128: '0x55d398326f99059ff775485246999027b3197955',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   // },
   // {
   //   pid: 18,
-  //   lpSymbol: 'XRP-BNB LP',
+  //   lpSymbol: 'XRP-AVAX LP',
   //   lpAddresses: {
   //     256: '0xE66790075ad839978fEBa15D4d8bB2b415556a1D',
   //     128: '0xc7b4b32a3be2cb6572a1c9959401f832ce47a6d2',
@@ -864,12 +864,12 @@ const farms: FarmConfig[] = [
   //     256: '0xE02dF9e3e622DeBdD69fb838bB799E3F168902c5',
   //     128: '0x1d2f0da169ceb9fc7b3144628db156f3f6c60dbe',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   // },
   // {
   //   pid: 19,
-  //   lpSymbol: 'ATOM-BNB LP',
+  //   lpSymbol: 'ATOM-AVAX LP',
   //   lpAddresses: {
   //     256: '0xE66790075ad839978fEBa15D4d8bB2b415556a1D',
   //     128: '0x2333c77fc0b2875c11409cdcd3c75d42d402e834',
@@ -879,12 +879,12 @@ const farms: FarmConfig[] = [
   //     256: '0xE02dF9e3e622DeBdD69fb838bB799E3F168902c5',
   //     128: '0x0eb3a705fc54725037cc9e008bdede697f62f335',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   // },
   // {
   //   pid: 20,
-  //   lpSymbol: 'YFII-BNB LP',
+  //   lpSymbol: 'YFII-AVAX LP',
   //   lpAddresses: {
   //     256: '0xE66790075ad839978fEBa15D4d8bB2b415556a1D',
   //     128: '0x574a978c2d0d36d707a05e459466c7a1054f1210',
@@ -894,12 +894,12 @@ const farms: FarmConfig[] = [
   //     256: '0xE02dF9e3e622DeBdD69fb838bB799E3F168902c5',
   //     128: '0x7f70642d88cf1c4a3a7abb072b53b929b653eda5',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   // },
   // {
   //   pid: 21,
-  //   lpSymbol: 'DAI-BNB LP',
+  //   lpSymbol: 'DAI-AVAX LP',
   //   lpAddresses: {
   //     256: '0xE66790075ad839978fEBa15D4d8bB2b415556a1D',
   //     128: '0x56c77d59e82f33c712f919d09fceddf49660a829',
@@ -909,12 +909,12 @@ const farms: FarmConfig[] = [
   //     256: '0xE02dF9e3e622DeBdD69fb838bB799E3F168902c5',
   //     128: '0x1af3f329e8be154074d8769d1ffa4ee058b1dbc3',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   // },
   // {
   //   pid: 22,
-  //   lpSymbol: 'XTZ-BNB LP',
+  //   lpSymbol: 'XTZ-AVAX LP',
   //   lpAddresses: {
   //     256: '0xE66790075ad839978fEBa15D4d8bB2b415556a1D',
   //     128: '0x5acac332f0f49c8badc7afd0134ad19d3db972e6',
@@ -924,12 +924,12 @@ const farms: FarmConfig[] = [
   //     256: '0xE02dF9e3e622DeBdD69fb838bB799E3F168902c5',
   //     128: '0x16939ef78684453bfdfb47825f8a5f714f12623a',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   // },
   // {
   //   pid: 23,
-  //   lpSymbol: 'BCH-BNB LP',
+  //   lpSymbol: 'BCH-AVAX LP',
   //   lpAddresses: {
   //     256: '0xE66790075ad839978fEBa15D4d8bB2b415556a1D',
   //     128: '0x54edd846db17f43b6e43296134ecd96284671e81',
@@ -939,12 +939,12 @@ const farms: FarmConfig[] = [
   //     256: '0xE02dF9e3e622DeBdD69fb838bB799E3F168902c5',
   //     128: '0x8ff795a6f4d97e7887c79bea79aba5cc76444adf',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   // },
   // {
   //   pid: 24,
-  //   lpSymbol: 'YFI-BNB LP',
+  //   lpSymbol: 'YFI-AVAX LP',
   //   lpAddresses: {
   //     256: '0xE66790075ad839978fEBa15D4d8bB2b415556a1D',
   //     128: '0x68Ff2ca47D27db5Ac0b5c46587645835dD51D3C1',
@@ -954,12 +954,12 @@ const farms: FarmConfig[] = [
   //     256: '0xE02dF9e3e622DeBdD69fb838bB799E3F168902c5',
   //     128: '0x88f1a5ae2a3bf98aeaf342d26b30a79438c9142e',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   // },
   // {
   //   pid: 25,
-  //   lpSymbol: 'UNI-BNB LP',
+  //   lpSymbol: 'UNI-AVAX LP',
   //   lpAddresses: {
   //     256: '0xE66790075ad839978fEBa15D4d8bB2b415556a1D',
   //     128: '0x4269e7F43A63CEA1aD7707Be565a94a9189967E9',
@@ -969,12 +969,12 @@ const farms: FarmConfig[] = [
   //     256: '0xE02dF9e3e622DeBdD69fb838bB799E3F168902c5',
   //     128: '0xbf5140a22578168fd562dccf235e5d43a02ce9b1',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   // },
   // {
   //   pid: 26,
-  //   lpSymbol: 'FIL-BNB LP',
+  //   lpSymbol: 'FIL-AVAX LP',
   //   lpAddresses: {
   //     256: '0xE66790075ad839978fEBa15D4d8bB2b415556a1D',
   //     128: '0x35fe9787f0ebf2a200bac413d3030cf62d312774',
@@ -984,12 +984,12 @@ const farms: FarmConfig[] = [
   //     256: '0xE02dF9e3e622DeBdD69fb838bB799E3F168902c5',
   //     128: '0x0d8ce2a99bb6e3b7db580ed848240e4a0f9ae153',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   // },
   // {
   //   pid: 27,
-  //   lpSymbol: 'INJ-BNB LP',
+  //   lpSymbol: 'INJ-AVAX LP',
   //   lpAddresses: {
   //     256: '0xE66790075ad839978fEBa15D4d8bB2b415556a1D',
   //     128: '0x7a34bd64d18e44CfdE3ef4B81b87BAf3EB3315B6',
@@ -999,12 +999,12 @@ const farms: FarmConfig[] = [
   //     256: '0xE02dF9e3e622DeBdD69fb838bB799E3F168902c5',
   //     128: '0xa2b726b1145a4773f68593cf171187d8ebe4d495',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   // },
   // {
   //   pid: 29,
-  //   lpSymbol: 'USDC-BNB LP',
+  //   lpSymbol: 'USDC-AVAX LP',
   //   lpAddresses: {
   //     256: '0xE66790075ad839978fEBa15D4d8bB2b415556a1D',
   //     128: '0x30479874f9320a62bce3bc0e315c920e1d73e278',
@@ -1014,12 +1014,12 @@ const farms: FarmConfig[] = [
   //     256: '0xE02dF9e3e622DeBdD69fb838bB799E3F168902c5',
   //     128: '0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   // },
   // {
   //   pid: 30,
-  //   lpSymbol: 'SXP-BNB LP',
+  //   lpSymbol: 'SXP-AVAX LP',
   //   lpAddresses: {
   //     256: '0xE66790075ad839978fEBa15D4d8bB2b415556a1D',
   //     128: '0x752E713fB70E3FA1Ac08bCF34485F14A986956c4',
@@ -1029,12 +1029,12 @@ const farms: FarmConfig[] = [
   //     256: '0xE02dF9e3e622DeBdD69fb838bB799E3F168902c5',
   //     128: '0x47bead2563dcbf3bf2c9407fea4dc236faba485a',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   // },
   // {
   //   pid: 32,
-  //   lpSymbol: 'CTK-BNB LP',
+  //   lpSymbol: 'CTK-AVAX LP',
   //   lpAddresses: {
   //     256: '0xE66790075ad839978fEBa15D4d8bB2b415556a1D',
   //     128: '0x7793870484647a7278907498ec504879d6971EAb',
@@ -1044,7 +1044,7 @@ const farms: FarmConfig[] = [
   //     256: '0xE02dF9e3e622DeBdD69fb838bB799E3F168902c5',
   //     128: '0xa8c2b8eec3d368c0253ad3dae65a5f2bbb89c929',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   // },
   // {
@@ -1060,7 +1060,7 @@ const farms: FarmConfig[] = [
   //     128: '0x0Da6Ed8B13214Ff28e9Ca979Dd37439e8a88F6c4',
   //   },
   //   quoteTokenSymbol: QuoteToken.PEFI,
-  //   quoteTokenAdresses: contracts.cake,
+  //   quoteTokenAdresses: contracts.penguin,
   //   isCommunity: true,
   // },
   // {
@@ -1076,7 +1076,7 @@ const farms: FarmConfig[] = [
   //     128: '0xa1303e6199b319a891b79685f0537d289af1fc83',
   //   },
   //   quoteTokenSymbol: QuoteToken.PEFI,
-  //   quoteTokenAdresses: contracts.cake,
+  //   quoteTokenAdresses: contracts.penguin,
   //   isCommunity: true,
   // },
   // {
@@ -1092,7 +1092,7 @@ const farms: FarmConfig[] = [
   //     128: '0xbfa0841f7a90c4ce6643f651756ee340991f99d5',
   //   },
   //   quoteTokenSymbol: QuoteToken.PEFI,
-  //   quoteTokenAdresses: contracts.cake,
+  //   quoteTokenAdresses: contracts.penguin,
   //   isCommunity: true,
   // },
   // {
@@ -1108,12 +1108,12 @@ const farms: FarmConfig[] = [
   //     128: '0xe64f5cb844946c1f102bd25bbd87a5ab4ae89fbe',
   //   },
   //   quoteTokenSymbol: QuoteToken.PEFI,
-  //   quoteTokenAdresses: contracts.cake,
+  //   quoteTokenAdresses: contracts.penguin,
   //   isCommunity: true,
   // },
   // {
   //   pid: 8,
-  //   lpSymbol: 'BAKE-BNB Bakery LP',
+  //   lpSymbol: 'BAKE-AVAX Bakery LP',
   //   lpAddresses: {
   //     256: '0xE66790075ad839978fEBa15D4d8bB2b415556a1D',
   //     128: '0xc2eed0f5a0dc28cfa895084bc0a9b8b8279ae492',
@@ -1123,12 +1123,12 @@ const farms: FarmConfig[] = [
   //     256: '0xE02dF9e3e622DeBdD69fb838bB799E3F168902c5',
   //     128: '0xE02dF9e3e622DeBdD69fb838bB799E3F168902c5',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   // },
   // {
   //   pid: 9,
-  //   lpSymbol: 'BURGER-BNB LP',
+  //   lpSymbol: 'BURGER-AVAX LP',
   //   lpAddresses: {
   //     256: '0xE66790075ad839978fEBa15D4d8bB2b415556a1D',
   //     128: '0xd937FB9E6e47F3805981453BFB277a49FFfE04D7',
@@ -1138,12 +1138,12 @@ const farms: FarmConfig[] = [
   //     256: '0xE02dF9e3e622DeBdD69fb838bB799E3F168902c5',
   //     128: '0xae9269f27437f0fcbc232d39ec814844a51d6b8f',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   // },
   // {
   //   pid: 10,
-  //   lpSymbol: 'BAKE-BNB LP',
+  //   lpSymbol: 'BAKE-AVAX LP',
   //   lpAddresses: {
   //     256: '0xE66790075ad839978fEBa15D4d8bB2b415556a1D',
   //     128: '0x3Da30727ed0626b78C212e81B37B97A8eF8A25bB',
@@ -1153,7 +1153,7 @@ const farms: FarmConfig[] = [
   //     256: '0xE02dF9e3e622DeBdD69fb838bB799E3F168902c5',
   //     128: '0xE02dF9e3e622DeBdD69fb838bB799E3F168902c5',
   //   },
-  //   quoteTokenSymbol: QuoteToken.BNB,
+  //   quoteTokenSymbol: QuoteToken.AVAX,
   //   quoteTokenAdresses: contracts.wbnb,
   // },
 ]

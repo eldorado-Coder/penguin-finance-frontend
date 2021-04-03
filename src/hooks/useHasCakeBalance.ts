@@ -1,12 +1,12 @@
 import BigNumber from 'bignumber.js'
-import { getCakeAddress } from 'utils/addressHelpers'
+import { getPefiAddress } from 'utils/addressHelpers'
 import useTokenBalance from './useTokenBalance'
 
 /**
  * A hook to check if a wallet's PEFI balance is at least the amount passed in
  */
 const useHasCakeBalance = (minimumBalance: BigNumber) => {
-  const cakeBalance = useTokenBalance(getCakeAddress())
+  const cakeBalance = useTokenBalance(getPefiAddress())
   return cakeBalance.gte(minimumBalance)
 }
 

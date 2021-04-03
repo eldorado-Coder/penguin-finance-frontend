@@ -23,6 +23,7 @@ export interface Ifo {
 }
 
 export enum QuoteToken {
+  'AVAX' = 'AVAX',
   'BNB' = 'BNB',
   'PEFI' = 'PEFI',
   'SYRUP' = 'SYRUP',
@@ -43,7 +44,7 @@ export interface Address {
   256?: string
   128?: string
   43113?: string
-  43114?: string
+  43114: string
 }
 
 export interface FarmConfig {

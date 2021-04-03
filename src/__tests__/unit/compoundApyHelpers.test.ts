@@ -7,7 +7,7 @@ it.each([
   [{ numberOfDays: 330, farmApy: 45.12, cakePrice: 5 }, 100.67],
   [{ numberOfDays: 365, farmApy: 100, cakePrice: 0.2 }, 8572.84],
   [{ numberOfDays: 365, farmApy: 20, cakePrice: 1 }, 221.34],
-])('calculate cake earned with values %o', ({ numberOfDays, farmApy, cakePrice }, expected) => {
+])('calculate penguin earned with values %o', ({ numberOfDays, farmApy, cakePrice }, expected) => {
   expect(calculateCakeEarnedPerThousandDollars({ numberOfDays, farmApy, cakePrice })).toEqual(expected)
 })
 

@@ -16,7 +16,7 @@ export const getIfos = (data) => {
       launchTime: format(lunchTime2, 'HH:mm:ss'),
       saleAmount: ifo.sale_amount,
       raiseAmount: ifo.raise_amount,
-      cakeToBurn: ifo.burn_amount,
+      penguinToBurn: ifo.burn_amount,
       projectSiteUrl: ifo.project_url,
       currency: ifo.currency,
       currencyAddress: ifo.currency_address,

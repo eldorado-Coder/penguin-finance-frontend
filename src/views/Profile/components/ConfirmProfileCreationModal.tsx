@@ -3,7 +3,7 @@ import { Modal, Flex, Text } from '@penguinfinance/uikit'
 import { useDispatch } from 'react-redux'
 import BigNumber from 'bignumber.js'
 import useI18n from 'hooks/useI18n'
-import { useCake, usePancakeRabbits, useProfile } from 'hooks/useContract'
+import { usePenguin, usePancakeRabbits, useProfile } from 'hooks/useContract'
 import useApproveConfirmTransaction from 'hooks/useApproveConfirmTransaction'
 import { fetchProfile } from 'state/profile'
 import { useToast } from 'state/hooks'
@@ -33,7 +33,7 @@ const ConfirmProfileCreationModal: React.FC<Props> = ({
   const pancakeRabbitsContract = usePancakeRabbits()
   const dispatch = useDispatch()
   const { toastSuccess } = useToast()
-  const cakeContract = useCake()
+  const penguinContract = usePenguin()
 
   const {
     isApproving,
@@ -45,7 +45,7 @@ const ConfirmProfileCreationModal: React.FC<Props> = ({
   } = useApproveConfirmTransaction({
     onRequiresApproval: async () => {
       try {
-        const response = await cakeContract.methods.allowance(account, profileContract.options.address).call()
+        const response = await penguinContract.methods.allowance(account, profileContract.options.address).call()
         const currentAllowance = new BigNumber(response)
         return currentAllowance.gte(minimumCakeRequired)
       } catch (error) {
@@ -53,7 +53,7 @@ const ConfirmProfileCreationModal: React.FC<Props> = ({
       }
     },
     onApprove: () => {
-      return cakeContract.methods.approve(profileContract.options.address, allowance.toJSON()).send({ from: account })
+      return penguinContract.methods.approve(profileContract.options.address, allowance.toJSON()).send({ from: account })
     },
     onConfirm: () => {
       return profileContract.methods

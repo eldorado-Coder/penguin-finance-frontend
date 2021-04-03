@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { AutoRenewIcon, Button, Flex, InjectedModalProps, Text } from '@penguinfinance/uikit'
 import useI18n from 'hooks/useI18n'
-import { useCake } from 'hooks/useContract'
+import { usePenguin } from 'hooks/useContract'
 import { useProfile, useToast } from 'state/hooks'
 import { getPancakeProfileAddress } from 'utils/addressHelpers'
 import { getFullDisplayBalance } from 'utils/formatBalance'
@@ -19,12 +19,12 @@ const ApproveCakePage: React.FC<ApproveCakePageProps> = ({ goToChange, onDismiss
   const TranslateString = useI18n()
   const { account } = useWallet()
   const { numberCakeToUpdate, numberCakeToReactivate } = useGetProfileCosts()
-  const cakeContract = useCake()
+  const penguinContract = usePenguin()
   const { toastError } = useToast()
   const cost = profile.isActive ? numberCakeToUpdate : numberCakeToReactivate
 
   const handleApprove = () => {
-    cakeContract.methods
+    penguinContract.methods
       .approve(getPancakeProfileAddress(), cost.times(2).toJSON())
       .send({ from: account })
       .on('sending', () => {

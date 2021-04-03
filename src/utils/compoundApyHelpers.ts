@@ -12,7 +12,7 @@ export const calculateCakeEarnedPerThousandDollars = ({ numberOfDays, farmApy, c
   // This is a translation of the typical mathematical compounding APY formula. Details here: https://www.calculatorsoup.com/calculators/financial/compound-interest-calculator.php
   const finalAmount = principal * (1 + apyAsDecimal / timesCompounded) ** (timesCompounded * daysAsDecimalOfYear)
 
-  // To get the cake earned, deduct the amount after compounding (finalAmount) from the starting PEFI balance (principal)
+  // To get the penguin earned, deduct the amount after compounding (finalAmount) from the starting PEFI balance (principal)
   const interestEarned = finalAmount - principal
   return roundToTwoDp(interestEarned)
 }
