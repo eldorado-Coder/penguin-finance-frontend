@@ -12,11 +12,11 @@ const config: MenuEntry[] = [
     items: [
       {
         label: 'Exchange',
-        href: 'https://exchange.penguinfinance.io',
+        href: 'https://app.pangolin.exchange/#/swap',
       },
       {
         label: 'Liquidity',
-        href: 'https://exchange.penguinfinance.io/#/pool',
+        href: 'https://app.pangolin.exchange/#/pool',
       },
     ],
   },
@@ -59,28 +59,28 @@ const config: MenuEntry[] = [
   //     },
   //   ],
   // },
-  // {
-  //   label: 'Info',
-  //   icon: 'InfoIcon',
-  //   items: [
-  //     {
-  //       label: 'Overview',
-  //       href: 'https://info.penguinfinance.io',
-  //     },
-  //     {
-  //       label: 'Tokens',
-  //       href: 'https://info.penguinfinance.io/tokens',
-  //     },
-  //     {
-  //       label: 'Pairs',
-  //       href: 'https://info.penguinfinance.io/pairs',
-  //     },
-  //     {
-  //       label: 'Accounts',
-  //       href: 'https://info.penguinfinance.io/accounts',
-  //     },
-  //   ],
-  // },
+  {
+    label: 'Info',
+    icon: 'InfoIcon',
+    items: [
+      {
+        label: 'Overview',
+        href: 'https://info.pangolin.exchange',
+      },
+      {
+        label: 'Tokens',
+        href: 'https://info.pangolin.exchange/#/tokens',
+      },
+      {
+        label: 'Pairs',
+        href: 'https://info.pangolin.exchange/#/pairs',
+      },
+      {
+        label: 'Accounts',
+        href: 'https://info.pangolin.exchange/#/accounts',
+      },
+    ],
+  },
   // {
   //   label: 'IFO',
   //   icon: 'IfoIcon',

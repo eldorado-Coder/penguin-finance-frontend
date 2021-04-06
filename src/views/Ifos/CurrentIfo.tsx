@@ -52,10 +52,10 @@ const Ifo = () => {
             <li>{TranslateString(598, 'Get PEFI-AVAX LP tokens by adding PEFI and AVAX liquidity')}</li>
           </List>
           <Flex mb="16px">
-            <LinkExternal href="https://exchange.penguinfinance.io/#/swap" mr="16px">
+            <LinkExternal href="https://app.pangolin.exchange/#/swap" mr="16px">
               {TranslateString(1060, 'Buy PEFI')}
             </LinkExternal>
-            <LinkExternal href="https://exchange.penguinfinance.io/#/add/ETH/0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82">
+            <LinkExternal href="https://app.pangolin.exchange/#/add/ETH/0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82">
               {TranslateString(1062, 'Get LP tokens')}
             </LinkExternal>
           </Flex>

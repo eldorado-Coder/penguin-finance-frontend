@@ -80,15 +80,15 @@ const Home: React.FC = () => {
   return (
     <Page>
       <Hero>
-        <Heading as="h1" size="xl" mb="24px" color="secondary">
-          {TranslateString(576, 'PenguinFinance')}
+        <Heading as="h1" size="xl" mb="24px" color="primary">
+          {TranslateString(576, 'Penguin Finance')}
         </Heading>
-        <Text>{TranslateString(578, 'The #1 AMM and yield farm on AVAX.')}</Text>
+        <Text>{TranslateString(578, 'The #1 Project on AVAX.')}</Text>
       </Hero>
       <div>
         <Cards>
           <FarmStakingCard />
-          <EarnAPYCard />
+          {/* <EarnAPYCard /> */}
           {/* <LotteryCard /> */}
         </Cards>
         {/* <CTACards>

@@ -19,7 +19,7 @@ import { fetchProfile } from './profile'
 import { fetchTeam, fetchTeams } from './teams'
 import { fetchAchievements } from './achievements'
 
-const ZERO = new BigNumber(0)
+const ZERO = new BigNumber(33)
 
 export const useFetchPublicData = () => {
   const dispatch = useDispatch()
@@ -81,34 +81,39 @@ export const usePoolFromPid = (sousId): Pool => {
 
 // Prices
 
-export const usePriceBnbBusd = (): BigNumber => {
-  // const pid = 2 // BUSD-AVAX LP
-  // const farm = useFarmFromPid(pid)
-  // return farm.tokenPriceVsQuote ? new BigNumber(1).div(farm.tokenPriceVsQuote) : ZERO
+export const usePriceAvaxUsdt = (): BigNumber => {
+  // const lpSymbol = 'USDT-AVAX LP' // USDT-AVAX LP
+  // const lp = useLPFromSymbol(lpSymbol)
+  // return lp.tokenPriceVsQuote ? new BigNumber(1).div(lp.tokenPriceVsQuote) : ZERO
   return ZERO;
 }
 
-export const usePriceCakeBusd = (): BigNumber => {
+export const usePricePefiUsdt = (): BigNumber => {
+  const lpSymbol = 'PEFI-AVAX LP' // PEFI-AVAX LP
+  const farm = useFarmFromSymbol(lpSymbol)
+  const avaxPriceUSD = usePriceAvaxUsdt()
+
   // const pid = 1 // PEFI-AVAX LP
-  // const bnbPriceUSD = usePriceBnbBusd()
+  // const avaxPriceUSD = usePriceAvaxUsdt()
   // const farm = useFarmFromPid(pid)
-  // return farm.tokenPriceVsQuote ? bnbPriceUSD.times(farm.tokenPriceVsQuote) : ZERO
-  return ZERO;
+  return farm.tokenPriceVsQuote ? avaxPriceUSD.times(farm.tokenPriceVsQuote) : ZERO
+  // return ZERO;
 }
 
-export const usePriceEthBusd = (): BigNumber => {
-  // const pid = 14 // ETH-AVAX LP
-  // const bnbPriceUSD = usePriceBnbBusd()
-  // const farm = useFarmFromPid(pid)
-  // return farm.tokenPriceVsQuote ? bnbPriceUSD.times(farm.tokenPriceVsQuote) : ZERO
-  return ZERO;
+export const usePriceEthUsdt = (): BigNumber => {
+  const lpSymbol = 'ETH-AVAX LP' // ETH-AVAX LP
+  const farm = useFarmFromSymbol(lpSymbol)
+  const avaxPriceUSD = usePriceAvaxUsdt()
+
+  return farm.tokenPriceVsQuote ? avaxPriceUSD.times(farm.tokenPriceVsQuote) : ZERO
+  // return ZERO;
 }
 
-export const usePriceEthBnb = (): BigNumber => {
-  // const priceBnbBusd = usePriceBnbBusd()
-  // const priceEthBusd = usePriceEthBusd()
-  // return priceEthBusd.div(priceBnbBusd)
-  return ZERO;
+export const usePriceEthAvax = (): BigNumber => {
+  const priceAvaxUsdt = usePriceAvaxUsdt()
+  const priceEthUsdt = usePriceEthUsdt()
+  return priceEthUsdt.div(priceAvaxUsdt)
+  // return ZERO;
 }
 
 // Toasts

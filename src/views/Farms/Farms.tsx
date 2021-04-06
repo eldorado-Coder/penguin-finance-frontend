@@ -8,7 +8,7 @@ import { Image, Heading } from '@penguinfinance/uikit'
 import { BLOCKS_PER_YEAR, PEFI_PER_BLOCK, PEFI_POOL_PID } from 'config'
 import FlexLayout from 'components/layout/Flex'
 import Page from 'components/layout/Page'
-import { useFarms, usePriceBnbBusd, usePriceCakeBusd, usePriceEthBusd } from 'state/hooks'
+import { useFarms, usePriceAvaxUsdt, usePricePefiUsdt, usePriceEthUsdt } from 'state/hooks'
 import useRefresh from 'hooks/useRefresh'
 import { fetchFarmUserDataAsync } from 'state/actions'
 import { QuoteToken } from 'config/constants/types'
@@ -22,10 +22,10 @@ const Farms: React.FC = () => {
   const { path } = useRouteMatch()
   const TranslateString = useI18n()
   const farmsLP = useFarms()
-  const cakePrice = usePriceCakeBusd()
-  const bnbPrice = usePriceBnbBusd()
+  const pefiPrice = usePricePefiUsdt()
+  const avaxPrice = usePriceAvaxUsdt()
   const { account, ethereum }: { account: string; ethereum: provider } = useWallet()
-  const ethPriceUsd = usePriceEthBusd()
+  const ethPriceUsd = usePriceEthUsdt()
 
   const dispatch = useDispatch()
   const { fastRefresh } = useRefresh()
@@ -49,52 +49,52 @@ const Farms: React.FC = () => {
   // to retrieve assets prices against USD
   const farmsList = useCallback(
     (farmsToDisplay, removed: boolean) => {
-      const cakePriceVsAVAX = new BigNumber(farmsLP.find((farm) => farm.pid === PEFI_POOL_PID)?.tokenPriceVsQuote || 0)
+      const pefiPriceVsAVAX = new BigNumber(farmsLP.find((farm) => farm.pid === PEFI_POOL_PID)?.tokenPriceVsQuote || 0)
       const farmsToDisplayWithAPY: FarmWithStakedValue[] = farmsToDisplay.map((farm) => {
-        if (!farm.tokenAmount || !farm.lpTotalInQuoteToken || !farm.lpTotalInQuoteToken) {
-          return farm
-        }
-        const cakeRewardPerBlock = PEFI_PER_BLOCK.times(farm.poolWeight)
-        const cakeRewardPerYear = cakeRewardPerBlock.times(BLOCKS_PER_YEAR)
-
-        // cakePriceInQuote * cakeRewardPerYear / lpTotalInQuoteToken
-        let apy = cakePriceVsAVAX.times(cakeRewardPerYear).div(farm.lpTotalInQuoteToken)
-
-        if (farm.quoteTokenSymbol === QuoteToken.BUSD || farm.quoteTokenSymbol === QuoteToken.UST) {
-          apy = cakePriceVsAVAX.times(cakeRewardPerYear).div(farm.lpTotalInQuoteToken).times(bnbPrice)
-        } else if (farm.quoteTokenSymbol === QuoteToken.ETH) {
-          apy = cakePrice.div(ethPriceUsd).times(cakeRewardPerYear).div(farm.lpTotalInQuoteToken)
-        } else if (farm.quoteTokenSymbol === QuoteToken.PEFI) {
-          apy = cakeRewardPerYear.div(farm.lpTotalInQuoteToken)
-        } else if (farm.dual) {
-          const cakeApy =
-            farm && cakePriceVsAVAX.times(cakeRewardPerBlock).times(BLOCKS_PER_YEAR).div(farm.lpTotalInQuoteToken)
-          const dualApy =
-            farm.tokenPriceVsQuote &&
-            new BigNumber(farm.tokenPriceVsQuote)
-              .times(farm.dual.rewardPerBlock)
-              .times(BLOCKS_PER_YEAR)
-              .div(farm.lpTotalInQuoteToken)
-
-          apy = cakeApy && dualApy && cakeApy.plus(dualApy)
-        }
-
-        return { ...farm, apy }
+          if (!farm.tokenAmount || !farm.lpTotalInQuoteToken || !farm.lpTotalInQuoteToken) {
+            return farm
+          }
+          const pefiRewardPerBlock = PEFI_PER_BLOCK.times(farm.poolWeight)
+          const cakeRewardPerYear = pefiRewardPerBlock.times(BLOCKS_PER_YEAR)
+  
+          // pefiPriceInQuote * cakeRewardPerYear / lpTotalInQuoteToken
+          let apy = pefiPriceVsAVAX.times(cakeRewardPerYear).div(farm.lpTotalInQuoteToken)
+  
+          if (farm.quoteTokenSymbol === QuoteToken.USDT || farm.quoteTokenSymbol === QuoteToken.UST) {
+            apy = pefiPriceVsAVAX.times(cakeRewardPerYear).div(farm.lpTotalInQuoteToken).times(avaxPrice)
+          } else if (farm.quoteTokenSymbol === QuoteToken.ETH) {
+            apy = pefiPrice.div(ethPriceUsd).times(cakeRewardPerYear).div(farm.lpTotalInQuoteToken)
+          } else if (farm.quoteTokenSymbol === QuoteToken.PEFI) {
+            apy = cakeRewardPerYear.div(farm.lpTotalInQuoteToken)
+          } else if (farm.dual) {
+            const pefiApy =
+              farm && pefiPriceVsAVAX.times(pefiRewardPerBlock).times(BLOCKS_PER_YEAR).div(farm.lpTotalInQuoteToken)
+            const dualApy =
+              farm.tokenPriceVsQuote &&
+              new BigNumber(farm.tokenPriceVsQuote)
+                .times(farm.dual.rewardPerBlock)
+                .times(BLOCKS_PER_YEAR)
+                .div(farm.lpTotalInQuoteToken)
+  
+            apy = pefiApy && dualApy && pefiApy.plus(dualApy)
+          }
+  
+          return { ...farm, apy }
       })
       return farmsToDisplayWithAPY.map((farm) => (
-        <FarmCard
-          key={farm.pid}
-          farm={farm}
-          removed={removed}
-          bnbPrice={bnbPrice}
-          cakePrice={cakePrice}
-          ethPrice={ethPriceUsd}
-          ethereum={ethereum}
-          account={account}
-        />
+          <FarmCard
+            key={farm.pid}
+            farm={farm}
+            removed={removed}
+            avaxPrice={avaxPrice}
+            pefiPrice={pefiPrice}
+            ethPrice={ethPriceUsd}
+            ethereum={ethereum}
+            account={account}
+          /> 
       ))
     },
-    [farmsLP, bnbPrice, ethPriceUsd, cakePrice, ethereum, account],
+    [farmsLP, avaxPrice, ethPriceUsd, pefiPrice, ethereum, account],
   )
 
   return (

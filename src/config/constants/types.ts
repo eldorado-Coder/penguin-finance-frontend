@@ -26,7 +26,7 @@ export enum QuoteToken {
   'AVAX' = 'AVAX',
   'PEFI' = 'PEFI',
   'SYRUP' = 'SYRUP',
-  'BUSD' = 'BUSD',
+  'USDT' = 'USDT',
   'TWT' = 'TWT',
   'UST' = 'UST',
   'ETH' = 'ETH',
@@ -47,7 +47,7 @@ export interface Address {
 }
 
 export interface FarmConfig {
-  pid: number
+  pid?: number
   lpSymbol: string
   lpAddresses: Address
   tokenSymbol: string
@@ -61,6 +61,14 @@ export interface FarmConfig {
     earnLabel: string
     endBlock: number
   }
+  withdrawalFee?: string
+}
+
+export interface LPConfig {
+  lpSymbol: string
+  lpAddresses: Address
+  quoteTokenSymbol: QuoteToken
+  quoteTokenAdresses: Address
 }
 
 export interface PoolConfig {

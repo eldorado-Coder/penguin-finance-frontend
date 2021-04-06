@@ -4,14 +4,14 @@ import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { allLanguages } from 'config/localisation/languageCodes'
 import { LanguageContext } from 'contexts/Localisation/languageContext'
 import useTheme from 'hooks/useTheme'
-import { usePriceCakeBusd, useProfile } from 'state/hooks'
+import { usePricePefiUsdt, useProfile } from 'state/hooks'
 import config from './config'
 
 const Menu = (props) => {
   const { account, connect, reset } = useWallet()
   const { selectedLanguage, setSelectedLanguage } = useContext(LanguageContext)
   const { isDark, toggleTheme } = useTheme()
-  const cakePriceUsd = usePriceCakeBusd()
+  const pefiPriceUsd = usePricePefiUsdt()
   const { profile } = useProfile()
 
   return (
@@ -24,7 +24,7 @@ const Menu = (props) => {
       currentLang={selectedLanguage && selectedLanguage.code}
       langs={allLanguages}
       setLang={setSelectedLanguage}
-      cakePriceUsd={cakePriceUsd.toNumber()}
+      pefiPriceUsd={pefiPriceUsd.toNumber()}
       links={config}
       // profile={{
       //   username: profile?.username,

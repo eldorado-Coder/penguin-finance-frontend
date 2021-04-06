@@ -10,7 +10,7 @@ import partition from 'lodash/partition'
 import useI18n from 'hooks/useI18n'
 import useBlock from 'hooks/useBlock'
 import { getBalanceNumber } from 'utils/formatBalance'
-import { useFarms, usePriceBnbBusd, usePools, usePriceEthBnb } from 'state/hooks'
+import { useFarms, usePriceAvaxUsdt, usePools, usePriceEthAvax } from 'state/hooks'
 import { QuoteToken, PoolCategory } from 'config/constants/types'
 import FlexLayout from 'components/layout/Flex'
 import Page from 'components/layout/Page'
@@ -25,8 +25,8 @@ const Farm: React.FC = () => {
   const { account } = useWallet()
   const farms = useFarms()
   const pools = usePools(account)
-  const bnbPriceUSD = usePriceBnbBusd()
-  const ethPriceBnb = usePriceEthBnb()
+  const avaxPriceUSD = usePriceAvaxUsdt()
+  const ethPriceBnb = usePriceEthAvax()
   const block = useBlock()
   const [stackedOnly, setStackedOnly] = useState(false)
 
@@ -35,8 +35,8 @@ const Farm: React.FC = () => {
     if (tokenName === 'AVAX') {
       return new BigNumber(1)
     }
-    if (tokenPrice && quoteToken === QuoteToken.BUSD) {
-      return tokenPriceBN.div(bnbPriceUSD)
+    if (tokenPrice && quoteToken === QuoteToken.USDT) {
+      return tokenPriceBN.div(avaxPriceUSD)
     }
     return tokenPriceBN
   }

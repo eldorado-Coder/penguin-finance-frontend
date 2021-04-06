@@ -1,6 +1,6 @@
 import { Toast } from '@penguinfinance/uikit'
 import BigNumber from 'bignumber.js'
-import { CampaignType, FarmConfig, Nft, PoolConfig, Team } from 'config/constants/types'
+import { CampaignType, LPConfig, FarmConfig, Nft, PoolConfig, Team } from 'config/constants/types'
 
 export type TranslatableText =
   | string
@@ -13,6 +13,20 @@ export type TranslatableText =
     }
 
 export interface Farm extends FarmConfig {
+  tokenAmount?: BigNumber
+  quoteTokenAmount?: BigNumber
+  lpTotalInQuoteToken?: BigNumber
+  tokenPriceVsQuote?: BigNumber
+  poolWeight?: BigNumber
+  userData?: {
+    allowance: BigNumber
+    tokenBalance: BigNumber
+    stakedBalance: BigNumber
+    earnings: BigNumber
+  }
+}
+
+export interface Lp extends LPConfig {
   tokenAmount?: BigNumber
   quoteTokenAmount?: BigNumber
   lpTotalInQuoteToken?: BigNumber
@@ -61,6 +75,10 @@ export interface FarmsState {
   data: Farm[]
 }
 
+export interface LpsState {
+  data: Lp[]
+}
+
 export interface PoolsState {
   data: Pool[]
 }
@@ -107,6 +125,7 @@ export interface AchievementState {
 // Global state
 
 export interface State {
+  lps: LpsState
   farms: FarmsState
   toasts: ToastsState
   pools: PoolsState

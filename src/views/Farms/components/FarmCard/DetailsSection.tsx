@@ -9,6 +9,8 @@ export interface ExpandableSectionProps {
   totalValueFormated?: string
   lpLabel?: string
   addLiquidityUrl?: string
+  withdrawalFee?: string
+  feeLabel?: string
 }
 
 const Wrapper = styled.div`
@@ -36,6 +38,8 @@ const DetailsSection: React.FC<ExpandableSectionProps> = ({
   totalValueFormated,
   lpLabel,
   addLiquidityUrl,
+  withdrawalFee,
+  feeLabel
 }) => {
   const TranslateString = useI18n()
 
@@ -45,6 +49,10 @@ const DetailsSection: React.FC<ExpandableSectionProps> = ({
         <Text>{TranslateString(316, 'Stake')}:</Text>
         <StyledLinkExternal href={addLiquidityUrl}>{lpLabel}</StyledLinkExternal>
       </Flex>
+      <Flex justifyContent="space-between">
+        <Text>{TranslateString(316, 'Withdrawal Fee')}:</Text>
+        <Text>{`${withdrawalFee} %`}</Text>
+      </Flex>
       {!removed && (
         <Flex justifyContent="space-between">
           <Text>{TranslateString(23, 'Total Liquidity')}:</Text>
@@ -53,7 +61,7 @@ const DetailsSection: React.FC<ExpandableSectionProps> = ({
       )}
       <Flex justifyContent="flex-start">
         <Link external href={avaxScanAddress} bold={false}>
-          {TranslateString(356, 'View on BscScan')}
+          {TranslateString(356, 'View on AVAX CChain Explorer')}
         </Link>
       </Flex>
     </Wrapper>
