@@ -34,7 +34,7 @@ const EarnAssetCard = () => {
         <CardMidContent color="invertedContrast">{assets}</CardMidContent>
         <Flex justifyContent="space-between">
           <Heading color="contrast" size="lg">
-            in Pools
+            in Nests
           </Heading>
           <NavLink exact activeClassName="active" to="/syrup" id="pool-cta">
             <ArrowForwardIcon mt={30} color="primary" />
