@@ -53,27 +53,26 @@ const CardActions: React.FC<FarmCardActionsProps> = ({ farm, ethereum, account, 
   }, [onApprove])
 
   const renderApprovalOrStakeButton = () => {
-    return  <StakeAction
-        stakedBalance={stakedBalance}
-        tokenBalance={tokenBalance}
-        tokenName={lpName}
-        pid={pid}
-        addLiquidityUrl={addLiquidityUrl}
-      />
-    
-    // return isApproved ? (
-    //   <StakeAction
+    // return  <StakeAction
     //     stakedBalance={stakedBalance}
     //     tokenBalance={tokenBalance}
     //     tokenName={lpName}
     //     pid={pid}
     //     addLiquidityUrl={addLiquidityUrl}
     //   />
-    // ) : (
-    //   <Button mt="8px" scale="md" disabled={requestedApproval} onClick={handleApprove}>
-    //     {TranslateString(758, 'Approve Contract')}
-    //   </Button>
-    // )
+    return isApproved ? (
+      <StakeAction
+        stakedBalance={stakedBalance}
+        tokenBalance={tokenBalance}
+        tokenName={lpName}
+        pid={pid}
+        addLiquidityUrl={addLiquidityUrl}
+      />
+    ) : (
+      <Button mt="8px" scale="md" disabled={requestedApproval} onClick={handleApprove}>
+        {TranslateString(758, 'Approve Contract')}
+      </Button>
+    )
   }
 
   return (

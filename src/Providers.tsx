@@ -20,7 +20,6 @@ const Providers: React.FC = ({ children }) => {
             chainId={parseInt(process.env.REACT_APP_CHAIN_ID)}
             connectors={{
               walletconnect: { rpcUrl },
-              bsc,
             }}
           >
             <BlockContextProvider>

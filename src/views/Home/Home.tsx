@@ -5,7 +5,7 @@ import useI18n from 'hooks/useI18n'
 import Page from 'components/layout/Page'
 import FarmStakingCard from 'views/Home/components/FarmStakingCard'
 import LotteryCard from 'views/Home/components/LotteryCard'
-import CakeStats from 'views/Home/components/CakeStats'
+import PefiStats from 'views/Home/components/PefiStats'
 import TotalValueLockedCard from 'views/Home/components/TotalValueLockedCard'
 import EarnAPYCard from 'views/Home/components/EarnAPYCard'
 import EarnAssetCard from 'views/Home/components/EarnAssetCard'
@@ -88,7 +88,7 @@ const Home: React.FC = () => {
       <div>
         <Cards>
           <FarmStakingCard />
-          {/* <EarnAPYCard /> */}
+          <EarnAPYCard />
           {/* <LotteryCard /> */}
         </Cards>
         {/* <CTACards>
@@ -96,7 +96,7 @@ const Home: React.FC = () => {
           <WinCard /> 
         </CTACards> */}
         <Cards>
-          <CakeStats />
+          <PefiStats />
           <TotalValueLockedCard />
         </Cards>
       </div>

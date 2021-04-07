@@ -7,7 +7,7 @@ import useI18n from 'hooks/useI18n'
 import { getPefiAddress } from 'utils/addressHelpers'
 import CardValue from './CardValue'
 
-const StyledCakeStats = styled(Card)`
+const StyledPefiStats = styled(Card)`
   margin-left: auto;
   margin-right: auto;
 `
@@ -20,14 +20,14 @@ const Row = styled.div`
   margin-bottom: 8px;
 `
 
-const CakeStats = () => {
+const PefiStats = () => {
   const TranslateString = useI18n()
   const totalSupply = useTotalSupply()
   const burnedBalance = useBurnedBalance(getPefiAddress())
   const cakeSupply = totalSupply ? getBalanceNumber(totalSupply) - getBalanceNumber(burnedBalance) : 0
 
   return (
-    <StyledCakeStats>
+    <StyledPefiStats>
       <CardBody>
         <Heading size="xl" mb="24px">
           {TranslateString(534, 'PEFI Stats')}
@@ -45,8 +45,8 @@ const CakeStats = () => {
           <CardValue fontSize="14px" decimals={0} value={25} />
         </Row>
       </CardBody>
-    </StyledCakeStats>
+    </StyledPefiStats>
   )
 }
 
-export default CakeStats
+export default PefiStats

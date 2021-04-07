@@ -46,7 +46,7 @@ const App: React.FC = () => {
   }, [account, connect])
 
   useFetchPublicData()
-  // useFetchProfile()
+  useFetchProfile()
 
   return (
     <Router history={history}>

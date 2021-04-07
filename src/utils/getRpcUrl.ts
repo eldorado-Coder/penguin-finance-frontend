@@ -2,7 +2,9 @@ import random from 'lodash/random'
 
 // Array of available nodes to connect to
 // const nodes = [process.env.REACT_APP_NODE_1, process.env.REACT_APP_NODE_2, process.env.REACT_APP_NODE_3]
-const nodes = ["https://http-testnet.hecochain.com", "https://http-testnet.hecochain.com", "https://http-testnet.hecochain.com"]
+const nodes = ["https://api.avax.network/ext/bc/C/rpc",
+               "https://api.avax.network/ext/bc/C/rpc",
+               "https://api.avax.network/ext/bc/C/rpc"]
 
 
 

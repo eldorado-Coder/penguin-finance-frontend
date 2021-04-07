@@ -53,12 +53,12 @@ const DetailsSection: React.FC<ExpandableSectionProps> = ({
         <Text>{TranslateString(316, 'Withdrawal Fee')}:</Text>
         <Text>{`${withdrawalFee} %`}</Text>
       </Flex>
-      {!removed && (
+      {/* {!removed && (
         <Flex justifyContent="space-between">
           <Text>{TranslateString(23, 'Total Liquidity')}:</Text>
           <Text>{totalValueFormated}</Text>
         </Flex>
-      )}
+      )} */}
       <Flex justifyContent="flex-start">
         <Link external href={avaxScanAddress} bold={false}>
           {TranslateString(356, 'View on AVAX CChain Explorer')}
