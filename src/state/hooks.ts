@@ -8,24 +8,26 @@ import { Team } from 'config/constants/types'
 import useRefresh from 'hooks/useRefresh'
 import {
   fetchFarmsPublicDataAsync,
+  fetchLpsPublicDataAsync,
   fetchPoolsPublicDataAsync,
   fetchPoolsUserDataAsync,
   push as pushToast,
   remove as removeToast,
   clear as clearToast,
 } from './actions'
-import { State, Farm, Pool, ProfileState, TeamsState, AchievementState } from './types'
+import { State, Farm, Lp, Pool, ProfileState, TeamsState, AchievementState } from './types'
 import { fetchProfile } from './profile'
 import { fetchTeam, fetchTeams } from './teams'
 import { fetchAchievements } from './achievements'
 
-const ZERO = new BigNumber(33)
+const ZERO = new BigNumber(0)
 
 export const useFetchPublicData = () => {
   const dispatch = useDispatch()
   const { slowRefresh } = useRefresh()
   useEffect(() => {
     dispatch(fetchFarmsPublicDataAsync())
+    dispatch(fetchLpsPublicDataAsync())
     // POOL REMOVAL
     // dispatch(fetchPoolsPublicDataAsync())
   }, [dispatch, slowRefresh])
@@ -46,6 +48,11 @@ export const useFarmFromPid = (pid): Farm => {
 export const useFarmFromSymbol = (lpSymbol: string): Farm => {
   const farm = useSelector((state: State) => state.farms.data.find((f) => f.lpSymbol === lpSymbol))
   return farm
+}
+
+export const useLPFromSymbol = (lpSymbol: string): Lp => {
+  const lp = useSelector((state: State) => state.lps.data.find((f) => f.lpSymbol === lpSymbol))
+  return lp
 }
 
 export const useFarmUser = (pid) => {
@@ -82,38 +89,29 @@ export const usePoolFromPid = (sousId): Pool => {
 // Prices
 
 export const usePriceAvaxUsdt = (): BigNumber => {
-  // const lpSymbol = 'USDT-AVAX LP' // USDT-AVAX LP
-  // const lp = useLPFromSymbol(lpSymbol)
-  // return lp.tokenPriceVsQuote ? new BigNumber(1).div(lp.tokenPriceVsQuote) : ZERO
-  return ZERO;
+  const lpSymbol = 'USDT-AVAX LP' // USDT-AVAX LP
+  const lp = useLPFromSymbol(lpSymbol)
+  return lp.tokenPriceVsQuote ? new BigNumber(1).div(lp.tokenPriceVsQuote) : ZERO
 }
 
 export const usePricePefiUsdt = (): BigNumber => {
   const lpSymbol = 'PEFI-AVAX LP' // PEFI-AVAX LP
   const farm = useFarmFromSymbol(lpSymbol)
   const avaxPriceUSD = usePriceAvaxUsdt()
-
-  // const pid = 1 // PEFI-AVAX LP
-  // const avaxPriceUSD = usePriceAvaxUsdt()
-  // const farm = useFarmFromPid(pid)
   return farm.tokenPriceVsQuote ? avaxPriceUSD.times(farm.tokenPriceVsQuote) : ZERO
-  // return ZERO;
 }
 
 export const usePriceEthUsdt = (): BigNumber => {
   const lpSymbol = 'ETH-AVAX LP' // ETH-AVAX LP
   const farm = useFarmFromSymbol(lpSymbol)
   const avaxPriceUSD = usePriceAvaxUsdt()
-
   return farm.tokenPriceVsQuote ? avaxPriceUSD.times(farm.tokenPriceVsQuote) : ZERO
-  // return ZERO;
 }
 
 export const usePriceEthAvax = (): BigNumber => {
   const priceAvaxUsdt = usePriceAvaxUsdt()
   const priceEthUsdt = usePriceEthUsdt()
   return priceEthUsdt.div(priceAvaxUsdt)
-  // return ZERO;
 }
 
 // Toasts

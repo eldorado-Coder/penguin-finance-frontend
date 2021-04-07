@@ -53,7 +53,7 @@ export interface FarmConfig {
   tokenSymbol: string
   tokenAddresses: Address
   quoteTokenSymbol: QuoteToken
-  quoteTokenAdresses: Address
+  quoteTokenAddresses: Address
   multiplier?: string
   isCommunity?: boolean
   dual?: {
@@ -67,8 +67,10 @@ export interface FarmConfig {
 export interface LPConfig {
   lpSymbol: string
   lpAddresses: Address
+  tokenSymbol: string
+  tokenAddresses: Address
   quoteTokenSymbol: QuoteToken
-  quoteTokenAdresses: Address
+  quoteTokenAddresses: Address
 }
 
 export interface PoolConfig {

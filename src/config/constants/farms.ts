@@ -15,7 +15,7 @@ const farms: FarmConfig[] = [
       43114: '0xe896CDeaAC9615145c0cA09C8Cd5C25bced6384c',
     },
     quoteTokenSymbol: QuoteToken.AVAX,
-    quoteTokenAdresses: contracts.wavax,
+    quoteTokenAddresses: contracts.wavax,
     withdrawalFee: '0',
   },
   {
@@ -31,7 +31,7 @@ const farms: FarmConfig[] = [
       43114: '0xf20d962a6c8f70c731bd838a3a388D7d48fA6e15',
     },
     quoteTokenSymbol: QuoteToken.AVAX,
-    quoteTokenAdresses: contracts.wavax,
+    quoteTokenAddresses: contracts.wavax,
     withdrawalFee: '0',
   },
   {
@@ -47,7 +47,7 @@ const farms: FarmConfig[] = [
       43114: '0x60781C2586D68229fde47564546784ab3fACA982',
     },
     quoteTokenSymbol: QuoteToken.PEFI,
-    quoteTokenAdresses: contracts.pefi,
+    quoteTokenAddresses: contracts.pefi,
     withdrawalFee: '0',
   },
   {
@@ -63,7 +63,7 @@ const farms: FarmConfig[] = [
       43114: '0xC38f41A296A4493Ff429F1238e030924A1542e50',
     },
     quoteTokenSymbol: QuoteToken.PEFI,
-    quoteTokenAdresses: contracts.pefi,
+    quoteTokenAddresses: contracts.pefi,
     withdrawalFee: '4',
   }
 ]

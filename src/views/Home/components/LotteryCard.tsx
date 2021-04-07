@@ -51,7 +51,7 @@ const FarmedStakingCard = () => {
   const [onPresentApprove] = useModal(<PurchaseWarningModal />)
   const { claimAmount } = useTotalClaim()
   const { onMultiClaim } = useMultiClaimLottery()
-  const cakeBalance = useTokenBalance(getPefiAddress())
+  const pefiBalance = useTokenBalance(getPefiAddress())
   const { handleApprove, requestedApproval } = useApproval(onPresentApprove)
 
   const handleClaim = useCallback(async () => {
@@ -82,7 +82,7 @@ const FarmedStakingCard = () => {
     )
   }
 
-  const [onPresentBuy] = useModal(<BuyModal max={cakeBalance} tokenName="PEFI" />)
+  const [onPresentBuy] = useModal(<BuyModal max={pefiBalance} tokenName="PEFI" />)
 
   return (
     <StyledLotteryCard>

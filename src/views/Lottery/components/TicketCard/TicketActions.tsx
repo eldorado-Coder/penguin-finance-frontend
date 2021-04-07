@@ -26,12 +26,12 @@ const TicketCard: React.FC = () => {
   const TranslateString = useI18n()
   const allowance = useLotteryAllowance()
   const lotteryHasDrawn = useGetLotteryHasDrawn()
-  const cakeBalance = useTokenBalance(getPefiAddress())
+  const pefiBalance = useTokenBalance(getPefiAddress())
   const tickets = useTickets()
   const ticketsLength = tickets.length
   const [onPresentMyTickets] = useModal(<MyTicketsModal myTicketNumbers={tickets} from="buy" />)
   const [onPresentApprove] = useModal(<PurchaseWarningModal />)
-  const [onPresentBuy] = useModal(<BuyTicketModal max={cakeBalance} tokenName="PEFI" />)
+  const [onPresentBuy] = useModal(<BuyTicketModal max={pefiBalance} tokenName="PEFI" />)
   const { handleApprove, requestedApproval } = useApproval(onPresentApprove)
 
   const renderLotteryTicketButtons = () => {

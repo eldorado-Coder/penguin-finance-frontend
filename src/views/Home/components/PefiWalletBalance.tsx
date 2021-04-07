@@ -10,10 +10,10 @@ import { BigNumber } from 'bignumber.js'
 import CardValue from './CardValue'
 import CardBusdValue from './CardBusdValue'
 
-const CakeWalletBalance = () => {
+const PefiWalletBalance = () => {
   const TranslateString = useI18n()
-  const cakeBalance = useTokenBalance(getPefiAddress())
-  const busdBalance = new BigNumber(getBalanceNumber(cakeBalance)).multipliedBy(usePricePefiUsdt()).toNumber()
+  const pefiBalance = useTokenBalance(getPefiAddress())
+  const usdtBalance = new BigNumber(getBalanceNumber(pefiBalance)).multipliedBy(usePricePefiUsdt()).toNumber()
   const { account } = useWallet()
 
   if (!account) {
@@ -26,10 +26,10 @@ const CakeWalletBalance = () => {
 
   return (
     <>
-      <CardValue value={getBalanceNumber(cakeBalance)} decimals={4} fontSize="24px" lineHeight="36px" />
-      <CardBusdValue value={busdBalance} />
+      <CardValue value={getBalanceNumber(pefiBalance)} decimals={4} fontSize="24px" lineHeight="36px" />
+      <CardBusdValue value={usdtBalance} />
     </>
   )
 }
 
-export default CakeWalletBalance
+export default PefiWalletBalance

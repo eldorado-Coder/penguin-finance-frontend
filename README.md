@@ -1,4 +1,4 @@
-# 🥞 Penguin Frontend
+# Penguin Frontend
 
 Netlify Status - to add link to status page here
 

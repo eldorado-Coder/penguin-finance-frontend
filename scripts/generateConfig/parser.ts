@@ -1,5 +1,5 @@
 import { parseISO, format } from 'date-fns'
-import { Ifo, PoolConfig, FarmConfig } from '../../src/config/constants/types'
+import { Ifo, PoolConfig, FarmConfig, LPConfig } from '../../src/config/constants/types'
 import { SettingsType } from './types'
 
 export const getIfos = (data) => {
@@ -58,15 +58,15 @@ export const getFarms = (data) => {
         lpSymbol: farm.lp_symbol,
         lpAddresses: {
           43114: farm.lp_mainnet_address,
-          256: '0xE66790075ad839978fEBa15D4d8bB2b415556a1D',
+          43113: '0xE66790075ad839978fEBa15D4d8bB2b415556a1D',
         },
         tokenSymbol: farm?.token?.symbol,
         tokenAddresses: {
           43114: farm?.token?.mainnet_address,
-          256: '0xa35062141fa33bca92ce69fed37d0e8908868aae',
+          43113: '0xa35062141fa33bca92ce69fed37d0e8908868aae',
         },
         quoteTokenSymbol: farm?.quote_token?.symbol,
-        quoteTokenAdresses: farm?.quote_token?.mainnet_address,
+        quoteTokenAddresses: farm?.quote_token?.mainnet_address,
         isCommunity: farm?.is_community,
       }
     }
@@ -74,8 +74,29 @@ export const getFarms = (data) => {
   return farms
 }
 
+export const getLps = (data) => {
+  const lps: LPConfig = data.map((lp) => {
+      return {
+        lpSymbol: lp.lp_symbol,
+        lpAddresses: {
+          43113: '0x9ee0a4e21bd333a6bb2ab298194320b8daa26516',
+          43114: lp.lp_mainnet_address,
+        },
+        tokenSymbol: lp?.token?.symbol,
+        tokenAddresses: {
+          43113: '0xde3A24028580884448a5397872046a019649b084',
+          43114: lp?.token?.mainnet_address,
+        },
+        quoteTokenSymbol: lp?.quote_token?.symbol,
+        quoteTokenAddresses: lp?.quote_token?.mainnet_address,
+      }
+  })
+  return lps
+}
+
 export const getFormattedData = (type: SettingsType, data) => {
   const handler = {
+    LP: () => getLps(data),
     IFO: () => getIfos(data),
     POOL: () => getPools(data),
     FARM: () => getFarms(data),

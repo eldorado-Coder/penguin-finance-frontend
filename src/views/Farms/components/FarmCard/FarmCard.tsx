@@ -127,8 +127,8 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, removed, pefiPrice, avaxPrice
   const earnLabel = farm.dual ? farm.dual.earnLabel : 'PEFI'
   const farmAPY = farm.apy && farm.apy.times(new BigNumber(100)).toNumber().toLocaleString('en-US').slice(0, -1)
 
-  const { quoteTokenAdresses, quoteTokenSymbol, tokenAddresses } = farm
-  const liquidityUrlPathParts = getLiquidityUrlPathParts({ quoteTokenAdresses, quoteTokenSymbol, tokenAddresses })
+  const { quoteTokenAddresses, quoteTokenSymbol, tokenAddresses } = farm
+  const liquidityUrlPathParts = getLiquidityUrlPathParts({ quoteTokenAddresses, quoteTokenSymbol, tokenAddresses })
   const addLiquidityUrl = `${BASE_ADD_LIQUIDITY_URL}/${liquidityUrlPathParts}`
 
   return (

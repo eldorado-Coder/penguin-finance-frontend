@@ -31,12 +31,9 @@ export interface Lp extends LPConfig {
   quoteTokenAmount?: BigNumber
   lpTotalInQuoteToken?: BigNumber
   tokenPriceVsQuote?: BigNumber
-  poolWeight?: BigNumber
   userData?: {
-    allowance: BigNumber
-    tokenBalance: BigNumber
-    stakedBalance: BigNumber
-    earnings: BigNumber
+    allowance?: BigNumber
+    tokenBalance?: BigNumber
   }
 }
 

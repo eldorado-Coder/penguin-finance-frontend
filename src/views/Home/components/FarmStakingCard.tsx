@@ -7,7 +7,7 @@ import { useAllHarvest } from 'hooks/useHarvest'
 import useFarmsWithBalance from 'hooks/useFarmsWithBalance'
 import UnlockButton from 'components/UnlockButton'
 import CakeHarvestBalance from './CakeHarvestBalance'
-import CakeWalletBalance from './CakeWalletBalance'
+import PefiWalletBalance from './PefiWalletBalance'
 
 const StyledFarmStakingCard = styled(Card)`
   background-repeat: no-repeat;
@@ -65,7 +65,7 @@ const FarmedStakingCard = () => {
         </Block>
         <Block>
           <Label>{TranslateString(546, 'PEFI in Wallet')}:</Label>
-          <CakeWalletBalance />
+          <PefiWalletBalance />
         </Block>
         <Actions>
           {account ? (

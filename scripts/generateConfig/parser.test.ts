@@ -130,7 +130,7 @@ describe('Parser', () => {
         tokenSymbol: 'SYRUP',
         tokenAddresses: '0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82',
         quoteTokenSymbol: 'AVAX',
-        quoteTokenAdresses: '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c',
+        quoteTokenAddresses: '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c',
         multiplier: 1,
         isCommunity: false,
       },

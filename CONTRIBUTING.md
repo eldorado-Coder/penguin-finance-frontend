@@ -64,5 +64,5 @@ TranslateString(id, 'fallback', data)
 If a Crowdin translation like this `You have %num% left in your wallet` - would look something like:
 
 ```
-TranslateString(675, `You have ${cakeBalance} left in your wallet`, { num: cakeBalance })
+TranslateString(675, `You have ${pefiBalance} left in your wallet`, { num: pefiBalance })
 ```
