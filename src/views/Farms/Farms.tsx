@@ -99,7 +99,7 @@ const Farms: React.FC = () => {
 
   return (
     <Page>
-      <Heading as="h1" size="lg" color="secondary" mb="50px" style={{ textAlign: 'center' }}>
+      <Heading as="h1" size="lg" color="primary" mb="50px" style={{ textAlign: 'center' }}>
         {TranslateString(696, 'Stake LP tokens to earn PEFI')}
       </Heading>
       <FarmTabButtons stackedOnly={stackedOnly} setStackedOnly={setStackedOnly} />

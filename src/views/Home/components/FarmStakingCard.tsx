@@ -6,7 +6,7 @@ import useI18n from 'hooks/useI18n'
 import { useAllHarvest } from 'hooks/useHarvest'
 import useFarmsWithBalance from 'hooks/useFarmsWithBalance'
 import UnlockButton from 'components/UnlockButton'
-import CakeHarvestBalance from './CakeHarvestBalance'
+import PefiHarvestBalance from './PefiHarvestBalance'
 import PefiWalletBalance from './PefiWalletBalance'
 
 const StyledFarmStakingCard = styled(Card)`
@@ -61,7 +61,7 @@ const FarmedStakingCard = () => {
         <CardImage src="/images/penguin-logo.png" alt="penguin logo" width={64} height={64} />
         <Block>
           <Label>{TranslateString(544, 'PEFI to Harvest')}:</Label>
-          <CakeHarvestBalance />
+          <PefiHarvestBalance />
         </Block>
         <Block>
           <Label>{TranslateString(546, 'PEFI in Wallet')}:</Label>

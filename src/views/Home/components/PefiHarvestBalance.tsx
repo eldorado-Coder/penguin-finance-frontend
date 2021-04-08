@@ -14,7 +14,7 @@ const Block = styled.div`
 }
 `
 
-const CakeHarvestBalance = () => {
+const PefiHarvestBalance = () => {
   const TranslateString = useI18n()
   const { account } = useWallet()
   const allEarnings = useAllEarnings()
@@ -39,4 +39,4 @@ const CakeHarvestBalance = () => {
   )
 }
 
-export default CakeHarvestBalance
+export default PefiHarvestBalance
