@@ -24,7 +24,7 @@ const Menu = (props) => {
       currentLang={selectedLanguage && selectedLanguage.code}
       langs={allLanguages}
       setLang={setSelectedLanguage}
-      pefiPriceUsd={pefiPriceUsd.toNumber()}
+      penguinPriceUsd={pefiPriceUsd.toNumber()}
       links={config}
       // profile={{
       //   username: profile?.username,
