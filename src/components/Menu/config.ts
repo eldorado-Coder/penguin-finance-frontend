@@ -30,6 +30,11 @@ const config: MenuEntry[] = [
     icon: 'PoolIcon',
     href: '/pools',
   },
+  {
+    label: 'Penguin Arena',
+    icon: 'NftIcon',
+    href: '/arena',
+  },
   // {
   //   label: 'Lottery',
   //   icon: 'TicketIcon',
