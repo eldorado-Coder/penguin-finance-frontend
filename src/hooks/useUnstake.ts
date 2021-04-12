@@ -6,6 +6,7 @@ import {
   updateUserStakedBalance,
   updateUserBalance,
   updateUserPendingReward,
+  fetchPoolsPublicDataAsync
 } from 'state/actions'
 import { unstake, sousUnstake, sousEmegencyUnstake } from 'utils/callHelpers'
 import { useMasterchef, useSousChef } from './useContract'
@@ -34,7 +35,7 @@ export const useSousUnstake = (sousId) => {
   const { account } = useWallet()
   const masterChefContract = useMasterchef()
   const sousChefContract = useSousChef(sousId)
-  const isOldSyrup = SYRUPIDS.includes(sousId)
+  const isOldSyrup = false
 
   const handleUnstake = useCallback(
     async (amount: string) => {
@@ -50,7 +51,7 @@ export const useSousUnstake = (sousId) => {
       }
       dispatch(updateUserStakedBalance(sousId, account))
       dispatch(updateUserBalance(sousId, account))
-      dispatch(updateUserPendingReward(sousId, account))
+      dispatch(fetchPoolsPublicDataAsync())
     },
     [account, dispatch, isOldSyrup, masterChefContract, sousChefContract, sousId],
   )

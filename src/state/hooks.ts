@@ -29,7 +29,7 @@ export const useFetchPublicData = () => {
     dispatch(fetchFarmsPublicDataAsync())
     dispatch(fetchLpsPublicDataAsync())
     // POOL REMOVAL
-    // dispatch(fetchPoolsPublicDataAsync())
+    dispatch(fetchPoolsPublicDataAsync())
   }, [dispatch, slowRefresh])
 }
 

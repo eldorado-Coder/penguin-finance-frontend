@@ -119,7 +119,6 @@ const Home: React.FC = () => {
   const farms = useFarms()
   const avaxPriceUSD = usePriceAvaxUsdt()
   const ethPriceBnb = usePriceEthAvax()
-  const block = useBlock()
 
   const priceToBnb = (tokenName: string, tokenPrice: BigNumber, quoteToken: QuoteToken): BigNumber => {
     const tokenPriceBN = new BigNumber(tokenPrice)
@@ -133,7 +132,6 @@ const Home: React.FC = () => {
   }
 
   const poolsWithApy = pools.map((pool) => {
-    const isBnbPool = pool.poolCategory === PoolCategory.BINANCE
     const rewardTokenFarm = farms.find((f) => f.tokenSymbol === pool.tokenName)
     const stakingTokenFarm = farms.find((s) => s.tokenSymbol === pool.stakingTokenName)
 
@@ -142,9 +140,7 @@ const Home: React.FC = () => {
     const tempMultiplier = stakingTokenFarm?.quoteTokenSymbol === 'ETH' ? ethPriceBnb : 1
 
     // /!\ Assume that the farm quote price is AVAX
-    const stakingTokenPriceInAVAX = isBnbPool
-      ? new BigNumber(1)
-      : new BigNumber(stakingTokenFarm?.tokenPriceVsQuote).times(tempMultiplier)
+    const stakingTokenPriceInAVAX = new BigNumber(stakingTokenFarm?.tokenPriceVsQuote).times(tempMultiplier)
     const rewardTokenPriceInAVAX = priceToBnb(
       pool.tokenName,
       rewardTokenFarm?.tokenPriceVsQuote,
@@ -157,8 +153,7 @@ const Home: React.FC = () => {
 
     return {
       ...pool,
-      isFinished: pool.sousId === 0 ? false : pool.isFinished || block > pool.endBlock,
-      apy,
+      apy: new BigNumber(0)
     }
   })
   const pefiPool = poolsWithApy.length > 0 ? poolsWithApy[0] : null
@@ -178,8 +173,7 @@ const Home: React.FC = () => {
             <PoolCardWrapper>
               <PoolCard pool={pefiPool} />
               <PoolCardNavWrapper>
-
-                <NavLink exact activeClassName="active" to="/farms" id="farm-apy-cta">
+                <NavLink exact activeClassName="active" to="/pools" id="nust-apy-cta">
                   <ArrowForwardIcon mt={30} color="primary" />
                 </NavLink>
               </PoolCardNavWrapper>
