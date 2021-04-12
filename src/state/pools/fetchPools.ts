@@ -36,7 +36,7 @@ export const fetchPoolsBlockLimits = async () => {
   })
 }
 
-export const fetchPoolsTotalStatking = async () => {
+export const fetchPoolsTotalStaking = async () => {
   const nonBnbPools = poolsConfig.filter((p) => p.stakingTokenName !== QuoteToken.AVAX)
   const bnbPool = poolsConfig.filter((p) => p.stakingTokenName === QuoteToken.AVAX)
 
@@ -56,13 +56,23 @@ export const fetchPoolsTotalStatking = async () => {
     }
   })
 
+
+  const callsNonBnbPoolsTotalSupplies = nonBnbPools.map((poolConfig) => {
+    return {
+      address: getAddress(poolConfig.contractAddress),
+      name: 'totalSupply',
+    }
+  })
+
   const nonBnbPoolsTotalStaked = await multicall(penguinABI, callsNonBnbPools)
+  const nonBnbPoolsTotalSupply = await multicall(penguinABI, callsNonBnbPoolsTotalSupplies)
   const bnbPoolsTotalStaked = await multicall(wbnbABI, callsBnbPools)
 
   return [
     ...nonBnbPools.map((p, index) => ({
       sousId: p.sousId,
       totalStaked: new BigNumber(nonBnbPoolsTotalStaked[index]).toJSON(),
+      totalSupply: new BigNumber(nonBnbPoolsTotalSupply[index]).toJSON(),
     })),
     ...bnbPool.map((p, index) => ({
       sousId: p.sousId,
