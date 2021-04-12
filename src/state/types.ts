@@ -5,12 +5,12 @@ import { CampaignType, LPConfig, FarmConfig, Nft, PoolConfig, Team } from 'confi
 export type TranslatableText =
   | string
   | {
-      id: number
-      fallback: string
-      data?: {
-        [key: string]: string | number
-      }
+    id: number
+    fallback: string
+    data?: {
+      [key: string]: string | number
     }
+  }
 
 export interface Farm extends FarmConfig {
   tokenAmount?: BigNumber
@@ -39,6 +39,7 @@ export interface Lp extends LPConfig {
 
 export interface Pool extends PoolConfig {
   totalStaked?: BigNumber
+  totalSupply?: BigNumber
   startBlock?: number
   endBlock?: number
   userData?: {

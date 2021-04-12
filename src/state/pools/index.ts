@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
 import poolsConfig from 'config/constants/pools'
-import { fetchPoolsBlockLimits, fetchPoolsTotalStatking } from './fetchPools'
+import { fetchPoolsBlockLimits, fetchPoolsTotalStaking } from './fetchPools'
 import {
   fetchPoolsAllowance,
   fetchUserBalances,
@@ -43,14 +43,13 @@ export const { setPoolsPublicData, setPoolsUserData, updatePoolsUserData } = Poo
 
 // Thunks
 export const fetchPoolsPublicDataAsync = () => async (dispatch) => {
-  const blockLimits = await fetchPoolsBlockLimits()
-  const totalStakings = await fetchPoolsTotalStatking()
-
+  // const blockLimits = await fetchPoolsBlockLimits()
+  const totalStakings = await fetchPoolsTotalStaking()
   const liveData = poolsConfig.map((pool) => {
-    const blockLimit = blockLimits.find((entry) => entry.sousId === pool.sousId)
+    // const blockLimit = blockLimits.find((entry) => entry.sousId === pool.sousId)
     const totalStaking = totalStakings.find((entry) => entry.sousId === pool.sousId)
     return {
-      ...blockLimit,
+      // ...blockLimit,
       ...totalStaking,
     }
   })
@@ -62,14 +61,14 @@ export const fetchPoolsUserDataAsync = (account) => async (dispatch) => {
   const allowances = await fetchPoolsAllowance(account)
   const stakingTokenBalances = await fetchUserBalances(account)
   const stakedBalances = await fetchUserStakeBalances(account)
-  const pendingRewards = await fetchUserPendingRewards(account)
+  // const pendingRewards = await fetchUserPendingRewards(account)
 
   const userData = poolsConfig.map((pool) => ({
     sousId: pool.sousId,
     allowance: allowances[pool.sousId],
     stakingTokenBalance: stakingTokenBalances[pool.sousId],
     stakedBalance: stakedBalances[pool.sousId],
-    pendingReward: pendingRewards[pool.sousId],
+    // pendingReward: pendingRewards[pool.sousId],
   }))
 
   dispatch(setPoolsUserData(userData))

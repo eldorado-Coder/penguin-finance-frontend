@@ -1,7 +1,11 @@
 import React from 'react'
+import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
-import { Heading, Text, BaseLayout } from '@penguinfinance/uikit'
+import { NavLink } from 'react-router-dom'
+import { Heading, Text, BaseLayout, ArrowForwardIcon } from '@penguinfinance/uikit'
+import { useWallet } from '@binance-chain/bsc-use-wallet'
 import useI18n from 'hooks/useI18n'
+import useBlock from 'hooks/useBlock'
 import Page from 'components/layout/Page'
 import FarmStakingCard from 'views/Home/components/FarmStakingCard'
 import LotteryCard from 'views/Home/components/LotteryCard'
@@ -10,6 +14,12 @@ import TotalValueLockedCard from 'views/Home/components/TotalValueLockedCard'
 import EarnAPYCard from 'views/Home/components/EarnAPYCard'
 import EarnAssetCard from 'views/Home/components/EarnAssetCard'
 import WinCard from 'views/Home/components/WinCard'
+import PoolCard from 'views/Pools/components/PoolCard'
+import { getBalanceNumber } from 'utils/formatBalance'
+import { BLOCKS_PER_YEAR } from 'config'
+import { QuoteToken, PoolCategory } from 'config/constants/types'
+import { useFarms, usePriceAvaxUsdt, usePools, usePriceEthAvax } from 'state/hooks'
+
 
 const Hero = styled.div`
   align-items: center;
@@ -73,9 +83,80 @@ const CTACards = styled(BaseLayout)`
     }
   }
 `
+const PoolCardWrapper = styled.div`
+  background: white;
+  border-radius: 32px;
+  box-shadow: 0px 2px 12px -8px rgb(25 19 38 / 10%), 0px 1px 1px rgb(20 19 38 / 5%);
+  display: flex;
+
+  > div:first-child {
+    width: 80%;
+    box-shadow: none;
+  }
+  > div:last-child {
+    width: 20%;
+  }
+`
+
+const PoolCardNavWrapper = styled.div`
+  padding: 24px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+`
+const PefiStatsCardWrapper = styled.div`
+`
+
+const SpacingWrapper = styled.div`
+  height: 24px;
+`
+
 
 const Home: React.FC = () => {
   const TranslateString = useI18n()
+  const { account } = useWallet()
+  const pools = usePools(account)
+  const farms = useFarms()
+  const avaxPriceUSD = usePriceAvaxUsdt()
+  const ethPriceBnb = usePriceEthAvax()
+
+  const priceToBnb = (tokenName: string, tokenPrice: BigNumber, quoteToken: QuoteToken): BigNumber => {
+    const tokenPriceBN = new BigNumber(tokenPrice)
+    if (tokenName === 'AVAX') {
+      return new BigNumber(1)
+    }
+    if (tokenPrice && quoteToken === QuoteToken.USDT) {
+      return tokenPriceBN.div(avaxPriceUSD)
+    }
+    return tokenPriceBN
+  }
+
+  const poolsWithApy = pools.map((pool) => {
+    const rewardTokenFarm = farms.find((f) => f.tokenSymbol === pool.tokenName)
+    const stakingTokenFarm = farms.find((s) => s.tokenSymbol === pool.stakingTokenName)
+
+    // tmp mulitplier to support ETH farms
+    // Will be removed after the price api
+    const tempMultiplier = stakingTokenFarm?.quoteTokenSymbol === 'ETH' ? ethPriceBnb : 1
+
+    // /!\ Assume that the farm quote price is AVAX
+    const stakingTokenPriceInAVAX = new BigNumber(stakingTokenFarm?.tokenPriceVsQuote).times(tempMultiplier)
+    const rewardTokenPriceInAVAX = priceToBnb(
+      pool.tokenName,
+      rewardTokenFarm?.tokenPriceVsQuote,
+      rewardTokenFarm?.quoteTokenSymbol,
+    )
+
+    const totalRewardPricePerYear = rewardTokenPriceInAVAX.times(pool.tokenPerBlock).times(BLOCKS_PER_YEAR)
+    const totalStakingTokenInPool = stakingTokenPriceInAVAX.times(getBalanceNumber(pool.totalStaked))
+    const apy = totalRewardPricePerYear.div(totalStakingTokenInPool).times(100)
+
+    return {
+      ...pool,
+      apy: new BigNumber(0)
+    }
+  })
+  const pefiPool = poolsWithApy.length > 0 ? poolsWithApy[0] : null
 
   return (
     <Page>
@@ -88,9 +169,22 @@ const Home: React.FC = () => {
       <div>
         <Cards>
           <FarmStakingCard />
+          {pefiPool && (
+            <PoolCardWrapper>
+              <PoolCard pool={pefiPool} />
+              <PoolCardNavWrapper>
+                <NavLink exact activeClassName="active" to="/pools" id="nust-apy-cta">
+                  <ArrowForwardIcon mt={30} color="primary" />
+                </NavLink>
+              </PoolCardNavWrapper>
+            </PoolCardWrapper>
+          )}
           <EarnAPYCard />
-          <PefiStats />
-          <EarnAssetCard /> 
+          <PefiStatsCardWrapper>
+            <PefiStats />
+            <SpacingWrapper />
+            <EarnAssetCard />
+          </PefiStatsCardWrapper>
         </Cards>
       </div>
     </Page>
