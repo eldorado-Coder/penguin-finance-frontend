@@ -169,22 +169,15 @@ const Home: React.FC = () => {
       <div>
         <Cards>
           <FarmStakingCard />
-          {pefiPool && (
-            <PoolCardWrapper>
-              <PoolCard pool={pefiPool} />
-              <PoolCardNavWrapper>
-                <NavLink exact activeClassName="active" to="/pools" id="nust-apy-cta">
-                  <ArrowForwardIcon mt={30} color="primary" />
-                </NavLink>
-              </PoolCardNavWrapper>
-            </PoolCardWrapper>
-          )}
-          <EarnAPYCard />
           <PefiStatsCardWrapper>
-            <PefiStats />
+            {pefiPool && (
+              <PoolCard pool={pefiPool} />
+            )}
             <SpacingWrapper />
-            <EarnAssetCard />
+            <PefiStats />
+            {/* <EarnAssetCard /> */}
           </PefiStatsCardWrapper>
+          <EarnAPYCard />
         </Cards>
       </div>
     </Page>

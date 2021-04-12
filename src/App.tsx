@@ -62,9 +62,9 @@ const App: React.FC = () => {
             <Route path="/farms">
               <Farms />
             </Route>
-            <Route path="/pools">
+            {/* <Route path="/pools">
               <Pools />
-            </Route>
+            </Route> */}
             {/* <Route path="/nests">
               <Nests />
             </Route> */}
@@ -87,12 +87,12 @@ const App: React.FC = () => {
               <Profile />
             </Route> */}
             {/* Redirect */}
-            <Route path="/staking">
+            {/* <Route path="/staking">
               <Redirect to="/pools" />
             </Route>
             <Route path="/syrup">
               <Redirect to="/pools" />
-            </Route>
+            </Route> */}
             {/* <Route path="/nft">
               <Redirect to="/collectibles" />
             </Route> */}

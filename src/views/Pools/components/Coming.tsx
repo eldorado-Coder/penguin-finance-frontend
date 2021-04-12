@@ -47,7 +47,7 @@ const Coming: React.FC = () => {
         <Balance>???</Balance>
         <Label>{TranslateString(416, 'Create a pool for your token')}</Label>
         <Button
-          variant="secondary"
+          variant="primary"
           as="a"
           href="https://docs.google.com/forms/d/e/1FAIpQLScGdT5rrVMr4WOWr08pvcroSeuIOtEJf1sVdQGVdcAOqryigQ/viewform"
           external

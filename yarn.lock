@@ -1873,10 +1873,10 @@
     hash.js "^1.1.7"
     randombytes "^2.1.0"
 
-"@penguinfinance/uikit@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@penguinfinance/uikit/-/uikit-1.0.2.tgz#92e1525f98b8e15895037c03b5f68b8cb4256164"
-  integrity sha512-HIncfK4IKO2YTOwvLMPjqNatRQkh1rhFfb8LwBeyvROskjz7uF1wliE1wLuNdNuG2LRZIHToPp1WN9b77gcEhg==
+"@penguinfinance/uikit@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@penguinfinance/uikit/-/uikit-1.0.4.tgz#e137893105450098a20b2fab8250eaeb81312913"
+  integrity sha512-Fdrg5skSagUCp1fPAoFnwOCXnkC4CIamCgmkA0haVjHV5w+ncwWSqxsMTdKMVwi3ukjdAGMA6Tc1hdBTjkgMFA==
   dependencies:
     "@types/lodash" "^4.14.162"
     "@types/styled-system" "^5.1.10"
