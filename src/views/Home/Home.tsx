@@ -11,6 +11,7 @@ import FarmStakingCard from 'views/Home/components/FarmStakingCard'
 import LotteryCard from 'views/Home/components/LotteryCard'
 import PefiStats from 'views/Home/components/PefiStats'
 import TotalValueLockedCard from 'views/Home/components/TotalValueLockedCard'
+import TotalPefiStakedNests from 'views/Home/components/TotalPefiStakedNests'
 import EarnAPYCard from 'views/Home/components/EarnAPYCard'
 import EarnAssetCard from 'views/Home/components/EarnAssetCard'
 import WinCard from 'views/Home/components/WinCard'
@@ -170,14 +171,15 @@ const Home: React.FC = () => {
         <Cards>
           <FarmStakingCard />
           <PefiStatsCardWrapper>
+            <EarnAPYCard />
+            <SpacingWrapper />
+            <TotalPefiStakedNests pool={pefiPool}/>
+          </PefiStatsCardWrapper>
+            <PefiStats />
             {pefiPool && (
               <PoolCard pool={pefiPool} />
             )}
             <SpacingWrapper />
-            <PefiStats />
-            {/* <EarnAssetCard /> */}
-          </PefiStatsCardWrapper>
-          <EarnAPYCard />
         </Cards>
       </div>
     </Page>

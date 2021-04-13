@@ -9,6 +9,11 @@ import { useFarms, usePriceAvaxUsdt } from 'state/hooks'
 import { BLOCKS_PER_YEAR, PEFI_PER_BLOCK, PEFI_POOL_PID } from 'config'
 
 const StyledFarmStakingCard = styled(Card)`
+  background-image: url('/images/Big_Igloo_EarnUp.png');
+  background-repeat: no-repeat;
+  background-position: top right;
+  min-height: 150px;
+
   margin-left: auto;
   margin-right: auto;
   width: 100%;
@@ -91,9 +96,9 @@ const EarnAPYCard = () => {
           <Heading color="contrast" size="lg">
             in Farms
           </Heading>
-          <NavLink exact activeClassName="active" to="/farms" id="farm-apy-cta">
+          {/* <NavLink exact activeClassName="active" to="/farms" id="farm-apy-cta">
             <ArrowForwardIcon mt={30} color="primary" />
-          </NavLink>
+          </NavLink> */}
         </Flex>
       </CardBody>
     </StyledFarmStakingCard>

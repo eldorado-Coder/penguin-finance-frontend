@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
 import { getBalanceNumber } from 'utils/formatBalance'
+import { Text } from '@penguinfinance/uikit'
 import useI18n from 'hooks/useI18n'
 import { ChevronDown, ChevronUp } from 'react-feather'
 import Balance from 'components/Balance'
@@ -102,7 +103,9 @@ const CardFooter: React.FC<Props> = ({
           <Row style={{ marginBottom: '4px' }}>
             <FlexFull>
               <Label>
-                {TranslateString(408, 'Total')}
+                <Text color="primary" fontSize="14px">
+                  {TranslateString(408, 'Total')}
+                </Text>
               </Label>
             </FlexFull>
             <Balance fontSize="14px" isDisabled={isFinished} value={getBalanceNumber(totalStaked)} />
@@ -124,7 +127,9 @@ const CardFooter: React.FC<Props> = ({
             </Row>
           )}
           <TokenLink href={projectLink} target="_blank">
-            {TranslateString(412, 'View project site')}
+            <Text color="primary" fontSize="14px">
+              {TranslateString(412, 'View project site')}
+            </Text>
           </TokenLink>
         </Details>
       )}

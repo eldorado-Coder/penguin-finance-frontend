@@ -21,50 +21,15 @@ const config: MenuEntry[] = [
     ],
   },
   {
-    label: 'Farms',
-    icon: 'FarmIcon',
-    href: '/farms',
+    label: 'Igloos',
+    icon: 'IglooIcon',
+    href: '/igloos',
   },
-  // {
-  //   label: 'Pools',
-  //   icon: 'PoolIcon',
-  //   href: '/pools',
-  // },
-  // {
-  //   label: 'Nests',
-  //   icon: 'EggIcon',
-  //   href: '/nests',
-  // },
-  // {
-  //   label: 'Lottery',
-  //   icon: 'TicketIcon',
-  //   href: '/lottery',
-  // },
-  // {
-  //   label: 'Collectibles',
-  //   icon: 'NftIcon',
-  //   href: '/collectibles',
-  // },
-  // {
-  //   label: 'Teams & Profile',Farms & Staking
-
-  //   icon: 'GroupsIcon',
-  //   calloutClass: 'rainbow',
-  //   items: [
-  //     {
-  //       label: 'Leaderboard',
-  //       href: '/teams',
-  //     },
-  //     {
-  //       label: 'Task Center',
-  //       href: '/profile/tasks',
-  //     },
-  //     {
-  //       label: 'Your Profile',
-  //       href: '/profile',
-  //     },
-  //   ],
-  // },
+  {
+    label: 'Nests',
+    icon: 'NestIcon',
+    href: '/nests',
+  },
   {
     label: 'Info',
     icon: 'InfoIcon',
@@ -87,33 +52,24 @@ const config: MenuEntry[] = [
       },
     ],
   },
-  // {
-  //   label: 'IFO',
-  //   icon: 'IfoIcon',
-  //   href: '/ifo',
-  // },
-  // {
-  //   label: 'More',
-  //   icon: 'MoreIcon',
-  //   items: [
-  //     {
-  //       label: 'Voting',
-  //       href: 'https://voting.penguinfinance.io',
-  //     },
-  //     {
-  //       label: 'Github',
-  //       href: 'https://github.com/penguinfinance',
-  //     },
-  //     {
-  //       label: 'Docs',
-  //       href: 'https://docs.penguinfinance.io',
-  //     },
-  //     {
-  //       label: 'Blog',
-  //       href: 'https://medium.com/penguinfinance',
-  //     },
-  //   ],
-  // },
+  {
+    label: 'More',
+    icon: 'MoreIcon',
+    items: [
+      {
+        label: 'Github',
+        href: 'https://github.com/Penguin-Finance',
+      },
+      {
+        label: 'Docs',
+        href: 'https://penguin-finance.gitbook.io/penguin-finance/',
+      },
+      {
+        label: 'Blog',
+        href: 'https://penguin-finance.medium.com/',
+      },
+    ],
+  },
 ]
 
 export default config
