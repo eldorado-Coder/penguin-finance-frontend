@@ -39,11 +39,9 @@ const TotalPefiStakedNests: React.FC<HarvestProps> = ({ pool }) => {
         <Heading color="contrast" size="md">
           {TranslateString(762, 'A total of')}
         </Heading>
-        <StyledDetails>
-          <Heading size="md">
-            <Balance color="primary" value={getBalanceNumber(totalStaked)} unit=" PEFI" />
-          </Heading>
-        </StyledDetails>
+        <Heading size="xl">
+          <Balance color="primary" fontSize="40px" value={getBalanceNumber(totalStaked)} unit=" PEFI" />
+        </Heading>
         <Heading color="contrast" size="md">
           {TranslateString(764, 'Staked in Penguin Nests')}
         </Heading>
@@ -52,8 +50,4 @@ const TotalPefiStakedNests: React.FC<HarvestProps> = ({ pool }) => {
   )
 }
 
-const StyledDetails = styled.div`
-  display: flex;
-  font-size: 14px;
-`
 export default TotalPefiStakedNests

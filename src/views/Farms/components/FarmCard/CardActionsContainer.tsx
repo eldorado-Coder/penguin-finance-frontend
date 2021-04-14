@@ -39,12 +39,12 @@ const CardActions: React.FC<FarmCardActionsProps> = ({ farm, ethereum, account, 
   const lpContract = useMemo(() => {
     return getContract(ethereum as provider, lpAddress)
   }, [ethereum, lpAddress])
-  
+
   const { onApprove } = useApprove(lpContract)
 
   const handleApprove = useCallback(async () => {
-    try {      
-      setRequestedApproval(true)      
+    try {
+      setRequestedApproval(true)
       await onApprove()
       setRequestedApproval(false)
     } catch (e) {
@@ -82,7 +82,7 @@ const CardActions: React.FC<FarmCardActionsProps> = ({ farm, ethereum, account, 
           {/* TODO: Is there a way to get a dynamic value here from useFarmFromSymbol? */}
           PEFI
         </Text>
-        <Text bold textTransform="uppercase" color="textSubtle" fontSize="12px">
+        <Text bold textTransform="uppercase" color="primary" fontSize="12px">
           {TranslateString(1072, 'Earned')}
         </Text>
       </Flex>
@@ -91,7 +91,7 @@ const CardActions: React.FC<FarmCardActionsProps> = ({ farm, ethereum, account, 
         <Text bold textTransform="uppercase" color="secondary" fontSize="12px" pr="3px">
           {lpName}
         </Text>
-        <Text bold textTransform="uppercase" color="textSubtle" fontSize="12px">
+        <Text bold textTransform="uppercase" color="primary" fontSize="12px">
           {TranslateString(1074, 'Staked')}
         </Text>
       </Flex>

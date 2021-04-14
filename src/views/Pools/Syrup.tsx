@@ -78,7 +78,7 @@ const Farm: React.FC = () => {
 
   return (
     <Page>
-      <Hero>
+      {/* <Hero>
         <div>
           <Heading as="h1" size="xxl" mb="16px">
             {TranslateString(738, 'Penguin Nests')}
@@ -89,10 +89,16 @@ const Farm: React.FC = () => {
             <li>{TranslateString(406, 'Rewards are calculated per block.')}</li>
           </ul>
         </div>
-        {/* <img src="/images/syrup.png" alt="SYRUP POOL icon" width={410} height={191} /> */}
-      </Hero>
-      <PoolTabButtons stackedOnly={stackedOnly} setStackedOnly={setStackedOnly} />
-      <Divider />
+        <img src="/images/syrup.png" alt="SYRUP POOL icon" width={410} height={191} />
+      </Hero> */}
+      <NestBannerContainer >
+        <BannerImage
+          src={`${process.env.PUBLIC_URL}/images/pools/nest_banner.png`}
+          alt="nests banner"
+        />
+      </NestBannerContainer >
+      {/* <PoolTabButtons stackedOnly={stackedOnly} setStackedOnly={setStackedOnly} /> */}
+      {/* <Divider /> */}
       <FlexLayout>
         <Route exact path={`${path}`}>
           <>
@@ -108,7 +114,7 @@ const Farm: React.FC = () => {
           ))}
         </Route>
       </FlexLayout>
-    </Page>
+    </Page >
   )
 }
 
@@ -140,6 +146,14 @@ const Hero = styled.div`
     margin: 0;
     max-width: none;
   }
+`
+
+
+const NestBannerContainer = styled.div`
+`
+
+const BannerImage = styled.img`
+  z-index: -1;
 `
 
 export default Farm

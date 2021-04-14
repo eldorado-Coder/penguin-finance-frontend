@@ -24,7 +24,7 @@ const CardImage = styled.img`
   margin-bottom: 16px;
 `
 
-const Label = styled.div`
+const Label = styled(Text).attrs({ color: "primary" })`
   font-size: 14px;
 `
 
@@ -66,17 +66,13 @@ const FarmedStakingCard = () => {
         />
         <Block>
           <Label>
-            <Text color="primary">
-              {TranslateString(544, 'PEFI to Harvest')}:
-            </Text>
+            {TranslateString(544, 'PEFI to Harvest')}:
           </Label>
           <PefiHarvestBalance />
         </Block>
         <Block>
           <Label>
-            <Text color="primary">
-              {TranslateString(546, 'PEFI in Wallet')}:
-            </Text>
+            {TranslateString(546, 'PEFI in Wallet')}:
           </Label>
           <PefiWalletBalance />
         </Block>
