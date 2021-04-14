@@ -82,7 +82,7 @@ const EarnAPYCard = () => {
   return (
     <StyledFarmStakingCard>
       <CardBody>
-        <Heading color="contrast" size="lg">
+        <Heading color="contrast" size="md">
           Earn up to
         </Heading>
         <CardMidContent color="primary">
@@ -93,7 +93,7 @@ const EarnAPYCard = () => {
           )}
         </CardMidContent>
         <Flex justifyContent="space-between">
-          <Heading color="contrast" size="lg">
+          <Heading color="contrast" size="md">
             in Farms
           </Heading>
           {/* <NavLink exact activeClassName="active" to="/farms" id="farm-apy-cta">

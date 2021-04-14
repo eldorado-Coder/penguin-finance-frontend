@@ -30,23 +30,23 @@ const TotalPefiStakedNests: React.FC<HarvestProps> = ({ pool }) => {
   const {
     totalStaked
   } = pool
-  
+
   const TranslateString = useI18n()
 
   return (
     <StyledTotalValueLockedCard>
       <CardBody>
-        <Text color="subtle">
+        <Heading color="contrast" size="md">
           {TranslateString(762, 'A total of')}
-        </Text>
+        </Heading>
         <StyledDetails>
           <Heading size="md">
-              <Balance color="primary" value={getBalanceNumber(totalStaked)} unit=" PEFI" />
+            <Balance color="primary" value={getBalanceNumber(totalStaked)} unit=" PEFI" />
           </Heading>
         </StyledDetails>
-        <Text color="subtle">
+        <Heading color="contrast" size="md">
           {TranslateString(764, 'Staked in Penguin Nests')}
-        </Text>
+        </Heading>
       </CardBody>
     </StyledTotalValueLockedCard>
   )
