@@ -5,7 +5,7 @@ const pools: PoolConfig[] = [
     sousId: 1,
     tokenName: 'PEFI',
     stakingTokenName: QuoteToken.PEFI,
-    stakingTokenAddress: '0xe896CDeaAC9615145c0cA09C8Cd5C25bced6384c',
+    stakingTokenAddress: '0xe896cdeaac9615145c0ca09c8cd5c25bced6384c',
     contractAddress: {
       256: '0xd3af5fe61dbaf8f73149bfcfa9fb653ff096029a',
       128: '0x73feaa1eE314F8c655E354234017bE2193C9E24E',
@@ -15,7 +15,7 @@ const pools: PoolConfig[] = [
     poolCategory: PoolCategory.CORE,
     projectLink: 'https://penguinfinance.io/',
     harvest: true,
-    tokenPerBlock: '10',
+    tokenPerBlock: '7',
     sortOrder: 1,
     isFinished: false,
     tokenDecimals: 18,

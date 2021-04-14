@@ -15,8 +15,10 @@ interface BalanceProps extends TextProps {
   unit?: string
 }
 
-const StyledText = styled(Text)<TextProps>`
+const StyledText = styled(Text) <TextProps>`
   color: ${({ isDisabled, color, theme }) => (isDisabled ? theme.colors.textDisabled : color)};
+  display: flex;
+  align-items: center;
 `
 
 const Balance: React.FC<BalanceProps> = ({ value, fontSize, color, decimals, isDisabled, unit }) => {

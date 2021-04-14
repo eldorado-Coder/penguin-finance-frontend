@@ -11,6 +11,7 @@ import FarmStakingCard from 'views/Home/components/FarmStakingCard'
 import LotteryCard from 'views/Home/components/LotteryCard'
 import PefiStats from 'views/Home/components/PefiStats'
 import TotalValueLockedCard from 'views/Home/components/TotalValueLockedCard'
+import TotalPefiStakedNests from 'views/Home/components/TotalPefiStakedNests'
 import EarnAPYCard from 'views/Home/components/EarnAPYCard'
 import EarnAssetCard from 'views/Home/components/EarnAssetCard'
 import WinCard from 'views/Home/components/WinCard'
@@ -20,24 +21,68 @@ import { BLOCKS_PER_YEAR } from 'config'
 import { QuoteToken, PoolCategory } from 'config/constants/types'
 import { useFarms, usePriceAvaxUsdt, usePools, usePriceEthAvax } from 'state/hooks'
 
+const HomeBgImage = styled.img`
+  position: sticky;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  z-index: -1;
+  width: 100%;
+`
 
 const Hero = styled.div`
+  position: relative;
   align-items: center;
   background-repeat: no-repeat;
-  background-position: top center;
+  background-position: center center;
   display: flex;
   justify-content: center;
   flex-direction: column;
   margin: auto;
   margin-bottom: 32px;
-  padding-top: 116px;
   text-align: center;
+  height: 165px;
+
+  h1 {
+    color:white;
+    font-weight: 500;
+    font-size: 44px;
+    margin-bottom: 10px;
+    z-index: 1;
+  }
+  > div {
+    color:white;
+    z-index: 1;
+  }
 
   ${({ theme }) => theme.mediaQueries.lg} {
-    background-position: left center, right center;
+    background-position: center center;
     height: 165px;
-    padding-top: 0;
   }
+`
+
+const HeroBgImageContainer = styled.div`
+  position: absolute;
+`
+
+const HeroBgImage = styled.img`
+  z-index: -1;
+`
+
+const HeroLeftImage = styled.img`
+  position: absolute;
+  height: 190px;  
+  left: -110px;
+  top: 35px;
+  z-index: 1;
+`
+
+const HeroRightImage = styled.img`
+  position: absolute;
+  height: 300px;
+  top: -25px;
+  right: -200px;
+  z-index: 1;
 `
 
 const Cards = styled(BaseLayout)`
@@ -159,35 +204,49 @@ const Home: React.FC = () => {
   const pefiPool = poolsWithApy.length > 0 ? poolsWithApy[0] : null
 
   return (
-    <Page>
-      <Hero>
-        <Heading as="h1" size="xl" mb="24px" color="primary">
-          {TranslateString(576, 'Penguin Finance')}
-        </Heading>
-        <Text>{TranslateString(578, 'The #1 Project on AVAX.')}</Text>
-      </Hero>
-      <div>
-        <Cards>
-          <FarmStakingCard />
-          {pefiPool && (
-            <PoolCardWrapper>
-              <PoolCard pool={pefiPool} />
-              <PoolCardNavWrapper>
-                <NavLink exact activeClassName="active" to="/pools" id="nust-apy-cta">
-                  <ArrowForwardIcon mt={30} color="primary" />
-                </NavLink>
-              </PoolCardNavWrapper>
-            </PoolCardWrapper>
-          )}
-          <EarnAPYCard />
-          <PefiStatsCardWrapper>
+    <>
+      <Page>
+        <Hero>
+          <HeroBgImageContainer>
+            <HeroBgImage
+              src={`${process.env.PUBLIC_URL}/images/home/title-bg.png`}
+              alt="astronaut"
+            />
+            <HeroLeftImage
+              src={`${process.env.PUBLIC_URL}/images/home/penguin_astronaut.gif`}
+              alt="astronaut"
+            />
+            <HeroRightImage
+              src={`${process.env.PUBLIC_URL}/images/home/penguin_astronauts.gif`}
+              alt="astronaut"
+            />
+          </HeroBgImageContainer>
+          <Heading as="h1" size="xl" mb="24px" color="primary">
+            {TranslateString(576, 'Penguin Finance')}
+          </Heading>
+          <Text>{TranslateString(578, 'The #1 Project on AVAX.')}</Text>
+        </Hero>
+        <div>
+          <Cards>
+            <FarmStakingCard />
+            <PefiStatsCardWrapper>
+              <EarnAPYCard />
+              <SpacingWrapper />
+              <TotalPefiStakedNests pool={pefiPool} />
+            </PefiStatsCardWrapper>
             <PefiStats />
+            {pefiPool && (
+              <PoolCard pool={pefiPool} />
+            )}
             <SpacingWrapper />
-            <EarnAssetCard />
-          </PefiStatsCardWrapper>
-        </Cards>
-      </div>
-    </Page>
+          </Cards>
+        </div>
+      </Page>
+      <HomeBgImage
+        src={`${process.env.PUBLIC_URL}/images/home/bg_mountains.png`}
+        alt="astronaut"
+      />
+    </>
   )
 }
 

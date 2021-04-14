@@ -78,28 +78,34 @@ const Farm: React.FC = () => {
 
   return (
     <Page>
-      <Hero>
+      {/* <Hero>
         <div>
           <Heading as="h1" size="xxl" mb="16px">
-            {TranslateString(738, 'Syrup Pool')}
+            {TranslateString(738, 'Penguin Nests')}
           </Heading>
           <ul>
-            <li>{TranslateString(580, 'Stake CAKE to earn new tokens.')}</li>
+            <li>{TranslateString(580, 'Stake PEFI to earn new tokens.')}</li>
             <li>{TranslateString(486, 'You can unstake at any time.')}</li>
             <li>{TranslateString(406, 'Rewards are calculated per block.')}</li>
           </ul>
         </div>
         <img src="/images/syrup.png" alt="SYRUP POOL icon" width={410} height={191} />
-      </Hero>
-      <PoolTabButtons stackedOnly={stackedOnly} setStackedOnly={setStackedOnly} />
-      <Divider />
+      </Hero> */}
+      <NestBannerContainer >
+        <BannerImage
+          src={`${process.env.PUBLIC_URL}/images/pools/nest_banner.png`}
+          alt="nests banner"
+        />
+      </NestBannerContainer >
+      {/* <PoolTabButtons stackedOnly={stackedOnly} setStackedOnly={setStackedOnly} /> */}
+      {/* <Divider /> */}
       <FlexLayout>
         <Route exact path={`${path}`}>
           <>
             {stackedOnly
               ? orderBy(stackedOnlyPools, ['sortOrder']).map((pool) => <PoolCard key={pool.sousId} pool={pool} />)
               : orderBy(openPools, ['sortOrder']).map((pool) => <PoolCard key={pool.sousId} pool={pool} />)}
-            <Coming />
+            {/* <Coming /> */}
           </>
         </Route>
         <Route path={`${path}/history`}>
@@ -108,7 +114,7 @@ const Farm: React.FC = () => {
           ))}
         </Route>
       </FlexLayout>
-    </Page>
+    </Page >
   )
 }
 
@@ -140,6 +146,14 @@ const Hero = styled.div`
     margin: 0;
     max-width: none;
   }
+`
+
+
+const NestBannerContainer = styled.div`
+`
+
+const BannerImage = styled.img`
+  z-index: -1;
 `
 
 export default Farm

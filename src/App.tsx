@@ -16,7 +16,7 @@ import history from './routerHistory'
 // Only pool is included in the main bundle because of it's the most visited page'
 const Home = lazy(() => import('./views/Home'))
 const Farms = lazy(() => import('./views/Farms'))
-const Arena = lazy(() => import('./views/Arena'))
+// const Nests = lazy(() => import('./views/Nests'))
 // const Lottery = lazy(() => import('./views/Lottery'))
 // const Ifos = lazy(() => import('./views/Ifos'))
 const NotFound = lazy(() => import('./views/NotFound'))
@@ -59,15 +59,15 @@ const App: React.FC = () => {
             <Route path="/" exact>
               <Home />
             </Route>
-            <Route path="/farms">
+            <Route path="/igloos">
               <Farms />
             </Route>
-            <Route path="/pools">
+            <Route path="/nests">
               <Pools />
             </Route>
-            <Route path="/arena">
-              <Arena />
-            </Route>
+            {/* <Route path="/nests">
+              <Nests />
+            </Route> */}
             {/* <Route path="/lottery">
               <Lottery />
             </Route>
@@ -87,12 +87,12 @@ const App: React.FC = () => {
               <Profile />
             </Route> */}
             {/* Redirect */}
-            <Route path="/staking">
+            {/* <Route path="/staking">
               <Redirect to="/pools" />
             </Route>
             <Route path="/syrup">
               <Redirect to="/pools" />
-            </Route>
+            </Route> */}
             {/* <Route path="/nft">
               <Redirect to="/collectibles" />
             </Route> */}

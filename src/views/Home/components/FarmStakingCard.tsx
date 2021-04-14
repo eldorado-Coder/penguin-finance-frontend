@@ -1,15 +1,16 @@
 import React, { useState, useCallback } from 'react'
 import styled from 'styled-components'
-import { Heading, Card, CardBody, Button } from '@penguinfinance/uikit'
+import { Heading, Card, CardBody, Button, Text } from '@penguinfinance/uikit'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import useI18n from 'hooks/useI18n'
 import { useAllHarvest } from 'hooks/useHarvest'
 import useFarmsWithBalance from 'hooks/useFarmsWithBalance'
 import UnlockButton from 'components/UnlockButton'
-import CakeHarvestBalance from './CakeHarvestBalance'
+import PefiHarvestBalance from './PefiHarvestBalance'
 import PefiWalletBalance from './PefiWalletBalance'
 
 const StyledFarmStakingCard = styled(Card)`
+  background-image: url('/images/BigPenguinFarms.svg');
   background-repeat: no-repeat;
   background-position: top right;
   min-height: 376px;
@@ -23,8 +24,7 @@ const CardImage = styled.img`
   margin-bottom: 16px;
 `
 
-const Label = styled.div`
-  color: ${({ theme }) => theme.colors.textSubtle};
+const Label = styled(Text).attrs({ color: "primary" })`
   font-size: 14px;
 `
 
@@ -58,13 +58,22 @@ const FarmedStakingCard = () => {
         <Heading size="xl" mb="24px">
           {TranslateString(542, 'Farms & Staking')}
         </Heading>
-        <CardImage src="/images/penguin-logo.png" alt="penguin logo" width={64} height={64} />
+        <CardImage
+          src="/images/penguin-logo.png"
+          alt="penguin logo"
+          width={64}
+          height={64}
+        />
         <Block>
-          <Label>{TranslateString(544, 'PEFI to Harvest')}:</Label>
-          <CakeHarvestBalance />
+          <Label>
+            {TranslateString(544, 'PEFI to Harvest')}:
+          </Label>
+          <PefiHarvestBalance />
         </Block>
         <Block>
-          <Label>{TranslateString(546, 'PEFI in Wallet')}:</Label>
+          <Label>
+            {TranslateString(546, 'PEFI in Wallet')}:
+          </Label>
           <PefiWalletBalance />
         </Block>
         <Actions>

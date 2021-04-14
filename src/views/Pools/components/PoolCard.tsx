@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js'
 import React, { useCallback, useState } from 'react'
 import styled from 'styled-components'
-import { Button, IconButton, useModal, AddIcon, Image } from '@penguinfinance/uikit'
+import { Button, IconButton, useModal, AddIcon, Image, Text } from '@penguinfinance/uikit'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import UnlockButton from 'components/UnlockButton'
 import { useERC20 } from 'hooks/useContract'
@@ -112,11 +112,11 @@ const PoolCard: React.FC<HarvestProps> = ({ pool }) => {
       {isFinished && sousId !== 0 && <PoolFinishedSash />}
       <div style={{ padding: '24px' }}>
         <CardTitle isFinished={isFinished && sousId !== 0}>
-          {tokenName} {TranslateString(348, 'Pool')}
+          {tokenName} {TranslateString(348, 'Nest')}
         </CardTitle>
         <div style={{ marginBottom: '8px', display: 'flex', alignItems: 'center' }}>
           <div style={{ flex: 1 }}>
-            <Image src={`/images/tokens/${image || tokenName}.png`} width={64} height={64} alt={tokenName} />
+            <Image src={`/images/pools/${image || tokenName}.png`} width={64} height={64} alt={tokenName} />
           </div>
         </div>
         <StyledCardActions>
@@ -145,14 +145,15 @@ const PoolCard: React.FC<HarvestProps> = ({ pool }) => {
         </StyledCardActions>
         <StyledDetails>
           <div style={{ flex: 1 }}>
-            <span role="img" aria-label={stakingTokenName}>
-              🥞{' '}
-            </span>
-            {TranslateString(384, 'Your Stake')}:
+            <Text color="primary">
+              {TranslateString(384, 'Your Stake')}:
+            </Text>
           </div>
           <Balance fontSize="14px" isDisabled={isFinished} value={getBalanceNumber(stakedBalance)} />
           <TokenSymbol>
-            {`x${stakingTokenName}`}
+            <Text color="subtitle" fontSize="14px">
+              {`x${stakingTokenName}`}
+            </Text>
           </TokenSymbol>
         </StyledDetails>
         <StyledDetails>
@@ -161,7 +162,9 @@ const PoolCard: React.FC<HarvestProps> = ({ pool }) => {
           </div>
           <Balance fontSize="14px" isDisabled={isFinished} value={(new BigNumber(getBalanceNumber(stakedBalance)).times(new BigNumber(rewardTokenRatio))).toNumber()} />
           <TokenSymbol>
-            {stakingTokenName}
+            <Text color="subtitle" fontSize="14px">
+              {stakingTokenName}
+            </Text>
           </TokenSymbol>
         </StyledDetails>
       </div>
