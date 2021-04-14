@@ -120,7 +120,7 @@ const Farm: React.FC = () => {
 }
 
 const NestBgContainer = styled.div` 
-  background-image: url("/images/pools/nest_bg2.png");
+  background-image: url("/images/pools/nest_bg1.png");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
@@ -130,7 +130,7 @@ const NestBgContainer = styled.div`
   right: 0px;
   left: 0px;
   z-index:-1;
-  opacity: 0.5;
+  opacity: 0.3;
 `;
 
 const Hero = styled.div`
