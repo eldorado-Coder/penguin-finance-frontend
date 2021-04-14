@@ -4,7 +4,6 @@ import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { Heading } from '@penguinfinance/uikit'
-import Sound from 'react-sound';
 import { BLOCKS_PER_YEAR } from 'config'
 import orderBy from 'lodash/orderBy'
 import partition from 'lodash/partition'
@@ -92,11 +91,6 @@ const Farm: React.FC = () => {
         </div>
         <img src="/images/syrup.png" alt="SYRUP POOL icon" width={410} height={191} />
       </Hero> */}
-      <Sound
-        url="/sounds/penguin_arena_page.mp3"
-        playStatus={Sound.status.PLAYING}
-        loop
-      />
       <NestBgContainer />
       <NestBannerContainer >
         <BannerImage
