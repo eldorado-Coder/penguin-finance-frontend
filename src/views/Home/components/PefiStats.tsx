@@ -33,16 +33,20 @@ const PefiStats = () => {
           {TranslateString(534, 'PEFI Stats')}
         </Heading>
         <Row>
-          <Text fontSize="14px">{TranslateString(536, 'Total PEFI Supply')}</Text>
+          <Text color="primary" fontSize="14px">{TranslateString(536, 'Total PEFI Supply')}</Text>
           {cakeSupply && <CardValue fontSize="14px" value={cakeSupply} />}
         </Row>
-        {/* <Row>
-          <Text fontSize="14px">{TranslateString(538, 'Total PEFI Burned')}</Text>
-          <CardValue fontSize="14px" value={getBalanceNumber(burnedBalance)} />
-        </Row> */}
         <Row>
-          <Text fontSize="14px">{TranslateString(540, 'New PEFI/block')}</Text>
-          <CardValue fontSize="14px" decimals={0} value={6.5} />
+          <Text color="primary" fontSize="14px">{TranslateString(538, 'Total PEFI Burned')}</Text>
+          <Text fontSize="14px"><b>125,000+</b></Text>
+        </Row>
+        <Row>
+          <Text color="primary" fontSize="14px">{TranslateString(540, 'PEFI/block')}</Text>
+          <CardValue fontSize="14px" decimals={2} value={6.15} />
+        </Row>
+        <Row>
+          <Text color="primary" fontSize="14px">{TranslateString(540, 'Paper Hands Penalty')}</Text>
+          <Text fontSize="14px"><b>20.83%</b></Text>
         </Row>
       </CardBody>
     </StyledPefiStats>
