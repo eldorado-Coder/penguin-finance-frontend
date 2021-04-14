@@ -13,7 +13,7 @@ const Arena: React.FC = () => {
         loop
       />
       <ArenaBgContainer  width="100%" height="100%" autoPlay loop muted>
-        <source src="/videos/ColiseoTeaser.mp4"/>
+        <source src="/videos/penguinarena.mp4" />
       </ ArenaBgContainer>
     </Page >
   )
