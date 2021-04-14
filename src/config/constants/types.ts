@@ -62,6 +62,7 @@ export interface FarmConfig {
     endBlock: number
   }
   withdrawalFee?: string
+  hardApy?: string
 }
 
 export interface LPConfig {

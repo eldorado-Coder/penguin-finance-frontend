@@ -225,7 +225,7 @@ const Home: React.FC = () => {
           <Heading as="h1" size="xl" mb="24px" color="primary">
             {TranslateString(576, 'Penguin Finance')}
           </Heading>
-          <Text>{TranslateString(578, 'The #1 Project on AVAX.')}</Text>
+          <Text>{TranslateString(578, 'Built for Penguins, by Penguins.')}</Text>
         </Hero>
         <div>
           <Cards>
