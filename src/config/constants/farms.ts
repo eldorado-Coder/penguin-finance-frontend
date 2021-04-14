@@ -17,6 +17,7 @@ const farms: FarmConfig[] = [
     quoteTokenSymbol: QuoteToken.AVAX,
     quoteTokenAddresses: contracts.wavax,
     withdrawalFee: '4',
+    hardApy: '1324.29%',
   },
   {
     pid: 1,
@@ -33,6 +34,7 @@ const farms: FarmConfig[] = [
     quoteTokenSymbol: QuoteToken.AVAX,
     quoteTokenAddresses: contracts.wavax,
     withdrawalFee: '4',
+    hardApy: '92.82%',
   },
   {
     pid: 2,
@@ -49,6 +51,7 @@ const farms: FarmConfig[] = [
     quoteTokenSymbol: QuoteToken.PEFI,
     quoteTokenAddresses: contracts.pefi,
     withdrawalFee: '4',
+    hardApy: '1457.53%',
   },
   {
     pid: 3,
@@ -65,6 +68,7 @@ const farms: FarmConfig[] = [
     quoteTokenSymbol: QuoteToken.PEFI,
     quoteTokenAddresses: contracts.pefi,
     withdrawalFee: '4',
+    hardApy: '1569.35%',
   }
 ]
 
