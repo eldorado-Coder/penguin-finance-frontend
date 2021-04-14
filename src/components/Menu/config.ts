@@ -31,6 +31,11 @@ const config: MenuEntry[] = [
     href: '/nests',
   },
   {
+    label: 'Penguin Arena',
+    icon: 'NftIcon',
+    href: '/arena',
+  },
+  {
     label: 'Info',
     icon: 'InfoIcon',
     items: [
