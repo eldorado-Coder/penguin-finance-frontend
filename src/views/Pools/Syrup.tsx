@@ -75,6 +75,10 @@ const Farm: React.FC = () => {
   const stackedOnlyPools = openPools.filter(
     (pool) => pool.userData && new BigNumber(pool.userData.stakedBalance).isGreaterThan(0),
   )
+  // console.log(theme);
+  // {({ theme }) => theme.mediaQueries.lg} {
+  //   background-image: url('/images/pools/nest-${({ theme }) => (theme.isDark ? 'dark' : 'light')}.png');
+  // }
 
   return (
     <Page>
@@ -91,9 +95,12 @@ const Farm: React.FC = () => {
         </div>
         <img src="/images/syrup.png" alt="SYRUP POOL icon" width={410} height={191} />
       </Hero> */}
+      <NestBgContainer />
       <NestBannerContainer >
         <BannerImage
-          src={`${process.env.PUBLIC_URL}/images/pools/nest_banner.png`}
+          src={
+            `${process.env.PUBLIC_URL}/images/pools/nests-dark.gif`
+          }
           alt="nests banner"
         />
       </NestBannerContainer >
@@ -117,6 +124,20 @@ const Farm: React.FC = () => {
     </Page >
   )
 }
+
+const NestBgContainer = styled.div` 
+  background-image: url("/images/pools/nest_bg1.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  right: 0px;
+  left: 0px;
+  z-index:-1;
+  opacity: 0.3;
+`;
 
 const Hero = styled.div`
   align-items: center;

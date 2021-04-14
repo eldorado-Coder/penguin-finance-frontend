@@ -56,7 +56,7 @@ const FarmedStakingCard = () => {
     <StyledFarmStakingCard>
       <CardBody>
         <Heading size="xl" mb="24px">
-          {TranslateString(542, 'Farms & Staking')}
+          {TranslateString(542, 'Igloos & Staking')}
         </Heading>
         <CardImage
           src="/images/penguin-logo.png"

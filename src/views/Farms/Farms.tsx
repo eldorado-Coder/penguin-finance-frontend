@@ -111,26 +111,44 @@ const Farms: React.FC = () => {
       {/* <Heading as="h1" size="lg" color="primary" mb="50px" style={{ textAlign: 'center' }}>
         {TranslateString(696, 'Stake LP tokens to earn PEFI')}
       </Heading> */}
+      <IgloosBgContainer />
       <IgloosBannerContainer>
         <BannerImage
-          src={`${process.env.PUBLIC_URL}/images/farms/igloo_banner.png`}
+          src={`${process.env.PUBLIC_URL}/images/farms/IglooHeader.gif`}
           alt="igloos banner"
         />
       </IgloosBannerContainer>
       {/* <FarmTabButtons stackedOnly={stackedOnly} setStackedOnly={setStackedOnly} /> */}
       <div>
         {/* <Divider /> */}
-        <FlexLayout>
-          <Route exact path={`${path}`}>
-            {stackedOnly ? farmsList(stackedOnlyFarms, false) : farmsList(activeFarms, false)}
-          </Route>
-          <Route exact path={`${path}/history`}>
-            {farmsList(inactiveFarms, true)}
-          </Route>
-        </FlexLayout>
+          <FlexLayout>
+            <Route exact path={`${path}`}>
+              {stackedOnly ? farmsList(stackedOnlyFarms, false) : farmsList(activeFarms, false)}
+            </Route>
+            <Route exact path={`${path}/history`}>
+              {farmsList(inactiveFarms, true)}
+            </Route>
+          </FlexLayout>
       </div>
     </Page>
   )
 }
+
+const IgloosBgContainer = styled.div` 
+  /* background-image: url("/images/farms/BackgroundwBucket-01.png"); */
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  right: 0px;
+  left: 0px;
+  ${({ theme }) => theme.mediaQueries.lg} {
+    background-image: url('/images/farms/igloo-background-${({ theme }) => (theme.isDark ? 'dark' : 'light')}.png');
+  }
+  z-index:-1;
+  /* opacity: 0.3; */
+`;
 
 export default Farms
