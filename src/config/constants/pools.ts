@@ -13,7 +13,7 @@ const pools: PoolConfig[] = [
       43114: '0xD79A36056c271B988C5F1953e664E61416A9820F',
     },
     poolCategory: PoolCategory.CORE,
-    projectLink: 'https://penguinfinance.io/',
+    projectLink: 'https://penguinfinance.org/',
     harvest: true,
     tokenPerBlock: '7',
     sortOrder: 1,

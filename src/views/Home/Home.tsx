@@ -233,9 +233,9 @@ const Home: React.FC = () => {
             <PefiStatsCardWrapper>
               <EarnAPYCard />
               <SpacingWrapper />
-              <TotalPefiStakedNests pool={pefiPool} />
-              <SpacingWrapper />
               <PercentagePefiStakedNests pool={pefiPool} />
+              <SpacingWrapper />
+              <TotalPefiStakedNests pool={pefiPool} />
             </PefiStatsCardWrapper>
             <PefiStats />
             {pefiPool && (

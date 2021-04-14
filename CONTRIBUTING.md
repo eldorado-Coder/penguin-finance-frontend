@@ -1,7 +1,7 @@
-# Contributing to the Penguin ecosystem 🥞
+# Contributing to the Penguin ecosystem
 
 Thanks for taking the time to contribute !
-You can start by reading our [Contribution guidelines](https://docs.penguinfinance.io/code/contributing) first.
+You can start by reading our [Contribution guidelines](https://docs.penguinfinance.org/code/contributing) first.
 
 ## Setup
 

@@ -75,6 +75,10 @@ const Farm: React.FC = () => {
   const stackedOnlyPools = openPools.filter(
     (pool) => pool.userData && new BigNumber(pool.userData.stakedBalance).isGreaterThan(0),
   )
+  // console.log(theme);
+  // {({ theme }) => theme.mediaQueries.lg} {
+  //   background-image: url('/images/pools/nest-${({ theme }) => (theme.isDark ? 'dark' : 'light')}.png');
+  // }
 
   return (
     <Page>
@@ -94,7 +98,9 @@ const Farm: React.FC = () => {
       <NestBgContainer />
       <NestBannerContainer >
         <BannerImage
-          src={`${process.env.PUBLIC_URL}/images/pools/nest_banner.png`}
+          src={
+            `${process.env.PUBLIC_URL}/images/pools/nests-dark.gif`
+          }
           alt="nests banner"
         />
       </NestBannerContainer >

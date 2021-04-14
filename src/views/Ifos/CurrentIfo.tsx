@@ -72,7 +72,7 @@ const Ifo = () => {
             <Button
               as="a"
               variant="secondary"
-              href="https://docs.penguinfinance.io/core-products/ifo-initial-farm-offering"
+              href="https://docs.penguinfinance.org/core-products/ifo-initial-farm-offering"
             >
               {TranslateString(610, 'Read more')}
             </Button>
