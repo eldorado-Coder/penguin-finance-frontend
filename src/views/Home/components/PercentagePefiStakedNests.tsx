@@ -10,7 +10,7 @@ import { Pool } from 'state/types'
 import { useGetStats } from 'hooks/api'
 
 const StyledTotalValueLockedCard = styled(Card)`
-  background-image: url('/images/pefi-bg.svg');
+  background-image: url('/images/Penguins.svg');
   background-repeat: no-repeat;
   background-position: right;
   /* min-height: 150px; */
