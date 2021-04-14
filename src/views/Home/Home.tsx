@@ -12,6 +12,7 @@ import LotteryCard from 'views/Home/components/LotteryCard'
 import PefiStats from 'views/Home/components/PefiStats'
 import TotalValueLockedCard from 'views/Home/components/TotalValueLockedCard'
 import TotalPefiStakedNests from 'views/Home/components/TotalPefiStakedNests'
+import PercentagePefiStakedNests from 'views/Home/components/PercentagePefiStakedNests'
 import EarnAPYCard from 'views/Home/components/EarnAPYCard'
 import EarnAssetCard from 'views/Home/components/EarnAssetCard'
 import WinCard from 'views/Home/components/WinCard'
@@ -213,7 +214,7 @@ const Home: React.FC = () => {
               alt="astronaut"
             />
             <HeroLeftImage
-              src={`${process.env.PUBLIC_URL}/images/home/penguin_astronaut.gif`}
+              src={`${process.env.PUBLIC_URL}/images/home/PenguinAstronaut.gif`}
               alt="astronaut"
             />
             <HeroRightImage
@@ -233,6 +234,8 @@ const Home: React.FC = () => {
               <EarnAPYCard />
               <SpacingWrapper />
               <TotalPefiStakedNests pool={pefiPool} />
+              <SpacingWrapper />
+              <PercentagePefiStakedNests pool={pefiPool} />
             </PefiStatsCardWrapper>
             <PefiStats />
             {pefiPool && (

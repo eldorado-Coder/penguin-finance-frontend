@@ -151,7 +151,7 @@ const PoolCard: React.FC<HarvestProps> = ({ pool }) => {
           </div>
           <Balance fontSize="14px" isDisabled={isFinished} value={getBalanceNumber(stakedBalance)} />
           <TokenSymbol>
-            <Text color="subtitle" fontSize="14px">
+            <Text color="primary" fontSize="14px">
               {`x${stakingTokenName}`}
             </Text>
           </TokenSymbol>
@@ -162,7 +162,7 @@ const PoolCard: React.FC<HarvestProps> = ({ pool }) => {
           </div>
           <Balance fontSize="14px" isDisabled={isFinished} value={(new BigNumber(getBalanceNumber(stakedBalance)).times(new BigNumber(rewardTokenRatio))).toNumber()} />
           <TokenSymbol>
-            <Text color="subtitle" fontSize="14px">
+            <Text color="primary" fontSize="14px">
               {stakingTokenName}
             </Text>
           </TokenSymbol>

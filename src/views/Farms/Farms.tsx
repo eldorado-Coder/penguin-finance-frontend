@@ -120,14 +120,14 @@ const Farms: React.FC = () => {
       {/* <FarmTabButtons stackedOnly={stackedOnly} setStackedOnly={setStackedOnly} /> */}
       <div>
         {/* <Divider /> */}
-        <FlexLayout>
-          <Route exact path={`${path}`}>
-            {stackedOnly ? farmsList(stackedOnlyFarms, false) : farmsList(activeFarms, false)}
-          </Route>
-          <Route exact path={`${path}/history`}>
-            {farmsList(inactiveFarms, true)}
-          </Route>
-        </FlexLayout>
+          <FlexLayout>
+            <Route exact path={`${path}`}>
+              {stackedOnly ? farmsList(stackedOnlyFarms, false) : farmsList(activeFarms, false)}
+            </Route>
+            <Route exact path={`${path}/history`}>
+              {farmsList(inactiveFarms, true)}
+            </Route>
+          </FlexLayout>
       </div>
     </Page>
   )
