@@ -69,6 +69,23 @@ const farms: FarmConfig[] = [
     quoteTokenAddresses: contracts.pefi,
     withdrawalFee: '4',
     hardApy: '1569.35%',
+  },
+  {
+    pid: 3,
+    lpSymbol: 'PEFI-SUSHI LP',
+    lpAddresses: {
+      43113: '',
+      43114: '0x8912a0FAdF3588c6791e42310B549a7Bc0047B0E',
+    },
+    tokenSymbol: 'SUSHI',
+    tokenAddresses: {
+      43113: '',
+      43114: '0xC38f41A296A4493Ff429F1238e030924A1542e50',
+    },
+    quoteTokenSymbol: QuoteToken.PEFI,
+    quoteTokenAddresses: contracts.pefi,
+    withdrawalFee: '4',
+    hardApy: '2500.35%',
   }
 ]
 
