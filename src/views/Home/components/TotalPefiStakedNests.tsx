@@ -37,34 +37,32 @@ const TotalPefiStakedNests: React.FC<HarvestProps> = ({ pool }) => {
   if (totalStaked) {
     return (
       <StyledTotalValueLockedCard>
-          <CardBody>
-            <Heading color="contrast" size="md">
-              {TranslateString(762, 'A total of')}
-            </Heading>
-            <Heading size="xl">
-            <CardMidContent color="primary">
-              {parseInt(getBalanceNumber(totalStaked).toString()) ? (
-                `${parseInt(getBalanceNumber(totalStaked).toString())} ${TranslateString(736, 'PEFI')}`
-              ) : (
-                <Skeleton animation="pulse" variant="rect" height="44px" />
-              )}
-            </CardMidContent>
-              {/* <Balance color="primary" fontSize="40px" value={getBalanceNumber(totalStaked)} unit={` PEFI`} /> */}
-            </Heading>
-            <Heading color="contrast" size="md">
-              {TranslateString(764, 'Staked in Penguin Nests')}
-            </Heading>
-          </CardBody>
+        <CardBody>
+          <Heading color="contrast" size="md">
+            {TranslateString(762, 'A total of')}
+          </Heading>
+          <CardMidContent color="primary">
+            {parseInt(getBalanceNumber(totalStaked).toString()) ? (
+              `${parseInt(getBalanceNumber(totalStaked).toString())} ${TranslateString(736, 'PEFI')}`
+            ) : (
+              <Skeleton animation="pulse" variant="rect" height="44px" />
+            )}
+          </CardMidContent>
+          {/* <Balance color="primary" fontSize="40px" value={getBalanceNumber(totalStaked)} unit={` PEFI`} /> */}
+          <Heading color="contrast" size="md">
+            {TranslateString(764, 'Staked in Penguin Nests')}
+          </Heading>
+        </CardBody>
       </StyledTotalValueLockedCard>
     )
   }
   return (
     <StyledTotalValueLockedCard>
-        <CardBody>
-          <Heading color="contrast" size="md">
-            {TranslateString(762, 'Stake your PEFI now!')}
-          </Heading>
-        </CardBody>
+      <CardBody>
+        <Heading color="contrast" size="md">
+          {TranslateString(762, 'Stake your PEFI now!')}
+        </Heading>
+      </CardBody>
     </StyledTotalValueLockedCard>
   )
 }

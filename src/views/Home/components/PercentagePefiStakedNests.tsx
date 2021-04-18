@@ -41,33 +41,31 @@ const PercentagePefiStakedNests: React.FC<HarvestProps> = ({ pool }) => {
     const percentageStaked = (getBalanceNumber(totalStaked) / getBalanceNumber(totalSupply)) * 100;
     return (
       <StyledTotalValueLockedCard>
-          <CardBody>
-            <Heading color="contrast" size="md">
-              {TranslateString(762, 'A total of')}
-            </Heading>
-            <Heading size="xl">
-            <CardMidContent color="primary">
-              {parseInt(percentageStaked.toString()) ? (
-                `${parseInt(percentageStaked.toString())}% ${TranslateString(736, 'of PEFI')}`
-              ) : (
-                <Skeleton animation="pulse" variant="rect" height="44px" />
-              )}
-            </CardMidContent>
-            </Heading>
-            <Heading color="contrast" size="md">
-              {TranslateString(764, 'Staked in Penguin Nests')}
-            </Heading>
-          </CardBody>
+        <CardBody>
+          <Heading color="contrast" size="md">
+            {TranslateString(762, 'A total of')}
+          </Heading>
+          <CardMidContent color="primary">
+            {parseInt(percentageStaked.toString()) ? (
+              `${parseInt(percentageStaked.toString())}% ${TranslateString(736, 'of PEFI')}`
+            ) : (
+              <Skeleton animation="pulse" variant="rect" height="44px" />
+            )}
+          </CardMidContent>
+          <Heading color="contrast" size="md">
+            {TranslateString(764, 'Staked in Penguin Nests')}
+          </Heading>
+        </CardBody>
       </StyledTotalValueLockedCard>
     )
   }
   return (
     <StyledTotalValueLockedCard>
-        <CardBody>
-          <Heading color="contrast" size="md">
-            {TranslateString(762, 'Stake your PEFI now!')}
-          </Heading>
-        </CardBody>
+      <CardBody>
+        <Heading color="contrast" size="md">
+          {TranslateString(762, 'Stake your PEFI now!')}
+        </Heading>
+      </CardBody>
     </StyledTotalValueLockedCard>
   )
 }
