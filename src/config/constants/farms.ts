@@ -71,7 +71,7 @@ const farms: FarmConfig[] = [
     hardApy: '1569.35%',
   },
   {
-    pid: 3,
+    pid: 4,
     lpSymbol: 'PEFI-SUSHI LP',
     lpAddresses: {
       43113: '',

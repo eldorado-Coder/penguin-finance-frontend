@@ -10,9 +10,6 @@ import { Pool } from 'state/types'
 import { useGetStats } from 'hooks/api'
 
 const StyledTotalValueLockedCard = styled(Card)`
-  background-image: url('/images/Penguins.svg');
-  background-repeat: no-repeat;
-  background-position: right;
   /* min-height: 150px; */
   align-items: center;
   display: flex;
@@ -21,6 +18,21 @@ const StyledTotalValueLockedCard = styled(Card)`
 const CardMidContent = styled(Heading).attrs({ size: 'xl' })`
   line-height: 44px;
 `
+
+const CardBgImageContainer = styled.div`
+  position: absolute;
+  right: 0;
+  padding: 10px;
+  height: 100%;
+  justify-content: flex-end;
+  display: flex;
+  align-items: center;
+`
+
+const CardBgImage = styled.img`
+  height: 100%;
+`
+
 interface PoolWithApy extends Pool {
   apy: BigNumber
 }
@@ -41,6 +53,12 @@ const PercentagePefiStakedNests: React.FC<HarvestProps> = ({ pool }) => {
     const percentageStaked = (getBalanceNumber(totalStaked) / getBalanceNumber(totalSupply)) * 100;
     return (
       <StyledTotalValueLockedCard>
+        <CardBgImageContainer>
+          <CardBgImage
+            src={`${process.env.PUBLIC_URL}/images/Penguins.svg`}
+            alt="astronaut"
+          />
+        </CardBgImageContainer>
         <CardBody>
           <Heading color="contrast" size="md">
             {TranslateString(762, 'A total of')}
