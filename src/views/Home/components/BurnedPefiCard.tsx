@@ -28,16 +28,16 @@ const BurnedPefiCard = () => {
   const TranslateString = useI18n()
   const totalSupply = useTotalSupply()
   const burnedBalance = useBurnedBalance(getPefiAddress())
-  const percentage = 100 * getBalanceNumber(burnedBalance) / getBalanceNumber(totalSupply)
+  const percentage = 100 * getBalanceNumber(burnedBalance) / getBalanceNumber(totalSupply) || 0
 
   return (
     <StyledFarmStakingCard>
       <CardBody>
         <Heading color="contrast" size="md">
-          {TranslateString(534, 'A total PEFI of')}
+          {TranslateString(534, 'A total of')}
         </Heading>
         <CardMidContent color="primary">
-          {percentage.toFixed(2)}%
+          {percentage.toFixed(2)}% of PEFI
         </CardMidContent>
         <Flex justifyContent="space-between">
           <Heading color="contrast" size="md">
