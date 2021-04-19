@@ -144,7 +144,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, removed, pefiPrice, avaxPrice
       {!removed && (
         <Flex justifyContent="space-between" alignItems="center">
           <Text>{TranslateString(736, 'APR')}:</Text>
-          
+
           <Text bold style={{ display: 'flex', alignItems: 'center' }}>
             {farm.hardApy}
           </Text>

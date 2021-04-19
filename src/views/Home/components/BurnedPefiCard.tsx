@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Heading, Card, CardBody, Flex, Skeleton } from '@penguinfinance/uikit'
-import { useBurnedBalance } from 'hooks/useTokenBalance'
+import { useTotalSupply, useBurnedBalance } from 'hooks/useTokenBalance'
 import useI18n from 'hooks/useI18n'
 import { getPefiAddress } from 'utils/addressHelpers'
 import { getBalanceNumber } from 'utils/formatBalance'
@@ -26,16 +26,18 @@ const CardMidContent = styled(Heading).attrs({ size: 'xl' })`
 `
 const BurnedPefiCard = () => {
   const TranslateString = useI18n()
+  const totalSupply = useTotalSupply()
   const burnedBalance = useBurnedBalance(getPefiAddress())
+  const percentage = 100 * getBalanceNumber(burnedBalance) / getBalanceNumber(totalSupply)
 
   return (
     <StyledFarmStakingCard>
       <CardBody>
         <Heading color="contrast" size="md">
-          {TranslateString(534, 'A total of')}
+          {TranslateString(534, 'A total PEFI of')}
         </Heading>
         <CardMidContent color="primary">
-          {getBalanceNumber(burnedBalance).toFixed(2)}
+          {percentage.toFixed(2)}%
         </CardMidContent>
         <Flex justifyContent="space-between">
           <Heading color="contrast" size="md">
