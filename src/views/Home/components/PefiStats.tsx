@@ -74,11 +74,11 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
         </Row>
         <Row>
           <Text color="primary" fontSize="14px">{TranslateString(540, 'PEFI/block')}</Text>
-          <CardValue fontSize="14px" decimals={2} value={PEFI_PER_BLOCK.toNumber()} />
+          <CardValue fontSize="14px" decimals={2} value={6.15} />
         </Row>
         <Row>
           <Text color="primary" fontSize="14px">{TranslateString(540, 'Paper Hands Penalty')}</Text>
-          <Text fontSize="14px"><b>20.83%</b></Text>
+          <Text fontSize="14px"><b>17.36%</b></Text>
         </Row>
       </CardBody>
     </StyledPefiStats>
