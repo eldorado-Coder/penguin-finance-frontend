@@ -75,12 +75,12 @@ const farms: FarmConfig[] = [
     lpSymbol: 'PEFI-SUSHI LP',
     lpAddresses: {
       43113: '',
-      43114: '0x8912a0FAdF3588c6791e42310B549a7Bc0047B0E',
+      43114: '0x8912a0fadf3588c6791e42310b549a7bc0047b0e',
     },
     tokenSymbol: 'SUSHI',
     tokenAddresses: {
       43113: '',
-      43114: '0xC38f41A296A4493Ff429F1238e030924A1542e50',
+      43114: '0x39cf1BD5f15fb22eC3D9Ff86b0727aFc203427cc',
     },
     quoteTokenSymbol: QuoteToken.PEFI,
     quoteTokenAddresses: contracts.pefi,
