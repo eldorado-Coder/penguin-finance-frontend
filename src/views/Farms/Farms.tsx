@@ -18,13 +18,6 @@ import FarmCard, { FarmWithStakedValue } from './components/FarmCard/FarmCard'
 import FarmTabButtons from './components/FarmTabButtons'
 import Divider from './components/Divider'
 
-const IgloosBannerContainer = styled.div`
-  /* position: absolute; */
-`
-
-const BannerImage = styled.img`
-  z-index: -1;
-`
 
 //
 const Farms: React.FC = () => {
@@ -121,14 +114,18 @@ const Farms: React.FC = () => {
       {/* <FarmTabButtons stackedOnly={stackedOnly} setStackedOnly={setStackedOnly} /> */}
       <div>
         {/* <Divider /> */}
-          <FlexLayout>
-            <Route exact path={`${path}`}>
-              {stackedOnly ? farmsList(stackedOnlyFarms, false) : farmsList(activeFarms, false)}
-            </Route>
-            <Route exact path={`${path}/history`}>
-              {farmsList(inactiveFarms, true)}
-            </Route>
-          </FlexLayout>
+
+        <FlexLayout>
+          <Route exact path={`${path}`}>
+            {stackedOnly ? farmsList(stackedOnlyFarms, false) : farmsList(activeFarms, false)}
+          </Route>
+          <Route exact path={`${path}/history`}>
+            {farmsList(inactiveFarms, true)}
+          </Route>
+        </FlexLayout>
+        <IgloosPenguinImgContainer>
+          <IgloosPenguinImg alt="igloos penguin" />
+        </IgloosPenguinImgContainer>
       </div>
     </Page>
   )
@@ -150,5 +147,37 @@ const IgloosBgContainer = styled.div`
   z-index:-1;
   /* opacity: 0.3; */
 `;
+
+const IgloosPenguinImgContainer = styled.div`
+  z-index: -1;
+  position: sticky;
+  left: 0px;
+  right: 0px;
+  margin-left: 0px;
+  bottom: 100px;
+
+  ${({ theme }) => theme.mediaQueries.lg} {
+    margin-left: -200px;
+  }
+`
+
+const IgloosPenguinImg = styled.img.attrs(props => ({
+  src: props.theme.isDark ? `${process.env.PUBLIC_URL}/images/farms/penguin-with-candle.gif` : `${process.env.PUBLIC_URL}/images/farms/penguin-with-fish.gif`,
+}))`
+  width: 150px;
+  ${({ theme }) => theme.mediaQueries.lg} {
+    width: 200px;
+    src: '/images/farms/igloo-background-${({ theme }) => (theme.isDark ? 'dark' : 'light')}.png';
+  }
+`
+
+
+const IgloosBannerContainer = styled.div`
+  /* position: absolute; */
+`
+
+const BannerImage = styled.img`
+  z-index: -1;
+`
 
 export default Farms
