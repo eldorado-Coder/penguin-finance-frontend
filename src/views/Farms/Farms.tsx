@@ -150,14 +150,14 @@ const IgloosBgContainer = styled.div`
 
 const IgloosPenguinImgContainer = styled.div`
   z-index: -1;
-  position: sticky;
-  left: 0px;
+  position: absolute;
+  left: 100px;
   right: 0px;
   margin-left: 0px;
   bottom: 100px;
 
   ${({ theme }) => theme.mediaQueries.lg} {
-    margin-left: -200px;
+    bottom: 200px;
   }
 `
 
