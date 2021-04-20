@@ -60,10 +60,10 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
           <Text color="primary" fontSize="14px">{TranslateString(538, 'Total PEFI Burned')}</Text>
           {burnedBalance && <CardValue fontSize="14px" value={getBalanceNumber(burnedBalance)} />}
         </Row>
-        <Row>
+        {/* <Row>
           <Text color="primary" fontSize="14px">{TranslateString(538, 'Total TVL')}</Text>
           {burnedBalance && <CardValue fontSize="14px" value={getBalanceNumber(burnedBalance)} />}
-        </Row>
+        </Row> */}
         <Row>
           <Text color="primary" fontSize="14px">{TranslateString(538, 'PEFI marketcap')}</Text>
           {pefiMarketcap && <CardValue fontSize="14px" value={pefiMarketcap} />}
