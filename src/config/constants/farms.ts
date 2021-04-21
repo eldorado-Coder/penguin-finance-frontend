@@ -85,7 +85,7 @@ const farms: FarmConfig[] = [
     quoteTokenSymbol: QuoteToken.PEFI,
     quoteTokenAddresses: contracts.pefi,
     withdrawalFee: '4',
-    hardApy: '481.88%',
+    hardApy: '3223.58%',
   }
 ]
 
