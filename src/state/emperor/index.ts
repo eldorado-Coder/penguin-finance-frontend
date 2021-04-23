@@ -9,6 +9,7 @@ import {
 import { EmperorState } from '../types'
 
 const initialState: EmperorState = {
+  myEmperor: {},
   currentEmperor: {},
   topEmperors: []
 }
@@ -19,6 +20,12 @@ export const EmperorSlice = createSlice({
   reducers: {
     setInitialData: (state) => {
       state.currentEmperor = {};
+    },
+    setMyEmperor: (state, action) => {
+      state.myEmperor = {
+        ...state.myEmperor,
+        ...action.payload
+      };
     },
     setCurrentEmperor: (state, action) => {
       state.currentEmperor = {
@@ -35,7 +42,7 @@ export const EmperorSlice = createSlice({
 })
 
 // Actions
-export const { setInitialData, setCurrentEmperor, setTopEmperors } = EmperorSlice.actions
+export const { setInitialData, setMyEmperor, setCurrentEmperor, setTopEmperors } = EmperorSlice.actions
 
 // Thunks
 
@@ -45,13 +52,20 @@ export const setInit = () => async (dispatch) => {
 
 export const fetchEmperor = (account) => async (dispatch) => {
   if (!account) return;
+
+  // fetch my emperor
+  const myEmperor = await fetchEmperorData(account);
+  dispatch(setMyEmperor(myEmperor));
+
+  console.log('555--->', myEmperor)
+
+  // fetch current emperor
   const currentEmperorAddress = await fetchCurrentEmperorAddress();
   dispatch(setCurrentEmperor({ address: currentEmperorAddress }));
 
   const currentEmperorBid = await fetchCurrentEmperorBid();
   dispatch(setCurrentEmperor({ bidAmount: currentEmperorBid }));
 
-  // fetch current emperor
   if (currentEmperorAddress && currentEmperorAddress.length > 0) {
     const currentEmperor = await fetchEmperorData(currentEmperorAddress);
     dispatch(setCurrentEmperor(currentEmperor));

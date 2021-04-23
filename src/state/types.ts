@@ -134,6 +134,7 @@ export interface Emperor {
   bidAmount?: number
 }
 export interface EmperorState {
+  myEmperor: Emperor,
   currentEmperor: Emperor
   topEmperors: Emperor[]
 }

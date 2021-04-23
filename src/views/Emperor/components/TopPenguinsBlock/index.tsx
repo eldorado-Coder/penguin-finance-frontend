@@ -115,7 +115,7 @@ const TopPenguinsBlock: React.FC = () => {
         {account && topEmperors &&
           topEmperors.map((topEmperor, index) => {
             return (
-              <EmperorRow>
+              <EmperorRow key={topEmperor.lastCrowningBlockTimestamp}>
                 <NumberField>
                   <Text color="secondary" fontSize="12px">
                     {`#${index + 1}`}

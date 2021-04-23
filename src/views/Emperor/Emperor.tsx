@@ -17,7 +17,11 @@ const Grid = styled.div<{ align: string }>`
   margin-bottom: 24px;
   justify-content: space-between;
   justify-content: ${({ align }) => align === 'center' ? "center" : "space-between"};
-
+  margin: 0px -50px;
+  margin-top: -20px;
+  &:last-child {
+    margin-top: -100px;
+  }
 `
 
 const GridItem = styled.div`
