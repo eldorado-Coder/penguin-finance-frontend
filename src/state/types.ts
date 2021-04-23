@@ -120,6 +120,24 @@ export interface AchievementState {
   data: Achievement[]
 }
 
+
+// emperor state
+
+export interface Emperor {
+  address?: string
+  nickname?: string
+  color?: string
+  style?: number
+  isRegistered?: boolean
+  timeAsEmperor?: number
+  lastCrowningBlockTimestamp?: number
+  bidAmount?: number
+}
+export interface EmperorState {
+  currentEmperor: Emperor
+  topEmperors: Emperor[]
+}
+
 // Global state
 
 export interface State {
@@ -130,4 +148,6 @@ export interface State {
   profile: ProfileState
   teams: TeamsState
   achievements: AchievementState
+  emperor: EmperorState
 }
+

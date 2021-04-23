@@ -36,6 +36,26 @@ const config: MenuEntry[] = [
     href: '/arena',
   },
   {
+    label: 'Penguin Emperor',
+    icon: 'NftIcon',
+    href: '/emperor',
+  },
+  // {
+  //   label: 'Penguin lottery',
+  //   icon: 'NftIcon',
+  //   href: '/lottery',
+  // },
+  // {
+  //   label: 'Penguin collectibles',
+  //   icon: 'NftIcon',
+  //   href: '/collectibles',
+  // },
+  // {
+  //   label: 'Penguin teams',
+  //   icon: 'NftIcon',
+  //   href: '/teams',
+  // },
+  {
     label: 'Info',
     icon: 'InfoIcon',
     items: [

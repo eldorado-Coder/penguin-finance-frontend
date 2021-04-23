@@ -15,10 +15,12 @@ import {
   remove as removeToast,
   clear as clearToast,
 } from './actions'
-import { State, Farm, Lp, Pool, ProfileState, TeamsState, AchievementState } from './types'
+import { State, Farm, Lp, Pool, ProfileState, TeamsState, AchievementState, EmperorState } from './types'
 import { fetchProfile } from './profile'
 import { fetchTeam, fetchTeams } from './teams'
 import { fetchAchievements } from './achievements'
+import { setInit, fetchEmperor } from './emperor'
+
 
 const ZERO = new BigNumber(0)
 
@@ -180,6 +182,22 @@ export const useTeams = () => {
   }, [dispatch])
 
   return { teams: data, isInitialized, isLoading }
+}
+
+export const useEmperor = () => {
+  const { account } = useWallet()
+  const emperorState: EmperorState = useSelector((state: State) => state.emperor)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(fetchEmperor(account))
+    return (() => {
+      dispatch(setInit())
+    })
+  }, [dispatch, account])
+
+  // return { teams: data, isInitialized, isLoading }
+  return emperorState
 }
 
 // Achievements
