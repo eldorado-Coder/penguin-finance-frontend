@@ -61,7 +61,22 @@ const YourScoreBlock: React.FC = () => {
     const TranslateString = useI18n()
     const { account } = useWallet()
     // const { teams, isLoading } = useEmperor()
-    const { currentEmperorAddress } = useEmperor()
+    const { myEmperor } = useEmperor()
+
+    // console.log('myEmperor--->', myEmperor)
+
+
+    const getMyStatus = () => {
+        let status: string;
+        if (!account) {
+            status = "not connected"
+        } else {
+            status = 'connected'
+        }
+        return status
+    }
+
+    const myStatus = getMyStatus()
 
 
     return (
@@ -85,7 +100,7 @@ const YourScoreBlock: React.FC = () => {
                 </TitleAvatarWrapper>
             </CardBlockHeader>
             <CardBlockContent>
-                {!account && (
+                {myStatus === 'not connected' && (
                     <WalletContainer>
                         <Text bold color="secondary" fontSize="22px">
                             {TranslateString(1074, 'Check your Rank')}
@@ -94,6 +109,14 @@ const YourScoreBlock: React.FC = () => {
                         <UnlockButton />
                     </WalletContainer>
                 )}
+                {/* {myStatus === 'connected' && (
+                    <WalletContainer>
+                        <Text bold color="secondary" fontSize="22px">
+                            {TranslateString(1074, 'You must register your penguin before attempting to steal the Throne')}
+                        </Text>
+                        <UnlockButton />
+                    </WalletContainer>
+                )} */}
             </CardBlockContent>
         </CardBlock>
     )
