@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import Sound from 'react-sound';
 import { Modal, Text, LinkExternal, Flex } from '@penguinfinance/uikit'
 import useI18n from 'hooks/useI18n'
 
@@ -35,6 +36,11 @@ const Emperor: React.FC = () => {
 
   return (
     <Page>
+      <Sound
+        url="/sounds/penguin_emperor_page.mp3"
+        playStatus={Sound.status.PLAYING}
+        loop
+      />
       <EmperorBgContainer width="100%" height="100%" autoPlay loop muted>
         <source src="/videos/penguin_emperor.mp4" />
       </EmperorBgContainer>
