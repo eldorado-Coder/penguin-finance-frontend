@@ -16,7 +16,7 @@ const CardBlockHeader = styled.div`
   display: flex;
   justify-content: center;
   z-index: 1;
-  padding: 24px;
+  padding: 16px;
 `
 
 const TitleBgWrapper = styled.div`
@@ -41,7 +41,7 @@ const TitleAvatar = styled.img`
 const CardBlockContent = styled.div`
   background: white;
   border-radius: 16px;
-  padding: 24px;
+  padding: 16px;
   position: relative;
   margin-top: -44px;
   text-align:center;
