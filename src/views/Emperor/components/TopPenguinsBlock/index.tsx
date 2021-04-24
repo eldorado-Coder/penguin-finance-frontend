@@ -6,9 +6,9 @@ import { useWallet } from '@binance-chain/bsc-use-wallet'
 import UnlockButton from 'components/UnlockButton'
 import { useEmperor } from 'state/hooks'
 import { getShortenAddress, formatTime } from 'utils/address'
+import SvgIcon from 'components/SvgIcon'
 
 const CardBlock = styled.div`
-  
 `
 
 const CardBlockHeader = styled.div`
@@ -19,96 +19,120 @@ const CardBlockHeader = styled.div`
   padding: 16px;
 `
 
-const TitleBgWrapper = styled.div`
+const TitleBgWrapper = styled.div<{ color: string }>`
   z-index: -1;
   width: 100%;
   text-align: center;
-`
 
-const TitleImage = styled.img`
-  z-index: -1;
-`
-
-const TitleAvatarWrapper = styled.div`
-  text-align: center;
-  position: absolute;
-  top: 29px;
-`
-const TitleAvatar = styled.img`
-  width: 80px;
+  svg {
+    #Layer_4 {
+      g:nth-child(1) {
+        g:nth-child(1) {
+          path:nth-child(1) {
+            fill: ${({ color }) => `#${color}`}; ;
+          }
+          path:nth-child(6) {
+          }
+        }
+      }
+    }
+  }
 `
 
 const CardBlockContent = styled.div`
   background: white;
   border-radius: 16px;
   padding: 16px;
+  padding-top: 24px;
   position: relative;
-  margin-top: -44px;
+  margin-top: -38px;
   text-align:center;
 `
 
 const EmperorRow = styled.div`
   padding: 12px 0px;
-  border-top: 1px solid blue;
+  border-top: 1px solid #42BCF5;
   display: flex;
   &:last-child {
     border-bottom: none;
   }
   /* position: relative;
-  margin-top: -44px;
+  margin-top: -38px;
   text-align:center; */
 `
 
 const NumberField = styled.div`
   width: 10%;
   margin-right: 10px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
 `
 
 const TimeField = styled.div`
   width: 35%;
   padding-right: 10px;
   text-align: center;
+  align-items: center;
+  display: flex;
+  justify-content: center;
 `
 
 const AddressField = styled.div`
   width: 35%;
   padding-right: 10px;
   text-align: center;
+  align-items: center;
+  display: flex;
+  justify-content: center;
 `
 
-const AvatarField = styled.div`
+
+const AvatarField = styled.div<{ color: string }>`
   width: 20%;
   overflow: hidden;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  svg {
+    >g {
+      >path:first-child {
+        fill: black;
+      }
+      #Color_1 {
+        path {
+          fill: ${({ color }) => `#${color}`};
+          opacity: 0.6;
+        }
+      } 
+      #Color_2 {
+        path {
+          fill: ${({ color }) => `#${color}`};
+        }
+      }      
+    }
+  }
 `
 
 const TopPenguinsBlock: React.FC = () => {
   const TranslateString = useI18n()
   const { account } = useWallet()
-  const { topEmperors } = useEmperor()
-
-
-  // console.log('999--->', topEmperors)
-
+  const { currentEmperor, topEmperors } = useEmperor()
+  const headerColor: string = topEmperors.length > 0 ? topEmperors[0].color : currentEmperor.color;
 
   return (
     <CardBlock>
       <CardBlockHeader>
-        <TitleBgWrapper>
-          <TitleImage
+        <TitleBgWrapper color={headerColor}>
+          <SvgIcon
             src={
-              `${process.env.PUBLIC_URL}/images/emperor/top_penguins_banner.svg`
+              account
+                ? `${process.env.PUBLIC_URL}/images/emperor/banner/top_penguins_banner_unlocked.svg`
+                : `${process.env.PUBLIC_URL}/images/emperor/banner/top_penguins_banner_locked.svg`
             }
-            alt="title banner"
+            width="100%"
           />
         </TitleBgWrapper>
-        <TitleAvatarWrapper>
-          <TitleAvatar
-            src={
-              `${process.env.PUBLIC_URL}/images/emperor/penguin_red.svg`
-            }
-            alt="title banner"
-          />
-        </TitleAvatarWrapper>
       </CardBlockHeader>
       <CardBlockContent>
         {!account && <UnlockButton />}
@@ -128,11 +152,15 @@ const TopPenguinsBlock: React.FC = () => {
                 </TimeField>
                 <AddressField>
                   <Text color="secondary" fontSize="12px">
-                    {getShortenAddress(topEmperor.address)}
+                    {getShortenAddress(topEmperor.nickname)}
                   </Text>
                 </AddressField>
-                <AvatarField>
-                  {getShortenAddress(topEmperor.address)}
+                <AvatarField color={topEmperor.color}>
+                  <SvgIcon
+                    src={`${process.env.PUBLIC_URL}/images/emperor/penguin_red.svg`}
+                    width="30px"
+                    height="30px"
+                  />
                 </AvatarField>
               </EmperorRow>
             )
@@ -142,7 +170,6 @@ const TopPenguinsBlock: React.FC = () => {
 
   )
 }
-
 
 
 export default TopPenguinsBlock

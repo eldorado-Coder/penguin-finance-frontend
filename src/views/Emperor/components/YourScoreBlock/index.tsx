@@ -5,6 +5,7 @@ import { Modal, Text, LinkExternal, Flex } from '@penguinfinance/uikit'
 import useI18n from 'hooks/useI18n'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import UnlockButton from 'components/UnlockButton'
+import SvgIcon from 'components/SvgIcon'
 import { useEmperor } from 'state/hooks'
 
 
@@ -20,23 +21,24 @@ const CardBlockHeader = styled.div`
   padding: 24px;
 `
 
-const TitleBgWrapper = styled.div`
+const TitleBgWrapper = styled.div<{ color: string }>`
   z-index: -1;
   width: 100%;
   text-align: center;
-`
 
-const TitleImage = styled.img`
-  z-index: -1;
-`
-
-const TitleAvatarWrapper = styled.div`
-  text-align: center;
-  position: absolute;
-  top: 28px;
-`
-const TitleAvatar = styled.img`
-  width: 80px;
+  svg {
+    #Layer_4 {
+      g:nth-child(1) {
+        g:nth-child(1) {
+          path:nth-child(1) {
+            fill: ${({ color }) => `#${color}`}; ;
+          }
+          path:nth-child(6) {
+          }
+        }
+      }
+    }
+  }
 `
 
 const CardBlockContent = styled.div`
@@ -44,7 +46,7 @@ const CardBlockContent = styled.div`
   border-radius: 16px;
   padding: 16px;
   position: relative;
-  margin-top: -44px;
+  margin-top: -46px;
   text-align:center;
 `
 
@@ -82,22 +84,16 @@ const YourScoreBlock: React.FC = () => {
     return (
         <CardBlock>
             <CardBlockHeader>
-                <TitleBgWrapper>
-                    <TitleImage
+                <TitleBgWrapper color={myEmperor.color}>
+                    <SvgIcon
                         src={
-                            `${process.env.PUBLIC_URL}/images/emperor/your_score_banner.svg`
+                            account
+                                ? `${process.env.PUBLIC_URL}/images/emperor/banner/your_score_banner_unlocked.svg`
+                                : `${process.env.PUBLIC_URL}/images/emperor/banner/your_score_banner_locked.svg`
                         }
-                        alt="title banner"
+                        width="100%"
                     />
                 </TitleBgWrapper>
-                <TitleAvatarWrapper>
-                    {account && (
-                        <TitleAvatar
-                            src={`${process.env.PUBLIC_URL}/images/emperor/penguin_red.svg`}
-                            alt="title banner"
-                        />
-                    )}
-                </TitleAvatarWrapper>
             </CardBlockHeader>
             <CardBlockContent>
                 {myStatus === 'not connected' && (

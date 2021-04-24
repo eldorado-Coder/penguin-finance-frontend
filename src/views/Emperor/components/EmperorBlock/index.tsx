@@ -6,6 +6,7 @@ import { useWallet } from '@binance-chain/bsc-use-wallet'
 import UnlockButton from 'components/UnlockButton'
 import { useEmperor } from 'state/hooks'
 import { getShortenAddress } from 'utils/address'
+import SvgIcon from 'components/SvgIcon'
 
 const CardBlock = styled.div`
   
@@ -19,10 +20,24 @@ const CardBlockHeader = styled.div`
   padding: 16px;
 `
 
-const TitleBgWrapper = styled.div`
+const TitleBgWrapper = styled.div<{ color: string }>`
   z-index: -1;
   width: 100%;
   text-align: center;
+
+  svg {
+    #Layer_4 {
+      g:nth-child(1) {
+        g:nth-child(1) {
+          path:nth-child(1) {
+            fill: ${({ color }) => `#${color}`}; ;
+          }
+          path:nth-child(6) {
+          }
+        }
+      }
+    }
+  }
 `
 
 const TitleImage = styled.img`
@@ -43,7 +58,7 @@ const CardBlockContent = styled.div`
   border-radius: 16px;
   padding: 16px;
   position: relative;
-  margin-top: -44px;
+  margin-top: -38px;
   text-align:center;
 `
 
@@ -61,26 +76,22 @@ const EmperorBlock: React.FC = () => {
     const currentEmperorNickname = currentEmperor && currentEmperor.nickname
     const currentEmperorBidAmount = currentEmperor && currentEmperor.bidAmount || 0
 
+    console.log('123--->', currentEmperor)
+
 
     return (
         <CardBlock >
             <CardBlockHeader>
-                <TitleBgWrapper>
-                    <TitleImage
+                <TitleBgWrapper color={currentEmperor.color}>
+                    <SvgIcon
                         src={
-                            `${process.env.PUBLIC_URL}/images/emperor/emperor_banner.svg`
+                            account
+                                ? `${process.env.PUBLIC_URL}/images/emperor/banner/emperor_banner_unlocked.svg`
+                                : `${process.env.PUBLIC_URL}/images/emperor/banner/emperor_banner_locked.svg`
                         }
-                        alt="title banner"
+                        width="100%"
                     />
                 </TitleBgWrapper>
-                <TitleAvatarWrapper>
-                    <TitleAvatar
-                        src={
-                            `${process.env.PUBLIC_URL}/images/emperor/penguin_red.svg`
-                        }
-                        alt="title banner"
-                    />
-                </TitleAvatarWrapper>
             </CardBlockHeader>
             <CardBlockContent>
                 {!account && (
