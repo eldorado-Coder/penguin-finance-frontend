@@ -45,6 +45,7 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
   }
 
   const xPefiToPefiRatio = getXPefiToPefiRatio()
+  const TVL = 5838483.88;
 
   return (
     <StyledPefiStats>
@@ -60,10 +61,10 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
           <Text color="primary" fontSize="14px">{TranslateString(538, 'Total PEFI Burned')}</Text>
           {burnedBalance && <CardValue fontSize="14px" value={getBalanceNumber(burnedBalance)} />}
         </Row>
-        {/* <Row>
+        <Row>
           <Text color="primary" fontSize="14px">{TranslateString(538, 'Total TVL')}</Text>
-          {burnedBalance && <CardValue fontSize="14px" value={getBalanceNumber(burnedBalance)} />}
-        </Row> */}
+          <Text fontSize="14px"><b>{`$${TVL}`}</b></Text>
+        </Row>
         <Row>
           <Text color="primary" fontSize="14px">{TranslateString(538, 'PEFI marketcap')}</Text>
           {pefiMarketcap && <CardValue fontSize="14px" value={pefiMarketcap} />}

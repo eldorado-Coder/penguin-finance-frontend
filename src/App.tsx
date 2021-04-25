@@ -17,14 +17,16 @@ import history from './routerHistory'
 const Home = lazy(() => import('./views/Home'))
 const Farms = lazy(() => import('./views/Farms'))
 const Arena = lazy(() => import('./views/Arena'))
-// const Nests = lazy(() => import('./views/Nests'))
-// const Lottery = lazy(() => import('./views/Lottery'))
-// const Ifos = lazy(() => import('./views/Ifos'))
+const Emperor = lazy(() => import('./views/Emperor'))
 const NotFound = lazy(() => import('./views/NotFound'))
-// const Collectibles = lazy(() => import('./views/Collectibles'))
-// const Teams = lazy(() => import('./views/Teams'))
-// const Team = lazy(() => import('./views/Teams/Team'))
-// const Profile = lazy(() => import('./views/Profile'))
+
+// const Nests = lazy(() => import('./views/Nests'))
+const Lottery = lazy(() => import('./views/Lottery'))
+const Ifos = lazy(() => import('./views/Ifos'))
+const Collectibles = lazy(() => import('./views/Collectibles'))
+const Teams = lazy(() => import('./views/Teams'))
+const Team = lazy(() => import('./views/Teams/Team'))
+const Profile = lazy(() => import('./views/Profile'))
 
 // This config is required for number formating
 BigNumber.config({
@@ -69,27 +71,9 @@ const App: React.FC = () => {
             <Route path="/arena">
               <Arena />
             </Route>
-            {/* <Route path="/nests">
-              <Nests />
-            </Route> */}
-            {/* <Route path="/lottery">
-              <Lottery />
+            <Route path="/emperor">
+              <Emperor />
             </Route>
-            <Route path="/ifo">
-              <Ifos />
-            </Route>
-            <Route path="/collectibles">
-              <Collectibles />
-            </Route>
-            <Route exact path="/teams">
-              <Teams />
-            </Route>
-            <Route path="/teams/:id">
-              <Team />
-            </Route>
-            <Route path="/profile">
-              <Profile />
-            </Route> */}
             {/* Redirect */}
             {/* <Route path="/staking">
               <Redirect to="/pools" />
