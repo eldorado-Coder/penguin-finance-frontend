@@ -35,11 +35,11 @@ const config: MenuEntry[] = [
     icon: 'NftIcon',
     href: '/arena',
   },
-  {
-    label: 'Penguin Emperor',
-    icon: 'NftIcon',
-    href: '/emperor',
-  },
+  // {
+  //   label: 'Penguin Emperor',
+  //   icon: 'NftIcon',
+  //   href: '/emperor',
+  // },
   // {
   //   label: 'Penguin lottery',
   //   icon: 'NftIcon',
