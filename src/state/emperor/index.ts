@@ -57,8 +57,6 @@ export const fetchEmperor = (account) => async (dispatch) => {
   const myEmperor = await fetchEmperorData(account);
   dispatch(setMyEmperor(myEmperor));
 
-  console.log('555--->', myEmperor)
-
   // fetch current emperor
   const currentEmperorAddress = await fetchCurrentEmperorAddress();
   dispatch(setCurrentEmperor({ address: currentEmperorAddress }));

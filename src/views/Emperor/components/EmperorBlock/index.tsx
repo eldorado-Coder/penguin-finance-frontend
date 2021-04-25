@@ -40,19 +40,6 @@ const TitleBgWrapper = styled.div<{ color: string }>`
   }
 `
 
-const TitleImage = styled.img`
-  z-index: -1;
-`
-
-const TitleAvatarWrapper = styled.div`
-  text-align: center;
-  position: absolute;
-  top: 29px;
-`
-const TitleAvatar = styled.img`
-  width: 80px;
-`
-
 const CardBlockContent = styled.div`
   background: white;
   border-radius: 16px;
@@ -71,13 +58,10 @@ const EmperorInfoContainer = styled.div`
 const EmperorBlock: React.FC = () => {
     const TranslateString = useI18n()
     const { account } = useWallet()
-    const { currentEmperor, topEmperors } = useEmperor()
+    const { currentEmperor } = useEmperor()
     const currentEmperorAddress = currentEmperor && currentEmperor.address
     const currentEmperorNickname = currentEmperor && currentEmperor.nickname
     const currentEmperorBidAmount = currentEmperor && currentEmperor.bidAmount || 0
-
-    console.log('123--->', currentEmperor)
-
 
     return (
         <CardBlock >

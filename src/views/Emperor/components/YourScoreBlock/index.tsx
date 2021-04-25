@@ -1,12 +1,13 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
-import { Modal, Text, LinkExternal, Flex } from '@penguinfinance/uikit'
+import { Modal, Button, Text, LinkExternal, Flex } from '@penguinfinance/uikit'
 import useI18n from 'hooks/useI18n'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import UnlockButton from 'components/UnlockButton'
 import SvgIcon from 'components/SvgIcon'
 import { useEmperor } from 'state/hooks'
+import RegisterModal from './RegisterModal'
 
 
 const CardBlock = styled.div`
@@ -57,28 +58,61 @@ const WalletContainer = styled.div`
   }
 `
 
+const RegisterContainer = styled.div`
+    margin-top: 20px;
+    text-align:center;
+    button {
+        margin-top: 20px;
+    }
+`
+
+const RegisterButtonContainer = styled.div`
+    /* margin-top: 20px;
+    text-align:center;
+    button {
+        margin-top: 20px;
+    } */
+`
+
+
 
 const YourScoreBlock: React.FC = () => {
+    const [isRegisterRequested, setRegisterRequested] = useState(false)
     const dispatch = useDispatch();
     const TranslateString = useI18n()
     const { account } = useWallet()
-    // const { teams, isLoading } = useEmperor()
     const { myEmperor } = useEmperor()
 
-    // console.log('myEmperor--->', myEmperor)
 
 
     const getMyStatus = () => {
-        let status: string;
-        if (!account) {
-            status = "not connected"
-        } else {
-            status = 'connected'
+        if (account) {
+            if (myEmperor.isRegistered) {
+                return 'registered';
+            }
+            return "not registered";
         }
-        return status
+        return "not connected";
     }
 
     const myStatus = getMyStatus()
+
+
+    const onToggleRegister = () => {
+        setRegisterRequested(!isRegisterRequested)
+    }
+
+    const onRegister = () => {
+        // setRegisterRequested(!isRegisterRequested)
+    }
+
+
+
+    if (isRegisterRequested) {
+        return (
+            <RegisterModal onConfirm={onRegister} onCancel={onToggleRegister} />
+        )
+    }
 
 
     return (
@@ -105,14 +139,18 @@ const YourScoreBlock: React.FC = () => {
                         <UnlockButton />
                     </WalletContainer>
                 )}
-                {/* {myStatus === 'connected' && (
-                    <WalletContainer>
-                        <Text bold color="secondary" fontSize="22px">
+                {myStatus === 'not registered' && (
+                    <RegisterContainer>
+                        <Text bold color="secondary" fontSize="18px">
                             {TranslateString(1074, 'You must register your penguin before attempting to steal the Throne')}
                         </Text>
-                        <UnlockButton />
-                    </WalletContainer>
-                )} */}
+                        <RegisterButtonContainer>
+                            <Button onClick={onToggleRegister}>
+                                {TranslateString(292, 'Register')}
+                            </Button>
+                        </RegisterButtonContainer>
+                    </RegisterContainer>
+                )}
             </CardBlockContent>
         </CardBlock>
     )
