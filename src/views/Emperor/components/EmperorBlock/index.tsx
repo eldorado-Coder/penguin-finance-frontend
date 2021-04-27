@@ -43,7 +43,7 @@ const TitleBgWrapper = styled.div<{ color: string }>`
 const CardBlockContent = styled.div`
   background: white;
   border-radius: 16px;
-  padding: 6px 16px;
+  padding: 16px;
   position: relative;
   margin-top: -38px;
   text-align:center;
@@ -55,13 +55,57 @@ const WalletContainer = styled.div`
 const EmperorInfoContainer = styled.div`
 `
 
+const PenguinsImageContainer = styled.div`
+  position: relative;
+`
+
+const KingPenguinImageWrapper = styled.div`
+  position: absolute;
+  top: 110px;
+  width: 50%;
+  right: 25%;
+`
+
+const MyPenguinImageWrapper = styled.div`
+  position: absolute;
+  top: 300px;
+  width: 40%;
+  left: 320px;
+`
+
+
+
+const images = [
+  { id: '1', kingSrc: 'penguin_top_hat.svg', normalSrc: 'penguin_top_hat.svg' },
+  { id: '2', kingSrc: 'penguin_fedora.svg', normalSrc: 'penguin_fedora.svg' },
+  { id: '3', kingSrc: 'penguin_patch_with_crown.svg', normalSrc: 'penguin_patch_without_crown.svg' },
+  { id: '4', kingSrc: 'penguin_sunglass_with_crown.svg', normalSrc: 'penguin_sunglass_without_crown.svg' }
+]
+
 const EmperorBlock: React.FC = () => {
   const TranslateString = useI18n()
   const { account } = useWallet()
-  const { currentEmperor } = useEmperor()
+  const { currentEmperor, myEmperor } = useEmperor()
   const currentEmperorAddress = currentEmperor && currentEmperor.address
   const currentEmperorNickname = currentEmperor && currentEmperor.nickname
   const currentEmperorBidAmount = currentEmperor && currentEmperor.bidAmount || 0
+
+  const getKingPenguin = (emperor) => {
+    const emperorPenguin = images.find((row) => String(row.id) === String(emperor.style))
+    if (emperorPenguin) return emperorPenguin.kingSrc;
+    if (emperor.style) return images[0].kingSrc;
+    return ''
+  }
+
+  const getNormalPenguin = (emperor) => {
+    const emperorPenguin = images.find((row) => String(row.id) === String(emperor.style))
+    if (emperorPenguin) return emperorPenguin.normalSrc;
+    if (emperor.style && emperor.style !== '0') return images[0].normalSrc;
+    return ''
+  }
+
+  const currentEmperorPenguin = getKingPenguin(currentEmperor)
+  const myEmperorPenguin = getNormalPenguin(myEmperor)
 
   return (
     <CardBlock >
@@ -93,7 +137,24 @@ const EmperorBlock: React.FC = () => {
           </EmperorInfoContainer>
         )}
       </CardBlockContent>
-    </CardBlock >)
+      <PenguinsImageContainer>
+        <KingPenguinImageWrapper>
+          <SvgIcon
+            src={`${process.env.PUBLIC_URL}/images/emperor/king/${currentEmperorPenguin}`}
+            width="100%"
+          />
+        </KingPenguinImageWrapper>
+        {currentEmperor.address && myEmperor.address && currentEmperor.address !== myEmperor.address && (
+          <MyPenguinImageWrapper>
+            <SvgIcon
+              src={`${process.env.PUBLIC_URL}/images/emperor/king/${myEmperorPenguin}`}
+              width="100%"
+            />
+          </MyPenguinImageWrapper>
+        )}
+      </PenguinsImageContainer>
+    </CardBlock >
+  )
 }
 
 

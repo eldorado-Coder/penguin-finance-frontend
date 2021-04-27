@@ -135,7 +135,7 @@ export const soushHarvestBnb = async (sousChefContract, account) => {
 
 export const registerEmperor = async (emperorContract, { nickName, color, style }, account) => {
   return emperorContract.methods
-    .registerYourPenguin(nickName, color, new BigNumber(style).toString())
+    .registerYourPenguin(nickName, color, style.toString())
     .send({ from: account, gas: 200000 })
     .on('transactionHash', (tx) => {
       return tx.transactionHash
