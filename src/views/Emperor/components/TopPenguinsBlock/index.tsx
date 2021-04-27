@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Modal, Text, LinkExternal, Flex } from '@penguinfinance/uikit'
-import useI18n from 'hooks/useI18n'
+import { Text } from '@penguinfinance/uikit'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import UnlockButton from 'components/UnlockButton'
 import { useEmperor } from 'state/hooks'
@@ -40,7 +39,7 @@ const TitleBgWrapper = styled.div<{ color: string }>`
 `
 
 const CardBlockContent = styled.div`
-  background: white;
+  background: ${(props) => props.theme.card.background};
   border-radius: 16px;
   padding: 16px;
   padding-top: 24px;
@@ -115,7 +114,6 @@ const AvatarField = styled.div<{ color: string }>`
 `
 
 const TopPenguinsBlock: React.FC = () => {
-  const TranslateString = useI18n()
   const { account } = useWallet()
   const { currentEmperor, topEmperors } = useEmperor()
   const headerColor: string = topEmperors.length > 0 ? topEmperors[0].color : currentEmperor.color;

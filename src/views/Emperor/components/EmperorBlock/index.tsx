@@ -41,7 +41,7 @@ const TitleBgWrapper = styled.div<{ color: string }>`
 `
 
 const CardBlockContent = styled.div`
-  background: white;
+  background: ${(props) => props.theme.card.background};
   border-radius: 16px;
   padding: 16px;
   position: relative;
