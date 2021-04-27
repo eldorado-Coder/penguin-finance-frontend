@@ -43,7 +43,7 @@ const TitleBgWrapper = styled.div<{ color: string }>`
 const CardBlockContent = styled.div`
   background: white;
   border-radius: 16px;
-  padding: 16px;
+  padding: 6px 16px;
   position: relative;
   margin-top: -38px;
   text-align:center;
@@ -56,44 +56,44 @@ const EmperorInfoContainer = styled.div`
 `
 
 const EmperorBlock: React.FC = () => {
-    const TranslateString = useI18n()
-    const { account } = useWallet()
-    const { currentEmperor } = useEmperor()
-    const currentEmperorAddress = currentEmperor && currentEmperor.address
-    const currentEmperorNickname = currentEmperor && currentEmperor.nickname
-    const currentEmperorBidAmount = currentEmperor && currentEmperor.bidAmount || 0
+  const TranslateString = useI18n()
+  const { account } = useWallet()
+  const { currentEmperor } = useEmperor()
+  const currentEmperorAddress = currentEmperor && currentEmperor.address
+  const currentEmperorNickname = currentEmperor && currentEmperor.nickname
+  const currentEmperorBidAmount = currentEmperor && currentEmperor.bidAmount || 0
 
-    return (
-        <CardBlock >
-            <CardBlockHeader>
-                <TitleBgWrapper color={currentEmperor.color}>
-                    <SvgIcon
-                        src={
-                            account
-                                ? `${process.env.PUBLIC_URL}/images/emperor/banner/emperor_banner_unlocked.svg`
-                                : `${process.env.PUBLIC_URL}/images/emperor/banner/emperor_banner_locked.svg`
-                        }
-                        width="100%"
-                    />
-                </TitleBgWrapper>
-            </CardBlockHeader>
-            <CardBlockContent>
-                {!account && (
-                    <WalletContainer>
-                        <UnlockButton />
-                    </WalletContainer>
-                )}
-                {account && (
-                    <EmperorInfoContainer>
-                        <Text bold color="secondary" fontSize="22px">
-                            {TranslateString(1074, currentEmperorNickname)}
-                        </Text>
-                        <Text color="secondary" fontSize="14px">{getShortenAddress(currentEmperorAddress)}</Text>
-                        <Text bold color="secondary" fontSize="14px">{`Current Bid: ${currentEmperorBidAmount.toFixed(2)} xPEFI`}</Text>
-                    </EmperorInfoContainer>
-                )}
-            </CardBlockContent>
-        </CardBlock >)
+  return (
+    <CardBlock >
+      <CardBlockHeader>
+        <TitleBgWrapper color={currentEmperor.color}>
+          <SvgIcon
+            src={
+              account
+                ? `${process.env.PUBLIC_URL}/images/emperor/banner/emperor_banner_unlocked.svg`
+                : `${process.env.PUBLIC_URL}/images/emperor/banner/emperor_banner_locked.svg`
+            }
+            width="100%"
+          />
+        </TitleBgWrapper>
+      </CardBlockHeader>
+      <CardBlockContent>
+        {!account && (
+          <WalletContainer>
+            <UnlockButton />
+          </WalletContainer>
+        )}
+        {account && (
+          <EmperorInfoContainer>
+            <Text bold color="secondary" fontSize="22px">
+              {TranslateString(1074, currentEmperorNickname)}
+            </Text>
+            <Text color="secondary" fontSize="14px">{getShortenAddress(currentEmperorAddress)}</Text>
+            <Text bold color="secondary" fontSize="14px">{`Current Bid: ${currentEmperorBidAmount.toFixed(2)} xPEFI`}</Text>
+          </EmperorInfoContainer>
+        )}
+      </CardBlockContent>
+    </CardBlock >)
 }
 
 
