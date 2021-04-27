@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
-import { Modal, Button, Text, LinkExternal, Flex } from '@penguinfinance/uikit'
+import { Modal, Button, Text, LinkExternal, Flex, useModal } from '@penguinfinance/uikit'
 import useI18n from 'hooks/useI18n'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import UnlockButton from 'components/UnlockButton'
 import SvgIcon from 'components/SvgIcon'
 import { useEmperor } from 'state/hooks'
+import { useRegister, useStealCrown } from 'hooks/useEmperor'
 import RegisterModal from './RegisterModal'
+import StealCrownModal from './StealCrownModal'
 
 
 const CardBlock = styled.div`
@@ -77,17 +79,20 @@ const RegisterButtonContainer = styled.div`
 
 
 const YourScoreBlock: React.FC = () => {
-    const [isRegisterRequested, setRegisterRequested] = useState(false)
     const dispatch = useDispatch();
     const TranslateString = useI18n()
     const { account } = useWallet()
-    const { myEmperor } = useEmperor()
-
+    const { myEmperor, currentEmperor } = useEmperor()
+    const { onRegister } = useRegister()
+    const { onSteal } = useStealCrown()
 
 
     const getMyStatus = () => {
         if (account) {
             if (myEmperor.isRegistered) {
+                if (myEmperor.address === currentEmperor.address) {
+                    return 'king';
+                }
                 return 'registered';
             }
             return "not registered";
@@ -97,23 +102,21 @@ const YourScoreBlock: React.FC = () => {
 
     const myStatus = getMyStatus()
 
-
-    const onToggleRegister = () => {
-        setRegisterRequested(!isRegisterRequested)
+    const onRegisterPenguin = async (nickName, color, style) => {
+        await onRegister(nickName, color, style)
     }
 
-    const onRegister = () => {
-        // setRegisterRequested(!isRegisterRequested)
+    const onStealCrown = async (amount) => {
+        await onSteal(amount)
     }
 
+    const [onToggleRegister] = useModal(
+        <RegisterModal onConfirm={onRegisterPenguin} />
+    )
 
-
-    if (isRegisterRequested) {
-        return (
-            <RegisterModal onConfirm={onRegister} onCancel={onToggleRegister} />
-        )
-    }
-
+    const [onToggleSteal] = useModal(
+        <StealCrownModal onConfirm={onStealCrown} />
+    )
 
     return (
         <CardBlock>
@@ -147,6 +150,22 @@ const YourScoreBlock: React.FC = () => {
                         <RegisterButtonContainer>
                             <Button onClick={onToggleRegister}>
                                 {TranslateString(292, 'Register')}
+                            </Button>
+                        </RegisterButtonContainer>
+                    </RegisterContainer>
+                )}
+
+                {myStatus === 'registered' && (
+                    <RegisterContainer>
+                        <Text bold color="secondary" fontSize="18px">
+                            {TranslateString(1074, 'You have been Emperor for:')}
+                        </Text>
+                        <Text bold color="primary" fontSize="22px">
+                            {`${myEmperor.timeAsEmperor} seconds`}
+                        </Text>
+                        <RegisterButtonContainer>
+                            <Button onClick={onToggleSteal}>
+                                {TranslateString(292, 'Steal the crown')}
                             </Button>
                         </RegisterButtonContainer>
                     </RegisterContainer>

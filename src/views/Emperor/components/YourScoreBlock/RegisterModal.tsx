@@ -2,57 +2,80 @@ import BigNumber from 'bignumber.js'
 import React, { useCallback, useMemo, useState } from 'react'
 import { Button, Modal, LinkExternal } from '@penguinfinance/uikit'
 import ModalActions from 'components/ModalActions'
-import ModalInput from 'components/ModalInput'
+import FieldInput from 'components/FieldInput'
 import useI18n from 'hooks/useI18n'
 
 interface RegisterModalProps {
-  onConfirm: (amount: string) => void
-  onCancel: () => void
-  nickName?: string
-  color?: string
-  style?: string
+  onConfirm: (nickName: string, color: string, style: string) => void
+  onDismiss?: () => void
 }
 
-const RegisterModal: React.FC<RegisterModalProps> = ({ onConfirm, onCancel, nickName = '', color = '', style = '' }) => {
-  const [val, setVal] = useState('')
+const RegisterModal: React.FC<RegisterModalProps> = ({ onConfirm, onDismiss }) => {
+  const [nickName, setNickName] = useState('')
+  const [color, setColor] = useState('')
+  const [style, setStyle] = useState('')
+
   const [pendingTx, setPendingTx] = useState(false)
   const TranslateString = useI18n()
 
-  const handleChange = useCallback(
+  const onChangeNickName = useCallback(
     (e: React.FormEvent<HTMLInputElement>) => {
-      setVal(e.currentTarget.value)
+      setNickName(e.currentTarget.value)
     },
-    [setVal],
+    [setNickName],
   )
 
+  const onChangeStyle = useCallback(
+    (e: React.FormEvent<HTMLInputElement>) => {
+      setStyle(e.currentTarget.value)
+    },
+    [setStyle],
+  )
+
+  const onChangeColor = useCallback(
+    (e: React.FormEvent<HTMLInputElement>) => {
+      setColor(e.currentTarget.value)
+    },
+    [setColor],
+  )
 
   return (
-    <Modal title={TranslateString(1068, 'Stake LP tokens')} onDismiss={onCancel}>
-      <ModalInput
+    <Modal title={TranslateString(1068, 'Register your emperor')} onDismiss={onDismiss}>
+      <FieldInput
         value={nickName}
-        onChange={handleChange}
-        inputTitle={TranslateString(1070, 'Stake')}
+        placeholder="emperor_king"
+        onChange={onChangeNickName}
+        inputTitle={TranslateString(1070, 'Nick name')}
+      />
+      <FieldInput
+        value={color}
+        placeholder="ff3356"
+        onChange={onChangeColor}
+        inputTitle={TranslateString(1070, 'Color')}
+      />
+      <FieldInput
+        value={style}
+        placeholder="0, 1, 2, 3..."
+        onChange={onChangeStyle}
+        inputTitle={TranslateString(1070, 'Style')}
       />
       <ModalActions>
-        <Button variant="primary" onClick={onCancel} scale="md">
+        <Button variant="primary" onClick={onDismiss} scale="md">
           {TranslateString(462, 'Cancel')}
         </Button>
         <Button
           scale="md"
-          disabled={pendingTx || val === '0'}
+          disabled={pendingTx || nickName.length === 0 || color.length === 0 || style.length === 0}
           onClick={async () => {
             setPendingTx(true)
-            await onConfirm(val)
+            await onConfirm(nickName, color, style)
             setPendingTx(false)
-            onCancel()
+            onDismiss()
           }}
         >
           {pendingTx ? TranslateString(488, 'Pending Confirmation') : TranslateString(464, 'Confirm')}
         </Button>
       </ModalActions>
-      <LinkExternal href={addLiquidityUrl} style={{ alignSelf: 'center' }}>
-        {TranslateString(999, 'Get')} {tokenName}
-      </LinkExternal>
     </Modal>
   )
 }

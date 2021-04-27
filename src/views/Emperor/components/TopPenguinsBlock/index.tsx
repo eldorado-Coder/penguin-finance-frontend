@@ -5,7 +5,7 @@ import useI18n from 'hooks/useI18n'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import UnlockButton from 'components/UnlockButton'
 import { useEmperor } from 'state/hooks'
-import { getShortenAddress, formatTime } from 'utils/address'
+import { getShortenNickName, formatTime } from 'utils/address'
 import SvgIcon from 'components/SvgIcon'
 
 const CardBlock = styled.div`
@@ -152,7 +152,7 @@ const TopPenguinsBlock: React.FC = () => {
                 </TimeField>
                 <AddressField>
                   <Text color="secondary" fontSize="12px">
-                    {getShortenAddress(topEmperor.nickname)}
+                    {getShortenNickName(topEmperor.nickname)}
                   </Text>
                 </AddressField>
                 <AvatarField color={topEmperor.color}>

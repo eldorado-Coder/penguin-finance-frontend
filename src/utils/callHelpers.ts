@@ -131,3 +131,22 @@ export const soushHarvestBnb = async (sousChefContract, account) => {
       return tx.transactionHash
     })
 }
+
+
+export const registerEmperor = async (emperorContract, { nickName, color, style }, account) => {
+  return emperorContract.methods
+    .registerYourPenguin(nickName, color, new BigNumber(style).toString())
+    .send({ from: account, gas: 200000 })
+    .on('transactionHash', (tx) => {
+      return tx.transactionHash
+    })
+}
+
+export const stealCrown = async (emperorContract, amount, account) => {
+  return emperorContract.methods
+    .stealCrown(new BigNumber(amount).times(new BigNumber(10).pow(18)).toString())
+    .send({ from: account, gas: 200000 })
+    .on('transactionHash', (tx) => {
+      return tx.transactionHash
+    })
+}
