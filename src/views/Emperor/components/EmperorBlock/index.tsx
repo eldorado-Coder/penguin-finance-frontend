@@ -27,13 +27,9 @@ const TitleBgWrapper = styled.div<{ color: string }>`
 
   svg {
     #Layer_4 {
-      g:nth-child(1) {
-        g:nth-child(1) {
-          path:nth-child(1) {
-            fill: ${({ color }) => `#${color}`}; ;
-          }
-          path:nth-child(6) {
-          }
+      #Color_1 {
+        path {
+          fill: ${({ color }) => `#${color}`};
         }
       }
     }
