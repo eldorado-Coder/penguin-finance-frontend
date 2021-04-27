@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Modal, Text, LinkExternal, Flex } from '@penguinfinance/uikit'
+import { Text } from '@penguinfinance/uikit'
 import useI18n from 'hooks/useI18n'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import UnlockButton from 'components/UnlockButton'
@@ -88,8 +88,8 @@ const EmperorBlock: React.FC = () => {
 
   const getKingPenguin = (emperor) => {
     const emperorPenguin = images.find((row) => String(row.id) === String(emperor.style))
-    if (emperorPenguin) return emperorPenguin.kingSrc;
-    if (emperor.style) return images[0].kingSrc;
+    // if (emperorPenguin) return emperorPenguin.kingSrc;
+    if (emperor.style) return images[2].kingSrc;
     return ''
   }
 

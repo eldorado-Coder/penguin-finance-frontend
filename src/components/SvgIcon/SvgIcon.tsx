@@ -9,6 +9,7 @@ interface IconProps {
 }
 
 const Icon = ({ src, width = "20px", height = "20px" }: IconProps) => {
+  console.log('555--->src', src)
   return (
     <ReactSVG
       src={src}
