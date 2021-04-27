@@ -88,8 +88,8 @@ const EmperorBlock: React.FC = () => {
 
   const getKingPenguin = (emperor) => {
     const emperorPenguin = images.find((row) => String(row.id) === String(emperor.style))
-    // if (emperorPenguin) return emperorPenguin.kingSrc;
-    if (emperor.style) return images[2].kingSrc;
+    if (emperorPenguin) return emperorPenguin.kingSrc;
+    if (emperor.style) return images[0].kingSrc;
     return ''
   }
 
