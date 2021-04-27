@@ -45,7 +45,7 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
   }
 
   const xPefiToPefiRatio = getXPefiToPefiRatio()
-  const TVL = 6972796.28;
+  const TVL = 6,972,796.28;
 
   return (
     <StyledPefiStats>
@@ -79,7 +79,7 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
         </Row>
         <Row>
           <Text color="primary" fontSize="14px">{TranslateString(540, 'Paper Hands Penalty')}</Text>
-          <Text fontSize="14px"><b>17.36%</b></Text>
+          <Text fontSize="14px"><b>14.47%</b></Text>
         </Row>
       </CardBody>
     </StyledPefiStats>
