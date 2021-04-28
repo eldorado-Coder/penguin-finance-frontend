@@ -42,6 +42,58 @@
     },
     {
         "type": "function",
+        "stateMutability": "view",
+        "outputs": [
+            {
+                "type": "address",
+                "name": "",
+                "internalType": "address"
+            }
+        ],
+        "name": "admin",
+        "inputs": []
+    },
+    {
+        "type": "function",
+        "stateMutability": "nonpayable",
+        "outputs": [],
+        "name": "changeColor",
+        "inputs": [
+            {
+                "type": "string",
+                "name": "_newColor",
+                "internalType": "string"
+            }
+        ]
+    },
+    {
+        "type": "function",
+        "stateMutability": "nonpayable",
+        "outputs": [],
+        "name": "changeFinalDate",
+        "inputs": [
+            {
+                "type": "uint256",
+                "name": "_newFinalDateInSeconds",
+                "internalType": "uint256"
+            }
+        ]
+    },
+    {
+        "type": "function",
+        "stateMutability": "nonpayable",
+        "outputs": [],
+        "name": "changeStyle",
+        "inputs": [
+            {
+                "type": "uint256",
+                "name": "_newStyle",
+                "internalType": "uint256"
+            }
+        ]
+    },
+    {
+        "type": "function",
         "stateMutability": "nonpayable",
         "outputs": [],
         "name": "claimJackpot",
