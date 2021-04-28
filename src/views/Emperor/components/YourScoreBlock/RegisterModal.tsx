@@ -44,7 +44,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ onConfirm, onDismiss }) =
         value={nickName}
         placeholder="emperor_king"
         onChange={onChangeNickName}
-        inputTitle={TranslateString(1070, 'Nick name')}
+        inputTitle={TranslateString(1070, 'Nickname')}
       />
       <FieldInput
         value={color}
