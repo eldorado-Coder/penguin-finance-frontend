@@ -4,7 +4,7 @@ import { Text } from '@penguinfinance/uikit'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import UnlockButton from 'components/UnlockButton'
 import { useEmperor } from 'state/hooks'
-import { getShortenNickName, formatTime } from 'utils/address'
+import { getShortenNickName, formatTime, badWordsFilter } from 'utils/address'
 import SvgIcon from 'components/SvgIcon'
 
 const CardBlock = styled.div`
@@ -24,7 +24,7 @@ const TitleBgWrapper = styled.div<{ color: string }>`
   text-align: center;
 
   svg {
-    #Layer_4 {
+    #Layer_4_unlocked {
       #Color_1 {
         path {
           fill: ${({ color }) => `#${color}`};
@@ -90,21 +90,10 @@ const AvatarField = styled.div<{ color: string }>`
   display: flex;
   justify-content: center;
   svg {
-    >g {
-      >path:first-child {
-        fill: black;
+    #Color_1_default {
+      path {
+        fill: ${({ color }) => `#${color}`};
       }
-      #Color_1 {
-        path {
-          fill: ${({ color }) => `#${color}`};
-          opacity: 0.6;
-        }
-      } 
-      #Color_2 {
-        path {
-          fill: ${({ color }) => `#${color}`};
-        }
-      }      
     }
   }
 `
@@ -146,7 +135,7 @@ const TopPenguinsBlock: React.FC = () => {
                 </TimeField>
                 <AddressField>
                   <Text color="secondary" fontSize="12px">
-                    {getShortenNickName(topEmperor.nickname)}
+                    {getShortenNickName(badWordsFilter(topEmperor.nickname))}
                   </Text>
                 </AddressField>
                 <AvatarField color={topEmperor.color}>

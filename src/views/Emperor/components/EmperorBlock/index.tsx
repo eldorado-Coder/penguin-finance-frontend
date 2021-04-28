@@ -26,7 +26,7 @@ const TitleBgWrapper = styled.div<{ color: string }>`
   text-align: center;
 
   svg {
-    #Layer_4 {
+    #Layer_4_unlocked {
       #Color_1 {
         path {
           fill: ${({ color }) => `#${color}`};

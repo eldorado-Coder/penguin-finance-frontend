@@ -73,7 +73,6 @@ const RegisterButtonContainer = styled.div`
 `
 
 
-
 const YourScoreBlock: React.FC = () => {
     const dispatch = useDispatch();
     const TranslateString = useI18n()
@@ -114,13 +113,14 @@ const YourScoreBlock: React.FC = () => {
         <StealCrownModal onConfirm={onStealCrown} />
     )
 
+
     return (
         <CardBlock>
             <CardBlockHeader>
                 <TitleBgWrapper color={myEmperor.color}>
                     <SvgIcon
                         src={
-                            account
+                            myStatus === 'registered'
                                 ? `${process.env.PUBLIC_URL}/images/emperor/banner/your_score_banner_unlocked.svg`
                                 : `${process.env.PUBLIC_URL}/images/emperor/banner/your_score_banner_locked.svg`
                         }
