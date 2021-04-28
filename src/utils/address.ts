@@ -20,6 +20,6 @@ export const formatTime = (timeStamp: number, type = "min") => {
 }
 
 export const badWordsFilter = (nickname: string) => {
-    const hasBadWord = nickname.replace(badWordsList, 'apple');
-    return hasBadWord;
+    if (!nickname) return '';
+    return nickname.replace(badWordsList, 'apple');
 }

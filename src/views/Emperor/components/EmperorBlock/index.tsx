@@ -5,7 +5,7 @@ import useI18n from 'hooks/useI18n'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import UnlockButton from 'components/UnlockButton'
 import { useEmperor } from 'state/hooks'
-import { getShortenAddress } from 'utils/address'
+import { getShortenAddress, badWordsFilter } from 'utils/address'
 import SvgIcon from 'components/SvgIcon'
 
 const CardBlock = styled.div`
@@ -94,7 +94,7 @@ const EmperorBlock: React.FC = () => {
   const { account } = useWallet()
   const { currentEmperor, myEmperor } = useEmperor()
   const currentEmperorAddress = currentEmperor && currentEmperor.address
-  const currentEmperorNickname = currentEmperor && currentEmperor.nickname
+  const currentEmperorNickname = currentEmperor && badWordsFilter(currentEmperor.nickname)
   const currentEmperorBidAmount = currentEmperor && currentEmperor.bidAmount || 0
 
   const getKingPenguin = (emperor) => {
