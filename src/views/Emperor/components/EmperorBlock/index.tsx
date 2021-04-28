@@ -69,13 +69,24 @@ const MyPenguinImageWrapper = styled.div`
   left: 320px;
 `
 
-
-
 const images = [
-  { id: '1', kingSrc: 'penguin_top_hat.svg', normalSrc: 'penguin_top_hat.svg' },
-  { id: '2', kingSrc: 'penguin_fedora.svg', normalSrc: 'penguin_fedora.svg' },
-  { id: '3', kingSrc: 'penguin_patch_with_crown.svg', normalSrc: 'penguin_patch_without_crown.svg' },
-  { id: '4', kingSrc: 'penguin_sunglass_with_crown.svg', normalSrc: 'penguin_sunglass_without_crown.svg' }
+  { id: '1', kingSrc: 'penguin_top_hat', normalSrc: 'penguin_top_hat' },
+  { id: '2', kingSrc: 'penguin_fedora', normalSrc: 'penguin_fedora' },
+  { id: '3', kingSrc: 'penguin_eye_patch_with_crown', normalSrc: 'penguin_eye_patch_without_crown' },
+  { id: '4', kingSrc: 'penguin_sunglass_with_crown', normalSrc: 'penguin_sunglass_without_crown' }
+]
+
+const colors = [
+  { name: "pink", color: 'FF81D2' },
+  { name: "red", color: 'E74242' },
+  { name: "blue", color: '3B44FF' },
+  { name: "yellow", color: 'FFF301' },
+  { name: "green", color: '53F453' },
+  { name: "turquoise", color: '08DED4' },
+  { name: "purple", color: '6C3C9A' },
+  { name: "orange", color: 'FF970D' },
+  { name: "white", color: 'FFFEE7' },
+  { name: "black", color: '2D2D2D' },
 ]
 
 const EmperorBlock: React.FC = () => {
@@ -100,8 +111,20 @@ const EmperorBlock: React.FC = () => {
     return ''
   }
 
+  const getPenguinColor = (emperor) => {
+    if (!emperor.color) return colors[0].name;
+
+    const penguinColor = colors.find((row) => row.name.toLocaleLowerCase() === emperor.color.toLocaleLowerCase() || row.color.toLocaleLowerCase() === emperor.color.toLocaleLowerCase())
+    console.log('555--->', penguinColor, emperor.color)
+    if (penguinColor) return penguinColor.name;
+    return colors[0].name;
+  }
+
   const currentEmperorPenguin = getKingPenguin(currentEmperor)
   const myEmperorPenguin = getNormalPenguin(myEmperor)
+
+  console.log('111--->', `${currentEmperorPenguin}_${getPenguinColor(currentEmperor)}.svg`)
+  console.log('111--->222', `${myEmperorPenguin}_${getPenguinColor(myEmperor)}.svg`)
 
   return (
     <CardBlock >
@@ -136,14 +159,14 @@ const EmperorBlock: React.FC = () => {
       <PenguinsImageContainer>
         <KingPenguinImageWrapper>
           <SvgIcon
-            src={`${process.env.PUBLIC_URL}/images/emperor/king/${currentEmperorPenguin}`}
+            src={`${process.env.PUBLIC_URL}/images/emperor/penguins/${currentEmperorPenguin}_${getPenguinColor(currentEmperor)}.svg`}
             width="100%"
           />
         </KingPenguinImageWrapper>
         {currentEmperor.address && myEmperor.address && currentEmperor.address !== myEmperor.address && (
           <MyPenguinImageWrapper>
             <SvgIcon
-              src={`${process.env.PUBLIC_URL}/images/emperor/king/${myEmperorPenguin}`}
+              src={`${process.env.PUBLIC_URL}/images/emperor/penguins/${myEmperorPenguin}_${getPenguinColor(myEmperor)}.svg`}
               width="100%"
             />
           </MyPenguinImageWrapper>
