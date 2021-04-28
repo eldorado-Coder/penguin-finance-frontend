@@ -73,8 +73,8 @@ const MyPenguinImageWrapper = styled.div`
 `;
 
 const images = [
-  { id: '1', kingSrc: 'penguin_top_hat', normalSrc: 'penguin_top_hat' },
-  { id: '2', kingSrc: 'penguin_fedora', normalSrc: 'penguin_fedora' },
+  { id: '1', kingSrc: 'penguin_top_hat', normalSrc: 'penguin_top_hat_no_crown' },
+  { id: '2', kingSrc: 'penguin_fedora', normalSrc: 'penguin_fedora_no_crown' },
   { id: '3', kingSrc: 'penguin_eye_patch_with_crown', normalSrc: 'penguin_eye_patch_no_crown' },
   { id: '4', kingSrc: 'penguin_sunglass_with_crown', normalSrc: 'penguin_sunglass_no_crown' }
 ]
@@ -117,7 +117,7 @@ const EmperorBlock: React.FC = () => {
   const getPenguinColor = (emperor) => {
     if (!emperor.color) return colors[0];
 
-    const penguinColor = colors.find((row) => row.name.toLocaleLowerCase() === emperor.color.toLocaleLowerCase() || row.color.toLocaleLowerCase() === emperor.color.toLocaleLowerCase())
+    const penguinColor = colors.find((row) => row.name.toLowerCase() === emperor.color.toLowerCase() || row.color.toLowerCase() === emperor.color.toLowerCase())
     if (penguinColor) return penguinColor;
     return colors[0];
   }
@@ -164,7 +164,7 @@ const EmperorBlock: React.FC = () => {
       {currentEmperor.address && myEmperor.address && currentEmperor.address !== myEmperor.address && (
         <MyPenguinImageWrapper>
           <SvgIcon
-            src={`${process.env.PUBLIC_URL}/images/emperor/penguins/${currentEmperorPenguin}_${getPenguinColor(currentEmperor).name}.svg`}
+            src={`${process.env.PUBLIC_URL}/images/emperor/penguins/${myEmperorPenguin}_${getPenguinColor(myEmperor).name}.svg`}
             width="100%"
           />
         </MyPenguinImageWrapper>

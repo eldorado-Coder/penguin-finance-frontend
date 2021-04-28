@@ -117,7 +117,7 @@ const colors = [
   { name: "turquoise", code: '08DED4' },
   { name: "purple", code: '6C3C9A' },
   { name: "orange", code: 'FF970D' },
-  { name: "white", color: 'FFFEE7' },
+  { name: "white", code: 'FFFEE7' },
   { name: "black", code: '2D2D2D' },
 ]
 
@@ -130,7 +130,7 @@ const TopPenguinsBlock: React.FC = () => {
 
   const getPenguinColor = (emperor) => {
     if (!emperor.color) return colors[0];
-    const penguinColor = colors.find((row) => row.name.toLocaleLowerCase() === emperor.color.toLocaleLowerCase() || row.code.toLocaleLowerCase() === emperor.color.toLocaleLowerCase())
+    const penguinColor = colors.find((row) => row.name.toLowerCase() === emperor.color.toLowerCase() || row.code.toLowerCase() === emperor.color.toLowerCase())
 
     if (penguinColor) return penguinColor;
     return colors[0];
