@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import { Button, Text, useModal } from '@penguinfinance/uikit'
@@ -7,6 +7,8 @@ import { useWallet } from '@binance-chain/bsc-use-wallet'
 import UnlockButton from 'components/UnlockButton'
 import SvgIcon from 'components/SvgIcon'
 import { useEmperor } from 'state/hooks'
+import { useXPefi } from 'hooks/useContract'
+import { getXPefiAddress } from 'utils/addressHelpers'
 import { useRegister, useStealCrown, useXPefiApprove } from 'hooks/useEmperor'
 import RegisterModal from './RegisterModal'
 import StealCrownModal from './StealCrownModal'
@@ -80,6 +82,7 @@ const YourScoreBlock: React.FC = () => {
     const { onRegister } = useRegister()
     const { onSteal } = useStealCrown()
     const { onApproveXPefi } = useXPefiApprove()
+    const xPefiContract = useXPefi();
 
 
     const getMyStatus = () => {
@@ -101,10 +104,17 @@ const YourScoreBlock: React.FC = () => {
         await onRegister(nickName, color, style)
     }
 
+    const fetchXPefiApproveBalance = useCallback(async () => {
+        const approveBalance = (await xPefiContract.methods.allowance(account, getXPefiAddress()).call()) / 1e18
+        console.log('111--->', approveBalance)
+        // setMaxAmount(xPefiBalance.toString())
+    }, [account, xPefiContract])
+
     const onStealCrown = async (amount) => {
+        fetchXPefiApproveBalance();
         // call approve function
-        await onApproveXPefi()
-        await onSteal(amount)
+        // await onApproveXPefi()
+        // await onSteal(amount)
     }
 
     const [onToggleRegister] = useModal(
