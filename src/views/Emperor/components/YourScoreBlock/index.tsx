@@ -157,7 +157,7 @@ const YourScoreBlock: React.FC = () => {
                 <TitleBgWrapper color={getPenguinColor(myEmperor).code}>
                     <SvgIcon
                         src={
-                            myStatus === 'registered'
+                            myStatus === 'registered' || myStatus === 'king'
                                 ? `${process.env.PUBLIC_URL}/images/emperor/banner/your_score_banner_unlocked.svg`
                                 : `${process.env.PUBLIC_URL}/images/emperor/banner/your_score_banner_locked.svg`
                         }
