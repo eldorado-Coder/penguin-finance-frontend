@@ -7,6 +7,7 @@ import {
   fetchMaxBidIncrease,
   fetchMinBidIncrease,
   fetchTopEmperors,
+  fetchCurrentEmperorJackpot
 } from './fetchEmperorData'
 import { EmperorState } from '../types'
 
@@ -83,6 +84,9 @@ export const fetchEmperor = (account) => async (dispatch) => {
 
   const currentEmperorBid = await fetchCurrentEmperorBid();
   dispatch(setCurrentEmperor({ bidAmount: currentEmperorBid }));
+
+  const currentEmperorJackpot = await fetchCurrentEmperorJackpot();
+  dispatch(setCurrentEmperor({ jackpot: currentEmperorJackpot }));
 
   if (currentEmperorAddress && currentEmperorAddress.length > 0) {
     const currentEmperor = await fetchEmperorData(currentEmperorAddress);
