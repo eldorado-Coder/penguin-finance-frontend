@@ -16,6 +16,8 @@ const CardBlockHeader = styled.div`
   justify-content: center;
   z-index: 1;
   padding: 16px;
+  margin-bottom: -120px;
+  margin-top: -80px;
 `
 
 const TitleBgWrapper = styled.div<{ color: string }>`
@@ -24,12 +26,10 @@ const TitleBgWrapper = styled.div<{ color: string }>`
   text-align: center;
 
   svg {
-    #Layer_4_unlocked {
-      #Color_1 {
+    #Banner-Avatar {
         path {
-          fill: ${({ color }) => `#${color}`};
+            fill: ${({ color }) => `#${color}`};
         }
-      }
     }
   }
 `
@@ -114,18 +114,19 @@ const colors = [
 const TopPenguinsBlock: React.FC = () => {
   const { account } = useWallet()
   const { currentEmperor, topEmperors } = useEmperor()
-  const headerColor: string = topEmperors.length > 0 ? topEmperors[0].color : currentEmperor.color;
   const _topEmperors = topEmperors.map((row, index) => {
     return { id: index, ...row }
   })
 
   const getPenguinColor = (emperor) => {
-    if (!emperor.color) return colors[0].code;
+    if (!emperor.color) return colors[0];
     const penguinColor = colors.find((row) => row.name.toLocaleLowerCase() === emperor.color.toLocaleLowerCase() || row.code.toLocaleLowerCase() === emperor.color.toLocaleLowerCase())
 
-    if (penguinColor) return penguinColor.code;
-    return colors[0].code;
+    if (penguinColor) return penguinColor;
+    return colors[0];
   }
+
+  const headerColor: string = topEmperors.length > 0 ? getPenguinColor(topEmperors[0]).code : getPenguinColor(currentEmperor).code;
 
   return (
     <CardBlock>
@@ -163,7 +164,7 @@ const TopPenguinsBlock: React.FC = () => {
                     {getShortenNickName(badWordsFilter(topEmperor.nickname))}
                   </Text>
                 </AddressField>
-                <AvatarField color={getPenguinColor(topEmperor)}>
+                <AvatarField color={getPenguinColor(topEmperor).code}>
                   <SvgIcon
                     src={`${process.env.PUBLIC_URL}/images/emperor/penguin_red.svg`}
                     width="30px"

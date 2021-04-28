@@ -42,19 +42,19 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ onConfirm, onDismiss }) =
     <Modal title={TranslateString(1068, 'Register your emperor')} onDismiss={onDismiss}>
       <FieldInput
         value={nickName}
-        placeholder="emperor_king"
+        placeholder="Cubiz"
         onChange={onChangeNickName}
         inputTitle={TranslateString(1070, 'Nickname')}
       />
       <FieldInput
         value={color}
-        placeholder="ff3356"
+        placeholder="Red"
         onChange={onChangeColor}
         inputTitle={TranslateString(1070, 'Color')}
       />
       <FieldInput
         value={style}
-        placeholder="0, 1, 2, 3..."
+        placeholder="1, 2, 3, 4"
         onChange={onChangeStyle}
         inputTitle={TranslateString(1070, 'Style')}
       />

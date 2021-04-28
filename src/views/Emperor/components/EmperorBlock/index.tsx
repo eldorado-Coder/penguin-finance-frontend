@@ -18,6 +18,8 @@ const CardBlockHeader = styled.div`
   justify-content: center;
   z-index: 1;
   padding: 16px;
+  margin-bottom: -120px;
+  margin-top: -80px;
 `
 
 const TitleBgWrapper = styled.div<{ color: string }>`
@@ -26,12 +28,10 @@ const TitleBgWrapper = styled.div<{ color: string }>`
   text-align: center;
 
   svg {
-    #Layer_4_unlocked {
-      #Color_1 {
+    #Banner-Avatar {
         path {
-          fill: ${({ color }) => `#${color}`};
+            fill: ${({ color }) => `#${color}`};
         }
-      }
     }
   }
 `
@@ -57,14 +57,14 @@ const PenguinsImageContainer = styled.div`
 
 const KingPenguinImageWrapper = styled.div`
   position: absolute;
-  top: 110px;
+  top: 130px;
   width: 50%;
   right: 25%;
 `
 
 const MyPenguinImageWrapper = styled.div`
   position: absolute;
-  top: 300px;
+  top: 340px;
   width: 40%;
   left: 320px;
 `
@@ -112,11 +112,11 @@ const EmperorBlock: React.FC = () => {
   }
 
   const getPenguinColor = (emperor) => {
-    if (!emperor.color) return colors[0].name;
+    if (!emperor.color) return colors[0];
 
     const penguinColor = colors.find((row) => row.name.toLocaleLowerCase() === emperor.color.toLocaleLowerCase() || row.color.toLocaleLowerCase() === emperor.color.toLocaleLowerCase())
-    if (penguinColor) return penguinColor.name;
-    return colors[0].name;
+    if (penguinColor) return penguinColor;
+    return colors[0];
   }
 
   const currentEmperorPenguin = getKingPenguin(currentEmperor)
@@ -125,7 +125,7 @@ const EmperorBlock: React.FC = () => {
   return (
     <CardBlock >
       <CardBlockHeader>
-        <TitleBgWrapper color={currentEmperor.color}>
+        <TitleBgWrapper color={getPenguinColor(currentEmperor).color}>
           <SvgIcon
             src={
               account
@@ -155,14 +155,14 @@ const EmperorBlock: React.FC = () => {
       <PenguinsImageContainer>
         <KingPenguinImageWrapper>
           <SvgIcon
-            src={`${process.env.PUBLIC_URL}/images/emperor/penguins/${currentEmperorPenguin}_${getPenguinColor(currentEmperor)}.svg`}
+            src={`${process.env.PUBLIC_URL}/images/emperor/penguins/${currentEmperorPenguin}_${getPenguinColor(currentEmperor).name}.svg`}
             width="100%"
           />
         </KingPenguinImageWrapper>
         {currentEmperor.address && myEmperor.address && currentEmperor.address !== myEmperor.address && (
           <MyPenguinImageWrapper>
             <SvgIcon
-              src={`${process.env.PUBLIC_URL}/images/emperor/penguins/${myEmperorPenguin}_${getPenguinColor(myEmperor)}.svg`}
+              src={`${process.env.PUBLIC_URL}/images/emperor/penguins/${myEmperorPenguin}_${getPenguinColor(myEmperor).name}.svg`}
               width="100%"
             />
           </MyPenguinImageWrapper>

@@ -23,6 +23,8 @@ const CardBlockHeader = styled.div`
   justify-content: center;
   z-index: 1;
   padding: 24px;
+  margin-bottom: -120px;
+  margin-top: -80px;
 `
 
 const TitleBgWrapper = styled.div<{ color: string }>`
@@ -31,12 +33,10 @@ const TitleBgWrapper = styled.div<{ color: string }>`
   text-align: center;
 
   svg {
-    #Layer_4 {
-      #Color_1 {
+    #Banner-Avatar {
         path {
-          fill: ${({ color }) => `#${color}`};
+            fill: ${({ color }) => `#${color}`};
         }
-      }
     }
   }
 `
@@ -73,6 +73,19 @@ const RegisterButtonContainer = styled.div`
     } */
 `
 
+const colors = [
+    { name: "pink", code: 'FF81D2' },
+    { name: "red", code: 'E74242' },
+    { name: "blue", code: '3B44FF' },
+    { name: "yellow", code: 'FFF301' },
+    { name: "green", code: '53F453' },
+    { name: "turquoise", code: '08DED4' },
+    { name: "purple", code: '6C3C9A' },
+    { name: "orange", code: 'FF970D' },
+    { name: "white", color: 'FFFEE7' },
+    { name: "black", code: '2D2D2D' },
+]
+
 
 const YourScoreBlock: React.FC = () => {
     const dispatch = useDispatch();
@@ -83,6 +96,14 @@ const YourScoreBlock: React.FC = () => {
     const { onSteal } = useStealCrown()
     const { onApproveXPefi } = useXPefiApprove()
     const xPefiContract = useXPefi();
+
+    const getPenguinColor = (emperor) => {
+        if (!emperor.color) return colors[0];
+        const penguinColor = colors.find((row) => row.name.toLocaleLowerCase() === emperor.color.toLocaleLowerCase() || row.code.toLocaleLowerCase() === emperor.color.toLocaleLowerCase())
+
+        if (penguinColor) return penguinColor;
+        return colors[0];
+    }
 
 
     const getMyStatus = () => {
@@ -111,10 +132,10 @@ const YourScoreBlock: React.FC = () => {
     }, [account, xPefiContract])
 
     const onStealCrown = async (amount) => {
-        fetchXPefiApproveBalance();
+        // fetchXPefiApproveBalance();
         // call approve function
-        // await onApproveXPefi()
-        // await onSteal(amount)
+        await onApproveXPefi()
+        await onSteal(amount)
     }
 
     const [onToggleRegister] = useModal(
@@ -129,7 +150,7 @@ const YourScoreBlock: React.FC = () => {
     return (
         <CardBlock>
             <CardBlockHeader>
-                <TitleBgWrapper color={myEmperor.color}>
+                <TitleBgWrapper color={getPenguinColor(myEmperor).code}>
                     <SvgIcon
                         src={
                             myStatus === 'registered'
