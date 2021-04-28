@@ -63,6 +63,9 @@ const StealCrownModal: React.FC<StealCrownModalProps> = ({ onConfirm, onDismiss 
         showError={false}
       />
       <BidInfoContainer>
+        <Text bold color="secondary" fontSize="18px">
+          You should bid with a bigger amount than the current emperor bid.
+        </Text>
         <Flex justifyContent="space-between" alignItems="center">
           <Text fontSize="14px">Current emperor bid:</Text>
           <Text fontSize="14px" style={{ display: 'flex', alignItems: 'center' }}>
@@ -81,9 +84,6 @@ const StealCrownModal: React.FC<StealCrownModalProps> = ({ onConfirm, onDismiss 
             {maxBidIncrease}
           </Text>
         </Flex>
-        <Text bold color="secondary" fontSize="18px">
-          You should bid with a bigger amount than the current emperor bid.
-        </Text>
       </BidInfoContainer>
 
       <ModalActions>
@@ -110,7 +110,7 @@ const StealCrownModal: React.FC<StealCrownModalProps> = ({ onConfirm, onDismiss 
 const BidInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 20px;
+  margin-top: 10px;
   padding: 0px 12px;
 `
 

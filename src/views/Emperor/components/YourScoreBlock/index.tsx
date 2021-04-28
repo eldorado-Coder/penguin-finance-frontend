@@ -7,7 +7,7 @@ import { useWallet } from '@binance-chain/bsc-use-wallet'
 import UnlockButton from 'components/UnlockButton'
 import SvgIcon from 'components/SvgIcon'
 import { useEmperor } from 'state/hooks'
-import { useRegister, useStealCrown } from 'hooks/useEmperor'
+import { useRegister, useStealCrown, useXPefiApprove } from 'hooks/useEmperor'
 import RegisterModal from './RegisterModal'
 import StealCrownModal from './StealCrownModal'
 
@@ -79,6 +79,7 @@ const YourScoreBlock: React.FC = () => {
     const { myEmperor, currentEmperor } = useEmperor()
     const { onRegister } = useRegister()
     const { onSteal } = useStealCrown()
+    const { onApproveXPefi } = useXPefiApprove()
 
 
     const getMyStatus = () => {
@@ -101,6 +102,8 @@ const YourScoreBlock: React.FC = () => {
     }
 
     const onStealCrown = async (amount) => {
+        // call approve function
+        await onApproveXPefi()
         await onSteal(amount)
     }
 

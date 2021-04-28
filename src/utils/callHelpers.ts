@@ -150,3 +150,13 @@ export const stealCrown = async (emperorContract, amount, account) => {
       return tx.transactionHash
     })
 }
+
+export const approveXPefi = async (xPefiContract, account, address) => {
+  const approveAmount = '1000000000000000000000000000';
+  return xPefiContract.methods
+    .approve(address, new BigNumber(approveAmount).times(new BigNumber(10).pow(18)).toString())
+    .send({ from: account, gas: 200000 })
+    .on('transactionHash', (tx) => {
+      return tx.transactionHash
+    })
+}
