@@ -191,12 +191,8 @@ export const useEmperor = () => {
 
   useEffect(() => {
     dispatch(fetchEmperor(account))
-    return (() => {
-      dispatch(setInit())
-    })
   }, [dispatch, account])
 
-  // return { teams: data, isInitialized, isLoading }
   return emperorState
 }
 
