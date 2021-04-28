@@ -45,7 +45,7 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
   }
 
   const xPefiToPefiRatio = getXPefiToPefiRatio()
-  const TVL = '6,972,796.28';
+  const TVL = `6,972,796.28`;
 
   return (
     <StyledPefiStats>

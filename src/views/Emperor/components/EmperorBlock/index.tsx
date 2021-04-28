@@ -9,8 +9,7 @@ import { getShortenAddress, badWordsFilter } from 'utils/address'
 import SvgIcon from 'components/SvgIcon'
 
 const CardBlock = styled.div`
-  
-`
+`;
 
 const CardBlockHeader = styled.div`
   position: relative;  
@@ -43,7 +42,7 @@ const CardBlockContent = styled.div`
   position: relative;
   margin-top: -38px;
   text-align:center;
-`
+`;
 
 const WalletContainer = styled.div`
 `
@@ -51,23 +50,23 @@ const WalletContainer = styled.div`
 const EmperorInfoContainer = styled.div`
 `
 
-const PenguinsImageContainer = styled.div`
-  position: relative;
-`
-
 const KingPenguinImageWrapper = styled.div`
   position: absolute;
-  top: 130px;
-  width: 50%;
-  right: 25%;
-`
+  width: 12.5%;
+  left: 44%;
+  bottom: 33%;
+`;
 
 const MyPenguinImageWrapper = styled.div`
   position: absolute;
-  top: 340px;
-  width: 40%;
-  left: 320px;
-`
+  width: 12.5%;
+  right: 24%;
+  bottom: 17%;
+
+  svg {
+    transform: scaleX(-1);
+  }
+`;
 
 const images = [
   { id: '1', kingSrc: 'penguin_top_hat', normalSrc: 'penguin_top_hat' },
@@ -92,7 +91,7 @@ const colors = [
 const EmperorBlock: React.FC = () => {
   const TranslateString = useI18n()
   const { account } = useWallet()
-  const { currentEmperor, myEmperor } = useEmperor()
+  const { myEmperor, currentEmperor } = useEmperor()
   const currentEmperorAddress = currentEmperor && currentEmperor.address
   const currentEmperorNickname = currentEmperor && badWordsFilter(currentEmperor.nickname)
   const currentEmperorBidAmount = currentEmperor && currentEmperor.bidAmount || 0
@@ -119,8 +118,8 @@ const EmperorBlock: React.FC = () => {
     return colors[0];
   }
 
-  const currentEmperorPenguin = getKingPenguin(currentEmperor)
-  const myEmperorPenguin = getNormalPenguin(myEmperor)
+  const currentEmperorPenguin = getKingPenguin(currentEmperor);
+  const myEmperorPenguin = getNormalPenguin(myEmperor);
 
   return (
     <CardBlock >
@@ -152,26 +151,22 @@ const EmperorBlock: React.FC = () => {
           </EmperorInfoContainer>
         )}
       </CardBlockContent>
-      <PenguinsImageContainer>
-        <KingPenguinImageWrapper>
+      <KingPenguinImageWrapper>
+        <SvgIcon
+          src={`${process.env.PUBLIC_URL}/images/emperor/penguins/${currentEmperorPenguin}_${getPenguinColor(currentEmperor)}.svg`}
+          width="100%"
+        />
+      </KingPenguinImageWrapper>
+      {currentEmperor.address && myEmperor.address && currentEmperor.address !== myEmperor.address && (
+        <MyPenguinImageWrapper>
           <SvgIcon
             src={`${process.env.PUBLIC_URL}/images/emperor/penguins/${currentEmperorPenguin}_${getPenguinColor(currentEmperor).name}.svg`}
             width="100%"
           />
-        </KingPenguinImageWrapper>
-        {currentEmperor.address && myEmperor.address && currentEmperor.address !== myEmperor.address && (
-          <MyPenguinImageWrapper>
-            <SvgIcon
-              src={`${process.env.PUBLIC_URL}/images/emperor/penguins/${myEmperorPenguin}_${getPenguinColor(myEmperor).name}.svg`}
-              width="100%"
-            />
-          </MyPenguinImageWrapper>
-        )}
-      </PenguinsImageContainer>
+        </MyPenguinImageWrapper>
+      )}
     </CardBlock >
-  )
-}
+  );
+};
 
-
-
-export default EmperorBlock
+export default EmperorBlock;

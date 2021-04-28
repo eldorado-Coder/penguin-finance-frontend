@@ -143,6 +143,15 @@ export const fetchMinBidIncrease = async () => {
   }
 }
 
+export const fetchCurrentEmperorJackpot = async () => {
+  try {
+    const currentEmperorJackpot = await emperorContract.methods.jackpot().call()
+    return getBalanceNumber(currentEmperorJackpot);
+  } catch (error) {
+    return 0
+  }
+}
+
 export const fetchEmperorData = async (currentEmperorAddress) => {
   try {
     const currentEmperor = await emperorContract.methods.penguDB(currentEmperorAddress).call()
