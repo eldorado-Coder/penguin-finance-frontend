@@ -4,6 +4,8 @@ import {
   fetchEmperorData,
   fetchCurrentEmperorAddress,
   fetchCurrentEmperorBid,
+  fetchMaxBidIncrease,
+  fetchMinBidIncrease,
   fetchTopEmperors,
 } from './fetchEmperorData'
 import { EmperorState } from '../types'
@@ -11,7 +13,9 @@ import { EmperorState } from '../types'
 const initialState: EmperorState = {
   myEmperor: {},
   currentEmperor: {},
-  topEmperors: []
+  topEmperors: [],
+  maxBidIncrease: 0,
+  minBidIncrease: 0
 }
 
 export const EmperorSlice = createSlice({
@@ -38,11 +42,24 @@ export const EmperorSlice = createSlice({
         ...action.payload
       ]
     },
+    setMaxBidIncrease: (state, action) => {
+      state.maxBidIncrease = action.payload
+    },
+    setMinBidIncrease: (state, action) => {
+      state.minBidIncrease = action.payload
+    },
   },
 })
 
 // Actions
-export const { setInitialData, setMyEmperor, setCurrentEmperor, setTopEmperors } = EmperorSlice.actions
+export const {
+  setInitialData,
+  setMyEmperor,
+  setCurrentEmperor,
+  setTopEmperors,
+  setMaxBidIncrease,
+  setMinBidIncrease
+} = EmperorSlice.actions
 
 // Thunks
 
@@ -53,9 +70,12 @@ export const setInit = () => async (dispatch) => {
 export const fetchEmperor = (account) => async (dispatch) => {
   if (!account) return;
 
-  // fetch my emperor
-  const myEmperor = await fetchEmperorData(account);
-  dispatch(setMyEmperor({ ...myEmperor, address: account }));
+  // fetch general Info
+  const maxBidIncrease = await fetchMaxBidIncrease();
+  dispatch(setMaxBidIncrease(maxBidIncrease));
+
+  const minBidIncrease = await fetchMinBidIncrease();
+  dispatch(setMinBidIncrease(minBidIncrease));
 
   // fetch current emperor
   const currentEmperorAddress = await fetchCurrentEmperorAddress();
@@ -68,6 +88,11 @@ export const fetchEmperor = (account) => async (dispatch) => {
     const currentEmperor = await fetchEmperorData(currentEmperorAddress);
     dispatch(setCurrentEmperor(currentEmperor));
   }
+
+
+  // fetch my emperor
+  const myEmperor = await fetchEmperorData(account);
+  dispatch(setMyEmperor({ ...myEmperor, address: account }));
 
   // fetch top 5 emperor
   if (currentEmperorAddress && currentEmperorAddress.length > 0) {

@@ -125,6 +125,24 @@ export const fetchCurrentEmperorBid = async () => {
   }
 }
 
+export const fetchMaxBidIncrease = async () => {
+  try {
+    const maxBidIncrease = await emperorContract.methods.maxBidIncrease().call()
+    return getBalanceNumber(maxBidIncrease);
+  } catch (error) {
+    return 0
+  }
+}
+
+export const fetchMinBidIncrease = async () => {
+  try {
+    const minBidIncrease = await emperorContract.methods.minBidIncrease().call()
+    return getBalanceNumber(minBidIncrease);
+  } catch (error) {
+    return 0
+  }
+}
+
 export const fetchEmperorData = async (currentEmperorAddress) => {
   try {
     const currentEmperor = await emperorContract.methods.penguDB(currentEmperorAddress).call()

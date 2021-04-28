@@ -1,6 +1,5 @@
-import BigNumber from 'bignumber.js'
-import React, { useCallback, useMemo, useState } from 'react'
-import { Button, Modal, LinkExternal } from '@penguinfinance/uikit'
+import React, { useCallback, useState } from 'react'
+import { Button, Modal, } from '@penguinfinance/uikit'
 import ModalActions from 'components/ModalActions'
 import FieldInput from 'components/FieldInput'
 import useI18n from 'hooks/useI18n'

@@ -1,11 +1,12 @@
-import BigNumber from 'bignumber.js'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { Button, Modal } from '@penguinfinance/uikit'
+import React, { useCallback, useEffect, useState } from 'react'
+import { Button, Modal, Text, Flex } from '@penguinfinance/uikit'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
+import styled from 'styled-components'
 import ModalActions from 'components/ModalActions'
 import ModalInput from 'components/ModalInput'
 import useI18n from 'hooks/useI18n'
 import { useXPefi } from 'hooks/useContract'
+import { useEmperor } from 'state/hooks'
 
 interface StealCrownModalProps {
   onConfirm: (amount: string) => void
@@ -19,6 +20,8 @@ const StealCrownModal: React.FC<StealCrownModalProps> = ({ onConfirm, onDismiss 
   const TranslateString = useI18n()
   const xPefiContract = useXPefi();
   const { account } = useWallet()
+  const { maxBidIncrease, minBidIncrease, currentEmperor } = useEmperor()
+  const currentBidAmount = currentEmperor.bidAmount;
 
   const fetchXPefiBalance = useCallback(async () => {
     const xPefiBalance = (await xPefiContract.methods.balanceOf(account).call()) / 1e18
@@ -35,9 +38,18 @@ const StealCrownModal: React.FC<StealCrownModalProps> = ({ onConfirm, onDismiss 
     },
     [setAmount],
   )
+
   const handleSelectMax = useCallback(() => {
-    setAmount(maxAmount)
-  }, [maxAmount, setAmount])
+    setAmount(String(currentBidAmount + maxBidIncrease))
+  }, [currentBidAmount, maxBidIncrease, setAmount])
+
+  const checkCanConfirm = () => {
+    if (pendingTx) return false;
+    if (amount.length === 0) return false;
+    if (Number(amount) > Number(maxAmount)) return false;
+    if (Number(amount) < Number(currentBidAmount) + Number(minBidIncrease)) return false;
+    return true;
+  }
 
   return (
     <Modal title={TranslateString(1068, 'Steal the Crown')} onDismiss={onDismiss}>
@@ -50,6 +62,29 @@ const StealCrownModal: React.FC<StealCrownModalProps> = ({ onConfirm, onDismiss 
         inputTitle={TranslateString(1070, 'Amount')}
         showError={false}
       />
+      <BidInfoContainer>
+        <Flex justifyContent="space-between" alignItems="center">
+          <Text fontSize="14px">Current emperor bid:</Text>
+          <Text fontSize="14px" style={{ display: 'flex', alignItems: 'center' }}>
+            {currentBidAmount}
+          </Text>
+        </Flex>
+        <Flex justifyContent="space-between" alignItems="center">
+          <Text fontSize="14px">Min bid increase:</Text>
+          <Text fontSize="14px" style={{ display: 'flex', alignItems: 'center' }}>
+            {minBidIncrease}
+          </Text>
+        </Flex>
+        <Flex justifyContent="space-between" alignItems="center">
+          <Text fontSize="14px">Max bid increase:</Text>
+          <Text fontSize="14px" style={{ display: 'flex', alignItems: 'center' }}>
+            {maxBidIncrease}
+          </Text>
+        </Flex>
+        <Text bold color="secondary" fontSize="18px">
+          You should bid with a bigger amount than the current emperor bid.
+        </Text>
+      </BidInfoContainer>
 
       <ModalActions>
         <Button variant="primary" onClick={onDismiss} scale="md">
@@ -57,7 +92,7 @@ const StealCrownModal: React.FC<StealCrownModalProps> = ({ onConfirm, onDismiss 
         </Button>
         <Button
           scale="md"
-          disabled={pendingTx || amount.length === 0}
+          disabled={!checkCanConfirm()}
           onClick={async () => {
             setPendingTx(true)
             await onConfirm(amount)
@@ -71,5 +106,12 @@ const StealCrownModal: React.FC<StealCrownModalProps> = ({ onConfirm, onDismiss 
     </Modal>
   )
 }
+
+const BidInfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  padding: 0px 12px;
+`
 
 export default StealCrownModal

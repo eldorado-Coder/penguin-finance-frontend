@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
-import { Modal, Button, Text, LinkExternal, Flex, useModal } from '@penguinfinance/uikit'
+import { Button, Text, useModal } from '@penguinfinance/uikit'
 import useI18n from 'hooks/useI18n'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import UnlockButton from 'components/UnlockButton'
@@ -10,7 +10,6 @@ import { useEmperor } from 'state/hooks'
 import { useRegister, useStealCrown } from 'hooks/useEmperor'
 import RegisterModal from './RegisterModal'
 import StealCrownModal from './StealCrownModal'
-
 
 const CardBlock = styled.div`
   
