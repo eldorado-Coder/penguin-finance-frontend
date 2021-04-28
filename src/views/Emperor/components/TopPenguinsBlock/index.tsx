@@ -102,6 +102,9 @@ const TopPenguinsBlock: React.FC = () => {
   const { account } = useWallet()
   const { currentEmperor, topEmperors } = useEmperor()
   const headerColor: string = topEmperors.length > 0 ? topEmperors[0].color : currentEmperor.color;
+  const _topEmperors = topEmperors.map((row, index) => {
+    return { id: index, ...row }
+  })
 
   return (
     <CardBlock>
@@ -120,9 +123,9 @@ const TopPenguinsBlock: React.FC = () => {
       <CardBlockContent>
         {!account && <UnlockButton />}
         {account && topEmperors &&
-          topEmperors.map((topEmperor, index) => {
+          _topEmperors.map((topEmperor, index) => {
             return (
-              <EmperorRow key={topEmperor.lastCrowningBlockTimestamp}>
+              <EmperorRow key={topEmperor.id}>
                 <NumberField>
                   <Text color="secondary" fontSize="12px">
                     {`#${index + 1}`}
