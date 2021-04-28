@@ -31,7 +31,7 @@ const Emperor: React.FC = () => {
       <Sound
         url="/sounds/penguin_emperor_page.mp3"
         playStatus={Sound.status.PLAYING}
-        volume={80}
+        volume={20}
         loop
       />
       <EmperorBgContainer width="100%" height="100%" autoPlay loop muted>
