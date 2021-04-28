@@ -72,8 +72,8 @@ const MyPenguinImageWrapper = styled.div`
 const images = [
   { id: '1', kingSrc: 'penguin_top_hat', normalSrc: 'penguin_top_hat' },
   { id: '2', kingSrc: 'penguin_fedora', normalSrc: 'penguin_fedora' },
-  { id: '3', kingSrc: 'penguin_eye_patch_with_crown', normalSrc: 'penguin_eye_patch_without_crown' },
-  { id: '4', kingSrc: 'penguin_sunglass_with_crown', normalSrc: 'penguin_sunglass_without_crown' }
+  { id: '3', kingSrc: 'penguin_eye_patch_with_crown', normalSrc: 'penguin_eye_patch_no_crown' },
+  { id: '4', kingSrc: 'penguin_sunglass_with_crown', normalSrc: 'penguin_sunglass_no_crown' }
 ]
 
 const colors = [
@@ -115,16 +115,12 @@ const EmperorBlock: React.FC = () => {
     if (!emperor.color) return colors[0].name;
 
     const penguinColor = colors.find((row) => row.name.toLocaleLowerCase() === emperor.color.toLocaleLowerCase() || row.color.toLocaleLowerCase() === emperor.color.toLocaleLowerCase())
-    console.log('555--->', penguinColor, emperor.color)
     if (penguinColor) return penguinColor.name;
     return colors[0].name;
   }
 
   const currentEmperorPenguin = getKingPenguin(currentEmperor)
   const myEmperorPenguin = getNormalPenguin(myEmperor)
-
-  console.log('111--->', `${currentEmperorPenguin}_${getPenguinColor(currentEmperor)}.svg`)
-  console.log('111--->222', `${myEmperorPenguin}_${getPenguinColor(myEmperor)}.svg`)
 
   return (
     <CardBlock >

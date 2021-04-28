@@ -15,7 +15,7 @@
 	.penguin-st9{fill:#6FBE44;}
 	.penguin-st10{fill:#65AB45;}
 	.penguin-st11{fill:#D4F4D0;}
-	.penguin-st12{fill:url(#SVGID_1_penguin);}
+	.penguin-st12{fill="url(#SVGID_1_penguin)";}
 	.penguin-st13{fill:#5B5B5B;}
 </style>
 <g id="Color_body">
