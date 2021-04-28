@@ -145,7 +145,7 @@ export const registerEmperor = async (emperorContract, { nickName, color, style 
 export const stealCrown = async (emperorContract, amount, account) => {
   return emperorContract.methods
     .stealCrown(new BigNumber(amount).times(new BigNumber(10).pow(18)).toString())
-    .send({ from: account, gas: 200000 })
+    .send({ from: account, gas: 400000 })
     .on('transactionHash', (tx) => {
       return tx.transactionHash
     })
