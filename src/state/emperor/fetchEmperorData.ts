@@ -169,41 +169,58 @@ export const fetchEmperorData = async (currentEmperorAddress) => {
 }
 
 export const fetchTopEmperors = async () => {
+  const NON_ADDRESS = '0x0000000000000000000000000000000000000000'
   try {
     let topEmperors: Emperor[] = [];
-
     const topEmperor1Address = await emperorContract.methods.topEmperors(0).call();
-    const topEmperor1 = await fetchEmperorData(topEmperor1Address);
-    topEmperors = [
-      ...topEmperors,
-      { ...topEmperor1, address: topEmperor1Address }
-    ]
+    if (topEmperor1Address !== NON_ADDRESS) {
+      const topEmperor1 = await fetchEmperorData(topEmperor1Address);
+      topEmperors = [
+        ...topEmperors,
+        { ...topEmperor1, address: topEmperor1Address }
+      ]
+    }
+
     const topEmperor2Address = await emperorContract.methods.topEmperors(1).call();
-    const topEmperor2 = await fetchEmperorData(topEmperor2Address);
-    topEmperors = [
-      ...topEmperors,
-      { ...topEmperor2, address: topEmperor2Address }
-    ]
+    if (topEmperor2Address !== NON_ADDRESS) {
+      const topEmperor2 = await fetchEmperorData(topEmperor2Address);
+      topEmperors = [
+        ...topEmperors,
+        { ...topEmperor2, address: topEmperor2Address }
+      ]
+    }
+
     const topEmperor3Address = await emperorContract.methods.topEmperors(2).call();
-    const topEmperor3 = await fetchEmperorData(topEmperor3Address);
-    topEmperors = [
-      ...topEmperors,
-      { ...topEmperor3, address: topEmperor3Address }
+    if (topEmperor3Address !== NON_ADDRESS) {
+      const topEmperor3 = await fetchEmperorData(topEmperor3Address);
+      topEmperors = [
+        ...topEmperors,
+        { ...topEmperor3, address: topEmperor3Address }
 
-    ]
+      ]
+    }
+
+
     const topEmperor4Address = await emperorContract.methods.topEmperors(3).call();
-    const topEmperor4 = await fetchEmperorData(topEmperor4Address);
-    topEmperors = [
-      ...topEmperors,
-      { ...topEmperor4, address: topEmperor4Address }
+    if (topEmperor4Address !== NON_ADDRESS) {
+      const topEmperor4 = await fetchEmperorData(topEmperor4Address);
+      topEmperors = [
+        ...topEmperors,
+        { ...topEmperor4, address: topEmperor4Address }
 
-    ]
+      ]
+    }
+
+
     const topEmperor5Address = await emperorContract.methods.topEmperors(4).call();
-    const topEmperor5 = await fetchEmperorData(topEmperor5Address);
-    topEmperors = [
-      ...topEmperors,
-      { ...topEmperor5, address: topEmperor5Address }
-    ]
+    if (topEmperor5Address !== NON_ADDRESS) {
+      const topEmperor5 = await fetchEmperorData(topEmperor5Address);
+      topEmperors = [
+        ...topEmperors,
+        { ...topEmperor5, address: topEmperor5Address }
+      ]
+    }
+
     return topEmperors
   } catch (error) {
     return {}
