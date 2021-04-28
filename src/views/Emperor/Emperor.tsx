@@ -86,6 +86,7 @@ const JackpotPaper = styled.img`
 const GridItem = styled.div`
   margin-bottom: '10px';
   width: 315px;
+  margin: 0px 4px;
 `
 
 const Grid = styled.div<{ align: string }>`
@@ -125,7 +126,7 @@ const Emperor: React.FC = () => {
       setJackpot(JACKPOTS.LOCK);
     }
   };
-  
+
   return (
     <Page>
       <Sound
@@ -142,11 +143,11 @@ const Emperor: React.FC = () => {
       <EmperorBgContainer width="100%" height="100%" autoPlay loop muted>
         <source src="/videos/penguin_emperor.mp4" />
       </EmperorBgContainer>
-      {account && 
-        <ChestWrapper 
+      {account &&
+        <ChestWrapper
           jackpot={jackpot}
           onClick={handleOpenJackpot}>
-          {jackpot === JACKPOTS.UNLOCK && 
+          {jackpot === JACKPOTS.UNLOCK &&
             <PaperWrapper>
               <JackpotPaper src={`${process.env.PUBLIC_URL}/images/emperor/jackpot/Mapefi.svg`} alt='jackpot_paper' />
               <Text className='price' fontSize='24px'>{currentEmperor.jackpot} <span>x</span>PEFI</Text>

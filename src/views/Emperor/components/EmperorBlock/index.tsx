@@ -157,7 +157,7 @@ const EmperorBlock: React.FC = () => {
       </CardBlockContent>
       <KingPenguinImageWrapper>
         <SvgIcon
-          src={`${process.env.PUBLIC_URL}/images/emperor/penguins/${currentEmperorPenguin}_${getPenguinColor(currentEmperor)}.svg`}
+          src={`${process.env.PUBLIC_URL}/images/emperor/penguins/${currentEmperorPenguin}_${getPenguinColor(currentEmperor).name}.svg`}
           width="100%"
         />
       </KingPenguinImageWrapper>
