@@ -98,6 +98,19 @@ const AvatarField = styled.div<{ color: string }>`
   }
 `
 
+const colors = [
+  { name: "pink", code: 'FF81D2' },
+  { name: "red", code: 'E74242' },
+  { name: "blue", code: '3B44FF' },
+  { name: "yellow", code: 'FFF301' },
+  { name: "green", code: '53F453' },
+  { name: "turquoise", code: '08DED4' },
+  { name: "purple", code: '6C3C9A' },
+  { name: "orange", code: 'FF970D' },
+  { name: "white", color: 'FFFEE7' },
+  { name: "black", code: '2D2D2D' },
+]
+
 const TopPenguinsBlock: React.FC = () => {
   const { account } = useWallet()
   const { currentEmperor, topEmperors } = useEmperor()
@@ -105,6 +118,14 @@ const TopPenguinsBlock: React.FC = () => {
   const _topEmperors = topEmperors.map((row, index) => {
     return { id: index, ...row }
   })
+
+  const getPenguinColor = (emperor) => {
+    if (!emperor.color) return colors[0].code;
+    const penguinColor = colors.find((row) => row.name.toLocaleLowerCase() === emperor.color.toLocaleLowerCase() || row.code.toLocaleLowerCase() === emperor.color.toLocaleLowerCase())
+
+    if (penguinColor) return penguinColor.code;
+    return colors[0].code;
+  }
 
   return (
     <CardBlock>
@@ -124,6 +145,7 @@ const TopPenguinsBlock: React.FC = () => {
         {!account && <UnlockButton />}
         {account && topEmperors &&
           _topEmperors.map((topEmperor, index) => {
+
             return (
               <EmperorRow key={topEmperor.id}>
                 <NumberField>
@@ -141,7 +163,7 @@ const TopPenguinsBlock: React.FC = () => {
                     {getShortenNickName(badWordsFilter(topEmperor.nickname))}
                   </Text>
                 </AddressField>
-                <AvatarField color={topEmperor.color}>
+                <AvatarField color={getPenguinColor(topEmperor)}>
                   <SvgIcon
                     src={`${process.env.PUBLIC_URL}/images/emperor/penguin_red.svg`}
                     width="30px"
