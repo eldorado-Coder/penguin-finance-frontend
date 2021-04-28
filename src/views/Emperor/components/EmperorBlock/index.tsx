@@ -63,8 +63,8 @@ const KingPenguinImageWrapper = styled.div`
 
 const MyPenguinImageWrapper = styled.div`
   position: absolute;
-  width: 12.5%;
-  right: 24%;
+  width: 9.5%;
+  right: 26%;
   bottom: 17%;
 
   svg {
