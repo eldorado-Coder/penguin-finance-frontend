@@ -52,6 +52,8 @@ const CardBlockContent = styled.div`
 
 const WalletContainer = styled.div`
   text-align:center;
+  position: relative;
+  z-index: 10;
   button {
     margin-top: 20px;
   }
@@ -60,6 +62,8 @@ const WalletContainer = styled.div`
 const RegisterContainer = styled.div`
     margin-top: 20px;
     text-align:center;
+    position: relative;
+    z-index: 10;
     button {
         margin-top: 20px;
     }

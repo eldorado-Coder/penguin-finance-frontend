@@ -46,9 +46,13 @@ const CardBlockContent = styled.div`
 `
 
 const WalletContainer = styled.div`
+  position: relative;
+  z-index: 10;
 `
 
 const EmperorInfoContainer = styled.div`
+  position: relative;
+  z-index: 10;
 `
 
 const PenguinsImageContainer = styled.div`

@@ -44,6 +44,16 @@ const CardBlockContent = styled.div`
   text-align:center;
 `
 
+const WalletContainer = styled.div`
+  position: relative;
+  z-index: 10;
+`
+
+const EmperorInfoContainer = styled.div`
+  position: relative;
+  z-index: 10;
+`
+
 const EmperorRow = styled.div`
   padding: 12px 0px;
   border-top: 1px solid #42BCF5;
@@ -143,37 +153,44 @@ const TopPenguinsBlock: React.FC = () => {
         </TitleBgWrapper>
       </CardBlockHeader>
       <CardBlockContent>
-        {!account && <UnlockButton />}
-        {account && topEmperors &&
-          _topEmperors.map((topEmperor, index) => {
-
-            return (
-              <EmperorRow key={topEmperor.id}>
-                <NumberField>
-                  <Text color="secondary" fontSize="12px">
-                    {`#${index + 1}`}
-                  </Text>
-                </NumberField>
-                <TimeField>
-                  <Text color="secondary" fontSize="12px">
-                    {formatTime(topEmperor.timeAsEmperor)}
-                  </Text>
-                </TimeField>
-                <AddressField>
-                  <Text color="secondary" fontSize="12px">
-                    {getShortenNickName(badWordsFilter(topEmperor.nickname))}
-                  </Text>
-                </AddressField>
-                <AvatarField color={getPenguinColor(topEmperor).code}>
-                  <SvgIcon
-                    src={`${process.env.PUBLIC_URL}/images/emperor/penguin_red.svg`}
-                    width="30px"
-                    height="30px"
-                  />
-                </AvatarField>
-              </EmperorRow>
-            )
-          })}
+        {!account && (
+          <WalletContainer>
+            <UnlockButton />
+          </WalletContainer>
+        )
+        }
+        {account && topEmperors && (
+          <EmperorInfoContainer>
+            {_topEmperors.map((topEmperor, index) => {
+              return (
+                <EmperorRow key={topEmperor.id}>
+                  <NumberField>
+                    <Text color="secondary" fontSize="12px">
+                      {`#${index + 1}`}
+                    </Text>
+                  </NumberField>
+                  <TimeField>
+                    <Text color="secondary" fontSize="12px">
+                      {formatTime(topEmperor.timeAsEmperor)}
+                    </Text>
+                  </TimeField>
+                  <AddressField>
+                    <Text color="secondary" fontSize="12px">
+                      {getShortenNickName(badWordsFilter(topEmperor.nickname))}
+                    </Text>
+                  </AddressField>
+                  <AvatarField color={getPenguinColor(topEmperor).code}>
+                    <SvgIcon
+                      src={`${process.env.PUBLIC_URL}/images/emperor/penguin_red.svg`}
+                      width="30px"
+                      height="30px"
+                    />
+                  </AvatarField>
+                </EmperorRow>
+              )
+            })}
+          </EmperorInfoContainer>
+        )}
       </CardBlockContent>
     </CardBlock>
 
