@@ -22,6 +22,10 @@ const ChestWrapper = styled.div`
   left: 22%;
   bottom: 18%;
 
+  &:hover {
+    z-index: 15;
+  }
+
   img {
     cursor: pointer;
   }
