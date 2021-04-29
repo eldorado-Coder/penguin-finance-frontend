@@ -195,12 +195,12 @@ const YourScoreBlock: React.FC = () => {
                         </Text>
                         <RegisterButtonContainer>
                             <Button onClick={onToggleStealModal} endIcon={<div>{` `}</div>}>
-                                {TranslateString(292, 'Steal the crown')}
+                                {TranslateString(292, 'Steal the Crown')}
                             </Button>
                         </RegisterButtonContainer>
                         <CustomizeStyleButtonContainer>
                             <Button onClick={onToggleCustomModal}>
-                                {TranslateString(292, 'Customize penguin')}
+                                {TranslateString(292, 'Customize Penguin')}
                             </Button>
                         </CustomizeStyleButtonContainer>
                     </RegisterContainer>
