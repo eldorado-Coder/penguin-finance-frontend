@@ -91,6 +91,11 @@ const StealCrownModal: React.FC<StealCrownModalProps> = ({ onConfirm, onDismiss 
           {TranslateString(462, 'Cancel')}
         </Button>
         <ButtonGroupContainer>
+          <Link fontSize="14px" bold={false} href="./nests" external color="failure">
+            <Button variant="primary" onClick={onDismiss} scale="md">
+              {TranslateString(462, 'Get xPEFI')}
+            </Button>
+          </Link>
           <Button
             scale="md"
             disabled={!checkCanConfirm()}
@@ -103,11 +108,6 @@ const StealCrownModal: React.FC<StealCrownModalProps> = ({ onConfirm, onDismiss 
           >
             {pendingTx ? TranslateString(488, 'Pending Confirmation') : TranslateString(464, 'Confirm')}
           </Button>
-          <Link fontSize="14px" bold={false} href="./nests" external color="failure">
-            <Button variant="primary" onClick={onDismiss} scale="md">
-              {TranslateString(462, 'Get xPEFI')}
-            </Button>
-          </Link>
         </ButtonGroupContainer>
       </ModalActions>
     </Modal>
