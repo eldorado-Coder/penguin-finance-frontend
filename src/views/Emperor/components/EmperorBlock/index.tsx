@@ -56,6 +56,7 @@ const EmperorInfoContainer = styled.div`
 `
 
 const KingPenguinImageWrapper = styled.div`
+  z-index: -1;
   position: absolute;
   width: 12.5%;
   left: 44%;
@@ -109,7 +110,7 @@ const EmperorBlock: React.FC = () => {
             <Text bold color="secondary" fontSize="22px">
               {TranslateString(1074, currentEmperorNickname)}
             </Text>
-            <Text color="secondary" fontSize="14px">{getShortenAddress(currentEmperorAddress)}</Text>
+            {/* <Text color="secondary" fontSize="14px">{getShortenAddress(currentEmperorAddress)}</Text> */}
             <Text bold color="secondary" fontSize="14px">{`Current Bid: ${currentEmperorBidAmount.toFixed(2)} xPEFI`}</Text>
           </EmperorInfoContainer>
         )}
