@@ -39,7 +39,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ onConfirm, onDismiss }) =
   )
 
   return (
-    <Modal title={TranslateString(1068, 'Register your emperor')} onDismiss={onDismiss}>
+    <Modal title={TranslateString(1068, 'Register your penguin')} onDismiss={onDismiss}>
       <FieldInput
         value={nickName}
         placeholder="Cubiz"
