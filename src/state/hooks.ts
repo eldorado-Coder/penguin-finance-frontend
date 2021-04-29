@@ -192,7 +192,7 @@ export const useEmperor = () => {
   useEffect(() => {
     const refreshInterval = setInterval(() => {
       dispatch(fetchEmperor(account));
-    }, 10000)
+    }, 5000)
 
     return () => clearInterval(refreshInterval);
   }, [dispatch, account])
