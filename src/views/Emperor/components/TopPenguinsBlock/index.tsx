@@ -83,6 +83,9 @@ const TimeField = styled.div`
   align-items: center;
   display: flex;
   justify-content: center;
+  >div {
+    margin-right: 5px;
+  }
 `
 
 const AddressField = styled.div`
@@ -153,6 +156,9 @@ const TopPenguinsBlock: React.FC = () => {
                   <TimeField>
                     <Text color="secondary" fontSize="12px">
                       {formatTime(topEmperor.timeAsEmperor)}
+                    </Text>
+                    <Text bold color="primary" fontSize="12px">
+                      min
                     </Text>
                   </TimeField>
                   <AddressField>
