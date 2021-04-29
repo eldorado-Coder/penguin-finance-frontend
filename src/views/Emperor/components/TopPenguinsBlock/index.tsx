@@ -41,6 +41,7 @@ const CardBlockContent = styled.div`
   border-radius: 16px;
   padding: 16px;
   padding-top: 24px;
+  padding-bottom: 8px;
   position: relative;
   margin-top: -38px;
   text-align:center;
@@ -57,7 +58,7 @@ const EmperorInfoContainer = styled.div`
 `
 
 const EmperorRow = styled.div`
-  padding: 12px 0px;
+  padding: 6px 0px;
   border-top: 1px solid #42BCF5;
   display: flex;
   &:last-child {

@@ -62,12 +62,12 @@ const WalletContainer = styled.div`
 `
 
 const RegisterContainer = styled.div`
-    margin-top: 20px;
+    margin-top: 10px;
     text-align:center;
     position: relative;
     z-index: 10;
     button {
-        margin-top: 20px;
+        margin-top: 10px;
     }
 `
 
