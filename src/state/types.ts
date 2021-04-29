@@ -132,6 +132,7 @@ export interface Emperor {
   timeAsEmperor?: number
   lastCrowningBlockTimestamp?: number
   bidAmount?: number
+  jackpot?: number
 }
 export interface EmperorState {
   myEmperor: Emperor

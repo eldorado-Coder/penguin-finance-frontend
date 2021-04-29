@@ -16,7 +16,7 @@ const JACKPOTS = {
   UNLOCK: `${process.env.PUBLIC_URL}/images/emperor/jackpot/jackpot_unlock.gif`,
 };
 
-const ChestWrapper = styled.div`
+const ChestWrapper = styled.div<{ jackpot: string }>`
   position: absolute;
   width: 15%;
   left: 22%;
