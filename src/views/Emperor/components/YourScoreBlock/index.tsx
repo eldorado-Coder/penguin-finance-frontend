@@ -9,9 +9,10 @@ import { useEmperor } from 'state/hooks'
 import { useXPefi } from 'hooks/useContract'
 import { getEmperorAddress } from 'utils/addressHelpers'
 import { badWordsFilter } from 'utils/address'
-import { useRegister, useStealCrown, useXPefiApprove } from 'hooks/useEmperor'
+import { useEmperorActions, useXPefiApprove } from 'hooks/useEmperor'
 import RegisterModal from './RegisterModal'
 import StealCrownModal from './StealCrownModal'
+import CustomStyleModal from './CustomStyleModal'
 import { getPenguinColor } from '../utils'
 
 const CardBlock = styled.div`
@@ -72,6 +73,17 @@ const RegisterContainer = styled.div`
 `
 
 const RegisterButtonContainer = styled.div`
+    button {
+        width: 200px;
+        border-radius: 30px;
+    }
+`
+const CustomizeStyleButtonContainer = styled.div`
+    button {
+        width: 200px;
+        background: ${(props) => props.theme.colors.secondary};
+        border-radius: 30px;
+    }
 `
 
 
@@ -80,8 +92,7 @@ const YourScoreBlock: React.FC = () => {
     const TranslateString = useI18n()
     const { account } = useWallet()
     const { myEmperor, currentEmperor } = useEmperor()
-    const { onRegister } = useRegister()
-    const { onSteal } = useStealCrown()
+    const { onRegister, onSteal, onChangeStyle, onChangeColor } = useEmperorActions()
     const { onApproveXPefi } = useXPefiApprove()
     const xPefiContract = useXPefi();
 
@@ -104,7 +115,7 @@ const YourScoreBlock: React.FC = () => {
         await onRegister(nickName, color, style)
     }
 
-    const onStealCrown = async (amount) => {
+    const onStealCrown = async (amount: string) => {
         const allowanceBalance = (await xPefiContract.methods.allowance(account, getEmperorAddress()).call()) / 1e18
         if (allowanceBalance === 0) {
             // call approve function
@@ -113,12 +124,24 @@ const YourScoreBlock: React.FC = () => {
         await onSteal(amount)
     }
 
+    const onChangeEmperorStyle = async (style: string) => {
+        await onChangeStyle(style)
+    }
+
+    const onChangeEmperorColor = async (color: string) => {
+        await onChangeColor(color)
+    }
+
     const [onToggleRegister] = useModal(
         <RegisterModal onConfirm={onRegisterPenguin} />
     )
 
-    const [onToggleSteal] = useModal(
+    const [onToggleStealModal] = useModal(
         <StealCrownModal onConfirm={onStealCrown} />
+    )
+
+    const [onToggleCustomModal] = useModal(
+        <CustomStyleModal onConfirmChangeStyle={onChangeEmperorStyle} onConfirmChangeColor={onChangeEmperorColor} />
     )
 
 
@@ -161,20 +184,25 @@ const YourScoreBlock: React.FC = () => {
 
                 {myStatus === 'registered' && (
                     <RegisterContainer>
-                        <Text bold color="secondary" fontSize="22px">
+                        <Text bold color="primary" fontSize="22px">
                             {TranslateString(1074, myEmperor && badWordsFilter(myEmperor.nickname))}
                         </Text>
                         <Text bold color="secondary" fontSize="18px">
                             {TranslateString(1074, 'You have been Emperor for:')}
                         </Text>
-                        <Text bold color="primary" fontSize="22px">
+                        <Text bold color="primary" fontSize="18px">
                             {`${myEmperor.timeAsEmperor} seconds`}
                         </Text>
                         <RegisterButtonContainer>
-                            <Button onClick={onToggleSteal}>
+                            <Button onClick={onToggleStealModal} endIcon={<div>{` `}</div>}>
                                 {TranslateString(292, 'Steal the crown')}
                             </Button>
                         </RegisterButtonContainer>
+                        <CustomizeStyleButtonContainer>
+                            <Button onClick={onToggleCustomModal}>
+                                {TranslateString(292, 'Customize penguin')}
+                            </Button>
+                        </CustomizeStyleButtonContainer>
                     </RegisterContainer>
                 )}
 

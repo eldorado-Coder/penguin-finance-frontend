@@ -151,6 +151,24 @@ export const stealCrown = async (emperorContract, amount, account) => {
     })
 }
 
+export const changeEmperorStyle = async (emperorContract, style, account) => {
+  return emperorContract.methods
+    .changeStyle(style)
+    .send({ from: account, gas: 200000 })
+    .on('transactionHash', (tx) => {
+      return tx.transactionHash
+    })
+}
+
+export const changeEmperorColor = async (emperorContract, color, account) => {
+  return emperorContract.methods
+    .changeColor(color)
+    .send({ from: account, gas: 200000 })
+    .on('transactionHash', (tx) => {
+      return tx.transactionHash
+    })
+}
+
 export const approveXPefi = async (xPefiContract, account, address) => {
   const approveAmount = '1000000000000000000000000000';
   return xPefiContract.methods

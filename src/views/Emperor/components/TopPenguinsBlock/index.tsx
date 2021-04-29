@@ -61,6 +61,7 @@ const EmperorRow = styled.div`
   padding: 6px 0px;
   border-top: 1px solid #42BCF5;
   display: flex;
+  min-height: 44px;
   &:last-child {
     border-bottom: none;
   }
