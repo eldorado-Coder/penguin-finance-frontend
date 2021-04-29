@@ -105,8 +105,8 @@ const YourScoreBlock: React.FC = () => {
     }
 
     const onStealCrown = async (amount) => {
-        const approveBalance = (await xPefiContract.methods.allowance(account, getEmperorAddress()).call()) / 1e18
-        if (approveBalance === 0) {
+        const allowanceBalance = (await xPefiContract.methods.allowance(account, getEmperorAddress()).call()) / 1e18
+        if (allowanceBalance === 0) {
             // call approve function
             await onApproveXPefi()
         }
