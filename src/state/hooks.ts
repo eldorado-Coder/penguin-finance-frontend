@@ -190,7 +190,9 @@ export const useEmperor = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(fetchEmperor(account))
+    setInterval(() => {
+      dispatch(fetchEmperor(account));
+    }, 10000)
   }, [dispatch, account])
 
   return emperorState
