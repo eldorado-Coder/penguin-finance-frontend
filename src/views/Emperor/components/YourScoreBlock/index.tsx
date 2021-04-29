@@ -1,5 +1,4 @@
-import React, { useCallback } from 'react'
-import { useDispatch } from 'react-redux'
+import React from 'react'
 import styled from 'styled-components'
 import { Button, Text, useModal } from '@penguinfinance/uikit'
 import useI18n from 'hooks/useI18n'
@@ -72,17 +71,11 @@ const RegisterContainer = styled.div`
 `
 
 const RegisterButtonContainer = styled.div`
-    /* margin-top: 20px;
-    text-align:center;
-    button {
-        margin-top: 20px;
-    } */
 `
 
 
 
 const YourScoreBlock: React.FC = () => {
-    const dispatch = useDispatch();
     const TranslateString = useI18n()
     const { account } = useWallet()
     const { myEmperor, currentEmperor } = useEmperor()
@@ -110,16 +103,12 @@ const YourScoreBlock: React.FC = () => {
         await onRegister(nickName, color, style)
     }
 
-    const fetchXPefiApproveBalance = useCallback(async () => {
-        const approveBalance = (await xPefiContract.methods.allowance(account, getXPefiAddress()).call()) / 1e18
-        console.log('111--->', approveBalance)
-        // setMaxAmount(xPefiBalance.toString())
-    }, [account, xPefiContract])
-
     const onStealCrown = async (amount) => {
-        // fetchXPefiApproveBalance();
-        // call approve function
-        await onApproveXPefi()
+        const approveBalance = (await xPefiContract.methods.allowance(account, getXPefiAddress()).call()) / 1e18
+        if (approveBalance === 0) {
+            // call approve function
+            await onApproveXPefi()
+        }
         await onSteal(amount)
     }
 
