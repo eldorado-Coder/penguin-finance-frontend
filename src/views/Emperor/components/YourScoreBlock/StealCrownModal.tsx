@@ -103,7 +103,7 @@ const StealCrownModal: React.FC<StealCrownModalProps> = ({ onConfirm, onDismiss 
           >
             {pendingTx ? TranslateString(488, 'Pending Confirmation') : TranslateString(464, 'Confirm')}
           </Button>
-          <Link fontSize="14px" bold={false} href="./igloos" external color="failure">
+          <Link fontSize="14px" bold={false} href="./nests" external color="failure">
             <Button variant="primary" onClick={onDismiss} scale="md">
               {TranslateString(462, 'Get xPEFI')}
             </Button>
