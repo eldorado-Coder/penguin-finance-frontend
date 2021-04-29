@@ -6,6 +6,7 @@ import UnlockButton from 'components/UnlockButton'
 import { useEmperor } from 'state/hooks'
 import { getShortenNickName, formatTime, badWordsFilter } from 'utils/address'
 import SvgIcon from 'components/SvgIcon'
+import { getPenguinColor } from '../utils'
 
 const CardBlock = styled.div`
 `
@@ -108,33 +109,12 @@ const AvatarField = styled.div<{ color: string }>`
   }
 `
 
-const colors = [
-  { name: "pink", code: 'FF81D2' },
-  { name: "red", code: 'E74242' },
-  { name: "blue", code: '3B44FF' },
-  { name: "yellow", code: 'FFF301' },
-  { name: "green", code: '53F453' },
-  { name: "turquoise", code: '08DED4' },
-  { name: "purple", code: '6C3C9A' },
-  { name: "orange", code: 'FF970D' },
-  { name: "white", code: 'FFFEE7' },
-  { name: "black", code: '2D2D2D' },
-]
-
 const TopPenguinsBlock: React.FC = () => {
   const { account } = useWallet()
   const { currentEmperor, topEmperors } = useEmperor()
   const _topEmperors = topEmperors.map((row, index) => {
     return { id: index, ...row }
   })
-
-  const getPenguinColor = (emperor) => {
-    if (!emperor.color) return colors[0];
-    const penguinColor = colors.find((row) => row.name.toLowerCase() === emperor.color.toLowerCase() || row.code.toLowerCase() === emperor.color.toLowerCase())
-
-    if (penguinColor) return penguinColor;
-    return colors[0];
-  }
 
   const headerColor: string = topEmperors.length > 0 ? getPenguinColor(topEmperors[0]).code : getPenguinColor(currentEmperor).code;
 

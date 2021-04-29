@@ -7,6 +7,7 @@ import UnlockButton from 'components/UnlockButton'
 import { useEmperor } from 'state/hooks'
 import { getShortenAddress, badWordsFilter } from 'utils/address'
 import SvgIcon from 'components/SvgIcon'
+import { getPenguinColor, getKingPenguin, getNormalPenguin } from '../utils'
 
 const CardBlock = styled.div`
 `;
@@ -72,25 +73,6 @@ const MyPenguinImageWrapper = styled.div`
   }
 `;
 
-const images = [
-  { id: '1', kingSrc: 'penguin_top_hat', normalSrc: 'penguin_top_hat_no_crown' },
-  { id: '2', kingSrc: 'penguin_fedora', normalSrc: 'penguin_fedora_no_crown' },
-  { id: '3', kingSrc: 'penguin_eye_patch_with_crown', normalSrc: 'penguin_eye_patch_no_crown' },
-  { id: '4', kingSrc: 'penguin_sunglass_with_crown', normalSrc: 'penguin_sunglass_no_crown' }
-]
-
-const colors = [
-  { name: "pink", color: 'FF81D2' },
-  { name: "red", color: 'E74242' },
-  { name: "blue", color: '3B44FF' },
-  { name: "yellow", color: 'FFF301' },
-  { name: "green", color: '53F453' },
-  { name: "turquoise", color: '08DED4' },
-  { name: "purple", color: '6C3C9A' },
-  { name: "orange", color: 'FF970D' },
-  { name: "white", color: 'FFFEE7' },
-  { name: "black", color: '2D2D2D' },
-]
 
 const EmperorBlock: React.FC = () => {
   const TranslateString = useI18n()
@@ -99,36 +81,13 @@ const EmperorBlock: React.FC = () => {
   const currentEmperorAddress = currentEmperor && currentEmperor.address
   const currentEmperorNickname = currentEmperor && badWordsFilter(currentEmperor.nickname)
   const currentEmperorBidAmount = currentEmperor && currentEmperor.bidAmount || 0
-
-  const getKingPenguin = (emperor) => {
-    const emperorPenguin = images.find((row) => String(row.id) === String(emperor.style))
-    if (emperorPenguin) return emperorPenguin.kingSrc;
-    if (emperor.style) return images[0].kingSrc;
-    return ''
-  }
-
-  const getNormalPenguin = (emperor) => {
-    const emperorPenguin = images.find((row) => String(row.id) === String(emperor.style))
-    if (emperorPenguin) return emperorPenguin.normalSrc;
-    if (emperor.style && emperor.style !== '0') return images[0].normalSrc;
-    return ''
-  }
-
-  const getPenguinColor = (emperor) => {
-    if (!emperor.color) return colors[0];
-
-    const penguinColor = colors.find((row) => row.name.toLowerCase() === emperor.color.toLowerCase() || row.color.toLowerCase() === emperor.color.toLowerCase())
-    if (penguinColor) return penguinColor;
-    return colors[0];
-  }
-
   const currentEmperorPenguin = getKingPenguin(currentEmperor);
   const myEmperorPenguin = getNormalPenguin(myEmperor);
 
   return (
     <CardBlock >
       <CardBlockHeader>
-        <TitleBgWrapper color={getPenguinColor(currentEmperor).color}>
+        <TitleBgWrapper color={getPenguinColor(currentEmperor).code}>
           <SvgIcon
             src={
               account
