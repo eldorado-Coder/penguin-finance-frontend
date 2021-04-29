@@ -15,6 +15,7 @@ const ButtonContainer = styled.div`
   margin-bottom: 20px;
   button {
     max-width: 200px;
+    margin: 0px 8px;
   }
 `
 
@@ -49,7 +50,6 @@ const CustomStyleModal: React.FC<CustomStyleModalProps> = ({ onConfirmChangeStyl
         inputTitle={TranslateString(1070, 'Color')}
       />
       <ButtonContainer>
-
         <Button
           scale="md"
           disabled={pendingTx || color.length === 0}
