@@ -7,7 +7,7 @@ import UnlockButton from 'components/UnlockButton'
 import SvgIcon from 'components/SvgIcon'
 import { useEmperor } from 'state/hooks'
 import { useXPefi } from 'hooks/useContract'
-import { getXPefiAddress } from 'utils/addressHelpers'
+import { getEmperorAddress } from 'utils/addressHelpers'
 import { badWordsFilter } from 'utils/address'
 import { useRegister, useStealCrown, useXPefiApprove } from 'hooks/useEmperor'
 import RegisterModal from './RegisterModal'
@@ -105,8 +105,7 @@ const YourScoreBlock: React.FC = () => {
     }
 
     const onStealCrown = async (amount) => {
-        const approveBalance = (await xPefiContract.methods.allowance(account, getXPefiAddress()).call()) / 1e18
-        console.log('111--->', account, getXPefiAddress(), approveBalance)
+        const approveBalance = (await xPefiContract.methods.allowance(account, getEmperorAddress()).call()) / 1e18
         if (approveBalance === 0) {
             // call approve function
             await onApproveXPefi()
