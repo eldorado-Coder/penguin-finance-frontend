@@ -154,43 +154,42 @@
 <g id="Layer_7">
 	<g>
 		<g>
-			
-				<linearGradient id="SVGID_6_" gradientUnits="userSpaceOnUse" x1="272.215" y1="315.0388" x2="348.1755" y2="315.0388" gradientTransform="matrix(-1 0 0 1 397.8514 0)">
-				<stop  offset="0" style="stop-color:#5D3292"/>
-				<stop  offset="0.8375" style="stop-color:#7C4A9C"/>
-			</linearGradient>
-			<path class="my-penguin-unlocked-st10" d="M56.1,285.2c16.1-3.4,47.5-9,67.8-6.9l1.7,63.7c0,0.5-0.4,1-0.9,1.1c-6.2,0.8-40.9,5.2-64.1,9
-				c-6.3,1-11.2-5.2-8.8-11.1l9.7-23.4l-10.9-20.8C48.1,292.1,50.9,286.3,56.1,285.2z"/>
-			<linearGradient id="SVGID_7_" gradientUnits="userSpaceOnUse" x1="108.1829" y1="286.1606" x2="108.7051" y2="349.6742">
-				<stop  offset="0.5564" style="stop-color:#442A74"/>
-				<stop  offset="0.589" style="stop-color:#4F307C"/>
-				<stop  offset="0.6793" style="stop-color:#683E8D"/>
-				<stop  offset="0.7617" style="stop-color:#774798"/>
-				<stop  offset="0.8289" style="stop-color:#7C4A9C"/>
-			</linearGradient>
-			<path class="my-penguin-unlocked-st11" d="M125.6,276.6L98.1,319l-5.8,3.3L91,330l33.8,12.7c0.4,0.2,0.8-0.1,0.8-0.6V276.6z"/>
-			<linearGradient id="SVGID_8_" gradientUnits="userSpaceOnUse" x1="374.3636" y1="315.0388" x2="450.3242" y2="315.0388">
-				<stop  offset="0" style="stop-color:#5D3292"/>
-				<stop  offset="0.8375" style="stop-color:#7C4A9C"/>
-			</linearGradient>
-			<path class="my-penguin-unlocked-st12" d="M443.9,285.2c-16.1-3.4-47.5-9-67.8-6.9l-1.7,63.7c0,0.5,0.4,1,0.9,1.1c6.2,0.8,40.9,5.2,64.1,9
-				c6.3,1,11.2-5.2,8.8-11.1l-9.7-23.4l10.9-20.8C451.9,292.1,449.1,286.3,443.9,285.2z"/>
-			<linearGradient id="SVGID_9_" gradientUnits="userSpaceOnUse" x1="391.6413" y1="305.3465" x2="391.6413" y2="339.6439">
-				<stop  offset="0.5564" style="stop-color:#442A74"/>
-				<stop  offset="0.5988" style="stop-color:#4F307C"/>
-				<stop  offset="0.7158" style="stop-color:#683E8D"/>
-				<stop  offset="0.8228" style="stop-color:#774798"/>
-				<stop  offset="0.9099" style="stop-color:#7C4A9C"/>
-			</linearGradient>
-			<path class="my-penguin-unlocked-st13" d="M374.3,276.6l27.6,42.4l5.8,3.3l1.3,7.7l-33.8,12.7c-0.4,0.2-0.8-0.1-0.8-0.6V276.6z"/>
-			<linearGradient id="SVGID_10_" gradientUnits="userSpaceOnUse" x1="91.0119" y1="295.9442" x2="408.9633" y2="295.9442">
-				<stop  offset="0" style="stop-color:#814E9E"/>
-				<stop  offset="0.5044" style="stop-color:#814E9E"/>
-				<stop  offset="1" style="stop-color:#7C4A9C"/>
-				<stop  offset="1" style="stop-color:#814E9E"/>
-			</linearGradient>
-			<rect x="91" y="261.9" class="my-penguin-unlocked-st14" width="318" height="68.1"/>
-		</g>
+					<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="272.215" y1="315.0388" x2="348.1755" y2="315.0388" gradientTransform="matrix(-1 0 0 1 397.8514 0)">
+					<stop  offset="0" style="stop-color:#5D3292"/>
+					<stop  offset="0.8375" style="stop-color:#7C4A9C"/>
+				</linearGradient>
+				<path class="emperor-locked-st0" fill="url(#SVGID_1_)" d="M56.1,285.2c16.1-3.4,47.5-9,67.8-6.9l1.7,63.7c0,0.5-0.4,1-0.9,1.1c-6.2,0.8-40.9,5.2-64.1,9
+					c-6.3,1-11.2-5.2-8.8-11.1l9.7-23.4l-10.9-20.8C48.1,292.1,50.9,286.3,56.1,285.2z"/>
+				<linearGradient id="SVGID_2_" gradientUnits="userSpaceOnUse" x1="108.1829" y1="286.1606" x2="108.7051" y2="349.6742">
+					<stop  offset="0.5564" style="stop-color:#442A74"/>
+					<stop  offset="0.589" style="stop-color:#4F307C"/>
+					<stop  offset="0.6793" style="stop-color:#683E8D"/>
+					<stop  offset="0.7617" style="stop-color:#774798"/>
+					<stop  offset="0.8289" style="stop-color:#7C4A9C"/>
+				</linearGradient>
+				<path class="emperor-locked-st1" fill="url(#SVGID_2_)" d="M125.6,276.6L98.1,319l-5.8,3.3L91,330l33.8,12.7c0.4,0.2,0.8-0.1,0.8-0.6V276.6z"/>
+				<linearGradient id="SVGID_3_" gradientUnits="userSpaceOnUse" x1="374.3636" y1="315.0388" x2="450.3242" y2="315.0388">
+					<stop  offset="0" style="stop-color:#5D3292"/>
+					<stop  offset="0.8375" style="stop-color:#7C4A9C"/>
+				</linearGradient>
+				<path class="emperor-locked-st2" fill="url(#SVGID_3_)" d="M443.9,285.2c-16.1-3.4-47.5-9-67.8-6.9l-1.7,63.7c0,0.5,0.4,1,0.9,1.1c6.2,0.8,40.9,5.2,64.1,9
+					c6.3,1,11.2-5.2,8.8-11.1l-9.7-23.4l10.9-20.8C451.9,292.1,449.1,286.3,443.9,285.2z"/>
+				<linearGradient id="SVGID_4_" gradientUnits="userSpaceOnUse" x1="391.6413" y1="305.3465" x2="391.6413" y2="339.6439">
+					<stop  offset="0.5564" style="stop-color:#442A74"/>
+					<stop  offset="0.5988" style="stop-color:#4F307C"/>
+					<stop  offset="0.7158" style="stop-color:#683E8D"/>
+					<stop  offset="0.8228" style="stop-color:#774798"/>
+					<stop  offset="0.9099" style="stop-color:#7C4A9C"/>
+				</linearGradient>
+				<path class="emperor-locked-st3" fill="url(#SVGID_4_)" d="M374.3,276.6l27.6,42.4l5.8,3.3l1.3,7.7l-33.8,12.7c-0.4,0.2-0.8-0.1-0.8-0.6V276.6z"/>
+				<linearGradient id="SVGID_5_" gradientUnits="userSpaceOnUse" x1="91.0119" y1="295.9442" x2="408.9633" y2="295.9442">
+					<stop  offset="0" style="stop-color:#814E9E"/>
+					<stop  offset="0.5044" style="stop-color:#814E9E"/>
+					<stop  offset="1" style="stop-color:#7C4A9C"/>
+					<stop  offset="1" style="stop-color:#814E9E"/>
+				</linearGradient>
+				<rect x="91" y="261.9" class="emperor-locked-st4" fill="url(#SVGID_5_)" width="318" height="68.1"/>
+			</g>
 	</g>
 	<g>
 		<g>
