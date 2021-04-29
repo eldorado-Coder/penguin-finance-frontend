@@ -6,23 +6,6 @@ import { registerEmperor, stealCrown, changeEmperorStyle, changeEmperorColor, ap
 import { getEmperorAddress } from 'utils/addressHelpers'
 import { useEmperor, useXPefi } from './useContract'
 
-// const useRegister = () => {
-//   const dispatch = useDispatch()
-//   const { account } = useWallet()
-//   const emperorContract = useEmperor()
-
-//   const handleRegister = useCallback(
-//     async (nickName: string, color: string, style: string,) => {
-//       const txHash = await registerEmperor(emperorContract, { nickName, color, style }, account)
-//       dispatch(fetchEmperor(account))
-//       console.info(txHash)
-//     },
-//     [account, dispatch, emperorContract]
-//   )
-
-//   return { onRegister: handleRegister }
-// }
-
 const useEmperorActions = () => {
   const dispatch = useDispatch()
   const { account } = useWallet()
