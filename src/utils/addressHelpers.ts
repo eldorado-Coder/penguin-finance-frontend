@@ -16,6 +16,9 @@ export const getMasterChefAddress = () => {
 export const getEmperorAddress = () => {
   return getAddress(addresses.emperor)
 }
+export const getXPefiAddress = () => {
+  return getAddress(addresses.xPefi)
+}
 export const getMulticallAddress = () => {
   return getAddress(addresses.mulltiCall)
 }

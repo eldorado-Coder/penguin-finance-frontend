@@ -190,13 +190,13 @@ export const useEmperor = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(fetchEmperor(account))
-    return (() => {
-      dispatch(setInit())
-    })
+    const refreshInterval = setInterval(() => {
+      dispatch(fetchEmperor(account));
+    }, 5000)
+
+    return () => clearInterval(refreshInterval);
   }, [dispatch, account])
 
-  // return { teams: data, isInitialized, isLoading }
   return emperorState
 }
 

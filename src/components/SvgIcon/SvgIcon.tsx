@@ -1,6 +1,5 @@
 import React from 'react';
 import { ReactSVG } from 'react-svg';
-import styled from 'styled-components'
 
 interface IconProps {
   src: string,

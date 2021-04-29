@@ -13,7 +13,7 @@ export default {
   },
   emperor: {
     43113: '',
-    43114: '0x5cbFab7d8750C1e9Dc1949F7Cc1C1f90f05b53Cd',
+    43114: '0xbEfECD5D04a21136600B1E31b4d53e0fdF076c25',
   },
   lottery: {
     43113: '',
@@ -63,4 +63,8 @@ export default {
     43113: '',
     43114: '0x7b7b1583De1DeB32Ce6605F6deEbF24A0671c17C',
   },
+  xPefi: {
+    43113: '',
+    43114: '0xD79A36056c271B988C5F1953e664E61416A9820F',
+  }
 }

@@ -1,12 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Modal, Text, LinkExternal, Flex } from '@penguinfinance/uikit'
-import useI18n from 'hooks/useI18n'
+import { Text } from '@penguinfinance/uikit'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import UnlockButton from 'components/UnlockButton'
 import { useEmperor } from 'state/hooks'
-import { getShortenAddress, formatTime } from 'utils/address'
+import { getShortenNickName, formatTime, badWordsFilter } from 'utils/address'
 import SvgIcon from 'components/SvgIcon'
+import { getPenguinColor } from '../utils'
 
 const CardBlock = styled.div`
 `
@@ -17,6 +17,9 @@ const CardBlockHeader = styled.div`
   justify-content: center;
   z-index: 1;
   padding: 16px;
+  margin-bottom: -120px;
+  margin-top: -80px;
+  min-height: 314px;
 `
 
 const TitleBgWrapper = styled.div<{ color: string }>`
@@ -25,34 +28,40 @@ const TitleBgWrapper = styled.div<{ color: string }>`
   text-align: center;
 
   svg {
-    #Layer_4 {
-      g:nth-child(1) {
-        g:nth-child(1) {
-          path:nth-child(1) {
-            fill: ${({ color }) => `#${color}`}; ;
-          }
-          path:nth-child(6) {
-          }
+    #Banner-Avatar {
+        path {
+            fill: ${({ color }) => `#${color}`};
         }
-      }
     }
   }
 `
 
 const CardBlockContent = styled.div`
-  background: white;
+  background: ${(props) => props.theme.card.background};
   border-radius: 16px;
   padding: 16px;
   padding-top: 24px;
+  padding-bottom: 8px;
   position: relative;
   margin-top: -38px;
   text-align:center;
 `
 
+const WalletContainer = styled.div`
+  position: relative;
+  z-index: 10;
+`
+
+const EmperorInfoContainer = styled.div`
+  position: relative;
+  z-index: 10;
+`
+
 const EmperorRow = styled.div`
-  padding: 12px 0px;
+  padding: 6px 0px;
   border-top: 1px solid #42BCF5;
   display: flex;
+  min-height: 44px;
   &:last-child {
     border-bottom: none;
   }
@@ -76,6 +85,9 @@ const TimeField = styled.div`
   align-items: center;
   display: flex;
   justify-content: center;
+  >div {
+    margin-right: 5px;
+  }
 `
 
 const AddressField = styled.div`
@@ -95,30 +107,22 @@ const AvatarField = styled.div<{ color: string }>`
   display: flex;
   justify-content: center;
   svg {
-    >g {
-      >path:first-child {
-        fill: black;
+    #Color_1_default {
+      path {
+        fill: ${({ color }) => `#${color}`};
       }
-      #Color_1 {
-        path {
-          fill: ${({ color }) => `#${color}`};
-          opacity: 0.6;
-        }
-      } 
-      #Color_2 {
-        path {
-          fill: ${({ color }) => `#${color}`};
-        }
-      }      
     }
   }
 `
 
 const TopPenguinsBlock: React.FC = () => {
-  const TranslateString = useI18n()
   const { account } = useWallet()
   const { currentEmperor, topEmperors } = useEmperor()
-  const headerColor: string = topEmperors.length > 0 ? topEmperors[0].color : currentEmperor.color;
+  const _topEmperors = topEmperors.map((row, index) => {
+    return { id: index, ...row }
+  })
+
+  const headerColor: string = topEmperors.length > 0 ? getPenguinColor(topEmperors[0]).code : getPenguinColor(currentEmperor).code;
 
   return (
     <CardBlock>
@@ -135,36 +139,47 @@ const TopPenguinsBlock: React.FC = () => {
         </TitleBgWrapper>
       </CardBlockHeader>
       <CardBlockContent>
-        {!account && <UnlockButton />}
-        {account && topEmperors &&
-          topEmperors.map((topEmperor, index) => {
-            return (
-              <EmperorRow key={topEmperor.lastCrowningBlockTimestamp}>
-                <NumberField>
-                  <Text color="secondary" fontSize="12px">
-                    {`#${index + 1}`}
-                  </Text>
-                </NumberField>
-                <TimeField>
-                  <Text color="secondary" fontSize="12px">
-                    {formatTime(topEmperor.timeAsEmperor)}
-                  </Text>
-                </TimeField>
-                <AddressField>
-                  <Text color="secondary" fontSize="12px">
-                    {getShortenAddress(topEmperor.nickname)}
-                  </Text>
-                </AddressField>
-                <AvatarField color={topEmperor.color}>
-                  <SvgIcon
-                    src={`${process.env.PUBLIC_URL}/images/emperor/penguin_red.svg`}
-                    width="30px"
-                    height="30px"
-                  />
-                </AvatarField>
-              </EmperorRow>
-            )
-          })}
+        {!account && (
+          <WalletContainer>
+            <UnlockButton />
+          </WalletContainer>
+        )
+        }
+        {account && topEmperors && (
+          <EmperorInfoContainer>
+            {_topEmperors.map((topEmperor, index) => {
+              return (
+                <EmperorRow key={topEmperor.id}>
+                  <NumberField>
+                    <Text color="secondary" fontSize="12px">
+                      {`#${index + 1}`}
+                    </Text>
+                  </NumberField>
+                  <TimeField>
+                    <Text color="secondary" fontSize="12px">
+                      {formatTime(topEmperor.timeAsEmperor)}
+                    </Text>
+                    <Text color="secondary" fontSize="12px">
+                      min
+                    </Text>
+                  </TimeField>
+                  <AddressField>
+                    <Text color="secondary" fontSize="12px">
+                      {getShortenNickName(badWordsFilter(topEmperor.nickname))}
+                    </Text>
+                  </AddressField>
+                  <AvatarField color={getPenguinColor(topEmperor).code}>
+                    <SvgIcon
+                      src={`${process.env.PUBLIC_URL}/images/emperor/penguin_red.svg`}
+                      width="30px"
+                      height="30px"
+                    />
+                  </AvatarField>
+                </EmperorRow>
+              )
+            })}
+          </EmperorInfoContainer>
+        )}
       </CardBlockContent>
     </CardBlock>
 

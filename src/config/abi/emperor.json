@@ -41,33 +41,53 @@
         ]
     },
     {
-        "type": "event",
-        "name": "OwnershipTransferred",
-        "inputs": [
+        "type": "function",
+        "stateMutability": "view",
+        "outputs": [
             {
                 "type": "address",
-                "name": "previousOwner",
-                "internalType": "address",
-                "indexed": true
-            },
-            {
-                "type": "address",
-                "name": "newOwner",
-                "internalType": "address",
-                "indexed": true
+                "name": "",
+                "internalType": "address"
             }
         ],
-        "anonymous": false
+        "name": "admin",
+        "inputs": []
     },
     {
         "type": "function",
         "stateMutability": "nonpayable",
         "outputs": [],
-        "name": "changeDate",
+        "name": "changeColor",
+        "inputs": [
+            {
+                "type": "string",
+                "name": "_newColor",
+                "internalType": "string"
+            }
+        ]
+    },
+    {
+        "type": "function",
+        "stateMutability": "nonpayable",
+        "outputs": [],
+        "name": "changeFinalDate",
         "inputs": [
             {
                 "type": "uint256",
-                "name": "_finalDate",
+                "name": "_newFinalDateInSeconds",
+                "internalType": "uint256"
+            }
+        ]
+    },
+    {
+        "type": "function",
+        "stateMutability": "nonpayable",
+        "outputs": [],
+        "name": "changeStyle",
+        "inputs": [
+            {
+                "type": "uint256",
+                "name": "_newStyle",
                 "internalType": "uint256"
             }
         ]
@@ -175,19 +195,6 @@
         "stateMutability": "view",
         "outputs": [
             {
-                "type": "address",
-                "name": "",
-                "internalType": "address"
-            }
-        ],
-        "name": "lastEmperor",
-        "inputs": []
-    },
-    {
-        "type": "function",
-        "stateMutability": "view",
-        "outputs": [
-            {
                 "type": "uint256",
                 "name": "",
                 "internalType": "uint256"
@@ -283,19 +290,6 @@
                 "internalType": "address"
             }
         ],
-        "name": "owner",
-        "inputs": []
-    },
-    {
-        "type": "function",
-        "stateMutability": "view",
-        "outputs": [
-            {
-                "type": "address",
-                "name": "",
-                "internalType": "address"
-            }
-        ],
         "name": "pefi",
         "inputs": []
     },
@@ -314,14 +308,14 @@
                 "internalType": "string"
             },
             {
-                "type": "uint256",
-                "name": "style",
-                "internalType": "uint256"
-            },
-            {
                 "type": "bool",
                 "name": "isRegistered",
                 "internalType": "bool"
+            },
+            {
+                "type": "uint256",
+                "name": "style",
+                "internalType": "uint256"
             },
             {
                 "type": "uint256",
@@ -370,13 +364,6 @@
         "type": "function",
         "stateMutability": "nonpayable",
         "outputs": [],
-        "name": "renounceOwnership",
-        "inputs": []
-    },
-    {
-        "type": "function",
-        "stateMutability": "nonpayable",
-        "outputs": [],
         "name": "stealCrown",
         "inputs": [
             {
@@ -402,19 +389,6 @@
                 "type": "uint256",
                 "name": "",
                 "internalType": "uint256"
-            }
-        ]
-    },
-    {
-        "type": "function",
-        "stateMutability": "nonpayable",
-        "outputs": [],
-        "name": "transferOwnership",
-        "inputs": [
-            {
-                "type": "address",
-                "name": "newOwner",
-                "internalType": "address"
             }
         ]
     }
