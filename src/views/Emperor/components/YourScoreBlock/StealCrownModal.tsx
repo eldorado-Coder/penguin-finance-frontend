@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { Button, Modal, Text, Flex } from '@penguinfinance/uikit'
+import { Button, Modal, Text, Flex, Link } from '@penguinfinance/uikit'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import styled from 'styled-components'
 import ModalActions from 'components/ModalActions'
@@ -90,18 +90,25 @@ const StealCrownModal: React.FC<StealCrownModalProps> = ({ onConfirm, onDismiss 
         <Button variant="primary" onClick={onDismiss} scale="md">
           {TranslateString(462, 'Cancel')}
         </Button>
-        <Button
-          scale="md"
-          disabled={!checkCanConfirm()}
-          onClick={async () => {
-            setPendingTx(true)
-            await onConfirm(amount)
-            setPendingTx(false)
-            onDismiss()
-          }}
-        >
-          {pendingTx ? TranslateString(488, 'Pending Confirmation') : TranslateString(464, 'Confirm')}
-        </Button>
+        <ButtonGroupContainer>
+          <Button
+            scale="md"
+            disabled={!checkCanConfirm()}
+            onClick={async () => {
+              setPendingTx(true)
+              await onConfirm(amount)
+              setPendingTx(false)
+              onDismiss()
+            }}
+          >
+            {pendingTx ? TranslateString(488, 'Pending Confirmation') : TranslateString(464, 'Confirm')}
+          </Button>
+          <Link fontSize="14px" bold={false} href="./igloos" external color="failure">
+            <Button variant="primary" onClick={onDismiss} scale="md">
+              {TranslateString(462, 'Get xPEFI')}
+            </Button>
+          </Link>
+        </ButtonGroupContainer>
       </ModalActions>
     </Modal>
   )
@@ -112,6 +119,16 @@ const BidInfoContainer = styled.div`
   flex-direction: column;
   margin-top: 10px;
   padding: 0px 12px;
+`
+
+const ButtonGroupContainer = styled.div`
+  display: flex;
+  button {
+    margin-right: 20px;
+  }
+  a:hover {
+    text-decoration: none !important;
+  }
 `
 
 export default StealCrownModal
