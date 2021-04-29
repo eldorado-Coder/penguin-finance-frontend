@@ -26,6 +26,7 @@ const CardBlockHeader = styled.div`
   padding: 24px;
   margin-bottom: -120px;
   margin-top: -80px;
+  min-height: 314px;
 `
 
 const TitleBgWrapper = styled.div<{ color: string }>`
