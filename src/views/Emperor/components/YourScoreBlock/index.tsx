@@ -9,6 +9,7 @@ import SvgIcon from 'components/SvgIcon'
 import { useEmperor } from 'state/hooks'
 import { useXPefi } from 'hooks/useContract'
 import { getXPefiAddress } from 'utils/addressHelpers'
+import { badWordsFilter } from 'utils/address'
 import { useRegister, useStealCrown, useXPefiApprove } from 'hooks/useEmperor'
 import RegisterModal from './RegisterModal'
 import StealCrownModal from './StealCrownModal'
@@ -170,6 +171,9 @@ const YourScoreBlock: React.FC = () => {
 
                 {myStatus === 'registered' && (
                     <RegisterContainer>
+                        <Text bold color="secondary" fontSize="22px">
+                            {TranslateString(1074, myEmperor && badWordsFilter(myEmperor.nickname))}
+                        </Text>
                         <Text bold color="secondary" fontSize="18px">
                             {TranslateString(1074, 'You have been Emperor for:')}
                         </Text>
@@ -181,6 +185,20 @@ const YourScoreBlock: React.FC = () => {
                                 {TranslateString(292, 'Steal the crown')}
                             </Button>
                         </RegisterButtonContainer>
+                    </RegisterContainer>
+                )}
+
+                {myStatus === 'king' && (
+                    <RegisterContainer>
+                        <Text bold color="secondary" fontSize="22px">
+                            {TranslateString(1074, myEmperor && badWordsFilter(myEmperor.nickname))}
+                        </Text>
+                        <Text bold color="secondary" fontSize="18px">
+                            {TranslateString(1074, 'You have been Emperor for:')}
+                        </Text>
+                        <Text bold color="primary" fontSize="22px">
+                            {`${myEmperor.timeAsEmperor} seconds`}
+                        </Text>
                     </RegisterContainer>
                 )}
             </CardBlockContent>
