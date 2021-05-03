@@ -181,11 +181,16 @@ const Emperor: React.FC = () => {
 
   const renderEmperorEndPage = () => {
     return (
-      <EmperorEndBgContainer />
+      <>
+        {/* <EmperorEndBgContainer /> */}
+      </>
     )
   }
 
   const emperorEnded = true;
+  const emperorDefaultVideo = "/videos/penguin_emperor.mp4";
+  // to change the video of emperor winner page background video, please change this video path
+  const emperorWinnerVideo = "/videos/penguin_emperor_winner.mp4";
 
   return (
     <Page>
@@ -201,15 +206,16 @@ const Emperor: React.FC = () => {
         volume={100}
       />
 
-      {!emperorEnded && (
+      {/* background video */}
+      <EmperorBgContainer width="100%" height="100%" autoPlay loop muted>
+        <source src={emperorEnded ? emperorWinnerVideo : emperorDefaultVideo} />
+      </EmperorBgContainer>
+
+      {!emperorEnded ? (
         <>
-          <EmperorBgContainer width="100%" height="100%" autoPlay loop muted>
-            <source src="/videos/penguin_emperor.mp4" />
-          </EmperorBgContainer>
           {renderEmperorStatsPage()}
         </>
-      )}
-      {emperorEnded && (
+      ) : (
         <>
           {renderEmperorEndPage()}
         </>
