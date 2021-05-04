@@ -1,10 +1,10 @@
 import BigNumber from 'bignumber.js'
-import React, { useCallback, useState } from 'react'
-import styled from 'styled-components'
-import { Button, IconButton, useModal, AddIcon, Image, Text } from 'penguinfinance-uikit2'
+import React, { useCallback, useState, useEffect } from 'react'
+import styled, { keyframes } from 'styled-components'
+import { Button, IconButton, useModal, AddIcon, Image, Text, Flex } from 'penguinfinance-uikit2'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import UnlockButton from 'components/UnlockButton'
-import { useERC20 } from 'hooks/useContract'
+import { useERC20, useXPefi } from 'hooks/useContract'
 import { useSousApprove } from 'hooks/useApprove'
 import useI18n from 'hooks/useI18n'
 import { useSousStake } from 'hooks/useStake'
@@ -22,15 +22,55 @@ import CardTitle from './CardTitle'
 import Card from './Card'
 import CardFooter from './CardFooter'
 
+const RainbowLight = keyframes`
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+`
+
+const StyledCardAccent = styled.div`
+  background: linear-gradient(
+    45deg,
+    rgba(255, 0, 0, 1) 0%,
+    rgba(255, 154, 0, 1) 10%,
+    rgba(208, 222, 33, 1) 20%,
+    rgba(79, 220, 74, 1) 30%,
+    rgba(63, 218, 216, 1) 40%,
+    rgba(47, 201, 226, 1) 50%,
+    rgba(28, 127, 238, 1) 60%,
+    rgba(95, 21, 242, 1) 70%,
+    rgba(186, 12, 248, 1) 80%,
+    rgba(251, 7, 217, 1) 90%,
+    rgba(255, 0, 0, 1) 100%
+  );
+  background-size: 300% 300%;
+  animation: ${RainbowLight} 2s linear infinite;
+  border-radius: 16px;
+  filter: blur(6px);
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
+  z-index: -1;
+`
+
 interface PoolWithApy extends Pool {
   apy: BigNumber
 }
 
 interface HarvestProps {
-  pool: PoolWithApy
+  pool: PoolWithApy,
+  isMainPool: boolean
 }
 
-const PoolCard: React.FC<HarvestProps> = ({ pool }) => {
+const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool }) => {
   const {
     sousId,
     image,
@@ -49,7 +89,7 @@ const PoolCard: React.FC<HarvestProps> = ({ pool }) => {
     isFinished,
     userData,
     stakingLimit,
-  } = pool
+  } = pool;
 
   // Pools using native AVAX behave differently than pools using a token
   const isBnbPool = poolCategory === PoolCategory.BINANCE
@@ -61,9 +101,11 @@ const PoolCard: React.FC<HarvestProps> = ({ pool }) => {
   const { onStake } = useSousStake(sousId, isBnbPool)
   const { onUnstake } = useSousUnstake(sousId)
   const { onReward } = useSousHarvest(sousId, isBnbPool)
+  const xPefiContract = useXPefi();
 
   const [requestedApproval, setRequestedApproval] = useState(false)
   const [pendingTx, setPendingTx] = useState(false)
+  const [handsOnPenalty, setHandsOnPenalty] = useState(0);
 
   const allowance = new BigNumber(userData?.allowance || 0)
   const stakingTokenBalance = new BigNumber(userData?.stakingTokenBalance || 0)
@@ -94,6 +136,21 @@ const PoolCard: React.FC<HarvestProps> = ({ pool }) => {
     <WithdrawModal max={stakedBalance} onConfirm={onUnstake} tokenName={`x${stakingTokenName}`} />,
   )
 
+  const fetchEarlyWithdrawalFee = useCallback(async () => {
+    const earlyWithdrawalFee = await xPefiContract.methods.earlyWithdrawalFee().call();
+    const maxEarlyWithdrawalFee = await xPefiContract.methods.MAX_EARLY_WITHDRAW_FEE().call();
+    const penalty = (earlyWithdrawalFee / maxEarlyWithdrawalFee) * 100;
+    setHandsOnPenalty(penalty);
+  }, [xPefiContract])
+
+  useEffect(() => {
+    fetchEarlyWithdrawalFee();
+  }, [fetchEarlyWithdrawalFee])
+
+  const getXPefiToPefiRatio = () => {
+    return pool.totalStaked && pool.totalSupply ? new BigNumber(pool.totalStaked).div(new BigNumber(pool.totalSupply)).toJSON() : 1
+  }
+
   const handleApprove = useCallback(async () => {
     try {
       setRequestedApproval(true)
@@ -107,17 +164,32 @@ const PoolCard: React.FC<HarvestProps> = ({ pool }) => {
     }
   }, [onApprove, setRequestedApproval])
 
+  const xPefiToPefiRatio = getXPefiToPefiRatio();
+
   return (
     <Card isActive={isCardActive} isFinished={isFinished && sousId !== 0}>
+      {isMainPool && 
+        <StyledCardAccent />
+      }
       {isFinished && sousId !== 0 && <PoolFinishedSash />}
       <div style={{ padding: '24px' }}>
         <CardTitle isFinished={isFinished && sousId !== 0}>
           {tokenName} {TranslateString(348, 'Nest')}
         </CardTitle>
         <div style={{ marginBottom: '8px', display: 'flex', alignItems: 'center' }}>
-          <div style={{ flex: 1 }}>
+          <Flex minWidth='100%' alignItems='center'>
             <Image src={`/images/pools/${image || tokenName}.png`} width={64} height={64} alt={tokenName} />
-          </div>
+            <Flex flexDirection='column' width='100%'>
+              <Flex ml='8px' width='100%' justifyContent='space-between'>
+                <Text color='textSubtle' bold fontSize="14px">xPEFI to PEFI:</Text>
+                <Text color='textSubtle' bold fontSize="14px">{Number(Number(xPefiToPefiRatio).toFixed(3))}</Text>
+              </Flex>
+              <Flex ml='8px' width='100%' justifyContent='space-between'>
+                <Text color='textSubtle' bold fontSize="14px">Paper Hands Penalty:</Text>
+                <Text color='textSubtle' bold fontSize="14px">{`${Number(handsOnPenalty).toFixed(2)}%`}</Text>
+              </Flex>
+            </Flex>
+          </Flex>
         </div>
         <StyledCardActions>
           {!account && <UnlockButton />}

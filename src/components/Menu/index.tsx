@@ -6,31 +6,14 @@ import { allLanguages } from 'config/localisation/languageCodes'
 import { LanguageContext } from 'contexts/Localisation/languageContext'
 import useTheme from 'hooks/useTheme'
 import { usePricePefiUsdt, useProfile, usePools } from 'state/hooks'
-import config from './config'
-
-const socials = [
-  {
-    label: "Discord",
-    icon: "DiscordIcon",
-    href: "https://discord.gg/R5Rv68GXXc",
-  },
-  {
-    label: 'Telegram',
-    icon: "TelegramIcon",
-    href: "https://t.me/penguin_defi"
-  },
-  {
-    label: "Twitter",
-    icon: "TwitterIcon",
-    href: "https://twitter.com/penguin_defi",
-  },
-];
+import { config, socials } from './config';
 
 const Menu = (props) => {
   const { account, connect, reset } = useWallet()
   const { selectedLanguage, setSelectedLanguage } = useContext(LanguageContext)
   const { isDark, toggleTheme } = useTheme()
   const pefiPriceUsd = usePricePefiUsdt()
+// <<<<<<< HEAD
   const { profile } = useProfile()
   const pools = usePools(account)
   const pefiPool = pools.length > 0 ? pools[0] : null
@@ -40,6 +23,24 @@ const Menu = (props) => {
   }
 
   const xPefiToPefiRatio = getXPefiToPefiRatio(pefiPool);
+// =======
+//   const { profile } = useProfile();
+//   const pools = usePools(account);
+  
+//   const poolsWithApy = pools.map((pool) => {
+//     return {
+//       ...pool,
+//       apy: new BigNumber(0)
+//     }
+//   })
+//   const pefiPool = poolsWithApy.length > 0 ? poolsWithApy[0] : null
+
+//   const getXPefiToPefiRatio = () => {
+//     return pefiPool.totalStaked && pefiPool.totalSupply ? new BigNumber(pefiPool.totalStaked).div(new BigNumber(pefiPool.totalSupply)).toJSON() : 1
+//   };
+
+//   const xPefiToPefiRatio = getXPefiToPefiRatio();
+// >>>>>>> 03c09a6 (feat: modified pefi nest card and footer)
 
   return (
     <UikitMenu
@@ -52,7 +53,11 @@ const Menu = (props) => {
       langs={allLanguages}
       setLang={setSelectedLanguage}
       penguinPriceUsd={pefiPriceUsd.toNumber()}
+// <<<<<<< HEAD
       pefiRatio={Number(xPefiToPefiRatio)}
+// =======
+//       pefiRatio={xPefiToPefiRatio}
+// >>>>>>> 03c09a6 (feat: modified pefi nest card and footer)
       links={config}
       socials={socials}
       // profile={{

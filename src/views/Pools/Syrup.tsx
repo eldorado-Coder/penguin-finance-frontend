@@ -10,6 +10,7 @@ import partition from 'lodash/partition'
 import useI18n from 'hooks/useI18n'
 import useBlock from 'hooks/useBlock'
 import { getBalanceNumber } from 'utils/formatBalance'
+import priceToBnb from 'utils/priceToBnb';
 import { useFarms, usePriceAvaxUsdt, usePools, usePriceEthAvax } from 'state/hooks'
 import { QuoteToken, PoolCategory } from 'config/constants/types'
 import FlexLayout from 'components/layout/Flex'
@@ -30,17 +31,6 @@ const Farm: React.FC = () => {
   const block = useBlock()
   const [stackedOnly, setStackedOnly] = useState(false)
 
-  const priceToBnb = (tokenName: string, tokenPrice: BigNumber, quoteToken: QuoteToken): BigNumber => {
-    const tokenPriceBN = new BigNumber(tokenPrice)
-    if (tokenName === 'AVAX') {
-      return new BigNumber(1)
-    }
-    if (tokenPrice && quoteToken === QuoteToken.USDT) {
-      return tokenPriceBN.div(avaxPriceUSD)
-    }
-    return tokenPriceBN
-  }
-
   const poolsWithApy = pools.map((pool) => {
     const isBnbPool = pool.poolCategory === PoolCategory.BINANCE
     const rewardTokenFarm = farms.find((f) => f.tokenSymbol === pool.tokenName)
@@ -58,6 +48,7 @@ const Farm: React.FC = () => {
       pool.tokenName,
       rewardTokenFarm?.tokenPriceVsQuote,
       rewardTokenFarm?.quoteTokenSymbol,
+      avaxPriceUSD
     )
 
     const totalRewardPricePerYear = rewardTokenPriceInAVAX.times(pool.tokenPerBlock).times(BLOCKS_PER_YEAR)
@@ -110,14 +101,14 @@ const Farm: React.FC = () => {
         <Route exact path={`${path}`}>
           <>
             {stackedOnly
-              ? orderBy(stackedOnlyPools, ['sortOrder']).map((pool) => <PoolCard key={pool.sousId} pool={pool} />)
-              : orderBy(openPools, ['sortOrder']).map((pool) => <PoolCard key={pool.sousId} pool={pool} />)}
+              ? orderBy(stackedOnlyPools, ['sortOrder']).map((pool) => <PoolCard key={pool.sousId} pool={pool} isMainPool />)
+              : orderBy(openPools, ['sortOrder']).map((pool) => <PoolCard key={pool.sousId} pool={pool} isMainPool />)}
             {/* <Coming /> */}
           </>
         </Route>
         <Route path={`${path}/history`}>
           {orderBy(finishedPools, ['sortOrder']).map((pool) => (
-            <PoolCard key={pool.sousId} pool={pool} />
+            <PoolCard key={pool.sousId} pool={pool} isMainPool />
           ))}
         </Route>
       </FlexLayout>
