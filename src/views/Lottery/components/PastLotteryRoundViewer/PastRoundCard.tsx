@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card } from '@penguinfinance/uikit'
+import { Card } from 'penguinfinance-uikit2'
 import { DataResponse } from 'utils/getLotteryRoundData'
 import PastRoundCardError from './PastRoundCardError'
 import PastRoundCardDetails from './PastRoundCardDetails'

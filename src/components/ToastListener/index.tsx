@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { ToastContainer, Toast } from '@penguinfinance/uikit'
+import { ToastContainer, Toast } from 'penguinfinance-uikit2'
 import { useToast } from 'state/hooks'
 import { State } from 'state/types'
 

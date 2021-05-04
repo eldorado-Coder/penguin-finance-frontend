@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { ChevronDownIcon, ChevronUpIcon, Text } from '@penguinfinance/uikit'
+import { ChevronDownIcon, ChevronUpIcon, Text } from 'penguinfinance-uikit2'
 
 export interface ExpandableSectionButtonProps {
   onClick?: () => void

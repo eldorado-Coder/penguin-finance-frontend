@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text } from '@penguinfinance/uikit'
+import { Text } from 'penguinfinance-uikit2'
 
 interface PastRoundCardErrorProps {
   error: {

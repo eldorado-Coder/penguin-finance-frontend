@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import BigNumber from 'bignumber.js'
-import { Modal, Button, Flex, LinkExternal } from '@penguinfinance/uikit'
+import { Modal, Button, Flex, LinkExternal } from 'penguinfinance-uikit2'
 import BalanceInput from 'components/Input/BalanceInput'
 import useTokenBalance from 'hooks/useTokenBalance'
 import { getFullDisplayBalance } from 'utils/formatBalance'

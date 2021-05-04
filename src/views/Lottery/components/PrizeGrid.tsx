@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import useI18n from 'hooks/useI18n'
-import { Heading, Text } from '@penguinfinance/uikit'
+import { Heading, Text } from 'penguinfinance-uikit2'
 
 export interface PrizeGridProps {
   lotteryPrizeAmount?: number

@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Heading, CardBody, CardFooter, PenguinRoundIcon, TicketRound } from '@penguinfinance/uikit'
+import { Heading, CardBody, CardFooter, PenguinRoundIcon, TicketRound } from 'penguinfinance-uikit2'
 import useI18n from 'hooks/useI18n'
 import { DataResponse } from 'utils/getLotteryRoundData'
 import LotteryCardHeading from '../LotteryCardHeading'

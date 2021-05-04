@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import BigNumber from 'bignumber.js'
-import { Card, CardBody, CardRibbon } from '@penguinfinance/uikit'
+import { Card, CardBody, CardRibbon } from 'penguinfinance-uikit2'
 import { AVAX_BLOCK_TIME } from 'config'
 import { Ifo, IfoStatus } from 'config/constants/types'
 import makeBatchRequest from 'utils/makeBatchRequest'
@@ -21,7 +21,7 @@ export interface IfoCardProps {
   ifo: Ifo
 }
 
-const StyledIfoCard = styled(Card)<{ ifoId: string }>`
+const StyledIfoCard = styled(Card) <{ ifoId: string }>`
   background-image: ${({ ifoId }) => `url('/images/ifos/${ifoId}-bg.svg')`};
   background-repeat: no-repeat;
   background-size: contain;

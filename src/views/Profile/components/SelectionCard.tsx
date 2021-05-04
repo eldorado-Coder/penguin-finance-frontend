@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Card, Radio } from '@penguinfinance/uikit'
+import { Card, Radio } from 'penguinfinance-uikit2'
 
 interface SelectionCardProps {
   name: string

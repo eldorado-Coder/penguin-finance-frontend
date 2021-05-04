@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text } from '@penguinfinance/uikit'
+import { Text } from 'penguinfinance-uikit2'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { useTotalRewards } from 'hooks/useTickets'
 import useI18n from 'hooks/useI18n'

@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Text, Heading, BaseLayout, Button, LinkExternal, Flex, Image } from '@penguinfinance/uikit'
+import { Text, Heading, BaseLayout, Button, LinkExternal, Flex, Image } from 'penguinfinance-uikit2'
 import { ifosConfig } from 'config/constants'
 import useI18n from 'hooks/useI18n'
 import IfoCard from './components/IfoCard'

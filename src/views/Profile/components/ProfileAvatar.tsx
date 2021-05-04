@@ -1,5 +1,5 @@
 import React from 'react'
-import { NoProfileAvatarIcon } from '@penguinfinance/uikit'
+import { NoProfileAvatarIcon } from 'penguinfinance-uikit2'
 import { Profile } from 'state/types'
 import styled from 'styled-components'
 

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { Button, Modal, Text, Flex, Link } from '@penguinfinance/uikit'
+import { Button, Modal, Text, Flex, Link } from 'penguinfinance-uikit2'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import styled from 'styled-components'
 import ModalActions from 'components/ModalActions'

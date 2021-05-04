@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Heading } from '@penguinfinance/uikit'
+import { Heading } from 'penguinfinance-uikit2'
 import useI18n from 'hooks/useI18n'
 import Page from 'components/layout/Page'
 import NftList from './components/NftList'

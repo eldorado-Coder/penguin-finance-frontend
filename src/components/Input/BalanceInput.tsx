@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Button } from '@penguinfinance/uikit'
+import { Button } from 'penguinfinance-uikit2'
 import useI18n from 'hooks/useI18n'
 import Input, { InputProps } from './Input'
 

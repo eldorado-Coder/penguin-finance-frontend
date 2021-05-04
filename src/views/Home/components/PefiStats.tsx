@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, CardBody, Heading, Text } from '@penguinfinance/uikit'
+import { Card, CardBody, Heading, Text } from 'penguinfinance-uikit2'
 import styled from 'styled-components'
 import BigNumber from 'bignumber.js'
 import { getBalanceNumber } from 'utils/formatBalance'

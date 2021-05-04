@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { Text } from '@penguinfinance/uikit'
+import { Text } from 'penguinfinance-uikit2'
 import useI18n from 'hooks/useI18n'
 
 export interface IfoCardDescriptionProps {
@@ -33,7 +33,7 @@ const ToggleButton = styled.button`
   width: 100%;
 `
 
-const Description = styled(Text)<{ isOpen: boolean }>`
+const Description = styled(Text) <{ isOpen: boolean }>`
   color: ${({ theme }) => theme.colors.textSubtle};
   display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
 `

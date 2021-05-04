@@ -1,4 +1,4 @@
-import { MenuEntry } from '@penguinfinance/uikit'
+import { MenuEntry } from 'penguinfinance-uikit2'
 
 const config: MenuEntry[] = [
   {
@@ -32,12 +32,12 @@ const config: MenuEntry[] = [
   },
   {
     label: 'Penguin Arena',
-    icon: 'NftIcon',
+    icon: 'BattleIcon',
     href: '/arena',
   },
   {
     label: 'Penguin Emperor',
-    icon: 'NftIcon',
+    icon: 'CrownIcon',
     href: '/emperor',
   },
   // {
