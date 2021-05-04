@@ -60,7 +60,7 @@ const BurnedPefiCard = () => {
         </CardMidContent>
         <Flex justifyContent="space-between">
           <Heading color="contrast" size="md">
-            {TranslateString(534, 'has been burnt forever!')}
+            {TranslateString(534, 'has been burned forever!')}
           </Heading>
         </Flex>
       </CardBody>
