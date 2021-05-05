@@ -166,7 +166,7 @@ const IgloosContentContainer = styled.div`
 const IgloosPenguinImgContainer = styled.div`
   z-index: -1;
   position: absolute;
-  left: -262px;
+  left: -190px;
   margin-left: 0px;
   bottom: 100px;
 
