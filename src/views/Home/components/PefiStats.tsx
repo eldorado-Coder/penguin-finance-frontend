@@ -1,10 +1,12 @@
-import React from 'react'
+
+import React, { useState, useCallback, useEffect } from 'react'
 import { Card, CardBody, Heading, Text } from 'penguinfinance-uikit2'
 import styled from 'styled-components'
 import BigNumber from 'bignumber.js'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { useTotalSupply, useBurnedBalance } from 'hooks/useTokenBalance'
 import useI18n from 'hooks/useI18n'
+import { useXPefi } from 'hooks/useContract'
 import { getPefiAddress } from 'utils/addressHelpers'
 import { usePricePefiUsdt } from 'state/hooks'
 import { Pool } from 'state/types'
@@ -39,10 +41,23 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
   const pefiSupply = totalSupply ? getBalanceNumber(totalSupply) - getBalanceNumber(burnedBalance) : 0
   const pefiPriceUsd = usePricePefiUsdt()
   const pefiMarketcap = pefiPriceUsd.toNumber() * getBalanceNumber(totalSupply)
+  const [handsOnPenalty, setHandsOnPenalty] = useState(0);
+  const xPefiContract = useXPefi();
 
   const getXPefiToPefiRatio = () => {
     return pool.totalStaked && pool.totalSupply ? new BigNumber(pool.totalStaked).div(new BigNumber(pool.totalSupply)).toJSON() : 1
   }
+
+  const fetchEarlyWithdrawalFee = useCallback(async () => {
+    const earlyWithdrawalFee = await xPefiContract.methods.earlyWithdrawalFee().call();
+    const maxEarlyWithdrawalFee = await xPefiContract.methods.MAX_EARLY_WITHDRAW_FEE().call();
+    const penalty = (earlyWithdrawalFee / maxEarlyWithdrawalFee) * 100;
+    setHandsOnPenalty(penalty);
+  }, [xPefiContract])
+
+  useEffect(() => {
+    fetchEarlyWithdrawalFee();
+  }, [fetchEarlyWithdrawalFee])
 
   const xPefiToPefiRatio = getXPefiToPefiRatio()
   const TVL = `6,972,796.28`;
@@ -71,7 +86,7 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
         </Row>
         <Row>
           <Text color="primary" fontSize="14px">{TranslateString(540, 'XPEFI to PEFI ratio')}</Text>
-          <CardValue fontSize="14px" decimals={2} value={Number(Number(xPefiToPefiRatio).toFixed(2))} />
+          <CardValue fontSize="14px" decimals={3} value={Number(Number(xPefiToPefiRatio).toFixed(3))} />
         </Row>
         <Row>
           <Text color="primary" fontSize="14px">{TranslateString(540, 'PEFI/block')}</Text>
@@ -79,7 +94,7 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
         </Row>
         <Row>
           <Text color="primary" fontSize="14px">{TranslateString(540, 'Paper Hands Penalty')}</Text>
-          <Text fontSize="14px"><b>14.47%</b></Text>
+          <Text fontSize="14px"><b>{`${Number(handsOnPenalty).toFixed(2)}%`}</b></Text>
         </Row>
       </CardBody>
     </StyledPefiStats>

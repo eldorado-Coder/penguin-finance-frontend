@@ -6,25 +6,7 @@ import { allLanguages } from 'config/localisation/languageCodes'
 import { LanguageContext } from 'contexts/Localisation/languageContext'
 import useTheme from 'hooks/useTheme'
 import { usePricePefiUsdt, useProfile, usePools } from 'state/hooks'
-import config from './config'
-
-const socials = [
-  {
-    label: "Discord",
-    icon: "DiscordIcon",
-    href: "https://discord.gg/R5Rv68GXXc",
-  },
-  {
-    label: 'Telegram',
-    icon: "TelegramIcon",
-    href: "https://t.me/penguin_defi"
-  },
-  {
-    label: "Twitter",
-    icon: "TwitterIcon",
-    href: "https://twitter.com/penguin_defi",
-  },
-];
+import { config, socials } from './config';
 
 const Menu = (props) => {
   const { account, connect, reset } = useWallet()
