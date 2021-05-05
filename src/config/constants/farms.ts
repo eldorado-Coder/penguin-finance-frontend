@@ -92,7 +92,7 @@ const farms: FarmConfig[] = [
     lpSymbol: 'PEFI-DAI LP',
     lpAddresses: {
       43113: '',
-      43114: '0x8912a0fadf3588c6791e42310b549a7bc0047b0e',
+      43114: '0x94DF699f8AA08314cBdfcca7dD6cfAA5AB9E8e26',
     },
     tokenSymbol: 'DAI',
     tokenAddresses: {
