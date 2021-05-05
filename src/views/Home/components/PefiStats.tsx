@@ -60,7 +60,7 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
   }, [fetchEarlyWithdrawalFee])
 
   const xPefiToPefiRatio = getXPefiToPefiRatio()
-  const TVL = `6,972,796.28`;
+  const TVL = `23,253,506.08`;
 
   return (
     <StyledPefiStats>

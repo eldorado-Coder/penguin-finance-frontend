@@ -112,6 +112,20 @@ const EmperorBgContainer = styled.video`
   z-index: -1;
 `;
 
+
+const EmperorEndBgContainer = styled.div` 
+  background-image: url("/images/emperor/competition_end.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  right: 0px;
+  left: 0px;
+  z-index:-1;
+`;
+
 const Emperor: React.FC = () => {
   const [jackpot, setJackpot] = useState(JACKPOTS.LOCK);
   const { currentEmperor } = useEmperor();
@@ -131,10 +145,57 @@ const Emperor: React.FC = () => {
     }
   };
 
+
+  const renderEmperorStatsPage = () => {
+    return (
+      <>
+        { account &&
+          <ChestWrapper
+            jackpot={jackpot}
+            onClick={handleOpenJackpot}>
+            {jackpot === JACKPOTS.UNLOCK &&
+              <PaperWrapper>
+                <JackpotPaper src={`${process.env.PUBLIC_URL}/images/emperor/jackpot/Mapefi.svg`} alt='jackpot_paper' />
+                <Text className='price' fontSize='24px'>{currentEmperor.jackpot} <span>x</span>PEFI</Text>
+              </PaperWrapper>
+            }
+            <img className='jackpot-lock' src={JACKPOTS.LOCK} alt="jackpot_lock" />
+            <img className='jackpot-open' src={JACKPOTS.OPEN} alt="jackpot_open" />
+            <img className='jackpot-unlock' src={JACKPOTS.UNLOCK} alt="jackpot_unlock" />
+          </ChestWrapper>}
+
+        <Grid align="between">
+          <GridItem>
+            <TopPenguinsBlock />
+          </GridItem>
+          <GridItem>
+            <EmperorBlock />
+          </GridItem>
+          <GridItem>
+            <YourScoreBlock />
+          </GridItem>
+        </Grid>
+      </>
+    )
+  }
+
+  const renderEmperorEndPage = () => {
+    return (
+      <>
+        {/* <EmperorEndBgContainer /> */}
+      </>
+    )
+  }
+
+  const emperorEnded = true;
+  const emperorDefaultVideo = "/videos/penguin_emperor.mp4";
+  // to change the video of emperor winner page background video, please change this video path
+  const emperorWinnerVideo = "/videos/PenguinEmperorWinner_Final.mp4";
+
   return (
     <Page>
       <Sound
-        url="/sounds/penguin_emperor_page.mp3"
+        url={`${emperorEnded ? "/sounds/penguin_emperor_winner.mp3" : "/sounds/penguin_emperor_page.mp3"} `}
         playStatus={Sound.status.PLAYING}
         volume={20}
         loop
@@ -144,35 +205,21 @@ const Emperor: React.FC = () => {
         playStatus={jackpotOpenSound ? Sound.status.PLAYING : Sound.status.STOPPED}
         volume={100}
       />
+
+      {/* background video */}
       <EmperorBgContainer width="100%" height="100%" autoPlay loop muted>
-        <source src="/videos/penguin_emperor.mp4" />
+        <source src={emperorEnded ? emperorWinnerVideo : emperorDefaultVideo} />
       </EmperorBgContainer>
-      {account &&
-        <ChestWrapper
-          jackpot={jackpot}
-          onClick={handleOpenJackpot}>
-          {jackpot === JACKPOTS.UNLOCK &&
-            <PaperWrapper>
-              <JackpotPaper src={`${process.env.PUBLIC_URL}/images/emperor/jackpot/Mapefi.svg`} alt='jackpot_paper' />
-              <Text className='price' fontSize='24px'>{currentEmperor.jackpot} <span>x</span>PEFI</Text>
-            </PaperWrapper>
-          }
-          <img className='jackpot-lock' src={JACKPOTS.LOCK} alt="jackpot_lock" />
-          <img className='jackpot-open' src={JACKPOTS.OPEN} alt="jackpot_open" />
-          <img className='jackpot-unlock' src={JACKPOTS.UNLOCK} alt="jackpot_unlock" />
-        </ChestWrapper>
-      }
-      <Grid align="between">
-        <GridItem>
-          <TopPenguinsBlock />
-        </GridItem>
-        <GridItem>
-          <EmperorBlock />
-        </GridItem>
-        <GridItem>
-          <YourScoreBlock />
-        </GridItem>
-      </Grid>
+
+      {!emperorEnded ? (
+        <>
+          {renderEmperorStatsPage()}
+        </>
+      ) : (
+        <>
+          {renderEmperorEndPage()}
+        </>
+      )}
     </Page >
   );
 };
