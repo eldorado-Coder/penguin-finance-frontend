@@ -87,23 +87,23 @@ const farms: FarmConfig[] = [
     withdrawalFee: '4',
     hardApy: '1677.83%',
   },
-  // {
-  //   pid: 5,
-  //   lpSymbol: 'PEFI-DAI LP',
-  //   lpAddresses: {
-  //     43113: '',
-  //     43114: '0x94DF699f8AA08314cBdfcca7dD6cfAA5AB9E8e26',
-  //   },
-  //   tokenSymbol: 'DAI',
-  //   tokenAddresses: {
-  //     43113: '',
-  //     43114: '0xbA7dEebBFC5fA1100Fb055a87773e1E99Cd3507a',
-  //   },
-  //   quoteTokenSymbol: QuoteToken.PEFI,
-  //   quoteTokenAddresses: contracts.pefi,
-  //   withdrawalFee: '4',
-  //   hardApy: '1322.62%',
-  // }
+  {
+    pid: 5,
+    lpSymbol: 'PEFI-DAI LP',
+    lpAddresses: {
+      43113: '',
+      43114: '0x94DF699f8AA08314cBdfcca7dD6cfAA5AB9E8e26',
+    },
+    tokenSymbol: 'DAI',
+    tokenAddresses: {
+      43113: '',
+      43114: '0xbA7dEebBFC5fA1100Fb055a87773e1E99Cd3507a',
+    },
+    quoteTokenSymbol: QuoteToken.PEFI,
+    quoteTokenAddresses: contracts.pefi,
+    withdrawalFee: '4',
+    hardApy: '1322.62%',
+  }
 ]
 
 export default farms
