@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react'
 import BigNumber from 'bignumber.js'
 import styled, { keyframes } from 'styled-components'
-import { Flex, Text, Skeleton } from '@penguinfinance/uikit'
+import { Flex, Text, Skeleton } from 'penguinfinance-uikit2'
 import { communityFarms } from 'config/constants'
 import { Farm } from 'state/types'
 import { provider } from 'web3-core'

@@ -1,5 +1,5 @@
 import React from 'react'
-import { InjectedModalProps, Modal } from '@penguinfinance/uikit'
+import { InjectedModalProps, Modal } from 'penguinfinance-uikit2'
 import useI18n from 'hooks/useI18n'
 import useEditProfile, { Views } from './reducer'
 import StartView from './StartView'

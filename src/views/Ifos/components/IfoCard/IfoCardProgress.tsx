@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Progress } from '@penguinfinance/uikit'
+import { Progress } from 'penguinfinance-uikit2'
 
 interface IfoCardProgressProps {
   progress: number

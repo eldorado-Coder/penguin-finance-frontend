@@ -1,6 +1,6 @@
 import React, { ButtonHTMLAttributes } from 'react'
 import styled from 'styled-components'
-import { Button, Text } from '@penguinfinance/uikit'
+import { Button, Text } from 'penguinfinance-uikit2'
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   value: string

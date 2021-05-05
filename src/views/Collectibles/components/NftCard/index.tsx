@@ -11,7 +11,7 @@ import {
   Text,
   CardFooter,
   useModal,
-} from '@penguinfinance/uikit'
+} from 'penguinfinance-uikit2'
 import { useProfile } from 'state/hooks'
 import useI18n from 'hooks/useI18n'
 import { Nft } from 'config/constants/types'

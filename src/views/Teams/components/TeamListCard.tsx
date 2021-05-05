@@ -1,7 +1,7 @@
 import React from 'react'
 import styled, { DefaultTheme } from 'styled-components'
 import { Link } from 'react-router-dom'
-import { Button, Card, CommunityIcon, Flex, Heading, PrizeIcon, Text } from '@penguinfinance/uikit'
+import { Button, Card, CommunityIcon, Flex, Heading, PrizeIcon, Text } from 'penguinfinance-uikit2'
 import useI18n from 'hooks/useI18n'
 import { Team } from 'config/constants/types'
 

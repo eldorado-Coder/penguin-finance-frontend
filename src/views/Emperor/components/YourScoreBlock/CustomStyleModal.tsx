@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react'
-import { Button, Modal, } from '@penguinfinance/uikit'
+import { Button, Modal, } from 'penguinfinance-uikit2'
 import styled from 'styled-components'
 import FieldInput from 'components/FieldInput'
 import useI18n from 'hooks/useI18n'

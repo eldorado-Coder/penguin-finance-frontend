@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Flex, Heading, Text } from '@penguinfinance/uikit'
+import { Flex, Heading, Text } from 'penguinfinance-uikit2'
 
 interface HeadingProps {
   valueToDisplay?: string

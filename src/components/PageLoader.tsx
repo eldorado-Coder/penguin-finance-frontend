@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Spinner } from '@penguinfinance/uikit'
+import { Spinner } from 'penguinfinance-uikit2'
 import Page from './layout/Page'
 
 const Wrapper = styled(Page)`

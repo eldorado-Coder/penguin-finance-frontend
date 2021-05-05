@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Text, Button, Input, InputProps, Flex, Link } from '@penguinfinance/uikit'
+import { Text, Button, Input, InputProps, Flex, Link } from 'penguinfinance-uikit2'
 import useI18n from '../../hooks/useI18n'
 
 interface ModalInputProps {

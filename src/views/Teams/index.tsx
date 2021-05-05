@@ -1,5 +1,5 @@
 import React from 'react'
-import { AutoRenewIcon, Flex, Heading } from '@penguinfinance/uikit'
+import { AutoRenewIcon, Flex, Heading } from 'penguinfinance-uikit2'
 import orderBy from 'lodash/orderBy'
 import { useTeams } from 'state/hooks'
 import Page from 'components/layout/Page'

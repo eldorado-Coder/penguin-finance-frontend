@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react'
-import { Button, Modal } from '@penguinfinance/uikit'
+import { Button, Modal } from 'penguinfinance-uikit2'
 import styled from 'styled-components'
 import { useWinningNumbers } from 'hooks/useTickets'
 import useI18n from 'hooks/useI18n'

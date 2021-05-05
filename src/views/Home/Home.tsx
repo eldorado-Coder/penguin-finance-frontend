@@ -2,7 +2,7 @@ import React from 'react'
 import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
 import { NavLink } from 'react-router-dom'
-import { Heading, Text, BaseLayout, ArrowForwardIcon } from '@penguinfinance/uikit'
+import { Heading, Text, BaseLayout, ArrowForwardIcon } from 'penguinfinance-uikit2'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import useI18n from 'hooks/useI18n'
 import useBlock from 'hooks/useBlock'
@@ -18,6 +18,7 @@ import EarnAssetCard from 'views/Home/components/EarnAssetCard'
 import WinCard from 'views/Home/components/WinCard'
 import PoolCard from 'views/Pools/components/PoolCard'
 import { getBalanceNumber } from 'utils/formatBalance'
+import priceToBnb from 'utils/priceToBnb'
 import { BLOCKS_PER_YEAR } from 'config'
 import { QuoteToken, PoolCategory } from 'config/constants/types'
 import { useFarms, usePriceAvaxUsdt, usePools, usePriceEthAvax } from 'state/hooks'
@@ -166,17 +167,6 @@ const Home: React.FC = () => {
   const avaxPriceUSD = usePriceAvaxUsdt()
   const ethPriceBnb = usePriceEthAvax()
 
-  const priceToBnb = (tokenName: string, tokenPrice: BigNumber, quoteToken: QuoteToken): BigNumber => {
-    const tokenPriceBN = new BigNumber(tokenPrice)
-    if (tokenName === 'AVAX') {
-      return new BigNumber(1)
-    }
-    if (tokenPrice && quoteToken === QuoteToken.USDT) {
-      return tokenPriceBN.div(avaxPriceUSD)
-    }
-    return tokenPriceBN
-  }
-
   const poolsWithApy = pools.map((pool) => {
     const rewardTokenFarm = farms.find((f) => f.tokenSymbol === pool.tokenName)
     const stakingTokenFarm = farms.find((s) => s.tokenSymbol === pool.stakingTokenName)
@@ -191,6 +181,7 @@ const Home: React.FC = () => {
       pool.tokenName,
       rewardTokenFarm?.tokenPriceVsQuote,
       rewardTokenFarm?.quoteTokenSymbol,
+      avaxPriceUSD
     )
 
     const totalRewardPricePerYear = rewardTokenPriceInAVAX.times(pool.tokenPerBlock).times(BLOCKS_PER_YEAR)
@@ -239,7 +230,7 @@ const Home: React.FC = () => {
             </PefiStatsCardWrapper>
             <PefiStats pool={pefiPool} />
             {pefiPool && (
-              <PoolCard pool={pefiPool} />
+              <PoolCard pool={pefiPool} isMainPool={false} />
             )}
             <SpacingWrapper />
           </Cards>

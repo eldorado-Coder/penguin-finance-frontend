@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { ButtonMenu, ButtonMenuItem } from '@penguinfinance/uikit'
+import { ButtonMenu, ButtonMenuItem } from 'penguinfinance-uikit2'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import PastLotteryDataContext from 'contexts/PastLotteryDataContext'
 import { getLotteryIssueIndex } from 'utils/lotteryUtils'

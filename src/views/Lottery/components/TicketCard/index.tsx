@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Card, CardBody, TicketRound, Text, Heading } from '@penguinfinance/uikit'
+import { Card, CardBody, TicketRound, Text, Heading } from 'penguinfinance-uikit2'
 import useI18n from 'hooks/useI18n'
 import useGetLotteryHasDrawn from 'hooks/useGetLotteryHasDrawn'
 import useTickets from 'hooks/useTickets'
@@ -12,7 +12,7 @@ interface CardProps {
   isSecondCard?: boolean
 }
 
-const StyledCard = styled(Card)<CardProps>`
+const StyledCard = styled(Card) <CardProps>`
   ${(props) =>
     props.isSecondCard
       ? `  

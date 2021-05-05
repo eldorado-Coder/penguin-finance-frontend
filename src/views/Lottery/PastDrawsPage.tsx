@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { BaseLayout } from '@penguinfinance/uikit'
+import { BaseLayout } from 'penguinfinance-uikit2'
 import PastLotteryRoundViewer from './components/PastLotteryRoundViewer'
 import PastDrawsHistoryCard from './components/PastDrawsHistory/PastDrawsHistoryCard'
 

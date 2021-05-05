@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { ChevronRightIcon, Button as UIKitButton, Flex, AutoRenewIcon, ChevronDownIcon } from '@penguinfinance/uikit'
+import { ChevronRightIcon, Button as UIKitButton, Flex, AutoRenewIcon, ChevronDownIcon } from 'penguinfinance-uikit2'
 import useI18n from 'hooks/useI18n'
 
 interface ApproveConfirmButtonsProps {

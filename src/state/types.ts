@@ -1,4 +1,4 @@
-import { Toast } from '@penguinfinance/uikit'
+import { Toast } from 'penguinfinance-uikit2'
 import BigNumber from 'bignumber.js'
 import { CampaignType, LPConfig, FarmConfig, Nft, PoolConfig, Team } from 'config/constants/types'
 

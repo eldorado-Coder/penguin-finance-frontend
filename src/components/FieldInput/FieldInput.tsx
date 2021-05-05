@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Text, Input, InputProps, Flex, } from '@penguinfinance/uikit'
+import { Text, Input, InputProps, Flex, } from 'penguinfinance-uikit2'
 
 interface FieldInputProps {
   onChange: (e: React.FormEvent<HTMLInputElement>) => void

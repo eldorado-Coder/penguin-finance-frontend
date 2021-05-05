@@ -1,5 +1,5 @@
 import React from 'react'
-import { Heading, Text, Flex, ChevronRightIcon } from '@penguinfinance/uikit'
+import { Heading, Text, Flex, ChevronRightIcon } from 'penguinfinance-uikit2'
 import { Link } from 'react-router-dom'
 import useI18n from 'hooks/useI18n'
 import nfts from 'config/constants/nfts'

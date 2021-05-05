@@ -1,5 +1,5 @@
 import React from 'react'
-import { ModalProvider } from '@penguinfinance/uikit'
+import { ModalProvider } from 'penguinfinance-uikit2'
 import bsc, { UseWalletProvider } from '@binance-chain/bsc-use-wallet'
 import { Provider } from 'react-redux'
 import getRpcUrl from 'utils/getRpcUrl'

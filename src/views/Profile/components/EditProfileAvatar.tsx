@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useModal } from '@penguinfinance/uikit'
+import { useModal } from 'penguinfinance-uikit2'
 import EditProfileModal from './EditProfileModal'
 import ProfileAvatar, { ProfileAvatarProps } from './ProfileAvatar'
 

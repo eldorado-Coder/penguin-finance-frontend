@@ -1,6 +1,6 @@
 import React from 'react'
 import BigNumber from 'bignumber.js'
-import { CalculateIcon, IconButton, useModal } from '@penguinfinance/uikit'
+import { CalculateIcon, IconButton, useModal } from 'penguinfinance-uikit2'
 import ApyCalculatorModal from './ApyCalculatorModal'
 
 export interface ApyButtonProps {

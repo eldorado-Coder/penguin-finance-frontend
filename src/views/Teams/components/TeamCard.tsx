@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Card, CardHeader, CardBody, CommunityIcon, Heading, PrizeIcon, Text } from '@penguinfinance/uikit'
+import { Card, CardHeader, CardBody, CommunityIcon, Heading, PrizeIcon, Text } from 'penguinfinance-uikit2'
 import { Team } from 'config/constants/types'
 import useI18n from 'hooks/useI18n'
 import ComingSoon from 'views/Profile/components/ComingSoon'
@@ -41,7 +41,7 @@ const StyledCard = styled(Card)`
   overflow: visible;
 `
 
-const StyledCardHeader = styled(CardHeader)<{ bg: string }>`
+const StyledCardHeader = styled(CardHeader) <{ bg: string }>`
   position: relative;
   background: url(${({ bg }) => bg});
   background-repeat: no-repeat;

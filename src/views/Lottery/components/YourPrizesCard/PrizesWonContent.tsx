@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react'
 import styled from 'styled-components'
-import { Button, Heading, Won, useModal } from '@penguinfinance/uikit'
+import { Button, Heading, Won, useModal } from 'penguinfinance-uikit2'
 import useI18n from 'hooks/useI18n'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { useMultiClaimLottery } from 'hooks/useBuyLottery'

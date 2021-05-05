@@ -1,5 +1,5 @@
 import styled, { DefaultTheme } from 'styled-components'
-import { CardHeader as UIKitCardHeader } from '@penguinfinance/uikit'
+import { CardHeader as UIKitCardHeader } from 'penguinfinance-uikit2'
 
 const getBackground = (theme: DefaultTheme) => {
   if (theme.isDark) {

@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Heading, Text, Flex } from '@penguinfinance/uikit'
+import { Heading, Text, Flex } from 'penguinfinance-uikit2'
 
 interface IfoCardHeaderProps {
   ifoId: string

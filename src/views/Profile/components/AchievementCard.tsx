@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Flex, PrizeIcon, Text } from '@penguinfinance/uikit'
+import { Flex, PrizeIcon, Text } from 'penguinfinance-uikit2'
 import { Achievement } from 'state/types'
 import AchievementAvatar from './AchievementAvatar'
 import AchievementTitle from './AchievementTitle'

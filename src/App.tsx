@@ -1,7 +1,7 @@
 import React, { useEffect, Suspense, lazy } from 'react'
 import { Router, Redirect, Route, Switch } from 'react-router-dom'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
-import { ResetCSS } from '@penguinfinance/uikit'
+import { ResetCSS } from 'penguinfinance-uikit2'
 import BigNumber from 'bignumber.js'
 import { useFetchProfile, useFetchPublicData } from 'state/hooks'
 import GlobalStyle from './style/Global'

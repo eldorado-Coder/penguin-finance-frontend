@@ -1,5 +1,5 @@
 import React from 'react'
-import { BunnyPlaceholderIcon, Flex, Heading } from '@penguinfinance/uikit'
+import { BunnyPlaceholderIcon, Flex, Heading } from 'penguinfinance-uikit2'
 import useI18n from 'hooks/useI18n'
 
 interface ComingSoonProps {

@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { Toast } from '@penguinfinance/uikit'
+import { Toast } from 'penguinfinance-uikit2'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { ToastsState } from '../types'
 

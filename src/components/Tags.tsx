@@ -1,5 +1,5 @@
 import React from 'react'
-import { Tag, VerifiedIcon, CommunityIcon, BinanceIcon } from '@penguinfinance/uikit'
+import { Tag, VerifiedIcon, CommunityIcon, BinanceIcon } from 'penguinfinance-uikit2'
 
 const CoreTag = () => (
   <Tag variant="primary" outline startIcon={<VerifiedIcon />}>

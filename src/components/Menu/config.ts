@@ -1,6 +1,6 @@
-import { MenuEntry } from '@penguinfinance/uikit'
+import { MenuEntry } from 'penguinfinance-uikit2'
 
-const config: MenuEntry[] = [
+export const config: MenuEntry[] = [
   {
     label: 'Home',
     icon: 'HomeIcon',
@@ -32,12 +32,12 @@ const config: MenuEntry[] = [
   },
   {
     label: 'Penguin Arena',
-    icon: 'NftIcon',
+    icon: 'BattleIcon',
     href: '/arena',
   },
   {
     label: 'Penguin Emperor',
-    icon: 'NftIcon',
+    icon: 'CrownIcon',
     href: '/emperor',
   },
   // {
@@ -95,6 +95,22 @@ const config: MenuEntry[] = [
       },
     ],
   },
-]
+];
 
-export default config
+export const socials = [
+  {
+    label: "Discord",
+    icon: "DiscordIcon",
+    href: "https://discord.gg/R5Rv68GXXc",
+  },
+  {
+    label: "Telegram",
+    icon: "TelegramIcon",
+    href: "https://t.me/penguin_defi"
+  },
+  {
+    label: "Twitter",
+    icon: "TwitterIcon",
+    href: "https://twitter.com/penguin_defi",
+  },
+];

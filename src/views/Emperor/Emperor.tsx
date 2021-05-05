@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Sound from 'react-sound';
 import { useWallet } from '@binance-chain/bsc-use-wallet';
-import { Text } from '@penguinfinance/uikit'
+import { Text } from 'penguinfinance-uikit2'
 
 import { useEmperor } from 'state/hooks';
 import Page from 'components/layout/Page';

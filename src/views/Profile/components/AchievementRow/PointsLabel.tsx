@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex, FlexProps, PrizeIcon, Text } from '@penguinfinance/uikit'
+import { Flex, FlexProps, PrizeIcon, Text } from 'penguinfinance-uikit2'
 import useI18n from 'hooks/useI18n'
 
 interface PointsLabelProps extends FlexProps {

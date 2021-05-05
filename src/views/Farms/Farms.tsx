@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import BigNumber from 'bignumber.js'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { provider } from 'web3-core'
-import { Image, Heading } from '@penguinfinance/uikit'
+import { Image, Heading } from 'penguinfinance-uikit2'
 import styled from 'styled-components'
 import { BLOCKS_PER_YEAR, PEFI_PER_BLOCK, PEFI_POOL_PID } from 'config'
 import FlexLayout from 'components/layout/Flex'
@@ -112,7 +112,7 @@ const Farms: React.FC = () => {
         />
       </IgloosBannerContainer>
       {/* <FarmTabButtons stackedOnly={stackedOnly} setStackedOnly={setStackedOnly} /> */}
-      <div>
+      <IgloosContentContainer>
         {/* <Divider /> */}
 
         <FlexLayout>
@@ -126,11 +126,12 @@ const Farms: React.FC = () => {
         <IgloosPenguinImgContainer>
           <IgloosPenguinImg alt="igloos penguin" />
         </IgloosPenguinImgContainer>
-      </div>
+      </IgloosContentContainer>
     </Page>
   )
 }
 
+// bg
 const IgloosBgContainer = styled.div` 
   /* background-image: url("/images/farms/BackgroundwBucket-01.png"); */
   background-repeat: no-repeat;
@@ -148,16 +149,29 @@ const IgloosBgContainer = styled.div`
   /* opacity: 0.3; */
 `;
 
+// banner
+const IgloosBannerContainer = styled.div`
+  /* position: absolute; */
+`
+
+const BannerImage = styled.img`
+  z-index: -1;
+`
+
+// content
+const IgloosContentContainer = styled.div`
+  position: relative;
+`
+
 const IgloosPenguinImgContainer = styled.div`
   z-index: -1;
   position: absolute;
-  left: 100px;
-  right: 0px;
+  left: -262px;
   margin-left: 0px;
   bottom: 100px;
 
   ${({ theme }) => theme.mediaQueries.lg} {
-    bottom: 200px;
+    bottom: 168px;
   }
 `
 
@@ -169,15 +183,6 @@ const IgloosPenguinImg = styled.img.attrs(props => ({
     width: 200px;
     src: '/images/farms/igloo-background-${({ theme }) => (theme.isDark ? 'dark' : 'light')}.png';
   }
-`
-
-
-const IgloosBannerContainer = styled.div`
-  /* position: absolute; */
-`
-
-const BannerImage = styled.img`
-  z-index: -1;
 `
 
 export default Farms
