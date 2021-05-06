@@ -8,6 +8,7 @@ export interface CardValueProps {
   fontSize?: string
   lineHeight?: string
   prefix?: string
+  suffix?: string
   bold?: boolean
   color?: string
 }
@@ -18,6 +19,7 @@ const CardValue: React.FC<CardValueProps> = ({
   fontSize = '40px',
   lineHeight = '1',
   prefix = '',
+  suffix = '',
   bold = true,
   color = 'text',
 }) => {
@@ -41,6 +43,7 @@ const CardValue: React.FC<CardValueProps> = ({
     <Text bold={bold} fontSize={fontSize} style={{ lineHeight }} color={color}>
       {prefix}
       {countUp}
+      {suffix}
     </Text>
   )
 }
