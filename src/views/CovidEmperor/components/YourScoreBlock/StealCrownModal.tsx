@@ -18,10 +18,10 @@ const StealCrownModal: React.FC<StealCrownModalProps> = ({ onConfirm, onDismiss 
   const [maxAmount, setMaxAmount] = useState('')
   const [pendingTx, setPendingTx] = useState(false)
   const TranslateString = useI18n()
-  const xPefiContract = useXPefi();
+  const xPefiContract = useXPefi()
   const { account } = useWallet()
   const { maxBidIncrease, minBidIncrease, currentEmperor } = useEmperor()
-  const currentBidAmount = currentEmperor.bidAmount;
+  const currentBidAmount = currentEmperor.bidAmount
 
   const fetchXPefiBalance = useCallback(async () => {
     const xPefiBalance = (await xPefiContract.methods.balanceOf(account).call()) / 1e18
@@ -29,7 +29,7 @@ const StealCrownModal: React.FC<StealCrownModalProps> = ({ onConfirm, onDismiss 
   }, [account, xPefiContract])
 
   useEffect(() => {
-    fetchXPefiBalance();
+    fetchXPefiBalance()
   }, [fetchXPefiBalance])
 
   const onChangeAmount = useCallback(
@@ -44,11 +44,11 @@ const StealCrownModal: React.FC<StealCrownModalProps> = ({ onConfirm, onDismiss 
   }, [currentBidAmount, maxBidIncrease, setAmount])
 
   const checkCanConfirm = () => {
-    if (pendingTx) return false;
-    if (amount.length === 0) return false;
-    if (Number(amount) > Number(maxAmount)) return false;
-    if (Number(amount) < Number(currentBidAmount) + Number(minBidIncrease)) return false;
-    return true;
+    if (pendingTx) return false
+    if (amount.length === 0) return false
+    if (Number(amount) > Number(maxAmount)) return false
+    if (Number(amount) < Number(currentBidAmount) + Number(minBidIncrease)) return false
+    return true
   }
 
   return (

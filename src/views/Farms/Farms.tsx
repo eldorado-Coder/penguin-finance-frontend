@@ -18,7 +18,6 @@ import FarmCard, { FarmWithStakedValue } from './components/FarmCard/FarmCard'
 import FarmTabButtons from './components/FarmTabButtons'
 import Divider from './components/Divider'
 
-
 //
 const Farms: React.FC = () => {
   const { path } = useRouteMatch()
@@ -107,10 +106,7 @@ const Farms: React.FC = () => {
       </Heading> */}
       <IgloosBgContainer />
       <IgloosBannerContainer>
-        <BannerImage
-          src={`${process.env.PUBLIC_URL}/images/farms/IglooHeader.gif`}
-          alt="igloos banner"
-        />
+        <BannerImage src={`${process.env.PUBLIC_URL}/images/farms/IglooHeader.gif`} alt="igloos banner" />
       </IgloosBannerContainer>
       {/* <FarmTabButtons stackedOnly={stackedOnly} setStackedOnly={setStackedOnly} /> */}
       <IgloosContentContainer>
@@ -133,7 +129,7 @@ const Farms: React.FC = () => {
 }
 
 // bg
-const IgloosBgContainer = styled.div` 
+const IgloosBgContainer = styled.div`
   /* background-image: url("/images/farms/BackgroundwBucket-01.png"); */
   background-repeat: no-repeat;
   background-size: cover;
@@ -146,9 +142,9 @@ const IgloosBgContainer = styled.div`
   ${({ theme }) => theme.mediaQueries.lg} {
     background-image: url('/images/farms/igloo-background-${({ theme }) => (theme.isDark ? 'dark' : 'light')}.png');
   }
-  z-index:-1;
+  z-index: -1;
   /* opacity: 0.3; */
-`;
+`
 
 // banner
 const IgloosBannerContainer = styled.div`
@@ -176,8 +172,10 @@ const IgloosPenguinImgContainer = styled.div`
   }
 `
 
-const IgloosPenguinImg = styled.img.attrs(props => ({
-  src: props.theme.isDark ? `${process.env.PUBLIC_URL}/images/farms/penguin-with-candle.gif` : `${process.env.PUBLIC_URL}/images/farms/penguin-with-fish.gif`,
+const IgloosPenguinImg = styled.img.attrs((props) => ({
+  src: props.theme.isDark
+    ? `${process.env.PUBLIC_URL}/images/farms/penguin-with-candle.gif`
+    : `${process.env.PUBLIC_URL}/images/farms/penguin-with-fish.gif`,
 }))`
   width: 150px;
   ${({ theme }) => theme.mediaQueries.lg} {

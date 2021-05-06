@@ -8,11 +8,10 @@ import { getShortenNickName, formatTime, badWordsFilter } from 'utils/address'
 import SvgIcon from 'components/SvgIcon'
 import { getPenguinColor } from '../utils'
 
-const CardBlock = styled.div`
-`
+const CardBlock = styled.div``
 
 const CardBlockHeader = styled.div`
-  position: relative;  
+  position: relative;
   display: flex;
   justify-content: center;
   z-index: 1;
@@ -29,9 +28,9 @@ const TitleBgWrapper = styled.div<{ color: string }>`
 
   svg {
     #Banner-Avatar {
-        path {
-            fill: ${({ color }) => `#${color}`};
-        }
+      path {
+        fill: ${({ color }) => `#${color}`};
+      }
     }
   }
 `
@@ -44,7 +43,7 @@ const CardBlockContent = styled.div`
   padding-bottom: 8px;
   position: relative;
   margin-top: -38px;
-  text-align:center;
+  text-align: center;
 `
 
 const WalletContainer = styled.div`
@@ -59,7 +58,7 @@ const EmperorInfoContainer = styled.div`
 
 const EmperorRow = styled.div`
   padding: 6px 0px;
-  border-top: 1px solid #42BCF5;
+  border-top: 1px solid #42bcf5;
   display: flex;
   min-height: 44px;
   &:last-child {
@@ -85,7 +84,7 @@ const TimeField = styled.div`
   align-items: center;
   display: flex;
   justify-content: center;
-  >div {
+  > div {
     margin-right: 5px;
   }
 `
@@ -98,7 +97,6 @@ const AddressField = styled.div`
   display: flex;
   justify-content: center;
 `
-
 
 const AvatarField = styled.div<{ color: string }>`
   width: 20%;
@@ -122,7 +120,8 @@ const TopPenguinsBlock: React.FC = () => {
     return { id: index, ...row }
   })
 
-  const headerColor: string = topEmperors.length > 0 ? getPenguinColor(topEmperors[0]).code : getPenguinColor(currentEmperor).code;
+  const headerColor: string =
+    topEmperors.length > 0 ? getPenguinColor(topEmperors[0]).code : getPenguinColor(currentEmperor).code
 
   return (
     <CardBlock>
@@ -144,8 +143,7 @@ const TopPenguinsBlock: React.FC = () => {
           <WalletContainer>
             <UnlockButton />
           </WalletContainer>
-        )
-        }
+        )}
         {account && topEmperors && (
           <EmperorInfoContainer>
             {_topEmperors.map((topEmperor, index) => {
@@ -183,9 +181,7 @@ const TopPenguinsBlock: React.FC = () => {
         )}
       </CardBlockContent>
     </CardBlock>
-
   )
 }
-
 
 export default TopPenguinsBlock

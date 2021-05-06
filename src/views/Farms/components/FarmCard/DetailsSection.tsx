@@ -39,7 +39,7 @@ const DetailsSection: React.FC<ExpandableSectionProps> = ({
   lpLabel,
   addLiquidityUrl,
   withdrawalFee,
-  feeLabel
+  feeLabel,
 }) => {
   const TranslateString = useI18n()
 

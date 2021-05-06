@@ -100,22 +100,22 @@ export const config: MenuEntry[] = [
       },
     ],
   },
-];
+]
 
 export const socials = [
   {
-    label: "Discord",
-    icon: "DiscordIcon",
-    href: "https://discord.gg/R5Rv68GXXc",
+    label: 'Discord',
+    icon: 'DiscordIcon',
+    href: 'https://discord.gg/R5Rv68GXXc',
   },
   {
-    label: "Telegram",
-    icon: "TelegramIcon",
-    href: "https://t.me/penguin_defi"
+    label: 'Telegram',
+    icon: 'TelegramIcon',
+    href: 'https://t.me/penguin_defi',
   },
   {
-    label: "Twitter",
-    icon: "TwitterIcon",
-    href: "https://twitter.com/penguin_defi",
+    label: 'Twitter',
+    icon: 'TwitterIcon',
+    href: 'https://twitter.com/penguin_defi',
   },
-];
+]

@@ -53,7 +53,9 @@ const ConfirmProfileCreationModal: React.FC<Props> = ({
       }
     },
     onApprove: () => {
-      return penguinContract.methods.approve(profileContract.options.address, allowance.toJSON()).send({ from: account })
+      return penguinContract.methods
+        .approve(profileContract.options.address, allowance.toJSON())
+        .send({ from: account })
     },
     onConfirm: () => {
       return profileContract.methods

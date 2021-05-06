@@ -6,7 +6,7 @@ import {
   updateUserStakedBalance,
   updateUserBalance,
   updateUserPendingReward,
-  fetchPoolsPublicDataAsync
+  fetchPoolsPublicDataAsync,
 } from 'state/actions'
 import { unstake, sousUnstake, sousEmegencyUnstake } from 'utils/callHelpers'
 import { useMasterchef, useSousChef } from './useContract'

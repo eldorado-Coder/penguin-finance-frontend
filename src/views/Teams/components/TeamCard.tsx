@@ -41,7 +41,7 @@ const StyledCard = styled(Card)`
   overflow: visible;
 `
 
-const StyledCardHeader = styled(CardHeader) <{ bg: string }>`
+const StyledCardHeader = styled(CardHeader)<{ bg: string }>`
   position: relative;
   background: url(${({ bg }) => bg});
   background-repeat: no-repeat;

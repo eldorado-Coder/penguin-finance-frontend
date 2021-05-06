@@ -42,19 +42,14 @@ interface HarvestProps {
 }
 
 const TotalPefiStakedNests: React.FC<HarvestProps> = ({ pool }) => {
-  const {
-    totalStaked
-  } = pool
+  const { totalStaked } = pool
 
   const TranslateString = useI18n()
   if (totalStaked) {
     return (
       <StyledTotalValueLockedCard>
-        <CardBgImageContainer >
-          <CardBgImage
-            src={`${process.env.PUBLIC_URL}/images/Big_Nest_Staked.png`}
-            alt="astronaut"
-          />
+        <CardBgImageContainer>
+          <CardBgImage src={`${process.env.PUBLIC_URL}/images/Big_Nest_Staked.png`} alt="astronaut" />
         </CardBgImageContainer>
         <CardBody>
           <Heading color="contrast" size="md">

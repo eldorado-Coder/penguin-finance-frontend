@@ -66,7 +66,7 @@ interface PoolWithApy extends Pool {
 }
 
 interface HarvestProps {
-  pool: PoolWithApy,
+  pool: PoolWithApy
   isMainPool: boolean
 }
 
@@ -89,7 +89,7 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool }) => {
     isFinished,
     userData,
     stakingLimit,
-  } = pool;
+  } = pool
 
   // Pools using native AVAX behave differently than pools using a token
   const isBnbPool = poolCategory === PoolCategory.BINANCE
@@ -101,11 +101,11 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool }) => {
   const { onStake } = useSousStake(sousId, isBnbPool)
   const { onUnstake } = useSousUnstake(sousId)
   const { onReward } = useSousHarvest(sousId, isBnbPool)
-  const xPefiContract = useXPefi();
+  const xPefiContract = useXPefi()
 
   const [requestedApproval, setRequestedApproval] = useState(false)
   const [pendingTx, setPendingTx] = useState(false)
-  const [handsOnPenalty, setHandsOnPenalty] = useState(0);
+  const [handsOnPenalty, setHandsOnPenalty] = useState(0)
 
   const allowance = new BigNumber(userData?.allowance || 0)
   const stakingTokenBalance = new BigNumber(userData?.stakingTokenBalance || 0)
@@ -117,7 +117,8 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool }) => {
   const accountHasStakedBalance = stakedBalance?.toNumber() > 0
   const needsApproval = !accountHasStakedBalance && !allowance.toNumber() && !isBnbPool
   const isCardActive = isFinished && accountHasStakedBalance
-  const rewardTokenRatio = totalStaked && totalSupply ? new BigNumber(totalStaked).div(new BigNumber(totalSupply)).toJSON() : 1
+  const rewardTokenRatio =
+    totalStaked && totalSupply ? new BigNumber(totalStaked).div(new BigNumber(totalSupply)).toJSON() : 1
 
   const convertedLimit = new BigNumber(stakingLimit).multipliedBy(new BigNumber(10).pow(tokenDecimals))
   const [onPresentDeposit] = useModal(
@@ -137,18 +138,20 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool }) => {
   )
 
   const fetchEarlyWithdrawalFee = useCallback(async () => {
-    const earlyWithdrawalFee = await xPefiContract.methods.earlyWithdrawalFee().call();
-    const maxEarlyWithdrawalFee = await xPefiContract.methods.MAX_EARLY_WITHDRAW_FEE().call();
-    const penalty = (earlyWithdrawalFee / maxEarlyWithdrawalFee) * 100;
-    setHandsOnPenalty(penalty);
+    const earlyWithdrawalFee = await xPefiContract.methods.earlyWithdrawalFee().call()
+    const maxEarlyWithdrawalFee = await xPefiContract.methods.MAX_EARLY_WITHDRAW_FEE().call()
+    const penalty = (earlyWithdrawalFee / maxEarlyWithdrawalFee) * 100
+    setHandsOnPenalty(penalty)
   }, [xPefiContract])
 
   useEffect(() => {
-    fetchEarlyWithdrawalFee();
+    fetchEarlyWithdrawalFee()
   }, [fetchEarlyWithdrawalFee])
 
   const getXPefiToPefiRatio = () => {
-    return pool.totalStaked && pool.totalSupply ? new BigNumber(pool.totalStaked).div(new BigNumber(pool.totalSupply)).toJSON() : 1
+    return pool.totalStaked && pool.totalSupply
+      ? new BigNumber(pool.totalStaked).div(new BigNumber(pool.totalSupply)).toJSON()
+      : 1
   }
 
   const handleApprove = useCallback(async () => {
@@ -164,29 +167,33 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool }) => {
     }
   }, [onApprove, setRequestedApproval])
 
-  const xPefiToPefiRatio = getXPefiToPefiRatio();
+  const xPefiToPefiRatio = getXPefiToPefiRatio()
 
   return (
     <Card isActive={isCardActive} isFinished={isFinished && sousId !== 0}>
-      {isMainPool &&
-        <StyledCardAccent />
-      }
+      {isMainPool && <StyledCardAccent />}
       {isFinished && sousId !== 0 && <PoolFinishedSash />}
       <div style={{ padding: '24px' }}>
         <CardTitle isFinished={isFinished && sousId !== 0}>
           {tokenName} {TranslateString(348, 'Nest')}
         </CardTitle>
         <div style={{ marginBottom: '8px', display: 'flex', alignItems: 'center' }}>
-          <Flex minWidth='100%' alignItems='center'>
+          <Flex minWidth="100%" alignItems="center">
             <Image src={`/images/pools/${image || tokenName}.png`} width={64} height={64} alt={tokenName} />
-            <Flex flexDirection='column' width='100%'>
-              <Flex ml='8px' width='100%' justifyContent='space-between'>
-                <Text color='textSubtle' bold fontSize="14px">xPEFI to PEFI:</Text>
-                <Text color='textSubtle' bold fontSize="14px">{Number(Number(xPefiToPefiRatio).toFixed(3))}</Text>
+            <Flex flexDirection="column" width="100%">
+              <Flex ml="8px" width="100%" justifyContent="space-between">
+                <Text color="textSubtle" bold fontSize="14px">
+                  xPEFI to PEFI:
+                </Text>
+                <Text color="textSubtle" bold fontSize="14px">
+                  {Number(Number(xPefiToPefiRatio).toFixed(3))}
+                </Text>
               </Flex>
-              <Flex ml='8px' width='100%' justifyContent='space-between'>
-                <Text color='textSubtle' bold fontSize="14px">Paper Hands Penalty:</Text>
-                <Text color='textSubtle' bold fontSize="14px">{`${Number(handsOnPenalty).toFixed(2)}%`}</Text>
+              <Flex ml="8px" width="100%" justifyContent="space-between">
+                <Text color="textSubtle" bold fontSize="14px">
+                  Paper Hands Penalty:
+                </Text>
+                <Text color="textSubtle" bold fontSize="14px">{`${Number(handsOnPenalty).toFixed(2)}%`}</Text>
               </Flex>
             </Flex>
           </Flex>
@@ -202,10 +209,7 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool }) => {
               </div>
             ) : (
               <>
-                <Button
-                  disabled={stakedBalance.eq(new BigNumber(0)) || pendingTx}
-                  onClick={onPresentWithdraw}
-                >
+                <Button disabled={stakedBalance.eq(new BigNumber(0)) || pendingTx} onClick={onPresentWithdraw}>
                   {`Unstake ${stakingTokenName}`}
                 </Button>
                 <StyledActionSpacer />
@@ -217,9 +221,7 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool }) => {
         </StyledCardActions>
         <StyledDetails>
           <div style={{ flex: 1 }}>
-            <Text color="primary">
-              {TranslateString(384, 'Your Stake')}:
-            </Text>
+            <Text color="primary">{TranslateString(384, 'Your Stake')}:</Text>
           </div>
           <Balance fontSize="14px" isDisabled={isFinished} value={getBalanceNumber(stakedBalance)} />
           <TokenSymbol>
@@ -229,10 +231,12 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool }) => {
           </TokenSymbol>
         </StyledDetails>
         <StyledDetails>
-          <div style={{ flex: 1 }}>
-            {' '}
-          </div>
-          <Balance fontSize="14px" isDisabled={isFinished} value={(new BigNumber(getBalanceNumber(stakedBalance)).times(new BigNumber(rewardTokenRatio))).toNumber()} />
+          <div style={{ flex: 1 }}> </div>
+          <Balance
+            fontSize="14px"
+            isDisabled={isFinished}
+            value={new BigNumber(getBalanceNumber(stakedBalance)).times(new BigNumber(rewardTokenRatio)).toNumber()}
+          />
           <TokenSymbol>
             <Text color="primary" fontSize="14px">
               {stakingTokenName}

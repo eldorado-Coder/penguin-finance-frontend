@@ -12,7 +12,7 @@ interface CardProps {
   isSecondCard?: boolean
 }
 
-const StyledCard = styled(Card) <CardProps>`
+const StyledCard = styled(Card)<CardProps>`
   ${(props) =>
     props.isSecondCard
       ? `  

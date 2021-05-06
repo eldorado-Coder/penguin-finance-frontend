@@ -103,7 +103,7 @@ const farms: FarmConfig[] = [
     quoteTokenAddresses: contracts.pefi,
     withdrawalFee: '4',
     hardApy: '300.35%',
-  }
+  },
 ]
 
 export default farms

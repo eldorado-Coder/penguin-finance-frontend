@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react'
-import { Button, Modal, } from 'penguinfinance-uikit2'
+import { Button, Modal } from 'penguinfinance-uikit2'
 import styled from 'styled-components'
 import FieldInput from 'components/FieldInput'
 import useI18n from 'hooks/useI18n'
@@ -19,13 +19,16 @@ const ButtonContainer = styled.div`
   }
 `
 
-const CustomStyleModal: React.FC<CustomStyleModalProps> = ({ onConfirmChangeStyle, onConfirmChangeColor, onDismiss }) => {
+const CustomStyleModal: React.FC<CustomStyleModalProps> = ({
+  onConfirmChangeStyle,
+  onConfirmChangeColor,
+  onDismiss,
+}) => {
   const [color, setColor] = useState('')
   const [style, setStyle] = useState('')
 
   const [pendingTx, setPendingTx] = useState(false)
   const TranslateString = useI18n()
-
 
   const onChangeStyle = useCallback(
     (e: React.FormEvent<HTMLInputElement>) => {

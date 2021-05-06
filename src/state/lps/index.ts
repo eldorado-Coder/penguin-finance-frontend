@@ -39,7 +39,6 @@ export const fetchLpsPublicDataAsync = () => async (dispatch) => {
 export const fetchLpUserDataAsync = (account) => async (dispatch) => {
   const userLpTokenBalances = await fetchLpUserTokenBalances(account)
 
-
   const arrayOfUserDataObjects = userLpTokenBalances.map((lpTokenBalance, index) => {
     return {
       index,
