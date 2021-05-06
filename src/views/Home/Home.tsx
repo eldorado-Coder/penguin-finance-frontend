@@ -217,8 +217,8 @@ const Home: React.FC = () => {
               <SpacingWrapper />
               <TotalPefiStakedNests pool={pefiPool} />
             </PefiStatsCardWrapper>
-            <PefiStats pool={pefiPool} />
             {pefiPool && <PoolCard pool={pefiPool} isMainPool={false} />}
+            <PefiStats pool={pefiPool} />
             <SpacingWrapper />
           </Cards>
         </div>
