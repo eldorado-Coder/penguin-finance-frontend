@@ -35,8 +35,13 @@ export const config: MenuEntry[] = [
     icon: 'BattleIcon',
     href: '/arena',
   },
+  // {
+  //   label: 'Penguin Emperor',
+  //   icon: 'CrownIcon',
+  //   href: '/emperor',
+  // },
   {
-    label: 'Penguin Emperor',
+    label: 'Penguin Emperor[temporary]',
     icon: 'CrownIcon',
     href: '/emperor',
   },
