@@ -8,7 +8,8 @@ BigNumber.config({
 export const PEFI_PER_BLOCK = new BigNumber(6.15)
 export const AVAX_BLOCK_TIME = 1
 export const WEEKS_PER_YEAR = 52
-export const BLOCKS_PER_YEAR = new BigNumber(10512000)
+// export const BLOCKS_PER_YEAR = new BigNumber(10512000)
+export const BLOCKS_PER_YEAR = new BigNumber(11690000)
 export const BLOCKS_PER_WEEK = BLOCKS_PER_YEAR.div(new BigNumber(WEEKS_PER_YEAR))
 export const PEFI_POOL_PID = 0
 export const BASE_EXCHANGE_URL = 'https://app.pangolin.exchange'
