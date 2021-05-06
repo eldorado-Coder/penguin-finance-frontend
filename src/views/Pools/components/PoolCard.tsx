@@ -168,7 +168,7 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool }) => {
 
   return (
     <Card isActive={isCardActive} isFinished={isFinished && sousId !== 0}>
-      {isMainPool && 
+      {isMainPool &&
         <StyledCardAccent />
       }
       {isFinished && sousId !== 0 && <PoolFinishedSash />}
