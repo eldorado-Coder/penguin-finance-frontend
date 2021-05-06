@@ -21,7 +21,6 @@ import { fetchTeam, fetchTeams } from './teams'
 import { fetchAchievements } from './achievements'
 import { setInit, fetchEmperor } from './emperor'
 
-
 const ZERO = new BigNumber(0)
 
 export const useFetchPublicData = () => {
@@ -191,10 +190,10 @@ export const useEmperor = () => {
 
   useEffect(() => {
     const refreshInterval = setInterval(() => {
-      dispatch(fetchEmperor(account));
+      dispatch(fetchEmperor(account))
     }, 5000)
 
-    return () => clearInterval(refreshInterval);
+    return () => clearInterval(refreshInterval)
   }, [dispatch, account])
 
   return emperorState

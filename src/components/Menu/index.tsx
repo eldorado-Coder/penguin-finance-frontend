@@ -6,7 +6,7 @@ import { allLanguages } from 'config/localisation/languageCodes'
 import { LanguageContext } from 'contexts/Localisation/languageContext'
 import useTheme from 'hooks/useTheme'
 import { usePricePefiUsdt, useProfile, usePools } from 'state/hooks'
-import { config, socials } from './config';
+import { config, socials } from './config'
 
 const Menu = (props) => {
   const { account, connect, reset } = useWallet()
@@ -18,10 +18,12 @@ const Menu = (props) => {
   const pefiPool = pools.length > 0 ? pools[0] : null
 
   const getXPefiToPefiRatio = (pool) => {
-    return pool.totalStaked && pool.totalSupply ? new BigNumber(pool.totalStaked).div(new BigNumber(pool.totalSupply)).toJSON() : 1
+    return pool.totalStaked && pool.totalSupply
+      ? new BigNumber(pool.totalStaked).div(new BigNumber(pool.totalSupply)).toJSON()
+      : 1
   }
 
-  const xPefiToPefiRatio = getXPefiToPefiRatio(pefiPool);
+  const xPefiToPefiRatio = getXPefiToPefiRatio(pefiPool)
 
   return (
     <UikitMenu

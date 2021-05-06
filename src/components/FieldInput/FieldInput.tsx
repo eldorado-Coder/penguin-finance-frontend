@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Text, Input, InputProps, Flex, } from 'penguinfinance-uikit2'
+import { Text, Input, InputProps, Flex } from 'penguinfinance-uikit2'
 
 interface FieldInputProps {
   onChange: (e: React.FormEvent<HTMLInputElement>) => void
@@ -8,7 +8,6 @@ interface FieldInputProps {
   value: string
   inputTitle?: string
 }
-
 
 const InputContainer = styled.div<InputProps>`
   display: flex;
@@ -24,9 +23,9 @@ const StyledInput = styled(Input)`
   margin: 8px;
   padding: 0 8px;
   border: 1px solid #7645d9;
-  ::placeholder { 
-    opacity: 0.6; 
-  };
+  ::placeholder {
+    opacity: 0.6;
+  }
 
   &:focus {
     box-shadow: 0px 0px 0px 1px #7645d9, 0px 0px 0px 1px rgb(118 69 217 / 60%) !important;
@@ -40,13 +39,7 @@ const StyledInput = styled(Input)`
   }
 `
 
-
-const FieldInput: React.FC<FieldInputProps> = ({
-  onChange,
-  placeholder,
-  value,
-  inputTitle,
-}) => {
+const FieldInput: React.FC<FieldInputProps> = ({ onChange, placeholder, value, inputTitle }) => {
   return (
     <div style={{ position: 'relative' }}>
       <InputContainer>

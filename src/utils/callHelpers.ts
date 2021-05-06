@@ -132,7 +132,6 @@ export const soushHarvestBnb = async (sousChefContract, account) => {
     })
 }
 
-
 export const registerEmperor = async (emperorContract, { nickName, color, style }, account) => {
   return emperorContract.methods
     .registerYourPenguin(nickName, color, style.toString())
@@ -170,7 +169,7 @@ export const changeEmperorColor = async (emperorContract, color, account) => {
 }
 
 export const approveXPefi = async (xPefiContract, account, address) => {
-  const approveAmount = '1000000000000000000000000000';
+  const approveAmount = '1000000000000000000000000000'
   return xPefiContract.methods
     .approve(address, new BigNumber(approveAmount).times(new BigNumber(10).pow(18)).toString())
     .send({ from: account, gas: 200000 })

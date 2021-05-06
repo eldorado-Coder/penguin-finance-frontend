@@ -46,14 +46,14 @@ const Hero = styled.div`
   height: 165px;
 
   h1 {
-    color:white;
+    color: white;
     font-weight: 500;
     font-size: 44px;
     margin-bottom: 10px;
     z-index: 1;
   }
   > div {
-    color:white;
+    color: white;
     z-index: 1;
   }
 
@@ -73,7 +73,7 @@ const HeroBgImage = styled.img`
 
 const HeroLeftImage = styled.img`
   position: absolute;
-  height: 190px;  
+  height: 190px;
   left: -110px;
   top: 35px;
   z-index: 1;
@@ -151,13 +151,11 @@ const PoolCardNavWrapper = styled.div`
   align-items: flex-end;
   justify-content: flex-end;
 `
-const PefiStatsCardWrapper = styled.div`
-`
+const PefiStatsCardWrapper = styled.div``
 
 const SpacingWrapper = styled.div`
   height: 24px;
 `
-
 
 const Home: React.FC = () => {
   const TranslateString = useI18n()
@@ -181,7 +179,7 @@ const Home: React.FC = () => {
       pool.tokenName,
       rewardTokenFarm?.tokenPriceVsQuote,
       rewardTokenFarm?.quoteTokenSymbol,
-      avaxPriceUSD
+      avaxPriceUSD,
     )
 
     const totalRewardPricePerYear = rewardTokenPriceInAVAX.times(pool.tokenPerBlock).times(BLOCKS_PER_YEAR)
@@ -190,7 +188,7 @@ const Home: React.FC = () => {
 
     return {
       ...pool,
-      apy: new BigNumber(0)
+      apy: new BigNumber(0),
     }
   })
   const pefiPool = poolsWithApy.length > 0 ? poolsWithApy[0] : null
@@ -200,18 +198,9 @@ const Home: React.FC = () => {
       <Page>
         <Hero>
           <HeroBgImageContainer>
-            <HeroBgImage
-              src={`${process.env.PUBLIC_URL}/images/home/title-bg.png`}
-              alt="astronaut"
-            />
-            <HeroLeftImage
-              src={`${process.env.PUBLIC_URL}/images/home/PenguinAstronaut.gif`}
-              alt="astronaut"
-            />
-            <HeroRightImage
-              src={`${process.env.PUBLIC_URL}/images/home/penguin_astronauts.gif`}
-              alt="astronaut"
-            />
+            <HeroBgImage src={`${process.env.PUBLIC_URL}/images/home/title-bg.png`} alt="astronaut" />
+            <HeroLeftImage src={`${process.env.PUBLIC_URL}/images/home/PenguinAstronaut.gif`} alt="astronaut" />
+            <HeroRightImage src={`${process.env.PUBLIC_URL}/images/home/penguin_astronauts.gif`} alt="astronaut" />
           </HeroBgImageContainer>
           <Heading as="h1" size="xl" mb="24px" color="primary">
             {TranslateString(576, 'Penguin Finance')}
@@ -229,17 +218,12 @@ const Home: React.FC = () => {
               <TotalPefiStakedNests pool={pefiPool} />
             </PefiStatsCardWrapper>
             <PefiStats pool={pefiPool} />
-            {pefiPool && (
-              <PoolCard pool={pefiPool} isMainPool={false} />
-            )}
+            {pefiPool && <PoolCard pool={pefiPool} isMainPool={false} />}
             <SpacingWrapper />
           </Cards>
         </div>
       </Page>
-      <HomeBgImage
-        src={`${process.env.PUBLIC_URL}/images/home/bg_mountains.png`}
-        alt="astronaut"
-      />
+      <HomeBgImage src={`${process.env.PUBLIC_URL}/images/home/bg_mountains.png`} alt="astronaut" />
     </>
   )
 }

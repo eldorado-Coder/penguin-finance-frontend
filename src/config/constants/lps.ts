@@ -15,7 +15,7 @@ const lps: LPConfig[] = [
     },
     quoteTokenSymbol: QuoteToken.AVAX,
     quoteTokenAddresses: contracts.wavax,
-  }
+  },
 ]
 
 export default lps

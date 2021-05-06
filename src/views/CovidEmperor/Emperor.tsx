@@ -162,7 +162,6 @@ const Emperor: React.FC = () => {
             <img className="jackpot-unlock" src={JACKPOTS.UNLOCK} alt="jackpot_unlock" />
           </ChestWrapper>
         )}
-
         <Grid align="between">
           <GridItem>
             <TopPenguinsBlock />
@@ -182,7 +181,7 @@ const Emperor: React.FC = () => {
     return <>{/* <EmperorEndBgContainer /> */}</>
   }
 
-  const emperorEnded = true
+  const emperorEnded = false
   const emperorDefaultVideo = '/videos/penguin_emperor.mp4'
   // to change the video of emperor winner page background video, please change this video path
   const emperorWinnerVideo = '/videos/PenguinEmperorWinner_Final.mp4'

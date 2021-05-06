@@ -23,7 +23,7 @@ export const fetchFarmUserAllowances = async (account: string) => {
 export const fetchFarmUserTokenBalances = async (account: string) => {
   const calls = farmsConfig.map((farm) => {
     const lpContractAddress = getAddress(farm.lpAddresses)
-    
+
     return {
       address: lpContractAddress,
       name: 'balanceOf',

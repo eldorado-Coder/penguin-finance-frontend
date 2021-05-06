@@ -1,8 +1,12 @@
+import BigNumber from 'bignumber.js'
+import { QuoteToken } from 'config/constants/types'
 
-import BigNumber from 'bignumber.js';
-import { QuoteToken } from 'config/constants/types';
-
-const priceToBnb = (tokenName: string, tokenPrice: BigNumber, quoteToken: QuoteToken, avaxPriceUSD: BigNumber): BigNumber => {
+const priceToBnb = (
+  tokenName: string,
+  tokenPrice: BigNumber,
+  quoteToken: QuoteToken,
+  avaxPriceUSD: BigNumber,
+): BigNumber => {
   const tokenPriceBN = new BigNumber(tokenPrice)
   if (tokenName === 'AVAX') {
     return new BigNumber(1)
@@ -11,6 +15,6 @@ const priceToBnb = (tokenName: string, tokenPrice: BigNumber, quoteToken: QuoteT
     return tokenPriceBN.div(avaxPriceUSD)
   }
   return tokenPriceBN
-};
+}
 
-export default priceToBnb;
+export default priceToBnb

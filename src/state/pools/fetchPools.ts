@@ -56,7 +56,6 @@ export const fetchPoolsTotalStaking = async () => {
     }
   })
 
-
   const callsNonBnbPoolsTotalSupplies = nonBnbPools.map((poolConfig) => {
     return {
       address: getAddress(poolConfig.contractAddress),

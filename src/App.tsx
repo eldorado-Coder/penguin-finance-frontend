@@ -18,6 +18,7 @@ const Home = lazy(() => import('./views/Home'))
 const Farms = lazy(() => import('./views/Farms'))
 const Arena = lazy(() => import('./views/Arena'))
 const Emperor = lazy(() => import('./views/Emperor'))
+const CovidEmperor = lazy(() => import('./views/CovidEmperor'))
 const NotFound = lazy(() => import('./views/NotFound'))
 
 // const Nests = lazy(() => import('./views/Nests'))
@@ -71,8 +72,12 @@ const App: React.FC = () => {
             <Route path="/arena">
               <Arena />
             </Route>
-            <Route path="/emperor">
+            {/* disable for a while */}
+            {/* <Route path="/emperor">
               <Emperor />
+            </Route> */}
+            <Route path="/emperor">
+              <CovidEmperor />
             </Route>
             {/* Redirect */}
             {/* <Route path="/staking">
