@@ -76,6 +76,7 @@ const App: React.FC = () => {
             <Route path="/emperor">
               <Emperor />
             </Route>
+            {/* temporary covid penguin emperor page */}
             {/* <Route path="/emperor">
               <CovidEmperor />
             </Route> */}
