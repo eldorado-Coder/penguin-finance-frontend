@@ -97,6 +97,7 @@ const EmperorBlock: React.FC = () => {
                 : `${process.env.PUBLIC_URL}/images/emperor/banner/emperor_banner_locked.svg`
             }
             width="100%"
+            height="20px"
           />
         </TitleBgWrapper>
       </CardBlockHeader>
@@ -120,6 +121,7 @@ const EmperorBlock: React.FC = () => {
         <SvgIcon
           src={`${process.env.PUBLIC_URL}/images/emperor/penguins/${currentEmperorPenguin}_${getPenguinColor(currentEmperor).name}.svg`}
           width="100%"
+          height="20px"
         />
       </KingPenguinImageWrapper>
       {currentEmperor.address && myEmperor.address && currentEmperor.address !== myEmperor.address && (
@@ -127,6 +129,7 @@ const EmperorBlock: React.FC = () => {
           <SvgIcon
             src={`${process.env.PUBLIC_URL}/images/emperor/penguins/${myEmperorPenguin}_${getPenguinColor(myEmperor).name}.svg`}
             width="100%"
+            height="20px"
           />
         </MyPenguinImageWrapper>
       )}

@@ -6,7 +6,7 @@ import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { provider } from 'web3-core'
 import { Image, Heading } from 'penguinfinance-uikit2'
 import styled from 'styled-components'
-import { BLOCKS_PER_YEAR, PEFI_PER_BLOCK, PEFI_POOL_PID } from 'config'
+import { BLOCKS_PER_WEEK, PEFI_PER_BLOCK, PEFI_POOL_PID } from 'config'
 import FlexLayout from 'components/layout/Flex'
 import Page from 'components/layout/Page'
 import { useFarms, usePriceAvaxUsdt, usePricePefiUsdt, usePriceEthUsdt } from 'state/hooks'
@@ -57,30 +57,31 @@ const Farms: React.FC = () => {
           return farm
         }
         const pefiRewardPerBlock = PEFI_PER_BLOCK.times(farm.poolWeight)
-        const cakeRewardPerYear = pefiRewardPerBlock.times(BLOCKS_PER_YEAR)
+        const rewardPerWeek = pefiRewardPerBlock.times(BLOCKS_PER_WEEK)
 
-        // pefiPriceInQuote * cakeRewardPerYear / lpTotalInQuoteToken
-        let apy = pefiPriceVsAVAX.times(cakeRewardPerYear).div(farm.lpTotalInQuoteToken)
+        // pefiPriceInQuote * rewardPerWeek / lpTotalInQuoteToken
+        let apy = pefiPriceVsAVAX.times(rewardPerWeek).div(farm.lpTotalInQuoteToken)
 
         if (farm.quoteTokenSymbol === QuoteToken.USDT || farm.quoteTokenSymbol === QuoteToken.UST) {
-          apy = pefiPriceVsAVAX.times(cakeRewardPerYear).div(farm.lpTotalInQuoteToken).times(avaxPrice)
+          apy = pefiPriceVsAVAX.times(rewardPerWeek).div(farm.lpTotalInQuoteToken).times(avaxPrice)
         } else if (farm.quoteTokenSymbol === QuoteToken.ETH) {
-          apy = pefiPrice.div(ethPriceUsd).times(cakeRewardPerYear).div(farm.lpTotalInQuoteToken)
+          apy = pefiPrice.div(ethPriceUsd).times(rewardPerWeek).div(farm.lpTotalInQuoteToken)
         } else if (farm.quoteTokenSymbol === QuoteToken.PEFI) {
-          apy = cakeRewardPerYear.div(farm.lpTotalInQuoteToken)
+          apy = rewardPerWeek.div(farm.lpTotalInQuoteToken)
         } else if (farm.dual) {
           const pefiApy =
-            farm && pefiPriceVsAVAX.times(pefiRewardPerBlock).times(BLOCKS_PER_YEAR).div(farm.lpTotalInQuoteToken)
+            farm && pefiPriceVsAVAX.times(pefiRewardPerBlock).times(BLOCKS_PER_WEEK).div(farm.lpTotalInQuoteToken)
           const dualApy =
             farm.tokenPriceVsQuote &&
             new BigNumber(farm.tokenPriceVsQuote)
               .times(farm.dual.rewardPerBlock)
-              .times(BLOCKS_PER_YEAR)
+              .times(BLOCKS_PER_WEEK)
               .div(farm.lpTotalInQuoteToken)
 
           apy = pefiApy && dualApy && pefiApy.plus(dualApy)
         }
 
+        // console.log('111--->', farm.lpSymbol, (Number(apy.toJSON()) * 100).toFixed(2))
         return { ...farm, apy }
       })
       return farmsToDisplayWithAPY.map((farm) => (
@@ -166,7 +167,7 @@ const IgloosContentContainer = styled.div`
 const IgloosPenguinImgContainer = styled.div`
   z-index: -1;
   position: absolute;
-  left: -262px;
+  left: -190px;
   margin-left: 0px;
   bottom: 100px;
 

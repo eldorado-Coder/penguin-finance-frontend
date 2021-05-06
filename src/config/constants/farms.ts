@@ -17,7 +17,7 @@ const farms: FarmConfig[] = [
     quoteTokenSymbol: QuoteToken.AVAX,
     quoteTokenAddresses: contracts.wavax,
     withdrawalFee: '4',
-    hardApy: '1239.77%',
+    hardApy: '896.65%',
   },
   {
     pid: 1,
@@ -34,7 +34,7 @@ const farms: FarmConfig[] = [
     quoteTokenSymbol: QuoteToken.AVAX,
     quoteTokenAddresses: contracts.wavax,
     withdrawalFee: '4',
-    hardApy: '321.88%',
+    hardApy: '196.24%',
   },
   {
     pid: 2,
@@ -51,7 +51,7 @@ const farms: FarmConfig[] = [
     quoteTokenSymbol: QuoteToken.PEFI,
     quoteTokenAddresses: contracts.pefi,
     withdrawalFee: '4',
-    hardApy: '1187.57%',
+    hardApy: '967.57%',
   },
   {
     pid: 3,
@@ -68,7 +68,7 @@ const farms: FarmConfig[] = [
     quoteTokenSymbol: QuoteToken.PEFI,
     quoteTokenAddresses: contracts.pefi,
     withdrawalFee: '4',
-    hardApy: '1676.66%',
+    hardApy: '1354.80%',
   },
   {
     pid: 4,
@@ -85,25 +85,25 @@ const farms: FarmConfig[] = [
     quoteTokenSymbol: QuoteToken.PEFI,
     quoteTokenAddresses: contracts.pefi,
     withdrawalFee: '4',
-    hardApy: '1677.83%',
+    hardApy: '1347.55%',
   },
-  // {
-  //   pid: 5,
-  //   lpSymbol: 'PEFI-DAI LP',
-  //   lpAddresses: {
-  //     43113: '',
-  //     43114: '0x94DF699f8AA08314cBdfcca7dD6cfAA5AB9E8e26',
-  //   },
-  //   tokenSymbol: 'DAI',
-  //   tokenAddresses: {
-  //     43113: '',
-  //     43114: '0xbA7dEebBFC5fA1100Fb055a87773e1E99Cd3507a',
-  //   },
-  //   quoteTokenSymbol: QuoteToken.PEFI,
-  //   quoteTokenAddresses: contracts.pefi,
-  //   withdrawalFee: '4',
-  //   hardApy: '1322.62%',
-  // }
+  {
+    pid: 5,
+    lpSymbol: 'PEFI-DAI LP',
+    lpAddresses: {
+      43113: '',
+      43114: '0x94DF699f8AA08314cBdfcca7dD6cfAA5AB9E8e26',
+    },
+    tokenSymbol: 'DAI',
+    tokenAddresses: {
+      43113: '',
+      43114: '0xbA7dEebBFC5fA1100Fb055a87773e1E99Cd3507a',
+    },
+    quoteTokenSymbol: QuoteToken.PEFI,
+    quoteTokenAddresses: contracts.pefi,
+    withdrawalFee: '4',
+    hardApy: '300.35%',
+  }
 ]
 
 export default farms
