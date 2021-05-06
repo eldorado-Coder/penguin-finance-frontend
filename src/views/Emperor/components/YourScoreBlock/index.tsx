@@ -156,6 +156,7 @@ const YourScoreBlock: React.FC = () => {
                                 : `${process.env.PUBLIC_URL}/images/emperor/banner/your_score_banner_locked.svg`
                         }
                         width="100%"
+                        height="20px"
                     />
                 </TitleBgWrapper>
             </CardBlockHeader>
