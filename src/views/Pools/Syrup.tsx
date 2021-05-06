@@ -10,7 +10,7 @@ import partition from 'lodash/partition'
 import useI18n from 'hooks/useI18n'
 import useBlock from 'hooks/useBlock'
 import { getBalanceNumber } from 'utils/formatBalance'
-import priceToBnb from 'utils/priceToBnb';
+import priceToBnb from 'utils/priceToBnb'
 import { useFarms, usePriceAvaxUsdt, usePools, usePriceEthAvax } from 'state/hooks'
 import { QuoteToken, PoolCategory } from 'config/constants/types'
 import FlexLayout from 'components/layout/Flex'
@@ -48,7 +48,7 @@ const Farm: React.FC = () => {
       pool.tokenName,
       rewardTokenFarm?.tokenPriceVsQuote,
       rewardTokenFarm?.quoteTokenSymbol,
-      avaxPriceUSD
+      avaxPriceUSD,
     )
 
     const totalRewardPricePerYear = rewardTokenPriceInAVAX.times(pool.tokenPerBlock).times(BLOCKS_PER_YEAR)
@@ -87,21 +87,18 @@ const Farm: React.FC = () => {
         <img src="/images/syrup.png" alt="SYRUP POOL icon" width={410} height={191} />
       </Hero> */}
       <NestBgContainer />
-      <NestBannerContainer >
-        <BannerImage
-          src={
-            `${process.env.PUBLIC_URL}/images/pools/nests-dark.gif`
-          }
-          alt="nests banner"
-        />
-      </NestBannerContainer >
+      <NestBannerContainer>
+        <BannerImage src={`${process.env.PUBLIC_URL}/images/pools/nests-dark.gif`} alt="nests banner" />
+      </NestBannerContainer>
       {/* <PoolTabButtons stackedOnly={stackedOnly} setStackedOnly={setStackedOnly} /> */}
       {/* <Divider /> */}
       <FlexLayout>
         <Route exact path={`${path}`}>
           <>
             {stackedOnly
-              ? orderBy(stackedOnlyPools, ['sortOrder']).map((pool) => <PoolCard key={pool.sousId} pool={pool} isMainPool />)
+              ? orderBy(stackedOnlyPools, ['sortOrder']).map((pool) => (
+                  <PoolCard key={pool.sousId} pool={pool} isMainPool />
+                ))
               : orderBy(openPools, ['sortOrder']).map((pool) => <PoolCard key={pool.sousId} pool={pool} isMainPool />)}
             {/* <Coming /> */}
           </>
@@ -112,12 +109,12 @@ const Farm: React.FC = () => {
           ))}
         </Route>
       </FlexLayout>
-    </Page >
+    </Page>
   )
 }
 
-const NestBgContainer = styled.div` 
-  background-image: url("/images/pools/nest_bg1.png");
+const NestBgContainer = styled.div`
+  background-image: url('/images/pools/nest_bg1.png');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
@@ -126,9 +123,9 @@ const NestBgContainer = styled.div`
   bottom: 0px;
   right: 0px;
   left: 0px;
-  z-index:-1;
+  z-index: -1;
   opacity: 0.3;
-`;
+`
 
 const Hero = styled.div`
   align-items: center;
@@ -160,9 +157,7 @@ const Hero = styled.div`
   }
 `
 
-
-const NestBannerContainer = styled.div`
-`
+const NestBannerContainer = styled.div``
 
 const BannerImage = styled.img`
   z-index: -1;

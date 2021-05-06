@@ -61,9 +61,7 @@ const Coming: React.FC = () => {
           <Value>??</Value>
         </DetailPlaceholder>
         <DetailPlaceholder>
-          <div style={{ flex: 1 }}>
-            {TranslateString(384, 'Your Stake')}:
-          </div>
+          <div style={{ flex: 1 }}>{TranslateString(384, 'Your Stake')}:</div>
           <Value>??? PEFI</Value>
         </DetailPlaceholder>
       </div>

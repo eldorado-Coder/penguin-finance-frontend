@@ -33,7 +33,7 @@ const ToggleButton = styled.button`
   width: 100%;
 `
 
-const Description = styled(Text) <{ isOpen: boolean }>`
+const Description = styled(Text)<{ isOpen: boolean }>`
   color: ${({ theme }) => theme.colors.textSubtle};
   display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
 `

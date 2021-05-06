@@ -24,7 +24,7 @@ const CardImage = styled.img`
   margin-bottom: 16px;
 `
 
-const Label = styled(Text).attrs({ color: "primary" })`
+const Label = styled(Text).attrs({ color: 'primary' })`
   font-size: 14px;
 `
 
@@ -58,22 +58,13 @@ const FarmedStakingCard = () => {
         <Heading size="xl" mb="24px">
           {TranslateString(542, 'Igloos & Staking')}
         </Heading>
-        <CardImage
-          src="/images/penguin-logo.png"
-          alt="penguin logo"
-          width={64}
-          height={64}
-        />
+        <CardImage src="/images/penguin-logo.png" alt="penguin logo" width={64} height={64} />
         <Block>
-          <Label>
-            {TranslateString(544, 'PEFI to Harvest')}:
-          </Label>
+          <Label>{TranslateString(544, 'PEFI to Harvest')}:</Label>
           <PefiHarvestBalance />
         </Block>
         <Block>
-          <Label>
-            {TranslateString(546, 'PEFI in Wallet')}:
-          </Label>
+          <Label>{TranslateString(546, 'PEFI in Wallet')}:</Label>
           <PefiWalletBalance />
         </Block>
         <Actions>

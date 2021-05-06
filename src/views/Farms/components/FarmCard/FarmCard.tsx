@@ -8,7 +8,7 @@ import { provider } from 'web3-core'
 import useI18n from 'hooks/useI18n'
 import ExpandableSectionButton from 'components/ExpandableSectionButton'
 import { QuoteToken } from 'config/constants/types'
-import { BASE_ADD_LIQUIDITY_URL } from 'config'
+import { BASE_ADD_LIQUIDITY_URL, WEEKS_PER_YEAR } from 'config'
 import getLiquidityUrlPathParts from 'utils/getLiquidityUrlPathParts'
 import DetailsSection from './DetailsSection'
 import CardHeading from './CardHeading'
@@ -125,7 +125,8 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, removed, pefiPrice, avaxPrice
 
   const lpLabel = farm.lpSymbol && farm.lpSymbol.toUpperCase().replace('PANCAKE', '')
   const earnLabel = farm.dual ? farm.dual.earnLabel : 'PEFI'
-  const farmAPY = farm.apy && farm.apy.times(new BigNumber(100)).toNumber().toLocaleString('en-US').slice(0, -1)
+  const farmAPY =
+    farm.apy && farm.apy.times(new BigNumber(WEEKS_PER_YEAR)).times(new BigNumber(100)).toNumber().toFixed(2)
 
   const { quoteTokenAddresses, quoteTokenSymbol, tokenAddresses } = farm
   const liquidityUrlPathParts = getLiquidityUrlPathParts({ quoteTokenAddresses, quoteTokenSymbol, tokenAddresses })
@@ -146,7 +147,8 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, removed, pefiPrice, avaxPrice
           <Text>{TranslateString(736, 'APR')}:</Text>
 
           <Text bold style={{ display: 'flex', alignItems: 'center' }}>
-            {farm.hardApy}
+            {/* {farm.hardApy} */}
+            {`${farmAPY || '--'}%`}
           </Text>
           {/* <Text bold style={{ display: 'flex', alignItems: 'center' }}>
             {farm.apy ? (
@@ -173,7 +175,9 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, removed, pefiPrice, avaxPrice
       <ExpandingWrapper expanded={showExpandableSection}>
         <DetailsSection
           removed={removed}
-          avaxScanAddress={`https://cchain.explorer.avax.network/address/${farm.lpAddresses[process.env.REACT_APP_CHAIN_ID]}`}
+          avaxScanAddress={`https://cchain.explorer.avax.network/address/${
+            farm.lpAddresses[process.env.REACT_APP_CHAIN_ID]
+          }`}
           totalValueFormated={totalValueFormated}
           lpLabel={lpLabel}
           addLiquidityUrl={addLiquidityUrl}

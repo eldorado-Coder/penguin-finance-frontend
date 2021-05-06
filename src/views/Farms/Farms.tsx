@@ -6,7 +6,7 @@ import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { provider } from 'web3-core'
 import { Image, Heading } from 'penguinfinance-uikit2'
 import styled from 'styled-components'
-import { BLOCKS_PER_YEAR, PEFI_PER_BLOCK, PEFI_POOL_PID } from 'config'
+import { BLOCKS_PER_WEEK, PEFI_PER_BLOCK, PEFI_POOL_PID } from 'config'
 import FlexLayout from 'components/layout/Flex'
 import Page from 'components/layout/Page'
 import { useFarms, usePriceAvaxUsdt, usePricePefiUsdt, usePriceEthUsdt } from 'state/hooks'
@@ -17,7 +17,6 @@ import useI18n from 'hooks/useI18n'
 import FarmCard, { FarmWithStakedValue } from './components/FarmCard/FarmCard'
 import FarmTabButtons from './components/FarmTabButtons'
 import Divider from './components/Divider'
-
 
 //
 const Farms: React.FC = () => {
@@ -57,30 +56,31 @@ const Farms: React.FC = () => {
           return farm
         }
         const pefiRewardPerBlock = PEFI_PER_BLOCK.times(farm.poolWeight)
-        const cakeRewardPerYear = pefiRewardPerBlock.times(BLOCKS_PER_YEAR)
+        const rewardPerWeek = pefiRewardPerBlock.times(BLOCKS_PER_WEEK)
 
-        // pefiPriceInQuote * cakeRewardPerYear / lpTotalInQuoteToken
-        let apy = pefiPriceVsAVAX.times(cakeRewardPerYear).div(farm.lpTotalInQuoteToken)
+        // pefiPriceInQuote * rewardPerWeek / lpTotalInQuoteToken
+        let apy = pefiPriceVsAVAX.times(rewardPerWeek).div(farm.lpTotalInQuoteToken)
 
         if (farm.quoteTokenSymbol === QuoteToken.USDT || farm.quoteTokenSymbol === QuoteToken.UST) {
-          apy = pefiPriceVsAVAX.times(cakeRewardPerYear).div(farm.lpTotalInQuoteToken).times(avaxPrice)
+          apy = pefiPriceVsAVAX.times(rewardPerWeek).div(farm.lpTotalInQuoteToken).times(avaxPrice)
         } else if (farm.quoteTokenSymbol === QuoteToken.ETH) {
-          apy = pefiPrice.div(ethPriceUsd).times(cakeRewardPerYear).div(farm.lpTotalInQuoteToken)
+          apy = pefiPrice.div(ethPriceUsd).times(rewardPerWeek).div(farm.lpTotalInQuoteToken)
         } else if (farm.quoteTokenSymbol === QuoteToken.PEFI) {
-          apy = cakeRewardPerYear.div(farm.lpTotalInQuoteToken)
+          apy = rewardPerWeek.div(farm.lpTotalInQuoteToken)
         } else if (farm.dual) {
           const pefiApy =
-            farm && pefiPriceVsAVAX.times(pefiRewardPerBlock).times(BLOCKS_PER_YEAR).div(farm.lpTotalInQuoteToken)
+            farm && pefiPriceVsAVAX.times(pefiRewardPerBlock).times(BLOCKS_PER_WEEK).div(farm.lpTotalInQuoteToken)
           const dualApy =
             farm.tokenPriceVsQuote &&
             new BigNumber(farm.tokenPriceVsQuote)
               .times(farm.dual.rewardPerBlock)
-              .times(BLOCKS_PER_YEAR)
+              .times(BLOCKS_PER_WEEK)
               .div(farm.lpTotalInQuoteToken)
 
           apy = pefiApy && dualApy && pefiApy.plus(dualApy)
         }
 
+        // console.log('111--->', farm.lpSymbol, (Number(apy.toJSON()) * 100).toFixed(2))
         return { ...farm, apy }
       })
       return farmsToDisplayWithAPY.map((farm) => (
@@ -106,10 +106,7 @@ const Farms: React.FC = () => {
       </Heading> */}
       <IgloosBgContainer />
       <IgloosBannerContainer>
-        <BannerImage
-          src={`${process.env.PUBLIC_URL}/images/farms/IglooHeader.gif`}
-          alt="igloos banner"
-        />
+        <BannerImage src={`${process.env.PUBLIC_URL}/images/farms/IglooHeader.gif`} alt="igloos banner" />
       </IgloosBannerContainer>
       {/* <FarmTabButtons stackedOnly={stackedOnly} setStackedOnly={setStackedOnly} /> */}
       <IgloosContentContainer>
@@ -132,7 +129,7 @@ const Farms: React.FC = () => {
 }
 
 // bg
-const IgloosBgContainer = styled.div` 
+const IgloosBgContainer = styled.div`
   /* background-image: url("/images/farms/BackgroundwBucket-01.png"); */
   background-repeat: no-repeat;
   background-size: cover;
@@ -145,9 +142,9 @@ const IgloosBgContainer = styled.div`
   ${({ theme }) => theme.mediaQueries.lg} {
     background-image: url('/images/farms/igloo-background-${({ theme }) => (theme.isDark ? 'dark' : 'light')}.png');
   }
-  z-index:-1;
+  z-index: -1;
   /* opacity: 0.3; */
-`;
+`
 
 // banner
 const IgloosBannerContainer = styled.div`
@@ -175,8 +172,10 @@ const IgloosPenguinImgContainer = styled.div`
   }
 `
 
-const IgloosPenguinImg = styled.img.attrs(props => ({
-  src: props.theme.isDark ? `${process.env.PUBLIC_URL}/images/farms/penguin-with-candle.gif` : `${process.env.PUBLIC_URL}/images/farms/penguin-with-fish.gif`,
+const IgloosPenguinImg = styled.img.attrs((props) => ({
+  src: props.theme.isDark
+    ? `${process.env.PUBLIC_URL}/images/farms/penguin-with-candle.gif`
+    : `${process.env.PUBLIC_URL}/images/farms/penguin-with-fish.gif`,
 }))`
   width: 150px;
   ${({ theme }) => theme.mediaQueries.lg} {

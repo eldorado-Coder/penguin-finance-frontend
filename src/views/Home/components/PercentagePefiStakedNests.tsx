@@ -44,20 +44,15 @@ interface HarvestProps {
 const PercentagePefiStakedNests: React.FC<HarvestProps> = ({ pool }) => {
   const totalSupply = useTotalSupply()
 
-  const {
-    totalStaked
-  } = pool
+  const { totalStaked } = pool
 
   const TranslateString = useI18n()
   if (totalStaked) {
-    const percentageStaked = (getBalanceNumber(totalStaked) / getBalanceNumber(totalSupply)) * 100;
+    const percentageStaked = (getBalanceNumber(totalStaked) / getBalanceNumber(totalSupply)) * 100
     return (
       <StyledTotalValueLockedCard>
         <CardBgImageContainer>
-          <CardBgImage
-            src={`${process.env.PUBLIC_URL}/images/Penguins.svg`}
-            alt="astronaut"
-          />
+          <CardBgImage src={`${process.env.PUBLIC_URL}/images/Penguins.svg`} alt="astronaut" />
         </CardBgImageContainer>
         <CardBody>
           <Heading color="contrast" size="md">

@@ -5,12 +5,12 @@ import { CampaignType, LPConfig, FarmConfig, Nft, PoolConfig, Team } from 'confi
 export type TranslatableText =
   | string
   | {
-    id: number
-    fallback: string
-    data?: {
-      [key: string]: string | number
+      id: number
+      fallback: string
+      data?: {
+        [key: string]: string | number
+      }
     }
-  }
 
 export interface Farm extends FarmConfig {
   tokenAmount?: BigNumber
@@ -120,7 +120,6 @@ export interface AchievementState {
   data: Achievement[]
 }
 
-
 // emperor state
 
 export interface Emperor {
@@ -154,4 +153,3 @@ export interface State {
   achievements: AchievementState
   emperor: EmperorState
 }
-

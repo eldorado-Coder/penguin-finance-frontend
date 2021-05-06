@@ -4,11 +4,10 @@ import multicall from 'utils/multicall'
 import lpsConfig from 'config/constants/lps'
 import { getAddress } from 'utils/addressHelpers'
 
-
 const fetchLpUserTokenBalances = async (account: string) => {
   const calls = lpsConfig.map((lp) => {
     const lpContractAddress = getAddress(lp.lpAddresses)
-    
+
     return {
       address: lpContractAddress,
       name: 'balanceOf',
