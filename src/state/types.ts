@@ -142,7 +142,9 @@ export interface EmperorState {
 }
 
 // Global state
-
+export interface GlobalState {
+  wrongNetworkGuideModalOpened: boolean
+}
 export interface State {
   lps: LpsState
   farms: FarmsState
@@ -152,4 +154,6 @@ export interface State {
   teams: TeamsState
   achievements: AchievementState
   emperor: EmperorState
+  // global
+  global: GlobalState
 }
