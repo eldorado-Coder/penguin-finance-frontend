@@ -42,7 +42,7 @@ const WalletConnectGuideModal: React.FC = () => {
                   href="https://penguin-finance.medium.com/penguin-finance-getting-started-923c383bb060"
                   target="_blank"
                 >
-                  New to Penguin Finance?
+                  Quick guide
                 </GuideLink>
               </Text>
             </Button>
