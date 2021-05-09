@@ -19,7 +19,9 @@ const ModalWrapper = styled.div`
 `
 
 const GuideLink = styled.a`
-  margin-top: 5px;
+  padding: 10px;
+  display: block;
+  width: block;
 `
 
 const WalletConnectGuideModal: React.FC = () => {
@@ -37,7 +39,7 @@ const WalletConnectGuideModal: React.FC = () => {
           <Overlay show onClick={onDismiss} />
           <Modal title="New to Penguin Finance?" onDismiss={onDismiss}>
             <Button width="100%" variant="tertiary" style={{ justifyContent: 'space-between' }}>
-              <Text bold color="primary" mr="16px">
+              <Text bold color="primary" mr="16px" style={{ width: '100%', textAlign: 'left' }}>
                 <GuideLink
                   href="https://penguin-finance.medium.com/penguin-finance-getting-started-923c383bb060"
                   target="_blank"
