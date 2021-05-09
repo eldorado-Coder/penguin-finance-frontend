@@ -15,7 +15,7 @@ import {
   remove as removeToast,
   clear as clearToast,
 } from './actions'
-import { State, Farm, Lp, Pool, ProfileState, TeamsState, AchievementState, EmperorState } from './types'
+import { State, Farm, Lp, Pool, ProfileState, TeamsState, AchievementState, EmperorState, GlobalState } from './types'
 import { fetchProfile } from './profile'
 import { fetchTeam, fetchTeams } from './teams'
 import { fetchAchievements } from './achievements'
@@ -200,7 +200,6 @@ export const useEmperor = () => {
 }
 
 // Achievements
-
 export const useFetchAchievements = () => {
   const { account } = useWallet()
   const dispatch = useDispatch()
@@ -210,6 +209,13 @@ export const useFetchAchievements = () => {
       dispatch(fetchAchievements(account))
     }
   }, [account, dispatch])
+}
+
+// Global
+export const useGlobal = () => {
+  const { wrongNetworkGuideModalOpened }: GlobalState = useSelector((state: State) => state.global)
+
+  return { wrongNetworkGuideModalOpened }
 }
 
 export const useAchievements = () => {

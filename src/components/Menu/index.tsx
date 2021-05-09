@@ -1,15 +1,18 @@
 import React, { useContext } from 'react'
 import { Menu as UikitMenu } from 'penguinfinance-uikit2'
-import { useWallet } from '@binance-chain/bsc-use-wallet'
+import { useWeb3React } from '@web3-react/core'
 import BigNumber from 'bignumber.js'
 import { allLanguages } from 'config/localisation/languageCodes'
 import { LanguageContext } from 'contexts/Localisation/languageContext'
 import useTheme from 'hooks/useTheme'
+import useAuth from 'hooks/useAuth'
 import { usePricePefiUsdt, useProfile, usePools } from 'state/hooks'
+import WalletConnectGuideModal from 'components/Modal/WalletConnectGuideModal'
 import { config, socials } from './config'
 
 const Menu = (props) => {
-  const { account, connect, reset } = useWallet()
+  const { account } = useWeb3React()
+  const { login, logout } = useAuth()
   const { selectedLanguage, setSelectedLanguage } = useContext(LanguageContext)
   const { isDark, toggleTheme } = useTheme()
   const pefiPriceUsd = usePricePefiUsdt()
@@ -26,28 +29,31 @@ const Menu = (props) => {
   const xPefiToPefiRatio = getXPefiToPefiRatio(pefiPool)
 
   return (
-    <UikitMenu
-      account={account}
-      login={connect}
-      logout={reset}
-      isDark={isDark}
-      toggleTheme={toggleTheme}
-      currentLang={selectedLanguage && selectedLanguage.code}
-      langs={allLanguages}
-      setLang={setSelectedLanguage}
-      penguinPriceUsd={pefiPriceUsd.toNumber()}
-      pefiRatio={Number(xPefiToPefiRatio)}
-      links={config}
-      socials={socials}
-      // profile={{
-      //   username: profile?.username,
-      //   image: profile?.nft ? `/images/nfts/${profile.nft?.images.sm}` : undefined,
-      //   profileLink: '/profile',
-      //   noProfileLink: '/profile',
-      //   showPip: !profile?.username,
-      // }}
-      {...props}
-    />
+    <>
+      <WalletConnectGuideModal />
+      <UikitMenu
+        account={account}
+        login={login}
+        logout={logout}
+        isDark={isDark}
+        toggleTheme={toggleTheme}
+        currentLang={selectedLanguage && selectedLanguage.code}
+        langs={allLanguages}
+        setLang={setSelectedLanguage}
+        penguinPriceUsd={pefiPriceUsd.toNumber()}
+        pefiRatio={Number(xPefiToPefiRatio)}
+        links={config}
+        socials={socials}
+        // profile={{
+        //   username: profile?.username,
+        //   image: profile?.nft ? `/images/nfts/${profile.nft?.images.sm}` : undefined,
+        //   profileLink: '/profile',
+        //   noProfileLink: '/profile',
+        //   showPip: !profile?.username,
+        // }}
+        {...props}
+      />
+    </>
   )
 }
 

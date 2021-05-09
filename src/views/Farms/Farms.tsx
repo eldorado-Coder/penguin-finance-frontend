@@ -80,7 +80,6 @@ const Farms: React.FC = () => {
           apy = pefiApy && dualApy && pefiApy.plus(dualApy)
         }
 
-        // console.log('111--->', farm.lpSymbol, (Number(apy.toJSON()) * 100).toFixed(2))
         return { ...farm, apy }
       })
       return farmsToDisplayWithAPY.map((farm) => (
