@@ -1,6 +1,5 @@
 import React from 'react'
 import { ModalProvider } from 'penguinfinance-uikit2'
-import bsc, { UseWalletProvider } from '@binance-chain/bsc-use-wallet'
 import { Provider } from 'react-redux'
 import getRpcUrl from 'utils/getRpcUrl'
 import { Web3ReactProvider } from '@web3-react/core'
@@ -21,18 +20,11 @@ const Providers: React.FC = ({ children }) => {
         <ToastsProvider>
           <ThemeContextProvider>
             <LanguageContextProvider>
-              <UseWalletProvider
-                chainId={parseInt(process.env.REACT_APP_CHAIN_ID)}
-                connectors={{
-                  walletconnect: { rpcUrl },
-                }}
-              >
-                <BlockContextProvider>
-                  <RefreshContextProvider>
-                    <ModalProvider>{children}</ModalProvider>
-                  </RefreshContextProvider>
-                </BlockContextProvider>
-              </UseWalletProvider>
+              <BlockContextProvider>
+                <RefreshContextProvider>
+                  <ModalProvider>{children}</ModalProvider>
+                </RefreshContextProvider>
+              </BlockContextProvider>
             </LanguageContextProvider>
           </ThemeContextProvider>
         </ToastsProvider>

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { Button, Modal, Text, Flex, Link } from 'penguinfinance-uikit2'
-import { useWallet } from '@binance-chain/bsc-use-wallet'
+import { useWeb3React } from '@web3-react/core'
 import styled from 'styled-components'
 import ModalActions from 'components/ModalActions'
 import ModalInput from 'components/ModalInput'
@@ -19,7 +19,7 @@ const StealCrownModal: React.FC<StealCrownModalProps> = ({ onConfirm, onDismiss 
   const [pendingTx, setPendingTx] = useState(false)
   const TranslateString = useI18n()
   const xPefiContract = useXPefi()
-  const { account } = useWallet()
+  const { account } = useWeb3React()
   const { maxBidIncrease, minBidIncrease, currentEmperor } = useEmperor()
   const currentBidAmount = currentEmperor.bidAmount
 

@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import { useWallet } from '@binance-chain/bsc-use-wallet'
+import { useWeb3React } from '@web3-react/core'
 import { useDispatch } from 'react-redux'
 import { fetchEmperor } from 'state/actions'
 import { registerEmperor, stealCrown, changeEmperorStyle, changeEmperorColor, approveXPefi } from 'utils/callHelpers'
@@ -8,7 +8,7 @@ import { useEmperor, useXPefi } from './useContract'
 
 const useEmperorActions = () => {
   const dispatch = useDispatch()
-  const { account } = useWallet()
+  const { account } = useWeb3React()
   const emperorContract = useEmperor()
 
   const handleRegister = useCallback(
@@ -56,7 +56,7 @@ const useEmperorActions = () => {
 }
 
 const useXPefiApprove = () => {
-  const { account } = useWallet()
+  const { account } = useWeb3React()
   const xPefiContract = useXPefi()
 
   const handleXPefiApprove = useCallback(async () => {

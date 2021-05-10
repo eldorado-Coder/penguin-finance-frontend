@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import Sound from 'react-sound'
-import { useWallet } from '@binance-chain/bsc-use-wallet'
+import { useWeb3React } from '@web3-react/core'
 import { Text } from 'penguinfinance-uikit2'
 
 import { useEmperor } from 'state/hooks'
@@ -128,7 +128,7 @@ const EmperorEndBgContainer = styled.div`
 const Emperor: React.FC = () => {
   const [jackpot, setJackpot] = useState(JACKPOTS.LOCK)
   const { currentEmperor } = useEmperor()
-  const { account } = useWallet()
+  const { account } = useWeb3React()
   const [jackpotOpenSound, setJackpotOpenSound] = useState(false)
 
   const handleOpenJackpot = () => {

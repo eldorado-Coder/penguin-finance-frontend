@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Button, Text, useModal } from 'penguinfinance-uikit2'
 import useI18n from 'hooks/useI18n'
-import { useWallet } from '@binance-chain/bsc-use-wallet'
+import { useWeb3React } from '@web3-react/core'
 import UnlockButton from 'components/UnlockButton'
 import SvgIcon from 'components/SvgIcon'
 import { useEmperor } from 'state/hooks'
@@ -15,7 +15,9 @@ import StealCrownModal from './StealCrownModal'
 import CustomStyleModal from './CustomStyleModal'
 import { getPenguinColor } from '../utils'
 
-const CardBlock = styled.div``
+const CardBlock = styled.div`
+  margin-top: 200px;
+`
 
 const CardBlockHeader = styled.div`
   position: relative;
@@ -32,13 +34,14 @@ const TitleBgWrapper = styled.div<{ color: string }>`
   z-index: -1;
   width: 100%;
   text-align: center;
-
+  transform: scale(1.8);
   svg {
-    #Banner-Avatar {
+    /* #Banner-Avatar {
       path {
         fill: ${({ color }) => `#${color}`};
       }
-    }
+    } */
+    width: 300px;
   }
 `
 
@@ -47,7 +50,7 @@ const CardBlockContent = styled.div`
   border-radius: 16px;
   padding: 16px;
   position: relative;
-  margin-top: -46px;
+  margin-top: -240px;
   text-align: center;
 `
 
@@ -86,7 +89,7 @@ const CustomizeStyleButtonContainer = styled.div`
 
 const YourScoreBlock: React.FC = () => {
   const TranslateString = useI18n()
-  const { account } = useWallet()
+  const { account } = useWeb3React()
   const { myEmperor, currentEmperor } = useEmperor()
   const { onRegister, onSteal, onChangeStyle, onChangeColor } = useEmperorActions()
   const { onApproveXPefi } = useXPefiApprove()
@@ -141,11 +144,7 @@ const YourScoreBlock: React.FC = () => {
       <CardBlockHeader>
         <TitleBgWrapper color={getPenguinColor(myEmperor).code}>
           <SvgIcon
-            src={
-              myStatus === 'registered' || myStatus === 'king'
-                ? `${process.env.PUBLIC_URL}/images/emperor/banner/your_score_banner_unlocked.svg`
-                : `${process.env.PUBLIC_URL}/images/emperor/banner/your_score_banner_locked.svg`
-            }
+            src={`${process.env.PUBLIC_URL}/images/covid-emperor/banner/your_penguin.svg`}
             width="100%"
             height="20px"
           />
