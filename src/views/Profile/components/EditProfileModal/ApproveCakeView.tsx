@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { AutoRenewIcon, Button, Flex, InjectedModalProps, Text } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import useI18n from 'hooks/useI18n'
