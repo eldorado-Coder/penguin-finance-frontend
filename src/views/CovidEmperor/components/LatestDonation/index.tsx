@@ -1,16 +1,20 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Text } from 'penguinfinance-uikit2'
+import { Text, Flex } from 'penguinfinance-uikit2'
 import useI18n from 'hooks/useI18n'
 import { useWeb3React } from '@web3-react/core'
+import BigNumber from 'bignumber.js'
 import UnlockButton from 'components/UnlockButton'
-import { useEmperor } from 'state/hooks'
-import { getShortenAddress, badWordsFilter } from 'utils/address'
+import { useEmperor, useDonations } from 'state/hooks'
+import { getBalanceNumber } from 'utils/formatBalance'
 import SvgIcon from 'components/SvgIcon'
 import { getPenguinColor, getKingPenguin, getNormalPenguin } from '../utils'
 
-const CardBlock = styled.div`
-  margin-top: 80px;
+const CardBlock = styled.div<{ account: string }>`
+  display: ${props => props.account && 'flex'};
+  flex-direction: column;
+  align-items: center;
+  margin-top: -100px;
 `
 
 const CardBlockHeader = styled.div`
@@ -19,9 +23,6 @@ const CardBlockHeader = styled.div`
   justify-content: center;
   z-index: 1;
   padding: 16px;
-  margin-bottom: -120px;
-  margin-top: -80px;
-  min-height: 314px;
 `
 
 const TitleBgWrapper = styled.div<{ color: string }>`
@@ -42,9 +43,9 @@ const TitleBgWrapper = styled.div<{ color: string }>`
 const CardBlockContent = styled.div`
   background: ${(props) => props.theme.card.background};
   border-radius: 16px;
-  padding: 16px;
+  padding: 24px;
+  padding-bottom: 16px;
   position: relative;
-  margin-top: -275px;
   text-align: center;
 `
 
@@ -56,6 +57,7 @@ const WalletContainer = styled.div`
 const EmperorInfoContainer = styled.div`
   position: relative;
   z-index: 10;
+  min-width: 240px;
 `
 
 const KingPenguinImageWrapper = styled.div`
@@ -77,18 +79,23 @@ const MyPenguinImageWrapper = styled.div`
   }
 `
 
-const EmperorBlock: React.FC = () => {
+const DonationText = styled(Text)`
+  margin-left: 4px;
+  margin-right: 2px;
+`;
+
+const LatestDonation: React.FC = () => {
   const TranslateString = useI18n()
   const { account } = useWeb3React()
   const { myEmperor, currentEmperor } = useEmperor()
-  const currentEmperorAddress = currentEmperor && currentEmperor.address
-  const currentEmperorNickname = currentEmperor && badWordsFilter(currentEmperor.nickname)
-  const currentEmperorBidAmount = (currentEmperor && currentEmperor.bidAmount) || 0
   const currentEmperorPenguin = getKingPenguin(currentEmperor)
   const myEmperorPenguin = getNormalPenguin(myEmperor)
+  const donations = useDonations();
+
+  const avaxDonations = getBalanceNumber(new BigNumber(donations.latestDonor.avaxDonations));
 
   return (
-    <CardBlock>
+    <CardBlock account={account}>
       <CardBlockHeader>
         <TitleBgWrapper color={getPenguinColor(currentEmperor).code}>
           <SvgIcon
@@ -106,13 +113,17 @@ const EmperorBlock: React.FC = () => {
         )}
         {account && (
           <EmperorInfoContainer>
-            <Text bold color="secondary" fontSize="22px">
-              {TranslateString(1074, currentEmperorNickname)}
+            <Text bold color="primaryBright" fontSize="22px">
+              {TranslateString(1074, donations.latestDonor.latestDonorName)}
             </Text>
-            {/* <Text color="secondary" fontSize="14px">{getShortenAddress(currentEmperorAddress)}</Text> */}
-            <Text bold color="secondary" fontSize="14px">{`Current Bid: ${currentEmperorBidAmount.toFixed(
-              2,
-            )} xPEFI`}</Text>
+            {avaxDonations > 0 ?
+              <Flex justifyContent='center' alignItems='center'>
+                <Text bold color="secondary" fontSize="14px">Thank you for donating</Text>
+                <DonationText bold color="primaryBright" fontSize="14px">{avaxDonations.toFixed(avaxDonations > 1 ? 0 : 3)} AVAX</DonationText>
+                <Text bold color="secondary" fontSize="16px" lineHeight={1.2}>!</Text>
+              </Flex>
+              : <Text bold color="secondary" fontSize="14px">Thank you for donating</Text>
+            }
           </EmperorInfoContainer>
         )}
       </CardBlockContent>
@@ -140,4 +151,4 @@ const EmperorBlock: React.FC = () => {
   )
 }
 
-export default EmperorBlock
+export default LatestDonation

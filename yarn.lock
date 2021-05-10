@@ -12093,7 +12093,7 @@ pbkdf2@^3.0.17, pbkdf2@^3.0.3:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-penguinfinance-uikit2@1.0.6:
+penguinfinance-uikit2@^1.0.6:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/penguinfinance-uikit2/-/penguinfinance-uikit2-1.0.6.tgz#4cc36ff7757fd2bc80d403658576089dca1022ff"
   integrity sha512-xmB2Lxwxab3wGPnURueV6KRx/CPUo13AA2NQkFsC+Fz+UMYBMG26oRdiDwum771JYLYMmhQHDXjFQFqxq3V9FQ==

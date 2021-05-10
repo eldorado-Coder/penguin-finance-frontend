@@ -49,3 +49,6 @@ export const getPointCenterIfoAddress = () => {
 export const getBunnySpecialAddress = () => {
   return getAddress(addresses.bunnySpecial)
 }
+export const getWithoutBordersAddress = () => {
+  return getAddress(addresses.withoutBorders)
+}

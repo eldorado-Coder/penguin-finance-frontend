@@ -6,9 +6,9 @@ import { Text } from 'penguinfinance-uikit2'
 
 import { useEmperor } from 'state/hooks'
 import Page from 'components/layout/Page'
-import EmperorBlock from './components/EmperorBlock'
+import LatestDonation from './components/LatestDonation'
 import YourScoreBlock from './components/YourScoreBlock'
-import TopPenguinsBlock from './components/TopPenguinsBlock'
+import TopRaisedBlock from './components/TopRaisedBlock'
 
 const JACKPOTS = {
   LOCK: `${process.env.PUBLIC_URL}/images/emperor/jackpot/jackpot_lock.gif`,
@@ -164,10 +164,10 @@ const Emperor: React.FC = () => {
         )}
         <Grid align="between">
           <GridItem>
-            <TopPenguinsBlock />
+            <TopRaisedBlock />
           </GridItem>
           <GridItem>
-            <EmperorBlock />
+            <LatestDonation />
           </GridItem>
           <GridItem>
             <YourScoreBlock />
@@ -185,7 +185,7 @@ const Emperor: React.FC = () => {
   const emperorDefaultVideo = '/videos/penguin_emperor.mp4'
   // to change the video of emperor winner page background video, please change this video path
   const emperorWinnerVideo = '/videos/PenguinEmperorWinner_Final.mp4'
-
+  
   return (
     <Page>
       <Sound
