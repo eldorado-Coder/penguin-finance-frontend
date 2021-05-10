@@ -50,7 +50,7 @@ const CardBlockContent = styled.div`
   border-radius: 16px;
   padding: 16px;
   position: relative;
-  margin-top: -240px;
+  margin-top: -235px;
   text-align: center;
 `
 
@@ -154,7 +154,7 @@ const YourScoreBlock: React.FC = () => {
         {myStatus === 'not connected' && (
           <WalletContainer>
             <Text bold color="secondary" fontSize="22px">
-              {TranslateString(1074, 'Check your Rank')}
+              {TranslateString(1074, 'Check your Penguin')}
             </Text>
             <Text fontSize="14px">Connect wallet to view</Text>
             <UnlockButton />
