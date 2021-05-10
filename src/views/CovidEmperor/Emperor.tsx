@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import Sound from 'react-sound'
-import { useWallet } from '@binance-chain/bsc-use-wallet'
+import { useWeb3React } from '@web3-react/core'
 import { Text } from 'penguinfinance-uikit2'
 
 import { useEmperor } from 'state/hooks'
@@ -99,7 +99,7 @@ const Grid = styled.div<{ align: string }>`
   justify-content: space-between;
   justify-content: ${({ align }) => (align === 'center' ? 'center' : 'space-between')};
   margin: 0px -50px;
-  margin-top: -20px;
+  margin-top: 100px;
 `
 
 const EmperorBgContainer = styled.video`
@@ -128,7 +128,7 @@ const EmperorEndBgContainer = styled.div`
 const Emperor: React.FC = () => {
   const [jackpot, setJackpot] = useState(JACKPOTS.LOCK)
   const { currentEmperor } = useEmperor()
-  const { account } = useWallet()
+  const { account } = useWeb3React()
   const [jackpotOpenSound, setJackpotOpenSound] = useState(false)
 
   const handleOpenJackpot = () => {

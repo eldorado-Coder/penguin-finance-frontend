@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
 import { NavLink } from 'react-router-dom'
 import { Heading, Text, BaseLayout, ArrowForwardIcon } from 'penguinfinance-uikit2'
-import { useWallet } from '@binance-chain/bsc-use-wallet'
+import { useWeb3React } from '@web3-react/core'
 import useI18n from 'hooks/useI18n'
 import useBlock from 'hooks/useBlock'
 import Page from 'components/layout/Page'
@@ -159,7 +159,7 @@ const SpacingWrapper = styled.div`
 
 const Home: React.FC = () => {
   const TranslateString = useI18n()
-  const { account } = useWallet()
+  const { account } = useWeb3React()
   const pools = usePools(account)
   const farms = useFarms()
   const avaxPriceUSD = usePriceAvaxUsdt()

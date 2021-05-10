@@ -1,14 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Text } from 'penguinfinance-uikit2'
-import { useWallet } from '@binance-chain/bsc-use-wallet'
+import { useWeb3React } from '@web3-react/core'
 import UnlockButton from 'components/UnlockButton'
 import { useEmperor } from 'state/hooks'
 import { getShortenNickName, formatTime, badWordsFilter } from 'utils/address'
 import SvgIcon from 'components/SvgIcon'
 import { getPenguinColor } from '../utils'
 
-const CardBlock = styled.div``
+const CardBlock = styled.div`
+  margin-top: 200px;
+`
 
 const CardBlockHeader = styled.div`
   position: relative;
@@ -25,6 +27,7 @@ const TitleBgWrapper = styled.div<{ color: string }>`
   z-index: -1;
   width: 100%;
   text-align: center;
+  transform: scale(1.8);
 
   svg {
     #Banner-Avatar {
@@ -40,9 +43,8 @@ const CardBlockContent = styled.div`
   border-radius: 16px;
   padding: 16px;
   padding-top: 24px;
-  padding-bottom: 8px;
   position: relative;
-  margin-top: -38px;
+  margin-top: -250px;
   text-align: center;
 `
 
@@ -114,7 +116,7 @@ const AvatarField = styled.div<{ color: string }>`
 `
 
 const TopPenguinsBlock: React.FC = () => {
-  const { account } = useWallet()
+  const { account } = useWeb3React()
   const { currentEmperor, topEmperors } = useEmperor()
   const _topEmperors = topEmperors.map((row, index) => {
     return { id: index, ...row }
@@ -128,11 +130,7 @@ const TopPenguinsBlock: React.FC = () => {
       <CardBlockHeader>
         <TitleBgWrapper color={headerColor}>
           <SvgIcon
-            src={
-              account
-                ? `${process.env.PUBLIC_URL}/images/emperor/banner/top_penguins_banner_unlocked.svg`
-                : `${process.env.PUBLIC_URL}/images/emperor/banner/top_penguins_banner_locked.svg`
-            }
+            src={`${process.env.PUBLIC_URL}/images/covid-emperor/banner/total_raised.svg`}
             width="100%"
             height="20px"
           />

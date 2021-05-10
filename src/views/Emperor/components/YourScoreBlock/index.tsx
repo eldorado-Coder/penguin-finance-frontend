@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Button, Text, useModal } from 'penguinfinance-uikit2'
 import useI18n from 'hooks/useI18n'
-import { useWallet } from '@binance-chain/bsc-use-wallet'
+import { useWeb3React } from '@web3-react/core'
 import UnlockButton from 'components/UnlockButton'
 import SvgIcon from 'components/SvgIcon'
 import { useEmperor } from 'state/hooks'
@@ -86,7 +86,7 @@ const CustomizeStyleButtonContainer = styled.div`
 
 const YourScoreBlock: React.FC = () => {
   const TranslateString = useI18n()
-  const { account } = useWallet()
+  const { account } = useWeb3React()
   const { myEmperor, currentEmperor } = useEmperor()
   const { onRegister, onSteal, onChangeStyle, onChangeColor } = useEmperorActions()
   const { onApproveXPefi } = useXPefiApprove()

@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Text } from 'penguinfinance-uikit2'
 import useI18n from 'hooks/useI18n'
-import { useWallet } from '@binance-chain/bsc-use-wallet'
+import { useWeb3React } from '@web3-react/core'
 import UnlockButton from 'components/UnlockButton'
 import { useEmperor } from 'state/hooks'
 import { getShortenAddress, badWordsFilter } from 'utils/address'
@@ -76,7 +76,7 @@ const MyPenguinImageWrapper = styled.div`
 
 const EmperorBlock: React.FC = () => {
   const TranslateString = useI18n()
-  const { account } = useWallet()
+  const { account } = useWeb3React()
   const { myEmperor, currentEmperor } = useEmperor()
   const currentEmperorAddress = currentEmperor && currentEmperor.address
   const currentEmperorNickname = currentEmperor && badWordsFilter(currentEmperor.nickname)

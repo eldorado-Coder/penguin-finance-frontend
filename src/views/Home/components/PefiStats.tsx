@@ -140,7 +140,7 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
           <Text color="primary" fontSize="14px">
             {TranslateString(540, 'PEFI Emission Rate:')}
           </Text>
-          <CardValue fontSize="14px" decimals={2} suffix=" PEFI/block" value={6.15} />
+          <CardValue fontSize="14px" decimals={2} suffix=" PEFI/block" value={5.55} />
         </Row>
         <Row>
           <Text color="primary" fontSize="14px">

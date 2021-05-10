@@ -1,6 +1,6 @@
 import React from 'react'
 import { Text } from 'penguinfinance-uikit2'
-import { useWallet } from '@binance-chain/bsc-use-wallet'
+import { useWeb3React } from '@web3-react/core'
 import useTokenBalance from 'hooks/useTokenBalance'
 import useI18n from 'hooks/useI18n'
 import { getPefiAddress } from 'utils/addressHelpers'
@@ -14,7 +14,7 @@ const PefiWalletBalance = () => {
   const TranslateString = useI18n()
   const pefiBalance = useTokenBalance(getPefiAddress())
   const usdtBalance = new BigNumber(getBalanceNumber(pefiBalance)).multipliedBy(usePricePefiUsdt()).toNumber()
-  const { account } = useWallet()
+  const { account } = useWeb3React()
 
   if (!account) {
     return (

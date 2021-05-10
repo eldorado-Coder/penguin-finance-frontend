@@ -1,28 +1,29 @@
 import { useEffect, useState } from 'react'
 import BigNumber from 'bignumber.js'
-import { useWallet } from '@binance-chain/bsc-use-wallet'
-import { provider } from 'web3-core'
+import { useWeb3React } from '@web3-react/core'
 import penguinABI from 'config/abi/penguin.json'
 import { getContract } from 'utils/web3'
 import { getTokenBalance } from 'utils/erc20'
 import { getPefiAddress } from 'utils/addressHelpers'
+import useWeb3 from 'hooks/useWeb3'
 import useRefresh from './useRefresh'
 
 const useTokenBalance = (tokenAddress: string) => {
   const [balance, setBalance] = useState(new BigNumber(0))
-  const { account, ethereum }: { account: string; ethereum: provider } = useWallet()
+  const { account } = useWeb3React()
   const { fastRefresh } = useRefresh()
+  const web3 = useWeb3()
 
   useEffect(() => {
     const fetchBalance = async () => {
-      const res = await getTokenBalance(ethereum, tokenAddress, account)
+      const res = await getTokenBalance(web3, tokenAddress, account)
       setBalance(new BigNumber(res))
     }
 
-    if (account && ethereum) {
+    if (account && web3) {
       fetchBalance()
     }
-  }, [account, ethereum, tokenAddress, fastRefresh])
+  }, [account, web3, tokenAddress, fastRefresh])
 
   return balance
 }
@@ -46,19 +47,20 @@ export const useTotalSupply = () => {
 
 export const useBurnedBalance = (tokenAddress: string) => {
   const [balance, setBalance] = useState(new BigNumber(0))
-  const { account, ethereum }: { account: string; ethereum: provider } = useWallet()
+  const { account } = useWeb3React()
   const { slowRefresh } = useRefresh()
+  const web3 = useWeb3()
 
   useEffect(() => {
     const fetchBalance = async () => {
-      const res = await getTokenBalance(ethereum, tokenAddress, '0x000000000000000000000000000000000000dEaD')
+      const res = await getTokenBalance(web3, tokenAddress, '0x000000000000000000000000000000000000dEaD')
       setBalance(new BigNumber(res))
     }
 
-    if (account && ethereum) {
+    if (account && web3) {
       fetchBalance()
     }
-  }, [account, ethereum, tokenAddress, slowRefresh])
+  }, [account, web3, tokenAddress, slowRefresh])
 
   return balance
 }
