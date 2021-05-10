@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Text } from 'penguinfinance-uikit2'
-import { useWallet } from '@binance-chain/bsc-use-wallet'
+import { useWeb3React } from '@web3-react/core'
 import UnlockButton from 'components/UnlockButton'
 import { useEmperor } from 'state/hooks'
 import { getShortenNickName, formatTime, badWordsFilter } from 'utils/address'
@@ -114,7 +114,7 @@ const AvatarField = styled.div<{ color: string }>`
 `
 
 const TopPenguinsBlock: React.FC = () => {
-  const { account } = useWallet()
+  const { account } = useWeb3React()
   const { currentEmperor, topEmperors } = useEmperor()
   const _topEmperors = topEmperors.map((row, index) => {
     return { id: index, ...row }

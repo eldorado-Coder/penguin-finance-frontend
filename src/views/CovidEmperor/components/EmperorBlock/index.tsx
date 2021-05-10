@@ -2,14 +2,16 @@ import React from 'react'
 import styled from 'styled-components'
 import { Text } from 'penguinfinance-uikit2'
 import useI18n from 'hooks/useI18n'
-import { useWallet } from '@binance-chain/bsc-use-wallet'
+import { useWeb3React } from '@web3-react/core'
 import UnlockButton from 'components/UnlockButton'
 import { useEmperor } from 'state/hooks'
 import { getShortenAddress, badWordsFilter } from 'utils/address'
 import SvgIcon from 'components/SvgIcon'
 import { getPenguinColor, getKingPenguin, getNormalPenguin } from '../utils'
 
-const CardBlock = styled.div``
+const CardBlock = styled.div`
+  margin-top: 80px;
+`
 
 const CardBlockHeader = styled.div`
   position: relative;
@@ -26,6 +28,7 @@ const TitleBgWrapper = styled.div<{ color: string }>`
   z-index: -1;
   width: 100%;
   text-align: center;
+  transform: scale(2.6);
 
   svg {
     #Banner-Avatar {
@@ -41,7 +44,7 @@ const CardBlockContent = styled.div`
   border-radius: 16px;
   padding: 16px;
   position: relative;
-  margin-top: -38px;
+  margin-top: -275px;
   text-align: center;
 `
 
@@ -76,7 +79,7 @@ const MyPenguinImageWrapper = styled.div`
 
 const EmperorBlock: React.FC = () => {
   const TranslateString = useI18n()
-  const { account } = useWallet()
+  const { account } = useWeb3React()
   const { myEmperor, currentEmperor } = useEmperor()
   const currentEmperorAddress = currentEmperor && currentEmperor.address
   const currentEmperorNickname = currentEmperor && badWordsFilter(currentEmperor.nickname)
@@ -89,11 +92,7 @@ const EmperorBlock: React.FC = () => {
       <CardBlockHeader>
         <TitleBgWrapper color={getPenguinColor(currentEmperor).code}>
           <SvgIcon
-            src={
-              account
-                ? `${process.env.PUBLIC_URL}/images/emperor/banner/emperor_banner_unlocked.svg`
-                : `${process.env.PUBLIC_URL}/images/emperor/banner/emperor_banner_locked.svg`
-            }
+            src={`${process.env.PUBLIC_URL}/images/covid-emperor/banner/penguin_without_borders.svg`}
             width="100%"
             height="20px"
           />

@@ -1,8 +1,8 @@
 import React, { useEffect, Suspense, lazy } from 'react'
 import { Router, Redirect, Route, Switch } from 'react-router-dom'
-import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { ResetCSS } from 'penguinfinance-uikit2'
 import BigNumber from 'bignumber.js'
+import { useWeb3React } from '@web3-react/core'
 import { useFetchProfile, useFetchPublicData } from 'state/hooks'
 import GlobalStyle from './style/Global'
 import Menu from './components/Menu'
@@ -36,20 +36,6 @@ BigNumber.config({
 })
 
 const App: React.FC = () => {
-  const { account, connect } = useWallet()
-
-  // Monkey patch warn() because of web3 flood
-  // To be removed when web3 1.3.5 is released
-  useEffect(() => {
-    console.warn = () => null
-  }, [])
-
-  useEffect(() => {
-    if (!account && window.localStorage.getItem('accountStatus')) {
-      connect('injected')
-    }
-  }, [account, connect])
-
   useFetchPublicData()
   useFetchProfile()
 
@@ -73,13 +59,13 @@ const App: React.FC = () => {
               <Arena />
             </Route>
             {/* disable for a while */}
-            <Route path="/emperor">
-              <Emperor />
-            </Route>
-            {/* temporary covid penguin emperor page */}
             {/* <Route path="/emperor">
-              <CovidEmperor />
+              <Emperor />
             </Route> */}
+            {/* temporary covid penguin emperor page */}
+            <Route path="/emperor">
+              <CovidEmperor />
+            </Route>
             {/* Redirect */}
             {/* <Route path="/staking">
               <Redirect to="/pools" />

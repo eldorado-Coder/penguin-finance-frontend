@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { AutoRenewIcon, Button, Flex, InjectedModalProps, Text } from 'penguinfinance-uikit2'
+import { useWeb3React } from '@web3-react/core'
 import useI18n from 'hooks/useI18n'
 import { usePenguin } from 'hooks/useContract'
 import { useProfile, useToast } from 'state/hooks'
@@ -17,7 +18,7 @@ const ApproveCakePage: React.FC<ApproveCakePageProps> = ({ goToChange, onDismiss
   const [isApproving, setIsApproving] = useState(false)
   const { profile } = useProfile()
   const TranslateString = useI18n()
-  const { account } = useWallet()
+  const { account } = useWeb3React()
   const { numberCakeToUpdate, numberCakeToReactivate } = useGetProfileCosts()
   const penguinContract = usePenguin()
   const { toastError } = useToast()

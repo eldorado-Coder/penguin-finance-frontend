@@ -2,8 +2,7 @@ import React, { useEffect, useCallback, useState } from 'react'
 import { Route, useRouteMatch } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import BigNumber from 'bignumber.js'
-import { useWallet } from '@binance-chain/bsc-use-wallet'
-import { provider } from 'web3-core'
+import { useWeb3React } from '@web3-react/core'
 import { Image, Heading } from 'penguinfinance-uikit2'
 import styled from 'styled-components'
 import { BLOCKS_PER_WEEK, PEFI_PER_BLOCK, PEFI_POOL_PID } from 'config'
@@ -25,7 +24,7 @@ const Farms: React.FC = () => {
   const farmsLP = useFarms()
   const pefiPrice = usePricePefiUsdt()
   const avaxPrice = usePriceAvaxUsdt()
-  const { account, ethereum }: { account: string; ethereum: provider } = useWallet()
+  const { account } = useWeb3React()
   const ethPriceUsd = usePriceEthUsdt()
 
   const dispatch = useDispatch()
@@ -80,7 +79,6 @@ const Farms: React.FC = () => {
           apy = pefiApy && dualApy && pefiApy.plus(dualApy)
         }
 
-        // console.log('111--->', farm.lpSymbol, (Number(apy.toJSON()) * 100).toFixed(2))
         return { ...farm, apy }
       })
       return farmsToDisplayWithAPY.map((farm) => (
@@ -91,12 +89,11 @@ const Farms: React.FC = () => {
           avaxPrice={avaxPrice}
           pefiPrice={pefiPrice}
           ethPrice={ethPriceUsd}
-          ethereum={ethereum}
           account={account}
         />
       ))
     },
-    [farmsLP, avaxPrice, ethPriceUsd, pefiPrice, ethereum, account],
+    [farmsLP, avaxPrice, ethPriceUsd, pefiPrice, account],
   )
 
   return (

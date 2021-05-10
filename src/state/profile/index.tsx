@@ -31,6 +31,10 @@ export const profileSlice = createSlice({
       state.isLoading = false
       state.isInitialized = true
     },
+    profileClear: () => ({
+      ...initialState,
+      isLoading: false,
+    }),
     addPoints: (state, action: PayloadAction<number>) => {
       state.data.points += action.payload
     },
@@ -38,7 +42,13 @@ export const profileSlice = createSlice({
 })
 
 // Actions
-export const { profileFetchStart, profileFetchSucceeded, profileFetchFailed, addPoints } = profileSlice.actions
+export const {
+  profileFetchStart,
+  profileFetchSucceeded,
+  profileFetchFailed,
+  profileClear,
+  addPoints,
+} = profileSlice.actions
 
 // Thunks
 export const fetchProfile = (address: string) => async (dispatch) => {

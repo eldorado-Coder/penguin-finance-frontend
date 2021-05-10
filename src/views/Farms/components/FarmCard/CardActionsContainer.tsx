@@ -10,6 +10,7 @@ import { useFarmFromSymbol, useFarmUser } from 'state/hooks'
 import useI18n from 'hooks/useI18n'
 import UnlockButton from 'components/UnlockButton'
 import { useApprove } from 'hooks/useApprove'
+import useWeb3 from 'hooks/useWeb3'
 import StakeAction from './StakeAction'
 import HarvestAction from './HarvestAction'
 
@@ -22,23 +23,23 @@ export interface FarmWithStakedValue extends Farm {
 
 interface FarmCardActionsProps {
   farm: FarmWithStakedValue
-  ethereum?: provider
   account?: string
   addLiquidityUrl?: string
 }
 
-const CardActions: React.FC<FarmCardActionsProps> = ({ farm, ethereum, account, addLiquidityUrl }) => {
+const CardActions: React.FC<FarmCardActionsProps> = ({ farm, account, addLiquidityUrl }) => {
   const TranslateString = useI18n()
   const [requestedApproval, setRequestedApproval] = useState(false)
   const { pid, lpAddresses } = useFarmFromSymbol(farm.lpSymbol)
   const { allowance, tokenBalance, stakedBalance, earnings } = useFarmUser(pid)
+  const web3 = useWeb3()
   const lpAddress = getAddress(lpAddresses)
   const lpName = farm.lpSymbol.toUpperCase()
   const isApproved = account && allowance && allowance.isGreaterThan(0)
 
   const lpContract = useMemo(() => {
-    return getContract(ethereum as provider, lpAddress)
-  }, [ethereum, lpAddress])
+    return getContract(web3, lpAddress)
+  }, [web3, lpAddress])
 
   const { onApprove } = useApprove(lpContract)
 
