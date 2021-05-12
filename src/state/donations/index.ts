@@ -1,6 +1,12 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
-import { fetchTotalPefiRaised, fetchTotalAvaxRaised, fetchLatestDonor, fetchMyDonor } from './fetchDonationsData'
+import {
+  fetchTotalPefiRaised,
+  fetchTotalAvaxRaised,
+  fetchLatestDonor,
+  fetchFinalDate,
+  fetchMyDonor,
+} from './fetchDonationsData'
 import { DonationsState } from '../types'
 
 const initialState: DonationsState = {
@@ -16,6 +22,7 @@ const initialState: DonationsState = {
     avaxDonations: 0,
     pefiDonations: 0,
   },
+  finalDate: null,
 }
 
 export const DonationsSlice = createSlice({
@@ -48,6 +55,9 @@ export const DonationsSlice = createSlice({
     setMyDonor: (state, action) => {
       state.myDonor = action.payload
     },
+    setFinalDate: (state, action) => {
+      state.finalDate = action.payload
+    },
   },
 })
 
@@ -58,6 +68,7 @@ export const {
   setTotalAvaxRaised,
   setLatestDonor,
   setMyDonor,
+  setFinalDate,
 } = DonationsSlice.actions
 
 // Thunks
@@ -77,6 +88,9 @@ export const fetchDonations = (account) => async (dispatch) => {
 
   const latestDonor = await fetchLatestDonor()
   dispatch(setLatestDonor(latestDonor))
+
+  const finalDate = await fetchFinalDate()
+  dispatch(setFinalDate(finalDate))
 
   const myDonor = await fetchMyDonor(account)
   dispatch(setMyDonor(myDonor))

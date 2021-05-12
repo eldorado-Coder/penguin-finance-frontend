@@ -21,7 +21,7 @@ const TitleBgWrapper = styled.div<{ color: string }>`
   z-index: -1;
   width: 100%;
   text-align: center;
-  margin-top: 12%;
+  margin-top: 7%;
   position: absolute;
 
   svg {
@@ -43,29 +43,30 @@ const CardBlockContent = styled.div`
   padding: 16px;
   position: relative;
   text-align: center;
-  margin-top: 30%;
-  min-width: 150px;
+
+  margin-top: 15%;
+  min-width: 120px;
   padding: 16px 8px 8px;
   @media (min-width: 640px) {
     width: 100%;
-    margin-top: 22%;
+    margin-top: 25%;
     padding: 32px 16px 12px;
   }
   @media (min-width: 768px) {
     width: 100%;
     padding: 40px 20px 16px;
-    margin-top: 28%;
+    margin-top: 30%;
   }
   @media (min-width: 1200px) {
     width: 100%;
     border-radius: 16px;
     padding: 40px 24px 16px;
-    margin-top: 35%;
+    margin-top: 30%;
   }
   @media (min-width: 1450px) {
     min-width: 240px;
     padding: 40px 24px 16px;
-    margin-top: 37%;
+    margin-top: 32%;
   }
   @media (min-width: 1200px) and (max-height: 800px) {
     padding-top: 16px;

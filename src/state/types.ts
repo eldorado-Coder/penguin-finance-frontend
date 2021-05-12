@@ -154,6 +154,7 @@ export interface DonationsState {
   totalAvaxRaised: number
   latestDonor: Player
   myDonor: Player
+  finalDate: string
 }
 
 // Global state

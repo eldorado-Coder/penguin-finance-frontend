@@ -1,26 +1,26 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import styled from 'styled-components'
 import Sound from 'react-sound'
 import { useWeb3React } from '@web3-react/core'
 import { Text } from 'penguinfinance-uikit2'
 
-import { useEmperor } from 'state/hooks'
+import { useDonations } from 'state/hooks'
 import Page from 'components/layout/Page'
 import LatestDonation from './components/LatestDonation'
 import YourScoreBlock from './components/YourScoreBlock'
 import TopRaisedBlock from './components/TopRaisedBlock'
 
-const JACKPOTS = {
-  LOCK: `${process.env.PUBLIC_URL}/images/emperor/jackpot/jackpot_lock.gif`,
-  OPEN: `${process.env.PUBLIC_URL}/images/emperor/jackpot/jackpot_open.gif`,
-  UNLOCK: `${process.env.PUBLIC_URL}/images/emperor/jackpot/jackpot_unlock.gif`,
+const AID_KIT = {
+  LOCK: `${process.env.PUBLIC_URL}/images/covid-emperor/aid_kit/kit_lock.gif`,
+  OPEN: `${process.env.PUBLIC_URL}/images/covid-emperor/aid_kit/kit_open.gif`,
+  UNLOCK: `${process.env.PUBLIC_URL}/images/covid-emperor/aid_kit/kit_unlock.gif`,
 }
 
 const EmperorPage = styled(Page)`
   max-width: 1120px;
 `
 
-const ChestWrapper = styled.div<{ jackpot: string }>`
+const ChestWrapper = styled.div<{ aidKit: string }>`
   position: absolute;
   width: 15%;
   left: 22%;
@@ -33,14 +33,14 @@ const ChestWrapper = styled.div<{ jackpot: string }>`
   img {
     cursor: pointer;
   }
-  .jackpot-lock {
-    display: ${(props) => props.jackpot !== JACKPOTS.LOCK && 'none'};
+  .aid-kit-lock {
+    display: ${(props) => props.aidKit !== AID_KIT.LOCK && 'none'};
   }
-  .jackpot-open {
-    display: ${(props) => props.jackpot !== JACKPOTS.OPEN && 'none'};
+  .aid-kit-open {
+    display: ${(props) => props.aidKit !== AID_KIT.OPEN && 'none'};
   }
-  .jackpot-unlock {
-    display: ${(props) => props.jackpot !== JACKPOTS.UNLOCK && 'none'};
+  .aid-kit-unlock {
+    display: ${(props) => props.aidKit !== AID_KIT.UNLOCK && 'none'};
   }
 `
 
@@ -54,41 +54,52 @@ const PaperWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 10%;
+  margin-bottom: 15%;
 
-  div {
+  .label {
+    color: #3eb4d9;
+  }
+
+  .time-left {
     position: absolute;
     font-family: 'GothamBold Font';
-    min-width: 120px;
+    min-width: 100px;
     text-align: center;
+    margin-left: 30%;
+    margin-top: 5%;
 
-    span {
-      color: #9b1919;
-    }
-
-    font-size: 10px;
     @media (min-width: 640px) {
-      font-size: 12px;
-    }
-    @media (min-width: 768px) {
-      font-size: 12px;
+      margin-left: 15%;
     }
     @media (min-width: 1200px) {
-      font-size: 14px;
+      min-width: 120px;
     }
     @media (min-width: 1450px) {
-      font-size: 20px;
+      margin-top: 3%;
     }
-    @media (min-width: 1600px) {
-      font-size: 24px;
+    div {
+      line-height: 1.1;
+      font-size: 10px;
+      @media (min-width: 640px) {
+        font-size: 12px;
+      }
+      @media (min-width: 1200px) {
+        font-size: 18px;
+      }
+      @media (min-width: 1450px) {
+        font-size: 22px;
+      }
     }
   }
 `
 
-const JackpotPaper = styled.img`
+const KitPaper = styled.img`
   object-fit: cover;
   position: absolute;
-  min-width: 120px;
+  min-width: 100px;
+  @media (min-width: 1200px) {
+    min-width: 120px;
+  }
 `
 
 const GridItem = styled.div`
@@ -148,40 +159,60 @@ const EmperorBgContainer = styled.video`
 `
 
 const Emperor: React.FC = () => {
-  const [jackpot, setJackpot] = useState(JACKPOTS.LOCK)
-  const { currentEmperor } = useEmperor()
+  const [aidKit, setAidKit] = useState(AID_KIT.LOCK)
   const { account } = useWeb3React()
-  const [jackpotOpenSound, setJackpotOpenSound] = useState(false)
+  const [aidKitOpenSound, setAidKitOpenSound] = useState(false);
+  const [showTimeLeft, setShowTimeLeft] = useState(false);
+  const aidKitRef = useRef(aidKit);
+  const donations = useDonations();
+  aidKitRef.current = aidKit;
+
+  const currentDate = ((new Date).getTime()/1000);
+  const timeLeftInSecond = donations.finalDate ? Number(donations.finalDate) - currentDate : 0;
 
   const handleOpenJackpot = () => {
-    if (jackpot === JACKPOTS.LOCK) {
-      setJackpotOpenSound(true)
-      setJackpot(JACKPOTS.OPEN)
+    if (aidKitRef.current === AID_KIT.LOCK) {
+      setAidKitOpenSound(true)
+      setAidKit(AID_KIT.OPEN)
       setTimeout(() => {
-        setJackpot(JACKPOTS.UNLOCK)
-        setJackpotOpenSound(false)
+        setAidKit(AID_KIT.UNLOCK)
+        setAidKitOpenSound(false)
       }, 800)
-    } else if (jackpot === JACKPOTS.UNLOCK) {
-      setJackpot(JACKPOTS.LOCK)
+    } else if (aidKitRef.current === AID_KIT.UNLOCK) {
+      setAidKit(AID_KIT.LOCK)
     }
-  }
+  };
+
+  const onKitLoaded = () => {
+    setShowTimeLeft(true);
+  };
 
   const renderEmperorStatsPage = () => {
     return (
       <>
-        {account && (
-          <ChestWrapper jackpot={jackpot} onClick={handleOpenJackpot}>
-            {jackpot === JACKPOTS.UNLOCK && (
+        {account && donations.finalDate && (
+          <ChestWrapper aidKit={aidKit} onClick={handleOpenJackpot}>
+            {aidKit === AID_KIT.UNLOCK && (
               <PaperWrapper>
-                <JackpotPaper src={`${process.env.PUBLIC_URL}/images/emperor/jackpot/Mapefi.svg`} alt="jackpot_paper" />
-                <Text className="price" fontSize="24px">
-                  {currentEmperor.jackpot} <span>x</span>PEFI
-                </Text>
+                <KitPaper 
+                  onLoad={onKitLoaded}
+                  src={`${process.env.PUBLIC_URL}/images/covid-emperor/aid_kit/KITcovidEmpty.png`} 
+                  alt="kit_paper" />
+                {showTimeLeft && 
+                  <div className='time-left'>
+                    <Text bold className="label">
+                      Time Left:
+                    </Text>
+                    <Text bold>
+                      {(timeLeftInSecond / 3600 > 1) ? `${Number(timeLeftInSecond/3600).toFixed(0)} hours` : `${Number(timeLeftInSecond/60).toFixed(0)} minutes`}
+                    </Text>
+                  </div>
+                }
               </PaperWrapper>
             )}
-            <img className="jackpot-lock" src={JACKPOTS.LOCK} alt="jackpot_lock" />
-            <img className="jackpot-open" src={JACKPOTS.OPEN} alt="jackpot_open" />
-            <img className="jackpot-unlock" src={JACKPOTS.UNLOCK} alt="jackpot_unlock" />
+            <img className="aid-kit-lock" src={AID_KIT.LOCK} alt="aid_kit_lock" />
+            <img className="aid-kit-open" src={AID_KIT.OPEN} alt="aid_kit_open" />
+            <img className="aid-kit-unlock" src={AID_KIT.UNLOCK} alt="aid_kit_unlock" />
           </ChestWrapper>
         )}
         <Grid align="center" marginTop={{ xs: 100 }}>
@@ -206,7 +237,7 @@ const Emperor: React.FC = () => {
   }
 
   const emperorEnded = false
-  const emperorDefaultVideo = '/videos/penguin_emperor.mp4'
+  const emperorDefaultVideo = '/videos/covid_emperor.mp4'
   // to change the video of emperor winner page background video, please change this video path
   const emperorWinnerVideo = '/videos/PenguinEmperorWinner_Final.mp4'
 
@@ -220,7 +251,7 @@ const Emperor: React.FC = () => {
       />
       <Sound
         url="/sounds/jackpot_open.mp3"
-        playStatus={jackpotOpenSound ? Sound.status.PLAYING : Sound.status.STOPPED}
+        playStatus={aidKitOpenSound ? Sound.status.PLAYING : Sound.status.STOPPED}
         volume={100}
       />
 
