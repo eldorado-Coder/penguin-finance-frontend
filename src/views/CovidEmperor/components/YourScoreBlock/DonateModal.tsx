@@ -7,10 +7,11 @@ import ModalInput from 'components/ModalInput'
 import useI18n from 'hooks/useI18n'
 import { usePenguin } from 'hooks/useContract'
 import { useDonations } from 'state/hooks'
+import { getWeb3 } from 'utils/web3'
 
 interface DonateModalProps {
   type?: string
-  onConfirm: (amount: string, type: string) => void
+  onConfirm: (amount: string) => void
   onDismiss?: () => void
 }
 
@@ -22,21 +23,22 @@ const DonateModal: React.FC<DonateModalProps> = ({ type, onConfirm, onDismiss })
   const pefiContract = usePenguin()
   const { account } = useWeb3React()
   const { minDonationAvax, minDonationPefi } = useDonations()
+  const web3 = getWeb3()
 
   const fetchPefiBalance = useCallback(async () => {
     const pefiBalance = (await pefiContract.methods.balanceOf(account).call()) / 1e18
     setMaxAmount(pefiBalance.toString())
   }, [account, pefiContract])
 
+  const fetchAvaxBalance = useCallback(async () => {
+    const _avaxAmount = await web3.eth.getBalance(account)
+    setMaxAmount(web3.utils.fromWei(_avaxAmount, 'ether'))
+  }, [account, web3])
+
   useEffect(() => {
-    // fetchXPefiBalance()
-    if (type === 'pefi') {
-      fetchPefiBalance()
-    }
-    if (type === 'avax') {
-      // fetchPefiBalance()
-    }
-  }, [type, fetchPefiBalance])
+    if (type === 'pefi') fetchPefiBalance()
+    if (type === 'avax') fetchAvaxBalance()
+  }, [type, fetchPefiBalance, fetchAvaxBalance])
 
   const onChangeAmount = useCallback(
     (e: React.FormEvent<HTMLInputElement>) => {
@@ -54,6 +56,7 @@ const DonateModal: React.FC<DonateModalProps> = ({ type, onConfirm, onDismiss })
     if (amount.length === 0) return false
     if (Number(amount) > Number(maxAmount)) return false
     if (type === 'pefi' && Number(amount) < Number(minDonationPefi)) return false
+    if (type === 'avax' && Number(amount) < Number(minDonationAvax)) return false
     return true
   }
 
@@ -91,8 +94,9 @@ const DonateModal: React.FC<DonateModalProps> = ({ type, onConfirm, onDismiss })
             scale="md"
             disabled={!checkCanConfirm()}
             onClick={async () => {
+              if (!checkCanConfirm()) return
               setPendingTx(true)
-              await onConfirm(amount, type)
+              await onConfirm(amount)
               setPendingTx(false)
               onDismiss()
             }}

@@ -52,3 +52,6 @@ export const getBunnySpecialAddress = () => {
 export const getWithoutBordersAddress = () => {
   return getAddress(addresses.withoutBorders)
 }
+export const getCharityPenguinDBAddress = () => {
+  return getAddress(addresses.charityPenguinDB)
+}

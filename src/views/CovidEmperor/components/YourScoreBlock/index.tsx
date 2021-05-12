@@ -5,12 +5,12 @@ import useI18n from 'hooks/useI18n'
 import { useWeb3React } from '@web3-react/core'
 import BigNumber from 'bignumber.js'
 import SvgIcon from 'components/SvgIcon'
-import { useEmperor, useDonations } from 'state/hooks'
+import { useDonations } from 'state/hooks'
 import { usePenguin } from 'hooks/useContract'
 import { getWithoutBordersAddress } from 'utils/addressHelpers'
 import { badWordsFilter } from 'utils/address'
 import { getBalanceNumber } from 'utils/formatBalance'
-import { useEmperorActions, usePefiApprove } from 'hooks/useEmperor'
+import { useCharityEmperorActions, usePefiApprove } from 'hooks/useEmperor'
 import RegisterModal from './RegisterModal'
 import DonateModal from './DonateModal'
 import DonateTypeModal from './DonateTypeModal'
@@ -114,21 +114,16 @@ const CustomizeStyleButtonContainer = styled.div`
 const YourScoreBlock: React.FC = () => {
   const TranslateString = useI18n()
   const { account } = useWeb3React()
-  const { myEmperor } = useEmperor()
-  const { myDonor, latestDonor, minDonationAvax, minDonationPefi } = useDonations()
-  const { onRegister, onSteal, onChangeStyle, onChangeColor } = useEmperorActions()
+  const { myDonor } = useDonations()
+  const { onRegister, onChangeStyle, onChangeColor, onDonateAvax, onDonatePefi } = useCharityEmperorActions()
   const { onApprovePefi } = usePefiApprove()
   const pefiContract = usePenguin()
-
   const myAvaxDonation = getBalanceNumber(new BigNumber(myDonor.avaxDonations))
   const myPefiDonation = getBalanceNumber(new BigNumber(myDonor.pefiDonations))
 
   const getMyStatus = () => {
     if (account) {
-      if (myEmperor.isRegistered) {
-        if (account === latestDonor.address) {
-          return 'king'
-        }
+      if (myDonor.isRegistered) {
         return 'registered'
       }
       return 'not registered'
@@ -142,22 +137,17 @@ const YourScoreBlock: React.FC = () => {
     await onRegister(nickName, color, style)
   }
 
-  const onDonatePefi = async (amount: string, type: string) => {
-    // const allowanceBalance = (await pefiContract.methods.allowance(account, getWithoutBordersAddress()).call()) / 1e18
-    // if (allowanceBalance === 0) {
-    //   // call approve function
-    //   await onApprovePefi()
-    // }
-    // await onSteal(amount)
+  const onConfirmDonatePefi = async (amount: string) => {
+    const allowanceBalance = (await pefiContract.methods.allowance(account, getWithoutBordersAddress()).call()) / 1e18
+    if (allowanceBalance === 0) {
+      // call approve function
+      await onApprovePefi()
+    }
+    await onDonatePefi(amount)
   }
 
-  const onDonateAvax = async (amount: string, type: string) => {
-    // const allowanceBalance = (await pefiContract.methods.allowance(account, getWithoutBordersAddress()).call()) / 1e18
-    // if (allowanceBalance === 0) {
-    //   // call approve function
-    //   await onApprovePefi()
-    // }
-    // await onSteal(amount)
+  const onConfirmDonateAvax = async (amount: string) => {
+    await onDonateAvax(amount)
   }
 
   const onSelectDonateType = (type: string) => {
@@ -181,9 +171,9 @@ const YourScoreBlock: React.FC = () => {
 
   const [onToggleDonateTypeModal] = useModal(<DonateTypeModal onConfirm={onSelectDonateType} />)
 
-  const [onToggleDonatePefiModal] = useModal(<DonateModal type="pefi" onConfirm={onDonatePefi} />)
+  const [onToggleDonatePefiModal] = useModal(<DonateModal type="pefi" onConfirm={onConfirmDonatePefi} />)
 
-  const [onToggleDonateAvaxModal] = useModal(<DonateModal type="avax" onConfirm={onDonateAvax} />)
+  const [onToggleDonateAvaxModal] = useModal(<DonateModal type="avax" onConfirm={onConfirmDonateAvax} />)
 
   const [onToggleCustomModal] = useModal(
     <CustomStyleModal onConfirmChangeStyle={onChangeEmperorStyle} onConfirmChangeColor={onChangeEmperorColor} />,
@@ -192,7 +182,7 @@ const YourScoreBlock: React.FC = () => {
   return (
     <CardBlock>
       <CardBlockHeader>
-        <TitleBgWrapper color={getPenguinColor(myEmperor).code}>
+        <TitleBgWrapper color={getPenguinColor(myDonor).code}>
           <SvgIcon
             src={`${process.env.PUBLIC_URL}/images/covid-emperor/banner/your_penguin.svg`}
             width="100%"
@@ -224,7 +214,7 @@ const YourScoreBlock: React.FC = () => {
         {myStatus === 'registered' && (
           <RegisterContainer>
             <Title bold color="secondary">
-              {TranslateString(1074, myEmperor && badWordsFilter(myEmperor.nickname))}
+              {TranslateString(1074, myDonor && badWordsFilter(myDonor.nickname))}
             </Title>
             <SubTitle bold color="primaryBright">
               {TranslateString(1074, 'You have donated:')}
@@ -240,20 +230,6 @@ const YourScoreBlock: React.FC = () => {
             <CustomizeStyleButtonContainer>
               <PGButton onClick={onToggleCustomModal}>{TranslateString(292, 'Customize Penguin')}</PGButton>
             </CustomizeStyleButtonContainer>
-          </RegisterContainer>
-        )}
-
-        {myStatus === 'king' && (
-          <RegisterContainer>
-            <Title bold color="secondary">
-              {TranslateString(1074, myEmperor && badWordsFilter(myEmperor.nickname))}
-            </Title>
-            <SubTitle bold color="secondary">
-              {TranslateString(1074, 'You have been Emperor for:')}
-            </SubTitle>
-            <Title bold color="primary">
-              {`${myEmperor.timeAsEmperor} seconds`}
-            </Title>
           </RegisterContainer>
         )}
       </CardBlockContent>

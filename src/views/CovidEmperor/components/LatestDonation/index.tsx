@@ -164,12 +164,11 @@ const UnlockButton = styled(Button)`
 const LatestDonation: React.FC = () => {
   const TranslateString = useI18n()
   const { account } = useWeb3React()
-  const { myEmperor, currentEmperor } = useEmperor()
+  const { currentEmperor } = useEmperor()
+  const { myDonor, latestDonor } = useDonations()
   const currentEmperorPenguin = getKingPenguin(currentEmperor)
-  const myEmperorPenguin = getNormalPenguin(myEmperor)
-  const donations = useDonations()
-
-  const avaxDonations = getBalanceNumber(new BigNumber(donations.latestDonor.avaxDonations))
+  const myEmperorPenguin = getNormalPenguin(myDonor)
+  const avaxDonations = getBalanceNumber(new BigNumber(latestDonor.avaxDonations))
 
   return (
     <CardBlock>
@@ -191,7 +190,7 @@ const LatestDonation: React.FC = () => {
         {account && (
           <EmperorInfoContainer>
             <Title bold color="primaryBright">
-              {TranslateString(1074, donations.latestDonor.latestDonorName)}
+              {TranslateString(1074, latestDonor.latestDonorName)}
             </Title>
             {avaxDonations > 0 ? (
               <Donations>
@@ -222,11 +221,11 @@ const LatestDonation: React.FC = () => {
           height="20px"
         />
       </KingPenguinImageWrapper>
-      {currentEmperor.address && myEmperor.address && currentEmperor.address !== myEmperor.address && (
+      {myDonor.isRegistered && (
         <MyPenguinImageWrapper>
           <SvgIcon
             src={`${process.env.PUBLIC_URL}/images/emperor/penguins/${myEmperorPenguin}_${
-              getPenguinColor(myEmperor).name
+              getPenguinColor(myDonor).name
             }.svg`}
             width="100%"
             height="20px"
