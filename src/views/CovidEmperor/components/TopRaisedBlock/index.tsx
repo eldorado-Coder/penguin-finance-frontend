@@ -15,7 +15,7 @@ const TitleBgWrapper = styled.div<{ color: string }>`
   text-align: center;
   
   position: absolute;
-  margin-top: 15%;
+  margin-top: 10%;
 
   svg {
     #Banner-Avatar {
@@ -40,32 +40,32 @@ const CardBlockContent = styled.div<{ account: string }>`
   position: relative;
   text-align: center;
   
-  margin-top: 25%;
+  margin-top: 20%;
   min-width: 100px;
   padding: 24px 8px 8px;
   @media (min-width: 640px) {
     width: 100%;
-    margin-top: 34%;
+    margin-top: 28%;
     padding: 32px 16px 12px;
   }
   @media (min-width: 768px) {
     width: 100%;
     padding: 40px 20px 16px;
-    margin-top: 38%;
+    margin-top: 32%;
   }
   @media (min-width: 1200px) {
     width: 100%;
     border-radius: 16px;
     padding: 48px 24px 16px;
-    margin-top: 38%;
+    margin-top: 32%;
   }
   @media (min-width: 1450px) {
     min-width: 240px;
     padding: 40px 24px 16px;
-    margin-top: 42%;
+    margin-top: 36%;
   }
   @media (min-width: 1200px) and (max-height: 800px) {
-    padding-top: 24px;
+    padding-top: 36px;
   }
 `
 

@@ -63,3 +63,12 @@ export const fetchPlayerData = async playerAddress => {
     return {}
   }
 }
+
+export const fetchFinalDate = async () => {
+  try {
+    const finalDate = await donationsContract.methods.finalDate().call()
+    return finalDate
+  } catch (error) {
+    return {}
+  }
+}
