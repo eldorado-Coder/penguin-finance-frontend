@@ -4,6 +4,7 @@ import {
   fetchTotalPefiRaised,
   fetchTotalAvaxRaised,
   fetchLatestDonor,
+  fetchFinalDate
 } from './fetchDonationsData'
 import { DonationsState } from '../types'
 
@@ -14,7 +15,8 @@ const initialState: DonationsState = {
     avaxDonations: 0,
     pefiDonations: 0,
     latestDonorName: ''
-  }
+  },
+  finalDate: null
 }
 
 export const DonationsSlice = createSlice({
@@ -38,6 +40,9 @@ export const DonationsSlice = createSlice({
     },
     setLatestDonor: (state, action) => {
       state.latestDonor = action.payload
+    },
+    setFinalDate: (state, action) => {
+      state.finalDate = action.payload
     }
   },
 })
@@ -47,7 +52,8 @@ export const {
   setInitialData,
   setTotalPefiRaised,
   setTotalAvaxRaised,
-  setLatestDonor
+  setLatestDonor,
+  setFinalDate
 } = DonationsSlice.actions
 
 // Thunks
@@ -67,6 +73,9 @@ export const fetchDonations = account => async dispatch => {
   
   const latestDonor = await fetchLatestDonor();
   dispatch(setLatestDonor(latestDonor));
+
+  const finalDate = await fetchFinalDate();
+  dispatch(setFinalDate(finalDate));
 }
 
 export default DonationsSlice.reducer

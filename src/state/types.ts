@@ -151,7 +151,8 @@ export interface EmperorState {
 export interface DonationsState {
   totalPefiRaised: number
   totalAvaxRaised: number
-  latestDonor: Player
+  latestDonor: Player,
+  finalDate: string
 }
 
 // Global state
