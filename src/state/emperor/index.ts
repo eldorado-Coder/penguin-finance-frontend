@@ -7,7 +7,7 @@ import {
   fetchMaxBidIncrease,
   fetchMinBidIncrease,
   fetchTopEmperors,
-  fetchCurrentEmperorJackpot,
+  fetchCurrentEmperorJackpot
 } from './fetchEmperorData'
 import { EmperorState } from '../types'
 
@@ -16,7 +16,7 @@ const initialState: EmperorState = {
   currentEmperor: {},
   topEmperors: [],
   maxBidIncrease: 0,
-  minBidIncrease: 0,
+  minBidIncrease: 0
 }
 
 export const EmperorSlice = createSlice({
@@ -46,7 +46,7 @@ export const EmperorSlice = createSlice({
     },
     setMinBidIncrease: (state, action) => {
       state.minBidIncrease = action.payload
-    },
+    }
   },
 })
 
@@ -57,7 +57,7 @@ export const {
   setCurrentEmperor,
   setTopEmperors,
   setMaxBidIncrease,
-  setMinBidIncrease,
+  setMinBidIncrease
 } = EmperorSlice.actions
 
 // Thunks

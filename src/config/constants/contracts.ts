@@ -67,4 +67,8 @@ export default {
     43113: '',
     43114: '0xD79A36056c271B988C5F1953e664E61416A9820F',
   },
+  withoutBorders: {
+    43113: '',
+    43114: '0x6f23Cc0D3532D46EeEfa49cD2891187413E8e77d',
+  }
 }

@@ -133,12 +133,25 @@ export interface Emperor {
   bidAmount?: number
   jackpot?: number
 }
+
+export interface Player {
+  avaxDonations?: number, 
+  pefiDonations?: number,
+  latestDonorName?: string
+}
+
 export interface EmperorState {
   myEmperor: Emperor
   currentEmperor: Emperor
   topEmperors: Emperor[]
   maxBidIncrease: number
   minBidIncrease: number
+}
+
+export interface DonationsState {
+  totalPefiRaised: number
+  totalAvaxRaised: number
+  latestDonor: Player
 }
 
 // Global state
@@ -152,8 +165,9 @@ export interface State {
   pools: PoolsState
   profile: ProfileState
   teams: TeamsState
-  achievements: AchievementState
-  emperor: EmperorState
+  achievements: AchievementState,
   // global
-  global: GlobalState
+  global: GlobalState,
+  emperor: EmperorState,
+  donations: DonationsState
 }

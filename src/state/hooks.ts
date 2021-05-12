@@ -15,11 +15,12 @@ import {
   remove as removeToast,
   clear as clearToast,
 } from './actions'
-import { State, Farm, Lp, Pool, ProfileState, TeamsState, AchievementState, EmperorState, GlobalState } from './types'
+import { State, Farm, Lp, Pool, ProfileState, TeamsState, AchievementState, EmperorState, GlobalState, DonationsState } from './types'
 import { fetchProfile } from './profile'
 import { fetchTeam, fetchTeams } from './teams'
 import { fetchAchievements } from './achievements'
-import { setInit, fetchEmperor } from './emperor'
+import { fetchEmperor } from './emperor'
+import { fetchDonations } from './donations'
 
 const ZERO = new BigNumber(0)
 
@@ -183,6 +184,7 @@ export const useTeams = () => {
   return { teams: data, isInitialized, isLoading }
 }
 
+// Emperor
 export const useEmperor = () => {
   const { account } = useWeb3React()
   const emperorState: EmperorState = useSelector((state: State) => state.emperor)
@@ -221,4 +223,21 @@ export const useGlobal = () => {
 export const useAchievements = () => {
   const achievements: AchievementState['data'] = useSelector((state: State) => state.achievements.data)
   return achievements
+}
+
+// Donations
+export const useDonations = () => {
+  const { account } = useWeb3React()
+  const donationsState: DonationsState = useSelector((state: State) => state.donations)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    const refreshInterval = setInterval(() => {
+      dispatch(fetchDonations(account))
+    }, 5000)
+
+    return () => clearInterval(refreshInterval)
+  }, [dispatch, account])
+
+  return donationsState
 }
