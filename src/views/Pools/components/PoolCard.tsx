@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js'
 import React, { useCallback, useState, useEffect } from 'react'
 import styled, { keyframes } from 'styled-components'
-import { Button, IconButton, useModal, AddIcon, Image, Text, Flex , Tag} from 'penguinfinance-uikit2'
+import { Button, IconButton, useModal, AddIcon, Image, Text, Flex, Tag } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import UnlockButton from 'components/UnlockButton'
 import { useERC20, useXPefi } from 'hooks/useContract'
@@ -67,10 +67,10 @@ const MultiplierTag = styled(Tag)`
 
 const APYTag = styled(Tag)`
   span {
-    color: #CE022D;
+    color: #ce022d;
     margin-right: 4px;
   }
-`;
+`
 
 interface PoolWithApy extends Pool {
   apy: BigNumber
@@ -188,9 +188,9 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool }) => {
         <CardTitle isFinished={isFinished && sousId !== 0}>
           {tokenName} {TranslateString(348, 'Nest')}
         </CardTitle>
-        <Flex justifyContent='flex-end'>
+        <Flex justifyContent="flex-end">
           <APYTag variant="primary" outline>
-            <span>600%</span> APY
+            <span>474.5%</span> APY
           </APYTag>
           <MultiplierTag variant="primary">10X</MultiplierTag>
         </Flex>
