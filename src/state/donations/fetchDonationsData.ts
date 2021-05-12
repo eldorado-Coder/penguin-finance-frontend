@@ -18,7 +18,7 @@ export const fetchLastDonation = async () => {
   }
 }
 
-export const fetchTotalPefiRaised  = async () => {
+export const fetchTotalPefiRaised = async () => {
   try {
     const totalPefiRaised = await donationsContract.methods.totalPefiRaised().call()
     return totalPefiRaised
@@ -39,25 +39,37 @@ export const fetchTotalAvaxRaised = async () => {
 export const fetchLatestDonor = async () => {
   try {
     const latestDonorAddress = await donationsContract.methods.latestDonor().call()
-    const latestDonorName = await donationsContract.methods.getCurrentEmperorNickname().call();
-    const latestDonor = await fetchPlayerData(latestDonorAddress);
+    const latestDonorName = await donationsContract.methods.getCurrentEmperorNickname().call()
+    const latestDonor = await fetchPlayerData(latestDonorAddress)
     return {
       ...latestDonor,
-      latestDonorName
-    };
+      latestDonorName,
+      address: latestDonorAddress,
+    }
   } catch (error) {
     return {}
   }
 }
 
-export const fetchPlayerData = async playerAddress => {
+export const fetchMyDonor = async (address: string) => {
+  try {
+    const myDonor = await fetchPlayerData(address)
+    return {
+      ...myDonor,
+    }
+  } catch (error) {
+    return {}
+  }
+}
+
+export const fetchPlayerData = async (playerAddress) => {
   try {
     const player = await donationsContract.methods.playerDB(playerAddress).call()
     const { avaxDonations, pefiDonations } = player
 
     return {
       avaxDonations,
-      pefiDonations
+      pefiDonations,
     }
   } catch (error) {
     return {}

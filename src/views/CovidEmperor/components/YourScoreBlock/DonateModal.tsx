@@ -8,19 +8,19 @@ import useI18n from 'hooks/useI18n'
 import { useXPefi } from 'hooks/useContract'
 import { useEmperor } from 'state/hooks'
 
-interface StealCrownModalProps {
+interface DonateModalProps {
   onConfirm: (amount: string) => void
   onDismiss?: () => void
 }
 
-const StealCrownModal: React.FC<StealCrownModalProps> = ({ onConfirm, onDismiss }) => {
+const DonateModal: React.FC<DonateModalProps> = ({ onConfirm, onDismiss }) => {
   const [amount, setAmount] = useState('')
   const [maxAmount, setMaxAmount] = useState('')
   const [pendingTx, setPendingTx] = useState(false)
   const TranslateString = useI18n()
   const xPefiContract = useXPefi()
   const { account } = useWeb3React()
-  const { maxBidIncrease, minBidIncrease, currentEmperor } = useEmperor()
+  const { minBidIncrease, currentEmperor } = useEmperor()
   const currentBidAmount = currentEmperor.bidAmount
 
   const fetchXPefiBalance = useCallback(async () => {
@@ -40,8 +40,8 @@ const StealCrownModal: React.FC<StealCrownModalProps> = ({ onConfirm, onDismiss 
   )
 
   const handleSelectMax = useCallback(() => {
-    setAmount(String(currentBidAmount + maxBidIncrease))
-  }, [currentBidAmount, maxBidIncrease, setAmount])
+    setAmount(String(currentBidAmount))
+  }, [currentBidAmount, setAmount])
 
   const checkCanConfirm = () => {
     if (pendingTx) return false
@@ -52,7 +52,7 @@ const StealCrownModal: React.FC<StealCrownModalProps> = ({ onConfirm, onDismiss 
   }
 
   return (
-    <Modal title={TranslateString(1068, 'Steal the Crown')} onDismiss={onDismiss}>
+    <Modal title={TranslateString(1068, 'Donate')} onDismiss={onDismiss}>
       <ModalInput
         value={amount}
         onSelectMax={handleSelectMax}
@@ -63,37 +63,21 @@ const StealCrownModal: React.FC<StealCrownModalProps> = ({ onConfirm, onDismiss 
         showError={false}
       />
       <BidInfoContainer>
-        <Text bold color="secondary" fontSize="18px">
-          You should bid with a bigger amount than the current emperor bid.
-        </Text>
         <Flex justifyContent="space-between" alignItems="center">
-          <Text fontSize="14px">Current emperor bid:</Text>
-          <Text fontSize="14px" style={{ display: 'flex', alignItems: 'center' }}>
-            {currentBidAmount}
-          </Text>
-        </Flex>
-        <Flex justifyContent="space-between" alignItems="center">
-          <Text fontSize="14px">Min bid increase:</Text>
+          <Text fontSize="14px">Min donation increase:</Text>
           <Text fontSize="14px" style={{ display: 'flex', alignItems: 'center' }}>
             {minBidIncrease}
           </Text>
         </Flex>
-        <Flex justifyContent="space-between" alignItems="center">
-          <Text fontSize="14px">Max bid increase:</Text>
-          <Text fontSize="14px" style={{ display: 'flex', alignItems: 'center' }}>
-            {maxBidIncrease}
-          </Text>
-        </Flex>
       </BidInfoContainer>
-
       <ModalActions>
         <Button variant="primary" onClick={onDismiss} scale="md">
           {TranslateString(462, 'Cancel')}
         </Button>
         <ButtonGroupContainer>
           <Link fontSize="14px" bold={false} href="./nests" external color="failure">
-            <Button variant="primary" onClick={onDismiss} scale="md">
-              {TranslateString(462, 'Get xPEFI')}
+            <Button variant="primary" disabled onClick={onDismiss} scale="md">
+              {TranslateString(462, 'Learn more')}
             </Button>
           </Link>
           <Button
@@ -116,6 +100,7 @@ const StealCrownModal: React.FC<StealCrownModalProps> = ({ onConfirm, onDismiss 
 
 const BidInfoContainer = styled.div`
   display: flex;
+  justify-content: flex-end;
   flex-direction: column;
   margin-top: 10px;
   padding: 0px 12px;
@@ -131,4 +116,4 @@ const ButtonGroupContainer = styled.div`
   }
 `
 
-export default StealCrownModal
+export default DonateModal

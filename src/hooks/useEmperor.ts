@@ -2,9 +2,16 @@ import { useCallback } from 'react'
 import { useWeb3React } from '@web3-react/core'
 import { useDispatch } from 'react-redux'
 import { fetchEmperor } from 'state/actions'
-import { registerEmperor, stealCrown, changeEmperorStyle, changeEmperorColor, approveXPefi } from 'utils/callHelpers'
-import { getEmperorAddress } from 'utils/addressHelpers'
-import { useEmperor, useXPefi } from './useContract'
+import {
+  registerEmperor,
+  stealCrown,
+  changeEmperorStyle,
+  changeEmperorColor,
+  approveXPefi,
+  approvePefi,
+} from 'utils/callHelpers'
+import { getEmperorAddress, getWithoutBordersAddress } from 'utils/addressHelpers'
+import { useEmperor, useXPefi, usePenguin } from './useContract'
 
 const useEmperorActions = () => {
   const dispatch = useDispatch()
@@ -67,4 +74,16 @@ const useXPefiApprove = () => {
   return { onApproveXPefi: handleXPefiApprove }
 }
 
-export { useEmperorActions, useXPefiApprove }
+const usePefiApprove = () => {
+  const { account } = useWeb3React()
+  const pefiContract = usePenguin()
+
+  const handlePefiApprove = useCallback(async () => {
+    const txHash = await approvePefi(pefiContract, account, getWithoutBordersAddress())
+    console.info(txHash)
+  }, [account, pefiContract])
+
+  return { onApprovePefi: handlePefiApprove }
+}
+
+export { useEmperorActions, useXPefiApprove, usePefiApprove }

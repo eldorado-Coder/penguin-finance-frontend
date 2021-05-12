@@ -1,5 +1,4 @@
-
-import styled from 'styled-components';
+import styled from 'styled-components'
 import { Text, Button as NormalButton } from 'penguinfinance-uikit2'
 
 import Button from 'components/UnlockButton'
@@ -8,12 +7,12 @@ export const CardBlock = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  
+
   width: 100%;
   @media (min-width: 1200px) and (max-height: 800px) {
-    width: 70%
+    width: 70%;
   }
-`;
+`
 
 export const CardBlockHeader = styled.div`
   position: relative;
@@ -43,13 +42,14 @@ export const UnlockButton = styled(Button)`
     padding: 0 24px;
     height: 48px;
   }
-`;
+`
 
-export const PGButton = styled(NormalButton)`
+export const PGButton = styled(NormalButton)<{ colorType?: string }>`
   font-size: 10px;
   padding: 0 8px;
   height: 28px;
   width: 100% !important;
+  background: ${(props) => (props.colorType ? props.theme.colors.primaryBright : props.theme.colors.primary)};
   @media (min-width: 640px) {
     font-size: 12px;
     padding: 0 12px;
@@ -65,7 +65,7 @@ export const PGButton = styled(NormalButton)`
     padding: 0 24px;
     height: 48px;
   }
-`;
+`
 
 export const Title = styled(Text)`
   font-size: 14px;
@@ -82,7 +82,7 @@ export const Title = styled(Text)`
     font-size: 22px;
     line-height: 1.5;
   }
-`;
+`
 
 export const SubTitle = styled(Text)`
   font-size: 12px;
@@ -95,7 +95,7 @@ export const SubTitle = styled(Text)`
   @media (min-width: 1200px) {
     font-size: 18px;
   }
-`;
+`
 
 export const Caption = styled(Text)`
   font-size: 10px;
@@ -108,4 +108,4 @@ export const Caption = styled(Text)`
   @media (min-width: 1200px) {
     font-size: 14px;
   }
-`;
+`

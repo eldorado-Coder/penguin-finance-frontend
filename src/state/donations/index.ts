@@ -1,10 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
-import {
-  fetchTotalPefiRaised,
-  fetchTotalAvaxRaised,
-  fetchLatestDonor,
-} from './fetchDonationsData'
+import { fetchTotalPefiRaised, fetchTotalAvaxRaised, fetchLatestDonor, fetchMyDonor } from './fetchDonationsData'
 import { DonationsState } from '../types'
 
 const initialState: DonationsState = {
@@ -13,8 +9,13 @@ const initialState: DonationsState = {
   latestDonor: {
     avaxDonations: 0,
     pefiDonations: 0,
-    latestDonorName: ''
-  }
+    latestDonorName: '',
+    address: '',
+  },
+  myDonor: {
+    avaxDonations: 0,
+    pefiDonations: 0,
+  },
 }
 
 export const DonationsSlice = createSlice({
@@ -27,7 +28,12 @@ export const DonationsSlice = createSlice({
       state.latestDonor = {
         avaxDonations: 0,
         pefiDonations: 0,
-        latestDonorName: ''
+        latestDonorName: '',
+        address: '',
+      }
+      state.myDonor = {
+        avaxDonations: 0,
+        pefiDonations: 0,
       }
     },
     setTotalPefiRaised: (state, action) => {
@@ -38,7 +44,10 @@ export const DonationsSlice = createSlice({
     },
     setLatestDonor: (state, action) => {
       state.latestDonor = action.payload
-    }
+    },
+    setMyDonor: (state, action) => {
+      state.myDonor = action.payload
+    },
   },
 })
 
@@ -47,7 +56,8 @@ export const {
   setInitialData,
   setTotalPefiRaised,
   setTotalAvaxRaised,
-  setLatestDonor
+  setLatestDonor,
+  setMyDonor,
 } = DonationsSlice.actions
 
 // Thunks
@@ -56,17 +66,20 @@ export const setInit = () => async (dispatch) => {
   dispatch(setInitialData())
 }
 
-export const fetchDonations = account => async dispatch => {
-  if (!account) return;
+export const fetchDonations = (account) => async (dispatch) => {
+  if (!account) return
 
-  const totalPefiRaised = await fetchTotalPefiRaised();
-  dispatch(setTotalPefiRaised(totalPefiRaised));
+  const totalPefiRaised = await fetchTotalPefiRaised()
+  dispatch(setTotalPefiRaised(totalPefiRaised))
 
-  const totalAvaxRaised = await fetchTotalAvaxRaised();
-  dispatch(setTotalAvaxRaised(totalAvaxRaised));
-  
-  const latestDonor = await fetchLatestDonor();
-  dispatch(setLatestDonor(latestDonor));
+  const totalAvaxRaised = await fetchTotalAvaxRaised()
+  dispatch(setTotalAvaxRaised(totalAvaxRaised))
+
+  const latestDonor = await fetchLatestDonor()
+  dispatch(setLatestDonor(latestDonor))
+
+  const myDonor = await fetchMyDonor(account)
+  dispatch(setMyDonor(myDonor))
 }
 
 export default DonationsSlice.reducer
