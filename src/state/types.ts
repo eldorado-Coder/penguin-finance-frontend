@@ -155,6 +155,8 @@ export interface DonationsState {
   latestDonor: Player
   myDonor: Player
   finalDate: string
+  minDonationAvax: number
+  minDonationPefi: number
 }
 
 // Global state

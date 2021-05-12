@@ -5,32 +5,38 @@ import styled from 'styled-components'
 import ModalActions from 'components/ModalActions'
 import ModalInput from 'components/ModalInput'
 import useI18n from 'hooks/useI18n'
-import { useXPefi } from 'hooks/useContract'
-import { useEmperor } from 'state/hooks'
+import { usePenguin } from 'hooks/useContract'
+import { useDonations } from 'state/hooks'
 
 interface DonateModalProps {
-  onConfirm: (amount: string) => void
+  type?: string
+  onConfirm: (amount: string, type: string) => void
   onDismiss?: () => void
 }
 
-const DonateModal: React.FC<DonateModalProps> = ({ onConfirm, onDismiss }) => {
+const DonateModal: React.FC<DonateModalProps> = ({ type, onConfirm, onDismiss }) => {
   const [amount, setAmount] = useState('')
   const [maxAmount, setMaxAmount] = useState('')
   const [pendingTx, setPendingTx] = useState(false)
   const TranslateString = useI18n()
-  const xPefiContract = useXPefi()
+  const pefiContract = usePenguin()
   const { account } = useWeb3React()
-  const { minBidIncrease, currentEmperor } = useEmperor()
-  const currentBidAmount = currentEmperor.bidAmount
+  const { minDonationAvax, minDonationPefi } = useDonations()
 
-  const fetchXPefiBalance = useCallback(async () => {
-    const xPefiBalance = (await xPefiContract.methods.balanceOf(account).call()) / 1e18
-    setMaxAmount(xPefiBalance.toString())
-  }, [account, xPefiContract])
+  const fetchPefiBalance = useCallback(async () => {
+    const pefiBalance = (await pefiContract.methods.balanceOf(account).call()) / 1e18
+    setMaxAmount(pefiBalance.toString())
+  }, [account, pefiContract])
 
   useEffect(() => {
-    fetchXPefiBalance()
-  }, [fetchXPefiBalance])
+    // fetchXPefiBalance()
+    if (type === 'pefi') {
+      fetchPefiBalance()
+    }
+    if (type === 'avax') {
+      // fetchPefiBalance()
+    }
+  }, [type, fetchPefiBalance])
 
   const onChangeAmount = useCallback(
     (e: React.FormEvent<HTMLInputElement>) => {
@@ -40,24 +46,24 @@ const DonateModal: React.FC<DonateModalProps> = ({ onConfirm, onDismiss }) => {
   )
 
   const handleSelectMax = useCallback(() => {
-    setAmount(String(currentBidAmount))
-  }, [currentBidAmount, setAmount])
+    setAmount(String(maxAmount))
+  }, [maxAmount, setAmount])
 
   const checkCanConfirm = () => {
     if (pendingTx) return false
     if (amount.length === 0) return false
     if (Number(amount) > Number(maxAmount)) return false
-    if (Number(amount) < Number(currentBidAmount) + Number(minBidIncrease)) return false
+    if (type === 'pefi' && Number(amount) < Number(minDonationPefi)) return false
     return true
   }
 
   return (
-    <Modal title={TranslateString(1068, 'Donate')} onDismiss={onDismiss}>
+    <Modal title={TranslateString(1068, `Donate ${type === 'pefi' ? 'PEFI' : 'AVAX'}`)} onDismiss={onDismiss}>
       <ModalInput
         value={amount}
         onSelectMax={handleSelectMax}
         max={maxAmount}
-        symbol="xPEFI"
+        symbol={type === 'pefi' ? 'PEFI' : 'AVAX'}
         onChange={onChangeAmount}
         inputTitle={TranslateString(1070, 'Amount')}
         showError={false}
@@ -66,7 +72,8 @@ const DonateModal: React.FC<DonateModalProps> = ({ onConfirm, onDismiss }) => {
         <Flex justifyContent="space-between" alignItems="center">
           <Text fontSize="14px">Min donation increase:</Text>
           <Text fontSize="14px" style={{ display: 'flex', alignItems: 'center' }}>
-            {minBidIncrease}
+            {type === 'pefi' && minDonationPefi}
+            {type === 'avax' && minDonationAvax}
           </Text>
         </Flex>
       </BidInfoContainer>
@@ -85,7 +92,7 @@ const DonateModal: React.FC<DonateModalProps> = ({ onConfirm, onDismiss }) => {
             disabled={!checkCanConfirm()}
             onClick={async () => {
               setPendingTx(true)
-              await onConfirm(amount)
+              await onConfirm(amount, type)
               setPendingTx(false)
               onDismiss()
             }}

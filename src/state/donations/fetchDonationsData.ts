@@ -1,8 +1,8 @@
 import { AbiItem } from 'web3-utils'
 import { getWeb3 } from 'utils/web3'
 import donationsAbi from 'config/abi/donations.json'
-
 import { getWithoutBordersAddress } from 'utils/addressHelpers'
+import { getBalanceNumber } from 'utils/formatBalance'
 
 // Pool 0, Cake / Cake is a different kind of contract (master chef)
 // AVAX pools use the native AVAX token (wrapping ? unwrapping is done at the contract level)
@@ -80,6 +80,24 @@ export const fetchFinalDate = async () => {
   try {
     const finalDate = await donationsContract.methods.finalDate().call()
     return finalDate
+  } catch (error) {
+    return {}
+  }
+}
+
+export const fetchMinDonationAvax = async () => {
+  try {
+    const minDonationAvax = await donationsContract.methods.minDonationAVAX().call()
+    return getBalanceNumber(minDonationAvax)
+  } catch (error) {
+    return {}
+  }
+}
+
+export const fetchMinDonationPefi = async () => {
+  try {
+    const minDonationPefi = await donationsContract.methods.minDonationPefi().call()
+    return getBalanceNumber(minDonationPefi)
   } catch (error) {
     return {}
   }

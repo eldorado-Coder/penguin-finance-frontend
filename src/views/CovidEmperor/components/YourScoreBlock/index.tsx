@@ -13,6 +13,7 @@ import { getBalanceNumber } from 'utils/formatBalance'
 import { useEmperorActions, usePefiApprove } from 'hooks/useEmperor'
 import RegisterModal from './RegisterModal'
 import DonateModal from './DonateModal'
+import DonateTypeModal from './DonateTypeModal'
 import CustomStyleModal from './CustomStyleModal'
 import { getPenguinColor } from '../utils'
 import { UnlockButton, Title, SubTitle, Caption, PGButton, CardBlockHeader, CardBlock } from '../UI'
@@ -113,16 +114,14 @@ const CustomizeStyleButtonContainer = styled.div`
 const YourScoreBlock: React.FC = () => {
   const TranslateString = useI18n()
   const { account } = useWeb3React()
-  const { myEmperor, currentEmperor } = useEmperor()
-  const { myDonor, latestDonor } = useDonations()
+  const { myEmperor } = useEmperor()
+  const { myDonor, latestDonor, minDonationAvax, minDonationPefi } = useDonations()
   const { onRegister, onSteal, onChangeStyle, onChangeColor } = useEmperorActions()
   const { onApprovePefi } = usePefiApprove()
   const pefiContract = usePenguin()
 
   const myAvaxDonation = getBalanceNumber(new BigNumber(myDonor.avaxDonations))
   const myPefiDonation = getBalanceNumber(new BigNumber(myDonor.pefiDonations))
-
-  console.log('111--->', myDonor, latestDonor, account, latestDonor.address)
 
   const getMyStatus = () => {
     if (account) {
@@ -143,13 +142,31 @@ const YourScoreBlock: React.FC = () => {
     await onRegister(nickName, color, style)
   }
 
-  const onDonatePefi = async (amount: string) => {
-    const allowanceBalance = (await pefiContract.methods.allowance(account, getWithoutBordersAddress()).call()) / 1e18
-    if (allowanceBalance === 0) {
-      // call approve function
-      await onApprovePefi()
-    }
+  const onDonatePefi = async (amount: string, type: string) => {
+    // const allowanceBalance = (await pefiContract.methods.allowance(account, getWithoutBordersAddress()).call()) / 1e18
+    // if (allowanceBalance === 0) {
+    //   // call approve function
+    //   await onApprovePefi()
+    // }
     // await onSteal(amount)
+  }
+
+  const onDonateAvax = async (amount: string, type: string) => {
+    // const allowanceBalance = (await pefiContract.methods.allowance(account, getWithoutBordersAddress()).call()) / 1e18
+    // if (allowanceBalance === 0) {
+    //   // call approve function
+    //   await onApprovePefi()
+    // }
+    // await onSteal(amount)
+  }
+
+  const onSelectDonateType = (type: string) => {
+    if (type === 'pefi') {
+      onToggleDonatePefiModal()
+    }
+    if (type === 'avax') {
+      onToggleDonateAvaxModal()
+    }
   }
 
   const onChangeEmperorStyle = async (style: string) => {
@@ -162,7 +179,11 @@ const YourScoreBlock: React.FC = () => {
 
   const [onToggleRegister] = useModal(<RegisterModal onConfirm={onRegisterPenguin} />)
 
-  const [onToggleDonateModal] = useModal(<DonateModal onConfirm={onDonatePefi} />)
+  const [onToggleDonateTypeModal] = useModal(<DonateTypeModal onConfirm={onSelectDonateType} />)
+
+  const [onToggleDonatePefiModal] = useModal(<DonateModal type="pefi" onConfirm={onDonatePefi} />)
+
+  const [onToggleDonateAvaxModal] = useModal(<DonateModal type="avax" onConfirm={onDonateAvax} />)
 
   const [onToggleCustomModal] = useModal(
     <CustomStyleModal onConfirmChangeStyle={onChangeEmperorStyle} onConfirmChangeColor={onChangeEmperorColor} />,
@@ -212,7 +233,7 @@ const YourScoreBlock: React.FC = () => {
               {`${myPefiDonation} PEFI (${myAvaxDonation} AVAX)`}
             </SubTitle>
             <RegisterButtonContainer>
-              <PGButton colorType="primaryBright" onClick={onToggleDonateModal} endIcon={<div>{` `}</div>}>
+              <PGButton colorType="primaryBright" onClick={onToggleDonateTypeModal} endIcon={<div>{` `}</div>}>
                 {TranslateString(292, 'Donate')}
               </PGButton>
             </RegisterButtonContainer>

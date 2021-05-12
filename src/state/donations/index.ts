@@ -6,6 +6,8 @@ import {
   fetchLatestDonor,
   fetchFinalDate,
   fetchMyDonor,
+  fetchMinDonationAvax,
+  fetchMinDonationPefi,
 } from './fetchDonationsData'
 import { DonationsState } from '../types'
 
@@ -23,6 +25,8 @@ const initialState: DonationsState = {
     pefiDonations: 0,
   },
   finalDate: null,
+  minDonationAvax: 0,
+  minDonationPefi: 0,
 }
 
 export const DonationsSlice = createSlice({
@@ -58,6 +62,12 @@ export const DonationsSlice = createSlice({
     setFinalDate: (state, action) => {
       state.finalDate = action.payload
     },
+    setMinDonationAvax: (state, action) => {
+      state.minDonationAvax = action.payload
+    },
+    setMinDonationPefi: (state, action) => {
+      state.minDonationPefi = action.payload
+    },
   },
 })
 
@@ -69,6 +79,8 @@ export const {
   setLatestDonor,
   setMyDonor,
   setFinalDate,
+  setMinDonationAvax,
+  setMinDonationPefi,
 } = DonationsSlice.actions
 
 // Thunks
@@ -94,6 +106,12 @@ export const fetchDonations = (account) => async (dispatch) => {
 
   const myDonor = await fetchMyDonor(account)
   dispatch(setMyDonor(myDonor))
+
+  const minDonationAvax = await fetchMinDonationAvax()
+  dispatch(setMinDonationAvax(minDonationAvax))
+
+  const minDonationPefi = await fetchMinDonationPefi()
+  dispatch(setMinDonationPefi(minDonationPefi))
 }
 
 export default DonationsSlice.reducer
