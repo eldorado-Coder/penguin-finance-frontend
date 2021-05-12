@@ -44,7 +44,7 @@ const CardBlockContent = styled.div`
   position: relative;
   text-align: center;
 
-  margin-top: 15%;
+  margin-top: 25%;
   min-width: 120px;
   padding: 16px 8px 8px;
   @media (min-width: 640px) {
@@ -55,7 +55,7 @@ const CardBlockContent = styled.div`
   @media (min-width: 768px) {
     width: 100%;
     padding: 40px 20px 16px;
-    margin-top: 30%;
+    margin-top: 22%;
   }
   @media (min-width: 1200px) {
     width: 100%;
