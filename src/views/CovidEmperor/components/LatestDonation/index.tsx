@@ -4,32 +4,26 @@ import { Text, Flex } from 'penguinfinance-uikit2'
 import useI18n from 'hooks/useI18n'
 import { useWeb3React } from '@web3-react/core'
 import BigNumber from 'bignumber.js'
-import UnlockButton from 'components/UnlockButton'
 import { useEmperor, useDonations } from 'state/hooks'
 import { getBalanceNumber } from 'utils/formatBalance'
 import SvgIcon from 'components/SvgIcon'
+import { UnlockButton as Button, Title, Caption, CardBlockHeader, CardBlock as Block } from '../UI'
 import { getPenguinColor, getKingPenguin, getNormalPenguin } from '../utils'
 
-const CardBlock = styled.div<{ account: string }>`
-  display: ${props => props.account && 'flex'};
-  flex-direction: column;
-  align-items: center;
+const CardBlock = styled(Block)`
   margin-top: -100px;
-`
 
-const CardBlockHeader = styled.div`
-  position: relative;
-  display: flex;
-  justify-content: center;
-  z-index: 1;
-  padding: 16px;
-`
+  @media (min-width: 1200px) and (max-height: 800px) {
+    margin-top: -120px;
+  }
+`;
 
 const TitleBgWrapper = styled.div<{ color: string }>`
   z-index: -1;
   width: 100%;
   text-align: center;
-  transform: scale(2.6);
+  position: absolute;
+  margin-top: -10%;
 
   svg {
     #Banner-Avatar {
@@ -38,15 +32,57 @@ const TitleBgWrapper = styled.div<{ color: string }>`
       }
     }
   }
+
+  transform: scale(3);
+  @media (min-width: 640px) {
+    transform: scale(3);
+  }
+  @media (min-width: 768px) {
+    transform: scale(2.8);
+  }
+  @media (min-width: 1200px) {
+    transform: scale(2.6);
+  }
+  @media (min-width: 1200px) and (max-height: 800px) {
+    transform: scale(2.8);
+  }
 `
 
 const CardBlockContent = styled.div`
   background: ${(props) => props.theme.card.background};
-  border-radius: 16px;
+  border-radius: 8px;
   padding: 24px;
   padding-bottom: 16px;
   position: relative;
   text-align: center;
+
+  margin-top: 20%;
+  min-width: 100px;
+  padding: 16px 8px 8px;
+  @media (min-width: 640px) {
+    width: 100%;
+    margin-top: 30%;
+    padding: 24px 16px 12px;
+  }
+  @media (min-width: 768px) {
+    width: 100%;
+    border-radius: 8px;
+    margin-top: 32%;
+    padding: 24px 20px 16px;
+  }
+  @media (min-width: 1200px) {
+    width: 100%;
+    margin-top: 32%;
+    padding: 28px 24px 16px;
+  }
+  @media (min-width: 1450px) {
+    min-width: 240px;
+    padding: 24px 24px 16px;
+    margin-top: 35%;
+  }
+  @media (min-width: 1200px) and (max-height: 800px) {
+    padding: 8px;
+  }
 `
 
 const WalletContainer = styled.div`
@@ -57,7 +93,6 @@ const WalletContainer = styled.div`
 const EmperorInfoContainer = styled.div`
   position: relative;
   z-index: 10;
-  min-width: 240px;
 `
 
 const KingPenguinImageWrapper = styled.div`
@@ -79,9 +114,52 @@ const MyPenguinImageWrapper = styled.div`
   }
 `
 
-const DonationText = styled(Text)`
-  margin-left: 4px;
-  margin-right: 2px;
+const DonationText = styled(Caption)`
+  white-space: nowrap;
+  @media (min-width: 768px) {
+    margin-right: 4px;
+  }
+`;
+
+const Donations = styled(Flex)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  .exclamation {
+    display: none;
+  }
+  @media (min-width: 640px) {
+    flex-direction: column;
+    .exclamation {
+      display: none;
+    }
+  }
+  @media (min-width: 1200px) {
+    flex-direction: row;
+    .exclamation {
+      display: inline;
+    }
+  }
+  @media (min-width: 1200px) and (max-height: 800px) {
+    flex-direction: column;
+    .exclamation {
+      display: none;
+    }
+  }
+`;
+
+const UnlockButton = styled(Button)`
+  margin-top: 4px;
+  @media (min-width: 640px) {
+    margin-top: 4px;
+  }
+  @media (min-width: 768px) {
+    margin-top: 16px;
+  }
+  @media (min-width: 1200px) {
+    margin-top: 8px;
+  }
 `;
 
 const LatestDonation: React.FC = () => {
@@ -95,7 +173,7 @@ const LatestDonation: React.FC = () => {
   const avaxDonations = getBalanceNumber(new BigNumber(donations.latestDonor.avaxDonations));
 
   return (
-    <CardBlock account={account}>
+    <CardBlock>
       <CardBlockHeader>
         <TitleBgWrapper color={getPenguinColor(currentEmperor).code}>
           <SvgIcon
@@ -113,16 +191,16 @@ const LatestDonation: React.FC = () => {
         )}
         {account && (
           <EmperorInfoContainer>
-            <Text bold color="primaryBright" fontSize="22px">
+            <Title bold color="primaryBright">
               {TranslateString(1074, donations.latestDonor.latestDonorName)}
-            </Text>
+            </Title>
             {avaxDonations > 0 ?
-              <Flex justifyContent='center' alignItems='center'>
-                <Text bold color="secondary" fontSize="14px">Thank you for donating</Text>
+              <Donations>
+                <DonationText bold color="secondary">Thank you for donating</DonationText>
                 <DonationText bold color="primaryBright" fontSize="14px">{avaxDonations.toFixed(avaxDonations > 1 ? 0 : 3)} AVAX</DonationText>
-                <Text bold color="secondary" fontSize="16px" lineHeight={1.2}>!</Text>
-              </Flex>
-              : <Text bold color="secondary" fontSize="14px">Thank you for donating</Text>
+                <Text className='exclamation' bold color="secondary" fontSize="16px" lineHeight={1.2}>!</Text>
+              </Donations>
+              : <DonationText bold color="secondary">Thank you for donating</DonationText>
             }
           </EmperorInfoContainer>
         )}

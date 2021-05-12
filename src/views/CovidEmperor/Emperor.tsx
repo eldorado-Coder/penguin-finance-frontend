@@ -16,6 +16,10 @@ const JACKPOTS = {
   UNLOCK: `${process.env.PUBLIC_URL}/images/emperor/jackpot/jackpot_unlock.gif`,
 }
 
+const EmperorPage = styled(Page)` 
+  max-width: 1120px;
+`;
+
 const ChestWrapper = styled.div<{ jackpot: string }>`
   position: absolute;
   width: 15%;
@@ -89,34 +93,25 @@ const JackpotPaper = styled.img`
 
 const GridItem = styled.div`
   margin-bottom: '10px';
-  width: 315px;
+  max-width: 315px;
   margin: 0px 4px;
+  width: 30%;
+  display: flex;
+  justify-content: center;
 `
 
 const Grid = styled.div<{ align: string }>`
   display: flex;
   margin-bottom: 24px;
-  justify-content: space-between;
+  justify-content: space-around;
   justify-content: ${({ align }) => (align === 'center' ? 'center' : 'space-between')};
-  margin: 0px -50px;
   margin-top: 100px;
+  padding: 0 5%;
+  width: 100%;
 `
 
 const EmperorBgContainer = styled.video`
   object-fit: fill;
-  position: absolute;
-  top: 0px;
-  bottom: 0px;
-  right: 0px;
-  left: 0px;
-  z-index: -1;
-`
-
-const EmperorEndBgContainer = styled.div`
-  background-image: url('/images/emperor/competition_end.png');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
   position: absolute;
   top: 0px;
   bottom: 0px;
@@ -187,7 +182,7 @@ const Emperor: React.FC = () => {
   const emperorWinnerVideo = '/videos/PenguinEmperorWinner_Final.mp4'
   
   return (
-    <Page>
+    <EmperorPage>
       <Sound
         url={`${emperorEnded ? '/sounds/penguin_emperor_winner.mp3' : '/sounds/penguin_emperor_page.mp3'} `}
         playStatus={Sound.status.PLAYING}
@@ -206,7 +201,7 @@ const Emperor: React.FC = () => {
       </EmperorBgContainer>
 
       {!emperorEnded ? <>{renderEmperorStatsPage()}</> : <>{renderEmperorEndPage()}</>}
-    </Page>
+    </EmperorPage>
   )
 }
 
