@@ -1,47 +1,40 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Button, Text, useModal } from 'penguinfinance-uikit2'
+import { useModal } from 'penguinfinance-uikit2'
 import useI18n from 'hooks/useI18n'
 import { useWeb3React } from '@web3-react/core'
-import UnlockButton from 'components/UnlockButton'
+import BigNumber from 'bignumber.js'
 import SvgIcon from 'components/SvgIcon'
-import { useEmperor } from 'state/hooks'
-import { useXPefi } from 'hooks/useContract'
-import { getEmperorAddress } from 'utils/addressHelpers'
+import { useEmperor, useDonations } from 'state/hooks'
+import { usePenguin } from 'hooks/useContract'
+import { getWithoutBordersAddress } from 'utils/addressHelpers'
 import { badWordsFilter } from 'utils/address'
-import { useEmperorActions, useXPefiApprove } from 'hooks/useEmperor'
+import { getBalanceNumber } from 'utils/formatBalance'
+import { useEmperorActions, usePefiApprove } from 'hooks/useEmperor'
 import RegisterModal from './RegisterModal'
-import StealCrownModal from './StealCrownModal'
+import DonateModal from './DonateModal'
+import DonateTypeModal from './DonateTypeModal'
 import CustomStyleModal from './CustomStyleModal'
 import { getPenguinColor } from '../utils'
-
-const CardBlock = styled.div`
-  margin-top: 200px;
-`
-
-const CardBlockHeader = styled.div`
-  position: relative;
-  display: flex;
-  justify-content: center;
-  z-index: 1;
-  padding: 24px;
-  margin-bottom: -120px;
-  margin-top: -80px;
-  min-height: 314px;
-`
+import { UnlockButton, Title, SubTitle, Caption, PGButton, CardBlockHeader, CardBlock } from '../UI'
 
 const TitleBgWrapper = styled.div<{ color: string }>`
   z-index: -1;
   width: 100%;
   text-align: center;
-  transform: scale(1.8);
+  margin-top: 7%;
+  position: absolute;
+
   svg {
-    /* #Banner-Avatar {
-      path {
-        fill: ${({ color }) => `#${color}`};
-      }
-    } */
     width: 300px;
+  }
+
+  transform: scale(1.8);
+  @media (min-width: 640px) {
+    transform: scale(1.5);
+  }
+  @media (min-width: 1200px) and (max-height: 800px) {
+    transform: scale(1.8);
   }
 `
 
@@ -50,16 +43,47 @@ const CardBlockContent = styled.div`
   border-radius: 16px;
   padding: 16px;
   position: relative;
-  margin-top: -235px;
   text-align: center;
+
+  margin-top: 25%;
+  min-width: 120px;
+  padding: 16px 8px 8px;
+  @media (min-width: 640px) {
+    width: 100%;
+    margin-top: 25%;
+    padding: 32px 16px 12px;
+  }
+  @media (min-width: 768px) {
+    width: 100%;
+    padding: 40px 20px 16px;
+    margin-top: 22%;
+  }
+  @media (min-width: 1200px) {
+    width: 100%;
+    border-radius: 16px;
+    padding: 40px 24px 16px;
+    margin-top: 30%;
+  }
+  @media (min-width: 1450px) {
+    min-width: 240px;
+    padding: 40px 24px 16px;
+    margin-top: 32%;
+  }
+  @media (min-width: 1200px) and (max-height: 800px) {
+    padding-top: 16px;
+  }
 `
 
 const WalletContainer = styled.div`
   text-align: center;
   position: relative;
   z-index: 10;
+  margin-top: 10px;
   button {
     margin-top: 20px;
+    @media (max-width: 640px) {
+      margin-top: 10px;
+    }
   }
 `
 
@@ -90,15 +114,19 @@ const CustomizeStyleButtonContainer = styled.div`
 const YourScoreBlock: React.FC = () => {
   const TranslateString = useI18n()
   const { account } = useWeb3React()
-  const { myEmperor, currentEmperor } = useEmperor()
+  const { myEmperor } = useEmperor()
+  const { myDonor, latestDonor, minDonationAvax, minDonationPefi } = useDonations()
   const { onRegister, onSteal, onChangeStyle, onChangeColor } = useEmperorActions()
-  const { onApproveXPefi } = useXPefiApprove()
-  const xPefiContract = useXPefi()
+  const { onApprovePefi } = usePefiApprove()
+  const pefiContract = usePenguin()
+
+  const myAvaxDonation = getBalanceNumber(new BigNumber(myDonor.avaxDonations))
+  const myPefiDonation = getBalanceNumber(new BigNumber(myDonor.pefiDonations))
 
   const getMyStatus = () => {
     if (account) {
       if (myEmperor.isRegistered) {
-        if (myEmperor.address === currentEmperor.address) {
+        if (account === latestDonor.address) {
           return 'king'
         }
         return 'registered'
@@ -114,13 +142,31 @@ const YourScoreBlock: React.FC = () => {
     await onRegister(nickName, color, style)
   }
 
-  const onStealCrown = async (amount: string) => {
-    const allowanceBalance = (await xPefiContract.methods.allowance(account, getEmperorAddress()).call()) / 1e18
-    if (allowanceBalance === 0) {
-      // call approve function
-      await onApproveXPefi()
+  const onDonatePefi = async (amount: string, type: string) => {
+    // const allowanceBalance = (await pefiContract.methods.allowance(account, getWithoutBordersAddress()).call()) / 1e18
+    // if (allowanceBalance === 0) {
+    //   // call approve function
+    //   await onApprovePefi()
+    // }
+    // await onSteal(amount)
+  }
+
+  const onDonateAvax = async (amount: string, type: string) => {
+    // const allowanceBalance = (await pefiContract.methods.allowance(account, getWithoutBordersAddress()).call()) / 1e18
+    // if (allowanceBalance === 0) {
+    //   // call approve function
+    //   await onApprovePefi()
+    // }
+    // await onSteal(amount)
+  }
+
+  const onSelectDonateType = (type: string) => {
+    if (type === 'pefi') {
+      onToggleDonatePefiModal()
     }
-    await onSteal(amount)
+    if (type === 'avax') {
+      onToggleDonateAvaxModal()
+    }
   }
 
   const onChangeEmperorStyle = async (style: string) => {
@@ -133,7 +179,11 @@ const YourScoreBlock: React.FC = () => {
 
   const [onToggleRegister] = useModal(<RegisterModal onConfirm={onRegisterPenguin} />)
 
-  const [onToggleStealModal] = useModal(<StealCrownModal onConfirm={onStealCrown} />)
+  const [onToggleDonateTypeModal] = useModal(<DonateTypeModal onConfirm={onSelectDonateType} />)
+
+  const [onToggleDonatePefiModal] = useModal(<DonateModal type="pefi" onConfirm={onDonatePefi} />)
+
+  const [onToggleDonateAvaxModal] = useModal(<DonateModal type="avax" onConfirm={onDonateAvax} />)
 
   const [onToggleCustomModal] = useModal(
     <CustomStyleModal onConfirmChangeStyle={onChangeEmperorStyle} onConfirmChangeColor={onChangeEmperorColor} />,
@@ -153,57 +203,57 @@ const YourScoreBlock: React.FC = () => {
       <CardBlockContent>
         {myStatus === 'not connected' && (
           <WalletContainer>
-            <Text bold color="secondary" fontSize="22px">
-              {TranslateString(1074, 'Check your Penguin')}
-            </Text>
-            <Text fontSize="14px">Connect wallet to view</Text>
+            <Title bold color="secondary">
+              {TranslateString(1074, 'Check your Rank')}
+            </Title>
+            <Caption>Connect wallet to view</Caption>
             <UnlockButton />
           </WalletContainer>
         )}
         {myStatus === 'not registered' && (
           <RegisterContainer>
-            <Text bold color="secondary" fontSize="18px">
+            <SubTitle bold color="secondary">
               {TranslateString(1074, 'You must register your penguin before attempting to steal the Throne')}
-            </Text>
+            </SubTitle>
             <RegisterButtonContainer>
-              <Button onClick={onToggleRegister}>{TranslateString(292, 'Register')}</Button>
+              <PGButton onClick={onToggleRegister}>{TranslateString(292, 'Register')}</PGButton>
             </RegisterButtonContainer>
           </RegisterContainer>
         )}
 
         {myStatus === 'registered' && (
           <RegisterContainer>
-            <Text bold color="primary" fontSize="22px">
+            <Title bold color="secondary">
               {TranslateString(1074, myEmperor && badWordsFilter(myEmperor.nickname))}
-            </Text>
-            <Text bold color="secondary" fontSize="18px">
-              {TranslateString(1074, 'You have been Emperor for:')}
-            </Text>
-            <Text bold color="primary" fontSize="18px">
-              {`${myEmperor.timeAsEmperor} seconds`}
-            </Text>
+            </Title>
+            <SubTitle bold color="primaryBright">
+              {TranslateString(1074, 'You have donated:')}
+            </SubTitle>
+            <SubTitle bold color="secondary">
+              {`${myPefiDonation} PEFI (${myAvaxDonation} AVAX)`}
+            </SubTitle>
             <RegisterButtonContainer>
-              <Button onClick={onToggleStealModal} endIcon={<div>{` `}</div>}>
-                {TranslateString(292, 'Steal the Crown')}
-              </Button>
+              <PGButton colorType="primaryBright" onClick={onToggleDonateTypeModal} endIcon={<div>{` `}</div>}>
+                {TranslateString(292, 'Donate')}
+              </PGButton>
             </RegisterButtonContainer>
             <CustomizeStyleButtonContainer>
-              <Button onClick={onToggleCustomModal}>{TranslateString(292, 'Customize Penguin')}</Button>
+              <PGButton onClick={onToggleCustomModal}>{TranslateString(292, 'Customize Penguin')}</PGButton>
             </CustomizeStyleButtonContainer>
           </RegisterContainer>
         )}
 
         {myStatus === 'king' && (
           <RegisterContainer>
-            <Text bold color="secondary" fontSize="22px">
+            <Title bold color="secondary">
               {TranslateString(1074, myEmperor && badWordsFilter(myEmperor.nickname))}
-            </Text>
-            <Text bold color="secondary" fontSize="18px">
+            </Title>
+            <SubTitle bold color="secondary">
               {TranslateString(1074, 'You have been Emperor for:')}
-            </Text>
-            <Text bold color="primary" fontSize="22px">
+            </SubTitle>
+            <Title bold color="primary">
               {`${myEmperor.timeAsEmperor} seconds`}
-            </Text>
+            </Title>
           </RegisterContainer>
         )}
       </CardBlockContent>

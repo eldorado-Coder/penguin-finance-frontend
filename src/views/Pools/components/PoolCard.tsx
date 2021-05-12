@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js'
 import React, { useCallback, useState, useEffect } from 'react'
 import styled, { keyframes } from 'styled-components'
-import { Button, IconButton, useModal, AddIcon, Image, Text, Flex } from 'penguinfinance-uikit2'
+import { Button, IconButton, useModal, AddIcon, Image, Text, Flex, Tag } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import UnlockButton from 'components/UnlockButton'
 import { useERC20, useXPefi } from 'hooks/useContract'
@@ -59,6 +59,17 @@ const StyledCardAccent = styled.div`
   bottom: -2px;
   left: -2px;
   z-index: -1;
+`
+
+const MultiplierTag = styled(Tag)`
+  margin-left: 4px;
+`
+
+const APYTag = styled(Tag)`
+  span {
+    color: #ce022d;
+    margin-right: 4px;
+  }
 `
 
 interface PoolWithApy extends Pool {
@@ -177,11 +188,17 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool }) => {
         <CardTitle isFinished={isFinished && sousId !== 0}>
           {tokenName} {TranslateString(348, 'Nest')}
         </CardTitle>
+        <Flex justifyContent="flex-end">
+          <APYTag variant="primary" outline>
+            <span>474.5%</span> APY
+          </APYTag>
+          <MultiplierTag variant="primary">10X</MultiplierTag>
+        </Flex>
         <div style={{ marginBottom: '8px', display: 'flex', alignItems: 'center' }}>
           <Flex minWidth="100%" alignItems="center">
             <Image src={`/images/pools/${image || tokenName}.png`} width={64} height={64} alt={tokenName} />
             <Flex flexDirection="column" width="100%">
-              <Flex ml="8px" width="100%" justifyContent="space-between">
+              <Flex ml="8px" justifyContent="space-between">
                 <Text color="textSubtle" bold fontSize="14px">
                   xPEFI to PEFI:
                 </Text>
@@ -189,7 +206,7 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool }) => {
                   {Number(Number(xPefiToPefiRatio).toFixed(3))}
                 </Text>
               </Flex>
-              <Flex ml="8px" width="100%" justifyContent="space-between">
+              <Flex ml="8px" justifyContent="space-between">
                 <Text color="textSubtle" bold fontSize="14px">
                   Paper Hands Penalty:
                 </Text>

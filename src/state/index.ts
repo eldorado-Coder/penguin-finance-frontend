@@ -9,6 +9,7 @@ import teamsReducer from './teams'
 import emperorReducer from './emperor'
 import achievementsReducer from './achievements'
 import globalReducer from './global'
+import donationsReducer from './donations'
 
 const store = configureStore({
   devTools: process.env.NODE_ENV !== 'production',
@@ -22,6 +23,7 @@ const store = configureStore({
     teams: teamsReducer,
     achievements: achievementsReducer,
     global: globalReducer,
+    donations: donationsReducer
   },
 })
 

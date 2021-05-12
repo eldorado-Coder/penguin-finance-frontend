@@ -12,3 +12,4 @@ export {
 export { profileFetchStart, profileFetchSucceeded, profileFetchFailed } from './profile'
 export { fetchStart, teamFetchSucceeded, fetchFailed, teamsFetchSucceeded } from './teams'
 export { fetchEmperor } from './emperor'
+export { fetchDonations } from './donations';

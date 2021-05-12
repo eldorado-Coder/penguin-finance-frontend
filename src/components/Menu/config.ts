@@ -12,7 +12,7 @@ export const config: MenuEntry[] = [
     items: [
       {
         label: 'Exchange',
-        href: 'https://app.pangolin.exchange/#/swap',
+        href: 'https://app.pangolin.exchange/#/swap?outputCurrency=0xe896CDeaAC9615145c0cA09C8Cd5C25bced6384c',
       },
       {
         label: 'Liquidity',
@@ -78,7 +78,7 @@ export const config: MenuEntry[] = [
     ],
   },
   {
-    label: 'More',
+    label: 'Learn More',
     icon: 'MoreIcon',
     items: [
       {

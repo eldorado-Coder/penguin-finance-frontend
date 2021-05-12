@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import styled from 'styled-components'
 import Sound from 'react-sound'
 import { useWeb3React } from '@web3-react/core'
@@ -112,36 +112,30 @@ const EmperorBgContainer = styled.video`
   z-index: -1;
 `
 
-const EmperorEndBgContainer = styled.div`
-  background-image: url('/images/emperor/competition_end.png');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
-  position: absolute;
-  top: 0px;
-  bottom: 0px;
-  right: 0px;
-  left: 0px;
-  z-index: -1;
-`
-
 const Emperor: React.FC = () => {
   const [jackpot, setJackpot] = useState(JACKPOTS.LOCK)
   const { currentEmperor } = useEmperor()
   const { account } = useWeb3React()
   const [jackpotOpenSound, setJackpotOpenSound] = useState(false)
+  const [showJackpot, setShowJackpot] = useState(false);
+  const jackpotRef = useRef(jackpot);
+  jackpotRef.current = jackpot;
 
   const handleOpenJackpot = () => {
-    if (jackpot === JACKPOTS.LOCK) {
+    if (jackpotRef.current === JACKPOTS.LOCK) {
       setJackpotOpenSound(true)
       setJackpot(JACKPOTS.OPEN)
       setTimeout(() => {
         setJackpot(JACKPOTS.UNLOCK)
         setJackpotOpenSound(false)
       }, 800)
-    } else if (jackpot === JACKPOTS.UNLOCK) {
+    } else if (jackpotRef.current === JACKPOTS.UNLOCK) {
       setJackpot(JACKPOTS.LOCK)
     }
+  }
+
+  const onJackpotLoaded = () => {
+    setShowJackpot(true);
   }
 
   const renderEmperorStatsPage = () => {
@@ -151,10 +145,14 @@ const Emperor: React.FC = () => {
           <ChestWrapper jackpot={jackpot} onClick={handleOpenJackpot}>
             {jackpot === JACKPOTS.UNLOCK && (
               <PaperWrapper>
-                <JackpotPaper src={`${process.env.PUBLIC_URL}/images/emperor/jackpot/Mapefi.svg`} alt="jackpot_paper" />
-                <Text className="price" fontSize="24px">
-                  {currentEmperor.jackpot} <span>x</span>PEFI
-                </Text>
+                <JackpotPaper 
+                  onLoad={onJackpotLoaded}
+                  src={`${process.env.PUBLIC_URL}/images/emperor/jackpot/Mapefi.svg`} alt="jackpot_paper" />
+                {showJackpot && 
+                  <Text className="price" fontSize="24px">
+                    {currentEmperor.jackpot} <span>x</span>PEFI
+                  </Text>
+                }
               </PaperWrapper>
             )}
             <img className="jackpot-lock" src={JACKPOTS.LOCK} alt="jackpot_lock" />
