@@ -16,7 +16,7 @@ const CardBlock = styled(Block)`
   @media (min-width: 1200px) and (max-height: 800px) {
     margin-top: -120px;
   }
-`;
+`
 
 const TitleBgWrapper = styled.div<{ color: string }>`
   z-index: -1;
@@ -55,9 +55,8 @@ const CardBlockContent = styled.div`
   padding-bottom: 16px;
   position: relative;
   text-align: center;
-
-  margin-top: 20%;
-  min-width: 100px;
+  margin-top: 30%;
+  min-width: 150px;
   padding: 16px 8px 8px;
   @media (min-width: 640px) {
     width: 100%;
@@ -119,7 +118,7 @@ const DonationText = styled(Caption)`
   @media (min-width: 768px) {
     margin-right: 4px;
   }
-`;
+`
 
 const Donations = styled(Flex)`
   display: flex;
@@ -147,7 +146,7 @@ const Donations = styled(Flex)`
       display: none;
     }
   }
-`;
+`
 
 const UnlockButton = styled(Button)`
   margin-top: 4px;
@@ -160,17 +159,16 @@ const UnlockButton = styled(Button)`
   @media (min-width: 1200px) {
     margin-top: 8px;
   }
-`;
+`
 
 const LatestDonation: React.FC = () => {
   const TranslateString = useI18n()
   const { account } = useWeb3React()
-  const { myEmperor, currentEmperor } = useEmperor()
+  const { currentEmperor } = useEmperor()
+  const { myDonor, latestDonor } = useDonations()
   const currentEmperorPenguin = getKingPenguin(currentEmperor)
-  const myEmperorPenguin = getNormalPenguin(myEmperor)
-  const donations = useDonations();
-
-  const avaxDonations = getBalanceNumber(new BigNumber(donations.latestDonor.avaxDonations));
+  const myEmperorPenguin = getNormalPenguin(myDonor)
+  const avaxDonations = getBalanceNumber(new BigNumber(latestDonor.avaxDonations))
 
   return (
     <CardBlock>
@@ -192,16 +190,25 @@ const LatestDonation: React.FC = () => {
         {account && (
           <EmperorInfoContainer>
             <Title bold color="primaryBright">
-              {TranslateString(1074, donations.latestDonor.latestDonorName)}
+              {TranslateString(1074, latestDonor.latestDonorName)}
             </Title>
-            {avaxDonations > 0 ?
+            {avaxDonations > 0 ? (
               <Donations>
-                <DonationText bold color="secondary">Thank you for donating</DonationText>
-                <DonationText bold color="primaryBright" fontSize="14px">{avaxDonations.toFixed(avaxDonations > 1 ? 0 : 3)} AVAX</DonationText>
-                <Text className='exclamation' bold color="secondary" fontSize="16px" lineHeight={1.2}>!</Text>
+                <DonationText bold color="secondary">
+                  Thank you for donating
+                </DonationText>
+                <DonationText bold color="primaryBright" fontSize="14px">
+                  {avaxDonations.toFixed(avaxDonations > 1 ? 0 : 3)} AVAX
+                </DonationText>
+                <Text className="exclamation" bold color="secondary" fontSize="16px" lineHeight={1.2}>
+                  !
+                </Text>
               </Donations>
-              : <DonationText bold color="secondary">Thank you for donating</DonationText>
-            }
+            ) : (
+              <DonationText bold color="secondary">
+                Thank you for donating
+              </DonationText>
+            )}
           </EmperorInfoContainer>
         )}
       </CardBlockContent>
@@ -214,11 +221,11 @@ const LatestDonation: React.FC = () => {
           height="20px"
         />
       </KingPenguinImageWrapper>
-      {currentEmperor.address && myEmperor.address && currentEmperor.address !== myEmperor.address && (
+      {myDonor.isRegistered && (
         <MyPenguinImageWrapper>
           <SvgIcon
             src={`${process.env.PUBLIC_URL}/images/emperor/penguins/${myEmperorPenguin}_${
-              getPenguinColor(myEmperor).name
+              getPenguinColor(myDonor).name
             }.svg`}
             width="100%"
             height="20px"

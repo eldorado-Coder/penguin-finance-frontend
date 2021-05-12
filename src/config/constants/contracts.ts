@@ -70,5 +70,9 @@ export default {
   withoutBorders: {
     43113: '',
     43114: '0x6f23Cc0D3532D46EeEfa49cD2891187413E8e77d',
-  }
+  },
+  charityPenguinDB: {
+    43113: '',
+    43114: '0xaAD41CCf76c035DAF80d662584823215f2e0487D',
+  },
 }

@@ -135,9 +135,14 @@ export interface Emperor {
 }
 
 export interface Player {
-  avaxDonations?: number, 
-  pefiDonations?: number,
+  avaxDonations?: number
+  pefiDonations?: number
   latestDonorName?: string
+  address?: string
+  nickname?: string
+  color?: string
+  isRegistered?: boolean
+  style?: number
 }
 
 export interface EmperorState {
@@ -151,8 +156,11 @@ export interface EmperorState {
 export interface DonationsState {
   totalPefiRaised: number
   totalAvaxRaised: number
-  latestDonor: Player,
+  latestDonor: Player
+  myDonor: Player
   finalDate: string
+  minDonationAvax: number
+  minDonationPefi: number
 }
 
 // Global state
@@ -166,9 +174,9 @@ export interface State {
   pools: PoolsState
   profile: ProfileState
   teams: TeamsState
-  achievements: AchievementState,
+  achievements: AchievementState
   // global
-  global: GlobalState,
-  emperor: EmperorState,
+  global: GlobalState
+  emperor: EmperorState
   donations: DonationsState
 }

@@ -13,7 +13,7 @@ const TitleBgWrapper = styled.div<{ color: string }>`
   z-index: -1;
   width: 100%;
   text-align: center;
-  
+
   position: absolute;
   margin-top: 10%;
 
@@ -39,7 +39,6 @@ const CardBlockContent = styled.div<{ account: string }>`
   border-radius: 8px;
   position: relative;
   text-align: center;
-  
   margin-top: 20%;
   min-width: 100px;
   padding: 24px 8px 8px;
@@ -83,19 +82,19 @@ const UnlockButton = styled(Button)`
   @media (min-width: 1200px) {
     margin-top: -8px;
   }
-`;
+`
 
 const TopRaisedBlock: React.FC = () => {
   const { account } = useWeb3React()
-  const { currentEmperor } = useEmperor();
-  const donations = useDonations();
+  const { currentEmperor } = useEmperor()
+  const donations = useDonations()
 
-  const headerColor: string = getPenguinColor(currentEmperor).code;
-  const totalAvaxRaised = getBalanceNumber(new BigNumber(donations.totalAvaxRaised));
-  const totalPefiRaised = getBalanceNumber(new BigNumber(donations.totalPefiRaised));
-  const pefiBurnt = getBalanceNumber(new BigNumber(donations.totalPefiRaised * 0.25));
+  const headerColor: string = getPenguinColor(currentEmperor).code
+  const totalAvaxRaised = getBalanceNumber(new BigNumber(donations.totalAvaxRaised))
+  const totalPefiRaised = getBalanceNumber(new BigNumber(donations.totalPefiRaised))
+  const pefiBurnt = getBalanceNumber(new BigNumber(donations.totalPefiRaised * 0.25))
 
-  return (  
+  return (
     <CardBlock>
       <CardBlockHeader>
         <TitleBgWrapper color={headerColor}>
@@ -106,7 +105,7 @@ const TopRaisedBlock: React.FC = () => {
           />
         </TitleBgWrapper>
       </CardBlockHeader>
-      <CardBlockContent account={account} >
+      <CardBlockContent account={account}>
         {!account && (
           <WalletContainer>
             <UnlockButton />
@@ -114,17 +113,29 @@ const TopRaisedBlock: React.FC = () => {
         )}
         {account && donations && (
           <EmperorInfoContainer>
-            <Flex justifyContent='space-between'>
-              <SubTitle bold color='secondary'>AVAX</SubTitle>
-              <SubTitle bold color="primaryBright">{totalAvaxRaised.toFixed((!totalAvaxRaised || totalAvaxRaised > 1) ? 0 : 3)}</SubTitle>
+            <Flex justifyContent="space-between">
+              <SubTitle bold color="secondary">
+                AVAX
+              </SubTitle>
+              <SubTitle bold color="primaryBright">
+                {totalAvaxRaised.toFixed(!totalAvaxRaised || totalAvaxRaised > 1 ? 0 : 3)}
+              </SubTitle>
             </Flex>
-            <Flex justifyContent='space-between'>
-              <SubTitle bold color='secondary'>PEFI</SubTitle>
-              <SubTitle bold color="primaryBright">{totalPefiRaised.toFixed((!totalPefiRaised || totalPefiRaised > 1) ? 0 : 3)}</SubTitle>
+            <Flex justifyContent="space-between">
+              <SubTitle bold color="secondary">
+                PEFI
+              </SubTitle>
+              <SubTitle bold color="primaryBright">
+                {totalPefiRaised.toFixed(!totalPefiRaised || totalPefiRaised > 1 ? 0 : 3)}
+              </SubTitle>
             </Flex>
-            <Flex justifyContent='space-between' mt='8px'>
-              <Caption bold color='secondary'>PEFI Burnt</Caption>
-              <Caption bold color="primaryBright">{pefiBurnt.toFixed((!pefiBurnt || pefiBurnt > 1) ? 0 : 3)}</Caption>
+            <Flex justifyContent="space-between" mt="8px">
+              <Caption bold color="secondary">
+                PEFI Burnt
+              </Caption>
+              <Caption bold color="primaryBright">
+                {pefiBurnt.toFixed(!pefiBurnt || pefiBurnt > 1 ? 0 : 3)}
+              </Caption>
             </Flex>
           </EmperorInfoContainer>
         )}

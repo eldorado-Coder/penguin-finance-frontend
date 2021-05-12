@@ -16,9 +16,9 @@ const AID_KIT = {
   UNLOCK: `${process.env.PUBLIC_URL}/images/covid-emperor/aid_kit/kit_unlock.gif`,
 }
 
-const EmperorPage = styled(Page)` 
+const EmperorPage = styled(Page)`
   max-width: 1120px;
-`;
+`
 
 const ChestWrapper = styled.div<{ aidKit: string }>`
   position: absolute;
@@ -111,12 +111,39 @@ const GridItem = styled.div`
   justify-content: center;
 `
 
-const Grid = styled.div<{ align: string }>`
+const Grid = styled.div<{ align: string; marginTop?: { xs?: number; sm?: number; md?: number; lg?: number } }>`
   display: flex;
   margin-bottom: 24px;
   justify-content: space-around;
   justify-content: ${({ align }) => (align === 'center' ? 'center' : 'space-between')};
-  margin-top: 100px;
+  margin-top: ${({ marginTop }) => `${marginTop.xs}px`};
+  @media (max-width: 640px) {
+    ${({ marginTop }) =>
+      marginTop.xs && {
+        marginTop: `${marginTop.xs}px`,
+      }}
+  }
+  @media (max-width: 768px) {
+    ${({ marginTop }) =>
+      marginTop.sm && {
+        marginTop: `${marginTop.sm}px`,
+      }}
+  }
+  @media (max-width: 1200px) {
+    ${({ marginTop }) =>
+      marginTop.md && {
+        marginTop: `${marginTop.md}px`,
+      }}
+  }
+  @media (max-width: 1450px) {
+    ${({ marginTop }) =>
+      marginTop.lg && {
+        marginTop: `${marginTop.lg}px`,
+      }}
+  }
+  @media (max-width: 1600px) {
+    font-size: 24px;
+  }
   padding: 0 5%;
   width: 100%;
 `
@@ -188,12 +215,14 @@ const Emperor: React.FC = () => {
             <img className="aid-kit-unlock" src={AID_KIT.UNLOCK} alt="aid_kit_unlock" />
           </ChestWrapper>
         )}
-        <Grid align="between">
-          <GridItem>
-            <TopRaisedBlock />
-          </GridItem>
+        <Grid align="center" marginTop={{ xs: 100 }}>
           <GridItem>
             <LatestDonation />
+          </GridItem>
+        </Grid>
+        <Grid align="between" marginTop={{ sm: -50, md: -60 }}>
+          <GridItem>
+            <TopRaisedBlock />
           </GridItem>
           <GridItem>
             <YourScoreBlock />
@@ -211,7 +240,7 @@ const Emperor: React.FC = () => {
   const emperorDefaultVideo = '/videos/covid_emperor.mp4'
   // to change the video of emperor winner page background video, please change this video path
   const emperorWinnerVideo = '/videos/PenguinEmperorWinner_Final.mp4'
-  
+
   return (
     <EmperorPage>
       <Sound

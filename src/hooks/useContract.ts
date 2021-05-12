@@ -14,6 +14,8 @@ import {
   getPointCenterIfoAddress,
   getBunnySpecialAddress,
   getEmperorAddress,
+  getWithoutBordersAddress as getCharityEmperorAddress,
+  getCharityPenguinDBAddress,
   getXPefiAddress,
 } from 'utils/addressHelpers'
 import { poolsConfig } from 'config/constants'
@@ -31,6 +33,8 @@ import profile from 'config/abi/pancakeProfile.json'
 import pointCenterIfo from 'config/abi/pointCenterIfo.json'
 import bunnySpecial from 'config/abi/bunnySpecial.json'
 import emperor from 'config/abi/emperor.json'
+import donations from 'config/abi/donations.json'
+import charityPenguinDB from 'config/abi/charityPenguin.json'
 import xPefi from 'config/abi/xPefi.json'
 
 const useContract = (abi: AbiItem, address: string, contractOptions?: ContractOptions) => {
@@ -112,6 +116,16 @@ export const useBunnySpecialContract = () => {
 export const useEmperor = () => {
   const abi = (emperor as unknown) as AbiItem
   return useContract(abi, getEmperorAddress())
+}
+
+export const useCharityEmperor = () => {
+  const abi = (donations as unknown) as AbiItem
+  return useContract(abi, getCharityEmperorAddress())
+}
+
+export const useCharityPenguinDB = () => {
+  const abi = (charityPenguinDB as unknown) as AbiItem
+  return useContract(abi, getCharityPenguinDBAddress())
 }
 
 export const useXPefi = () => {

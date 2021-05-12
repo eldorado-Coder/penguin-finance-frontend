@@ -4,7 +4,11 @@ import {
   fetchTotalPefiRaised,
   fetchTotalAvaxRaised,
   fetchLatestDonor,
-  fetchFinalDate
+  fetchFinalDate,
+  fetchMyDonor,
+  fetchMinDonationAvax,
+  fetchMinDonationPefi,
+  fetchEmperorData,
 } from './fetchDonationsData'
 import { DonationsState } from '../types'
 
@@ -14,9 +18,20 @@ const initialState: DonationsState = {
   latestDonor: {
     avaxDonations: 0,
     pefiDonations: 0,
-    latestDonorName: ''
+    latestDonorName: '',
+    address: '',
   },
-  finalDate: null
+  myDonor: {
+    avaxDonations: 0,
+    pefiDonations: 0,
+    nickname: '',
+    color: '',
+    isRegistered: false,
+    style: 0,
+  },
+  finalDate: null,
+  minDonationAvax: 0,
+  minDonationPefi: 0,
 }
 
 export const DonationsSlice = createSlice({
@@ -29,7 +44,16 @@ export const DonationsSlice = createSlice({
       state.latestDonor = {
         avaxDonations: 0,
         pefiDonations: 0,
-        latestDonorName: ''
+        latestDonorName: '',
+        address: '',
+      }
+      state.myDonor = {
+        avaxDonations: 0,
+        pefiDonations: 0,
+        nickname: '',
+        color: '',
+        isRegistered: false,
+        style: 0,
       }
     },
     setTotalPefiRaised: (state, action) => {
@@ -41,9 +65,18 @@ export const DonationsSlice = createSlice({
     setLatestDonor: (state, action) => {
       state.latestDonor = action.payload
     },
+    setMyDonor: (state, action) => {
+      state.myDonor = { ...state.myDonor, ...action.payload }
+    },
     setFinalDate: (state, action) => {
       state.finalDate = action.payload
-    }
+    },
+    setMinDonationAvax: (state, action) => {
+      state.minDonationAvax = action.payload
+    },
+    setMinDonationPefi: (state, action) => {
+      state.minDonationPefi = action.payload
+    },
   },
 })
 
@@ -53,7 +86,10 @@ export const {
   setTotalPefiRaised,
   setTotalAvaxRaised,
   setLatestDonor,
-  setFinalDate
+  setMyDonor,
+  setFinalDate,
+  setMinDonationAvax,
+  setMinDonationPefi,
 } = DonationsSlice.actions
 
 // Thunks
@@ -62,20 +98,32 @@ export const setInit = () => async (dispatch) => {
   dispatch(setInitialData())
 }
 
-export const fetchDonations = account => async dispatch => {
-  if (!account) return;
+export const fetchDonations = (account) => async (dispatch) => {
+  if (!account) return
 
-  const totalPefiRaised = await fetchTotalPefiRaised();
-  dispatch(setTotalPefiRaised(totalPefiRaised));
+  const totalPefiRaised = await fetchTotalPefiRaised()
+  dispatch(setTotalPefiRaised(totalPefiRaised))
 
-  const totalAvaxRaised = await fetchTotalAvaxRaised();
-  dispatch(setTotalAvaxRaised(totalAvaxRaised));
-  
-  const latestDonor = await fetchLatestDonor();
-  dispatch(setLatestDonor(latestDonor));
+  const totalAvaxRaised = await fetchTotalAvaxRaised()
+  dispatch(setTotalAvaxRaised(totalAvaxRaised))
 
-  const finalDate = await fetchFinalDate();
-  dispatch(setFinalDate(finalDate));
+  const latestDonor = await fetchLatestDonor()
+  dispatch(setLatestDonor(latestDonor))
+
+  const finalDate = await fetchFinalDate()
+  dispatch(setFinalDate(finalDate))
+
+  const myDonor = await fetchMyDonor(account)
+  dispatch(setMyDonor(myDonor))
+
+  const myEmperor = await fetchEmperorData(account)
+  dispatch(setMyDonor(myEmperor))
+
+  const minDonationAvax = await fetchMinDonationAvax()
+  dispatch(setMinDonationAvax(minDonationAvax))
+
+  const minDonationPefi = await fetchMinDonationPefi()
+  dispatch(setMinDonationPefi(minDonationPefi))
 }
 
 export default DonationsSlice.reducer

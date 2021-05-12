@@ -3,14 +3,17 @@ import styled from 'styled-components'
 import { useModal } from 'penguinfinance-uikit2'
 import useI18n from 'hooks/useI18n'
 import { useWeb3React } from '@web3-react/core'
+import BigNumber from 'bignumber.js'
 import SvgIcon from 'components/SvgIcon'
-import { useEmperor } from 'state/hooks'
-import { useXPefi } from 'hooks/useContract'
-import { getEmperorAddress } from 'utils/addressHelpers'
+import { useDonations } from 'state/hooks'
+import { usePenguin } from 'hooks/useContract'
+import { getWithoutBordersAddress } from 'utils/addressHelpers'
 import { badWordsFilter } from 'utils/address'
-import { useEmperorActions, useXPefiApprove } from 'hooks/useEmperor'
+import { getBalanceNumber } from 'utils/formatBalance'
+import { useCharityEmperorActions, usePefiApprove } from 'hooks/useEmperor'
 import RegisterModal from './RegisterModal'
-import StealCrownModal from './StealCrownModal'
+import DonateModal from './DonateModal'
+import DonateTypeModal from './DonateTypeModal'
 import CustomStyleModal from './CustomStyleModal'
 import { getPenguinColor } from '../utils'
 import { UnlockButton, Title, SubTitle, Caption, PGButton, CardBlockHeader, CardBlock } from '../UI'
@@ -23,7 +26,7 @@ const TitleBgWrapper = styled.div<{ color: string }>`
   position: absolute;
 
   svg {
-    width: 300px; 
+    width: 300px;
   }
 
   transform: scale(1.8);
@@ -42,7 +45,7 @@ const CardBlockContent = styled.div`
   position: relative;
   text-align: center;
 
-  margin-top: 15%;
+  margin-top: 25%;
   min-width: 120px;
   padding: 16px 8px 8px;
   @media (min-width: 640px) {
@@ -53,7 +56,7 @@ const CardBlockContent = styled.div`
   @media (min-width: 768px) {
     width: 100%;
     padding: 40px 20px 16px;
-    margin-top: 30%;
+    margin-top: 22%;
   }
   @media (min-width: 1200px) {
     width: 100%;
@@ -111,17 +114,16 @@ const CustomizeStyleButtonContainer = styled.div`
 const YourScoreBlock: React.FC = () => {
   const TranslateString = useI18n()
   const { account } = useWeb3React()
-  const { myEmperor, currentEmperor } = useEmperor()
-  const { onRegister, onSteal, onChangeStyle, onChangeColor } = useEmperorActions()
-  const { onApproveXPefi } = useXPefiApprove()
-  const xPefiContract = useXPefi()
+  const { myDonor } = useDonations()
+  const { onRegister, onChangeStyle, onChangeColor, onDonateAvax, onDonatePefi } = useCharityEmperorActions()
+  const { onApprovePefi } = usePefiApprove()
+  const pefiContract = usePenguin()
+  const myAvaxDonation = getBalanceNumber(new BigNumber(myDonor.avaxDonations))
+  const myPefiDonation = getBalanceNumber(new BigNumber(myDonor.pefiDonations))
 
   const getMyStatus = () => {
     if (account) {
-      if (myEmperor.isRegistered) {
-        if (myEmperor.address === currentEmperor.address) {
-          return 'king'
-        }
+      if (myDonor.isRegistered) {
         return 'registered'
       }
       return 'not registered'
@@ -135,13 +137,26 @@ const YourScoreBlock: React.FC = () => {
     await onRegister(nickName, color, style)
   }
 
-  const onStealCrown = async (amount: string) => {
-    const allowanceBalance = (await xPefiContract.methods.allowance(account, getEmperorAddress()).call()) / 1e18
+  const onConfirmDonatePefi = async (amount: string) => {
+    const allowanceBalance = (await pefiContract.methods.allowance(account, getWithoutBordersAddress()).call()) / 1e18
     if (allowanceBalance === 0) {
       // call approve function
-      await onApproveXPefi()
+      await onApprovePefi()
     }
-    await onSteal(amount)
+    await onDonatePefi(amount)
+  }
+
+  const onConfirmDonateAvax = async (amount: string) => {
+    await onDonateAvax(amount)
+  }
+
+  const onSelectDonateType = (type: string) => {
+    if (type === 'pefi') {
+      onToggleDonatePefiModal()
+    }
+    if (type === 'avax') {
+      onToggleDonateAvaxModal()
+    }
   }
 
   const onChangeEmperorStyle = async (style: string) => {
@@ -154,7 +169,11 @@ const YourScoreBlock: React.FC = () => {
 
   const [onToggleRegister] = useModal(<RegisterModal onConfirm={onRegisterPenguin} />)
 
-  const [onToggleStealModal] = useModal(<StealCrownModal onConfirm={onStealCrown} />)
+  const [onToggleDonateTypeModal] = useModal(<DonateTypeModal onConfirm={onSelectDonateType} />)
+
+  const [onToggleDonatePefiModal] = useModal(<DonateModal type="pefi" onConfirm={onConfirmDonatePefi} />)
+
+  const [onToggleDonateAvaxModal] = useModal(<DonateModal type="avax" onConfirm={onConfirmDonateAvax} />)
 
   const [onToggleCustomModal] = useModal(
     <CustomStyleModal onConfirmChangeStyle={onChangeEmperorStyle} onConfirmChangeColor={onChangeEmperorColor} />,
@@ -163,7 +182,7 @@ const YourScoreBlock: React.FC = () => {
   return (
     <CardBlock>
       <CardBlockHeader>
-        <TitleBgWrapper color={getPenguinColor(myEmperor).code}>
+        <TitleBgWrapper color={getPenguinColor(myDonor).code}>
           <SvgIcon
             src={`${process.env.PUBLIC_URL}/images/covid-emperor/banner/your_penguin.svg`}
             width="100%"
@@ -194,37 +213,23 @@ const YourScoreBlock: React.FC = () => {
 
         {myStatus === 'registered' && (
           <RegisterContainer>
-            <Title bold color="primary">
-              {TranslateString(1074, myEmperor && badWordsFilter(myEmperor.nickname))}
+            <Title bold color="secondary">
+              {TranslateString(1074, myDonor && badWordsFilter(myDonor.nickname))}
             </Title>
-            <SubTitle bold color="secondary">
-              {TranslateString(1074, 'You have been Emperor for:')}
+            <SubTitle bold color="primaryBright">
+              {TranslateString(1074, 'You have donated:')}
             </SubTitle>
-            <SubTitle bold color="primary">
-              {`${myEmperor.timeAsEmperor} seconds`}
+            <SubTitle bold color="secondary">
+              {`${myPefiDonation} PEFI (${myAvaxDonation} AVAX)`}
             </SubTitle>
             <RegisterButtonContainer>
-              <PGButton onClick={onToggleStealModal} endIcon={<div>{` `}</div>}>
-                {TranslateString(292, 'Steal the Crown')}
+              <PGButton colorType="primaryBright" onClick={onToggleDonateTypeModal} endIcon={<div>{` `}</div>}>
+                {TranslateString(292, 'Donate')}
               </PGButton>
             </RegisterButtonContainer>
             <CustomizeStyleButtonContainer>
               <PGButton onClick={onToggleCustomModal}>{TranslateString(292, 'Customize Penguin')}</PGButton>
             </CustomizeStyleButtonContainer>
-          </RegisterContainer>
-        )}
-
-        {myStatus === 'king' && (
-          <RegisterContainer>
-            <Title bold color="secondary">
-              {TranslateString(1074, myEmperor && badWordsFilter(myEmperor.nickname))}
-            </Title>
-            <SubTitle bold color="secondary">
-              {TranslateString(1074, 'You have been Emperor for:')}
-            </SubTitle>
-            <Title bold color="primary">
-              {`${myEmperor.timeAsEmperor} seconds`}
-            </Title>
           </RegisterContainer>
         )}
       </CardBlockContent>
