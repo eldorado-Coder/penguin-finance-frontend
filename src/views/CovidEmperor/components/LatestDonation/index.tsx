@@ -213,7 +213,7 @@ const LatestDonation: React.FC = () => {
       </CardBlockContent>
       <KingPenguinImageWrapper>
         <SvgIcon
-          src={`${process.env.PUBLIC_URL}/images/emperor/penguins/${lastDonorPenguin}_${
+          src={`${process.env.PUBLIC_URL}/images/covid-emperor/penguins/${lastDonorPenguin}_${
             getPenguinColor(latestDonor).name
           }.svg`}
           width="100%"
@@ -223,7 +223,7 @@ const LatestDonation: React.FC = () => {
       {latestDonor.address && latestDonor.address !== account && myDonor.isRegistered && (
         <MyPenguinImageWrapper>
           <SvgIcon
-            src={`${process.env.PUBLIC_URL}/images/emperor/penguins/${myDonorPenguin}_${
+            src={`${process.env.PUBLIC_URL}/images/covid-emperor/penguins/${myDonorPenguin}_${
               getPenguinColor(myDonor).name
             }.svg`}
             width="100%"
