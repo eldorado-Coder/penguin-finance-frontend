@@ -29,12 +29,12 @@ const TitleBgWrapper = styled.div<{ color: string }>`
     width: 300px;
   }
 
-  transform: scale(1.8);
+  transform: scale(1.3);
   @media (min-width: 640px) {
     transform: scale(1.5);
   }
   @media (min-width: 1200px) and (max-height: 800px) {
-    transform: scale(1.8);
+    transform: scale(1.5);
   }
 `
 

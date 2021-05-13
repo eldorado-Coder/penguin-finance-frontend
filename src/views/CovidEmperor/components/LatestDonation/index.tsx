@@ -33,18 +33,18 @@ const TitleBgWrapper = styled.div<{ color: string }>`
     }
   }
 
-  transform: scale(3);
+  transform: scale(2.2);
   @media (min-width: 640px) {
-    transform: scale(3);
+    transform: scale(2);
   }
   @media (min-width: 768px) {
-    transform: scale(2.8);
+    transform: scale(2);
   }
   @media (min-width: 1200px) {
-    transform: scale(2.6);
+    transform: scale(2);
   }
   @media (min-width: 1200px) and (max-height: 800px) {
-    transform: scale(2.8);
+    transform: scale(2.3);
   }
 `
 
@@ -55,32 +55,32 @@ const CardBlockContent = styled.div`
   padding-bottom: 16px;
   position: relative;
   text-align: center;
-  margin-top: 30%;
+  margin-top: 25%;
   min-width: 150px;
   padding: 16px 8px 8px;
   @media (min-width: 640px) {
     width: 100%;
-    margin-top: 30%;
+    margin-top: 25%;
     padding: 24px 16px 12px;
   }
   @media (min-width: 768px) {
     width: 100%;
     border-radius: 8px;
-    margin-top: 32%;
+    margin-top: 25%;
     padding: 24px 20px 16px;
   }
   @media (min-width: 1200px) {
     width: 100%;
-    margin-top: 32%;
+    margin-top: 25%;
     padding: 28px 24px 16px;
   }
   @media (min-width: 1450px) {
     min-width: 240px;
     padding: 24px 24px 16px;
-    margin-top: 35%;
+    margin-top: 26%;
   }
   @media (min-width: 1200px) and (max-height: 800px) {
-    padding: 8px;
+    padding: 28px 24px 16px;
   }
 `
 

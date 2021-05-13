@@ -18,6 +18,7 @@ const AID_KIT = {
 
 const EmperorPage = styled(Page)`
   max-width: 1120px;
+  overflow: hidden;
 `
 
 const ChestWrapper = styled.div<{ aidKit: string }>`
@@ -105,7 +106,7 @@ const KitPaper = styled.img`
 const GridItem = styled.div`
   margin-bottom: '10px';
   max-width: 315px;
-  margin: 0px 4px;
+  margin: 0px -20px;
   width: 30%;
   display: flex;
   justify-content: center;
