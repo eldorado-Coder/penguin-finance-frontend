@@ -13,7 +13,6 @@ const TitleBgWrapper = styled.div<{ color: string }>`
   z-index: -1;
   width: 100%;
   text-align: center;
-
   position: absolute;
   margin-top: 10%;
 
@@ -25,12 +24,12 @@ const TitleBgWrapper = styled.div<{ color: string }>`
     }
   }
 
-  transform: scale(1.8);
+  transform: scale(1.2);
   @media (min-width: 640px) {
-    transform: scale(1.5);
+    transform: scale(1.4);
   }
   @media (min-width: 1200px) and (max-height: 800px) {
-    transform: scale(1.8);
+    transform: scale(1.4);
   }
 `
 
@@ -40,7 +39,7 @@ const CardBlockContent = styled.div<{ account: string }>`
   position: relative;
   text-align: center;
   margin-top: 20%;
-  min-width: 100px;
+  min-width: 120px;
   padding: 24px 8px 8px;
   @media (min-width: 640px) {
     width: 100%;
