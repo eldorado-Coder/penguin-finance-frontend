@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useWeb3React } from '@web3-react/core'
-import { Text, Flex } from 'penguinfinance-uikit2'
+import { Flex } from 'penguinfinance-uikit2'
 import BigNumber from 'bignumber.js'
-import { useEmperor, useDonations } from 'state/hooks'
+import { useDonations } from 'state/hooks'
 import { getBalanceNumber } from 'utils/formatBalance'
 import SvgIcon from 'components/SvgIcon'
 import { getPenguinColor } from '../utils'
@@ -86,10 +86,9 @@ const UnlockButton = styled(Button)`
 
 const TopRaisedBlock: React.FC = () => {
   const { account } = useWeb3React()
-  const { currentEmperor } = useEmperor()
   const donations = useDonations()
 
-  const headerColor: string = getPenguinColor(currentEmperor).code
+  const headerColor: string = getPenguinColor(donations.latestDonor).code
   const totalAvaxRaised = getBalanceNumber(new BigNumber(donations.totalAvaxRaised))
   const totalPefiRaised = getBalanceNumber(new BigNumber(donations.totalPefiRaised))
   const pefiBurnt = getBalanceNumber(new BigNumber(donations.totalPefiRaised * 0.25))
