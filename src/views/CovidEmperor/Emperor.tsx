@@ -223,7 +223,7 @@ const Emperor: React.FC = () => {
             <LatestDonation />
           </GridItem>
         </Grid>
-        <Grid align="between" marginTop={{ xs: -80, sm: -50, md: -60 }}>
+        <Grid align="between" marginTop={{ xs: -100, sm: -50, md: -60 }}>
           <GridItem>
             <TopRaisedBlock />
           </GridItem>

@@ -46,10 +46,16 @@ export const fetchLatestDonor = async () => {
     const latestDonorAddress = await donationsContract.methods.latestDonor().call()
     const latestDonorName = await donationsContract.methods.getCurrentEmperorNickname().call()
     const latestDonor = await fetchPlayerData(latestDonorAddress)
+    const { nickname, color, isRegistered, style } = await fetchDonorData(latestDonorAddress)
+
     return {
       ...latestDonor,
       latestDonorName,
       address: latestDonorAddress,
+      nickname,
+      color,
+      isRegistered,
+      style,
     }
   } catch (error) {
     return {}
@@ -59,8 +65,13 @@ export const fetchLatestDonor = async () => {
 export const fetchMyDonor = async (address: string) => {
   try {
     const myDonor = await fetchPlayerData(address)
+    const { nickname, color, isRegistered, style } = await fetchDonorData(address)
     return {
       ...myDonor,
+      nickname,
+      color,
+      isRegistered,
+      style,
     }
   } catch (error) {
     return {}
@@ -108,10 +119,10 @@ export const fetchMinDonationPefi = async () => {
   }
 }
 
-export const fetchEmperorData = async (address) => {
+export const fetchDonorData = async (address) => {
   try {
-    const currentEmperor = await charityPenguinDBContract.methods.penguDB(address).call()
-    const { nickname, color, isRegistered, style } = currentEmperor
+    const emperorData = await charityPenguinDBContract.methods.penguDB(address).call()
+    const { nickname, color, isRegistered, style } = emperorData
 
     return {
       nickname,
