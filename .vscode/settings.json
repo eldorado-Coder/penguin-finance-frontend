@@ -2,6 +2,7 @@
     "editor.formatOnSave": true,
     "cSpell.ignoreWords": [
         "pefi",
-        "Avax"
+        "Avax",
+        "covid"
     ]
 }
