@@ -4,7 +4,7 @@ import { Text, Flex } from 'penguinfinance-uikit2'
 import useI18n from 'hooks/useI18n'
 import { useWeb3React } from '@web3-react/core'
 import BigNumber from 'bignumber.js'
-import { useEmperor, useDonations } from 'state/hooks'
+import { useDonations } from 'state/hooks'
 import { getBalanceNumber } from 'utils/formatBalance'
 import SvgIcon from 'components/SvgIcon'
 import { UnlockButton as Button, Title, Caption, CardBlockHeader, CardBlock as Block } from '../UI'
@@ -164,16 +164,15 @@ const UnlockButton = styled(Button)`
 const LatestDonation: React.FC = () => {
   const TranslateString = useI18n()
   const { account } = useWeb3React()
-  const { currentEmperor } = useEmperor()
   const { myDonor, latestDonor } = useDonations()
-  const currentEmperorPenguin = getKingPenguin(currentEmperor)
-  const myEmperorPenguin = getNormalPenguin(myDonor)
+  const lastDonorPenguin = getKingPenguin(latestDonor)
+  const myDonorPenguin = getNormalPenguin(myDonor)
   const avaxDonations = getBalanceNumber(new BigNumber(latestDonor.avaxDonations))
 
   return (
     <CardBlock>
       <CardBlockHeader>
-        <TitleBgWrapper color={getPenguinColor(currentEmperor).code}>
+        <TitleBgWrapper color={getPenguinColor(latestDonor).code}>
           <SvgIcon
             src={`${process.env.PUBLIC_URL}/images/covid-emperor/banner/penguin_without_borders.svg`}
             width="100%"
@@ -214,17 +213,17 @@ const LatestDonation: React.FC = () => {
       </CardBlockContent>
       <KingPenguinImageWrapper>
         <SvgIcon
-          src={`${process.env.PUBLIC_URL}/images/emperor/penguins/${currentEmperorPenguin}_${
-            getPenguinColor(currentEmperor).name
+          src={`${process.env.PUBLIC_URL}/images/emperor/penguins/${lastDonorPenguin}_${
+            getPenguinColor(latestDonor).name
           }.svg`}
           width="100%"
           height="20px"
         />
       </KingPenguinImageWrapper>
-      {myDonor.isRegistered && (
+      {latestDonor.address && latestDonor.address !== account && myDonor.isRegistered && (
         <MyPenguinImageWrapper>
           <SvgIcon
-            src={`${process.env.PUBLIC_URL}/images/emperor/penguins/${myEmperorPenguin}_${
+            src={`${process.env.PUBLIC_URL}/images/emperor/penguins/${myDonorPenguin}_${
               getPenguinColor(myDonor).name
             }.svg`}
             width="100%"

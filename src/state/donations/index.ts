@@ -8,7 +8,7 @@ import {
   fetchMyDonor,
   fetchMinDonationAvax,
   fetchMinDonationPefi,
-  fetchEmperorData,
+  fetchDonorData,
 } from './fetchDonationsData'
 import { DonationsState } from '../types'
 
@@ -115,9 +115,6 @@ export const fetchDonations = (account) => async (dispatch) => {
 
   const myDonor = await fetchMyDonor(account)
   dispatch(setMyDonor(myDonor))
-
-  const myEmperor = await fetchEmperorData(account)
-  dispatch(setMyDonor(myEmperor))
 
   const minDonationAvax = await fetchMinDonationAvax()
   dispatch(setMinDonationAvax(minDonationAvax))
