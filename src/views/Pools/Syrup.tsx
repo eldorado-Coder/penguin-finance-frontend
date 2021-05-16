@@ -86,29 +86,29 @@ const Farm: React.FC = () => {
         </div>
         <img src="/images/syrup.png" alt="SYRUP POOL icon" width={410} height={191} />
       </Hero> */}
-      <NestBgContainer />
+      {/* <NestBgContainer /> */}
       <NestBannerContainer>
         <BannerImage src={`${process.env.PUBLIC_URL}/images/pools/nests-dark.gif`} alt="nests banner" />
       </NestBannerContainer>
       {/* <PoolTabButtons stackedOnly={stackedOnly} setStackedOnly={setStackedOnly} /> */}
       {/* <Divider /> */}
-      <Layout>
+      <FlexLayout>
         <Route exact path={`${path}`}>
           <>
             {stackedOnly
               ? orderBy(stackedOnlyPools, ['sortOrder']).map((pool) => (
-                  <PoolCard key={pool.sousId} pool={pool} isMainPool />
+                  <PoolCard isNestPage key={pool.sousId} pool={pool} isMainPool />
                 ))
-              : orderBy(openPools, ['sortOrder']).map((pool) => <PoolCard key={pool.sousId} pool={pool} isMainPool />)}
+              : orderBy(openPools, ['sortOrder']).map((pool) => <PoolCard isNestPage key={pool.sousId} pool={pool} isMainPool />)}
             {/* <Coming /> */}
           </>
         </Route>
         <Route path={`${path}/history`}>
           {orderBy(finishedPools, ['sortOrder']).map((pool) => (
-            <PoolCard key={pool.sousId} pool={pool} isMainPool />
+            <PoolCard isNestPage key={pool.sousId} pool={pool} isMainPool />
           ))}
         </Route>
-      </Layout>
+      </FlexLayout>
     </Page>
   )
 }
@@ -164,19 +164,5 @@ const NestBannerContainer = styled.div`
 const BannerImage = styled.img`
   z-index: -1;
 `
-
-const Layout = styled(FlexLayout)`
-  & > * {
-    @media (min-width: 640px) {
-      min-width: 480px;
-      max-width: 50%;
-      width: unset;
-    }
-    @media (min-width: 768px) {
-      max-width: 31.5%;
-      width: 100%;
-    }
-  }
-`;
 
 export default Farm
