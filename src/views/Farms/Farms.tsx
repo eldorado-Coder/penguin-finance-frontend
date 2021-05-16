@@ -97,7 +97,7 @@ const Farms: React.FC = () => {
   )
 
   return (
-    <Page>
+    <FarmPage>
       {/* <Heading as="h1" size="lg" color="primary" mb="50px" style={{ textAlign: 'center' }}>
         {TranslateString(696, 'Stake LP tokens to earn PEFI')}
       </Heading> */}
@@ -117,13 +117,17 @@ const Farms: React.FC = () => {
             {farmsList(inactiveFarms, true)}
           </Route>
         </FlexLayout>
-        <IgloosPenguinImgContainer>
+        {/* <IgloosPenguinImgContainer>
           <IgloosPenguinImg alt="igloos penguin" />
-        </IgloosPenguinImgContainer>
+        </IgloosPenguinImgContainer> */}
       </IgloosContentContainer>
-    </Page>
+    </FarmPage>
   )
 }
+
+const FarmPage = styled(Page)`
+  max-width: 1200px;
+`;
 
 // bg
 const IgloosBgContainer = styled.div`

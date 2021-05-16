@@ -86,7 +86,7 @@ const Farm: React.FC = () => {
         </div>
         <img src="/images/syrup.png" alt="SYRUP POOL icon" width={410} height={191} />
       </Hero> */}
-      <NestBgContainer />
+      {/* <NestBgContainer /> */}
       <NestBannerContainer>
         <BannerImage src={`${process.env.PUBLIC_URL}/images/pools/nests-dark.gif`} alt="nests banner" />
       </NestBannerContainer>
@@ -97,15 +97,15 @@ const Farm: React.FC = () => {
           <>
             {stackedOnly
               ? orderBy(stackedOnlyPools, ['sortOrder']).map((pool) => (
-                  <PoolCard key={pool.sousId} pool={pool} isMainPool />
+                  <PoolCard isNestPage key={pool.sousId} pool={pool} isMainPool />
                 ))
-              : orderBy(openPools, ['sortOrder']).map((pool) => <PoolCard key={pool.sousId} pool={pool} isMainPool />)}
+              : orderBy(openPools, ['sortOrder']).map((pool) => <PoolCard isNestPage key={pool.sousId} pool={pool} isMainPool />)}
             {/* <Coming /> */}
           </>
         </Route>
         <Route path={`${path}/history`}>
           {orderBy(finishedPools, ['sortOrder']).map((pool) => (
-            <PoolCard key={pool.sousId} pool={pool} isMainPool />
+            <PoolCard isNestPage key={pool.sousId} pool={pool} isMainPool />
           ))}
         </Route>
       </FlexLayout>
@@ -157,7 +157,9 @@ const Hero = styled.div`
   }
 `
 
-const NestBannerContainer = styled.div``
+const NestBannerContainer = styled.div`
+  margin-bottom: 32px;
+`
 
 const BannerImage = styled.img`
   z-index: -1;

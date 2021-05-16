@@ -69,23 +69,72 @@ const HeroBgImageContainer = styled.div`
 
 const HeroBgImage = styled.img`
   z-index: -1;
+  object-fit: cover;
+  min-height: 140px;
+  border-radius: 20px;
 `
 
 const HeroLeftImage = styled.img`
   position: absolute;
-  height: 190px;
-  left: -110px;
-  top: 35px;
+  left: 0;
+  top: 94px;
   z-index: 1;
+  transform: scaleX(-1);
+  height: 96px;
+
+  @media (min-width: 640px) {
+    left: 20px;
+    top: 16px;
+    height: 120px;
+  }
+  @media (min-width: 768px) {
+    left: 20px;
+    top: 0;
+    height: 170px;
+  }
+  @media (min-width: 1200px) {
+    left: 60px;
+    height: 190px;
+  }
 `
 
 const HeroRightImage = styled.img`
   position: absolute;
-  height: 300px;
-  top: -25px;
-  right: -200px;
   z-index: 1;
+  height: 90px;
+  top: 96px;
+  right: 0;
+
+  @media (min-width: 640px) {
+    height: 120px;
+    top: 16px;
+    right: 0;
+  }
+  @media (min-width: 768px) {
+    height: 160px;
+    top: 0;
+    right: 0;
+  }
+  @media (min-width: 1200px) {
+    height: 180px;
+    top: 0;
+    right: 0;
+  }
 `
+
+const Header = styled(Text)`
+  @font-face {
+    font-family: 'GothamBold Font';
+    src: url(${process.env.PUBLIC_URL}/fonts/GothamBold.ttf) format('truetype');
+  }
+
+  font-family: 'GothamBold Font';
+  font-size: 32px;
+  margin-top: -16px;
+  ${({ theme }) => theme.mediaQueries.md} {
+    font-size: 44px;
+  }
+`;
 
 const Cards = styled(BaseLayout)`
   align-items: stretch;
@@ -198,14 +247,14 @@ const Home: React.FC = () => {
       <Page>
         <Hero>
           <HeroBgImageContainer>
-            <HeroBgImage src={`${process.env.PUBLIC_URL}/images/home/title-bg.png`} alt="astronaut" />
+            <HeroBgImage src={`${process.env.PUBLIC_URL}/images/home/HomeBanner1.png`} alt="astronaut" />
             <HeroLeftImage src={`${process.env.PUBLIC_URL}/images/home/PenguinAstronaut.gif`} alt="astronaut" />
-            <HeroRightImage src={`${process.env.PUBLIC_URL}/images/home/penguin_astronauts.gif`} alt="astronaut" />
+            <HeroRightImage src={`${process.env.PUBLIC_URL}/images/home/Astronaut2.gif`} alt="astronaut" />
           </HeroBgImageContainer>
-          <Heading as="h1" size="xl" mb="24px" color="primary">
+          <Header color="primary">
             {TranslateString(576, 'Penguin Finance')}
-          </Heading>
-          <Text>{TranslateString(578, 'Built for Penguins, by Penguins.')}</Text>
+          </Header>
+          <Text>{TranslateString(578, 'The #1 project on Avalanche')}</Text>
         </Hero>
         <div>
           <Cards>

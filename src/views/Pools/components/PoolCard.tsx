@@ -34,6 +34,13 @@ const RainbowLight = keyframes`
 	}
 `
 
+const StyledCard = styled(Card)<{ isNestPage?: boolean; }>`
+  @media (min-width: 640px) {
+    transform: ${props => props.isNestPage && 'scale(1.3)'};
+    margin-top: ${props => props.isNestPage && '60px'};
+  }
+`;
+
 const StyledCardAccent = styled.div`
   background: linear-gradient(
     45deg,
@@ -72,6 +79,17 @@ const APYTag = styled(Tag)`
   }
 `
 
+const CardContent = styled.div`
+  padding: 24px;
+  background: ${(props) => props.theme.card.background};
+  border-radius: 32px 32px 0 0;
+`;
+
+const CardAction = styled.div`
+  background: ${(props) => props.theme.card.background};
+  border-radius: 0 0 32px 32px;
+`;
+
 interface PoolWithApy extends Pool {
   apy: BigNumber
 }
@@ -79,9 +97,10 @@ interface PoolWithApy extends Pool {
 interface HarvestProps {
   pool: PoolWithApy
   isMainPool: boolean
+  isNestPage?: boolean
 }
 
-const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool }) => {
+const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage }) => {
   const {
     sousId,
     image,
@@ -181,10 +200,13 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool }) => {
   const xPefiToPefiRatio = getXPefiToPefiRatio()
 
   return (
-    <Card isActive={isCardActive} isFinished={isFinished && sousId !== 0}>
+    <StyledCard 
+      isNestPage={isNestPage} 
+      isActive={isCardActive} 
+      isFinished={isFinished && sousId !== 0}>
       {isMainPool && <StyledCardAccent />}
       {isFinished && sousId !== 0 && <PoolFinishedSash />}
-      <div style={{ padding: '24px' }}>
+      <CardContent>
         <CardTitle isFinished={isFinished && sousId !== 0}>
           {tokenName} {TranslateString(348, 'Nest')}
         </CardTitle>
@@ -260,16 +282,18 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool }) => {
             </Text>
           </TokenSymbol>
         </StyledDetails>
-      </div>
-      <CardFooter
-        projectLink={projectLink}
-        totalStaked={totalStaked}
-        blocksRemaining={blocksRemaining}
-        isFinished={isFinished}
-        blocksUntilStart={blocksUntilStart}
-        poolCategory={poolCategory}
-      />
-    </Card>
+      </CardContent>
+      <CardAction>
+        <CardFooter
+          projectLink={projectLink}
+          totalStaked={totalStaked}
+          blocksRemaining={blocksRemaining}
+          isFinished={isFinished}
+          blocksUntilStart={blocksUntilStart}
+          poolCategory={poolCategory}
+        />
+      </CardAction>
+    </StyledCard>
   )
 }
 
