@@ -221,7 +221,7 @@ export const changeCharityEmperorColor = async (donationContract, color, account
 export const donateAvax = async (donationContract, amount, account) => {
   return donationContract.methods
     .donateAvax()
-    .send({ from: account, gas: 200000, value: new BigNumber(amount).times(new BigNumber(10).pow(18)).toString() })
+    .send({ from: account, gas: 450000, value: new BigNumber(amount).times(new BigNumber(10).pow(18)).toString() })
     .on('transactionHash', (tx) => {
       return tx.transactionHash
     })
@@ -230,7 +230,7 @@ export const donateAvax = async (donationContract, amount, account) => {
 export const donatePefi = async (donationContract, amount, account) => {
   return donationContract.methods
     .donatePefi(new BigNumber(amount).times(new BigNumber(10).pow(18)).toString())
-    .send({ from: account, gas: 200000 })
+    .send({ from: account, gas: 450000 })
     .on('transactionHash', (tx) => {
       return tx.transactionHash
     })
