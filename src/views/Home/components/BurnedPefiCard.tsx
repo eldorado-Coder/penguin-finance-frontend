@@ -12,6 +12,7 @@ const StyledFarmStakingCard = styled(Card)`
   margin-right: auto;
   position: relative;
   width: 100%;
+  background: #363266;
 
   ${({ theme }) => theme.mediaQueries.lg} {
     margin: 0;
@@ -20,22 +21,12 @@ const StyledFarmStakingCard = styled(Card)`
 `
 const CardMidContent = styled(Heading).attrs({ size: 'xl' })`
   line-height: 44px;
+  color: #FFFFFF;
 `
 
-const CardBgImageContainer = styled.div`
-  position: absolute;
-  right: 0;
-  padding: 10px;
-  height: 100%;
-  opacity: 0.3;
-  justify-content: flex-end;
-  display: flex;
-  align-items: center;
-`
-
-const CardBgImage = styled.img`
-  height: 100%;
-`
+const Text = styled(Heading)`
+  color: #FFFFFF;
+`;
 
 const BurnedPefiCard = () => {
   const TranslateString = useI18n()
@@ -45,18 +36,15 @@ const BurnedPefiCard = () => {
 
   return (
     <StyledFarmStakingCard>
-      <CardBgImageContainer>
-        <CardBgImage src={`${process.env.PUBLIC_URL}/images/Big_Igloo_EarnUp.svg`} alt="astronaut" />
-      </CardBgImageContainer>
       <CardBody>
-        <Heading color="contrast" size="md">
+        <Text size="md">
           {TranslateString(534, 'A total of')}
-        </Heading>
-        <CardMidContent color="primary">{percentage.toFixed(2)}% of PEFI</CardMidContent>
+        </Text>
+        <CardMidContent>{percentage.toFixed(2)}% of PEFI</CardMidContent>
         <Flex justifyContent="space-between">
-          <Heading color="contrast" size="md">
+          <Text size="md">
             {TranslateString(534, 'has been burned forever!')}
-          </Heading>
+          </Text>
         </Flex>
       </CardBody>
     </StyledFarmStakingCard>

@@ -8,6 +8,7 @@ import {
   fetchMyDonor,
   fetchMinDonationAvax,
   fetchMinDonationPefi,
+  fetchDonorData,
 } from './fetchDonationsData'
 import { DonationsState } from '../types'
 
@@ -23,6 +24,10 @@ const initialState: DonationsState = {
   myDonor: {
     avaxDonations: 0,
     pefiDonations: 0,
+    nickname: '',
+    color: '',
+    isRegistered: false,
+    style: '0',
   },
   finalDate: null,
   minDonationAvax: 0,
@@ -45,6 +50,10 @@ export const DonationsSlice = createSlice({
       state.myDonor = {
         avaxDonations: 0,
         pefiDonations: 0,
+        nickname: '',
+        color: '',
+        isRegistered: false,
+        style: '0',
       }
     },
     setTotalPefiRaised: (state, action) => {
@@ -57,7 +66,7 @@ export const DonationsSlice = createSlice({
       state.latestDonor = action.payload
     },
     setMyDonor: (state, action) => {
-      state.myDonor = action.payload
+      state.myDonor = { ...state.myDonor, ...action.payload }
     },
     setFinalDate: (state, action) => {
       state.finalDate = action.payload

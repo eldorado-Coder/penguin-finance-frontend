@@ -4,7 +4,7 @@ import { Text, Flex } from 'penguinfinance-uikit2'
 import useI18n from 'hooks/useI18n'
 import { useWeb3React } from '@web3-react/core'
 import BigNumber from 'bignumber.js'
-import { useEmperor, useDonations } from 'state/hooks'
+import { useDonations } from 'state/hooks'
 import { getBalanceNumber } from 'utils/formatBalance'
 import SvgIcon from 'components/SvgIcon'
 import { UnlockButton as Button, Title, Caption, CardBlockHeader, CardBlock as Block } from '../UI'
@@ -33,18 +33,18 @@ const TitleBgWrapper = styled.div<{ color: string }>`
     }
   }
 
-  transform: scale(3);
+  transform: scale(2.2);
   @media (min-width: 640px) {
-    transform: scale(3);
+    transform: scale(2);
   }
   @media (min-width: 768px) {
-    transform: scale(2.8);
+    transform: scale(2);
   }
   @media (min-width: 1200px) {
-    transform: scale(2.6);
+    transform: scale(2);
   }
   @media (min-width: 1200px) and (max-height: 800px) {
-    transform: scale(2.8);
+    transform: scale(2.3);
   }
 `
 
@@ -55,32 +55,32 @@ const CardBlockContent = styled.div`
   padding-bottom: 16px;
   position: relative;
   text-align: center;
-  margin-top: 30%;
+  margin-top: 25%;
   min-width: 150px;
   padding: 16px 8px 8px;
   @media (min-width: 640px) {
     width: 100%;
-    margin-top: 30%;
+    margin-top: 25%;
     padding: 24px 16px 12px;
   }
   @media (min-width: 768px) {
     width: 100%;
     border-radius: 8px;
-    margin-top: 32%;
+    margin-top: 25%;
     padding: 24px 20px 16px;
   }
   @media (min-width: 1200px) {
     width: 100%;
-    margin-top: 32%;
+    margin-top: 25%;
     padding: 28px 24px 16px;
   }
   @media (min-width: 1450px) {
     min-width: 240px;
     padding: 24px 24px 16px;
-    margin-top: 35%;
+    margin-top: 26%;
   }
   @media (min-width: 1200px) and (max-height: 800px) {
-    padding: 8px;
+    padding: 28px 24px 16px;
   }
 `
 
@@ -107,6 +107,9 @@ const MyPenguinImageWrapper = styled.div`
   width: 9.5%;
   right: 26%;
   bottom: 17%;
+  &:hover {
+    z-index: 11;
+  }
 
   svg {
     transform: scaleX(-1);
@@ -164,17 +167,15 @@ const UnlockButton = styled(Button)`
 const LatestDonation: React.FC = () => {
   const TranslateString = useI18n()
   const { account } = useWeb3React()
-  const { myEmperor, currentEmperor } = useEmperor()
-  const currentEmperorPenguin = getKingPenguin(currentEmperor)
-  const myEmperorPenguin = getNormalPenguin(myEmperor)
-  const donations = useDonations()
-
-  const avaxDonations = getBalanceNumber(new BigNumber(donations.latestDonor.avaxDonations))
+  const { myDonor, latestDonor } = useDonations()
+  const lastDonorPenguin = getKingPenguin(latestDonor)
+  const myDonorPenguin = getNormalPenguin(myDonor)
+  const avaxDonations = getBalanceNumber(new BigNumber(latestDonor.avaxDonations))
 
   return (
     <CardBlock>
       <CardBlockHeader>
-        <TitleBgWrapper color={getPenguinColor(currentEmperor).code}>
+        <TitleBgWrapper color={getPenguinColor(latestDonor).code}>
           <SvgIcon
             src={`${process.env.PUBLIC_URL}/images/covid-emperor/banner/penguin_without_borders.svg`}
             width="100%"
@@ -191,7 +192,7 @@ const LatestDonation: React.FC = () => {
         {account && (
           <EmperorInfoContainer>
             <Title bold color="primaryBright">
-              {TranslateString(1074, donations.latestDonor.latestDonorName)}
+              {TranslateString(1074, latestDonor.latestDonorName)}
             </Title>
             {avaxDonations > 0 ? (
               <Donations>
@@ -213,21 +214,31 @@ const LatestDonation: React.FC = () => {
           </EmperorInfoContainer>
         )}
       </CardBlockContent>
-      <KingPenguinImageWrapper>
-        <SvgIcon
-          src={`${process.env.PUBLIC_URL}/images/emperor/penguins/${currentEmperorPenguin}_${
-            getPenguinColor(currentEmperor).name
-          }.svg`}
-          width="100%"
-          height="20px"
-        />
-      </KingPenguinImageWrapper>
-      {currentEmperor.address && myEmperor.address && currentEmperor.address !== myEmperor.address && (
+      {latestDonor.address && (
+        <KingPenguinImageWrapper>
+          <SvgIcon
+            src={
+              latestDonor.style === '3'
+                ? `${process.env.PUBLIC_URL}/images/covid-emperor/penguins/penguin_surgeon_crown_main.svg`
+                : `${process.env.PUBLIC_URL}/images/covid-emperor/penguins/${lastDonorPenguin}_${
+                    getPenguinColor(latestDonor).name
+                  }.svg`
+            }
+            width="100%"
+            height="20px"
+          />
+        </KingPenguinImageWrapper>
+      )}
+      {latestDonor.address && latestDonor.address !== account && myDonor.isRegistered && (
         <MyPenguinImageWrapper>
           <SvgIcon
-            src={`${process.env.PUBLIC_URL}/images/emperor/penguins/${myEmperorPenguin}_${
-              getPenguinColor(myEmperor).name
-            }.svg`}
+            src={
+              myDonor.style === '3'
+                ? `${process.env.PUBLIC_URL}/images/covid-emperor/penguins/penguin_surgeon_no_crown_main.svg`
+                : `${process.env.PUBLIC_URL}/images/covid-emperor/penguins/${myDonorPenguin}_${
+                    getPenguinColor(myDonor).name
+                  }.svg`
+            }
             width="100%"
             height="20px"
           />

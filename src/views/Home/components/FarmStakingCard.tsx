@@ -10,9 +10,6 @@ import PefiHarvestBalance from './PefiHarvestBalance'
 import PefiWalletBalance from './PefiWalletBalance'
 
 const StyledFarmStakingCard = styled(Card)`
-  background-image: url('/images/BigPenguinFarms.svg');
-  background-repeat: no-repeat;
-  background-position: top right;
   min-height: 376px;
 `
 
@@ -31,6 +28,10 @@ const Label = styled(Text).attrs({ color: 'primary' })`
 const Actions = styled.div`
   margin-top: 24px;
 `
+
+const Title = styled(Heading)`
+  color: ${({ theme}) => !theme.isDark && '#D4444C'};
+`;
 
 const FarmedStakingCard = () => {
   const [pendingTx, setPendingTx] = useState(false)
@@ -55,9 +56,9 @@ const FarmedStakingCard = () => {
   return (
     <StyledFarmStakingCard>
       <CardBody>
-        <Heading size="xl" mb="24px">
-          {TranslateString(542, 'Igloos & Staking')}
-        </Heading>
+        <Title size="xl" mb="24px">
+          {TranslateString(542, 'Farms & Staking')}
+        </Title>
         <CardImage src="/images/penguin-logo.png" alt="penguin logo" width={64} height={64} />
         <Block>
           <Label>{TranslateString(544, 'PEFI to Harvest')}:</Label>

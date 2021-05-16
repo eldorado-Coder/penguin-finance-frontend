@@ -139,6 +139,10 @@ export interface Player {
   pefiDonations?: number
   latestDonorName?: string
   address?: string
+  nickname?: string
+  color?: string
+  isRegistered?: boolean
+  style?: string
 }
 
 export interface EmperorState {

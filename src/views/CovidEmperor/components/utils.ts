@@ -1,8 +1,8 @@
 const images = [
-  { id: '1', kingSrc: 'penguin_top_hat', normalSrc: 'penguin_top_hat_no_crown' },
-  { id: '2', kingSrc: 'penguin_fedora', normalSrc: 'penguin_fedora_no_crown' },
-  { id: '3', kingSrc: 'penguin_eye_patch_with_crown', normalSrc: 'penguin_eye_patch_no_crown' },
-  { id: '4', kingSrc: 'penguin_sunglass_with_crown', normalSrc: 'penguin_sunglass_no_crown' },
+  { id: '1', kingSrc: 'penguin_nurse_no_crown', normalSrc: 'penguin_nurse_no_crown' },
+  { id: '2', kingSrc: 'penguin_doctor_crown', normalSrc: 'penguin_doctor_no_crown' },
+  { id: '3', kingSrc: 'penguin_surgeon_crown', normalSrc: 'penguin_surgeon_no_crown' },
+  { id: '4', kingSrc: 'penguin_vaccine_crown', normalSrc: 'penguin_vaccine_no_crown' },
 ]
 
 const colors = [

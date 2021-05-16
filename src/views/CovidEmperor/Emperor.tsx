@@ -18,6 +18,7 @@ const AID_KIT = {
 
 const EmperorPage = styled(Page)`
   max-width: 1120px;
+  overflow: hidden;
 `
 
 const ChestWrapper = styled.div<{ aidKit: string }>`
@@ -105,7 +106,7 @@ const KitPaper = styled.img`
 const GridItem = styled.div`
   margin-bottom: '10px';
   max-width: 315px;
-  margin: 0px 4px;
+  margin: 0px -20px;
   width: 30%;
   display: flex;
   justify-content: center;
@@ -161,14 +162,14 @@ const EmperorBgContainer = styled.video`
 const Emperor: React.FC = () => {
   const [aidKit, setAidKit] = useState(AID_KIT.LOCK)
   const { account } = useWeb3React()
-  const [aidKitOpenSound, setAidKitOpenSound] = useState(false);
-  const [showTimeLeft, setShowTimeLeft] = useState(false);
-  const aidKitRef = useRef(aidKit);
-  const donations = useDonations();
-  aidKitRef.current = aidKit;
+  const [aidKitOpenSound, setAidKitOpenSound] = useState(false)
+  const [showTimeLeft, setShowTimeLeft] = useState(false)
+  const aidKitRef = useRef(aidKit)
+  const donations = useDonations()
+  aidKitRef.current = aidKit
 
-  const currentDate = ((new Date).getTime()/1000);
-  const timeLeftInSecond = donations.finalDate ? Number(donations.finalDate) - currentDate : 0;
+  const currentDate = new Date().getTime() / 1000
+  const timeLeftInSecond = donations.finalDate ? Number(donations.finalDate) - currentDate : 0
 
   const handleOpenJackpot = () => {
     if (aidKitRef.current === AID_KIT.LOCK) {
@@ -181,11 +182,11 @@ const Emperor: React.FC = () => {
     } else if (aidKitRef.current === AID_KIT.UNLOCK) {
       setAidKit(AID_KIT.LOCK)
     }
-  };
+  }
 
   const onKitLoaded = () => {
-    setShowTimeLeft(true);
-  };
+    setShowTimeLeft(true)
+  }
 
   const renderEmperorStatsPage = () => {
     return (
@@ -194,20 +195,23 @@ const Emperor: React.FC = () => {
           <ChestWrapper aidKit={aidKit} onClick={handleOpenJackpot}>
             {aidKit === AID_KIT.UNLOCK && (
               <PaperWrapper>
-                <KitPaper 
+                <KitPaper
                   onLoad={onKitLoaded}
-                  src={`${process.env.PUBLIC_URL}/images/covid-emperor/aid_kit/KITcovidEmpty.png`} 
-                  alt="kit_paper" />
-                {showTimeLeft && 
-                  <div className='time-left'>
+                  src={`${process.env.PUBLIC_URL}/images/covid-emperor/aid_kit/KITcovidEmpty.png`}
+                  alt="kit_paper"
+                />
+                {showTimeLeft && (
+                  <div className="time-left">
                     <Text bold className="label">
                       Time Left:
                     </Text>
                     <Text bold>
-                      {(timeLeftInSecond / 3600 > 1) ? `${Number(timeLeftInSecond/3600).toFixed(0)} hours` : `${Number(timeLeftInSecond/60).toFixed(0)} minutes`}
+                      {timeLeftInSecond / 3600 > 1
+                        ? `${Number(timeLeftInSecond / 3600).toFixed(0)} hours`
+                        : `${Number(timeLeftInSecond / 60).toFixed(0)} minutes`}
                     </Text>
                   </div>
-                }
+                )}
               </PaperWrapper>
             )}
             <img className="aid-kit-lock" src={AID_KIT.LOCK} alt="aid_kit_lock" />
@@ -220,7 +224,7 @@ const Emperor: React.FC = () => {
             <LatestDonation />
           </GridItem>
         </Grid>
-        <Grid align="between" marginTop={{ sm: -50, md: -60 }}>
+        <Grid align="between" marginTop={{ xs: -100, sm: -50, md: -60 }}>
           <GridItem>
             <TopRaisedBlock />
           </GridItem>

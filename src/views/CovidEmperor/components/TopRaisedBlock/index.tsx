@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useWeb3React } from '@web3-react/core'
-import { Text, Flex } from 'penguinfinance-uikit2'
+import { Flex } from 'penguinfinance-uikit2'
 import BigNumber from 'bignumber.js'
-import { useEmperor, useDonations } from 'state/hooks'
+import { useDonations } from 'state/hooks'
 import { getBalanceNumber } from 'utils/formatBalance'
 import SvgIcon from 'components/SvgIcon'
 import { getPenguinColor } from '../utils'
@@ -13,7 +13,6 @@ const TitleBgWrapper = styled.div<{ color: string }>`
   z-index: -1;
   width: 100%;
   text-align: center;
-
   position: absolute;
   margin-top: 10%;
 
@@ -25,12 +24,12 @@ const TitleBgWrapper = styled.div<{ color: string }>`
     }
   }
 
-  transform: scale(1.8);
+  transform: scale(1.2);
   @media (min-width: 640px) {
-    transform: scale(1.5);
+    transform: scale(1.4);
   }
   @media (min-width: 1200px) and (max-height: 800px) {
-    transform: scale(1.8);
+    transform: scale(1.4);
   }
 `
 
@@ -40,7 +39,7 @@ const CardBlockContent = styled.div<{ account: string }>`
   position: relative;
   text-align: center;
   margin-top: 20%;
-  min-width: 100px;
+  min-width: 120px;
   padding: 24px 8px 8px;
   @media (min-width: 640px) {
     width: 100%;
@@ -86,10 +85,9 @@ const UnlockButton = styled(Button)`
 
 const TopRaisedBlock: React.FC = () => {
   const { account } = useWeb3React()
-  const { currentEmperor } = useEmperor()
   const donations = useDonations()
 
-  const headerColor: string = getPenguinColor(currentEmperor).code
+  const headerColor: string = getPenguinColor(donations.latestDonor).code
   const totalAvaxRaised = getBalanceNumber(new BigNumber(donations.totalAvaxRaised))
   const totalPefiRaised = getBalanceNumber(new BigNumber(donations.totalPefiRaised))
   const pefiBurnt = getBalanceNumber(new BigNumber(donations.totalPefiRaised * 0.25))
