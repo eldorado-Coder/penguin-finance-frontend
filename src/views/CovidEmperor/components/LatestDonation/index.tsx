@@ -214,21 +214,19 @@ const LatestDonation: React.FC = () => {
           </EmperorInfoContainer>
         )}
       </CardBlockContent>
-      <KingPenguinImageWrapper>
-        <SvgIcon
-          src={`${process.env.PUBLIC_URL}/images/covid-emperor/penguins/${lastDonorPenguin}_${
-            getPenguinColor(latestDonor).name
-          }.svg`}
-          width="100%"
-          height="20px"
-        />
-      </KingPenguinImageWrapper>
+      {latestDonor.address && 
+        <KingPenguinImageWrapper>
+          <SvgIcon
+            src={`${process.env.PUBLIC_URL}/images/covid-emperor/penguins/penguin_surgeon_crown_main.svg`}
+            width="100%"
+            height="20px"
+          />
+        </KingPenguinImageWrapper>
+      }
       {latestDonor.address && latestDonor.address !== account && myDonor.isRegistered && (
         <MyPenguinImageWrapper>
           <SvgIcon
-            src={`${process.env.PUBLIC_URL}/images/covid-emperor/penguins/${myDonorPenguin}_${
-              getPenguinColor(myDonor).name
-            }.svg`}
+            src={`${process.env.PUBLIC_URL}/images/covid-emperor/penguins/penguin_surgeon_no_crown_main.svg`}
             width="100%"
             height="20px"
           />

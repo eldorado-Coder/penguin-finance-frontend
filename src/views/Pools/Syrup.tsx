@@ -92,7 +92,7 @@ const Farm: React.FC = () => {
       </NestBannerContainer>
       {/* <PoolTabButtons stackedOnly={stackedOnly} setStackedOnly={setStackedOnly} /> */}
       {/* <Divider /> */}
-      <FlexLayout>
+      <Layout>
         <Route exact path={`${path}`}>
           <>
             {stackedOnly
@@ -108,7 +108,7 @@ const Farm: React.FC = () => {
             <PoolCard key={pool.sousId} pool={pool} isMainPool />
           ))}
         </Route>
-      </FlexLayout>
+      </Layout>
     </Page>
   )
 }
@@ -157,10 +157,26 @@ const Hero = styled.div`
   }
 `
 
-const NestBannerContainer = styled.div``
+const NestBannerContainer = styled.div`
+  margin-bottom: 32px;
+`
 
 const BannerImage = styled.img`
   z-index: -1;
 `
+
+const Layout = styled(FlexLayout)`
+  & > * {
+    @media (min-width: 640px) {
+      min-width: 480px;
+      max-width: 50%;
+      width: unset;
+    }
+    @media (min-width: 768px) {
+      max-width: 31.5%;
+      width: 100%;
+    }
+  }
+`;
 
 export default Farm
