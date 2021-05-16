@@ -142,7 +142,7 @@ export interface Player {
   nickname?: string
   color?: string
   isRegistered?: boolean
-  style?: number
+  style?: string
 }
 
 export interface EmperorState {

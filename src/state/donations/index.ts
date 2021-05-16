@@ -27,7 +27,7 @@ const initialState: DonationsState = {
     nickname: '',
     color: '',
     isRegistered: false,
-    style: 0,
+    style: '0',
   },
   finalDate: null,
   minDonationAvax: 0,
@@ -53,7 +53,7 @@ export const DonationsSlice = createSlice({
         nickname: '',
         color: '',
         isRegistered: false,
-        style: 0,
+        style: '0',
       }
     },
     setTotalPefiRaised: (state, action) => {
