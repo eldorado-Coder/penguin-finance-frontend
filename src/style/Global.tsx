@@ -13,7 +13,7 @@ const GlobalStyle = createGlobalStyle`
   }
   body {
     background-color: ${({ theme }) => theme.colors.background};
-
+    background: ${({ theme }) => theme.isDark && '#171027'};
     img {
       height: auto;
       max-width: 100%;

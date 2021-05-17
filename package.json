@@ -44,7 +44,7 @@
     "ethers": "^5.1.4",
     "lodash": "^4.17.20",
     "node-fetch": "^2.6.1",
-    "penguinfinance-uikit2": "^1.0.7",
+    "penguinfinance-uikit2": "1.0.9",
     "react": "^17.0.1",
     "react-chartjs-2": "^2.11.1",
     "react-countup": "^4.3.3",

@@ -34,12 +34,12 @@ const RainbowLight = keyframes`
 	}
 `
 
-const StyledCard = styled(Card)<{ isNestPage?: boolean; }>`
+const StyledCard = styled(Card)<{ isNestPage?: boolean }>`
   @media (min-width: 640px) {
-    transform: ${props => props.isNestPage && 'scale(1.3)'};
-    margin-top: ${props => props.isNestPage && '60px'};
+    transform: ${(props) => props.isNestPage && 'scale(1.3)'};
+    margin-top: ${(props) => props.isNestPage && '60px'};
   }
-`;
+`
 
 const StyledCardAccent = styled.div`
   background: linear-gradient(
@@ -83,12 +83,12 @@ const CardContent = styled.div`
   padding: 24px;
   background: ${(props) => props.theme.card.background};
   border-radius: 32px 32px 0 0;
-`;
+`
 
 const CardAction = styled.div`
   background: ${(props) => props.theme.card.background};
   border-radius: 0 0 32px 32px;
-`;
+`
 
 interface PoolWithApy extends Pool {
   apy: BigNumber
@@ -200,10 +200,7 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage }) => {
   const xPefiToPefiRatio = getXPefiToPefiRatio()
 
   return (
-    <StyledCard 
-      isNestPage={isNestPage} 
-      isActive={isCardActive} 
-      isFinished={isFinished && sousId !== 0}>
+    <StyledCard isNestPage={isNestPage} isActive={isCardActive} isFinished={isFinished && sousId !== 0}>
       {isMainPool && <StyledCardAccent />}
       {isFinished && sousId !== 0 && <PoolFinishedSash />}
       <CardContent>
