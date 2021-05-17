@@ -190,12 +190,6 @@ const PoolCardWrapper = styled.div`
   }
 `
 
-const PoolCardNavWrapper = styled.div`
-  padding: 24px;
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
-`
 const PefiStatsCardWrapper = styled.div``
 
 const SpacingWrapper = styled.div`
@@ -262,7 +256,7 @@ const Home: React.FC = () => {
             </PefiStatsCardWrapper>
             {pefiPool && (
               <PoolCardWrapper>
-                <PoolCard pool={pefiPool} isMainPool={false} />
+                <PoolCard pool={pefiPool} isMainPool={false} isHomePage />
               </PoolCardWrapper>
             )}
             <PefiStats pool={pefiPool} />
