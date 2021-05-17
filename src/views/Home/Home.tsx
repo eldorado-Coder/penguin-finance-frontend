@@ -134,7 +134,7 @@ const Header = styled(Text)`
   ${({ theme }) => theme.mediaQueries.md} {
     font-size: 44px;
   }
-`;
+`
 
 const Cards = styled(BaseLayout)`
   align-items: stretch;
@@ -251,9 +251,7 @@ const Home: React.FC = () => {
             <HeroLeftImage src={`${process.env.PUBLIC_URL}/images/home/PenguinAstronaut.gif`} alt="astronaut" />
             <HeroRightImage src={`${process.env.PUBLIC_URL}/images/home/Astronaut2.gif`} alt="astronaut" />
           </HeroBgImageContainer>
-          <Header color="primary">
-            {TranslateString(576, 'Penguin Finance')}
-          </Header>
+          <Header color="primary">{TranslateString(576, 'Penguin Finance')}</Header>
           <Text>{TranslateString(578, 'The #1 project on Avalanche')}</Text>
         </Hero>
         <div>
@@ -272,7 +270,7 @@ const Home: React.FC = () => {
           </Cards>
         </div>
       </Page>
-      <HomeBgImage src={`${process.env.PUBLIC_URL}/images/home/bg_mountains.png`} alt="astronaut" />
+      {/* <HomeBgImage src={`${process.env.PUBLIC_URL}/images/home/bg_mountains.png`} alt="astronaut" /> */}
     </>
   )
 }
