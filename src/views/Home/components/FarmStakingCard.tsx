@@ -11,6 +11,7 @@ import PefiWalletBalance from './PefiWalletBalance'
 
 const StyledFarmStakingCard = styled(Card)`
   min-height: 376px;
+  background: ${({ theme }) => theme.isDark && '#30264F'};
 `
 
 const Block = styled.div`
@@ -23,6 +24,7 @@ const CardImage = styled.img`
 
 const Label = styled(Text).attrs({ color: 'primary' })`
   font-size: 14px;
+  color: ${({ theme }) => theme.isDark && '#D4444C'};
 `
 
 const Actions = styled.div`
@@ -30,8 +32,8 @@ const Actions = styled.div`
 `
 
 const Title = styled(Heading)`
-  color: ${({ theme}) => !theme.isDark && '#D4444C'};
-`;
+  color: ${({ theme }) => !theme.isDark && '#D4444C'};
+`
 
 const FarmedStakingCard = () => {
   const [pendingTx, setPendingTx] = useState(false)

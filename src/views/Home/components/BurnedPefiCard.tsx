@@ -13,6 +13,7 @@ const StyledFarmStakingCard = styled(Card)`
   position: relative;
   width: 100%;
   background: #363266;
+  background: ${({ theme }) => theme.isDark && '#30264F'};
 
   ${({ theme }) => theme.mediaQueries.lg} {
     margin: 0;
@@ -21,12 +22,12 @@ const StyledFarmStakingCard = styled(Card)`
 `
 const CardMidContent = styled(Heading).attrs({ size: 'xl' })`
   line-height: 44px;
-  color: #FFFFFF;
+  color: #ffffff;
 `
 
 const Text = styled(Heading)`
-  color: #FFFFFF;
-`;
+  color: #ffffff;
+`
 
 const BurnedPefiCard = () => {
   const TranslateString = useI18n()
@@ -37,14 +38,10 @@ const BurnedPefiCard = () => {
   return (
     <StyledFarmStakingCard>
       <CardBody>
-        <Text size="md">
-          {TranslateString(534, 'A total of')}
-        </Text>
+        <Text size="md">{TranslateString(534, 'A total of')}</Text>
         <CardMidContent>{percentage.toFixed(2)}% of PEFI</CardMidContent>
         <Flex justifyContent="space-between">
-          <Text size="md">
-            {TranslateString(534, 'has been burned forever!')}
-          </Text>
+          <Text size="md">{TranslateString(534, 'has been burned forever!')}</Text>
         </Flex>
       </CardBody>
     </StyledFarmStakingCard>
