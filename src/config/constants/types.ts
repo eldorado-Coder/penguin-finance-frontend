@@ -84,6 +84,7 @@ export interface PoolConfig {
   contractAddress: Address
   poolCategory: PoolCategory
   projectLink: string
+  penguinNestsGuideLink: string
   tokenPerBlock: string
   sortOrder?: number
   harvest?: boolean

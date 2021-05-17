@@ -16,7 +16,7 @@ const tags = {
 }
 
 interface Props {
-  projectLink: string
+  penguinNestsGuideLink: string
   totalStaked: BigNumber
   blocksRemaining: number
   isFinished: boolean
@@ -74,7 +74,7 @@ const TokenLink = styled.a`
 `
 
 const CardFooter: React.FC<Props> = ({
-  projectLink,
+  penguinNestsGuideLink,
   totalStaked,
   blocksRemaining,
   isFinished,
@@ -126,9 +126,9 @@ const CardFooter: React.FC<Props> = ({
               <Balance fontSize="14px" isDisabled={isFinished} value={blocksRemaining} decimals={0} />
             </Row>
           )}
-          <TokenLink href={projectLink} target="_blank">
+          <TokenLink href={penguinNestsGuideLink} target="_blank">
             <Text color="primary" fontSize="14px">
-              {TranslateString(412, 'View project site')}
+              {TranslateString(412, 'Learn more about Nests')}
             </Text>
           </TokenLink>
         </Details>

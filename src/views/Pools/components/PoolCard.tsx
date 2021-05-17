@@ -107,7 +107,7 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage }) => {
     tokenName,
     stakingTokenName,
     stakingTokenAddress,
-    projectLink,
+    penguinNestsGuideLink,
     harvest,
     apy,
     tokenDecimals,
@@ -282,7 +282,7 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage }) => {
       </CardContent>
       <CardAction>
         <CardFooter
-          projectLink={projectLink}
+          penguinNestsGuideLink={penguinNestsGuideLink}
           totalStaked={totalStaked}
           blocksRemaining={blocksRemaining}
           isFinished={isFinished}
