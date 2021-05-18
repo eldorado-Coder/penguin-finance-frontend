@@ -23,18 +23,6 @@ import { BLOCKS_PER_YEAR } from 'config'
 import { QuoteToken, PoolCategory } from 'config/constants/types'
 import { useFarms, usePriceAvaxUsdt, usePools, usePriceEthAvax } from 'state/hooks'
 
-const HomeBgContainer = styled.div`
-  left: 0px;
-  right: 0px;
-  bottom: 0px;
-  top: 0px;
-  position: absolute;
-  z-index: -1;
-  height: 100%;
-  width: 100%;
-  background: ${({ theme }) => theme.isDark && '#171027'};
-`
-
 const Hero = styled.div`
   position: relative;
   align-items: center;
@@ -196,6 +184,19 @@ const SpacingWrapper = styled.div`
   height: 24px;
 `
 
+const HomeBgContainer = styled.div`
+  background-image: url('/images/home/HomePageBackground.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  right: 0px;
+  left: 0px;
+  z-index: -1;
+`
+
 const Home: React.FC = () => {
   const TranslateString = useI18n()
   const { account } = useWeb3React()
@@ -244,6 +245,7 @@ const Home: React.FC = () => {
           <Header color="primary">{TranslateString(576, 'Penguin Finance')}</Header>
           <Text>{TranslateString(578, 'The #1 project on Avalanche')}</Text>
         </Hero>
+        <HomeBgContainer />
         <div>
           <Cards>
             <FarmStakingCard />
@@ -264,8 +266,6 @@ const Home: React.FC = () => {
           </Cards>
         </div>
       </Page>
-      {/* <HomeBgImage src={`${process.env.PUBLIC_URL}/images/home/bg_mountains.png`} alt="astronaut" /> */}
-      {/* <HomeBgContainer /> */}
     </>
   )
 }
