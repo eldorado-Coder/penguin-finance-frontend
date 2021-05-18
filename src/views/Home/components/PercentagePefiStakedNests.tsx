@@ -13,16 +13,17 @@ const StyledTotalValueLockedCard = styled(Card)`
   align-items: center;
   display: flex;
   flex: 1;
-  background: #D4444C;
+  background: #d4444c;
+  background: ${({ theme }) => theme.isDark && '#30264F'};
 `
 const CardMidContent = styled(Heading).attrs({ size: 'xl' })`
   line-height: 44px;
   color: #ffffff;
-`;
+`
 
 const Title = styled(Heading)`
   color: #ffffff;
-`;
+`
 interface PoolWithApy extends Pool {
   apy: BigNumber
 }
@@ -42,9 +43,7 @@ const PercentagePefiStakedNests: React.FC<HarvestProps> = ({ pool }) => {
     return (
       <StyledTotalValueLockedCard>
         <CardBody>
-          <Title size="md">
-            {TranslateString(762, 'A total of')}
-          </Title>
+          <Title size="md">{TranslateString(762, 'A total of')}</Title>
           <CardMidContent color="primary">
             {parseInt(percentageStaked.toString()) ? (
               `${parseInt(percentageStaked.toString())}% ${TranslateString(736, 'of PEFI')}`
@@ -52,9 +51,7 @@ const PercentagePefiStakedNests: React.FC<HarvestProps> = ({ pool }) => {
               <Skeleton animation="pulse" variant="rect" height="44px" />
             )}
           </CardMidContent>
-          <Title size="md">
-            {TranslateString(764, 'Staked in Penguin Nests')}
-          </Title>
+          <Title size="md">{TranslateString(764, 'Staked in Penguin Nests')}</Title>
         </CardBody>
       </StyledTotalValueLockedCard>
     )
@@ -62,9 +59,7 @@ const PercentagePefiStakedNests: React.FC<HarvestProps> = ({ pool }) => {
   return (
     <StyledTotalValueLockedCard>
       <CardBody>
-        <Title size="md">
-          {TranslateString(762, 'Stake your PEFI now!')}
-        </Title>
+        <Title size="md">{TranslateString(762, 'Stake your PEFI now!')}</Title>
       </CardBody>
     </StyledTotalValueLockedCard>
   )

@@ -101,7 +101,9 @@ const Farms: React.FC = () => {
       {/* <Heading as="h1" size="lg" color="primary" mb="50px" style={{ textAlign: 'center' }}>
         {TranslateString(696, 'Stake LP tokens to earn PEFI')}
       </Heading> */}
-      <IgloosBgContainer />
+      <BgWrapper>
+        <IgloosBgContainer />
+      </BgWrapper>
       <IgloosBannerContainer>
         <BannerImage src={`${process.env.PUBLIC_URL}/images/farms/IglooHeader.gif`} alt="igloos banner" />
       </IgloosBannerContainer>
@@ -131,21 +133,28 @@ const FarmPage = styled(Page)`
 
 // bg
 const IgloosBgContainer = styled.div`
-  /* background-image: url("/images/farms/BackgroundwBucket-01.png"); */
+  background-image: url('/images/farms/IglooBackground${({ theme }) => (theme.isDark ? 'Night' : 'Light')}.png');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
+  position: absolute;
+  top: -8px;
+  bottom: -8px;
+  right: 0px;
+  left: 0px;
+  z-index: -1;
+`
+
+const BgWrapper = styled.div`
+  background: ${({ theme }) => !theme.isDark && '#EBEEF7'};
   position: absolute;
   top: 0px;
   bottom: 0px;
   right: 0px;
   left: 0px;
-  ${({ theme }) => theme.mediaQueries.lg} {
-    background-image: url('/images/farms/igloo-background-${({ theme }) => (theme.isDark ? 'dark' : 'light')}.png');
-  }
   z-index: -1;
-  /* opacity: 0.3; */
 `
+
 
 // banner
 const IgloosBannerContainer = styled.div`

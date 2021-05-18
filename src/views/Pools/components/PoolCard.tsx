@@ -34,11 +34,16 @@ const RainbowLight = keyframes`
 	}
 `
 
-const StyledCard = styled(Card)<{ isNestPage?: boolean; }>`
+const StyledCard = styled(Card)<{ isNestPage?: boolean }>`
   @media (min-width: 640px) {
-    transform: ${props => props.isNestPage && 'scale(1.3)'};
-    margin-top: ${props => props.isNestPage && '60px'};
+    transform: ${(props) => props.isNestPage && 'scale(1.3)'};
+    margin-top: ${(props) => props.isNestPage && '60px'};
+    margin-bottom: ${(props) => props.isNestPage && '60px'};
   }
+`
+
+const PGUnlockButton = styled(UnlockButton)<{ isHomePage?: boolean }>`
+  background: ${({ theme, isHomePage }) => (!theme.isDark && isHomePage) && '#383466'};
 `;
 
 const StyledCardAccent = styled.div`
@@ -83,12 +88,12 @@ const CardContent = styled.div`
   padding: 24px;
   background: ${(props) => props.theme.card.background};
   border-radius: 32px 32px 0 0;
-`;
+`
 
 const CardAction = styled.div`
   background: ${(props) => props.theme.card.background};
   border-radius: 0 0 32px 32px;
-`;
+`
 
 interface PoolWithApy extends Pool {
   apy: BigNumber
@@ -98,16 +103,17 @@ interface HarvestProps {
   pool: PoolWithApy
   isMainPool: boolean
   isNestPage?: boolean
+  isHomePage?: boolean
 }
 
-const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage }) => {
+const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHomePage }) => {
   const {
     sousId,
     image,
     tokenName,
     stakingTokenName,
     stakingTokenAddress,
-    projectLink,
+    penguinNestsGuideLink,
     harvest,
     apy,
     tokenDecimals,
@@ -200,10 +206,7 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage }) => {
   const xPefiToPefiRatio = getXPefiToPefiRatio()
 
   return (
-    <StyledCard 
-      isNestPage={isNestPage} 
-      isActive={isCardActive} 
-      isFinished={isFinished && sousId !== 0}>
+    <StyledCard isNestPage={isNestPage} isActive={isCardActive} isFinished={isFinished && sousId !== 0}>
       {isMainPool && <StyledCardAccent />}
       {isFinished && sousId !== 0 && <PoolFinishedSash />}
       <CardContent>
@@ -238,7 +241,7 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage }) => {
           </Flex>
         </div>
         <StyledCardActions>
-          {!account && <UnlockButton />}
+          {!account && <PGUnlockButton isHomePage={isHomePage} />}
           {account &&
             (needsApproval ? (
               <div style={{ flex: 1 }}>
@@ -285,7 +288,7 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage }) => {
       </CardContent>
       <CardAction>
         <CardFooter
-          projectLink={projectLink}
+          penguinNestsGuideLink={penguinNestsGuideLink}
           totalStaked={totalStaked}
           blocksRemaining={blocksRemaining}
           isFinished={isFinished}

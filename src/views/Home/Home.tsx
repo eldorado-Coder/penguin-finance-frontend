@@ -23,15 +23,6 @@ import { BLOCKS_PER_YEAR } from 'config'
 import { QuoteToken, PoolCategory } from 'config/constants/types'
 import { useFarms, usePriceAvaxUsdt, usePools, usePriceEthAvax } from 'state/hooks'
 
-const HomeBgImage = styled.img`
-  position: sticky;
-  left: 0px;
-  right: 0px;
-  bottom: 0px;
-  z-index: -1;
-  width: 100%;
-`
-
 const Hero = styled.div`
   position: relative;
   align-items: center;
@@ -134,7 +125,7 @@ const Header = styled(Text)`
   ${({ theme }) => theme.mediaQueries.md} {
     font-size: 44px;
   }
-`;
+`
 
 const Cards = styled(BaseLayout)`
   align-items: stretch;
@@ -180,30 +171,30 @@ const CTACards = styled(BaseLayout)`
   }
 `
 const PoolCardWrapper = styled.div`
-  background: white;
-  border-radius: 32px;
-  box-shadow: 0px 2px 12px -8px rgb(25 19 38 / 10%), 0px 1px 1px rgb(20 19 38 / 5%);
-  display: flex;
-
-  > div:first-child {
-    width: 80%;
-    box-shadow: none;
-  }
-  > div:last-child {
-    width: 20%;
+  > div {
+    > div {
+      background: ${({ theme }) => theme.isDark && '#30264F'};
+    }
   }
 `
 
-const PoolCardNavWrapper = styled.div`
-  padding: 24px;
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
-`
 const PefiStatsCardWrapper = styled.div``
 
 const SpacingWrapper = styled.div`
   height: 24px;
+`
+
+const HomeBgContainer = styled.div`
+  background-image: url('/images/home/HomePageBackground.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  right: 0px;
+  left: 0px;
+  z-index: -1;
 `
 
 const Home: React.FC = () => {
@@ -251,11 +242,10 @@ const Home: React.FC = () => {
             <HeroLeftImage src={`${process.env.PUBLIC_URL}/images/home/PenguinAstronaut.gif`} alt="astronaut" />
             <HeroRightImage src={`${process.env.PUBLIC_URL}/images/home/Astronaut2.gif`} alt="astronaut" />
           </HeroBgImageContainer>
-          <Header color="primary">
-            {TranslateString(576, 'Penguin Finance')}
-          </Header>
+          <Header color="primary">{TranslateString(576, 'Penguin Finance')}</Header>
           <Text>{TranslateString(578, 'The #1 project on Avalanche')}</Text>
         </Hero>
+        <HomeBgContainer />
         <div>
           <Cards>
             <FarmStakingCard />
@@ -266,13 +256,16 @@ const Home: React.FC = () => {
               <SpacingWrapper />
               <TotalPefiStakedNests pool={pefiPool} />
             </PefiStatsCardWrapper>
-            {pefiPool && <PoolCard pool={pefiPool} isMainPool={false} />}
+            {pefiPool && (
+              <PoolCardWrapper>
+                <PoolCard pool={pefiPool} isMainPool={false} isHomePage />
+              </PoolCardWrapper>
+            )}
             <PefiStats pool={pefiPool} />
             <SpacingWrapper />
           </Cards>
         </div>
       </Page>
-      <HomeBgImage src={`${process.env.PUBLIC_URL}/images/home/bg_mountains.png`} alt="astronaut" />
     </>
   )
 }
