@@ -31,14 +31,14 @@ export const config: MenuEntry[] = [
     href: '/nests',
   },
   {
-    label: 'Arena',
-    icon: 'BattleIcon',
-    href: '/arena',
-  },
-  {
     label: 'Emperor',
     icon: 'CrownIcon',
     href: '/emperor',
+  },
+  {
+    label: 'Arena',
+    icon: 'BattleIcon',
+    href: '/arena',
   },
   // {
   //   label: 'Penguin lottery',

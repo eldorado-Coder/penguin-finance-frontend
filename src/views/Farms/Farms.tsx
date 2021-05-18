@@ -131,20 +131,16 @@ const FarmPage = styled(Page)`
 
 // bg
 const IgloosBgContainer = styled.div`
-  /* background-image: url("/images/farms/BackgroundwBucket-01.png"); */
+  background-image: url('/images/farms/IglooBackground${({ theme }) => (theme.isDark ? 'Night' : 'Light')}.png');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
   position: absolute;
-  top: 0px;
-  bottom: 0px;
+  top: -8px;
+  bottom: -8px;
   right: 0px;
   left: 0px;
-  ${({ theme }) => theme.mediaQueries.lg} {
-    background-image: url('/images/farms/igloo-background-${({ theme }) => (theme.isDark ? 'dark' : 'light')}.png');
-  }
   z-index: -1;
-  /* opacity: 0.3; */
 `
 
 // banner

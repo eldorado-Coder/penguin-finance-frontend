@@ -86,7 +86,7 @@ const Farm: React.FC = () => {
         </div>
         <img src="/images/syrup.png" alt="SYRUP POOL icon" width={410} height={191} />
       </Hero> */}
-      {/* <NestBgContainer /> */}
+      <NestBgContainer />
       <NestBannerContainer>
         <BannerImage src={`${process.env.PUBLIC_URL}/images/pools/nests-dark.gif`} alt="nests banner" />
       </NestBannerContainer>
@@ -114,7 +114,7 @@ const Farm: React.FC = () => {
 }
 
 const NestBgContainer = styled.div`
-  background-image: url('/images/pools/nest_bg1.png');
+  background-image: url(${({ theme }) => theme.isDark ? '/images/pools/NestBackgroundNight.png' : '/images/pools/NestBackgroundLight.png'});
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
@@ -124,7 +124,7 @@ const NestBgContainer = styled.div`
   right: 0px;
   left: 0px;
   z-index: -1;
-  opacity: 0.3;
+  // opacity: 0.3;
 `
 
 const Hero = styled.div`

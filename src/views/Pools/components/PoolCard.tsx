@@ -38,6 +38,7 @@ const StyledCard = styled(Card)<{ isNestPage?: boolean }>`
   @media (min-width: 640px) {
     transform: ${(props) => props.isNestPage && 'scale(1.3)'};
     margin-top: ${(props) => props.isNestPage && '60px'};
+    margin-bottom: ${(props) => props.isNestPage && '60px'};
   }
 `
 
