@@ -101,7 +101,9 @@ const Farms: React.FC = () => {
       {/* <Heading as="h1" size="lg" color="primary" mb="50px" style={{ textAlign: 'center' }}>
         {TranslateString(696, 'Stake LP tokens to earn PEFI')}
       </Heading> */}
-      <IgloosBgContainer />
+      <BgWrapper>
+        <IgloosBgContainer />
+      </BgWrapper>
       <IgloosBannerContainer>
         <BannerImage src={`${process.env.PUBLIC_URL}/images/farms/IglooHeader.gif`} alt="igloos banner" />
       </IgloosBannerContainer>
@@ -142,6 +144,17 @@ const IgloosBgContainer = styled.div`
   left: 0px;
   z-index: -1;
 `
+
+const BgWrapper = styled.div`
+  background: ${({ theme }) => !theme.isDark && '#EBEEF7'};
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  right: 0px;
+  left: 0px;
+  z-index: -1;
+`
+
 
 // banner
 const IgloosBannerContainer = styled.div`
