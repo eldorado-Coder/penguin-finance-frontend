@@ -41,6 +41,10 @@ const StyledCard = styled(Card)<{ isNestPage?: boolean }>`
   }
 `
 
+const PGUnlockButton = styled(UnlockButton)<{ isHomePage?: boolean }>`
+  background: ${({ theme, isHomePage }) => (!theme.isDark && isHomePage) && '#383466'};
+`;
+
 const StyledCardAccent = styled.div`
   background: linear-gradient(
     45deg,
@@ -98,16 +102,17 @@ interface HarvestProps {
   pool: PoolWithApy
   isMainPool: boolean
   isNestPage?: boolean
+  isHomePage?: boolean
 }
 
-const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage }) => {
+const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHomePage }) => {
   const {
     sousId,
     image,
     tokenName,
     stakingTokenName,
     stakingTokenAddress,
-    projectLink,
+    penguinNestsGuideLink,
     harvest,
     apy,
     tokenDecimals,
@@ -235,7 +240,7 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage }) => {
           </Flex>
         </div>
         <StyledCardActions>
-          {!account && <UnlockButton />}
+          {!account && <PGUnlockButton isHomePage={isHomePage} />}
           {account &&
             (needsApproval ? (
               <div style={{ flex: 1 }}>
@@ -282,7 +287,7 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage }) => {
       </CardContent>
       <CardAction>
         <CardFooter
-          projectLink={projectLink}
+          penguinNestsGuideLink={penguinNestsGuideLink}
           totalStaked={totalStaked}
           blocksRemaining={blocksRemaining}
           isFinished={isFinished}

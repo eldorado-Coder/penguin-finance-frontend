@@ -35,6 +35,10 @@ const Title = styled(Heading)`
   color: ${({ theme }) => !theme.isDark && '#D4444C'};
 `
 
+const PGUnlockButton = styled(UnlockButton)`
+  background: ${({ theme }) => !theme.isDark && '#383466'};
+`;
+
 const FarmedStakingCard = () => {
   const [pendingTx, setPendingTx] = useState(false)
   const { account } = useWeb3React()
@@ -83,7 +87,7 @@ const FarmedStakingCard = () => {
                 : TranslateString(532, `Harvest all (${balancesWithValue.length})`)}
             </Button>
           ) : (
-            <UnlockButton fullWidth />
+            <PGUnlockButton fullWidth />
           )}
         </Actions>
       </CardBody>
