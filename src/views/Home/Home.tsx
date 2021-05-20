@@ -1,27 +1,25 @@
 import React from 'react'
 import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
-import { NavLink } from 'react-router-dom'
-import { Heading, Text, BaseLayout, ArrowForwardIcon } from 'penguinfinance-uikit2'
+import { Text, BaseLayout } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import useI18n from 'hooks/useI18n'
-import useBlock from 'hooks/useBlock'
 import Page from 'components/layout/Page'
 import FarmStakingCard from 'views/Home/components/FarmStakingCard'
-import LotteryCard from 'views/Home/components/LotteryCard'
 import PefiStats from 'views/Home/components/PefiStats'
-import TotalValueLockedCard from 'views/Home/components/TotalValueLockedCard'
 import TotalPefiStakedNests from 'views/Home/components/TotalPefiStakedNests'
 import PercentagePefiStakedNests from 'views/Home/components/PercentagePefiStakedNests'
 import BurnedPefiCard from 'views/Home/components/BurnedPefiCard'
-import EarnAssetCard from 'views/Home/components/EarnAssetCard'
-import WinCard from 'views/Home/components/WinCard'
 import PoolCard from 'views/Pools/components/PoolCard'
-import { getBalanceNumber } from 'utils/formatBalance'
-import priceToBnb from 'utils/priceToBnb'
-import { BLOCKS_PER_YEAR } from 'config'
-import { QuoteToken, PoolCategory } from 'config/constants/types'
-import { useFarms, usePriceAvaxUsdt, usePools, usePriceEthAvax } from 'state/hooks'
+// import { getBalanceNumber } from 'utils/formatBalance'
+// import priceToBnb from 'utils/priceToBnb'
+// import { BLOCKS_PER_YEAR } from 'config'
+import { 
+  // useFarms, 
+  // usePriceAvaxUsdt, 
+  usePools, 
+  // usePriceEthAvax 
+} from 'state/hooks'
 
 const Hero = styled.div`
   position: relative;
@@ -150,26 +148,6 @@ const Cards = styled(BaseLayout)`
   }
 `
 
-const CTACards = styled(BaseLayout)`
-  align-items: start;
-  margin-bottom: 32px;
-
-  & > div {
-    grid-column: span 6;
-  }
-
-  ${({ theme }) => theme.mediaQueries.sm} {
-    & > div {
-      grid-column: span 8;
-    }
-  }
-
-  ${({ theme }) => theme.mediaQueries.lg} {
-    & > div {
-      grid-column: span 4;
-    }
-  }
-`
 const PoolCardWrapper = styled.div`
   > div {
     > div {
@@ -201,30 +179,30 @@ const Home: React.FC = () => {
   const TranslateString = useI18n()
   const { account } = useWeb3React()
   const pools = usePools(account)
-  const farms = useFarms()
-  const avaxPriceUSD = usePriceAvaxUsdt()
-  const ethPriceBnb = usePriceEthAvax()
+  // const farms = useFarms()
+  // const avaxPriceUSD = usePriceAvaxUsdt()
+  // const ethPriceBnb = usePriceEthAvax()
 
   const poolsWithApy = pools.map((pool) => {
-    const rewardTokenFarm = farms.find((f) => f.tokenSymbol === pool.tokenName)
-    const stakingTokenFarm = farms.find((s) => s.tokenSymbol === pool.stakingTokenName)
+    // const rewardTokenFarm = farms.find((f) => f.tokenSymbol === pool.tokenName)
+    // const stakingTokenFarm = farms.find((s) => s.tokenSymbol === pool.stakingTokenName)
 
     // tmp mulitplier to support ETH farms
     // Will be removed after the price api
-    const tempMultiplier = stakingTokenFarm?.quoteTokenSymbol === 'ETH' ? ethPriceBnb : 1
+    // const tempMultiplier = stakingTokenFarm?.quoteTokenSymbol === 'ETH' ? ethPriceBnb : 1
 
     // /!\ Assume that the farm quote price is AVAX
-    const stakingTokenPriceInAVAX = new BigNumber(stakingTokenFarm?.tokenPriceVsQuote).times(tempMultiplier)
-    const rewardTokenPriceInAVAX = priceToBnb(
-      pool.tokenName,
-      rewardTokenFarm?.tokenPriceVsQuote,
-      rewardTokenFarm?.quoteTokenSymbol,
-      avaxPriceUSD,
-    )
+    // const stakingTokenPriceInAVAX = new BigNumber(stakingTokenFarm?.tokenPriceVsQuote).times(tempMultiplier)
+    // const rewardTokenPriceInAVAX = priceToBnb(
+    //   pool.tokenName,
+    //   rewardTokenFarm?.tokenPriceVsQuote,
+    //   rewardTokenFarm?.quoteTokenSymbol,
+    //   avaxPriceUSD,
+    // )
 
-    const totalRewardPricePerYear = rewardTokenPriceInAVAX.times(pool.tokenPerBlock).times(BLOCKS_PER_YEAR)
-    const totalStakingTokenInPool = stakingTokenPriceInAVAX.times(getBalanceNumber(pool.totalStaked))
-    const apy = totalRewardPricePerYear.div(totalStakingTokenInPool).times(100)
+    // const totalRewardPricePerYear = rewardTokenPriceInAVAX.times(pool.tokenPerBlock).times(BLOCKS_PER_YEAR)
+    // const totalStakingTokenInPool = stakingTokenPriceInAVAX.times(getBalanceNumber(pool.totalStaked))
+    // const apy = totalRewardPricePerYear.div(totalStakingTokenInPool).times(100)
 
     return {
       ...pool,

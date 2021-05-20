@@ -5,9 +5,9 @@ BigNumber.config({
   DECIMAL_PLACES: 80,
 })
 
-export const PEFI_PER_BLOCK = new BigNumber(5.55)
+export const PEFI_PER_BLOCK = new BigNumber(4.98)
 export const PEFI_MAX_SUPPLY = 21000000
-export const AVAX_BLOCK_TIME = 2.65
+export const AVAX_BLOCK_TIME = 3
 export const WEEKS_PER_YEAR = 52
 // export const BLOCKS_PER_YEAR = new BigNumber(10512000)
 // export const BLOCKS_PER_YEAR = new BigNumber(11690000)

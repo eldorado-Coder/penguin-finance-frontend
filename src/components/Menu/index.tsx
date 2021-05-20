@@ -6,7 +6,7 @@ import { allLanguages } from 'config/localisation/languageCodes'
 import { LanguageContext } from 'contexts/Localisation/languageContext'
 import useTheme from 'hooks/useTheme'
 import useAuth from 'hooks/useAuth'
-import { usePricePefiUsdt, useProfile, usePools } from 'state/hooks'
+import { usePricePefiUsdt, usePools } from 'state/hooks'
 import WalletConnectGuideModal from 'components/Modal/WalletConnectGuideModal'
 import { config, socials } from './config'
 
@@ -16,7 +16,6 @@ const Menu = (props) => {
   const { selectedLanguage, setSelectedLanguage } = useContext(LanguageContext)
   const { isDark, toggleTheme } = useTheme()
   const pefiPriceUsd = usePricePefiUsdt()
-  const { profile } = useProfile()
   const pools = usePools(account)
   const pefiPool = pools.length > 0 ? pools[0] : null
 

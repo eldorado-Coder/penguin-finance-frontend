@@ -16,7 +16,7 @@ const farms: FarmConfig[] = [
     },
     quoteTokenSymbol: QuoteToken.AVAX,
     quoteTokenAddresses: contracts.wavax,
-    withdrawalFee: '4',
+    withdrawalFee: '3.2',
     hardApy: '896.65%',
   },
   {
@@ -33,7 +33,7 @@ const farms: FarmConfig[] = [
     },
     quoteTokenSymbol: QuoteToken.AVAX,
     quoteTokenAddresses: contracts.wavax,
-    withdrawalFee: '4',
+    withdrawalFee: '3.2',
     hardApy: '196.24%',
   },
   {
@@ -50,7 +50,7 @@ const farms: FarmConfig[] = [
     },
     quoteTokenSymbol: QuoteToken.PEFI,
     quoteTokenAddresses: contracts.pefi,
-    withdrawalFee: '4',
+    withdrawalFee: '3.2',
     hardApy: '967.57%',
   },
   {
@@ -67,7 +67,7 @@ const farms: FarmConfig[] = [
     },
     quoteTokenSymbol: QuoteToken.PEFI,
     quoteTokenAddresses: contracts.pefi,
-    withdrawalFee: '4',
+    withdrawalFee: '3.2',
     hardApy: '1354.80%',
   },
   {
@@ -84,7 +84,7 @@ const farms: FarmConfig[] = [
     },
     quoteTokenSymbol: QuoteToken.PEFI,
     quoteTokenAddresses: contracts.pefi,
-    withdrawalFee: '4',
+    withdrawalFee: '3.2',
     hardApy: '1347.55%',
   },
   {
@@ -98,6 +98,23 @@ const farms: FarmConfig[] = [
     tokenAddresses: {
       43113: '',
       43114: '0xbA7dEebBFC5fA1100Fb055a87773e1E99Cd3507a',
+    },
+    quoteTokenSymbol: QuoteToken.PEFI,
+    quoteTokenAddresses: contracts.pefi,
+    withdrawalFee: '4',
+    hardApy: '300.35%',
+  },
+  {
+    pid: 6,
+    lpSymbol: 'PEFI-LINK LP',
+    lpAddresses: {
+      43113: '',
+      43114: '0x2656e72C5E07711E8d697C7B1009e31174c6DF66',
+    },
+    tokenSymbol: 'LINK',
+    tokenAddresses: {
+      43113: '',
+      43114: '0xB3fe5374F67D7a22886A0eE082b2E2f9d2651651',
     },
     quoteTokenSymbol: QuoteToken.PEFI,
     quoteTokenAddresses: contracts.pefi,

@@ -2,11 +2,9 @@ import React from 'react'
 import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
 import { getBalanceNumber } from 'utils/formatBalance'
-import { Card, CardBody, Heading, Skeleton, Text } from 'penguinfinance-uikit2'
-import Balance from 'components/Balance'
+import { Card, CardBody, Heading, Skeleton } from 'penguinfinance-uikit2'
 import useI18n from 'hooks/useI18n'
 import { Pool } from 'state/types'
-import { useGetStats } from 'hooks/api'
 
 const StyledTotalValueLockedCard = styled(Card)`
   min-height: 150px;
