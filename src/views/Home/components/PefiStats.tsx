@@ -39,7 +39,6 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
   const TranslateString = useI18n()
   const totalSupply = useTotalSupply()
   const burnedBalance = useBurnedBalance(getPefiAddress())
-  const pefiSupply = totalSupply ? getBalanceNumber(totalSupply) - getBalanceNumber(burnedBalance) : 0
   const xPefiContract = useXPefi()
   const farmsLP = useFarms()
   const pefiPrice = usePricePefiUsdt()

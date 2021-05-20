@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import { useCallback } from 'react'
 import { useWeb3React, UnsupportedChainIdError } from '@web3-react/core'
 import { NoBscProviderError } from '@binance-chain/bsc-connector'
 import {
@@ -9,7 +9,7 @@ import {
   UserRejectedRequestError as UserRejectedRequestErrorWalletConnect,
   WalletConnectConnector,
 } from '@web3-react/walletconnect-connector'
-import { ConnectorNames, connectorLocalStorageKey, useModal } from 'penguinfinance-uikit2'
+import { ConnectorNames, connectorLocalStorageKey } from 'penguinfinance-uikit2'
 import { connectorsByName } from 'utils/web3React'
 import { setupNetwork } from 'utils/wallet'
 import useToast from 'hooks/useToast'

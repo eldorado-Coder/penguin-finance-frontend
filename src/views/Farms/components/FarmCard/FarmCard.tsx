@@ -1,10 +1,9 @@
 import React, { useMemo, useState } from 'react'
 import BigNumber from 'bignumber.js'
 import styled, { keyframes } from 'styled-components'
-import { Flex, Text, Skeleton } from 'penguinfinance-uikit2'
+import { Flex, Text } from 'penguinfinance-uikit2'
 import { communityFarms } from 'config/constants'
 import { Farm } from 'state/types'
-import { provider } from 'web3-core'
 import useI18n from 'hooks/useI18n'
 import ExpandableSectionButton from 'components/ExpandableSectionButton'
 import { QuoteToken } from 'config/constants/types'
@@ -13,7 +12,6 @@ import getLiquidityUrlPathParts from 'utils/getLiquidityUrlPathParts'
 import DetailsSection from './DetailsSection'
 import CardHeading from './CardHeading'
 import CardActionsContainer from './CardActionsContainer'
-import ApyButton from './ApyButton'
 
 export interface FarmWithStakedValue extends Farm {
   apy?: BigNumber
@@ -144,21 +142,9 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, removed, pefiPrice, avaxPrice
       {!removed && (
         <Flex justifyContent="space-between" alignItems="center">
           <Text>{TranslateString(736, 'APR')}:</Text>
-
           <Text bold style={{ display: 'flex', alignItems: 'center' }}>
-            {/* {farm.hardApy} */}
             {`${farmAPY || '--'}%`}
           </Text>
-          {/* <Text bold style={{ display: 'flex', alignItems: 'center' }}>
-            {farm.apy ? (
-              <>
-                <ApyButton lpLabel={lpLabel} addLiquidityUrl={addLiquidityUrl} pefiPrice={pefiPrice} apy={farm.apy} />
-                {farmAPY}%
-              </>
-            ) : (
-              <Skeleton height={24} width={80} />
-            )}
-          </Text> */}
         </Flex>
       )}
       <Flex justifyContent="space-between">

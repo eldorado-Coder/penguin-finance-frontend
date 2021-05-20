@@ -8,7 +8,6 @@ import {
   fetchMyDonor,
   fetchMinDonationAvax,
   fetchMinDonationPefi,
-  fetchDonorData,
 } from './fetchDonationsData'
 import { DonationsState } from '../types'
 

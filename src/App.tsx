@@ -1,8 +1,8 @@
-import React, { useEffect, Suspense, lazy } from 'react'
-import { Router, Redirect, Route, Switch } from 'react-router-dom'
+import React, { Suspense, lazy } from 'react'
+import { Router, Route, Switch } from 'react-router-dom'
 import { ResetCSS } from 'penguinfinance-uikit2'
 import BigNumber from 'bignumber.js'
-import { useWeb3React } from '@web3-react/core'
+// import { useWeb3React } from '@web3-react/core'
 import { useFetchProfile, useFetchPublicData } from 'state/hooks'
 import GlobalStyle from './style/Global'
 import Menu from './components/Menu'
@@ -17,17 +17,17 @@ import history from './routerHistory'
 const Home = lazy(() => import('./views/Home'))
 const Farms = lazy(() => import('./views/Farms'))
 const Arena = lazy(() => import('./views/Arena'))
-const Emperor = lazy(() => import('./views/Emperor'))
+// const Emperor = lazy(() => import('./views/Emperor'))
 const CovidEmperor = lazy(() => import('./views/CovidEmperor'))
 const NotFound = lazy(() => import('./views/NotFound'))
 
 // const Nests = lazy(() => import('./views/Nests'))
-const Lottery = lazy(() => import('./views/Lottery'))
-const Ifos = lazy(() => import('./views/Ifos'))
-const Collectibles = lazy(() => import('./views/Collectibles'))
-const Teams = lazy(() => import('./views/Teams'))
-const Team = lazy(() => import('./views/Teams/Team'))
-const Profile = lazy(() => import('./views/Profile'))
+// const Lottery = lazy(() => import('./views/Lottery'))
+// const Ifos = lazy(() => import('./views/Ifos'))
+// const Collectibles = lazy(() => import('./views/Collectibles'))
+// const Teams = lazy(() => import('./views/Teams'))
+// const Team = lazy(() => import('./views/Teams/Team'))
+// const Profile = lazy(() => import('./views/Profile'))
 
 // This config is required for number formating
 BigNumber.config({

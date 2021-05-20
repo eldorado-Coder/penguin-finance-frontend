@@ -1,4 +1,4 @@
-import React, { createContext, ReactNode, useCallback, useState } from 'react'
+import React, { createContext, useCallback, useState } from 'react'
 import { kebabCase } from 'lodash'
 import { Toast, toastTypes } from 'penguinfinance-uikit2'
 import { ToastContextApi } from './types'

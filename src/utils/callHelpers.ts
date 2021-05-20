@@ -1,7 +1,5 @@
 import BigNumber from 'bignumber.js'
 import { ethers } from 'ethers'
-import { getWithoutBordersAddress as getCharityEmperorAddress } from 'utils/addressHelpers'
-import { getWeb3 } from 'utils/web3'
 
 export const approve = async (lpContract, masterChefContract, account) => {
   return lpContract.methods
