@@ -104,6 +104,23 @@ const farms: FarmConfig[] = [
     withdrawalFee: '4',
     hardApy: '300.35%',
   },
+  {
+    pid: 6,
+    lpSymbol: 'PEFI-LINK LP',
+    lpAddresses: {
+      43113: '',
+      43114: '0x2656e72C5E07711E8d697C7B1009e31174c6DF66',
+    },
+    tokenSymbol: 'LINK',
+    tokenAddresses: {
+      43113: '',
+      43114: '0xB3fe5374F67D7a22886A0eE082b2E2f9d2651651',
+    },
+    quoteTokenSymbol: QuoteToken.PEFI,
+    quoteTokenAddresses: contracts.pefi,
+    withdrawalFee: '4',
+    hardApy: '300.35%',
+  },
 ]
 
 export default farms
