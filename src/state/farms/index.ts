@@ -1,7 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
 import farmsConfig from 'config/constants/farms'
-import lpsConfig from 'config/constants/lps'
 import fetchFarms from './fetchFarms'
 import {
   fetchFarmUserEarnings,

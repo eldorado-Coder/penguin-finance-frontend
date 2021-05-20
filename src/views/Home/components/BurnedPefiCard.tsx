@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Heading, Card, CardBody, Flex, Skeleton } from 'penguinfinance-uikit2'
+import { Heading, Card, CardBody, Flex } from 'penguinfinance-uikit2'
 import { useTotalSupply, useBurnedBalance } from 'hooks/useTokenBalance'
 import useI18n from 'hooks/useI18n'
 import { getPefiAddress } from 'utils/addressHelpers'

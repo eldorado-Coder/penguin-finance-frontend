@@ -1,10 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Card, CardBody } from 'penguinfinance-uikit2'
+import { Card } from 'penguinfinance-uikit2'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { useTotalClaim } from 'hooks/useTickets'
-import PrizesWonContent from './PrizesWonContent'
-import NoPrizesContent from './NoPrizesContent'
 
 const StyledCard = styled(Card)`
   ${(props) =>

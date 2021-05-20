@@ -5,7 +5,6 @@ import {
   fetchFarmUserDataAsync,
   updateUserStakedBalance,
   updateUserBalance,
-  updateUserPendingReward,
   fetchPoolsPublicDataAsync,
 } from 'state/actions'
 import { unstake, sousUnstake, sousEmegencyUnstake } from 'utils/callHelpers'
@@ -27,8 +26,6 @@ const useUnstake = (pid: number) => {
 
   return { onUnstake: handleUnstake }
 }
-
-const SYRUPIDS = [5, 6, 3, 1, 22, 23]
 
 export const useSousUnstake = (sousId) => {
   const dispatch = useDispatch()

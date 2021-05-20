@@ -3,11 +3,9 @@ import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { Card, CardBody, Heading, Skeleton } from 'penguinfinance-uikit2'
-import { useTotalSupply, useBurnedBalance } from 'hooks/useTokenBalance'
-import Balance from 'components/Balance'
+import { useTotalSupply } from 'hooks/useTokenBalance'
 import useI18n from 'hooks/useI18n'
 import { Pool } from 'state/types'
-import { useGetStats } from 'hooks/api'
 
 const StyledTotalValueLockedCard = styled(Card)`
   align-items: center;
