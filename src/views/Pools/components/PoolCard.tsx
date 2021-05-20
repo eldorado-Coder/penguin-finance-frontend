@@ -11,13 +11,11 @@ import { useSousStake } from 'hooks/useStake'
 import { useSousUnstake } from 'hooks/useUnstake'
 import useBlock from 'hooks/useBlock'
 import { getBalanceNumber } from 'utils/formatBalance'
-import { useSousHarvest } from 'hooks/useHarvest'
 import Balance from 'components/Balance'
-import { QuoteToken, PoolCategory } from 'config/constants/types'
+import { PoolCategory } from 'config/constants/types'
 import { Pool } from 'state/types'
 import DepositModal from './DepositModal'
 import WithdrawModal from './WithdrawModal'
-import CompoundModal from './CompoundModal'
 import CardTitle from './CardTitle'
 import Card from './Card'
 import CardFooter from './CardFooter'
@@ -114,8 +112,6 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
     stakingTokenName,
     stakingTokenAddress,
     penguinNestsGuideLink,
-    harvest,
-    apy,
     tokenDecimals,
     poolCategory,
     totalStaked,
@@ -136,17 +132,14 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
   const { onApprove } = useSousApprove(stakingTokenContract, sousId)
   const { onStake } = useSousStake(sousId, isBnbPool)
   const { onUnstake } = useSousUnstake(sousId)
-  const { onReward } = useSousHarvest(sousId, isBnbPool)
   const xPefiContract = useXPefi()
 
   const [requestedApproval, setRequestedApproval] = useState(false)
-  const [pendingTx, setPendingTx] = useState(false)
   const [handsOnPenalty, setHandsOnPenalty] = useState(0)
 
   const allowance = new BigNumber(userData?.allowance || 0)
   const stakingTokenBalance = new BigNumber(userData?.stakingTokenBalance || 0)
   const stakedBalance = new BigNumber(userData?.stakedBalance || 0)
-  const earnings = new BigNumber(userData?.pendingReward || 0)
 
   const blocksUntilStart = Math.max(startBlock - block, 0)
   const blocksRemaining = Math.max(endBlock - block, 0)
@@ -163,10 +156,6 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
       onConfirm={onStake}
       tokenName={stakingLimit ? `${stakingTokenName} (${stakingLimit} max)` : stakingTokenName}
     />,
-  )
-
-  const [onPresentCompound] = useModal(
-    <CompoundModal earnings={earnings} onConfirm={onStake} tokenName={stakingTokenName} />,
   )
 
   const [onPresentWithdraw] = useModal(
@@ -251,7 +240,7 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
               </div>
             ) : (
               <>
-                <Button disabled={stakedBalance.eq(new BigNumber(0)) || pendingTx} onClick={onPresentWithdraw}>
+                <Button disabled={stakedBalance.eq(new BigNumber(0))} onClick={onPresentWithdraw}>
                   {`Unstake ${stakingTokenName}`}
                 </Button>
                 <StyledActionSpacer />

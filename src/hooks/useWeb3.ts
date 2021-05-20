@@ -1,10 +1,7 @@
 import { useEffect, useState, useRef } from 'react'
 import Web3 from 'web3'
-import { HttpProviderOptions } from 'web3-core-helpers'
-import { provider as ProviderType } from 'web3-core'
 import { useWeb3React } from '@web3-react/core'
 import { getWeb3NoAccount } from 'utils/web3'
-import getRpcUrl from 'utils/getRpcUrl'
 
 /**
  * Provides a web3 instance using the provider provided by useWallet

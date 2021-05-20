@@ -1,9 +1,8 @@
-import React, { useEffect, useCallback, useState } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import { Route, useRouteMatch } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import BigNumber from 'bignumber.js'
 import { useWeb3React } from '@web3-react/core'
-import { Image, Heading } from 'penguinfinance-uikit2'
 import styled from 'styled-components'
 import { BLOCKS_PER_WEEK, PEFI_PER_BLOCK, PEFI_POOL_PID } from 'config'
 import FlexLayout from 'components/layout/Flex'
@@ -12,15 +11,11 @@ import { useFarms, usePriceAvaxUsdt, usePricePefiUsdt, usePriceEthUsdt } from 's
 import useRefresh from 'hooks/useRefresh'
 import { fetchFarmUserDataAsync } from 'state/actions'
 import { QuoteToken } from 'config/constants/types'
-import useI18n from 'hooks/useI18n'
 import FarmCard, { FarmWithStakedValue } from './components/FarmCard/FarmCard'
-import FarmTabButtons from './components/FarmTabButtons'
-import Divider from './components/Divider'
 
 //
 const Farms: React.FC = () => {
   const { path } = useRouteMatch()
-  const TranslateString = useI18n()
   const farmsLP = useFarms()
   const pefiPrice = usePricePefiUsdt()
   const avaxPrice = usePriceAvaxUsdt()
@@ -35,15 +30,16 @@ const Farms: React.FC = () => {
     }
   }, [account, dispatch, fastRefresh])
 
-  const [stackedOnly, setStackedOnly] = useState(false)
+  // const [stackedOnly, setStackedOnly] = useState(false)
 
   // const activeFarms = farmsLP.filter((farm) => farm.pid !== 0 && farm.multiplier !== '0X')
   // const inactiveFarms = farmsLP.filter((farm) => farm.pid !== 0 && farm.multiplier === '0X')
   const activeFarms = farmsLP.filter((farm) => farm.multiplier !== '0X')
   const inactiveFarms = farmsLP.filter((farm) => farm.multiplier === '0X')
-  const stackedOnlyFarms = activeFarms.filter(
-    (farm) => farm.userData && new BigNumber(farm.userData.stakedBalance).isGreaterThan(0),
-  )
+  // const stackedOnlyFarms = activeFarms.filter(
+  //   (farm) => farm.userData && new BigNumber(farm.userData.stakedBalance).isGreaterThan(0),
+  // )
+
   // /!\ This function will be removed soon
   // This function compute the APY for each farm and will be replaced when we have a reliable API
   // to retrieve assets prices against USD
@@ -113,7 +109,8 @@ const Farms: React.FC = () => {
 
         <FlexLayout>
           <Route exact path={`${path}`}>
-            {stackedOnly ? farmsList(stackedOnlyFarms, false) : farmsList(activeFarms, false)}
+            {/* {stackedOnly ? farmsList(stackedOnlyFarms, false) : farmsList(activeFarms, false)} */}
+            {farmsList(activeFarms, false)}
           </Route>
           <Route exact path={`${path}/history`}>
             {farmsList(inactiveFarms, true)}
@@ -168,30 +165,6 @@ const BannerImage = styled.img`
 // content
 const IgloosContentContainer = styled.div`
   position: relative;
-`
-
-const IgloosPenguinImgContainer = styled.div`
-  z-index: -1;
-  position: absolute;
-  left: -190px;
-  margin-left: 0px;
-  bottom: 100px;
-
-  ${({ theme }) => theme.mediaQueries.lg} {
-    bottom: 168px;
-  }
-`
-
-const IgloosPenguinImg = styled.img.attrs((props) => ({
-  src: props.theme.isDark
-    ? `${process.env.PUBLIC_URL}/images/farms/penguin-with-candle.gif`
-    : `${process.env.PUBLIC_URL}/images/farms/penguin-with-fish.gif`,
-}))`
-  width: 150px;
-  ${({ theme }) => theme.mediaQueries.lg} {
-    width: 200px;
-    src: '/images/farms/igloo-background-${({ theme }) => (theme.isDark ? 'dark' : 'light')}.png';
-  }
 `
 
 export default Farms

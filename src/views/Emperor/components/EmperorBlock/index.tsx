@@ -5,7 +5,7 @@ import useI18n from 'hooks/useI18n'
 import { useWeb3React } from '@web3-react/core'
 import UnlockButton from 'components/UnlockButton'
 import { useEmperor } from 'state/hooks'
-import { getShortenAddress, badWordsFilter } from 'utils/address'
+import { badWordsFilter } from 'utils/address'
 import SvgIcon from 'components/SvgIcon'
 import { getPenguinColor, getKingPenguin, getNormalPenguin } from '../utils'
 
@@ -78,7 +78,6 @@ const EmperorBlock: React.FC = () => {
   const TranslateString = useI18n()
   const { account } = useWeb3React()
   const { myEmperor, currentEmperor } = useEmperor()
-  const currentEmperorAddress = currentEmperor && currentEmperor.address
   const currentEmperorNickname = currentEmperor && badWordsFilter(currentEmperor.nickname)
   const currentEmperorBidAmount = (currentEmperor && currentEmperor.bidAmount) || 0
   const currentEmperorPenguin = getKingPenguin(currentEmperor)

@@ -1,7 +1,6 @@
 import React, { useMemo, useState, useCallback } from 'react'
 import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
-import { provider } from 'web3-core'
 import { getContract } from 'utils/erc20'
 import { getAddress } from 'utils/addressHelpers'
 import { Button, Flex, Text } from 'penguinfinance-uikit2'
