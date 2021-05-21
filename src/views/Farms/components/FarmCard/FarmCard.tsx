@@ -116,7 +116,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, removed, pefiPrice, avaxPrice
     return farm.lpTotalInQuoteToken
   }, [avaxPrice, pefiPrice, ethPrice, farm.lpTotalInQuoteToken, farm.quoteTokenSymbol])
 
-  const totalValueFormated = totalValue
+  const totalValueFormatted = totalValue
     ? `$${Number(totalValue).toLocaleString(undefined, { maximumFractionDigits: 0 })}`
     : '-'
 
@@ -163,7 +163,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, removed, pefiPrice, avaxPrice
           avaxScanAddress={`https://cchain.explorer.avax.network/address/${
             farm.lpAddresses[process.env.REACT_APP_CHAIN_ID]
           }`}
-          totalValueFormated={totalValueFormated}
+          totalValueFormatted={totalValueFormatted}
           lpLabel={lpLabel}
           addLiquidityUrl={addLiquidityUrl}
           withdrawalFee={farm.withdrawalFee}
