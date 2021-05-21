@@ -26,14 +26,14 @@ const Menu = (props) => {
   }
 
   const xPefiToPefiRatio = getXPefiToPefiRatio(pefiPool)
-  const isLive = true; // event status
-  const links = [...config];
-  if (isLive) {
-    const emperorIndex = links.findIndex(link => link.label === 'Emperor');
-    links[emperorIndex] = {
-      ...links[emperorIndex],
-      badge: 'LIVE'
-    }
+
+  // add badge to "emperor" menu
+  const isEmperorLive = false // event status
+  const links = [...config]
+  const emperorIndex = links.findIndex((link) => link.label === 'Emperor')
+  links[emperorIndex] = {
+    ...links[emperorIndex],
+    badge: isEmperorLive ? 'LIVE' : 'SOON',
   }
 
   return (
