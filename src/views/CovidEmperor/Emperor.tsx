@@ -240,15 +240,15 @@ const Emperor: React.FC = () => {
     return <>{/* <EmperorEndBgContainer /> */}</>
   }
 
-  const emperorEnded = false
-  const emperorDefaultVideo = '/videos/covid_emperor.mp4'
+  const emperorEnded = true
+  const emperorDefaultVideo = '/videos/penguin_charity.mp4'
   // to change the video of emperor winner page background video, please change this video path
-  const emperorWinnerVideo = '/videos/PenguinEmperorWinner_Final.mp4'
+  const emperorWinnerVideo = '/videos/penguin_charity_end.mp4'
 
   return (
     <EmperorPage>
       <Sound
-        url={`${emperorEnded ? '/sounds/charity_event_winner.mp3' : '/sounds/charity_event.mp3'} `}
+        url={`${emperorEnded ? '/sounds/charity_event.mp3' : '/sounds/charity_event.mp3'} `}
         playStatus={Sound.status.PLAYING}
         volume={20}
         loop
