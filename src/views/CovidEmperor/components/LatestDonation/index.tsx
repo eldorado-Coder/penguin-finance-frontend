@@ -94,12 +94,17 @@ const EmperorInfoContainer = styled.div`
   z-index: 10;
 `
 
-const KingPenguinImageWrapper = styled.div`
+const KingPenguinImageWrapper = styled.div<{ penguin: string }>`
   z-index: -1;
   position: absolute;
   width: 12.5%;
   left: 44%;
   bottom: 33%;
+  svg {
+    ${({ penguin }) => `.${penguin}-st0 {
+          fill: blue;
+        }`}
+  }
 `
 
 const MyPenguinImageWrapper = styled.div`
@@ -172,6 +177,8 @@ const LatestDonation: React.FC = () => {
   const myDonorPenguin = getNormalPenguin(myDonor)
   const avaxDonations = getBalanceNumber(new BigNumber(latestDonor.avaxDonations))
 
+  console.log('111--->', lastDonorPenguin)
+
   return (
     <CardBlock>
       <CardBlockHeader>
@@ -215,7 +222,7 @@ const LatestDonation: React.FC = () => {
         )}
       </CardBlockContent>
       {latestDonor.address && (
-        <KingPenguinImageWrapper>
+        <KingPenguinImageWrapper penguin={`${lastDonorPenguin}`}>
           <SvgIcon
             src={
               latestDonor.style === '3'
