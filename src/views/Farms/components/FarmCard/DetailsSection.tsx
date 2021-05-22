@@ -6,7 +6,7 @@ import { Text, Flex, Link, LinkExternal } from 'penguinfinance-uikit2'
 export interface ExpandableSectionProps {
   avaxScanAddress?: string
   removed?: boolean
-  totalValueFormated?: string
+  totalValueFormatted?: string
   lpLabel?: string
   addLiquidityUrl?: string
   withdrawalFee?: string
@@ -35,6 +35,7 @@ const StyledLinkExternal = styled(LinkExternal)`
 const DetailsSection: React.FC<ExpandableSectionProps> = ({
   avaxScanAddress,
   lpLabel,
+  totalValueFormatted,
   addLiquidityUrl,
   withdrawalFee,
 }) => {
@@ -50,12 +51,10 @@ const DetailsSection: React.FC<ExpandableSectionProps> = ({
         <Text>{TranslateString(316, 'Withdrawal Fee')}:</Text>
         <Text>{`${withdrawalFee} %`}</Text>
       </Flex>
-      {/* {!removed && (
-        <Flex justifyContent="space-between">
-          <Text>{TranslateString(23, 'Total Liquidity')}:</Text>
-          <Text>{totalValueFormated}</Text>
-        </Flex>
-      )} */}
+      <Flex justifyContent="space-between">
+        <Text>{TranslateString(23, 'Total Liquidity')}:</Text>
+        <Text>{totalValueFormatted}</Text>
+      </Flex>
       <Flex justifyContent="flex-start">
         <Link external href={avaxScanAddress} bold={false}>
           {TranslateString(356, 'View on AVAX CChain Explorer')}
