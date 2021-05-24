@@ -20,38 +20,52 @@ export interface FarmWithStakedValue extends Farm {
 const FCard = styled.div<{ index: number }>`
   width: 100%;
   /* background: ${(props) => props.theme.card.background}; */
-  background: ${({ index }) => (index % 2 === 0 ? '#4941A0' : '#D84E49')};
+  background: ${({ index }) => (index % 2 === 0 ? '#383466' : '#D3464E')};
   border-radius: 12px;
   box-shadow: 0px 2px 12px -8px rgba(25, 19, 38, 0.1), 0px 1px 1px rgba(25, 19, 38, 0.05);
   display: flex;
   justify-content: space-between;
-  padding: 24px;
+  padding: 0 16px 12px;
   position: relative;
-  margin-bottom: 36px;
+  margin-bottom: 20px;
 `
 
 // card action container
 const CardActionContainer = styled.div`
   display: flex;
+  margin-right: 2rem;
 `
 const IglooLogoContainer = styled.div`
-  margin-right: 10px;
+  margin-right: 16px;
   width: 100%;
   display: flex;
   align-items: center;
   > div {
-    width: 64px;
+    width: 96px;
   }
 `
 const IglooTitleWrapper = styled.div`
+  @font-face {
+    font-family: 'GothamBold Font';
+    src: url(${process.env.PUBLIC_URL}/fonts/GothamUltra.otf) format('truetype');
+  }
+
   > div {
     color: #fff;
+    font-family: 'GothamBold Font';
   }
 `
 const ActionButtonWrapper = styled.div<{ index: number }>`
+  @font-face {
+    font-family: 'Kanit-Medium Font';
+    src: url(${process.env.PUBLIC_URL}/fonts/Kanit-Medium.ttf) format('truetype');
+  }
+
   margin-right: 10px;
   button {
-    background: ${({ index }) => (index % 2 === 0 ? '#D84E49' : '#4941A0')};
+    background: ${({ index }) => (index % 2 === 0 ? '#D3464E' : '#383466')};
+    font-family: 'Kanit-Medium Font';
+    font-size: 14px;
   }
 `
 
@@ -68,9 +82,27 @@ const CardInfoContainer = styled.div<{ index?: number }>`
   }
 `
 const CardInfoWrapper = styled.div<{ index?: number }>`
+  @font-face {
+    font-family: 'PoppinsRegular Font';
+    src: url(${process.env.PUBLIC_URL}/fonts/PoppinsRegular.ttf) format('truetype');
+  }
+
+  @font-face {
+    font-family: 'Kanit-ExtraBold Font';
+    src: url(${process.env.PUBLIC_URL}/fonts/Kanit-ExtraBold.ttf) format('truetype');
+  }
+
   > div {
     color: #fff;
     text-align: center;
+  }
+
+  .label {
+    font-family: 'PoppinsRegular Font';
+  }
+
+  .value {
+    font-family: 'Kanit-ExtraBold Font';
   }
 `
 
@@ -122,8 +154,8 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, removed, pefiPrice, av
   const { quoteTokenAddresses, tokenSymbol, quoteTokenSymbol, tokenAddresses } = farm
 
   const data = {
-    tvl: '2304000',
-    farmTvl: '2304000',
+    tvl: '2,304,000',
+    farmTvl: '2,304,000',
     normalAPY: '459',
     compoundAPY: '12543.45',
   }
@@ -132,63 +164,65 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, removed, pefiPrice, av
     <FCard index={index}>
       <CardActionContainer>
         <IglooLogoContainer>
-          <Image src={`/images/farms/${farmImage}.svg`} alt={farm.tokenSymbol} width={64} height={64} />
+          <Image src={`/images/farms/${farmImage}.svg`} alt={farm.tokenSymbol} width={96} height={96} />
         </IglooLogoContainer>
-        <Flex flexDirection="column">
+        <Flex flexDirection="column" pt='16px'>
           <IglooTitleWrapper>
-            <Text bold fontSize="20px">{`${tokenSymbol} - ${quoteTokenSymbol} Igloo`}</Text>
+            <Text mt='4px' bold fontSize="18px">{`${tokenSymbol} - ${quoteTokenSymbol} Igloo`}</Text>
           </IglooTitleWrapper>
           <Flex justifyContent="center">
             <ActionButtonWrapper index={index}>
-              <Button mt="8px" scale="sm" disabled={!account}>
+              <Button mt="4px" scale="sm" disabled={!account}>
                 {TranslateString(758, 'Deposit')}
               </Button>
             </ActionButtonWrapper>
             <ActionButtonWrapper index={index}>
-              <Button mt="8px" scale="sm" disabled={!account}>
+              <Button mt="4px" scale="sm" disabled={!account}>
                 {TranslateString(758, 'Withdraw')}
               </Button>
             </ActionButtonWrapper>
             <ActionButtonWrapper index={index}>
-              <Button mt="8px" scale="sm" disabled={!account}>
+              <Button mt="4px" scale="sm" disabled={!account}>
                 {TranslateString(758, 'Reinvest')}
               </Button>
             </ActionButtonWrapper>
           </Flex>
         </Flex>
       </CardActionContainer>
-      <CardInfoContainer index={index}>
-        <CardInfoWrapper index={index}>
-          <Text fontSize="18px">Your TVL</Text>
-          <Text bold fontSize="20px">
-            {data.tvl}
-          </Text>
-        </CardInfoWrapper>
-      </CardInfoContainer>
-      <CardInfoContainer index={index}>
-        <CardInfoWrapper index={index}>
-          <Text fontSize="18px">FARM TVL</Text>
-          <Text bold fontSize="20px">
-            {data.farmTvl}
-          </Text>
-        </CardInfoWrapper>
-      </CardInfoContainer>
-      <CardInfoContainer index={index}>
-        <CardInfoWrapper index={index}>
-          <Text fontSize="18px">NORMAL APY</Text>
-          <Text bold fontSize="20px">
-            {data.normalAPY}
-          </Text>
-        </CardInfoWrapper>
-      </CardInfoContainer>
-      <CardInfoContainer index={index}>
-        <CardInfoWrapper index={index}>
-          <Text fontSize="18px">COMPOUND APY</Text>
-          <Text bold fontSize="20px">
-            {data.compoundAPY}
-          </Text>
-        </CardInfoWrapper>
-      </CardInfoContainer>
+      <Flex pt='16px' justifyContent='space-between' width='100%'>
+        <CardInfoContainer index={index}>
+          <CardInfoWrapper index={index}>
+            <Text className='label' fontSize="16px">YOUR TVL</Text>
+            <Text className='value' bold fontSize="24px">
+              {`$${data.tvl}`}
+            </Text>
+          </CardInfoWrapper>
+        </CardInfoContainer>
+        <CardInfoContainer index={index}>
+          <CardInfoWrapper index={index}>
+            <Text className='label' fontSize="16px">FARM TVL</Text>
+            <Text className='value' bold fontSize="24px">
+              {`$${data.farmTvl}`}
+            </Text>
+          </CardInfoWrapper>
+        </CardInfoContainer>
+        <CardInfoContainer index={index}>
+          <CardInfoWrapper index={index}>
+            <Text className='label' fontSize="16px">NORMAL APY</Text>
+            <Text className='value' bold fontSize="24px">
+              {`${data.normalAPY}%`}
+            </Text>
+          </CardInfoWrapper>
+        </CardInfoContainer>
+        <CardInfoContainer index={index}>
+          <CardInfoWrapper index={index}>
+            <Text className='label' fontSize="16px">COMPOUND APY</Text>
+            <Text className='value' bold fontSize="24px">
+              {`${data.compoundAPY}%`}
+            </Text>
+          </CardInfoWrapper>
+        </CardInfoContainer>
+      </Flex>
     </FCard>
   )
 }
