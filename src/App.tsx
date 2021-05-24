@@ -8,6 +8,7 @@ import GlobalStyle from './style/Global'
 import Menu from './components/Menu'
 import ToastListener from './components/ToastListener'
 import PageLoader from './components/PageLoader'
+import CompounderIgloos from './views/CompounderIgloos'
 import Pools from './views/Pools'
 import GlobalCheckBullHiccupClaimStatus from './views/Collectibles/components/GlobalCheckBullHiccupClaimStatus'
 import history from './routerHistory'
@@ -47,8 +48,11 @@ const App: React.FC = () => {
         <Suspense fallback={<PageLoader />}>
           <Switch>
             <Route path="/" exact>
-              <Home />
+              <CompounderIgloos />
             </Route>
+            {/* <Route path="/" exact>
+              <Home />
+            </Route> */}
             <Route path="/igloos">
               <Farms />
             </Route>
