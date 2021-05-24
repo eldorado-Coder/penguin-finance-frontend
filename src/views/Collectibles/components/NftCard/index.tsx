@@ -48,6 +48,12 @@ const InfoBlock = styled.div`
   padding: 24px;
 `
 
+const Footer = styled(CardFooter)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 const NftCard: React.FC<NftCardProps> = ({ nft, onSuccess, canClaim = false, tokenIds = [] }) => {
   const [isOpen, setIsOpen] = useState(false)
   const TranslateString = useI18n()
@@ -91,7 +97,7 @@ const NftCard: React.FC<NftCardProps> = ({ nft, onSuccess, canClaim = false, tok
           </Button>
         )}
       </CardBody>
-      <CardFooter p="0">
+      <Footer p="0">
         <DetailsButton endIcon={<Icon width="24px" color="primary" />} onClick={handleClick}>
           {TranslateString(658, 'Details')}
         </DetailsButton>
@@ -102,7 +108,7 @@ const NftCard: React.FC<NftCardProps> = ({ nft, onSuccess, canClaim = false, tok
             </Text>
           </InfoBlock>
         )}
-      </CardFooter>
+      </Footer>
     </Card>
   )
 }

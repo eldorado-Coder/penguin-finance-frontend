@@ -1,34 +1,30 @@
 import { Nft } from './types'
 
 const Nfts: Nft[] = [
-  // {
-  //   name: 'Bullish',
-  //   description: 'Happy Niu Year! This bunny’s excited for the year of the bull (market!)',
-  //   images: {
-  //     lg: 'bullish-lg.png',
-  //     md: 'bullish-md.png',
-  //     sm: 'bullish-sm.png',
-  //     ipfs: 'https://gateway.pinata.cloud/ipfs/QmNS1A5HsRW1JvFWtGkm4o9TgZVe2P7kA8TB4yxvS6A7ms/bullish.png',
-  //   },
-  //   video: {
-  //     webm: 'https://gateway.pinata.cloud/ipfs/QmNS1A5HsRW1JvFWtGkm4o9TgZVe2P7kA8TB4yxvS6A7ms/bullish.webm',
-  //     mp4: 'https://gateway.pinata.cloud/ipfs/QmNS1A5HsRW1JvFWtGkm4o9TgZVe2P7kA8TB4yxvS6A7ms/bullish.mp4',
-  //   },
-  //   sortOrder: 999,
-  //   bunnyId: 11,
-  // },
-  // {
-  //   name: 'Hiccup',
-  //   description: "Oopsie daisy! Hiccup's had a bit of an accident. Poor little fella.",
-  //   images: {
-  //     lg: 'hiccup-lg.png',
-  //     md: 'hiccup-md.png',
-  //     sm: 'hiccup-sm.png',
-  //     ipfs: 'https://gateway.pinata.cloud/ipfs/QmQ6EE6gkVzAQUdQLLM7CyrnME6LZHCoy92ZERW8HXmyjw/hiccup.png',
-  //   },
-  //   sortOrder: 999,
-  //   bunnyId: 10,
-  // },
+  {
+    name: 'Doctor Aukee',
+    description: 'The second wave of the pandemic is turning out to be extremely fatal for all and especially for the healthcare workers who are at the forefront',
+    images: {
+      lg: 'Doctor_Aukee.jpg',
+      md: 'Doctor_Aukee.jpg',
+      sm: 'Doctor_Aukee.jpg',
+      // ipfs: 'https://gateway.pinata.cloud/ipfs/QmNS1A5HsRW1JvFWtGkm4o9TgZVe2P7kA8TB4yxvS6A7ms/bullish.png',
+    },
+    sortOrder: 999,
+    bunnyId: 11,
+  },
+  {
+    name: 'Penguin Nurse',
+    description: "She can help patients to be survive",
+    images: {
+      lg: 'Penguin_Nurse.jpg',
+      md: 'Penguin_Nurse.jpg',
+      sm: 'Penguin_Nurse.jpg',
+      // ipfs: 'https://gateway.pinata.cloud/ipfs/QmQ6EE6gkVzAQUdQLLM7CyrnME6LZHCoy92ZERW8HXmyjw/hiccup.png',
+    },
+    sortOrder: 999,
+    bunnyId: 10,
+  },
   // {
   //   name: 'Sleepy',
   //   description: 'Aww, looks like eating pancakes all day is tough work. Sweet dreams!',

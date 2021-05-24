@@ -45,11 +45,11 @@ export const config: MenuEntry[] = [
   //   icon: 'NftIcon',
   //   href: '/lottery',
   // },
-  // {
-  //   label: 'Penguin collectibles',
-  //   icon: 'NftIcon',
-  //   href: '/collectibles',
-  // },
+  {
+    label: 'Collectibles',
+    icon: 'NftIcon',
+    href: '/collectibles',
+  },
   // {
   //   label: 'Penguin teams',
   //   icon: 'NftIcon',
