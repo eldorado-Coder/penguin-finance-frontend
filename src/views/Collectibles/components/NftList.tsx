@@ -56,7 +56,7 @@ const NftList = () => {
       fetchClaimableStatuses(account)
     }
   }, [account, fetchClaimableStatuses])
-
+  
   return (
     <NftGrid>
       {orderBy(nfts, 'sortOrder').map((nft) => {
