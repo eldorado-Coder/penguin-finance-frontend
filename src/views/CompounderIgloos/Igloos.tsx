@@ -87,9 +87,7 @@ const Igloos: React.FC = () => {
 
   return (
     <CompounderIglooPage>
-      <BgWrapper>
-        <IgloosBgContainer />
-      </BgWrapper>
+      <IgloosBgContainer />
       <IgloosBannerContainer>
         <BannerImage
           src={`${process.env.PUBLIC_URL}/images/compounder-igloos/banner.png`}
@@ -112,22 +110,11 @@ const CompounderIglooPage = styled(Page)`
   max-width: 1200px;
 `
 
-// bg
 const IgloosBgContainer = styled.div`
-  /* background-image: url('/images/farms/IglooBackground${({ theme }) => (theme.isDark ? 'Night' : 'Light')}.png'); */
+  background-image: url('/images/home/HomePageBackground.png');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
-  position: absolute;
-  top: -8px;
-  bottom: -8px;
-  right: 0px;
-  left: 0px;
-  z-index: -1;
-`
-
-const BgWrapper = styled.div`
-  background: ${({ theme }) => !theme.isDark && '#EBEEF7'};
   position: absolute;
   top: 0px;
   bottom: 0px;
