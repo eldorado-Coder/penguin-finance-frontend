@@ -2,6 +2,7 @@ import React, { useEffect, useCallback } from 'react'
 import { Route, useRouteMatch } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import BigNumber from 'bignumber.js'
+import { Text } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import styled from 'styled-components'
 import { BLOCKS_PER_WEEK, PEFI_POOL_PID } from 'config'
@@ -10,6 +11,7 @@ import { usePefiPerBlock, useFarms, usePriceAvaxUsdt, usePricePefiUsdt, usePrice
 import useRefresh from 'hooks/useRefresh'
 import { fetchFarmUserDataAsync } from 'state/actions'
 import { QuoteToken } from 'config/constants/types'
+import Select from 'components/Select/Select';
 import FarmCard, { FarmWithStakedValue } from './components/FarmCard/FarmCard'
 
 //
@@ -32,6 +34,7 @@ const Igloos: React.FC = () => {
 
   const activeFarms = farmsLP.filter((farm) => farm.multiplier !== '0X')
   const inactiveFarms = farmsLP.filter((farm) => farm.multiplier === '0X')
+
   // /!\ This function will be removed soon
   // This function compute the APY for each farm and will be replaced when we have a reliable API
   // to retrieve assets prices against USD
@@ -69,6 +72,7 @@ const Igloos: React.FC = () => {
 
         return { ...farm, apy }
       })
+
       return farmsToDisplayWithAPY.map((farm, index) => (
         <FarmCard
           key={farm.pid}
@@ -94,6 +98,15 @@ const Igloos: React.FC = () => {
           alt="compounder igloos banner"
         />
       </IgloosBannerContainer>
+      <FilterContainer>
+        <LabelWrapper>
+          <Text textTransform="uppercase">Sort by</Text>
+          <Select options={[
+            { label: 'Farm TVL', value: 'farm-tvl'},
+            { label: 'APY', value: 'apy'}
+          ]}/>
+        </LabelWrapper>
+      </FilterContainer>
       <IgloosContentContainer>
         <Route exact path={`${path}`}>
           {farmsList(activeFarms, false)}
@@ -108,13 +121,27 @@ const Igloos: React.FC = () => {
 
 const CompounderIglooPage = styled(Page)`
   max-width: 1200px;
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 0;
 `
 
+// bg
 const IgloosBgContainer = styled.div`
-  background-image: url('/images/home/HomePageBackground.png');
+  background-image: url('/images/compounder-igloos/CompounderPattern.png');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
+  position: absolute;
+  top: -8px;
+  bottom: -8px;
+  right: 0px;
+  left: 0px;
+  z-index: -1;
+`
+
+const BgWrapper = styled.div`
+  background: ${({ theme }) => theme.isDark ? '#1A1028' : '#F9F8F9'};
   position: absolute;
   top: 0px;
   bottom: 0px;
@@ -137,6 +164,16 @@ const BannerImage = styled.img`
 // content
 const IgloosContentContainer = styled.div`
   position: relative;
+`
+
+const FilterContainer = styled.div`
+  margin-bottom: 1rem;
+`;
+
+const LabelWrapper = styled.div`
+  > ${Text} {
+    font-size: 12px;
+  }
 `
 
 export default Igloos
