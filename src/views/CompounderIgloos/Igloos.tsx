@@ -6,6 +6,7 @@ import { Text } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import styled from 'styled-components'
 import { BLOCKS_PER_WEEK, PEFI_POOL_PID } from 'config'
+import useTheme from 'hooks/useTheme';
 import Page from 'components/layout/Page'
 import { usePefiPerBlock, useFarms, usePriceAvaxUsdt, usePricePefiUsdt, usePriceEthUsdt } from 'state/hooks'
 import useRefresh from 'hooks/useRefresh'
@@ -23,6 +24,7 @@ const Igloos: React.FC = () => {
   const avaxPrice = usePriceAvaxUsdt()
   const { account } = useWeb3React()
   const ethPriceUsd = usePriceEthUsdt()
+  const { isDark } = useTheme();
 
   const dispatch = useDispatch()
   const { fastRefresh } = useRefresh()
@@ -91,30 +93,32 @@ const Igloos: React.FC = () => {
 
   return (
     <CompounderIglooPage>
-      <IgloosBgContainer />
-      <IgloosBannerContainer>
-        <BannerImage
-          src={`${process.env.PUBLIC_URL}/images/compounder-igloos/banner.png`}
-          alt="compounder igloos banner"
-        />
-      </IgloosBannerContainer>
-      <FilterContainer>
-        <LabelWrapper>
-          <Text textTransform="uppercase">Sort by</Text>
-          <Select options={[
-            { label: 'Farm TVL', value: 'farm-tvl'},
-            { label: 'APY', value: 'apy'}
-          ]}/>
-        </LabelWrapper>
-      </FilterContainer>
-      <IgloosContentContainer>
-        <Route exact path={`${path}`}>
-          {farmsList(activeFarms, false)}
-        </Route>
-        <Route exact path={`${path}/history`}>
-          {farmsList(inactiveFarms, true)}
-        </Route>
-      </IgloosContentContainer>
+      <BgWrapper>
+        <IgloosBgContainer />
+      </BgWrapper>
+      <BannerImage
+        src={`${process.env.PUBLIC_URL}/images/compounder-igloos/Compounder${isDark ? 'Night' : 'Day'}.gif`}
+        alt="compounder igloos banner"
+      />
+      <CompounderContent>
+        <FilterContainer>
+          <LabelWrapper>
+            <Text textTransform="uppercase">Sort by</Text>
+            <Select options={[
+              { label: 'Farm TVL', value: 'farm-tvl'},
+              { label: 'APY', value: 'apy'}
+            ]}/>
+          </LabelWrapper>
+        </FilterContainer>
+        <IgloosContentContainer>
+          <Route exact path={`${path}`}>
+            {farmsList(activeFarms, false)}
+          </Route>
+          <Route exact path={`${path}/history`}>
+            {farmsList(inactiveFarms, true)}
+          </Route>
+        </IgloosContentContainer>
+      </CompounderContent>
     </CompounderIglooPage>
   )
 }
@@ -150,15 +154,9 @@ const BgWrapper = styled.div`
   z-index: -1;
 `
 
-// banner
-const IgloosBannerContainer = styled.div`
-  /* position: absolute; */
-`
-
 const BannerImage = styled.img`
   z-index: -1;
   width: 100%;
-  margin-bottom: 50px;
 `
 
 // content
@@ -175,5 +173,13 @@ const LabelWrapper = styled.div`
     font-size: 12px;
   }
 `
+
+const CompounderContent = styled.div`
+  padding: 0 16px;
+
+  ${({ theme }) => theme.mediaQueries.sm} {
+    padding: 0 40px;
+  }
+`;
 
 export default Igloos
