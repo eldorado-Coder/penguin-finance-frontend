@@ -12,6 +12,7 @@ import getLiquidityUrlPathParts from 'utils/getLiquidityUrlPathParts'
 import DetailsSection from './DetailsSection'
 import CardHeading from './CardHeading'
 import CardActionsContainer from './CardActionsContainer'
+import CardValue from './CardValue'
 
 export interface FarmWithStakedValue extends Farm {
   apy?: BigNumber
@@ -154,10 +155,10 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, removed, pefiPrice, av
   const { quoteTokenAddresses, tokenSymbol, quoteTokenSymbol, tokenAddresses } = farm
 
   const data = {
-    tvl: '2,304,000',
-    farmTvl: '2,304,000',
-    normalAPY: '459',
-    compoundAPY: '12543.45',
+    tvl: 2304000,
+    farmTvl: 2304000,
+    normalAPY: 459,
+    compoundAPY: 12543.45,
   }
 
   return (
@@ -166,9 +167,9 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, removed, pefiPrice, av
         <IglooLogoContainer>
           <Image src={`/images/farms/${farmImage}.svg`} alt={farm.tokenSymbol} width={96} height={96} />
         </IglooLogoContainer>
-        <Flex flexDirection="column" pt='16px'>
+        <Flex flexDirection="column" pt="16px">
           <IglooTitleWrapper>
-            <Text mt='4px' bold fontSize="18px">{`${tokenSymbol} - ${quoteTokenSymbol} Igloo`}</Text>
+            <Text mt="4px" bold fontSize="18px">{`${tokenSymbol} - ${quoteTokenSymbol} Igloo`}</Text>
           </IglooTitleWrapper>
           <Flex justifyContent="center">
             <ActionButtonWrapper index={index}>
@@ -189,37 +190,37 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, removed, pefiPrice, av
           </Flex>
         </Flex>
       </CardActionContainer>
-      <Flex pt='16px' justifyContent='space-between' width='100%'>
+      <Flex pt="16px" justifyContent="space-between" width="100%">
         <CardInfoContainer index={index}>
           <CardInfoWrapper index={index}>
-            <Text className='label' fontSize="16px">YOUR TVL</Text>
-            <Text className='value' bold fontSize="24px">
-              {`$${data.tvl}`}
+            <Text className="label" fontSize="16px">
+              YOUR TVL
             </Text>
+            <CardValue className="value" bold fontSize="24px" prefix="$" value={data.tvl} />
           </CardInfoWrapper>
         </CardInfoContainer>
         <CardInfoContainer index={index}>
           <CardInfoWrapper index={index}>
-            <Text className='label' fontSize="16px">FARM TVL</Text>
-            <Text className='value' bold fontSize="24px">
-              {`$${data.farmTvl}`}
+            <Text className="label" fontSize="16px">
+              FARM TVL
             </Text>
+            <CardValue className="value" bold fontSize="24px" prefix="$" value={data.farmTvl} />
           </CardInfoWrapper>
         </CardInfoContainer>
         <CardInfoContainer index={index}>
           <CardInfoWrapper index={index}>
-            <Text className='label' fontSize="16px">NORMAL APY</Text>
-            <Text className='value' bold fontSize="24px">
-              {`${data.normalAPY}%`}
+            <Text className="label" fontSize="16px">
+              NORMAL APY
             </Text>
+            <CardValue className="value" bold fontSize="24px" prefix="$" value={data.normalAPY} />
           </CardInfoWrapper>
         </CardInfoContainer>
         <CardInfoContainer index={index}>
           <CardInfoWrapper index={index}>
-            <Text className='label' fontSize="16px">COMPOUND APY</Text>
-            <Text className='value' bold fontSize="24px">
-              {`${data.compoundAPY}%`}
+            <Text className="label" fontSize="16px">
+              COMPOUND APY
             </Text>
+            <CardValue className="value" bold fontSize="24px" prefix="$" value={data.compoundAPY} />
           </CardInfoWrapper>
         </CardInfoContainer>
       </Flex>
