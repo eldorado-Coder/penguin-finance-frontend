@@ -183,7 +183,7 @@ const LatestDonation: React.FC = () => {
   return (
     <CardBlock>
       <CardBlockHeader>
-        <TitleBgWrapper color={getPenguinColor(latestDonor).code}>
+        <TitleBgWrapper color={getPenguinColor(latestDonor)}>
           <SvgIcon
             src={`${process.env.PUBLIC_URL}/images/covid-emperor/banner/penguin_without_borders.svg`}
             width="100%"
@@ -223,7 +223,7 @@ const LatestDonation: React.FC = () => {
         )}
       </CardBlockContent>
       {latestDonor.address && (
-        <KingPenguinImageWrapper penguin={`${lastDonorPenguin}`} color={getPenguinColor(latestDonor).code}>
+        <KingPenguinImageWrapper penguin={`${lastDonorPenguin}`} color={getPenguinColor(latestDonor)}>
           <SvgIcon
             src={
               latestDonor.style === '3'
@@ -236,7 +236,7 @@ const LatestDonation: React.FC = () => {
         </KingPenguinImageWrapper>
       )}
       {latestDonor.address && latestDonor.address !== account && myDonor.isRegistered && (
-        <MyPenguinImageWrapper penguin={`${myDonorPenguin}`} color={getPenguinColor(myDonor).code}>
+        <MyPenguinImageWrapper penguin={`${myDonorPenguin}`} color={getPenguinColor(myDonor)}>
           <SvgIcon
             src={
               myDonor.style === '3'
