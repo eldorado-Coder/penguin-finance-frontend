@@ -47,7 +47,6 @@ export const useTotalSupply = () => {
 
 export const useBurnedBalance = (tokenAddress: string) => {
   const [balance, setBalance] = useState(new BigNumber(0))
-  const { account } = useWeb3React()
   const { slowRefresh } = useRefresh()
   const web3 = useWeb3()
 
@@ -57,10 +56,10 @@ export const useBurnedBalance = (tokenAddress: string) => {
       setBalance(new BigNumber(res))
     }
 
-    if (account && web3) {
+    if (web3) {
       fetchBalance()
     }
-  }, [account, web3, tokenAddress, slowRefresh])
+  }, [web3, tokenAddress, slowRefresh])
 
   return balance
 }

@@ -26,6 +26,11 @@ export const config: MenuEntry[] = [
     href: '/igloos',
   },
   {
+    label: 'Compounder',
+    icon: 'FarmIcon',
+    href: '/compounder',
+  },
+  {
     label: 'Nests',
     icon: 'NestIcon',
     href: '/nests',
@@ -45,11 +50,11 @@ export const config: MenuEntry[] = [
   //   icon: 'NftIcon',
   //   href: '/lottery',
   // },
-  // {
-  //   label: 'Penguin collectibles',
-  //   icon: 'NftIcon',
-  //   href: '/collectibles',
-  // },
+  {
+    label: 'Collectibles',
+    icon: 'NftIcon',
+    href: '/collectibles',
+  },
   // {
   //   label: 'Penguin teams',
   //   icon: 'NftIcon',
