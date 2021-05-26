@@ -8,7 +8,6 @@ import GlobalStyle from './style/Global'
 import Menu from './components/Menu'
 import ToastListener from './components/ToastListener'
 import PageLoader from './components/PageLoader'
-import CompounderIgloos from './views/CompounderIgloos'
 import Pools from './views/Pools'
 import GlobalCheckBullHiccupClaimStatus from './views/Collectibles/components/GlobalCheckBullHiccupClaimStatus'
 import history from './routerHistory'
@@ -26,6 +25,7 @@ const NotFound = lazy(() => import('./views/NotFound'))
 // const Lottery = lazy(() => import('./views/Lottery'))
 // const Ifos = lazy(() => import('./views/Ifos'))
 const Collectibles = lazy(() => import('./views/Collectibles'))
+const CompounderIgloos = lazy(() => import('./views/CompounderIgloos'))
 // const Teams = lazy(() => import('./views/Teams'))
 // const Team = lazy(() => import('./views/Teams/Team'))
 // const Profile = lazy(() => import('./views/Profile'))
@@ -47,7 +47,7 @@ const App: React.FC = () => {
       <Menu>
         <Suspense fallback={<PageLoader />}>
           <Switch>
-            <Route path="/compounder" exact>
+            <Route path="/compounder">
               <CompounderIgloos />
             </Route>
             <Route path="/" exact>

@@ -91,8 +91,9 @@ const ListItem = styled.li`
 `
 
 export interface SelectProps {
+  value?: string
   options: OptionProps[]
-  onChange?: (option: OptionProps) => void
+  onChange?: (option: string) => void
 }
 
 export interface OptionProps {
@@ -100,21 +101,25 @@ export interface OptionProps {
   value: any
 }
 
-const Select: React.FunctionComponent<SelectProps> = ({ options, onChange }) => {
+const Select: React.FunctionComponent<SelectProps> = ({ value, options, onChange }) => {
   const containerRef = useRef(null)
   const dropdownRef = useRef(null)
   const [isOpen, setIsOpen] = useState(false)
-  const [selectedOption, setSelectedOption] = useState(options[0])
+  const [selectedValue, setSelectedValue] = useState(value || options[0].value)
   const [containerSize, setContainerSize] = useState({ width: 0, height: 0 })
 
   const toggling = () => setIsOpen(!isOpen)
 
+  useEffect(() => {
+    setSelectedValue(value);
+  }, [value]);
+
   const onOptionClicked = (option: OptionProps) => () => {
-    setSelectedOption(option)
+    setSelectedValue(option.value)
     setIsOpen(false)
 
     if (onChange) {
-      onChange(option)
+      onChange(option.value)
     }
   }
 
@@ -125,18 +130,19 @@ const Select: React.FunctionComponent<SelectProps> = ({ options, onChange }) => 
     })
   }, [])
 
+  const selectedOption = options.find(option => option.value === selectedValue);
   return (
     <DropDownContainer isOpen={isOpen} ref={containerRef} {...containerSize}>
       {containerSize.width !== 0 && (
         <DropDownHeader onClick={toggling}>
-          <Text>{selectedOption.label}</Text>
+          <Text>{selectedOption ? selectedOption.label : ""}</Text>
         </DropDownHeader>
       )}
       <ArrowDropDownIcon color="text" onClick={toggling} />
       <DropDownListContainer>
         <DropDownList ref={dropdownRef}>
           {options.map((option) =>
-            option.label !== selectedOption.label ? (
+            option.value !== selectedValue ? (
               <ListItem onClick={onOptionClicked(option)} key={option.label}>
                 <Text>{option.label}</Text>
               </ListItem>

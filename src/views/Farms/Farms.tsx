@@ -93,6 +93,7 @@ const Farms: React.FC = () => {
     [pefiPerBlock, farmsLP, avaxPrice, ethPriceUsd, pefiPrice, account],
   )
 
+  console.log('ant : rendered');
   return (
     <FarmPage>
       {/* <Heading as="h1" size="lg" color="primary" mb="50px" style={{ textAlign: 'center' }}>
