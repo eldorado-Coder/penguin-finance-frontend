@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components';
 import Page from 'components/layout/Page'
+import useTheme from 'hooks/useTheme';
 import NftList from './components/NftList'
 
 const PageBgContainer = styled.div`
@@ -22,10 +23,11 @@ const NFTPage = styled(Page)`
 `;
 
 const Collectibles = () => {
+  const { isDark } = useTheme();
   return (
     <NFTPage>
       <PageBgContainer />
-      <img src={`${process.env.PUBLIC_URL}/images/nfts/NFTBannerAnimated.gif`} alt="ntf banner" />
+      <img src={`${process.env.PUBLIC_URL}/images/nfts/${isDark ? 'BannerNightNFTs' : 'NFTBannerAnimated'}.gif`} alt="ntf banner" />
       <NftList />
     </NFTPage>
   )
