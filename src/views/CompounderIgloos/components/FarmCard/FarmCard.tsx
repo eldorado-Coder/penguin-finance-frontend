@@ -1,28 +1,22 @@
-import React from 'react'
+import React, { useState, useMemo, useCallback } from 'react'
 import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
 import { Flex, Text, Image, Button, useModal } from 'penguinfinance-uikit2'
-// import { communityFarms } from 'config/constants'
 import { Farm } from 'state/types'
 import useI18n from 'hooks/useI18n'
 import { useFarmFromSymbol, useFarmUser } from 'state/hooks'
-// import { useApprove } from 'hooks/useApprove'
-// import useWeb3 from 'hooks/useWeb3'
-// import { getAddress } from 'utils/addressHelpers'
-// import { getContract } from 'utils/erc20'
+import { useApprove } from 'hooks/useApprove'
+import useWeb3 from 'hooks/useWeb3'
+import { getAddress } from 'utils/addressHelpers'
+import { getContract } from 'utils/erc20'
 import { BASE_ADD_LIQUIDITY_URL, WEEKS_PER_YEAR } from 'config'
 import getLiquidityUrlPathParts from 'utils/getLiquidityUrlPathParts'
 import useStake from 'hooks/useStake'
 import useUnstake from 'hooks/useUnstake'
-// import { QuoteToken } from 'config/constants/types'
+import { getBalanceNumber } from 'utils/formatBalance'
+import { QuoteToken } from 'config/constants/types'
 import DepositModal from '../DepositModal'
 import WithdrawModal from '../WithdrawModal'
-// import ExpandableSectionButton from 'components/ExpandableSectionButton'
-// import { WEEKS_PER_YEAR } from 'config'
-// import getLiquidityUrlPathParts from 'utils/getLiquidityUrlPathParts'
-// import DetailsSection from './DetailsSection'
-// import CardHeading from './CardHeading'
-// import CardActionsContainer from './CardActionsContainer'
 
 export interface FarmWithStakedValue extends Farm {
   apy?: BigNumber,
@@ -53,10 +47,10 @@ const FCard = styled.div<{ index: number }>`
 const CardActionContainer = styled.div`
   display: flex;
   margin-right: 2rem;
+  min-width: 38%;
 `
 const IglooLogoContainer = styled.div`
   margin-right: 16px;
-  width: 100%;
   display: flex;
   align-items: center;
   > div {
@@ -95,6 +89,7 @@ const ActionButtonWrapper = styled.div<{ index: number }>`
     font-family: 'Kanit-Medium Font';
     font-size: 14px;
     font-weight: 500;
+    white-space: nowrap;
   }
 `
 
@@ -148,14 +143,52 @@ interface FarmCardProps {
 const FarmCard: React.FC<FarmCardProps> = ({ 
   index, 
   farm, 
+  avaxPrice,
+  pefiPrice,
+  ethPrice,
   account 
 }) => {
   const TranslateString = useI18n()
-  const { pid } = useFarmFromSymbol(farm.lpSymbol)
-  const { tokenBalance, stakedBalance } = useFarmUser(pid)
+  const { pid, lpAddresses } = useFarmFromSymbol(farm.lpSymbol)
+  const { allowance, tokenBalance, stakedBalance } = useFarmUser(pid)
   const lpName = farm.lpSymbol.toUpperCase()
   const { onStake } = useStake(pid)
   const { onUnstake } = useUnstake(pid)
+  const web3 = useWeb3()
+  const lpAddress = getAddress(lpAddresses)
+  const isApproved = account && allowance && allowance.isGreaterThan(0)
+  const [requestedApproval, setRequestedApproval] = useState(false)
+  
+  const lpContract = useMemo(() => {
+    return getContract(web3, lpAddress)
+  }, [web3, lpAddress])
+
+  const { onApprove } = useApprove(lpContract)
+
+  const handleApprove = useCallback(async () => {
+    try {
+      setRequestedApproval(true)
+      await onApprove()
+      setRequestedApproval(false)
+    } catch (e) {
+      console.error(e)
+    }
+  }, [onApprove])
+
+  const rawStakedBalance = getBalanceNumber(stakedBalance)
+
+  let stakedValue = new BigNumber(rawStakedBalance);
+  if (farm.quoteTokenSymbol === QuoteToken.AVAX) {
+    stakedValue = avaxPrice.times(rawStakedBalance)
+  }
+  else if (farm.quoteTokenSymbol === QuoteToken.PEFI) {
+    stakedValue = pefiPrice.times(rawStakedBalance)
+  }
+  else if (farm.quoteTokenSymbol === QuoteToken.ETH) {
+    stakedValue = ethPrice.times(rawStakedBalance)
+  } else {
+    stakedValue = stakedBalance
+  }
 
   const { quoteTokenAddresses, quoteTokenSymbol, tokenAddresses } = farm
   const liquidityUrlPathParts = getLiquidityUrlPathParts({ quoteTokenAddresses, quoteTokenSymbol, tokenAddresses })
@@ -173,7 +206,7 @@ const FarmCard: React.FC<FarmCardProps> = ({
     ? `$${Number(farm.totalValue).toLocaleString(undefined, { maximumFractionDigits: 0 })}`
     : '-'
 
-  const stakedValueFormatted = `$${Number(stakedBalance).toLocaleString(undefined, { maximumFractionDigits: 0 })}`
+  const stakedValueFormatted = `$${Number(stakedValue).toLocaleString(undefined, { maximumFractionDigits: 2 })}`
   const farmAPY =
     farm.apy && farm.apy.times(new BigNumber(WEEKS_PER_YEAR)).times(new BigNumber(100)).toNumber().toFixed(2)
 
@@ -195,21 +228,31 @@ const FarmCard: React.FC<FarmCardProps> = ({
             <Text mt='4px' bold fontSize="18px">{`${farm.tokenSymbol} - ${quoteTokenSymbol} Igloo`}</Text>
           </IglooTitleWrapper>
           <Flex justifyContent="center">
-            <ActionButtonWrapper index={index}>
-              <Button mt="4px" scale="sm" disabled={!account} onClick={onPresentDeposit}>
-                {TranslateString(758, 'Deposit')}
-              </Button>
-            </ActionButtonWrapper>
-            <ActionButtonWrapper index={index}>
-              <Button mt="4px" scale="sm" disabled={!account} onClick={onPresentWithdraw}>
-                {TranslateString(758, 'Withdraw')}
-              </Button>
-            </ActionButtonWrapper>
-            <ActionButtonWrapper index={index}>
-              <Button mt="4px" scale="sm" disabled={!account}>
-                {TranslateString(758, 'Reinvest')}
-              </Button>
-            </ActionButtonWrapper>
+            {isApproved ? 
+              <>
+                <ActionButtonWrapper index={index}>
+                  <Button mt="4px" scale="sm" disabled={!account} onClick={onPresentDeposit}>
+                    {TranslateString(758, 'Deposit')}
+                  </Button>
+                </ActionButtonWrapper>
+                <ActionButtonWrapper index={index}>
+                  <Button mt="4px" scale="sm" disabled={!account} onClick={onPresentWithdraw}>
+                    {TranslateString(758, 'Withdraw')}
+                  </Button>
+                </ActionButtonWrapper>
+                <ActionButtonWrapper index={index}>
+                  <Button mt="4px" scale="sm" disabled={!account}>
+                    {TranslateString(758, 'Reinvest')}
+                  </Button>
+                </ActionButtonWrapper>
+              </>
+              : 
+              <ActionButtonWrapper index={index}>
+                <Button mt="4px" scale="sm" disabled={requestedApproval} onClick={handleApprove}>
+                  {TranslateString(758, 'Approve Contract')}
+                </Button>
+              </ActionButtonWrapper>
+            }
           </Flex>
         </Flex>
       </CardActionContainer>

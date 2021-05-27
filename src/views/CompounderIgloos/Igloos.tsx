@@ -41,8 +41,6 @@ const Igloos: React.FC = () => {
   const activeFarms = farmsLP.filter((farm) => farm.multiplier !== '0X')
   const inactiveFarms = farmsLP.filter((farm) => farm.multiplier === '0X')
 
-  console.log('ant : activeFarms => ', activeFarms);
-
   // /!\ This function will be removed soon
   // This function compute the APY for each farm and will be replaced when we have a reliable API
   // to retrieve assets prices against USD
@@ -110,6 +108,9 @@ const Igloos: React.FC = () => {
           farm={farm}
           removed={removed}
           account={account}
+          avaxPrice={avaxPrice}
+          pefiPrice={pefiPrice}
+          ethPrice={ethPriceUsd}
         />
       ))
     },

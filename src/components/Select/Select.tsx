@@ -105,17 +105,11 @@ const Select: React.FunctionComponent<SelectProps> = ({ value, options, onChange
   const containerRef = useRef(null)
   const dropdownRef = useRef(null)
   const [isOpen, setIsOpen] = useState(false)
-  const [selectedValue, setSelectedValue] = useState(value || options[0].value)
   const [containerSize, setContainerSize] = useState({ width: 0, height: 0 })
 
   const toggling = () => setIsOpen(!isOpen)
 
-  useEffect(() => {
-    setSelectedValue(value);
-  }, [value]);
-
   const onOptionClicked = (option: OptionProps) => () => {
-    setSelectedValue(option.value)
     setIsOpen(false)
 
     if (onChange) {
@@ -130,19 +124,17 @@ const Select: React.FunctionComponent<SelectProps> = ({ value, options, onChange
     })
   }, [])
 
-  const selectedOption = options.find(option => option.value === selectedValue);
+  const selectedOption = options.find(option => option.value === value);
   return (
     <DropDownContainer isOpen={isOpen} ref={containerRef} {...containerSize}>
-      {containerSize.width !== 0 && (
-        <DropDownHeader onClick={toggling}>
-          <Text>{selectedOption ? selectedOption.label : ""}</Text>
-        </DropDownHeader>
-      )}
+      <DropDownHeader onClick={toggling}>
+        <Text>{selectedOption ? selectedOption.label : ""}</Text>
+      </DropDownHeader>
       <ArrowDropDownIcon color="text" onClick={toggling} />
       <DropDownListContainer>
         <DropDownList ref={dropdownRef}>
           {options.map((option) =>
-            option.value !== selectedValue ? (
+            option.value !== value ? (
               <ListItem onClick={onOptionClicked(option)} key={option.label}>
                 <Text>{option.label}</Text>
               </ListItem>
