@@ -33,10 +33,15 @@ const Header = styled(InfoRow)`
 
 const DetailsButton = styled(Button).attrs({ variant: 'text', fullWidth: true })`
   height: auto;
-  padding: 16px 24px;
+  border-radius: 8px;
+  padding: 4px 24px;
+  margin-bottom: 8px;
+  font-weight: 500;
+  background-color: ${({ theme }) => theme.isDark ? '#121021' : '#fbca30'};
+  color: #ffffff;
 
-  &:hover:not(:disabled):not(:active) {
-    background-color: transparent;
+  svg {
+    fill: #ffffff;
   }
 
   &:focus:not(:active) {
@@ -45,13 +50,34 @@ const DetailsButton = styled(Button).attrs({ variant: 'text', fullWidth: true })
 `
 
 const InfoBlock = styled.div`
-  padding: 24px;
+  padding: 16px 24px 24px;
 `
 
 const Footer = styled(CardFooter)`
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-top: none;
+`;
+
+const PGCard = styled(Card)`
+  border-radius: 20px;
+  padding: 8px 24px;
+  box-shadow: 0px 2px 12px -8px rgba(25, 19, 38, 0.1), 0px 1px 1px rgba(25, 19, 38, 0.05);
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  background: ${({ theme }) => theme.isDark && '#443C7C'};
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    max-width: 360px;
+  }
+`;
+
+const PGCardBody = styled(CardBody)`
+  display: flex;
+  justify-content: center;
+  padding: 8px 0 12px;
 `;
 
 const NftCard: React.FC<NftCardProps> = ({ nft, onSuccess, canClaim = false, tokenIds = [] }) => {
@@ -70,11 +96,10 @@ const NftCard: React.FC<NftCardProps> = ({ nft, onSuccess, canClaim = false, tok
   const [onPresentClaimModal] = useModal(<ClaimNftModal nft={nft} onSuccess={onSuccess} />)
 
   return (
-    <Card isActive={walletOwnsNft || canClaim}>
-      <Preview nft={nft} isOwned={walletOwnsNft} />
-      <CardBody>
+    <PGCard isActive={walletOwnsNft || canClaim}>
+      <PGCardBody>
         <Header>
-          <Heading>{name}</Heading>
+          <Heading size='lg'>{name}</Heading>
           {walletOwnsNft && (
             <Tag outline variant="secondary">
               {TranslateString(999, 'In Wallet')}
@@ -96,9 +121,10 @@ const NftCard: React.FC<NftCardProps> = ({ nft, onSuccess, canClaim = false, tok
             {TranslateString(999, 'Transfer')}
           </Button>
         )}
-      </CardBody>
-      <Footer p="0">
-        <DetailsButton endIcon={<Icon width="24px" color="primary" />} onClick={handleClick}>
+      </PGCardBody>
+      <Preview nft={nft} isOwned={walletOwnsNft} />
+      <Footer p="16px 0 0">
+        <DetailsButton endIcon={<Icon width="32px" color="primary" />} onClick={handleClick}>
           {TranslateString(658, 'Details')}
         </DetailsButton>
         {isOpen && (
@@ -109,7 +135,7 @@ const NftCard: React.FC<NftCardProps> = ({ nft, onSuccess, canClaim = false, tok
           </InfoBlock>
         )}
       </Footer>
-    </Card>
+    </PGCard>
   )
 }
 

@@ -4,7 +4,7 @@ import Page from 'components/layout/Page'
 import NftList from './components/NftList'
 
 const PageBgContainer = styled.div`
-  background-image: url('/images/nfts/NFTPattern.png');
+  background-image: ${({ theme }) => theme.isDark ? `url('/images/nfts/Background_for_NFT_Nightmode.png')` : `url('/images/nfts/NFTPattern.png')`};
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
@@ -16,14 +16,18 @@ const PageBgContainer = styled.div`
   z-index: -1;
 `
 
+const NFTPage = styled(Page)`
+  max-width: 1200px;
+  padding: 0 0 24px;
+`;
+
 const Collectibles = () => {
   return (
-    <Page>
+    <NFTPage>
       <PageBgContainer />
-      <img src={`${process.env.PUBLIC_URL}/images/nfts/nft-banner.png`} alt="ntf banner" />
+      <img src={`${process.env.PUBLIC_URL}/images/nfts/NFTBannerAnimated.gif`} alt="ntf banner" />
       <NftList />
-      {/* <img src='/images/nfts/penguin-land.jpg' alt='penguin-land' /> */}
-    </Page>
+    </NFTPage>
   )
 }
 
