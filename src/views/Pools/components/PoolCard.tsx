@@ -94,6 +94,7 @@ const CustomToolTip = styled(ReactTooltip)`
   padding: 16px !important;
   font-size: 16px !important;
   border-radius: 16px !important;
+  margin-top: 0px !important;
   > div {
     width: 100%;
     white-space: pre-wrap !important;
