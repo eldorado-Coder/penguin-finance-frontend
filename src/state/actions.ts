@@ -1,4 +1,4 @@
-export { fetchFarmsPublicDataAsync, fetchFarmUserDataAsync } from './farms'
+export { fetchMasterChefPefiPerBlock, fetchFarmsPublicDataAsync, fetchFarmUserDataAsync } from './farms'
 export { fetchLpsPublicDataAsync, fetchLpUserDataAsync } from './lps'
 export { clear, remove, push } from './toasts'
 export {
@@ -12,4 +12,4 @@ export {
 export { profileFetchStart, profileFetchSucceeded, profileFetchFailed } from './profile'
 export { fetchStart, teamFetchSucceeded, fetchFailed, teamsFetchSucceeded } from './teams'
 export { fetchEmperor } from './emperor'
-export { fetchDonations } from './donations';
+export { fetchDonations } from './donations'

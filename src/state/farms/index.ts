@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
 import farmsConfig from 'config/constants/farms'
-import fetchFarms from './fetchFarms'
+import { fetchMasterChefGlobalData, fetchFarms } from './fetchFarms'
 import {
   fetchFarmUserEarnings,
   fetchFarmUserAllowances,
@@ -10,12 +10,15 @@ import {
 } from './fetchFarmUser'
 import { FarmsState, Farm } from '../types'
 
-const initialState: FarmsState = { data: [...farmsConfig] }
+const initialState: FarmsState = { pefiPerBlock: 0, data: [...farmsConfig] }
 
 export const farmsSlice = createSlice({
   name: 'Farms',
   initialState,
   reducers: {
+    setPefiPerBlock: (state, action) => {
+      state.pefiPerBlock = action.payload
+    },
     setFarmsPublicData: (state, action) => {
       const liveFarmsData: Farm[] = action.payload
       state.data = state.data.map((farm) => {
@@ -34,9 +37,13 @@ export const farmsSlice = createSlice({
 })
 
 // Actions
-export const { setFarmsPublicData, setFarmUserData } = farmsSlice.actions
+export const { setPefiPerBlock, setFarmsPublicData, setFarmUserData } = farmsSlice.actions
 
 // Thunks
+export const fetchMasterChefPefiPerBlock = () => async (dispatch) => {
+  const { pefiPerBlock } = await fetchMasterChefGlobalData()
+  dispatch(setPefiPerBlock(pefiPerBlock))
+}
 export const fetchFarmsPublicDataAsync = () => async (dispatch) => {
   const farms = await fetchFarms()
   dispatch(setFarmsPublicData(farms))

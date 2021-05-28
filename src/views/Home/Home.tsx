@@ -14,11 +14,11 @@ import PoolCard from 'views/Pools/components/PoolCard'
 // import { getBalanceNumber } from 'utils/formatBalance'
 // import priceToBnb from 'utils/priceToBnb'
 // import { BLOCKS_PER_YEAR } from 'config'
-import { 
-  // useFarms, 
-  // usePriceAvaxUsdt, 
-  usePools, 
-  // usePriceEthAvax 
+import {
+  // useFarms,
+  // usePriceAvaxUsdt,
+  usePools,
+  // usePriceEthAvax
 } from 'state/hooks'
 
 const Hero = styled.div`

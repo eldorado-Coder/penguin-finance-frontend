@@ -1,5 +1,6 @@
 import BigNumber from 'bignumber.js'
 import React, { useCallback, useState, useEffect } from 'react'
+import ReactTooltip from 'react-tooltip'
 import styled, { keyframes } from 'styled-components'
 import { Button, IconButton, useModal, AddIcon, Image, Text, Flex, Tag } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
@@ -13,6 +14,7 @@ import useBlock from 'hooks/useBlock'
 import { getBalanceNumber } from 'utils/formatBalance'
 import Balance from 'components/Balance'
 import { PoolCategory } from 'config/constants/types'
+import { APY_TOOLTIP_TEXT } from 'config'
 import { Pool } from 'state/types'
 import DepositModal from './DepositModal'
 import WithdrawModal from './WithdrawModal'
@@ -41,8 +43,8 @@ const StyledCard = styled(Card)<{ isNestPage?: boolean }>`
 `
 
 const PGUnlockButton = styled(UnlockButton)<{ isHomePage?: boolean }>`
-  background: ${({ theme, isHomePage }) => (!theme.isDark && isHomePage) && '#383466'};
-`;
+  background: ${({ theme, isHomePage }) => !theme.isDark && isHomePage && '#383466'};
+`
 
 const StyledCardAccent = styled.div`
   background: linear-gradient(
@@ -79,6 +81,27 @@ const APYTag = styled(Tag)`
   span {
     color: #ce022d;
     margin-right: 4px;
+  }
+`
+
+const CustomToolTip = styled(ReactTooltip)`
+  width: 100% !important;
+  max-width: 300px !important;
+  background: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#383466!important')};
+  box-shadow: ${(props) => `${props.theme.card.boxShadow}!important`};
+  color: ${({ theme }) => (theme.isDark ? '#2D2159!important' : '#ffffff!important')};
+  opacity: 1 !important;
+  padding: 16px !important;
+  font-size: 16px !important;
+  border-radius: 16px !important;
+  margin-top: 0px !important;
+  > div {
+    width: 100%;
+    white-space: pre-wrap !important;
+  }
+  &:after {
+    border-top-color: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#383466!important')};
+    border-bottom-color: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#383466!important')};
   }
 `
 
@@ -204,7 +227,18 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
         </CardTitle>
         <Flex justifyContent="flex-end">
           <APYTag variant="primary" outline>
-            <span>474.5%</span> APY
+            <a href="/" data-for="custom-class" data-tip={APY_TOOLTIP_TEXT}>
+              <span>474.5%</span> APY
+            </a>
+            <CustomToolTip
+              id="custom-class"
+              wrapper="div"
+              delayHide={300}
+              effect="solid"
+              multiline
+              place="bottom"
+              html
+            />
           </APYTag>
           <MultiplierTag variant="primary">10X</MultiplierTag>
         </Flex>
