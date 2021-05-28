@@ -1,6 +1,5 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
-import BigNumber from 'bignumber.js'
 import farmsConfig from 'config/constants/farms'
 import { fetchMasterChefGlobalData, fetchFarms } from './fetchFarms'
 import {
@@ -11,7 +10,7 @@ import {
 } from './fetchFarmUser'
 import { FarmsState, Farm } from '../types'
 
-const initialState: FarmsState = { pefiPerBlock: new BigNumber(0), data: [...farmsConfig] }
+const initialState: FarmsState = { pefiPerBlock: 0, data: [...farmsConfig] }
 
 export const farmsSlice = createSlice({
   name: 'Farms',

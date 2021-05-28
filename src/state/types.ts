@@ -70,7 +70,7 @@ export interface ToastsState {
 }
 
 export interface FarmsState {
-  pefiPerBlock: BigNumber
+  pefiPerBlock: number
   data: Farm[]
 }
 

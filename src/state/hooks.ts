@@ -52,7 +52,7 @@ export const useFetchPublicData = () => {
 
 export const usePefiPerBlock = (): BigNumber => {
   const pefiPerBlock = useSelector((state: State) => state.farms.pefiPerBlock)
-  return pefiPerBlock
+  return new BigNumber(pefiPerBlock)
 }
 
 export const useFarms = (): Farm[] => {
