@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Team } from 'config/constants/types'
 import useRefresh from 'hooks/useRefresh'
 import {
+  fetchMasterChefPefiPerBlock,
   fetchFarmsPublicDataAsync,
   fetchLpsPublicDataAsync,
   fetchPoolsPublicDataAsync,
@@ -15,7 +16,18 @@ import {
   remove as removeToast,
   clear as clearToast,
 } from './actions'
-import { State, Farm, Lp, Pool, ProfileState, TeamsState, AchievementState, EmperorState, GlobalState, DonationsState } from './types'
+import {
+  State,
+  Farm,
+  Lp,
+  Pool,
+  ProfileState,
+  TeamsState,
+  AchievementState,
+  EmperorState,
+  GlobalState,
+  DonationsState,
+} from './types'
 import { fetchProfile } from './profile'
 import { fetchTeam, fetchTeams } from './teams'
 import { fetchAchievements } from './achievements'
@@ -28,6 +40,7 @@ export const useFetchPublicData = () => {
   const dispatch = useDispatch()
   const { slowRefresh } = useRefresh()
   useEffect(() => {
+    dispatch(fetchMasterChefPefiPerBlock())
     dispatch(fetchFarmsPublicDataAsync())
     dispatch(fetchLpsPublicDataAsync())
     // POOL REMOVAL
@@ -36,6 +49,11 @@ export const useFetchPublicData = () => {
 }
 
 // Farms
+
+export const usePefiPerBlock = (): BigNumber => {
+  const pefiPerBlock = useSelector((state: State) => state.farms.pefiPerBlock)
+  return pefiPerBlock
+}
 
 export const useFarms = (): Farm[] => {
   const farms = useSelector((state: State) => state.farms.data)

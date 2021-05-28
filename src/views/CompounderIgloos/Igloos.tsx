@@ -4,9 +4,9 @@ import { useDispatch } from 'react-redux'
 import BigNumber from 'bignumber.js'
 import { useWeb3React } from '@web3-react/core'
 import styled from 'styled-components'
-import { BLOCKS_PER_WEEK, PEFI_PER_BLOCK, PEFI_POOL_PID } from 'config'
+import { BLOCKS_PER_WEEK, PEFI_POOL_PID } from 'config'
 import Page from 'components/layout/Page'
-import { useFarms, usePriceAvaxUsdt, usePricePefiUsdt, usePriceEthUsdt } from 'state/hooks'
+import { usePefiPerBlock, useFarms, usePriceAvaxUsdt, usePricePefiUsdt, usePriceEthUsdt } from 'state/hooks'
 import useRefresh from 'hooks/useRefresh'
 import { fetchFarmUserDataAsync } from 'state/actions'
 import { QuoteToken } from 'config/constants/types'
@@ -15,6 +15,7 @@ import FarmCard, { FarmWithStakedValue } from './components/FarmCard/FarmCard'
 //
 const Igloos: React.FC = () => {
   const { path } = useRouteMatch()
+  const pefiPerBlock = usePefiPerBlock()
   const farmsLP = useFarms()
   const pefiPrice = usePricePefiUsdt()
   const avaxPrice = usePriceAvaxUsdt()
@@ -41,7 +42,7 @@ const Igloos: React.FC = () => {
         if (!farm.tokenAmount || !farm.lpTotalInQuoteToken || !farm.lpTotalInQuoteToken) {
           return farm
         }
-        const pefiRewardPerBlock = PEFI_PER_BLOCK.times(farm.poolWeight)
+        const pefiRewardPerBlock = pefiPerBlock.times(farm.poolWeight)
         const rewardPerWeek = pefiRewardPerBlock.times(BLOCKS_PER_WEEK)
 
         // pefiPriceInQuote * rewardPerWeek / lpTotalInQuoteToken
@@ -81,7 +82,7 @@ const Igloos: React.FC = () => {
         />
       ))
     },
-    [farmsLP, avaxPrice, ethPriceUsd, pefiPrice, account],
+    [pefiPerBlock, farmsLP, avaxPrice, ethPriceUsd, pefiPrice, account],
   )
 
   return (
