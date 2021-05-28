@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState } from 'react'
+import React, { useEffect, useCallback, useState, useMemo } from 'react'
 import { Route, useRouteMatch } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import BigNumber from 'bignumber.js'
@@ -121,6 +121,19 @@ const Igloos: React.FC = () => {
     setProject(project);
   };
 
+  const { filteredActiveFarms, filteredInActiveFarms } = useMemo(() => {
+    if (selectedProject === 'All' || selectedProject === 'Your Farms') {
+      return {
+        filteredActiveFarms: activeFarms,
+        filteredInActiveFarms: inactiveFarms
+      }
+    }
+    return {
+        filteredActiveFarms: [],
+        filteredInActiveFarms: []
+      }
+  }, [activeFarms, inactiveFarms, selectedProject]);
+
   return (
     <CompounderIglooPage>
       <BgWrapper>
@@ -165,10 +178,10 @@ const Igloos: React.FC = () => {
         </FilterContainer>
         <IgloosContentContainer>
           <Route exact path={`${path}`}>
-            {farmsList(activeFarms, false)}
+            {farmsList(filteredActiveFarms, false)}
           </Route>
           <Route exact path={`${path}/history`}>
-            {farmsList(inactiveFarms, true)}
+            {farmsList(filteredInActiveFarms, true)}
           </Route>
         </IgloosContentContainer>
       </CompounderContent>
