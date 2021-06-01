@@ -1,27 +1,39 @@
-import React, { useMemo, useState } from 'react'
+import React, { useState, useMemo, useCallback } from 'react'
 import BigNumber from 'bignumber.js'
-import styled, { keyframes } from 'styled-components'
-import { Flex, Text, Heading, Image, Button } from 'penguinfinance-uikit2'
-import { communityFarms } from 'config/constants'
+import styled from 'styled-components'
+import { Flex, Text, Image, Button, useModal } from 'penguinfinance-uikit2'
 import { Farm } from 'state/types'
 import useI18n from 'hooks/useI18n'
-import ExpandableSectionButton from 'components/ExpandableSectionButton'
-import { QuoteToken } from 'config/constants/types'
+import { useFarmFromSymbol, useFarmUser } from 'state/hooks'
+import { useApprove } from 'hooks/useApprove'
+import useWeb3 from 'hooks/useWeb3'
+import { getAddress } from 'utils/addressHelpers'
+import { getContract } from 'utils/erc20'
 import { BASE_ADD_LIQUIDITY_URL, WEEKS_PER_YEAR } from 'config'
 import getLiquidityUrlPathParts from 'utils/getLiquidityUrlPathParts'
-import DetailsSection from './DetailsSection'
-import CardHeading from './CardHeading'
-import CardActionsContainer from './CardActionsContainer'
-import CardValue from './CardValue'
+import useStake from 'hooks/useStake'
+import useUnstake from 'hooks/useUnstake'
+import { getBalanceNumber } from 'utils/formatBalance'
+import { QuoteToken } from 'config/constants/types'
+import DepositModal from '../DepositModal'
+import WithdrawModal from '../WithdrawModal'
 
 export interface FarmWithStakedValue extends Farm {
-  apy?: BigNumber
+  apy?: BigNumber,
+  totalValue?: BigNumber
 }
+
+const getCardBackground = (index, theme) => {
+  if (index % 2) {
+    return theme.isDark ? '#22214C' : '#D3464E'
+  }
+  return theme.isDark ? '#322C59' : '#383466'
+};
 
 const FCard = styled.div<{ index: number }>`
   width: 100%;
   /* background: ${(props) => props.theme.card.background}; */
-  background: ${({ index }) => (index % 2 === 0 ? '#383466' : '#D3464E')};
+  background: ${({ index, theme }) => getCardBackground(index, theme)};
   border-radius: 12px;
   box-shadow: 0px 2px 12px -8px rgba(25, 19, 38, 0.1), 0px 1px 1px rgba(25, 19, 38, 0.05);
   display: flex;
@@ -35,10 +47,10 @@ const FCard = styled.div<{ index: number }>`
 const CardActionContainer = styled.div`
   display: flex;
   margin-right: 2rem;
+  min-width: 38%;
 `
 const IglooLogoContainer = styled.div`
   margin-right: 16px;
-  width: 100%;
   display: flex;
   align-items: center;
   > div {
@@ -56,6 +68,14 @@ const IglooTitleWrapper = styled.div`
     font-family: 'GothamBold Font';
   }
 `
+
+const getButtonBackground = (index, theme) => {
+  if (index % 2) {
+    return theme.isDark ? '#322C59' : '#383466'
+  }
+  return theme.isDark ? '#22234C' : '#D3464E'
+};
+
 const ActionButtonWrapper = styled.div<{ index: number }>`
   @font-face {
     font-family: 'Kanit-Medium Font';
@@ -64,9 +84,12 @@ const ActionButtonWrapper = styled.div<{ index: number }>`
 
   margin-right: 10px;
   button {
-    background: ${({ index }) => (index % 2 === 0 ? '#D3464E' : '#383466')};
+    background: ${({ index, theme }) => getButtonBackground(index, theme)};
+    color: ${({ theme }) => theme.isDark && '#ffffff'};
     font-family: 'Kanit-Medium Font';
     font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
   }
 `
 
@@ -117,48 +140,81 @@ interface FarmCardProps {
   account?: string
 }
 
-const FarmCard: React.FC<FarmCardProps> = ({ index, farm, removed, pefiPrice, avaxPrice, ethPrice, account }) => {
+const FarmCard: React.FC<FarmCardProps> = ({ 
+  index, 
+  farm, 
+  avaxPrice,
+  pefiPrice,
+  ethPrice,
+  account 
+}) => {
   const TranslateString = useI18n()
+  const { pid, lpAddresses } = useFarmFromSymbol(farm.lpSymbol)
+  const { allowance, tokenBalance, stakedBalance } = useFarmUser(pid)
+  const lpName = farm.lpSymbol.toUpperCase()
+  const { onStake } = useStake(pid)
+  const { onUnstake } = useUnstake(pid)
+  const web3 = useWeb3()
+  const lpAddress = getAddress(lpAddresses)
+  const isApproved = account && allowance && allowance.isGreaterThan(0)
+  const [requestedApproval, setRequestedApproval] = useState(false)
+  
+  const lpContract = useMemo(() => {
+    return getContract(web3, lpAddress)
+  }, [web3, lpAddress])
 
-  const [showExpandableSection, setShowExpandableSection] = useState(false)
+  const { onApprove } = useApprove(lpContract)
 
-  const isCommunityFarm = communityFarms.includes(farm.tokenSymbol)
-  // We assume the token name is coin pair + lp e.g. PEFI-AVAX LP, LINK-AVAX LP,
-  // NAR-PEFI LP. The images should be penguin-avax.svg, link-avax.svg, nar-penguin.svg
+  const handleApprove = useCallback(async () => {
+    try {
+      setRequestedApproval(true)
+      await onApprove()
+      setRequestedApproval(false)
+    } catch (e) {
+      console.error(e)
+    }
+  }, [onApprove])
+
+  const rawStakedBalance = getBalanceNumber(stakedBalance)
+
+  let stakedValue = new BigNumber(rawStakedBalance);
+  if (farm.quoteTokenSymbol === QuoteToken.AVAX) {
+    stakedValue = avaxPrice.times(rawStakedBalance)
+  }
+  else if (farm.quoteTokenSymbol === QuoteToken.PEFI) {
+    stakedValue = pefiPrice.times(rawStakedBalance)
+  }
+  else if (farm.quoteTokenSymbol === QuoteToken.ETH) {
+    stakedValue = ethPrice.times(rawStakedBalance)
+  } else {
+    stakedValue = stakedBalance
+  }
+
+  const { quoteTokenAddresses, quoteTokenSymbol, tokenAddresses } = farm
+  const liquidityUrlPathParts = getLiquidityUrlPathParts({ quoteTokenAddresses, quoteTokenSymbol, tokenAddresses })
+  const addLiquidityUrl = `${BASE_ADD_LIQUIDITY_URL}/${liquidityUrlPathParts}`
+
+  const [onPresentDeposit] = useModal(
+    <DepositModal max={tokenBalance} onConfirm={onStake} tokenName={lpName} addLiquidityUrl={addLiquidityUrl} />,
+  )
+  const [onPresentWithdraw] = useModal(
+    <WithdrawModal max={stakedBalance} onConfirm={onUnstake} tokenName={lpName} />,
+  )
+
   const farmImage = farm.lpSymbol.split(' ')[0].toLocaleLowerCase()
-
-  const totalValue: BigNumber = useMemo(() => {
-    if (!farm.lpTotalInQuoteToken) {
-      return null
-    }
-    if (farm.quoteTokenSymbol === QuoteToken.AVAX) {
-      return avaxPrice.times(farm.lpTotalInQuoteToken)
-    }
-    if (farm.quoteTokenSymbol === QuoteToken.PEFI) {
-      return pefiPrice.times(farm.lpTotalInQuoteToken)
-    }
-    if (farm.quoteTokenSymbol === QuoteToken.ETH) {
-      return ethPrice.times(farm.lpTotalInQuoteToken)
-    }
-    return farm.lpTotalInQuoteToken
-  }, [avaxPrice, pefiPrice, ethPrice, farm.lpTotalInQuoteToken, farm.quoteTokenSymbol])
-
-  const totalValueFormated = totalValue
-    ? `$${Number(totalValue).toLocaleString(undefined, { maximumFractionDigits: 0 })}`
+  const totalValueFormatted = farm.totalValue
+    ? `$${Number(farm.totalValue).toLocaleString(undefined, { maximumFractionDigits: 0 })}`
     : '-'
 
-  const lpLabel = farm.lpSymbol && farm.lpSymbol.toUpperCase().replace('PANCAKE', '')
-  const earnLabel = farm.dual ? farm.dual.earnLabel : 'PEFI'
+  const stakedValueFormatted = `$${Number(stakedValue).toLocaleString(undefined, { maximumFractionDigits: 2 })}`
   const farmAPY =
     farm.apy && farm.apy.times(new BigNumber(WEEKS_PER_YEAR)).times(new BigNumber(100)).toNumber().toFixed(2)
 
-  const { quoteTokenAddresses, tokenSymbol, quoteTokenSymbol, tokenAddresses } = farm
-
   const data = {
-    tvl: 2304000,
-    farmTvl: 2304000,
-    normalAPY: 459,
-    compoundAPY: 12543.45,
+    tvl: stakedValueFormatted,
+    farmTvl: totalValueFormatted,
+    normalAPY: farmAPY,
+    compoundAPY: farm.hardApy
   }
 
   return (
@@ -169,58 +225,68 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, removed, pefiPrice, av
         </IglooLogoContainer>
         <Flex flexDirection="column" pt="16px">
           <IglooTitleWrapper>
-            <Text mt="4px" bold fontSize="18px">{`${tokenSymbol} - ${quoteTokenSymbol} Igloo`}</Text>
+            <Text mt='4px' bold fontSize="18px">{`${farm.tokenSymbol} - ${quoteTokenSymbol} Igloo`}</Text>
           </IglooTitleWrapper>
           <Flex justifyContent="center">
-            <ActionButtonWrapper index={index}>
-              <Button mt="4px" scale="sm" disabled={!account}>
-                {TranslateString(758, 'Deposit')}
-              </Button>
-            </ActionButtonWrapper>
-            <ActionButtonWrapper index={index}>
-              <Button mt="4px" scale="sm" disabled={!account}>
-                {TranslateString(758, 'Withdraw')}
-              </Button>
-            </ActionButtonWrapper>
-            <ActionButtonWrapper index={index}>
-              <Button mt="4px" scale="sm" disabled={!account}>
-                {TranslateString(758, 'Reinvest')}
-              </Button>
-            </ActionButtonWrapper>
+            {isApproved ? 
+              <>
+                <ActionButtonWrapper index={index}>
+                  <Button mt="4px" scale="sm" disabled={!account} onClick={onPresentDeposit}>
+                    {TranslateString(758, 'Deposit')}
+                  </Button>
+                </ActionButtonWrapper>
+                <ActionButtonWrapper index={index}>
+                  <Button mt="4px" scale="sm" disabled={!account} onClick={onPresentWithdraw}>
+                    {TranslateString(758, 'Withdraw')}
+                  </Button>
+                </ActionButtonWrapper>
+                <ActionButtonWrapper index={index}>
+                  <Button mt="4px" scale="sm" disabled={!account}>
+                    {TranslateString(758, 'Reinvest')}
+                  </Button>
+                </ActionButtonWrapper>
+              </>
+              : 
+              <ActionButtonWrapper index={index}>
+                <Button mt="4px" scale="sm" disabled={requestedApproval} onClick={handleApprove}>
+                  {TranslateString(758, 'Approve Contract')}
+                </Button>
+              </ActionButtonWrapper>
+            }
           </Flex>
         </Flex>
       </CardActionContainer>
-      <Flex pt="16px" justifyContent="space-between" width="100%">
+      <Flex pt='16px' justifyContent='space-between' width='100%'>
         <CardInfoContainer index={index}>
           <CardInfoWrapper index={index}>
-            <Text className="label" fontSize="16px">
-              YOUR TVL
+            <Text className='label' fontSize="16px">YOUR TVL</Text>
+            <Text className='value' bold fontSize="24px">
+              {data.tvl}
             </Text>
-            <CardValue className="value" bold fontSize="24px" prefix="$" value={data.tvl} />
           </CardInfoWrapper>
         </CardInfoContainer>
         <CardInfoContainer index={index}>
           <CardInfoWrapper index={index}>
-            <Text className="label" fontSize="16px">
-              FARM TVL
+            <Text className='label' fontSize="16px">FARM TVL</Text>
+            <Text className='value' bold fontSize="24px">
+              {data.farmTvl}
             </Text>
-            <CardValue className="value" bold fontSize="24px" prefix="$" value={data.farmTvl} />
           </CardInfoWrapper>
         </CardInfoContainer>
         <CardInfoContainer index={index}>
           <CardInfoWrapper index={index}>
-            <Text className="label" fontSize="16px">
-              NORMAL APY
+            <Text className='label' fontSize="16px">NORMAL APY</Text>
+            <Text className='value' bold fontSize="24px">
+              {`${data.normalAPY}%`}
             </Text>
-            <CardValue className="value" bold fontSize="24px" prefix="$" value={data.normalAPY} />
           </CardInfoWrapper>
         </CardInfoContainer>
         <CardInfoContainer index={index}>
           <CardInfoWrapper index={index}>
-            <Text className="label" fontSize="16px">
-              COMPOUND APY
+            <Text className='label' fontSize="16px">COMPOUND APY</Text>
+            <Text className='value' bold fontSize="24px">
+              {`${data.compoundAPY}`}
             </Text>
-            <CardValue className="value" bold fontSize="24px" prefix="$" value={data.compoundAPY} />
           </CardInfoWrapper>
         </CardInfoContainer>
       </Flex>
