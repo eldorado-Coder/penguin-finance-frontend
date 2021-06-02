@@ -47,9 +47,9 @@ const App: React.FC = () => {
       <Menu>
         <Suspense fallback={<PageLoader />}>
           <Switch>
-            <Route path="/compounder">
+            {/* <Route path="/compounder">
               <CompounderIgloos />
-            </Route>
+            </Route> */}
             <Route path="/" exact>
               <Home />
             </Route>
