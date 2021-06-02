@@ -77,9 +77,9 @@ const App: React.FC = () => {
             <Route path="/syrup">
               <Redirect to="/pools" />
             </Route> */}
-            <Route path="/collectibles">
+            {/* <Route path="/collectibles">
               <Collectibles />
-            </Route>
+            </Route> */}
             {/* 404 */}
             <Route component={NotFound} />
           </Switch>
