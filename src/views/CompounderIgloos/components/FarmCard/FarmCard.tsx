@@ -19,7 +19,7 @@ import DepositModal from '../DepositModal'
 import WithdrawModal from '../WithdrawModal'
 
 export interface FarmWithStakedValue extends Farm {
-  apy?: BigNumber,
+  apy?: BigNumber
   totalValue?: BigNumber
 }
 
@@ -28,7 +28,7 @@ const getCardBackground = (index, theme) => {
     return theme.isDark ? '#22214C' : '#D3464E'
   }
   return theme.isDark ? '#322C59' : '#383466'
-};
+}
 
 const FCard = styled.div<{ index: number }>`
   width: 100%;
@@ -74,7 +74,7 @@ const getButtonBackground = (index, theme) => {
     return theme.isDark ? '#322C59' : '#383466'
   }
   return theme.isDark ? '#22234C' : '#D3464E'
-};
+}
 
 const ActionButtonWrapper = styled.div<{ index: number }>`
   @font-face {
@@ -140,14 +140,7 @@ interface FarmCardProps {
   account?: string
 }
 
-const FarmCard: React.FC<FarmCardProps> = ({ 
-  index, 
-  farm, 
-  avaxPrice,
-  pefiPrice,
-  ethPrice,
-  account 
-}) => {
+const FarmCard: React.FC<FarmCardProps> = ({ index, farm, avaxPrice, pefiPrice, ethPrice, account }) => {
   const TranslateString = useI18n()
   const { pid, lpAddresses } = useFarmFromSymbol(farm.lpSymbol)
   const { allowance, tokenBalance, stakedBalance } = useFarmUser(pid)
@@ -158,7 +151,7 @@ const FarmCard: React.FC<FarmCardProps> = ({
   const lpAddress = getAddress(lpAddresses)
   const isApproved = account && allowance && allowance.isGreaterThan(0)
   const [requestedApproval, setRequestedApproval] = useState(false)
-  
+
   const lpContract = useMemo(() => {
     return getContract(web3, lpAddress)
   }, [web3, lpAddress])
@@ -177,14 +170,12 @@ const FarmCard: React.FC<FarmCardProps> = ({
 
   const rawStakedBalance = getBalanceNumber(stakedBalance)
 
-  let stakedValue = new BigNumber(rawStakedBalance);
+  let stakedValue = new BigNumber(rawStakedBalance)
   if (farm.quoteTokenSymbol === QuoteToken.AVAX) {
     stakedValue = avaxPrice.times(rawStakedBalance)
-  }
-  else if (farm.quoteTokenSymbol === QuoteToken.PEFI) {
+  } else if (farm.quoteTokenSymbol === QuoteToken.PEFI) {
     stakedValue = pefiPrice.times(rawStakedBalance)
-  }
-  else if (farm.quoteTokenSymbol === QuoteToken.ETH) {
+  } else if (farm.quoteTokenSymbol === QuoteToken.ETH) {
     stakedValue = ethPrice.times(rawStakedBalance)
   } else {
     stakedValue = stakedBalance
@@ -197,9 +188,7 @@ const FarmCard: React.FC<FarmCardProps> = ({
   const [onPresentDeposit] = useModal(
     <DepositModal max={tokenBalance} onConfirm={onStake} tokenName={lpName} addLiquidityUrl={addLiquidityUrl} />,
   )
-  const [onPresentWithdraw] = useModal(
-    <WithdrawModal max={stakedBalance} onConfirm={onUnstake} tokenName={lpName} />,
-  )
+  const [onPresentWithdraw] = useModal(<WithdrawModal max={stakedBalance} onConfirm={onUnstake} tokenName={lpName} />)
 
   const farmImage = farm.lpSymbol.split(' ')[0].toLocaleLowerCase()
   const totalValueFormatted = farm.totalValue
@@ -214,7 +203,7 @@ const FarmCard: React.FC<FarmCardProps> = ({
     tvl: stakedValueFormatted,
     farmTvl: totalValueFormatted,
     normalAPY: farmAPY,
-    compoundAPY: farm.hardApy
+    compoundAPY: farm.hardApy,
   }
 
   return (
@@ -225,10 +214,10 @@ const FarmCard: React.FC<FarmCardProps> = ({
         </IglooLogoContainer>
         <Flex flexDirection="column" pt="16px">
           <IglooTitleWrapper>
-            <Text mt='4px' bold fontSize="18px">{`${farm.tokenSymbol} - ${quoteTokenSymbol} Igloo`}</Text>
+            <Text mt="4px" bold fontSize="18px">{`${farm.tokenSymbol} - ${quoteTokenSymbol} Igloo`}</Text>
           </IglooTitleWrapper>
           <Flex justifyContent="center">
-            {isApproved ? 
+            {isApproved ? (
               <>
                 <ActionButtonWrapper index={index}>
                   <Button mt="4px" scale="sm" disabled={!account} onClick={onPresentDeposit}>
@@ -246,45 +235,53 @@ const FarmCard: React.FC<FarmCardProps> = ({
                   </Button>
                 </ActionButtonWrapper>
               </>
-              : 
+            ) : (
               <ActionButtonWrapper index={index}>
                 <Button mt="4px" scale="sm" disabled={requestedApproval} onClick={handleApprove}>
                   {TranslateString(758, 'Approve Contract')}
                 </Button>
               </ActionButtonWrapper>
-            }
+            )}
           </Flex>
         </Flex>
       </CardActionContainer>
-      <Flex pt='16px' justifyContent='space-between' width='100%'>
+      <Flex pt="16px" justifyContent="space-between" width="100%">
         <CardInfoContainer index={index}>
           <CardInfoWrapper index={index}>
-            <Text className='label' fontSize="16px">YOUR TVL</Text>
-            <Text className='value' bold fontSize="24px">
+            <Text className="label" fontSize="16px">
+              YOUR TVL
+            </Text>
+            <Text className="value" bold fontSize="24px">
               {data.tvl}
             </Text>
           </CardInfoWrapper>
         </CardInfoContainer>
         <CardInfoContainer index={index}>
           <CardInfoWrapper index={index}>
-            <Text className='label' fontSize="16px">FARM TVL</Text>
-            <Text className='value' bold fontSize="24px">
+            <Text className="label" fontSize="16px">
+              FARM TVL
+            </Text>
+            <Text className="value" bold fontSize="24px">
               {data.farmTvl}
             </Text>
           </CardInfoWrapper>
         </CardInfoContainer>
         <CardInfoContainer index={index}>
           <CardInfoWrapper index={index}>
-            <Text className='label' fontSize="16px">NORMAL APY</Text>
-            <Text className='value' bold fontSize="24px">
+            <Text className="label" fontSize="16px">
+              NORMAL APY
+            </Text>
+            <Text className="value" bold fontSize="24px">
               {`${data.normalAPY}%`}
             </Text>
           </CardInfoWrapper>
         </CardInfoContainer>
         <CardInfoContainer index={index}>
           <CardInfoWrapper index={index}>
-            <Text className='label' fontSize="16px">COMPOUND APY</Text>
-            <Text className='value' bold fontSize="24px">
+            <Text className="label" fontSize="16px">
+              COMPOUND APY
+            </Text>
+            <Text className="value" bold fontSize="24px">
               {`${data.compoundAPY}`}
             </Text>
           </CardInfoWrapper>
