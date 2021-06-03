@@ -3,6 +3,9 @@ import erc20 from 'config/abi/erc20.json'
 import masterchefABI from 'config/abi/masterchef.json'
 import multicall from 'utils/multicall'
 import { getAddress, getMasterChefAddress } from 'utils/addressHelpers'
+
+import getFarmMasterChefAbi from 'utils/getFarmMasterChefAbi';
+import getFarmMasterChefAddress from 'utils/getFarmMasterChefAddress';
 import farmsConfig from 'config/constants/farms'
 
 export const fetchMasterChefGlobalData = async () => {
@@ -14,12 +17,13 @@ export const fetchMasterChefGlobalData = async () => {
   ])
 
   return { pefiPerBlock: new BigNumber(pefiPerBlock).div(new BigNumber(10).pow(18)).toNumber() }
-}
+};
 
 export const fetchFarms = async () => {
   const data = await Promise.all(
     farmsConfig.map(async (farmConfig) => {
       const lpAddress = getAddress(farmConfig.lpAddresses)
+      const farmMasterChefAddress = getFarmMasterChefAddress(farmConfig.type)
       const calls = [
         // Balance of token in the LP contract
         {
@@ -37,7 +41,7 @@ export const fetchFarms = async () => {
         {
           address: lpAddress,
           name: 'balanceOf',
-          params: [getMasterChefAddress()],
+          params: [farmMasterChefAddress],
         },
         // Total supply of LP tokens
         {
@@ -55,7 +59,7 @@ export const fetchFarms = async () => {
           name: 'decimals',
         },
       ]
-
+      
       const [
         tokenBalanceLP,
         quoteTokenBalanceLP,
@@ -63,7 +67,7 @@ export const fetchFarms = async () => {
         lpTotalSupply,
         tokenDecimals,
         quoteTokenDecimals,
-      ] = await multicall(erc20, calls)
+      ] = await multicall(erc20, calls);
 
       // Ratio in % a LP tokens that are in staking, vs the total number in circulation
       const lpTokenRatio = new BigNumber(lpTokenBalanceMC).div(new BigNumber(lpTotalSupply))
@@ -80,14 +84,14 @@ export const fetchFarms = async () => {
         .div(new BigNumber(10).pow(quoteTokenDecimals))
         .times(lpTokenRatio)
 
-      const [info, totalAllocPoint] = await multicall(masterchefABI, [
+      const [info, totalAllocPoint] = await multicall(getFarmMasterChefAbi(farmConfig.type), [
         {
-          address: getMasterChefAddress(),
+          address: getFarmMasterChefAddress(farmConfig.type),
           name: 'poolInfo',
           params: [farmConfig.pid],
         },
         {
-          address: getMasterChefAddress(),
+          address: getFarmMasterChefAddress(farmConfig.type),
           name: 'totalAllocPoint',
         },
       ])

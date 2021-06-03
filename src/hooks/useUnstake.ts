@@ -10,10 +10,10 @@ import {
 import { unstake, sousUnstake, sousEmegencyUnstake } from 'utils/callHelpers'
 import { useMasterchef, useSousChef } from './useContract'
 
-const useUnstake = (pid: number) => {
+const useUnstake = (pid: number, type?: string) => {
   const dispatch = useDispatch()
   const { account } = useWeb3React()
-  const masterChefContract = useMasterchef()
+  const masterChefContract = useMasterchef(type)
 
   const handleUnstake = useCallback(
     async (amount: string) => {

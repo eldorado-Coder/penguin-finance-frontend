@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { useDispatch } from 'react-redux'
 import farmsReducer from './farms'
+import compounderFarmsReducer from './compounderFarms'
 import lpsReducer from './lps'
 import toastsReducer from './toasts'
 import poolsReducer from './pools'
@@ -16,6 +17,7 @@ const store = configureStore({
   reducer: {
     lps: lpsReducer,
     farms: farmsReducer,
+    compounderFarms: compounderFarmsReducer,
     toasts: toastsReducer,
     pools: poolsReducer,
     emperor: emperorReducer,

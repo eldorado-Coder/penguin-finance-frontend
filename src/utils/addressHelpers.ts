@@ -13,6 +13,12 @@ export const getPefiAddress = () => {
 export const getMasterChefAddress = () => {
   return getAddress(addresses.masterChef)
 }
+export const getGondolaMasterChefAddress = () => {
+  return getAddress(addresses.gondolaMasterChef)
+}
+export const getLydiaMasterChefAddress = () => {
+  return getAddress(addresses.lydiaMasterChef)
+}
 export const getEmperorAddress = () => {
   return getAddress(addresses.emperor)
 }

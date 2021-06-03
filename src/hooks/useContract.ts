@@ -18,6 +18,10 @@ import {
   getCharityPenguinDBAddress,
   getXPefiAddress,
 } from 'utils/addressHelpers'
+import getFarmMasterChefAddress from 'utils/getFarmMasterChefAddress';
+import getFarmMasterChefAbi from 'utils/getFarmMasterChefAbi';
+import getStrategyAddress from 'utils/getStrategyAddress';
+import getStrategyAbi from 'utils/getStrategyAbi';
 import { poolsConfig } from 'config/constants'
 import { PoolCategory } from 'config/constants/types'
 import ifo from 'config/abi/ifo.json'
@@ -91,9 +95,20 @@ export const useLotteryTicket = () => {
   return useContract(abi, getLotteryTicketAddress())
 }
 
-export const useMasterchef = () => {
-  const abi = (masterChef as unknown) as AbiItem
-  return useContract(abi, getMasterChefAddress())
+export const useMasterchef = (type?: string) => {
+  let abi = (masterChef as unknown) as AbiItem
+  let masterChefAddress = getMasterChefAddress();
+  if (type) {
+    abi = (getFarmMasterChefAbi(type) as unknown) as AbiItem;
+    masterChefAddress = getFarmMasterChefAddress(type);
+  }
+  return useContract(abi, masterChefAddress)
+}
+
+export const useStrategyContract = (pid: number, type: string) => {
+  const abi = (getStrategyAbi(pid, type) as unknown) as AbiItem;
+  const strategyAddress = getStrategyAddress(pid, type);
+  return useContract(abi, strategyAddress)
 }
 
 export const useSousChef = (id) => {

@@ -4,15 +4,16 @@ import styled from 'styled-components'
 import { Flex, Text, Image, Button, useModal } from 'penguinfinance-uikit2'
 import { Farm } from 'state/types'
 import useI18n from 'hooks/useI18n'
-import { useFarmFromSymbol, useFarmUser } from 'state/hooks'
-import { useApprove } from 'hooks/useApprove'
+import { useCompounderFarmFromSymbol, useCompounderFarmUser } from 'state/hooks'
+import { useStrategyApprove } from 'hooks/useApprove'
 import useWeb3 from 'hooks/useWeb3'
 import { getAddress } from 'utils/addressHelpers'
 import { getContract } from 'utils/erc20'
 import { BASE_ADD_LIQUIDITY_URL, WEEKS_PER_YEAR } from 'config'
 import getLiquidityUrlPathParts from 'utils/getLiquidityUrlPathParts'
-import useStake from 'hooks/useStake'
-import useUnstake from 'hooks/useUnstake'
+import useCompounderStake from 'hooks/useCompounderStake'
+import useCompounderUnstake from 'hooks/useCompounderUnstake'
+import useCompounderClaimXPefi from 'hooks/useCompounderClaimXPefi'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { QuoteToken } from 'config/constants/types'
 import DepositModal from '../DepositModal'
@@ -20,7 +21,8 @@ import WithdrawModal from '../WithdrawModal'
 
 export interface FarmWithStakedValue extends Farm {
   apy?: BigNumber,
-  totalValue?: BigNumber
+  totalValue?: BigNumber,
+  totalSupply?: BigNumber
 }
 
 const getCardBackground = (index, theme) => {
@@ -137,6 +139,9 @@ interface FarmCardProps {
   pefiPrice?: BigNumber
   avaxPrice?: BigNumber
   ethPrice?: BigNumber
+  pngPrice?: BigNumber
+  linkPrice?: BigNumber
+  lydPrice?: BigNumber
   account?: string
 }
 
@@ -146,24 +151,28 @@ const FarmCard: React.FC<FarmCardProps> = ({
   avaxPrice,
   pefiPrice,
   ethPrice,
+  pngPrice,
+  linkPrice,
+  lydPrice,
   account 
 }) => {
   const TranslateString = useI18n()
-  const { pid, lpAddresses } = useFarmFromSymbol(farm.lpSymbol)
-  const { allowance, tokenBalance, stakedBalance } = useFarmUser(pid)
+  const { pid, lpAddresses, type } = useCompounderFarmFromSymbol(farm.lpSymbol)
+  const { allowance, tokenBalance, stakedBalance } = useCompounderFarmUser(pid, type)
   const lpName = farm.lpSymbol.toUpperCase()
-  const { onStake } = useStake(pid)
-  const { onUnstake } = useUnstake(pid)
+  const { onStake } = useCompounderStake(pid, type)
+  const { onUnstake } = useCompounderUnstake(pid, type)
   const web3 = useWeb3()
   const lpAddress = getAddress(lpAddresses)
   const isApproved = account && allowance && allowance.isGreaterThan(0)
   const [requestedApproval, setRequestedApproval] = useState(false)
-  
+
   const lpContract = useMemo(() => {
     return getContract(web3, lpAddress)
   }, [web3, lpAddress])
 
-  const { onApprove } = useApprove(lpContract)
+  const { onApprove } = useStrategyApprove(lpContract, farm.pid, farm.type)
+  const { onClaimXPefi } = useCompounderClaimXPefi(farm.pid, farm.type);
 
   const handleApprove = useCallback(async () => {
     try {
@@ -180,13 +189,18 @@ const FarmCard: React.FC<FarmCardProps> = ({
   let stakedValue = new BigNumber(rawStakedBalance);
   if (farm.quoteTokenSymbol === QuoteToken.AVAX) {
     stakedValue = avaxPrice.times(rawStakedBalance)
-  }
-  else if (farm.quoteTokenSymbol === QuoteToken.PEFI) {
+  } else if (farm.quoteTokenSymbol === QuoteToken.PEFI) {
     stakedValue = pefiPrice.times(rawStakedBalance)
-  }
-  else if (farm.quoteTokenSymbol === QuoteToken.ETH) {
+  } else if (farm.quoteTokenSymbol === QuoteToken.ETH) {
     stakedValue = ethPrice.times(rawStakedBalance)
-  } else {
+  } else if (farm.quoteTokenSymbol === QuoteToken.PNG) {
+    stakedValue = pngPrice.times(rawStakedBalance);
+  } else if (farm.quoteTokenSymbol === QuoteToken.LINK) {
+    stakedValue = linkPrice.times(rawStakedBalance);
+  } else if (farm.quoteTokenSymbol === QuoteToken.LYD) {
+    stakedValue = lydPrice.times(rawStakedBalance);
+  } 
+  else {
     stakedValue = stakedBalance
   }
 
@@ -225,7 +239,7 @@ const FarmCard: React.FC<FarmCardProps> = ({
         </IglooLogoContainer>
         <Flex flexDirection="column" pt="16px">
           <IglooTitleWrapper>
-            <Text mt='4px' bold fontSize="18px">{`${farm.tokenSymbol} - ${quoteTokenSymbol} Igloo`}</Text>
+            <Text mt='4px' bold fontSize="18px">{`${farm.lpSymbol.split(' ')[0]} Igloo`}</Text>
           </IglooTitleWrapper>
           <Flex justifyContent="center">
             {isApproved ? 
@@ -240,11 +254,13 @@ const FarmCard: React.FC<FarmCardProps> = ({
                     {TranslateString(758, 'Withdraw')}
                   </Button>
                 </ActionButtonWrapper>
-                <ActionButtonWrapper index={index}>
-                  <Button mt="4px" scale="sm" disabled={!account}>
-                    {TranslateString(758, 'Reinvest')}
-                  </Button>
-                </ActionButtonWrapper>
+                {farm.type === 'Penguin Finance' && 
+                  <ActionButtonWrapper index={index}>
+                    <Button mt="4px" scale="sm" disabled={!account} onClick={onClaimXPefi}>
+                      {TranslateString(758, 'Claim')}
+                    </Button>
+                  </ActionButtonWrapper>
+                }
               </>
               : 
               <ActionButtonWrapper index={index}>
