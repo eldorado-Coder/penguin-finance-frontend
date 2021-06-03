@@ -171,6 +171,7 @@ export interface GlobalState {
 export interface State {
   lps: LpsState
   farms: FarmsState
+  compounderFarms: FarmsState
   toasts: ToastsState
   pools: PoolsState
   profile: ProfileState

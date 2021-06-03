@@ -5,27 +5,31 @@ import BigNumber from 'bignumber.js'
 import { Text, Flex } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import styled from 'styled-components'
-import { BLOCKS_PER_WEEK, PEFI_POOL_PID } from 'config'
+// import { BLOCKS_PER_WEEK, PEFI_POOL_PID } from 'config'
 import useTheme from 'hooks/useTheme';
 import Page from 'components/layout/Page'
-import { usePefiPerBlock, useFarms, usePriceAvaxUsdt, usePricePefiUsdt, usePriceEthUsdt } from 'state/hooks'
+import { usePriceAvaxUsdt, usePricePefiUsdt, usePriceEthUsdt, usePricePngUsdt, usePriceLinkUsdt, usePriceLydUsdt, useCompounderFarms } from 'state/hooks'
 import useRefresh from 'hooks/useRefresh'
-import { fetchFarmUserDataAsync } from 'state/actions'
+import { fetchCompounderFarmUserDataAsync } from 'state/actions'
 import { QuoteToken } from 'config/constants/types'
 import Select from 'components/Select/Select';
+import { getBalanceNumber } from 'utils/formatBalance'
 import FarmCard, { FarmWithStakedValue } from './components/FarmCard/FarmCard'
 
-const PROJECTS = ['All', 'Your Farms', 'Gondola', 'Olive', 'Lydia', 'Penguin Finance', 'Baguette', 'Elk Finance'];
+const PROJECTS = ['All', 'Your Farms', 'Pangolin', 'Gondola', 'Olive', 'Lydia', 'Penguin Finance', 'Baguette', 'Elk Finance'];
 
 //
 const Igloos: React.FC = () => {
   const { path } = useRouteMatch()
-  const pefiPerBlock = usePefiPerBlock()
-  const farmsLP = useFarms()
+  // const pefiPerBlock = usePefiPerBlock()
+  const farmsLP = useCompounderFarms()
   const pefiPrice = usePricePefiUsdt()
   const avaxPrice = usePriceAvaxUsdt()
   const { account } = useWeb3React()
   const ethPriceUsd = usePriceEthUsdt()
+  const pngPriceUsd = usePricePngUsdt();
+  const linkPriceUsd = usePriceLinkUsdt();
+  const lydPriceUsd = usePriceLydUsdt();
   const { isDark } = useTheme();
   const [selectedProject, setProject] = useState('All');
   const [sortType, setSortType] = useState('farm-tvl');
@@ -34,7 +38,7 @@ const Igloos: React.FC = () => {
   const { fastRefresh } = useRefresh()
   useEffect(() => {
     if (account) {
-      dispatch(fetchFarmUserDataAsync(account))
+      dispatch(fetchCompounderFarmUserDataAsync(account))
     }
   }, [account, dispatch, fastRefresh])
 
@@ -46,52 +50,81 @@ const Igloos: React.FC = () => {
   // to retrieve assets prices against USD
   const farmsList = useCallback(
     (farmsToDisplay, removed: boolean) => {
-      const pefiPriceVsAVAX = new BigNumber(farmsLP.find((farm) => farm.pid === PEFI_POOL_PID)?.tokenPriceVsQuote || 0)
+      // const pefiPriceVsAVAX = new BigNumber(farmsLP.find((farm) => farm.pid === PEFI_POOL_PID)?.tokenPriceVsQuote || 0)
       let farmsToDisplayWithAPY: FarmWithStakedValue[] = farmsToDisplay.map((farm) => {
-        if (!farm.tokenAmount || !farm.lpTotalInQuoteToken || !farm.lpTotalInQuoteToken) {
-          return farm
-        }
-        const pefiRewardPerBlock = pefiPerBlock.times(farm.poolWeight)
-        const rewardPerWeek = pefiRewardPerBlock.times(BLOCKS_PER_WEEK)
+        // if (!farm.tokenAmount || !farm.lpTotalInQuoteToken) {
+        //   return farm
+        // }
+        // const pefiRewardPerBlock = pefiPerBlock.times(farm.poolWeight)
+        // const rewardPerWeek = pefiRewardPerBlock.times(BLOCKS_PER_WEEK)
 
-        // pefiPriceInQuote * rewardPerWeek / lpTotalInQuoteToken
-        let apy = pefiPriceVsAVAX.times(rewardPerWeek).div(farm.lpTotalInQuoteToken)
+        // // pefiPriceInQuote * rewardPerWeek / lpTotalInQuoteToken
+        // let apy = pefiPriceVsAVAX.times(rewardPerWeek).div(farm.lpTotalInQuoteToken)
 
-        if (farm.quoteTokenSymbol === QuoteToken.USDT || farm.quoteTokenSymbol === QuoteToken.UST) {
-          apy = pefiPriceVsAVAX.times(rewardPerWeek).div(farm.lpTotalInQuoteToken).times(avaxPrice)
-        } else if (farm.quoteTokenSymbol === QuoteToken.ETH) {
-          apy = pefiPrice.div(ethPriceUsd).times(rewardPerWeek).div(farm.lpTotalInQuoteToken)
+        // if (farm.quoteTokenSymbol === QuoteToken.USDT || farm.quoteTokenSymbol === QuoteToken.UST) {
+        //   apy = pefiPriceVsAVAX.times(rewardPerWeek).div(farm.lpTotalInQuoteToken).times(avaxPrice)
+        // } else if (farm.quoteTokenSymbol === QuoteToken.ETH) {
+        //   apy = pefiPrice.div(ethPriceUsd).times(rewardPerWeek).div(farm.lpTotalInQuoteToken)
+        // } else if (farm.quoteTokenSymbol === QuoteToken.PEFI) {
+        //   apy = rewardPerWeek.div(farm.lpTotalInQuoteToken)
+        // } else if (farm.quoteTokenSymbol === QuoteToken.AVAX) {
+        //   apy = pefiPrice.div(avaxPrice).times(rewardPerWeek).div(farm.lpTotalInQuoteToken)
+        // } else if (farm.quoteTokenSymbol === QuoteToken.LYD) {
+        //   apy = lydPriceUsd.div(pngPriceUsd).times(rewardPerWeek).div(farm.lpTotalInQuoteToken)
+        // } else if (farm.dual) {
+        //   const pefiApy =
+        //     farm && pefiPriceVsAVAX.times(pefiRewardPerBlock).times(BLOCKS_PER_WEEK).div(farm.lpTotalInQuoteToken)
+        //   const dualApy =
+        //     farm.tokenPriceVsQuote &&
+        //     new BigNumber(farm.tokenPriceVsQuote)
+        //       .times(farm.dual.rewardPerBlock)
+        //       .times(BLOCKS_PER_WEEK)
+        //       .div(farm.lpTotalInQuoteToken)
+
+        //   apy = pefiApy && dualApy && pefiApy.plus(dualApy)
+        // }
+
+        const rawTotalSupplyBalance = getBalanceNumber(farm.totalSupply)
+
+        let totalValue = new BigNumber(rawTotalSupplyBalance);
+        if (farm.quoteTokenSymbol === QuoteToken.AVAX) {
+          totalValue = avaxPrice.times(rawTotalSupplyBalance)
         } else if (farm.quoteTokenSymbol === QuoteToken.PEFI) {
-          apy = rewardPerWeek.div(farm.lpTotalInQuoteToken)
-        } else if (farm.dual) {
-          const pefiApy =
-            farm && pefiPriceVsAVAX.times(pefiRewardPerBlock).times(BLOCKS_PER_WEEK).div(farm.lpTotalInQuoteToken)
-          const dualApy =
-            farm.tokenPriceVsQuote &&
-            new BigNumber(farm.tokenPriceVsQuote)
-              .times(farm.dual.rewardPerBlock)
-              .times(BLOCKS_PER_WEEK)
-              .div(farm.lpTotalInQuoteToken)
-
-          apy = pefiApy && dualApy && pefiApy.plus(dualApy)
-        }
-
-        let totalValue = null;
-        if (!farm.lpTotalInQuoteToken) {
-          totalValue = null;
-        }
-        else if (farm.quoteTokenSymbol === QuoteToken.AVAX) {
-          totalValue = avaxPrice.times(farm.lpTotalInQuoteToken)
-        }
-        else if (farm.quoteTokenSymbol === QuoteToken.PEFI) {
-          totalValue = pefiPrice.times(farm.lpTotalInQuoteToken)
-        }
-        else if (farm.quoteTokenSymbol === QuoteToken.ETH) {
-          totalValue = ethPriceUsd.times(farm.lpTotalInQuoteToken)
+          totalValue = pefiPrice.times(rawTotalSupplyBalance)
+        } else if (farm.quoteTokenSymbol === QuoteToken.ETH) {
+          totalValue = ethPriceUsd.times(rawTotalSupplyBalance)
+        } else if (farm.quoteTokenSymbol === QuoteToken.PNG) {
+          totalValue = pngPriceUsd.times(rawTotalSupplyBalance);
+        } else if (farm.quoteTokenSymbol === QuoteToken.LINK) {
+          totalValue = linkPriceUsd.times(rawTotalSupplyBalance);
+        } else if (farm.quoteTokenSymbol === QuoteToken.LYD) {
+          totalValue = lydPriceUsd.times(rawTotalSupplyBalance);
         } else {
-          totalValue = farm.lpTotalInQuoteToken
+          totalValue = farm.totalSupply
         }
-        return { ...farm, apy, totalValue }
+        
+        // let totalValue = null;
+        // if (!farm.lpTotalInQuoteToken) {
+        //   totalValue = null;
+        // }
+        // else if (farm.quoteTokenSymbol === QuoteToken.AVAX) {
+        //   totalValue = avaxPrice.times(farm.lpTotalInQuoteToken)
+        // }
+        // else if (farm.quoteTokenSymbol === QuoteToken.PEFI) {
+        //   totalValue = pefiPrice.times(farm.lpTotalInQuoteToken)
+        // }
+        // else if (farm.quoteTokenSymbol === QuoteToken.ETH) {
+        //   totalValue = ethPriceUsd.times(farm.lpTotalInQuoteToken)
+        // } else if (farm.quoteTokenSymbol === QuoteToken.PNG) {
+        //   totalValue = pngPriceUsd.times(farm.lpTotalInQuoteToken)
+        // } else if (farm.quoteTokenSymbol === QuoteToken.LYD) {
+        //   totalValue = lydPriceUsd.times(farm.lpTotalInQuoteToken)
+        // } else if (farm.quoteTokenSymbol === QuoteToken.LINK) {
+        //   totalValue = linkPriceUsd.times(farm.lpTotalInQuoteToken)
+        // } else {
+        //   totalValue = farm.lpTotalInQuoteToken
+        // }
+        return { ...farm, totalValue }
       })
 
       farmsToDisplayWithAPY = farmsToDisplayWithAPY.sort((farm1, farm2) => {
@@ -103,7 +136,7 @@ const Igloos: React.FC = () => {
 
       return farmsToDisplayWithAPY.map((farm, index) => (
         <FarmCard
-          key={farm.pid}
+          key={`${farm.type}-${farm.pid}`}
           index={index}
           farm={farm}
           removed={removed}
@@ -111,10 +144,13 @@ const Igloos: React.FC = () => {
           avaxPrice={avaxPrice}
           pefiPrice={pefiPrice}
           ethPrice={ethPriceUsd}
+          pngPrice={pngPriceUsd}
+          lydPrice={lydPriceUsd}
+          linkPrice={linkPriceUsd}
         />
       ))
     },
-    [pefiPerBlock, farmsLP, avaxPrice, ethPriceUsd, pefiPrice, account, sortType],
+    [avaxPrice, ethPriceUsd, pefiPrice, pngPriceUsd, linkPriceUsd, lydPriceUsd, account, sortType],
   )
 
   const handleSelectProject = project => () => {
@@ -122,16 +158,28 @@ const Igloos: React.FC = () => {
   };
 
   const { filteredActiveFarms, filteredInActiveFarms } = useMemo(() => {
-    if (selectedProject === 'All' || selectedProject === 'Your Farms') {
-      return {
-        filteredActiveFarms: activeFarms,
-        filteredInActiveFarms: inactiveFarms
+    let filteredActiveFarmList = [...activeFarms];
+    let filteredInActiveFarmList = [...inactiveFarms];
+
+    if (selectedProject !== 'All') {
+      if (selectedProject === 'Your Farms') {
+        filteredActiveFarmList = activeFarms.filter(farm => farm.type === 'Penguin Finance');
+        filteredInActiveFarmList = inactiveFarms.filter(farm => farm.type === 'Penguin Finance');
+      } else {
+        filteredActiveFarmList = activeFarms.filter(farm => farm.type === selectedProject);
+        filteredInActiveFarmList = inactiveFarms.filter(farm => farm.type === selectedProject);
       }
     }
+    // if (selectedProject === 'All' || selectedProject === 'Your Farms') {
+    //   return {
+    //     filteredActiveFarms: activeFarms,
+    //     filteredInActiveFarms: inactiveFarms
+    //   }
+    // }
     return {
-        filteredActiveFarms: [],
-        filteredInActiveFarms: []
-      }
+      filteredActiveFarms: filteredActiveFarmList,
+      filteredInActiveFarms: filteredInActiveFarmList
+    }
   }, [activeFarms, inactiveFarms, selectedProject]);
 
   return (

@@ -1,16 +1,18 @@
 import BigNumber from 'bignumber.js'
 import erc20ABI from 'config/abi/erc20.json'
 import multicall from 'utils/multicall'
-import farmsConfig from 'config/constants/farms'
+import farmsConfig from 'config/constants/compounderFarms'
 import { getAddress } from 'utils/addressHelpers'
 import getFarmMasterChefAbi from 'utils/getFarmMasterChefAbi';
 import getFarmMasterChefAddress from 'utils/getFarmMasterChefAddress';
+import getStrategyAddress from 'utils/getStrategyAddress';
+import getStrategyAbi from 'utils/getStrategyAbi';
 
-export const fetchFarmUserAllowances = async (account: string) => {
+export const fetchCompounderFarmUserAllowances = async (account: string) => {
   const calls = farmsConfig.map((farm) => {
     const lpContractAddress = getAddress(farm.lpAddresses)
-    const masterChefAddress = getFarmMasterChefAddress(farm.type);
-    return { address: lpContractAddress, name: 'allowance', params: [account, masterChefAddress] }
+    const strategyContractAddress = getStrategyAddress(farm.pid, farm.type);
+    return { address: lpContractAddress, name: 'allowance', params: [account, strategyContractAddress] }
   })
 
   const rawLpAllowances = await multicall(erc20ABI, calls);
@@ -21,7 +23,7 @@ export const fetchFarmUserAllowances = async (account: string) => {
   return parsedLpAllowances
 }
 
-export const fetchFarmUserTokenBalances = async (account: string) => {
+export const fetchCompounderFarmUserTokenBalances = async (account: string) => {
   const calls = farmsConfig.map((farm) => {
     const lpContractAddress = getAddress(farm.lpAddresses)
 
@@ -39,16 +41,25 @@ export const fetchFarmUserTokenBalances = async (account: string) => {
   return parsedTokenBalances
 }
 
-export const fetchFarmUserStakedBalances = async (account: string) => {
+export const fetchCompounderFarmUserStakedBalances = async (account: string) => {
   const results = [];
   for (let i = 0; i < farmsConfig.length; i++) {
-    const call = [{
-      address: getFarmMasterChefAddress(farmsConfig[i].type),
-      name: 'userInfo',
-      params: [farmsConfig[i].pid, account],
-    }];
+    // const call = [{
+    //   address: getFarmMasterChefAddress(farmsConfig[i].type),
+    //   name: 'userInfo',
+    //   params: [farmsConfig[i].pid, account],
+    // }];
 
-    const masterChefABI = getFarmMasterChefAbi(farmsConfig[i].type);
+    // const masterChefABI = getFarmMasterChefAbi(farmsConfig[i].type);
+    // const farmRes = multicall(masterChefABI, call);
+    // results.push(farmRes);
+    const call = [{
+      address: getStrategyAddress(farmsConfig[i].pid, farmsConfig[i].type),
+      name: 'balanceOf',
+      params: [account]
+    }]
+
+    const masterChefABI = getStrategyAbi(farmsConfig[i].pid, farmsConfig[i].type);
     const farmRes = multicall(masterChefABI, call);
     results.push(farmRes);
   }
@@ -60,7 +71,7 @@ export const fetchFarmUserStakedBalances = async (account: string) => {
   return parsedStakedBalances
 }
 
-export const fetchFarmUserEarnings = async (account: string) => {
+export const fetchCompounderFarmUserEarnings = async (account: string) => {
   const results = [];
   for (let i = 0; i < farmsConfig.length; i++) {
     const call = [{

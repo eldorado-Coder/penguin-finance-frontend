@@ -7,6 +7,14 @@ export default {
     43113: '',
     43114: '0x8AC8ED5839ba269Be2619FfeB3507baB6275C257',
   },
+  gondolaMasterChef: {
+    43113: '',
+    43114: '0x34C8712Cc527a8E6834787Bd9e3AD4F2537B0f50',
+  },
+  lydiaMasterChef: {
+    43113: '',
+    43114: '0xFb26525B14048B7BB1F3794F6129176195Db7766',
+  },
   wavax: {
     43113: '',
     43114: '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7',
@@ -75,4 +83,24 @@ export default {
     43113: '',
     43114: '0xaAD41CCf76c035DAF80d662584823215f2e0487D',
   },
+  png: {
+    43113: '',
+    43114: '0x60781C2586D68229fde47564546784ab3fACA982',
+  },
+  link: {
+    43113: '',
+    43114: '0xB3fe5374F67D7a22886A0eE082b2E2f9d2651651',
+  },
+  zeth: {
+    43113: '',
+    43114: '0xf6f3eea905ac1da6f6dd37d06810c6fcb0ef5183',
+  },
+  zusdt: {
+    43113: '',
+    43114: '0x650cecafe61f3f65edd21efacca18cc905eef0b7'
+  },
+  lyd: {
+    43113: '',
+    43114: '0x4C9B4E1AC6F24CdE3660D5E4Ef1eBF77C710C084'
+  }
 }

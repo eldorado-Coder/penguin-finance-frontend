@@ -32,11 +32,10 @@ const Farms: React.FC = () => {
   }, [account, dispatch, fastRefresh])
 
   // const [stackedOnly, setStackedOnly] = useState(false)
-
   // const activeFarms = farmsLP.filter((farm) => farm.pid !== 0 && farm.multiplier !== '0X')
   // const inactiveFarms = farmsLP.filter((farm) => farm.pid !== 0 && farm.multiplier === '0X')
-  const activeFarms = farmsLP.filter((farm) => farm.multiplier !== '0X')
-  const inactiveFarms = farmsLP.filter((farm) => farm.multiplier === '0X')
+  const activeFarms = farmsLP.filter((farm) => farm.type === 'Penguin Finance' && farm.multiplier !== '0X')
+  const inactiveFarms = farmsLP.filter((farm) => farm.type === 'Penguin Finance' && farm.multiplier === '0X')
   // const stackedOnlyFarms = activeFarms.filter(
   //   (farm) => farm.userData && new BigNumber(farm.userData.stakedBalance).isGreaterThan(0),
   // )
@@ -93,7 +92,6 @@ const Farms: React.FC = () => {
     [pefiPerBlock, farmsLP, avaxPrice, ethPriceUsd, pefiPrice, account],
   )
 
-  console.log('ant : rendered');
   return (
     <FarmPage>
       {/* <Heading as="h1" size="lg" color="primary" mb="50px" style={{ textAlign: 'center' }}>

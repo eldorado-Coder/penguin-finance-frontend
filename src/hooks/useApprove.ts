@@ -5,13 +5,13 @@ import { ethers } from 'ethers'
 import { useDispatch } from 'react-redux'
 import { updateUserAllowance, fetchFarmUserDataAsync } from 'state/actions'
 import { approve } from 'utils/callHelpers'
-import { useMasterchef, usePenguin, useSousChef, useLottery } from './useContract'
+import { useMasterchef, usePenguin, useSousChef, useLottery, useStrategyContract } from './useContract'
 
 // Approve a Farm
-export const useApprove = (lpContract: Contract) => {
+export const useApprove = (lpContract: Contract, type?: string) => {
   const dispatch = useDispatch()
   const { account } = useWeb3React()
-  const masterChefContract = useMasterchef()
+  const masterChefContract = useMasterchef(type)
 
   const handleApprove = useCallback(async () => {
     try {
@@ -21,7 +21,26 @@ export const useApprove = (lpContract: Contract) => {
     } catch (e) {
       return false
     }
-  }, [account, dispatch, lpContract, masterChefContract])
+  }, [account, dispatch, lpContract, masterChefContract, type])
+
+  return { onApprove: handleApprove }
+}
+
+// Approve a Farm
+export const useStrategyApprove = (lpContract: Contract, pid: number, type: string) => {
+  const dispatch = useDispatch()
+  const { account } = useWeb3React()
+  const strategyContract = useStrategyContract(pid, type);
+
+  const handleApprove = useCallback(async () => {
+    try {
+      const tx = await approve(lpContract, strategyContract, account)
+      dispatch(fetchFarmUserDataAsync(account))
+      return tx
+    } catch (e) {
+      return false
+    }
+  }, [account, dispatch, lpContract, strategyContract])
 
   return { onApprove: handleApprove }
 }
