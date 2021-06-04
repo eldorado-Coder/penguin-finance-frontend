@@ -11,7 +11,7 @@ import getStrategyAbi from 'utils/getStrategyAbi';
 export const fetchCompounderFarmUserAllowances = async (account: string) => {
   const calls = farmsConfig.map((farm) => {
     const lpContractAddress = getAddress(farm.lpAddresses)
-    const strategyContractAddress = getStrategyAddress(farm.pid, farm.type);
+    const strategyContractAddress = getStrategyAddress(farm.lpSymbol, farm.type);
     return { address: lpContractAddress, name: 'allowance', params: [account, strategyContractAddress] }
   })
 
@@ -54,12 +54,12 @@ export const fetchCompounderFarmUserStakedBalances = async (account: string) => 
     // const farmRes = multicall(masterChefABI, call);
     // results.push(farmRes);
     const call = [{
-      address: getStrategyAddress(farmsConfig[i].pid, farmsConfig[i].type),
+      address: getStrategyAddress(farmsConfig[i].lpSymbol, farmsConfig[i].type),
       name: 'balanceOf',
       params: [account]
     }]
 
-    const masterChefABI = getStrategyAbi(farmsConfig[i].pid, farmsConfig[i].type);
+    const masterChefABI = getStrategyAbi(farmsConfig[i].lpSymbol, farmsConfig[i].type);
     const farmRes = multicall(masterChefABI, call);
     results.push(farmRes);
   }

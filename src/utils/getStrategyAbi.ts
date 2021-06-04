@@ -16,13 +16,13 @@ import lydPng from 'config/abi/compounder/lydPng.json'
 // Pangolin
 // import avaxEth from 'config/abi/compounder/avaxEth.json'
 // import avaxLink from 'config/abi/compounder/avaxLink.json'
-// import avaxPng from 'config/abi/compounder/avaxPng.json'
+import avaxPng from 'config/abi/compounder/avaxPng.json'
 // import daiUsdt from 'config/abi/compounder/daiUsdt.json'
 
 import compounderFarms from 'config/constants/compounderFarms';
 
-const getStrategyAbi = (pid: number, farmType: string) => {
-  const farm = compounderFarms.find(farmItem => farmItem.pid === pid && farmItem.type === farmType);
+const getStrategyAbi = (lpSymbol: string, farmType: string) => {
+  const farm = compounderFarms.find(farmItem => farmItem.lpSymbol === lpSymbol && farmItem.type === farmType);
 
   if (farm.lpSymbol === "PEFI-AVAX LP") {
     return pefiAvax;
@@ -48,7 +48,9 @@ const getStrategyAbi = (pid: number, farmType: string) => {
     return lydUsdt;
   } if (farm.lpSymbol === "LYD-PNG LP") {
     return lydPng;
-  } 
+  } if (farm.lpSymbol === 'AVAX-PNG LP') {
+    return avaxPng;
+  }
   return null;
 };
 

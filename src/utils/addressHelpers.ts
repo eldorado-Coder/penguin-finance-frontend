@@ -19,6 +19,9 @@ export const getGondolaMasterChefAddress = () => {
 export const getLydiaMasterChefAddress = () => {
   return getAddress(addresses.lydiaMasterChef)
 }
+export const getPangolinAddress = () => {
+  return getAddress(addresses.pangolinManager);
+}
 export const getEmperorAddress = () => {
   return getAddress(addresses.emperor)
 }

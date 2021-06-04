@@ -2,15 +2,18 @@
 import masterchefABI from 'config/abi/masterchef.json'
 import gondolaMasterchefABI from 'config/abi/gondolaMasterChef.json'
 import lydiaMasterchefABI from 'config/abi/lydiaMasterChef.json'
+import pangolinManagerABI from 'config/abi/pangolinManager.json'
 
 const getFarmMasterChefAbi = (farmType: string) => {
   switch(farmType) {
-    case 'Penguin Finance':
+    case 'Penguin':
       return masterchefABI;
     case 'Lydia':
       return lydiaMasterchefABI;
     case 'Gondola':
       return gondolaMasterchefABI;
+    case 'Pangolin':
+      return pangolinManagerABI;
     default:
       return masterchefABI;
   }

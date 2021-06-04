@@ -27,10 +27,10 @@ export const useApprove = (lpContract: Contract, type?: string) => {
 }
 
 // Approve a Farm
-export const useStrategyApprove = (lpContract: Contract, pid: number, type: string) => {
+export const useStrategyApprove = (lpContract: Contract, lpSymbol: string, type: string) => {
   const dispatch = useDispatch()
   const { account } = useWeb3React()
-  const strategyContract = useStrategyContract(pid, type);
+  const strategyContract = useStrategyContract(lpSymbol, type);
 
   const handleApprove = useCallback(async () => {
     try {

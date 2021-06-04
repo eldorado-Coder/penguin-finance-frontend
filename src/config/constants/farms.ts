@@ -18,7 +18,7 @@ const farms: FarmConfig[] = [
     quoteTokenAddresses: contracts.wavax,
     withdrawalFee: '3.2',
     hardApy: '896.65%',
-    type: 'Penguin Finance',
+    type: 'Penguin',
     name: 'pendingPEFI'
   },
   {
@@ -37,7 +37,7 @@ const farms: FarmConfig[] = [
     quoteTokenAddresses: contracts.wavax,
     withdrawalFee: '3.2',
     hardApy: '196.24%',
-    type: 'Penguin Finance',
+    type: 'Penguin',
     name: 'pendingPEFI'
   },
   {
@@ -56,7 +56,7 @@ const farms: FarmConfig[] = [
     quoteTokenAddresses: contracts.pefi,
     withdrawalFee: '3.2',
     hardApy: '967.57%',
-    type: 'Penguin Finance',
+    type: 'Penguin',
     name: 'pendingPEFI'
   },
   {
@@ -75,7 +75,7 @@ const farms: FarmConfig[] = [
     quoteTokenAddresses: contracts.pefi,
     withdrawalFee: '3.2',
     hardApy: '1354.80%',
-    type: 'Penguin Finance',
+    type: 'Penguin',
     name: 'pendingPEFI'
   },
   {
@@ -94,7 +94,7 @@ const farms: FarmConfig[] = [
     quoteTokenAddresses: contracts.pefi,
     withdrawalFee: '3.2',
     hardApy: '1347.55%',
-    type: 'Penguin Finance',
+    type: 'Penguin',
     name: 'pendingPEFI'
   },
   {
@@ -113,7 +113,7 @@ const farms: FarmConfig[] = [
     quoteTokenAddresses: contracts.pefi,
     withdrawalFee: '4',
     hardApy: '300.35%',
-    type: 'Penguin Finance',
+    type: 'Penguin',
     name: 'pendingPEFI'
   },
   {
@@ -132,7 +132,7 @@ const farms: FarmConfig[] = [
     quoteTokenAddresses: contracts.pefi,
     withdrawalFee: '4',
     hardApy: '300.35%',
-    type: 'Penguin Finance',
+    type: 'Penguin',
     name: 'pendingPEFI'
   },
   // {

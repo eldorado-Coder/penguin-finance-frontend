@@ -1,14 +1,16 @@
 
-import { getMasterChefAddress, getGondolaMasterChefAddress, getLydiaMasterChefAddress } from 'utils/addressHelpers'
+import { getMasterChefAddress, getGondolaMasterChefAddress, getLydiaMasterChefAddress, getPangolinAddress } from 'utils/addressHelpers'
 
 const getFarmMasterChefAddress = (farmType: string) => {
   switch(farmType) {
-    case 'Penguin Finance':
+    case 'Penguin':
       return getMasterChefAddress();
     case 'Lydia':
       return getLydiaMasterChefAddress();
     case 'Gondola':
       return getGondolaMasterChefAddress();
+    case 'Pangolin':
+      return getPangolinAddress();
     default:
       return getMasterChefAddress();
   }

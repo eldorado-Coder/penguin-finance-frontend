@@ -15,7 +15,6 @@ import useCompounderStake from 'hooks/useCompounderStake'
 import useCompounderUnstake from 'hooks/useCompounderUnstake'
 import useCompounderClaimXPefi from 'hooks/useCompounderClaimXPefi'
 import { getBalanceNumber } from 'utils/formatBalance'
-import SvgIcon from 'components/SvgIcon';
 import UnlockButton from 'components/UnlockButton';
 import DepositModal from '../DepositModal'
 import WithdrawModal from '../WithdrawModal'
@@ -58,12 +57,6 @@ const IglooLogoContainer = styled.div`
   align-items: center;
   > div {
     width: 108px;
-  }
-
-  & svg {
-    margin-top: 8px;
-    width: 108px;
-    height: 96px;
   }
 `
 const IglooTitleWrapper = styled.div`
@@ -169,8 +162,8 @@ const FarmCard: React.FC<FarmCardProps> = ({
   const { pid, lpAddresses, type } = useCompounderFarmFromSymbol(farm.lpSymbol)
   const { allowance, tokenBalance, stakedBalance } = useCompounderFarmUser(pid, type)
   const lpName = farm.lpSymbol.toUpperCase()
-  const { onStake } = useCompounderStake(pid, type)
-  const { onUnstake } = useCompounderUnstake(pid, type)
+  const { onStake } = useCompounderStake(farm.lpSymbol, type)
+  const { onUnstake } = useCompounderUnstake(farm.lpSymbol, type)
   const web3 = useWeb3()
   const lpAddress = getAddress(lpAddresses)
   const isApproved = account && allowance && allowance.isGreaterThan(0)
@@ -180,8 +173,8 @@ const FarmCard: React.FC<FarmCardProps> = ({
     return getContract(web3, lpAddress)
   }, [web3, lpAddress])
 
-  const { onApprove } = useStrategyApprove(lpContract, farm.pid, farm.type)
-  const { onClaimXPefi } = useCompounderClaimXPefi(farm.pid, farm.type);
+  const { onApprove } = useStrategyApprove(lpContract, farm.lpSymbol, farm.type)
+  const { onClaimXPefi } = useCompounderClaimXPefi(farm.lpSymbol, farm.type);
 
   const handleApprove = useCallback(async () => {
     try {
@@ -226,24 +219,16 @@ const FarmCard: React.FC<FarmCardProps> = ({
   const renderFarmLogo = () => {
     switch (farm.type) {
       case 'Lydia':
-        return (
-          <SvgIcon
-            src={`${process.env.PUBLIC_URL}/images/compounder-igloos/LydiaLogo.svg`}
-            width="108px"
-            height="96px"
-          />
-        )
+        return <Image mt='12px' src={`${process.env.PUBLIC_URL}/images/compounder-igloos/LydiaLogo.png`} alt={farm.tokenSymbol} width={108} height={108} />
       case 'Pangolin':
-        return (
-          <Image src={`${process.env.PUBLIC_URL}/images/compounder-igloos/PangolinLogo.png`} alt={farm.tokenSymbol} width={108} height={108} />
-        )
+        return <Image mt='12px'src={`${process.env.PUBLIC_URL}/images/compounder-igloos/PangolinLogo.png`} alt={farm.tokenSymbol} width={108} height={108} />
       case 'Olive':
-        return (
-          <Image src={`${process.env.PUBLIC_URL}/images/compounder-igloos/OliveLogo.png`} alt={farm.tokenSymbol} width={108} height={108} />
-        )
-      case 'Penguin Finance':
+        return <Image mt='12px' src={`${process.env.PUBLIC_URL}/images/compounder-igloos/OliveLogo.png`} alt={farm.tokenSymbol} width={108} height={108} />
+      case 'Gondola':
+        return <Image mt='12px' src={`${process.env.PUBLIC_URL}/images/compounder-igloos/GondolaLogo.png`} alt={farm.tokenSymbol} width={108} height={108} />
+      case 'Penguin':
       default:
-        return <Image src={`${process.env.PUBLIC_URL}/images/farms/${farmImage}.svg`} alt={farm.tokenSymbol} width={108} height={108} />
+        return <Image mt='6px' mb='6px' src={`${process.env.PUBLIC_URL}/images/farms/${farmImage}.svg`} alt={farm.tokenSymbol} width={108} height={108} />
     }
   };
 
@@ -260,7 +245,7 @@ const FarmCard: React.FC<FarmCardProps> = ({
             {TranslateString(758, 'Withdraw')}
           </Button>
         </ActionButtonWrapper>
-        {farm.type === 'Penguin Finance' && 
+        {farm.type === 'Penguin' && 
           <ActionButtonWrapper index={index}>
             <Button mt="4px" scale="sm" disabled={!account} onClick={onClaimXPefi}>
               {TranslateString(758, 'Claim')}
@@ -282,9 +267,9 @@ const FarmCard: React.FC<FarmCardProps> = ({
         <IglooLogoContainer>
           {renderFarmLogo()}
         </IglooLogoContainer>
-        <Flex flexDirection="column" pt="8px" justifyContent='center'>
+        <Flex flexDirection="column" pt="8px" justifyContent='center' alignItems='flex-start'>
           <IglooTitleWrapper>
-            <Text bold fontSize="20px">{`${farm.lpSymbol.split(' ')[0]} Igloo`}</Text>
+            <Text bold fontSize="20px">{`${farm.type} ${farm.lpSymbol.split(' ')[0]}`}</Text>
           </IglooTitleWrapper>
           <Flex justifyContent="center">
             {!account ? <PGUnlockButton index={index} scale='sm' mt="4px" fullWidth /> : renderActionButtons()}
