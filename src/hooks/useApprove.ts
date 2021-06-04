@@ -21,7 +21,7 @@ export const useApprove = (lpContract: Contract, type?: string) => {
     } catch (e) {
       return false
     }
-  }, [account, dispatch, lpContract, masterChefContract, type])
+  }, [account, dispatch, lpContract, masterChefContract])
 
   return { onApprove: handleApprove }
 }
