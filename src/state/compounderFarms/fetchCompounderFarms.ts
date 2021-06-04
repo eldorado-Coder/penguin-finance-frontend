@@ -4,8 +4,8 @@ import masterchefABI from 'config/abi/masterchef.json'
 import multicall from 'utils/multicall'
 import { getAddress, getMasterChefAddress } from 'utils/addressHelpers'
 
-// import getFarmMasterChefAbi from 'utils/getFarmMasterChefAbi';
-// import getFarmMasterChefAddress from 'utils/getFarmMasterChefAddress';
+import getFarmMasterChefAbi from 'utils/getFarmMasterChefAbi';
+import getFarmMasterChefAddress from 'utils/getFarmMasterChefAddress';
 import farmsConfig from 'config/constants/compounderFarms'
 
 export const fetchMasterChefGlobalData = async () => {
@@ -23,7 +23,7 @@ export const fetchCompounderFarms = async () => {
   const data = await Promise.all(
     farmsConfig.map(async (farmConfig) => {
       const lpAddress = getAddress(farmConfig.lpAddresses)
-      // const farmMasterChefAddress = getFarmMasterChefAddress(farmConfig.type)
+      const farmMasterChefAddress = getFarmMasterChefAddress(farmConfig.type)
       const calls = [
         // Balance of token in the LP contract
         {
@@ -41,11 +41,11 @@ export const fetchCompounderFarms = async () => {
         {
           address: lpAddress,
           name: 'balanceOf',
-          params: [farmConfig.strategyAddress],
+          params: [farmMasterChefAddress],
         },
         // Total supply of LP tokens
         {
-          address: farmConfig.strategyAddress,
+          address: lpAddress,
           name: 'totalSupply',
         },
         // Token decimals
@@ -58,6 +58,11 @@ export const fetchCompounderFarms = async () => {
           address: getAddress(farmConfig.quoteTokenAddresses),
           name: 'decimals',
         },
+        // Total supply of Strategy LP tokens
+        {
+          address: farmConfig.strategyAddress,
+          name: 'totalSupply',
+        },
       ]
       
       const [
@@ -67,52 +72,49 @@ export const fetchCompounderFarms = async () => {
         lpTotalSupply,
         tokenDecimals,
         quoteTokenDecimals,
+        strategyTotalSupply
       ] = await multicall(erc20, calls);
 
-      // // Ratio in % a LP tokens that are in staking, vs the total number in circulation
-      // const lpTokenRatio = new BigNumber(lpTokenBalanceMC).div(new BigNumber(lpTotalSupply))
+      // Ratio in % a LP tokens that are in staking, vs the total number in circulation
+      const lpTokenRatio = new BigNumber(lpTokenBalanceMC).div(new BigNumber(lpTotalSupply))
 
-      // // Total value in staking in quote token value
-      // const lpTotalInQuoteToken = new BigNumber(quoteTokenBalanceLP)
-      //   .div(new BigNumber(10).pow(18))
-      //   .times(new BigNumber(2))
-      //   .times(lpTokenRatio)
+      // Total value in staking in quote token value
+      const lpTotalInQuoteToken = new BigNumber(quoteTokenBalanceLP)
+        .div(new BigNumber(10).pow(18))
+        .times(new BigNumber(2))
+        .times(lpTokenRatio)
 
-      // // Amount of token in the LP that are considered staking (i.e amount of token * lp ratio)
-      // const tokenAmount = new BigNumber(tokenBalanceLP).div(new BigNumber(10).pow(tokenDecimals)).times(lpTokenRatio)
-      // const quoteTokenAmount = new BigNumber(quoteTokenBalanceLP)
-      //   .div(new BigNumber(10).pow(quoteTokenDecimals))
-      //   .times(lpTokenRatio)
+      // Amount of token in the LP that are considered staking (i.e amount of token * lp ratio)
+      const tokenAmount = new BigNumber(tokenBalanceLP).div(new BigNumber(10).pow(tokenDecimals)).times(lpTokenRatio)
+      const quoteTokenAmount = new BigNumber(quoteTokenBalanceLP)
+        .div(new BigNumber(10).pow(quoteTokenDecimals))
+        .times(lpTokenRatio)
 
-      // const [info, totalAllocPoint] = await multicall(getFarmMasterChefAbi(farmConfig.type), [
-      //   {
-      //     address: getFarmMasterChefAddress(farmConfig.type),
-      //     name: 'poolInfo',
-      //     params: [farmConfig.pid],
-      //   },
-      //   {
-      //     address: getFarmMasterChefAddress(farmConfig.type),
-      //     name: 'totalAllocPoint',
-      //   },
-      // ])
+      const [info, totalAllocPoint] = await multicall(getFarmMasterChefAbi(farmConfig.type), [
+        {
+          address: getFarmMasterChefAddress(farmConfig.type),
+          name: 'poolInfo',
+          params: [farmConfig.pid],
+        },
+        {
+          address: getFarmMasterChefAddress(farmConfig.type),
+          name: 'totalAllocPoint',
+        },
+      ])
 
-      // const allocPoint = new BigNumber(info.allocPoint._hex)
-      // const poolWeight = allocPoint.div(new BigNumber(totalAllocPoint))
+      const allocPoint = new BigNumber(info.allocPoint._hex)
+      const poolWeight = allocPoint.div(new BigNumber(totalAllocPoint))
 
       return {
         ...farmConfig,
+        tokenAmount: tokenAmount.toJSON(),
         totalSupply: lpTotalSupply,
-        tokenBalanceLP,
-        quoteTokenBalanceLP,
-        lpTokenBalanceMC,
-        tokenDecimals,
-        quoteTokenDecimals,
-        // tokenAmount: tokenAmount.toJSON(),
-        // quoteTokenAmount: quoteTokenAmount.toJSON(),
-        // lpTotalInQuoteToken: lpTotalInQuoteToken.toJSON(),
-        // tokenPriceVsQuote: quoteTokenAmount.div(tokenAmount).toJSON(),
-        // poolWeight: poolWeight.toJSON(),
-        // multiplier: `${allocPoint.div(100).toString()}X`,
+        strategySupply: strategyTotalSupply,
+        quoteTokenAmount: quoteTokenAmount.toJSON(),
+        lpTotalInQuoteToken: lpTotalInQuoteToken.toJSON(),
+        tokenPriceVsQuote: quoteTokenAmount.div(tokenAmount).toJSON(),
+        poolWeight: poolWeight.toJSON(),
+        multiplier: `${allocPoint.div(100).toString()}X`,
       }
     }),
   )

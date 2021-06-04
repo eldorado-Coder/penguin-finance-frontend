@@ -15,7 +15,7 @@ import useCompounderStake from 'hooks/useCompounderStake'
 import useCompounderUnstake from 'hooks/useCompounderUnstake'
 import useCompounderClaimXPefi from 'hooks/useCompounderClaimXPefi'
 import { getBalanceNumber } from 'utils/formatBalance'
-import { QuoteToken } from 'config/constants/types'
+import SvgIcon from 'components/SvgIcon';
 import DepositModal from '../DepositModal'
 import WithdrawModal from '../WithdrawModal'
 
@@ -56,18 +56,24 @@ const IglooLogoContainer = styled.div`
   display: flex;
   align-items: center;
   > div {
-    width: 96px;
+    width: 108px;
+  }
+
+  & svg {
+    margin-top: 8px;
+    width: 108px;
+    height: 96px;
   }
 `
 const IglooTitleWrapper = styled.div`
   @font-face {
-    font-family: 'GothamBold Font';
+    font-family: 'GothamUltra Font';
     src: url(${process.env.PUBLIC_URL}/fonts/GothamUltra.otf) format('truetype');
   }
 
   > div {
     color: #fff;
-    font-family: 'GothamBold Font';
+    font-family: 'GothamUltra Font';
   }
 `
 
@@ -125,10 +131,13 @@ const CardInfoWrapper = styled.div<{ index?: number }>`
 
   .label {
     font-family: 'PoppinsRegular Font';
+    font-weight: 400;
+    line-height: 1;
   }
 
   .value {
     font-family: 'Kanit-ExtraBold Font';
+    font-weight: 800;
   }
 `
 
@@ -147,13 +156,7 @@ interface FarmCardProps {
 
 const FarmCard: React.FC<FarmCardProps> = ({ 
   index, 
-  farm, 
-  avaxPrice,
-  pefiPrice,
-  ethPrice,
-  pngPrice,
-  linkPrice,
-  lydPrice,
+  farm,
   account 
 }) => {
   const TranslateString = useI18n()
@@ -186,24 +189,6 @@ const FarmCard: React.FC<FarmCardProps> = ({
 
   const rawStakedBalance = getBalanceNumber(stakedBalance)
 
-  let stakedValue = new BigNumber(rawStakedBalance);
-  if (farm.quoteTokenSymbol === QuoteToken.AVAX) {
-    stakedValue = avaxPrice.times(rawStakedBalance)
-  } else if (farm.quoteTokenSymbol === QuoteToken.PEFI) {
-    stakedValue = pefiPrice.times(rawStakedBalance)
-  } else if (farm.quoteTokenSymbol === QuoteToken.ETH) {
-    stakedValue = ethPrice.times(rawStakedBalance)
-  } else if (farm.quoteTokenSymbol === QuoteToken.PNG) {
-    stakedValue = pngPrice.times(rawStakedBalance);
-  } else if (farm.quoteTokenSymbol === QuoteToken.LINK) {
-    stakedValue = linkPrice.times(rawStakedBalance);
-  } else if (farm.quoteTokenSymbol === QuoteToken.LYD) {
-    stakedValue = lydPrice.times(rawStakedBalance);
-  } 
-  else {
-    stakedValue = stakedBalance
-  }
-
   const { quoteTokenAddresses, quoteTokenSymbol, tokenAddresses } = farm
   const liquidityUrlPathParts = getLiquidityUrlPathParts({ quoteTokenAddresses, quoteTokenSymbol, tokenAddresses })
   const addLiquidityUrl = `${BASE_ADD_LIQUIDITY_URL}/${liquidityUrlPathParts}`
@@ -215,12 +200,13 @@ const FarmCard: React.FC<FarmCardProps> = ({
     <WithdrawModal max={stakedBalance} onConfirm={onUnstake} tokenName={lpName} />,
   )
 
+  const lpTokenPrice = new BigNumber(farm.totalValue).div(getBalanceNumber(farm.totalSupply)).toNumber();
   const farmImage = farm.lpSymbol.split(' ')[0].toLocaleLowerCase()
   const totalValueFormatted = farm.totalValue
     ? `$${Number(farm.totalValue).toLocaleString(undefined, { maximumFractionDigits: 0 })}`
     : '-'
 
-  const stakedValueFormatted = `$${Number(stakedValue).toLocaleString(undefined, { maximumFractionDigits: 2 })}`
+  const stakedValueFormatted = `$${Number(rawStakedBalance * lpTokenPrice).toLocaleString(undefined, { maximumFractionDigits: 2 })}`
   const farmAPY =
     farm.apy && farm.apy.times(new BigNumber(WEEKS_PER_YEAR)).times(new BigNumber(100)).toNumber().toFixed(2)
 
@@ -231,15 +217,39 @@ const FarmCard: React.FC<FarmCardProps> = ({
     compoundAPY: farm.hardApy
   }
 
+  const renderFarmLogo = () => {
+    switch (farm.type) {
+      case 'Lydia':
+        return (
+          <SvgIcon
+            src={`${process.env.PUBLIC_URL}/images/compounder-igloos/LydiaLogo.svg`}
+            width="108px"
+            height="96px"
+          />
+        )
+      case 'Pangolin':
+        return (
+          <Image src={`${process.env.PUBLIC_URL}/images/compounder-igloos/PangolinLogo.png`} alt={farm.tokenSymbol} width={108} height={108} />
+        )
+      case 'Olive':
+        return (
+          <Image src={`${process.env.PUBLIC_URL}/images/compounder-igloos/OliveLogo.png`} alt={farm.tokenSymbol} width={108} height={108} />
+        )
+      case 'Penguin Finance':
+      default:
+        return <Image src={`${process.env.PUBLIC_URL}/images/farms/${farmImage}.svg`} alt={farm.tokenSymbol} width={108} height={108} />
+    }
+  };
+
   return (
     <FCard index={index}>
       <CardActionContainer>
         <IglooLogoContainer>
-          <Image src={`/images/farms/${farmImage}.svg`} alt={farm.tokenSymbol} width={96} height={96} />
+          {renderFarmLogo()}
         </IglooLogoContainer>
-        <Flex flexDirection="column" pt="16px">
+        <Flex flexDirection="column" pt="8px" justifyContent='center'>
           <IglooTitleWrapper>
-            <Text mt='4px' bold fontSize="18px">{`${farm.lpSymbol.split(' ')[0]} Igloo`}</Text>
+            <Text bold fontSize="20px">{`${farm.lpSymbol.split(' ')[0]} Igloo`}</Text>
           </IglooTitleWrapper>
           <Flex justifyContent="center">
             {isApproved ? 
