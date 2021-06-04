@@ -28,8 +28,8 @@ const useAllEarnings = () => {
         res.push(farmRes);
       }
 
-      const balances = await Promise.all(res);
-      setBalance(balances.map(balance => balance[0]));
+      const allBalances = await Promise.all(res);
+      setBalance(allBalances.map(balance => balance[0]));
     }
 
     if (account) {
