@@ -5,8 +5,8 @@ import { NavLink } from 'react-router-dom'
 import useI18n from 'hooks/useI18n'
 import BigNumber from 'bignumber.js'
 import { QuoteToken } from 'config/constants/types'
-import { useFarms, usePriceAvaxUsdt } from 'state/hooks'
-import { BLOCKS_PER_YEAR, PEFI_PER_BLOCK, PEFI_POOL_PID } from 'config'
+import { usePefiPerBlock, useFarms, usePriceAvaxUsdt } from 'state/hooks'
+import { PEFI_POOL_PID, BLOCKS_PER_YEAR } from 'config'
 
 const StyledFarmStakingCard = styled(Card)`
   background-image: url('/images/Big_Igloo_EarnUp.png');
@@ -28,6 +28,7 @@ const CardMidContent = styled(Heading).attrs({ size: 'xl' })`
 `
 const EarnAPYCard = () => {
   const TranslateString = useI18n()
+  const pefiPerBlock = usePefiPerBlock()
   const farmsLP = useFarms()
   const avaxPrice = usePriceAvaxUsdt()
 
@@ -49,7 +50,7 @@ const EarnAPYCard = () => {
         if (!farm.tokenAmount || !farm.lpTotalInQuoteToken || !farm.lpTotalInQuoteToken) {
           return farm
         }
-        const pefiRewardPerBlock = PEFI_PER_BLOCK.times(farm.poolWeight)
+        const pefiRewardPerBlock = pefiPerBlock.times(farm.poolWeight)
         const cakeRewardPerYear = pefiRewardPerBlock.times(BLOCKS_PER_YEAR)
 
         let apy = pefiPriceVsAVAX.times(cakeRewardPerYear).div(farm.lpTotalInQuoteToken)
@@ -76,7 +77,7 @@ const EarnAPYCard = () => {
         return apy
       })
     },
-    [avaxPrice, farmsLP],
+    [pefiPerBlock, avaxPrice, farmsLP],
   )
 
   return (

@@ -5,7 +5,18 @@ import multicall from 'utils/multicall'
 import { getAddress, getMasterChefAddress } from 'utils/addressHelpers'
 import farmsConfig from 'config/constants/farms'
 
-const fetchFarms = async () => {
+export const fetchMasterChefGlobalData = async () => {
+  const [pefiPerBlock] = await multicall(masterchefABI, [
+    {
+      address: getMasterChefAddress(),
+      name: 'pefiPerBlock',
+    },
+  ])
+
+  return { pefiPerBlock: new BigNumber(pefiPerBlock).div(new BigNumber(10).pow(18)).toNumber() }
+}
+
+export const fetchFarms = async () => {
   const data = await Promise.all(
     farmsConfig.map(async (farmConfig) => {
       const lpAddress = getAddress(farmConfig.lpAddresses)
@@ -97,5 +108,3 @@ const fetchFarms = async () => {
   )
   return data
 }
-
-export default fetchFarms

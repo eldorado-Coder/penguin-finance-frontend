@@ -25,6 +25,11 @@ export const config: MenuEntry[] = [
     icon: 'IglooIcon',
     href: '/igloos',
   },
+  // {
+  //   label: 'Compounder',
+  //   icon: 'FarmIcon',
+  //   href: '/compounder',
+  // },
   {
     label: 'Nests',
     icon: 'NestIcon',
@@ -46,7 +51,7 @@ export const config: MenuEntry[] = [
   //   href: '/lottery',
   // },
   // {
-  //   label: 'Penguin collectibles',
+  //   label: 'Collectibles',
   //   icon: 'NftIcon',
   //   href: '/collectibles',
   // },

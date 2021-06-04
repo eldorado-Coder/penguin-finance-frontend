@@ -7,7 +7,7 @@ import { getBalanceNumber } from 'utils/formatBalance'
 import { useTotalSupply, useBurnedBalance } from 'hooks/useTokenBalance'
 import { useXPefi } from 'hooks/useContract'
 import { getPefiAddress } from 'utils/addressHelpers'
-import { useFarms, usePriceAvaxUsdt, usePricePefiUsdt, usePriceEthUsdt } from 'state/hooks'
+import { usePefiPerBlock, useFarms, usePriceAvaxUsdt, usePricePefiUsdt, usePriceEthUsdt } from 'state/hooks'
 import { Pool } from 'state/types'
 import { QuoteToken } from 'config/constants/types'
 import { PEFI_MAX_SUPPLY } from 'config'
@@ -40,6 +40,7 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
   const totalSupply = useTotalSupply()
   const burnedBalance = useBurnedBalance(getPefiAddress())
   const xPefiContract = useXPefi()
+  const pefiPerBlock = usePefiPerBlock()
   const farmsLP = useFarms()
   const pefiPrice = usePricePefiUsdt()
   const avaxPrice = usePriceAvaxUsdt()
@@ -140,7 +141,7 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
           <Text color="primary" fontSize="14px">
             {TranslateString(540, 'PEFI Emission Rate:')}
           </Text>
-          <CardValue fontSize="14px" decimals={2} suffix=" PEFI/block" value={4.98} />
+          <CardValue fontSize="14px" decimals={2} suffix=" PEFI/block" value={pefiPerBlock.toNumber()} />
         </Row>
         <Row>
           <Text color="primary" fontSize="14px">

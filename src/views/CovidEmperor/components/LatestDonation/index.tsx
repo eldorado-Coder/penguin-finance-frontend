@@ -94,15 +94,20 @@ const EmperorInfoContainer = styled.div`
   z-index: 10;
 `
 
-const KingPenguinImageWrapper = styled.div`
+const KingPenguinImageWrapper = styled.div<{ penguin: string; color: string }>`
   z-index: -1;
   position: absolute;
   width: 12.5%;
   left: 44%;
   bottom: 33%;
+  svg {
+    ${({ penguin, color }) => `.${penguin}-st0 {
+          fill: #${color};
+        }`}
+  }
 `
 
-const MyPenguinImageWrapper = styled.div`
+const MyPenguinImageWrapper = styled.div<{ penguin: string; color: string }>`
   position: absolute;
   width: 9.5%;
   right: 26%;
@@ -113,6 +118,9 @@ const MyPenguinImageWrapper = styled.div`
 
   svg {
     transform: scaleX(-1);
+    ${({ penguin, color }) => `.${penguin}-st0 {
+          fill: #${color};
+        }`}
   }
 `
 
@@ -175,7 +183,7 @@ const LatestDonation: React.FC = () => {
   return (
     <CardBlock>
       <CardBlockHeader>
-        <TitleBgWrapper color={getPenguinColor(latestDonor).code}>
+        <TitleBgWrapper color={getPenguinColor(latestDonor)}>
           <SvgIcon
             src={`${process.env.PUBLIC_URL}/images/covid-emperor/banner/penguin_without_borders.svg`}
             width="100%"
@@ -215,14 +223,12 @@ const LatestDonation: React.FC = () => {
         )}
       </CardBlockContent>
       {latestDonor.address && (
-        <KingPenguinImageWrapper>
+        <KingPenguinImageWrapper penguin={`${lastDonorPenguin}`} color={getPenguinColor(latestDonor)}>
           <SvgIcon
             src={
               latestDonor.style === '3'
                 ? `${process.env.PUBLIC_URL}/images/covid-emperor/penguins/penguin_surgeon_crown_main.svg`
-                : `${process.env.PUBLIC_URL}/images/covid-emperor/penguins/${lastDonorPenguin}_${
-                    getPenguinColor(latestDonor).name
-                  }.svg`
+                : `${process.env.PUBLIC_URL}/images/covid-emperor/penguins/${lastDonorPenguin}.svg`
             }
             width="100%"
             height="20px"
@@ -230,14 +236,12 @@ const LatestDonation: React.FC = () => {
         </KingPenguinImageWrapper>
       )}
       {latestDonor.address && latestDonor.address !== account && myDonor.isRegistered && (
-        <MyPenguinImageWrapper>
+        <MyPenguinImageWrapper penguin={`${myDonorPenguin}`} color={getPenguinColor(myDonor)}>
           <SvgIcon
             src={
               myDonor.style === '3'
                 ? `${process.env.PUBLIC_URL}/images/covid-emperor/penguins/penguin_surgeon_no_crown_main.svg`
-                : `${process.env.PUBLIC_URL}/images/covid-emperor/penguins/${myDonorPenguin}_${
-                    getPenguinColor(myDonor).name
-                  }.svg`
+                : `${process.env.PUBLIC_URL}/images/covid-emperor/penguins/${myDonorPenguin}.svg`
             }
             width="100%"
             height="20px"

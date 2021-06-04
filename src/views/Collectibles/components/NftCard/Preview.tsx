@@ -13,6 +13,7 @@ const Container = styled.div`
   width: 100%;
   overflow: hidden;
   padding-bottom: 100%;
+  border-radius: 8px;
 `
 
 const StyledImage = styled.img`
@@ -23,7 +24,7 @@ const StyledImage = styled.img`
   transition: opacity 1s linear;
   height: 100%;
   object-fit: cover;
-  border-radius: 32px 32px 0 0;
+  border-radius: 8px;
 `
 
 const StyledVideo = styled.video`
