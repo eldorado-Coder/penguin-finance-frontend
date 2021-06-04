@@ -16,6 +16,7 @@ import useCompounderUnstake from 'hooks/useCompounderUnstake'
 import useCompounderClaimXPefi from 'hooks/useCompounderClaimXPefi'
 import { getBalanceNumber } from 'utils/formatBalance'
 import SvgIcon from 'components/SvgIcon';
+import UnlockButton from 'components/UnlockButton';
 import DepositModal from '../DepositModal'
 import WithdrawModal from '../WithdrawModal'
 
@@ -141,6 +142,11 @@ const CardInfoWrapper = styled.div<{ index?: number }>`
   }
 `
 
+const PGUnlockButton = styled(UnlockButton)<{ index: number }>`
+  background: ${({ index, theme }) => getButtonBackground(index, theme)};
+  color: ${({ theme }) => theme.isDark && '#ffffff'};
+`;
+
 interface FarmCardProps {
   index: number
   farm: FarmWithStakedValue
@@ -241,6 +247,35 @@ const FarmCard: React.FC<FarmCardProps> = ({
     }
   };
 
+  const renderActionButtons = () => {
+    return isApproved ? 
+      <>
+        <ActionButtonWrapper index={index}>
+          <Button mt="4px" scale="sm" disabled={!account} onClick={onPresentDeposit}>
+            {TranslateString(758, 'Deposit')}
+          </Button>
+        </ActionButtonWrapper>
+        <ActionButtonWrapper index={index}>
+          <Button mt="4px" scale="sm" disabled={!account} onClick={onPresentWithdraw}>
+            {TranslateString(758, 'Withdraw')}
+          </Button>
+        </ActionButtonWrapper>
+        {farm.type === 'Penguin Finance' && 
+          <ActionButtonWrapper index={index}>
+            <Button mt="4px" scale="sm" disabled={!account} onClick={onClaimXPefi}>
+              {TranslateString(758, 'Claim')}
+            </Button>
+          </ActionButtonWrapper>
+        }
+      </>
+      : 
+      <ActionButtonWrapper index={index}>
+        <Button mt="4px" scale="sm" disabled={requestedApproval} onClick={handleApprove}>
+          {TranslateString(758, 'Approve Contract')}
+        </Button>
+      </ActionButtonWrapper>
+  }
+
   return (
     <FCard index={index}>
       <CardActionContainer>
@@ -252,33 +287,7 @@ const FarmCard: React.FC<FarmCardProps> = ({
             <Text bold fontSize="20px">{`${farm.lpSymbol.split(' ')[0]} Igloo`}</Text>
           </IglooTitleWrapper>
           <Flex justifyContent="center">
-            {isApproved ? 
-              <>
-                <ActionButtonWrapper index={index}>
-                  <Button mt="4px" scale="sm" disabled={!account} onClick={onPresentDeposit}>
-                    {TranslateString(758, 'Deposit')}
-                  </Button>
-                </ActionButtonWrapper>
-                <ActionButtonWrapper index={index}>
-                  <Button mt="4px" scale="sm" disabled={!account} onClick={onPresentWithdraw}>
-                    {TranslateString(758, 'Withdraw')}
-                  </Button>
-                </ActionButtonWrapper>
-                {farm.type === 'Penguin Finance' && 
-                  <ActionButtonWrapper index={index}>
-                    <Button mt="4px" scale="sm" disabled={!account} onClick={onClaimXPefi}>
-                      {TranslateString(758, 'Claim')}
-                    </Button>
-                  </ActionButtonWrapper>
-                }
-              </>
-              : 
-              <ActionButtonWrapper index={index}>
-                <Button mt="4px" scale="sm" disabled={requestedApproval} onClick={handleApprove}>
-                  {TranslateString(758, 'Approve Contract')}
-                </Button>
-              </ActionButtonWrapper>
-            }
+            {!account ? <PGUnlockButton index={index} scale='sm' mt="4px" fullWidth /> : renderActionButtons()}
           </Flex>
         </Flex>
       </CardActionContainer>
