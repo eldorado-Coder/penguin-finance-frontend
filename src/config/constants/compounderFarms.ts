@@ -242,6 +242,67 @@ const farms: FarmConfig[] = [
     type: 'Lydia',
     name: 'pendingLyd'
   },
+  // Pangolin
+  // {
+  //   pid: 2,
+  //   lpSymbol: 'AVAX-PNG LP',
+  //   lpAddresses: {
+  //     43113: '',
+  //     43114: '0xd7538cABBf8605BdE1f4901B47B8D42c61DE0367',
+  //   },
+  //   tokenSymbol: 'AVAX',
+  //   tokenAddresses: {
+  //     43113: '',
+  //     43114: '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7',
+  //   },
+  //   strategyAddress: '0x0B9f7bbA8934a93463317D9910BD8FE347f4C694',
+  //   quoteTokenSymbol: QuoteToken.PNG,
+  //   quoteTokenAddresses: contracts.png,
+  //   withdrawalFee: '4',
+  //   hardApy: '300.35%',
+  //   type: 'Pangolin',
+  //   name: 'pendingPangolin'
+  // },
+  // {
+  //   pid: 3,
+  //   lpSymbol: 'AVAX-ETH LP',
+  //   lpAddresses: {
+  //     43113: '',
+  //     43114: '0x1aCf1583bEBdCA21C8025E172D8E8f2817343d65',
+  //   },
+  //   tokenSymbol: 'AVAX',
+  //   tokenAddresses: {
+  //     43113: '',
+  //     43114: '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7',
+  //   },
+  //   strategyAddress: '0x47fff475a0045508046F9658B125701447AbcCD5',
+  //   quoteTokenSymbol: QuoteToken.ETH,
+  //   quoteTokenAddresses: contracts.eth,
+  //   withdrawalFee: '4',
+  //   hardApy: '300.35%',
+  //   type: 'Pangolin',
+  //   name: 'pendingPangolin'
+  // },
+  // {
+  //   pid: 7,
+  //   lpSymbol: 'AVAX-LINK LP',
+  //   lpAddresses: {
+  //     43113: '',
+  //     43114: '0xbbC7fFF833D27264AaC8806389E02F717A5506c9',
+  //   },
+  //   tokenSymbol: 'AVAX',
+  //   tokenAddresses: {
+  //     43113: '',
+  //     43114: '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7',
+  //   },
+  //   strategyAddress: '0x8dd033E43a848E33d2de504921E1578199C129fE',
+  //   quoteTokenSymbol: QuoteToken.LINK,
+  //   quoteTokenAddresses: contracts.link,
+  //   withdrawalFee: '3.2',
+  //   hardApy: '1347.55%',
+  //   type: 'Pangolin',
+  //   name: 'pendingPangolin'
+  // },
 ]
 
 export default farms
