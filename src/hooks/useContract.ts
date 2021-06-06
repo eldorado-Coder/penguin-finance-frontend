@@ -105,9 +105,9 @@ export const useMasterchef = (type?: string) => {
   return useContract(abi, masterChefAddress)
 }
 
-export const useStrategyContract = (pid: number, type: string) => {
-  const abi = (getStrategyAbi(pid, type) as unknown) as AbiItem;
-  const strategyAddress = getStrategyAddress(pid, type);
+export const useStrategyContract = (lpSymbol: string, type: string) => {
+  const abi = (getStrategyAbi(lpSymbol, type) as unknown) as AbiItem;
+  const strategyAddress = getStrategyAddress(lpSymbol, type);
   return useContract(abi, strategyAddress)
 }
 

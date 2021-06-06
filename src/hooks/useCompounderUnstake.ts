@@ -5,10 +5,10 @@ import { fetchCompounderFarmUserDataAsync } from 'state/actions'
 import { compounderUnstake } from 'utils/callHelpers'
 import { useStrategyContract } from './useContract'
 
-const useUnstake = (pid: number, type?: string) => {
+const useUnstake = (lpSymbol: string, type?: string) => {
   const dispatch = useDispatch()
   const { account } = useWeb3React()
-  const strategyContract = useStrategyContract(pid, type)
+  const strategyContract = useStrategyContract(lpSymbol, type)
 
   const handleUnstake = useCallback(
     async (amount: string) => {

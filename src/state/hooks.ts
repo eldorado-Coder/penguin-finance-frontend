@@ -189,6 +189,13 @@ export const usePriceLydUsdt = (): BigNumber => {
   return lp.tokenPriceVsQuote ? new BigNumber(1).div(lp.tokenPriceVsQuote) : ZERO
 }
 
+export const usePriceZEthUsdt = (): BigNumber => {
+  const lpSymbol = 'ETH-ZETH LP';
+  const farm = useFarmFromSymbol(lpSymbol);
+  const ethPriceUsdt = usePriceEthUsdt();
+  return farm.tokenPriceVsQuote ? ethPriceUsdt.times(farm.tokenPriceVsQuote) : ZERO
+};
+
 // Toasts
 export const useToast = () => {
   const dispatch = useDispatch()

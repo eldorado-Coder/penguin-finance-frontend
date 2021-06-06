@@ -8,7 +8,16 @@ import styled from 'styled-components'
 import { BLOCKS_PER_WEEK, PEFI_POOL_PID } from 'config'
 import useTheme from 'hooks/useTheme';
 import Page from 'components/layout/Page'
-import { usePefiPerBlock, usePriceAvaxUsdt, usePricePefiUsdt, usePriceEthUsdt, usePricePngUsdt, usePriceLinkUsdt, usePriceLydUsdt, useCompounderFarms } from 'state/hooks'
+import { 
+  usePefiPerBlock, 
+  usePriceAvaxUsdt, 
+  usePricePefiUsdt, 
+  usePriceEthUsdt, 
+  usePricePngUsdt, 
+  usePriceLinkUsdt, 
+  usePriceLydUsdt, 
+  useCompounderFarms 
+} from 'state/hooks'
 import useRefresh from 'hooks/useRefresh'
 import { fetchCompounderFarmUserDataAsync } from 'state/actions'
 import { QuoteToken } from 'config/constants/types'
@@ -143,11 +152,11 @@ const Igloos: React.FC = () => {
 
     if (selectedProject !== 'All') {
       if (selectedProject === 'Your Farms') {
-        filteredActiveFarmList = activeFarms.filter(farm => farm.type === 'Penguin Finance');
-        filteredInActiveFarmList = inactiveFarms.filter(farm => farm.type === 'Penguin Finance');
+        filteredActiveFarmList = activeFarms.filter(farm => farm.type === 'Penguin');
+        filteredInActiveFarmList = inactiveFarms.filter(farm => farm.type === 'Penguin');
       } else {
-        filteredActiveFarmList = activeFarms.filter(farm => farm.type === selectedProject);
-        filteredInActiveFarmList = inactiveFarms.filter(farm => farm.type === selectedProject);
+        filteredActiveFarmList = activeFarms.filter(farm => selectedProject.includes(farm.type));
+        filteredInActiveFarmList = inactiveFarms.filter(farm => selectedProject.includes(farm.type));
       }
     }
     // if (selectedProject === 'All' || selectedProject === 'Your Farms') {

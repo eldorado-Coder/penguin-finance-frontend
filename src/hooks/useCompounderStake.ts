@@ -5,11 +5,11 @@ import { fetchCompounderFarmUserDataAsync } from 'state/actions'
 import { compounderStake } from 'utils/callHelpers'
 import { useStrategyContract } from './useContract'
 
-const useStake = (pid: number, type?: string) => {
+const useStake = (lpSymbol: string, type?: string) => {
   const dispatch = useDispatch()
   const { account } = useWeb3React()
-  const strategyContract = useStrategyContract(pid, type)
-  
+  const strategyContract = useStrategyContract(lpSymbol, type)
+
   const handleStake = useCallback(
     async (amount: string) => {
       const txHash = await compounderStake(strategyContract, amount, account)
