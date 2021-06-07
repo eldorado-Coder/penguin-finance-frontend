@@ -4,23 +4,25 @@ import styled from 'styled-components'
 import { Flex, Text, Image, Button, useModal } from 'penguinfinance-uikit2'
 import { Farm } from 'state/types'
 import useI18n from 'hooks/useI18n'
-import { useFarmFromSymbol, useFarmUser } from 'state/hooks'
-import { useApprove } from 'hooks/useApprove'
+import { useCompounderFarmFromSymbol, useCompounderFarmUser } from 'state/hooks'
+import { useStrategyApprove } from 'hooks/useApprove'
 import useWeb3 from 'hooks/useWeb3'
 import { getAddress } from 'utils/addressHelpers'
 import { getContract } from 'utils/erc20'
 import { BASE_ADD_LIQUIDITY_URL, WEEKS_PER_YEAR } from 'config'
 import getLiquidityUrlPathParts from 'utils/getLiquidityUrlPathParts'
-import useStake from 'hooks/useStake'
-import useUnstake from 'hooks/useUnstake'
+import useCompounderStake from 'hooks/useCompounderStake'
+import useCompounderUnstake from 'hooks/useCompounderUnstake'
+import useCompounderClaimXPefi from 'hooks/useCompounderClaimXPefi'
 import { getBalanceNumber } from 'utils/formatBalance'
-import { QuoteToken } from 'config/constants/types'
+import UnlockButton from 'components/UnlockButton'
 import DepositModal from '../DepositModal'
 import WithdrawModal from '../WithdrawModal'
 
 export interface FarmWithStakedValue extends Farm {
   apy?: BigNumber
   totalValue?: BigNumber
+  totalSupply?: BigNumber
 }
 
 const getCardBackground = (index, theme) => {
@@ -54,18 +56,18 @@ const IglooLogoContainer = styled.div`
   display: flex;
   align-items: center;
   > div {
-    width: 96px;
+    width: 108px;
   }
 `
 const IglooTitleWrapper = styled.div`
   @font-face {
-    font-family: 'GothamBold Font';
+    font-family: 'GothamUltra Font';
     src: url(${process.env.PUBLIC_URL}/fonts/GothamUltra.otf) format('truetype');
   }
 
   > div {
     color: #fff;
-    font-family: 'GothamBold Font';
+    font-family: 'GothamUltra Font';
   }
 `
 
@@ -123,11 +125,19 @@ const CardInfoWrapper = styled.div<{ index?: number }>`
 
   .label {
     font-family: 'PoppinsRegular Font';
+    font-weight: 400;
+    line-height: 1;
   }
 
   .value {
     font-family: 'Kanit-ExtraBold Font';
+    font-weight: 800;
   }
+`
+
+const PGUnlockButton = styled(UnlockButton)<{ index: number }>`
+  background: ${({ index, theme }) => getButtonBackground(index, theme)};
+  color: ${({ theme }) => theme.isDark && '#ffffff'};
 `
 
 interface FarmCardProps {
@@ -137,16 +147,19 @@ interface FarmCardProps {
   pefiPrice?: BigNumber
   avaxPrice?: BigNumber
   ethPrice?: BigNumber
+  pngPrice?: BigNumber
+  linkPrice?: BigNumber
+  lydPrice?: BigNumber
   account?: string
 }
 
-const FarmCard: React.FC<FarmCardProps> = ({ index, farm, avaxPrice, pefiPrice, ethPrice, account }) => {
+const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
   const TranslateString = useI18n()
-  const { pid, lpAddresses } = useFarmFromSymbol(farm.lpSymbol)
-  const { allowance, tokenBalance, stakedBalance } = useFarmUser(pid)
+  const { pid, lpAddresses, type } = useCompounderFarmFromSymbol(farm.lpSymbol)
+  const { allowance, tokenBalance, stakedBalance } = useCompounderFarmUser(pid, type)
   const lpName = farm.lpSymbol.toUpperCase()
-  const { onStake } = useStake(pid)
-  const { onUnstake } = useUnstake(pid)
+  const { onStake } = useCompounderStake(farm.lpSymbol, type)
+  const { onUnstake } = useCompounderUnstake(farm.lpSymbol, type)
   const web3 = useWeb3()
   const lpAddress = getAddress(lpAddresses)
   const isApproved = account && allowance && allowance.isGreaterThan(0)
@@ -156,7 +169,8 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, avaxPrice, pefiPrice, 
     return getContract(web3, lpAddress)
   }, [web3, lpAddress])
 
-  const { onApprove } = useApprove(lpContract)
+  const { onApprove } = useStrategyApprove(lpContract, farm.lpSymbol, farm.type)
+  const { onClaimXPefi } = useCompounderClaimXPefi(farm.lpSymbol, farm.type)
 
   const handleApprove = useCallback(async () => {
     try {
@@ -170,17 +184,6 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, avaxPrice, pefiPrice, 
 
   const rawStakedBalance = getBalanceNumber(stakedBalance)
 
-  let stakedValue = new BigNumber(rawStakedBalance)
-  if (farm.quoteTokenSymbol === QuoteToken.AVAX) {
-    stakedValue = avaxPrice.times(rawStakedBalance)
-  } else if (farm.quoteTokenSymbol === QuoteToken.PEFI) {
-    stakedValue = pefiPrice.times(rawStakedBalance)
-  } else if (farm.quoteTokenSymbol === QuoteToken.ETH) {
-    stakedValue = ethPrice.times(rawStakedBalance)
-  } else {
-    stakedValue = stakedBalance
-  }
-
   const { quoteTokenAddresses, quoteTokenSymbol, tokenAddresses } = farm
   const liquidityUrlPathParts = getLiquidityUrlPathParts({ quoteTokenAddresses, quoteTokenSymbol, tokenAddresses })
   const addLiquidityUrl = `${BASE_ADD_LIQUIDITY_URL}/${liquidityUrlPathParts}`
@@ -190,12 +193,15 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, avaxPrice, pefiPrice, 
   )
   const [onPresentWithdraw] = useModal(<WithdrawModal max={stakedBalance} onConfirm={onUnstake} tokenName={lpName} />)
 
+  const lpTokenPrice = new BigNumber(farm.totalValue).div(getBalanceNumber(farm.totalSupply)).toNumber()
   const farmImage = farm.lpSymbol.split(' ')[0].toLocaleLowerCase()
   const totalValueFormatted = farm.totalValue
     ? `$${Number(farm.totalValue).toLocaleString(undefined, { maximumFractionDigits: 0 })}`
     : '-'
 
-  const stakedValueFormatted = `$${Number(stakedValue).toLocaleString(undefined, { maximumFractionDigits: 2 })}`
+  const stakedValueFormatted = `$${Number(rawStakedBalance * lpTokenPrice).toLocaleString(undefined, {
+    maximumFractionDigits: 2,
+  })}`
   const farmAPY =
     farm.apy && farm.apy.times(new BigNumber(WEEKS_PER_YEAR)).times(new BigNumber(100)).toNumber().toFixed(2)
 
@@ -206,42 +212,103 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, avaxPrice, pefiPrice, 
     compoundAPY: farm.hardApy,
   }
 
+  const renderFarmLogo = () => {
+    switch (farm.type) {
+      case 'Lydia':
+        return (
+          <Image
+            mt="12px"
+            src={`${process.env.PUBLIC_URL}/images/compounder-igloos/LydiaLogo.png`}
+            alt={farm.tokenSymbol}
+            width={108}
+            height={108}
+          />
+        )
+      case 'Pangolin':
+        return (
+          <Image
+            mt="12px"
+            src={`${process.env.PUBLIC_URL}/images/compounder-igloos/PangolinLogo.png`}
+            alt={farm.tokenSymbol}
+            width={108}
+            height={108}
+          />
+        )
+      case 'Olive':
+        return (
+          <Image
+            mt="12px"
+            src={`${process.env.PUBLIC_URL}/images/compounder-igloos/OliveLogo.png`}
+            alt={farm.tokenSymbol}
+            width={108}
+            height={108}
+          />
+        )
+      case 'Gondola':
+        return (
+          <Image
+            mt="12px"
+            src={`${process.env.PUBLIC_URL}/images/compounder-igloos/GondolaLogo.png`}
+            alt={farm.tokenSymbol}
+            width={108}
+            height={108}
+          />
+        )
+      case 'Penguin':
+      default:
+        return (
+          <Image
+            mt="6px"
+            mb="6px"
+            src={`${process.env.PUBLIC_URL}/images/farms/${farmImage}.svg`}
+            alt={farm.tokenSymbol}
+            width={108}
+            height={108}
+          />
+        )
+    }
+  }
+
+  const renderActionButtons = () => {
+    return isApproved ? (
+      <>
+        <ActionButtonWrapper index={index}>
+          <Button mt="4px" scale="sm" disabled={!account} onClick={onPresentDeposit}>
+            {TranslateString(758, 'Deposit')}
+          </Button>
+        </ActionButtonWrapper>
+        <ActionButtonWrapper index={index}>
+          <Button mt="4px" scale="sm" disabled={!account} onClick={onPresentWithdraw}>
+            {TranslateString(758, 'Withdraw')}
+          </Button>
+        </ActionButtonWrapper>
+        {farm.type === 'Penguin' && (
+          <ActionButtonWrapper index={index}>
+            <Button mt="4px" scale="sm" disabled={!account} onClick={onClaimXPefi}>
+              {TranslateString(758, 'Claim')}
+            </Button>
+          </ActionButtonWrapper>
+        )}
+      </>
+    ) : (
+      <ActionButtonWrapper index={index}>
+        <Button mt="4px" scale="sm" disabled={requestedApproval} onClick={handleApprove}>
+          {TranslateString(758, 'Approve Contract')}
+        </Button>
+      </ActionButtonWrapper>
+    )
+  }
+
   return (
     <FCard index={index}>
       <CardActionContainer>
-        <IglooLogoContainer>
-          <Image src={`/images/farms/${farmImage}.svg`} alt={farm.tokenSymbol} width={96} height={96} />
-        </IglooLogoContainer>
-        <Flex flexDirection="column" pt="16px">
+        <IglooLogoContainer>{renderFarmLogo()}</IglooLogoContainer>
+        <Flex flexDirection="column" pt="8px" justifyContent="center" alignItems="flex-start">
           <IglooTitleWrapper>
-            <Text mt="4px" bold fontSize="18px">{`${farm.tokenSymbol} - ${quoteTokenSymbol} Igloo`}</Text>
+            <Text bold fontSize="20px">{`${farm.type} ${farm.lpSymbol.split(' ')[0]}`}</Text>
           </IglooTitleWrapper>
           <Flex justifyContent="center">
-            {isApproved ? (
-              <>
-                <ActionButtonWrapper index={index}>
-                  <Button mt="4px" scale="sm" disabled={!account} onClick={onPresentDeposit}>
-                    {TranslateString(758, 'Deposit')}
-                  </Button>
-                </ActionButtonWrapper>
-                <ActionButtonWrapper index={index}>
-                  <Button mt="4px" scale="sm" disabled={!account} onClick={onPresentWithdraw}>
-                    {TranslateString(758, 'Withdraw')}
-                  </Button>
-                </ActionButtonWrapper>
-                <ActionButtonWrapper index={index}>
-                  <Button mt="4px" scale="sm" disabled={!account}>
-                    {TranslateString(758, 'Reinvest')}
-                  </Button>
-                </ActionButtonWrapper>
-              </>
-            ) : (
-              <ActionButtonWrapper index={index}>
-                <Button mt="4px" scale="sm" disabled={requestedApproval} onClick={handleApprove}>
-                  {TranslateString(758, 'Approve Contract')}
-                </Button>
-              </ActionButtonWrapper>
-            )}
+            {!account ? <PGUnlockButton index={index} scale="sm" mt="4px" fullWidth /> : renderActionButtons()}
           </Flex>
         </Flex>
       </CardActionContainer>

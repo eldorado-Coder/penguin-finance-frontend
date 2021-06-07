@@ -9,6 +9,7 @@ import useRefresh from 'hooks/useRefresh'
 import {
   fetchMasterChefPefiPerBlock,
   fetchFarmsPublicDataAsync,
+  fetchCompounderFarmsPublicDataAsync,
   fetchLpsPublicDataAsync,
   fetchPoolsPublicDataAsync,
   fetchPoolsUserDataAsync,
@@ -42,6 +43,7 @@ export const useFetchPublicData = () => {
   useEffect(() => {
     dispatch(fetchMasterChefPefiPerBlock())
     dispatch(fetchFarmsPublicDataAsync())
+    dispatch(fetchCompounderFarmsPublicDataAsync())
     dispatch(fetchLpsPublicDataAsync())
     // POOL REMOVAL
     dispatch(fetchPoolsPublicDataAsync())
@@ -60,8 +62,8 @@ export const useFarms = (): Farm[] => {
   return farms
 }
 
-export const useFarmFromPid = (pid): Farm => {
-  const farm = useSelector((state: State) => state.farms.data.find((f) => f.pid === pid))
+export const useFarmFromPid = (pid, type): Farm => {
+  const farm = useSelector((state: State) => state.farms.data.find((f) => f.pid === pid && f.type === type))
   return farm
 }
 
@@ -75,8 +77,41 @@ export const useLPFromSymbol = (lpSymbol: string): Lp => {
   return lp
 }
 
-export const useFarmUser = (pid) => {
-  const farm = useFarmFromPid(pid)
+export const useFarmUser = (pid, type) => {
+  const farm = useFarmFromPid(pid, type)
+
+  return {
+    allowance: farm.userData ? new BigNumber(farm.userData.allowance) : new BigNumber(0),
+    tokenBalance: farm.userData ? new BigNumber(farm.userData.tokenBalance) : new BigNumber(0),
+    stakedBalance: farm.userData ? new BigNumber(farm.userData.stakedBalance) : new BigNumber(0),
+    earnings: farm.userData ? new BigNumber(farm.userData.earnings) : new BigNumber(0),
+  }
+}
+
+// Compounder Farms
+
+export const useCompounderPefiPerBlock = (): BigNumber => {
+  const pefiPerBlock = useSelector((state: State) => state.compounderFarms.pefiPerBlock)
+  return new BigNumber(pefiPerBlock)
+}
+
+export const useCompounderFarms = (): Farm[] => {
+  const farms = useSelector((state: State) => state.compounderFarms.data)
+  return farms
+}
+
+export const useCompounderFarmFromPid = (pid, type): Farm => {
+  const farm = useSelector((state: State) => state.compounderFarms.data.find((f) => f.pid === pid && f.type === type))
+  return farm
+}
+
+export const useCompounderFarmFromSymbol = (lpSymbol: string): Farm => {
+  const farm = useSelector((state: State) => state.compounderFarms.data.find((f) => f.lpSymbol === lpSymbol))
+  return farm
+}
+
+export const useCompounderFarmUser = (pid, type) => {
+  const farm = useCompounderFarmFromPid(pid, type)
 
   return {
     allowance: farm.userData ? new BigNumber(farm.userData.allowance) : new BigNumber(0),
@@ -133,6 +168,33 @@ export const usePriceEthAvax = (): BigNumber => {
   const priceEthUsdt = usePriceEthUsdt()
   return priceEthUsdt.div(priceAvaxUsdt)
 }
+
+export const usePricePngUsdt = (): BigNumber => {
+  const lpSymbol = 'PEFI-PNG LP'
+  const farm = useFarmFromSymbol(lpSymbol)
+  const pefiPriceUSD = usePricePefiUsdt()
+  return farm.tokenPriceVsQuote ? pefiPriceUSD.times(farm.tokenPriceVsQuote) : ZERO
+}
+
+export const usePriceLinkUsdt = (): BigNumber => {
+  const lpSymbol = 'PEFI-LINK LP'
+  const farm = useFarmFromSymbol(lpSymbol)
+  const pefiPriceUSD = usePricePefiUsdt()
+  return farm.tokenPriceVsQuote ? pefiPriceUSD.times(farm.tokenPriceVsQuote) : ZERO
+}
+
+export const usePriceLydUsdt = (): BigNumber => {
+  const lpSymbol = 'LYD-USDT LP';
+  const lp = useLPFromSymbol(lpSymbol)
+  return lp.tokenPriceVsQuote ? new BigNumber(1).div(lp.tokenPriceVsQuote) : ZERO
+}
+
+export const usePriceZEthUsdt = (): BigNumber => {
+  const lpSymbol = 'ETH-ZETH LP';
+  const farm = useFarmFromSymbol(lpSymbol);
+  const ethPriceUsdt = usePriceEthUsdt();
+  return farm.tokenPriceVsQuote ? ethPriceUsdt.times(farm.tokenPriceVsQuote) : ZERO
+};
 
 // Toasts
 export const useToast = () => {

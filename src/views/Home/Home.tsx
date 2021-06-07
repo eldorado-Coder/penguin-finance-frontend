@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { Text, BaseLayout } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import useI18n from 'hooks/useI18n'
+import useBlockGenerationTime from 'hooks/useBlockGenerationTime'
 import Page from 'components/layout/Page'
 import FarmStakingCard from 'views/Home/components/FarmStakingCard'
 import PefiStats from 'views/Home/components/PefiStats'
@@ -13,7 +14,7 @@ import BurnedPefiCard from 'views/Home/components/BurnedPefiCard'
 import PoolCard from 'views/Pools/components/PoolCard'
 // import { getBalanceNumber } from 'utils/formatBalance'
 // import priceToBnb from 'utils/priceToBnb'
-// import { BLOCKS_PER_YEAR } from 'config'
+// import { SECONDS_PER_YEAR } from 'config'
 import {
   // useFarms,
   // usePriceAvaxUsdt,
@@ -179,6 +180,9 @@ const Home: React.FC = () => {
   const TranslateString = useI18n()
   const { account } = useWeb3React()
   const pools = usePools(account)
+  // const AVAX_BLOCK_TIME = useBlockGenerationTime()
+  // const BLOCKS_PER_YEAR = new BigNumber(SECONDS_PER_YEAR).div(new BigNumber(AVAX_BLOCK_TIME))
+
   // const farms = useFarms()
   // const avaxPriceUSD = usePriceAvaxUsdt()
   // const ethPriceBnb = usePriceEthAvax()

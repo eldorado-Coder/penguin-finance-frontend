@@ -16,6 +16,20 @@ const lps: LPConfig[] = [
     quoteTokenSymbol: QuoteToken.AVAX,
     quoteTokenAddresses: contracts.wavax,
   },
+  {
+    lpSymbol: 'LYD-USDT LP',
+    lpAddresses: {
+      43113: '',
+      43114: '0x752C59f22fAAA861108649F4596034796C69bC3f',
+    },
+    tokenSymbol: 'USDT',
+    tokenAddresses: {
+      43113: '',
+      43114: '0xde3A24028580884448a5397872046a019649b084',
+    },
+    quoteTokenSymbol: QuoteToken.LYD,
+    quoteTokenAddresses: contracts.lyd,
+  },
 ]
 
 export default lps
