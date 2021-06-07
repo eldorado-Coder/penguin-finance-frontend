@@ -5,26 +5,37 @@ import BigNumber from 'bignumber.js'
 import { Text, Flex } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import styled from 'styled-components'
-import { BLOCKS_PER_WEEK, PEFI_POOL_PID } from 'config'
-import useTheme from 'hooks/useTheme';
+import { SECONDS_PER_YEAR, WEEKS_PER_YEAR, PEFI_POOL_PID } from 'config'
+import useTheme from 'hooks/useTheme'
+import useBlockGenerationTime from 'hooks/useBlockGenerationTime'
 import Page from 'components/layout/Page'
-import { 
-  usePefiPerBlock, 
-  usePriceAvaxUsdt, 
-  usePricePefiUsdt, 
-  usePriceEthUsdt, 
-  usePricePngUsdt, 
-  usePriceLinkUsdt, 
-  usePriceLydUsdt, 
-  useCompounderFarms 
+import {
+  usePefiPerBlock,
+  usePriceAvaxUsdt,
+  usePricePefiUsdt,
+  usePriceEthUsdt,
+  usePricePngUsdt,
+  usePriceLinkUsdt,
+  usePriceLydUsdt,
+  useCompounderFarms,
 } from 'state/hooks'
 import useRefresh from 'hooks/useRefresh'
 import { fetchCompounderFarmUserDataAsync } from 'state/actions'
 import { QuoteToken } from 'config/constants/types'
-import Select from 'components/Select/Select';
+import Select from 'components/Select/Select'
 import FarmCard, { FarmWithStakedValue } from './components/FarmCard/FarmCard'
 
-const PROJECTS = ['All', 'Your Farms', 'Pangolin', 'Gondola', 'Olive', 'Lydia', 'Penguin Finance', 'Baguette', 'Elk Finance'];
+const PROJECTS = [
+  'All',
+  'Your Farms',
+  'Pangolin',
+  'Gondola',
+  'Olive',
+  'Lydia',
+  'Penguin Finance',
+  'Baguette',
+  'Elk Finance',
+]
 
 //
 const Igloos: React.FC = () => {
@@ -35,12 +46,15 @@ const Igloos: React.FC = () => {
   const avaxPrice = usePriceAvaxUsdt()
   const { account } = useWeb3React()
   const ethPriceUsd = usePriceEthUsdt()
-  const pngPriceUsd = usePricePngUsdt();
-  const linkPriceUsd = usePriceLinkUsdt();
-  const lydPriceUsd = usePriceLydUsdt();
-  const { isDark } = useTheme();
-  const [selectedProject, setProject] = useState('All');
-  const [sortType, setSortType] = useState('farm-tvl');
+  const pngPriceUsd = usePricePngUsdt()
+  const linkPriceUsd = usePriceLinkUsdt()
+  const lydPriceUsd = usePriceLydUsdt()
+  const { isDark } = useTheme()
+  const [selectedProject, setProject] = useState('All')
+  const [sortType, setSortType] = useState('farm-tvl')
+  const AVAX_BLOCK_TIME = useBlockGenerationTime()
+  const BLOCKS_PER_YEAR = new BigNumber(SECONDS_PER_YEAR).div(new BigNumber(AVAX_BLOCK_TIME))
+  const BLOCKS_PER_WEEK = BLOCKS_PER_YEAR.div(new BigNumber(WEEKS_PER_YEAR))
 
   const dispatch = useDispatch()
   const { fastRefresh } = useRefresh()
@@ -91,18 +105,15 @@ const Igloos: React.FC = () => {
 
           apy = pefiApy && dualApy && pefiApy.plus(dualApy)
         }
-        
-        let totalValue = null;
+
+        let totalValue = null
         if (!farm.lpTotalInQuoteToken) {
-          totalValue = null;
-        }
-        else if (farm.quoteTokenSymbol === QuoteToken.AVAX) {
+          totalValue = null
+        } else if (farm.quoteTokenSymbol === QuoteToken.AVAX) {
           totalValue = avaxPrice.times(farm.lpTotalInQuoteToken)
-        }
-        else if (farm.quoteTokenSymbol === QuoteToken.PEFI) {
+        } else if (farm.quoteTokenSymbol === QuoteToken.PEFI) {
           totalValue = pefiPrice.times(farm.lpTotalInQuoteToken)
-        }
-        else if (farm.quoteTokenSymbol === QuoteToken.ETH) {
+        } else if (farm.quoteTokenSymbol === QuoteToken.ETH) {
           totalValue = ethPriceUsd.times(farm.lpTotalInQuoteToken)
         } else if (farm.quoteTokenSymbol === QuoteToken.PNG) {
           totalValue = pngPriceUsd.times(farm.lpTotalInQuoteToken)
@@ -118,10 +129,10 @@ const Igloos: React.FC = () => {
 
       farmsToDisplayWithAPY = farmsToDisplayWithAPY.sort((farm1, farm2) => {
         if (sortType === 'farm-tvl') {
-          return Number(farm1.totalValue) < Number(farm2.totalValue) ? 1 : -1;
-        } 
-        return farm1.apy < farm2.apy ? 1 : -1;
-      });
+          return Number(farm1.totalValue) < Number(farm2.totalValue) ? 1 : -1
+        }
+        return farm1.apy < farm2.apy ? 1 : -1
+      })
 
       return farmsToDisplayWithAPY.map((farm, index) => (
         <FarmCard
@@ -139,24 +150,36 @@ const Igloos: React.FC = () => {
         />
       ))
     },
-    [farmsLP, avaxPrice, ethPriceUsd, pefiPrice, pngPriceUsd, linkPriceUsd, lydPriceUsd, pefiPerBlock, account, sortType],
+    [
+      BLOCKS_PER_WEEK,
+      farmsLP,
+      avaxPrice,
+      ethPriceUsd,
+      pefiPrice,
+      pngPriceUsd,
+      linkPriceUsd,
+      lydPriceUsd,
+      pefiPerBlock,
+      account,
+      sortType,
+    ],
   )
 
-  const handleSelectProject = project => () => {
-    setProject(project);
-  };
+  const handleSelectProject = (project) => () => {
+    setProject(project)
+  }
 
   const { filteredActiveFarms, filteredInActiveFarms } = useMemo(() => {
-    let filteredActiveFarmList = [...activeFarms];
-    let filteredInActiveFarmList = [...inactiveFarms];
+    let filteredActiveFarmList = [...activeFarms]
+    let filteredInActiveFarmList = [...inactiveFarms]
 
     if (selectedProject !== 'All') {
       if (selectedProject === 'Your Farms') {
-        filteredActiveFarmList = activeFarms.filter(farm => farm.type === 'Penguin');
-        filteredInActiveFarmList = inactiveFarms.filter(farm => farm.type === 'Penguin');
+        filteredActiveFarmList = activeFarms.filter((farm) => farm.type === 'Penguin')
+        filteredInActiveFarmList = inactiveFarms.filter((farm) => farm.type === 'Penguin')
       } else {
-        filteredActiveFarmList = activeFarms.filter(farm => selectedProject.includes(farm.type));
-        filteredInActiveFarmList = inactiveFarms.filter(farm => selectedProject.includes(farm.type));
+        filteredActiveFarmList = activeFarms.filter((farm) => selectedProject.includes(farm.type))
+        filteredInActiveFarmList = inactiveFarms.filter((farm) => selectedProject.includes(farm.type))
       }
     }
     // if (selectedProject === 'All' || selectedProject === 'Your Farms') {
@@ -167,9 +190,9 @@ const Igloos: React.FC = () => {
     // }
     return {
       filteredActiveFarms: filteredActiveFarmList,
-      filteredInActiveFarms: filteredInActiveFarmList
+      filteredInActiveFarms: filteredInActiveFarmList,
     }
-  }, [activeFarms, inactiveFarms, selectedProject]);
+  }, [activeFarms, inactiveFarms, selectedProject])
 
   return (
     <CompounderIglooPage>
@@ -187,19 +210,21 @@ const Igloos: React.FC = () => {
             <Select
               value={sortType}
               options={[
-                { label: 'Farm TVL', value: 'farm-tvl'},
-                { label: 'APY', value: 'apy'}
+                { label: 'Farm TVL', value: 'farm-tvl' },
+                { label: 'APY', value: 'apy' },
               ]}
-              onChange={setSortType} />
+              onChange={setSortType}
+            />
           </LabelWrapper>
           <ProjectFiltersWrapper>
-            {PROJECTS.map(project => (
-              <ProjectLabel 
-                fontSize='18px'
-                active={project === selectedProject} 
+            {PROJECTS.map((project) => (
+              <ProjectLabel
+                fontSize="18px"
+                active={project === selectedProject}
                 key={project}
-                onClick={handleSelectProject(project)}>
-                  {project}
+                onClick={handleSelectProject(project)}
+              >
+                {project}
               </ProjectLabel>
             ))}
           </ProjectFiltersWrapper>
@@ -207,10 +232,12 @@ const Igloos: React.FC = () => {
             <Text textTransform="uppercase">Filter by</Text>
             <Select
               value={selectedProject}
-              options={PROJECTS.map(project => ({
-                label: project, value: project
+              options={PROJECTS.map((project) => ({
+                label: project,
+                value: project,
               }))}
-              onChange={setProject} />
+              onChange={setProject}
+            />
           </FilterWrapper>
         </FilterContainer>
         <IgloosContentContainer>
@@ -248,7 +275,7 @@ const IgloosBgContainer = styled.div`
 `
 
 const BgWrapper = styled.div`
-  background: ${({ theme }) => theme.isDark ? '#1A1028' : '#F9F8F9'};
+  background: ${({ theme }) => (theme.isDark ? '#1A1028' : '#F9F8F9')};
   position: absolute;
   top: 0px;
   bottom: 0px;
@@ -277,7 +304,7 @@ const FilterContainer = styled.div`
   @media (min-width: 1200px) {
     justify-content: space-between;
   }
-`;
+`
 
 const LabelWrapper = styled.div`
   > ${Text} {
@@ -289,7 +316,7 @@ const FilterWrapper = styled(LabelWrapper)`
   margin-left: 1rem;
   display: block;
   @media (min-width: 1200px) {
-    display: none;  
+    display: none;
   }
 `
 
@@ -299,26 +326,26 @@ const CompounderContent = styled.div`
   ${({ theme }) => theme.mediaQueries.sm} {
     padding: 0 40px;
   }
-`;
+`
 
 const ProjectLabel = styled(Text)<{ active: boolean }>`
   cursor: pointer;
   margin-left: 1rem;
   margin-top: 0.5rem;
   white-space: nowrap;
-  color: ${props => props.theme.colors.menuIcon};
-  border-bottom: ${props => props.active && `2px solid ${props.theme.colors.menuIcon}`};
+  color: ${(props) => props.theme.colors.menuIcon};
+  border-bottom: ${(props) => props.active && `2px solid ${props.theme.colors.menuIcon}`};
 
   @media (min-width: 1450px) {
     margin-left: 1.5rem;
   }
-`;
+`
 
 const ProjectFiltersWrapper = styled(Flex)`
   display: none;
   @media (min-width: 1200px) {
-    display: flex;  
+    display: flex;
   }
-`;
+`
 
 export default Igloos

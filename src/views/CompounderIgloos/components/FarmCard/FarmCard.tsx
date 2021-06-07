@@ -15,13 +15,13 @@ import useCompounderStake from 'hooks/useCompounderStake'
 import useCompounderUnstake from 'hooks/useCompounderUnstake'
 import useCompounderClaimXPefi from 'hooks/useCompounderClaimXPefi'
 import { getBalanceNumber } from 'utils/formatBalance'
-import UnlockButton from 'components/UnlockButton';
+import UnlockButton from 'components/UnlockButton'
 import DepositModal from '../DepositModal'
 import WithdrawModal from '../WithdrawModal'
 
 export interface FarmWithStakedValue extends Farm {
-  apy?: BigNumber,
-  totalValue?: BigNumber,
+  apy?: BigNumber
+  totalValue?: BigNumber
   totalSupply?: BigNumber
 }
 
@@ -30,7 +30,7 @@ const getCardBackground = (index, theme) => {
     return theme.isDark ? '#22214C' : '#D3464E'
   }
   return theme.isDark ? '#322C59' : '#383466'
-};
+}
 
 const FCard = styled.div<{ index: number }>`
   width: 100%;
@@ -76,7 +76,7 @@ const getButtonBackground = (index, theme) => {
     return theme.isDark ? '#322C59' : '#383466'
   }
   return theme.isDark ? '#22234C' : '#D3464E'
-};
+}
 
 const ActionButtonWrapper = styled.div<{ index: number }>`
   @font-face {
@@ -138,7 +138,7 @@ const CardInfoWrapper = styled.div<{ index?: number }>`
 const PGUnlockButton = styled(UnlockButton)<{ index: number }>`
   background: ${({ index, theme }) => getButtonBackground(index, theme)};
   color: ${({ theme }) => theme.isDark && '#ffffff'};
-`;
+`
 
 interface FarmCardProps {
   index: number
@@ -153,11 +153,7 @@ interface FarmCardProps {
   account?: string
 }
 
-const FarmCard: React.FC<FarmCardProps> = ({ 
-  index, 
-  farm,
-  account 
-}) => {
+const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
   const TranslateString = useI18n()
   const { pid, lpAddresses, type } = useCompounderFarmFromSymbol(farm.lpSymbol)
   const { allowance, tokenBalance, stakedBalance } = useCompounderFarmUser(pid, type)
@@ -174,7 +170,7 @@ const FarmCard: React.FC<FarmCardProps> = ({
   }, [web3, lpAddress])
 
   const { onApprove } = useStrategyApprove(lpContract, farm.lpSymbol, farm.type)
-  const { onClaimXPefi } = useCompounderClaimXPefi(farm.lpSymbol, farm.type);
+  const { onClaimXPefi } = useCompounderClaimXPefi(farm.lpSymbol, farm.type)
 
   const handleApprove = useCallback(async () => {
     try {
@@ -195,17 +191,17 @@ const FarmCard: React.FC<FarmCardProps> = ({
   const [onPresentDeposit] = useModal(
     <DepositModal max={tokenBalance} onConfirm={onStake} tokenName={lpName} addLiquidityUrl={addLiquidityUrl} />,
   )
-  const [onPresentWithdraw] = useModal(
-    <WithdrawModal max={stakedBalance} onConfirm={onUnstake} tokenName={lpName} />,
-  )
+  const [onPresentWithdraw] = useModal(<WithdrawModal max={stakedBalance} onConfirm={onUnstake} tokenName={lpName} />)
 
-  const lpTokenPrice = new BigNumber(farm.totalValue).div(getBalanceNumber(farm.totalSupply)).toNumber();
+  const lpTokenPrice = new BigNumber(farm.totalValue).div(getBalanceNumber(farm.totalSupply)).toNumber()
   const farmImage = farm.lpSymbol.split(' ')[0].toLocaleLowerCase()
   const totalValueFormatted = farm.totalValue
     ? `$${Number(farm.totalValue).toLocaleString(undefined, { maximumFractionDigits: 0 })}`
     : '-'
 
-  const stakedValueFormatted = `$${Number(rawStakedBalance * lpTokenPrice).toLocaleString(undefined, { maximumFractionDigits: 2 })}`
+  const stakedValueFormatted = `$${Number(rawStakedBalance * lpTokenPrice).toLocaleString(undefined, {
+    maximumFractionDigits: 2,
+  })}`
   const farmAPY =
     farm.apy && farm.apy.times(new BigNumber(WEEKS_PER_YEAR)).times(new BigNumber(100)).toNumber().toFixed(2)
 
@@ -213,27 +209,68 @@ const FarmCard: React.FC<FarmCardProps> = ({
     tvl: stakedValueFormatted,
     farmTvl: totalValueFormatted,
     normalAPY: farmAPY,
-    compoundAPY: farm.hardApy
+    compoundAPY: farm.hardApy,
   }
 
   const renderFarmLogo = () => {
     switch (farm.type) {
       case 'Lydia':
-        return <Image mt='12px' src={`${process.env.PUBLIC_URL}/images/compounder-igloos/LydiaLogo.png`} alt={farm.tokenSymbol} width={108} height={108} />
+        return (
+          <Image
+            mt="12px"
+            src={`${process.env.PUBLIC_URL}/images/compounder-igloos/LydiaLogo.png`}
+            alt={farm.tokenSymbol}
+            width={108}
+            height={108}
+          />
+        )
       case 'Pangolin':
-        return <Image mt='12px'src={`${process.env.PUBLIC_URL}/images/compounder-igloos/PangolinLogo.png`} alt={farm.tokenSymbol} width={108} height={108} />
+        return (
+          <Image
+            mt="12px"
+            src={`${process.env.PUBLIC_URL}/images/compounder-igloos/PangolinLogo.png`}
+            alt={farm.tokenSymbol}
+            width={108}
+            height={108}
+          />
+        )
       case 'Olive':
-        return <Image mt='12px' src={`${process.env.PUBLIC_URL}/images/compounder-igloos/OliveLogo.png`} alt={farm.tokenSymbol} width={108} height={108} />
+        return (
+          <Image
+            mt="12px"
+            src={`${process.env.PUBLIC_URL}/images/compounder-igloos/OliveLogo.png`}
+            alt={farm.tokenSymbol}
+            width={108}
+            height={108}
+          />
+        )
       case 'Gondola':
-        return <Image mt='12px' src={`${process.env.PUBLIC_URL}/images/compounder-igloos/GondolaLogo.png`} alt={farm.tokenSymbol} width={108} height={108} />
+        return (
+          <Image
+            mt="12px"
+            src={`${process.env.PUBLIC_URL}/images/compounder-igloos/GondolaLogo.png`}
+            alt={farm.tokenSymbol}
+            width={108}
+            height={108}
+          />
+        )
       case 'Penguin':
       default:
-        return <Image mt='6px' mb='6px' src={`${process.env.PUBLIC_URL}/images/farms/${farmImage}.svg`} alt={farm.tokenSymbol} width={108} height={108} />
+        return (
+          <Image
+            mt="6px"
+            mb="6px"
+            src={`${process.env.PUBLIC_URL}/images/farms/${farmImage}.svg`}
+            alt={farm.tokenSymbol}
+            width={108}
+            height={108}
+          />
+        )
     }
-  };
+  }
 
   const renderActionButtons = () => {
-    return isApproved ? 
+    return isApproved ? (
       <>
         <ActionButtonWrapper index={index}>
           <Button mt="4px" scale="sm" disabled={!account} onClick={onPresentDeposit}>
@@ -245,66 +282,73 @@ const FarmCard: React.FC<FarmCardProps> = ({
             {TranslateString(758, 'Withdraw')}
           </Button>
         </ActionButtonWrapper>
-        {farm.type === 'Penguin' && 
+        {farm.type === 'Penguin' && (
           <ActionButtonWrapper index={index}>
             <Button mt="4px" scale="sm" disabled={!account} onClick={onClaimXPefi}>
               {TranslateString(758, 'Claim')}
             </Button>
           </ActionButtonWrapper>
-        }
+        )}
       </>
-      : 
+    ) : (
       <ActionButtonWrapper index={index}>
         <Button mt="4px" scale="sm" disabled={requestedApproval} onClick={handleApprove}>
           {TranslateString(758, 'Approve Contract')}
         </Button>
       </ActionButtonWrapper>
+    )
   }
 
   return (
     <FCard index={index}>
       <CardActionContainer>
-        <IglooLogoContainer>
-          {renderFarmLogo()}
-        </IglooLogoContainer>
-        <Flex flexDirection="column" pt="8px" justifyContent='center' alignItems='flex-start'>
+        <IglooLogoContainer>{renderFarmLogo()}</IglooLogoContainer>
+        <Flex flexDirection="column" pt="8px" justifyContent="center" alignItems="flex-start">
           <IglooTitleWrapper>
             <Text bold fontSize="20px">{`${farm.type} ${farm.lpSymbol.split(' ')[0]}`}</Text>
           </IglooTitleWrapper>
           <Flex justifyContent="center">
-            {!account ? <PGUnlockButton index={index} scale='sm' mt="4px" fullWidth /> : renderActionButtons()}
+            {!account ? <PGUnlockButton index={index} scale="sm" mt="4px" fullWidth /> : renderActionButtons()}
           </Flex>
         </Flex>
       </CardActionContainer>
-      <Flex pt='16px' justifyContent='space-between' width='100%'>
+      <Flex pt="16px" justifyContent="space-between" width="100%">
         <CardInfoContainer index={index}>
           <CardInfoWrapper index={index}>
-            <Text className='label' fontSize="16px">YOUR TVL</Text>
-            <Text className='value' bold fontSize="24px">
+            <Text className="label" fontSize="16px">
+              YOUR TVL
+            </Text>
+            <Text className="value" bold fontSize="24px">
               {data.tvl}
             </Text>
           </CardInfoWrapper>
         </CardInfoContainer>
         <CardInfoContainer index={index}>
           <CardInfoWrapper index={index}>
-            <Text className='label' fontSize="16px">FARM TVL</Text>
-            <Text className='value' bold fontSize="24px">
+            <Text className="label" fontSize="16px">
+              FARM TVL
+            </Text>
+            <Text className="value" bold fontSize="24px">
               {data.farmTvl}
             </Text>
           </CardInfoWrapper>
         </CardInfoContainer>
         <CardInfoContainer index={index}>
           <CardInfoWrapper index={index}>
-            <Text className='label' fontSize="16px">NORMAL APY</Text>
-            <Text className='value' bold fontSize="24px">
+            <Text className="label" fontSize="16px">
+              NORMAL APY
+            </Text>
+            <Text className="value" bold fontSize="24px">
               {`${data.normalAPY}%`}
             </Text>
           </CardInfoWrapper>
         </CardInfoContainer>
         <CardInfoContainer index={index}>
           <CardInfoWrapper index={index}>
-            <Text className='label' fontSize="16px">COMPOUND APY</Text>
-            <Text className='value' bold fontSize="24px">
+            <Text className="label" fontSize="16px">
+              COMPOUND APY
+            </Text>
+            <Text className="value" bold fontSize="24px">
               {`${data.compoundAPY}`}
             </Text>
           </CardInfoWrapper>

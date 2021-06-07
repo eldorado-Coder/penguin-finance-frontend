@@ -4,11 +4,12 @@ import { useDispatch } from 'react-redux'
 import BigNumber from 'bignumber.js'
 import { useWeb3React } from '@web3-react/core'
 import styled from 'styled-components'
-import { BLOCKS_PER_WEEK, PEFI_POOL_PID } from 'config'
+import { SECONDS_PER_YEAR, WEEKS_PER_YEAR, PEFI_POOL_PID } from 'config'
 import FlexLayout from 'components/layout/Flex'
 import Page from 'components/layout/Page'
 import { usePefiPerBlock, useFarms, usePriceAvaxUsdt, usePricePefiUsdt, usePriceEthUsdt } from 'state/hooks'
 import useRefresh from 'hooks/useRefresh'
+import useBlockGenerationTime from 'hooks/useBlockGenerationTime'
 import { fetchFarmUserDataAsync } from 'state/actions'
 import { QuoteToken } from 'config/constants/types'
 import FarmCard, { FarmWithStakedValue } from './components/FarmCard/FarmCard'
@@ -22,6 +23,9 @@ const Farms: React.FC = () => {
   const avaxPrice = usePriceAvaxUsdt()
   const { account } = useWeb3React()
   const ethPriceUsd = usePriceEthUsdt()
+  const AVAX_BLOCK_TIME = useBlockGenerationTime()
+  const BLOCKS_PER_YEAR = new BigNumber(SECONDS_PER_YEAR).div(new BigNumber(AVAX_BLOCK_TIME))
+  const BLOCKS_PER_WEEK = BLOCKS_PER_YEAR.div(new BigNumber(WEEKS_PER_YEAR))
 
   const dispatch = useDispatch()
   const { fastRefresh } = useRefresh()
@@ -89,7 +93,7 @@ const Farms: React.FC = () => {
         />
       ))
     },
-    [pefiPerBlock, farmsLP, avaxPrice, ethPriceUsd, pefiPrice, account],
+    [BLOCKS_PER_WEEK, pefiPerBlock, farmsLP, avaxPrice, ethPriceUsd, pefiPrice, account],
   )
 
   return (

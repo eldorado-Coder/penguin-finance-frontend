@@ -3,10 +3,11 @@ import styled from 'styled-components'
 import { Heading, Card, CardBody, Flex, ArrowForwardIcon, Skeleton } from 'penguinfinance-uikit2'
 import { NavLink } from 'react-router-dom'
 import useI18n from 'hooks/useI18n'
+import useBlockGenerationTime from 'hooks/useBlockGenerationTime'
 import BigNumber from 'bignumber.js'
 import { QuoteToken } from 'config/constants/types'
 import { usePefiPerBlock, useFarms, usePriceAvaxUsdt } from 'state/hooks'
-import { PEFI_POOL_PID, BLOCKS_PER_YEAR } from 'config'
+import { PEFI_POOL_PID, SECONDS_PER_YEAR } from 'config'
 
 const StyledFarmStakingCard = styled(Card)`
   background-image: url('/images/Big_Igloo_EarnUp.png');
@@ -31,8 +32,9 @@ const EarnAPYCard = () => {
   const pefiPerBlock = usePefiPerBlock()
   const farmsLP = useFarms()
   const avaxPrice = usePriceAvaxUsdt()
-
   const maxAPY = useRef(Number.MIN_VALUE)
+  const AVAX_BLOCK_TIME = useBlockGenerationTime()
+  const BLOCKS_PER_YEAR = new BigNumber(SECONDS_PER_YEAR).div(new BigNumber(AVAX_BLOCK_TIME))
 
   const getHighestAPY = () => {
     const activeFarms = farmsLP.filter((farm) => farm.pid !== 0 && farm.multiplier !== '0X')
@@ -77,7 +79,7 @@ const EarnAPYCard = () => {
         return apy
       })
     },
-    [pefiPerBlock, avaxPrice, farmsLP],
+    [BLOCKS_PER_YEAR, pefiPerBlock, avaxPrice, farmsLP],
   )
 
   return (

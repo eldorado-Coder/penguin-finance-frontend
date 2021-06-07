@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { BlockContext } from 'contexts/BlockContext'
 
 const useBlock = () => {
-  const block: number = useContext(BlockContext)
+  const { block } = useContext(BlockContext)
   return block
 }
 
