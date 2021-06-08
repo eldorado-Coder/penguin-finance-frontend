@@ -875,6 +875,24 @@
   },
   {
     "type": "function",
+    "stateMutability": "nonpayable",
+    "outputs": [],
+    "name": "impromptuTokenAggregation",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "minReturnAmountAccepted",
+        "internalType": "uint256"
+      },
+      {
+        "type": "bool",
+        "name": "disableDeposits",
+        "internalType": "bool"
+      }
+    ]
+  },
+  {
+    "type": "function",
     "stateMutability": "view",
     "outputs": [
       {
@@ -1057,24 +1075,6 @@
     "outputs": [],
     "name": "renounceOwnership",
     "inputs": []
-  },
-  {
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "outputs": [],
-    "name": "rescueDeployedFunds",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "minReturnAmountAccepted",
-        "internalType": "uint256"
-      },
-      {
-        "type": "bool",
-        "name": "disableDeposits",
-        "internalType": "bool"
-      }
-    ]
   },
   {
     "type": "function",
