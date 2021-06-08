@@ -9,7 +9,7 @@ import { useStrategyApprove } from 'hooks/useApprove'
 import useWeb3 from 'hooks/useWeb3'
 import { getAddress } from 'utils/addressHelpers'
 import { getContract } from 'utils/erc20'
-import { BASE_ADD_LIQUIDITY_URL, WEEKS_PER_YEAR } from 'config'
+import { BASE_ADD_LIQUIDITY_URL } from 'config'
 import getLiquidityUrlPathParts from 'utils/getLiquidityUrlPathParts'
 import useCompounderStake from 'hooks/useCompounderStake'
 import useCompounderUnstake from 'hooks/useCompounderUnstake'
@@ -202,8 +202,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
   const stakedValueFormatted = `$${Number(rawStakedBalance * lpTokenPrice).toLocaleString(undefined, {
     maximumFractionDigits: 2,
   })}`
-  const farmAPY =
-    farm.apy && farm.apy.times(new BigNumber(WEEKS_PER_YEAR)).times(new BigNumber(100)).toNumber().toFixed(2)
+  const farmAPY = farm.apy && farm.apy.times(new BigNumber(100)).toNumber().toFixed(2)
 
   const data = {
     tvl: stakedValueFormatted,

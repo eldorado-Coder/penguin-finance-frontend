@@ -8,9 +8,9 @@ import {
   fetchCompounderFarmUserTokenBalances,
   fetchCompounderFarmUserStakedBalances,
 } from './fetchCompounderFarmUser'
-import { FarmsState, Farm } from '../types'
+import { CompounderFarmsState, Farm } from '../types'
 
-const initialState: FarmsState = { pefiPerBlock: 0, data: [...farmsConfig] }
+const initialState: CompounderFarmsState = { pefiPerBlock: 0, gondolaPerSec: 0, lydPerSec: 0, data: [...farmsConfig] }
 
 export const farmsSlice = createSlice({
   name: 'CompounderFarms',
@@ -18,6 +18,12 @@ export const farmsSlice = createSlice({
   reducers: {
     setPefiPerBlock: (state, action) => {
       state.pefiPerBlock = action.payload
+    },
+    setGondolaPerSec: (state, action) => {
+      state.gondolaPerSec = action.payload
+    },
+    setLydPerSec: (state, action) => {
+      state.lydPerSec = action.payload
     },
     setFarmsPublicData: (state, action) => {
       const liveFarmsData: Farm[] = action.payload
@@ -37,12 +43,20 @@ export const farmsSlice = createSlice({
 })
 
 // Actions
-export const { setPefiPerBlock, setFarmsPublicData, setFarmUserData } = farmsSlice.actions
+export const {
+  setPefiPerBlock,
+  setGondolaPerSec,
+  setLydPerSec,
+  setFarmsPublicData,
+  setFarmUserData,
+} = farmsSlice.actions
 
 // Thunks
-export const fetchMasterChefPefiPerBlock = () => async (dispatch) => {
-  const { pefiPerBlock } = await fetchMasterChefGlobalData()
+export const fetchMasterChefRewards = () => async (dispatch) => {
+  const { pefiPerBlock, gondolaPerSec, lydPerSec } = await fetchMasterChefGlobalData()
   dispatch(setPefiPerBlock(pefiPerBlock))
+  dispatch(setGondolaPerSec(gondolaPerSec))
+  dispatch(setLydPerSec(lydPerSec))
 }
 export const fetchCompounderFarmsPublicDataAsync = () => async (dispatch) => {
   const farms = await fetchCompounderFarms()

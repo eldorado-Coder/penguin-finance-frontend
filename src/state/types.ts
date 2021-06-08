@@ -74,6 +74,13 @@ export interface FarmsState {
   data: Farm[]
 }
 
+export interface CompounderFarmsState {
+  pefiPerBlock: number
+  gondolaPerSec: number
+  lydPerSec: number
+  data: Farm[]
+}
+
 export interface LpsState {
   data: Lp[]
 }
@@ -171,7 +178,7 @@ export interface GlobalState {
 export interface State {
   lps: LpsState
   farms: FarmsState
-  compounderFarms: FarmsState
+  compounderFarms: CompounderFarmsState
   toasts: ToastsState
   pools: PoolsState
   profile: ProfileState

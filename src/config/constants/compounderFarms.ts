@@ -20,7 +20,7 @@ const farms: FarmConfig[] = [
     withdrawalFee: '3.2',
     hardApy: '896.65%',
     type: 'Penguin',
-    name: 'pendingPEFI'
+    name: 'pendingPEFI',
   },
   {
     pid: 1,
@@ -40,7 +40,7 @@ const farms: FarmConfig[] = [
     withdrawalFee: '3.2',
     hardApy: '196.24%',
     type: 'Penguin',
-    name: 'pendingPEFI'
+    name: 'pendingPEFI',
   },
   {
     pid: 2,
@@ -60,7 +60,7 @@ const farms: FarmConfig[] = [
     withdrawalFee: '3.2',
     hardApy: '967.57%',
     type: 'Penguin',
-    name: 'pendingPEFI'
+    name: 'pendingPEFI',
   },
   {
     pid: 3,
@@ -80,7 +80,7 @@ const farms: FarmConfig[] = [
     withdrawalFee: '3.2',
     hardApy: '1354.80%',
     type: 'Penguin',
-    name: 'pendingPEFI'
+    name: 'pendingPEFI',
   },
   {
     pid: 4,
@@ -100,7 +100,7 @@ const farms: FarmConfig[] = [
     withdrawalFee: '3.2',
     hardApy: '1347.55%',
     type: 'Penguin',
-    name: 'pendingPEFI'
+    name: 'pendingPEFI',
   },
   {
     pid: 5,
@@ -120,7 +120,7 @@ const farms: FarmConfig[] = [
     withdrawalFee: '4',
     hardApy: '300.35%',
     type: 'Penguin',
-    name: 'pendingPEFI'
+    name: 'pendingPEFI',
   },
   {
     pid: 6,
@@ -140,8 +140,9 @@ const farms: FarmConfig[] = [
     withdrawalFee: '4',
     hardApy: '300.35%',
     type: 'Penguin',
-    name: 'pendingPEFI'
+    name: 'pendingPEFI',
   },
+  // gondola
   {
     pid: 7,
     lpSymbol: 'ETH-ZETH LP',
@@ -149,18 +150,25 @@ const farms: FarmConfig[] = [
       43113: '',
       43114: '0xc37ECFA7Bbf1dF92Da7C4A3d92d8CF8657D1FF7f',
     },
-    tokenSymbol: 'ETH',
-    tokenAddresses: {
+    tokenSymbol: QuoteToken.ZETH,
+    tokenAddresses: contracts.zeth,
+    strategyAddress: '0x01B149E00997eD25Df10C1Ce2b938D748Ec393d3',
+    quoteTokenSymbol: QuoteToken.ETH,
+    quoteTokenAddresses: {
       43113: '',
       43114: '0xf20d962a6c8f70c731bd838a3a388D7d48fA6e15',
     },
-    strategyAddress: '0x01B149E00997eD25Df10C1Ce2b938D748Ec393d3',
-    quoteTokenSymbol: QuoteToken.ZETH,
-    quoteTokenAddresses: contracts.zeth,
+
+    // tokenSymbol: 'ETH',
+    // tokenAddresses: {
+    //   43113: '',
+    //   43114: '0xf20d962a6c8f70c731bd838a3a388D7d48fA6e15',
+    // },
+
     withdrawalFee: '3.2',
     hardApy: '1354.80%',
     type: 'Gondola',
-    name: 'pendingGondola'
+    name: 'pendingGondola',
   },
   {
     pid: 4,
@@ -180,8 +188,9 @@ const farms: FarmConfig[] = [
     withdrawalFee: '3.2',
     hardApy: '1347.55%',
     type: 'Gondola',
-    name: 'pendingGondola'
+    name: 'pendingGondola',
   },
+  // lydia
   {
     pid: 2,
     lpSymbol: 'AVAX-ETH LP',
@@ -200,7 +209,7 @@ const farms: FarmConfig[] = [
     withdrawalFee: '4',
     hardApy: '300.35%',
     type: 'Lydia',
-    name: 'pendingLyd'
+    name: 'pendingLyd',
   },
   {
     pid: 3,
@@ -220,7 +229,7 @@ const farms: FarmConfig[] = [
     withdrawalFee: '4',
     hardApy: '300.35%',
     type: 'Lydia',
-    name: 'pendingLyd'
+    name: 'pendingLyd',
   },
   {
     pid: 7,
@@ -240,68 +249,68 @@ const farms: FarmConfig[] = [
     withdrawalFee: '3.2',
     hardApy: '1347.55%',
     type: 'Lydia',
-    name: 'pendingLyd'
+    name: 'pendingLyd',
   },
-  // // Pangolin
-  // {
-  //   lpSymbol: 'AVAX-PNG LP',
-  //   lpAddresses: {
-  //     43113: '',
-  //     43114: '0xd7538cABBf8605BdE1f4901B47B8D42c61DE0367',
-  //   },
-  //   tokenSymbol: 'AVAX',
-  //   tokenAddresses: {
-  //     43113: '',
-  //     43114: '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7',
-  //   },
-  //   strategyAddress: '0x0B9f7bbA8934a93463317D9910BD8FE347f4C694',
-  //   quoteTokenSymbol: QuoteToken.PNG,
-  //   quoteTokenAddresses: contracts.png,
-  //   withdrawalFee: '4',
-  //   hardApy: '300.35%',
-  //   type: 'Pangolin',
-  //   name: 'pendingPangolin'
-  // },
-  // {
-  //   pid: 3,
-  //   lpSymbol: 'AVAX-ETH LP',
-  //   lpAddresses: {
-  //     43113: '',
-  //     43114: '0x1aCf1583bEBdCA21C8025E172D8E8f2817343d65',
-  //   },
-  //   tokenSymbol: 'AVAX',
-  //   tokenAddresses: {
-  //     43113: '',
-  //     43114: '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7',
-  //   },
-  //   strategyAddress: '0x47fff475a0045508046F9658B125701447AbcCD5',
-  //   quoteTokenSymbol: QuoteToken.ETH,
-  //   quoteTokenAddresses: contracts.eth,
-  //   withdrawalFee: '4',
-  //   hardApy: '300.35%',
-  //   type: 'Pangolin',
-  //   name: 'pendingPangolin'
-  // },
-  // {
-  //   pid: 7,
-  //   lpSymbol: 'AVAX-LINK LP',
-  //   lpAddresses: {
-  //     43113: '',
-  //     43114: '0xbbC7fFF833D27264AaC8806389E02F717A5506c9',
-  //   },
-  //   tokenSymbol: 'AVAX',
-  //   tokenAddresses: {
-  //     43113: '',
-  //     43114: '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7',
-  //   },
-  //   strategyAddress: '0x8dd033E43a848E33d2de504921E1578199C129fE',
-  //   quoteTokenSymbol: QuoteToken.LINK,
-  //   quoteTokenAddresses: contracts.link,
-  //   withdrawalFee: '3.2',
-  //   hardApy: '1347.55%',
-  //   type: 'Pangolin',
-  //   name: 'pendingPangolin'
-  // },
+  // Pangolin
+  {
+    lpSymbol: 'AVAX-PNG LP',
+    lpAddresses: {
+      43113: '',
+      43114: '0xd7538cABBf8605BdE1f4901B47B8D42c61DE0367',
+    },
+    tokenSymbol: 'AVAX',
+    tokenAddresses: {
+      43113: '',
+      43114: '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7',
+    },
+    strategyAddress: '0x0B9f7bbA8934a93463317D9910BD8FE347f4C694',
+    stakingAddress: '0x574d3245e36Cf8C9dc86430EaDb0fDB2F385F829',
+    quoteTokenSymbol: QuoteToken.PNG,
+    quoteTokenAddresses: contracts.png,
+    withdrawalFee: '4',
+    hardApy: '300.35%',
+    type: 'Pangolin',
+    name: 'pendingPangolin',
+  },
+  {
+    pid: 3,
+    lpSymbol: 'AVAX-ETH LP',
+    lpAddresses: {
+      43113: '',
+      43114: '0x1aCf1583bEBdCA21C8025E172D8E8f2817343d65',
+    },
+    tokenSymbol: 'AVAX',
+    tokenAddresses: {
+      43113: '',
+      43114: '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7',
+    },
+    strategyAddress: '0x47fff475a0045508046F9658B125701447AbcCD5',
+    stakingAddress: '0x417C02150b9a31BcaCb201d1D60967653384E1C6',
+    quoteTokenSymbol: QuoteToken.ETH,
+    quoteTokenAddresses: contracts.eth,
+    withdrawalFee: '4',
+    hardApy: '300.35%',
+    type: 'Pangolin',
+    name: 'pendingPangolin',
+  },
+  {
+    pid: 7,
+    lpSymbol: 'AVAX-LINK LP',
+    lpAddresses: {
+      43113: '',
+      43114: '0xbbC7fFF833D27264AaC8806389E02F717A5506c9',
+    },
+    tokenSymbol: QuoteToken.LINK,
+    tokenAddresses: contracts.link,
+    strategyAddress: '0x8dd033E43a848E33d2de504921E1578199C129fE',
+    stakingAddress: '0xBDa623cDD04d822616A263BF4EdbBCe0B7DC4AE7',
+    quoteTokenSymbol: QuoteToken.AVAX,
+    quoteTokenAddresses: contracts.wavax,
+    withdrawalFee: '3.2',
+    hardApy: '1347.55%',
+    type: 'Pangolin',
+    name: 'pendingPangolin',
+  },
 ]
 
 export default farms
