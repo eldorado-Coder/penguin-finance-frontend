@@ -762,13 +762,7 @@
     "stateMutability": "nonpayable",
     "outputs": [],
     "name": "claimXPEFI",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "user",
-        "internalType": "address"
-      }
-    ]
+    "inputs": []
   },
   {
     "type": "function",
@@ -960,6 +954,24 @@
         "type": "uint256",
         "name": "amount",
         "internalType": "uint256"
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "outputs": [],
+    "name": "impromptuTokenAggregation",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "minReturnAmountAccepted",
+        "internalType": "uint256"
+      },
+      {
+        "type": "bool",
+        "name": "disableDeposits",
+        "internalType": "bool"
       }
     ]
   },
@@ -1166,24 +1178,6 @@
     "outputs": [],
     "name": "renounceOwnership",
     "inputs": []
-  },
-  {
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "outputs": [],
-    "name": "rescueDeployedFunds",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "minReturnAmountAccepted",
-        "internalType": "uint256"
-      },
-      {
-        "type": "bool",
-        "name": "disableDeposits",
-        "internalType": "bool"
-      }
-    ]
   },
   {
     "type": "function",
