@@ -21,3 +21,14 @@ export const apyModalRoi = ({ amountEarned, amountInvested }) => {
   const percentage = (amountEarned / amountInvested) * 100
   return percentage.toFixed(2)
 }
+
+export const getCompoundApy = ({ normalApy, type }: { normalApy: string; type: string }) => {
+  if (!normalApy) return ''
+  if (type === 'Lydia' || type === 'Pangolin' || type === 'Gondola') {
+    const _normalApy = Number(normalApy) / 100
+    const compoundApy = (1 + _normalApy / 365) ** 365 - 1
+
+    return (compoundApy * 100).toFixed(2)
+  }
+  return normalApy
+}

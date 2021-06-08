@@ -9,6 +9,7 @@ import useRefresh from 'hooks/useRefresh'
 import {
   fetchMasterChefPefiPerBlock,
   fetchFarmsPublicDataAsync,
+  fetchMasterChefRewards,
   fetchCompounderFarmsPublicDataAsync,
   fetchLpsPublicDataAsync,
   fetchPoolsPublicDataAsync,
@@ -43,6 +44,7 @@ export const useFetchPublicData = () => {
   useEffect(() => {
     dispatch(fetchMasterChefPefiPerBlock())
     dispatch(fetchFarmsPublicDataAsync())
+    dispatch(fetchMasterChefRewards())
     dispatch(fetchCompounderFarmsPublicDataAsync())
     dispatch(fetchLpsPublicDataAsync())
     // POOL REMOVAL
@@ -53,8 +55,18 @@ export const useFetchPublicData = () => {
 // Farms
 
 export const usePefiPerBlock = (): BigNumber => {
-  const pefiPerBlock = useSelector((state: State) => state.farms.pefiPerBlock)
+  const pefiPerBlock = useSelector((state: State) => state.compounderFarms.pefiPerBlock)
   return new BigNumber(pefiPerBlock)
+}
+
+export const useGondolaPerSec = (): BigNumber => {
+  const gondolaPerSec = useSelector((state: State) => state.compounderFarms.gondolaPerSec)
+  return new BigNumber(gondolaPerSec)
+}
+
+export const useLydPerSec = (): BigNumber => {
+  const lydPerSec = useSelector((state: State) => state.compounderFarms.lydPerSec)
+  return new BigNumber(lydPerSec)
 }
 
 export const useFarms = (): Farm[] => {
@@ -184,17 +196,31 @@ export const usePriceLinkUsdt = (): BigNumber => {
 }
 
 export const usePriceLydUsdt = (): BigNumber => {
-  const lpSymbol = 'LYD-USDT LP';
+  const lpSymbol = 'LYD-USDT LP'
   const lp = useLPFromSymbol(lpSymbol)
   return lp.tokenPriceVsQuote ? new BigNumber(1).div(lp.tokenPriceVsQuote) : ZERO
 }
 
+// export const usePriceLydUsdt = (): BigNumber => {
+//   const lpSymbol = 'LYD-AVAX LP'
+//   const farm = useLPFromSymbol(lpSymbol)
+//   const avaxPriceUSD = usePriceAvaxUsdt()
+//   return farm.tokenPriceVsQuote ? avaxPriceUSD.div(farm.tokenPriceVsQuote) : ZERO
+// }
+
+export const usePriceGdlUsdt = (): BigNumber => {
+  const lpSymbol = 'GDL-AVAX LP'
+  const farm = useLPFromSymbol(lpSymbol)
+  const avaxPriceUSD = usePriceAvaxUsdt()
+  return farm.tokenPriceVsQuote ? avaxPriceUSD.div(farm.tokenPriceVsQuote) : ZERO
+}
+
 export const usePriceZEthUsdt = (): BigNumber => {
-  const lpSymbol = 'ETH-ZETH LP';
-  const farm = useCompounderFarmFromSymbol(lpSymbol);
-  const ethPriceUsdt = usePriceEthUsdt();
+  const lpSymbol = 'ETH-ZETH LP'
+  const farm = useCompounderFarmFromSymbol(lpSymbol)
+  const ethPriceUsdt = usePriceEthUsdt()
   return farm.tokenPriceVsQuote ? ethPriceUsdt.times(farm.tokenPriceVsQuote) : ZERO
-};
+}
 
 // Toasts
 export const useToast = () => {

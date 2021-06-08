@@ -20,7 +20,7 @@ const lps: LPConfig[] = [
     lpSymbol: 'LYD-USDT LP',
     lpAddresses: {
       43113: '',
-      43114: '0x752C59f22fAAA861108649F4596034796C69bC3f',
+      43114: '0x35d63e319133dd77d5de06d0c90c78866dde0ccb',
     },
     tokenSymbol: 'USDT',
     tokenAddresses: {
@@ -29,6 +29,29 @@ const lps: LPConfig[] = [
     },
     quoteTokenSymbol: QuoteToken.LYD,
     quoteTokenAddresses: contracts.lyd,
+  },
+
+  // {
+  //   lpSymbol: 'LYD-AVAX LP',
+  //   lpAddresses: {
+  //     43113: '',
+  //     43114: '0x87b1cf8f0fd3e0243043642cea7164a67cb67e4d',
+  //   },
+  //   tokenSymbol: QuoteToken.AVAX,
+  //   tokenAddresses: contracts.wavax,
+  //   quoteTokenSymbol: QuoteToken.LYD,
+  //   quoteTokenAddresses: contracts.lyd,
+  // },
+  {
+    lpSymbol: 'GDL-AVAX LP',
+    lpAddresses: {
+      43113: '',
+      43114: '0xc5ab0c94bc88b98f55f4e21c1474f67ab2329cfd',
+    },
+    tokenSymbol: QuoteToken.AVAX,
+    tokenAddresses: contracts.wavax,
+    quoteTokenSymbol: QuoteToken.GDL,
+    quoteTokenAddresses: contracts.gdl,
   },
 ]
 

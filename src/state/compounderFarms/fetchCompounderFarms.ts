@@ -4,26 +4,51 @@ import masterchefABI from 'config/abi/masterchef.json'
 import multicall from 'utils/multicall'
 import { getAddress, getMasterChefAddress } from 'utils/addressHelpers'
 
-import getFarmMasterChefAbi from 'utils/getFarmMasterChefAbi';
-import getFarmMasterChefAddress from 'utils/getFarmMasterChefAddress';
+import getFarmMasterChefAbi from 'utils/getFarmMasterChefAbi'
+import getFarmMasterChefAddress from 'utils/getFarmMasterChefAddress'
 import farmsConfig from 'config/constants/compounderFarms'
 
 export const fetchMasterChefGlobalData = async () => {
-  const [pefiPerBlock] = await multicall(masterchefABI, [
+  const pefiMasterChefAddress = getFarmMasterChefAddress('Penguin')
+  const gondolaMasterChefAddress = getFarmMasterChefAddress('Gondola')
+  const lydiaMasterChefAddress = getFarmMasterChefAddress('Lydia')
+
+  const pefiMasterChefAbi = getFarmMasterChefAbi('Penguin')
+  const gondolaMasterChefAbi = getFarmMasterChefAbi('Gondola')
+  const lydiaMasterChefAbi = getFarmMasterChefAbi('Lydia')
+
+  const [pefiPerBlock] = await multicall(pefiMasterChefAbi, [
     {
-      address: getMasterChefAddress(),
+      address: pefiMasterChefAddress,
       name: 'pefiPerBlock',
     },
   ])
+  const [gondolaPerSec] = await multicall(gondolaMasterChefAbi, [
+    {
+      address: gondolaMasterChefAddress,
+      name: 'gondolaPerSec',
+    },
+  ])
+  const [lydPerSec] = await multicall(lydiaMasterChefAbi, [
+    {
+      address: lydiaMasterChefAddress,
+      name: 'lydPerSec',
+    },
+  ])
 
-  return { pefiPerBlock: new BigNumber(pefiPerBlock).div(new BigNumber(10).pow(18)).toNumber() }
-};
+  return {
+    pefiPerBlock: new BigNumber(pefiPerBlock).div(new BigNumber(10).pow(18)).toNumber(),
+    gondolaPerSec: new BigNumber(gondolaPerSec).div(new BigNumber(10).pow(18)).toNumber(),
+    lydPerSec: new BigNumber(lydPerSec).div(new BigNumber(10).pow(18)).toNumber(),
+  }
+}
 
 export const fetchCompounderFarms = async () => {
   const data = await Promise.all(
     farmsConfig.map(async (farmConfig) => {
       const lpAddress = getAddress(farmConfig.lpAddresses)
-      const farmMasterChefAddress = getFarmMasterChefAddress(farmConfig.type)
+      const farmMasterChefAddress =
+        farmConfig.type === 'Pangolin' ? farmConfig.stakingAddress : getFarmMasterChefAddress(farmConfig.type)
       const calls = [
         // Balance of token in the LP contract
         {
@@ -64,7 +89,7 @@ export const fetchCompounderFarms = async () => {
           name: 'totalSupply',
         },
       ]
-      
+
       const [
         tokenBalanceLP,
         quoteTokenBalanceLP,
@@ -72,8 +97,8 @@ export const fetchCompounderFarms = async () => {
         lpTotalSupply,
         tokenDecimals,
         quoteTokenDecimals,
-        strategyTotalSupply
-      ] = await multicall(erc20, calls);
+        strategyTotalSupply,
+      ] = await multicall(erc20, calls)
 
       // Ratio in % a LP tokens that are in staking, vs the total number in circulation
       const lpTokenRatio = new BigNumber(lpTokenBalanceMC).div(new BigNumber(lpTotalSupply))
@@ -90,19 +115,41 @@ export const fetchCompounderFarms = async () => {
         .div(new BigNumber(10).pow(quoteTokenDecimals))
         .times(lpTokenRatio)
 
-      const [info, totalAllocPoint] = await multicall(getFarmMasterChefAbi(farmConfig.type), [
-        {
-          address: getFarmMasterChefAddress(farmConfig.type),
-          name: 'poolInfo',
-          params: [farmConfig.pid],
-        },
-        {
-          address: getFarmMasterChefAddress(farmConfig.type),
-          name: 'totalAllocPoint',
-        },
-      ])
+      let info: any = { allocPoint: new BigNumber(1) }
+      let totalAllocPoint = 1
 
-      const allocPoint = new BigNumber(info.allocPoint._hex)
+      let rewardPerSec = new BigNumber(1)
+
+      if (farmConfig.type !== 'Pangolin') {
+        const res = await multicall(getFarmMasterChefAbi(farmConfig.type), [
+          {
+            address: farmMasterChefAddress,
+            name: 'poolInfo',
+            params: [farmConfig.pid],
+          },
+          {
+            address: farmMasterChefAddress,
+            name: 'totalAllocPoint',
+          },
+        ])
+
+        info = res[0]
+        totalAllocPoint = res[1]
+      } else {
+        const [rewardForDuration, rewardsDuration] = await multicall(getFarmMasterChefAbi(farmConfig.type), [
+          {
+            address: farmMasterChefAddress,
+            name: 'getRewardForDuration',
+          },
+          {
+            address: farmMasterChefAddress,
+            name: 'rewardsDuration',
+          },
+        ])
+        rewardPerSec = new BigNumber(rewardForDuration).div(new BigNumber(rewardsDuration)).div(1e18)
+      }
+
+      const allocPoint = farmConfig.type !== 'Pangolin' ? new BigNumber(info.allocPoint._hex) : new BigNumber(1)
       const poolWeight = allocPoint.div(new BigNumber(totalAllocPoint))
 
       return {
@@ -115,6 +162,7 @@ export const fetchCompounderFarms = async () => {
         tokenPriceVsQuote: quoteTokenAmount.div(tokenAmount).toJSON(),
         poolWeight: poolWeight.toJSON(),
         multiplier: `${allocPoint.div(100).toString()}X`,
+        rewardPerSec,
       }
     }),
   )

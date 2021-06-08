@@ -11,12 +11,15 @@ import useBlockGenerationTime from 'hooks/useBlockGenerationTime'
 import Page from 'components/layout/Page'
 import {
   usePefiPerBlock,
+  useGondolaPerSec,
+  useLydPerSec,
   usePriceAvaxUsdt,
   usePricePefiUsdt,
   usePriceEthUsdt,
   usePricePngUsdt,
   usePriceLinkUsdt,
   usePriceLydUsdt,
+  usePriceGdlUsdt,
   useCompounderFarms,
 } from 'state/hooks'
 import useRefresh from 'hooks/useRefresh'
@@ -41,6 +44,8 @@ const PROJECTS = [
 const Igloos: React.FC = () => {
   const { path } = useRouteMatch()
   const pefiPerBlock = usePefiPerBlock()
+  const gondolaPerSec = useGondolaPerSec()
+  const lydPerSec = useLydPerSec()
   const farmsLP = useCompounderFarms()
   const pefiPrice = usePricePefiUsdt()
   const avaxPrice = usePriceAvaxUsdt()
@@ -49,6 +54,7 @@ const Igloos: React.FC = () => {
   const pngPriceUsd = usePricePngUsdt()
   const linkPriceUsd = usePriceLinkUsdt()
   const lydPriceUsd = usePriceLydUsdt()
+  const gdlPriceUsd = usePriceGdlUsdt()
   const { isDark } = useTheme()
   const [selectedProject, setProject] = useState('All')
   const [sortType, setSortType] = useState('farm-tvl')
@@ -70,6 +76,7 @@ const Igloos: React.FC = () => {
   // /!\ This function will be removed soon
   // This function compute the APY for each farm and will be replaced when we have a reliable API
   // to retrieve assets prices against USD
+
   const farmsList = useCallback(
     (farmsToDisplay, removed: boolean) => {
       const pefiPriceVsAVAX = new BigNumber(farmsLP.find((farm) => farm.pid === PEFI_POOL_PID)?.tokenPriceVsQuote || 0)
@@ -78,32 +85,50 @@ const Igloos: React.FC = () => {
           return farm
         }
         const pefiRewardPerBlock = pefiPerBlock.times(farm.poolWeight)
-        const rewardPerWeek = pefiRewardPerBlock.times(BLOCKS_PER_WEEK)
+        const gondolaRewardPerSec = gondolaPerSec.times(farm.poolWeight)
+        const lydRewardPerSec = lydPerSec.times(farm.poolWeight)
+        const pefiRewardPerYear = pefiRewardPerBlock.times(BLOCKS_PER_WEEK).times(new BigNumber(WEEKS_PER_YEAR))
+        const gondolaRewardPerYear = gondolaRewardPerSec.times(SECONDS_PER_YEAR)
+        const lydRewardPerYear = lydRewardPerSec.times(SECONDS_PER_YEAR)
 
+        let rewardPerYear = pefiRewardPerYear
+        let rewardTokenPrice = pefiPrice
+        if (farm.type === 'Gondola') {
+          rewardPerYear = gondolaRewardPerYear
+          rewardTokenPrice = gdlPriceUsd
+        }
+        if (farm.type === 'Lydia') {
+          rewardPerYear = lydRewardPerYear
+          rewardTokenPrice = lydPriceUsd
+        }
+        if (farm.type === 'Pangolin') {
+          rewardPerYear = farm.rewardPerSec.times(SECONDS_PER_YEAR)
+          rewardTokenPrice = pngPriceUsd
+        }
         // pefiPriceInQuote * rewardPerWeek / lpTotalInQuoteToken
-        let apy = pefiPriceVsAVAX.times(rewardPerWeek).div(farm.lpTotalInQuoteToken)
+        let apy = pefiPriceVsAVAX.times(rewardPerYear).div(farm.lpTotalInQuoteToken)
 
         if (farm.quoteTokenSymbol === QuoteToken.USDT || farm.quoteTokenSymbol === QuoteToken.UST) {
-          apy = pefiPriceVsAVAX.times(rewardPerWeek).div(farm.lpTotalInQuoteToken).times(avaxPrice)
+          if (farm.lpTotalInQuoteToken === '0') {
+            apy = new BigNumber(0)
+          } else {
+            // apy = pefiPriceVsAVAX.times(rewardPerYear).div(farm.lpTotalInQuoteToken).times(avaxPrice)
+            apy = rewardPerYear.div(farm.lpTotalInQuoteToken)
+          }
         } else if (farm.quoteTokenSymbol === QuoteToken.ETH) {
-          apy = pefiPrice.div(ethPriceUsd).times(rewardPerWeek).div(farm.lpTotalInQuoteToken)
+          if (farm.lpTotalInQuoteToken === '0') {
+            apy = new BigNumber(0)
+          } else {
+            apy = rewardTokenPrice.div(ethPriceUsd).times(rewardPerYear).div(farm.lpTotalInQuoteToken)
+          }
         } else if (farm.quoteTokenSymbol === QuoteToken.PEFI) {
-          apy = rewardPerWeek.div(farm.lpTotalInQuoteToken)
+          apy = rewardPerYear.div(farm.lpTotalInQuoteToken)
         } else if (farm.quoteTokenSymbol === QuoteToken.AVAX) {
-          apy = pefiPrice.div(avaxPrice).times(rewardPerWeek).div(farm.lpTotalInQuoteToken)
+          apy = rewardTokenPrice.div(avaxPrice).times(rewardPerYear).div(farm.lpTotalInQuoteToken)
         } else if (farm.quoteTokenSymbol === QuoteToken.LYD) {
-          apy = lydPriceUsd.div(pngPriceUsd).times(rewardPerWeek).div(farm.lpTotalInQuoteToken)
-        } else if (farm.dual) {
-          const pefiApy =
-            farm && pefiPriceVsAVAX.times(pefiRewardPerBlock).times(BLOCKS_PER_WEEK).div(farm.lpTotalInQuoteToken)
-          const dualApy =
-            farm.tokenPriceVsQuote &&
-            new BigNumber(farm.tokenPriceVsQuote)
-              .times(farm.dual.rewardPerBlock)
-              .times(BLOCKS_PER_WEEK)
-              .div(farm.lpTotalInQuoteToken)
-
-          apy = pefiApy && dualApy && pefiApy.plus(dualApy)
+          apy = rewardPerYear.div(farm.lpTotalInQuoteToken)
+        } else if (farm.quoteTokenSymbol === QuoteToken.PNG) {
+          apy = rewardPerYear.div(farm.lpTotalInQuoteToken)
         }
 
         let totalValue = null
@@ -159,7 +184,10 @@ const Igloos: React.FC = () => {
       pngPriceUsd,
       linkPriceUsd,
       lydPriceUsd,
+      gdlPriceUsd,
       pefiPerBlock,
+      gondolaPerSec,
+      lydPerSec,
       account,
       sortType,
     ],

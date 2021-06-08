@@ -97,14 +97,18 @@ export default {
   },
   zusdt: {
     43113: '',
-    43114: '0x650cecafe61f3f65edd21efacca18cc905eef0b7'
+    43114: '0x650cecafe61f3f65edd21efacca18cc905eef0b7',
   },
   lyd: {
     43113: '',
-    43114: '0x4C9B4E1AC6F24CdE3660D5E4Ef1eBF77C710C084'
+    43114: '0x4C9B4E1AC6F24CdE3660D5E4Ef1eBF77C710C084',
+  },
+  gdl: {
+    43113: '',
+    43114: '0xd606199557c8ab6f4cc70bd03facc96ca576f142',
   },
   pangolinManager: {
     43113: '',
-    43114: '0x912b5D41656048Ef681eFa9D32488a3fFE397994'
-  }
+    43114: '0x912b5D41656048Ef681eFa9D32488a3fFE397994',
+  },
 }
