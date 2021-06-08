@@ -16,5 +16,7 @@ export const BASE_LIQUIDITY_POOL_URL = `${BASE_EXCHANGE_URL}/#/pool`
 export const LOTTERY_MAX_NUMBER_OF_TICKETS = 50
 export const LOTTERY_TICKET_PRICE = 1
 
+export const MAX_COMPOUND_APY = 99999
+
 export const APY_TOOLTIP_TEXT =
   '<div>The APY  shown are estimated for your convenience, it is not a guaranteed return rate, these yields can change due to block speed, emission rates adjustments, compounding strategies, among other factors</div>'
