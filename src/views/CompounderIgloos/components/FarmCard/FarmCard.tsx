@@ -159,8 +159,6 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
   const { pid, lpAddresses, type } = useCompounderFarmFromSymbol(farm.lpSymbol)
   const { allowance, tokenBalance, stakedBalance } = useCompounderFarmUser(pid, type)
   const lpName = farm.lpSymbol.toUpperCase()
-  const { onStake } = useCompounderStake(farm.lpSymbol, type)
-  const { onUnstake } = useCompounderUnstake(farm.lpSymbol, type)
   const web3 = useWeb3()
   const lpAddress = getAddress(lpAddresses)
   const isApproved = account && allowance && allowance.isGreaterThan(0)
@@ -172,6 +170,8 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
 
   const { onApprove } = useStrategyApprove(lpContract, farm.lpSymbol, farm.type)
   const { onClaimXPefi } = useCompounderClaimXPefi(farm.lpSymbol, farm.type)
+  const { onStake } = useCompounderStake(farm.lpSymbol, type)
+  const { onUnstake } = useCompounderUnstake(farm.lpSymbol, type)
 
   const handleApprove = useCallback(async () => {
     try {

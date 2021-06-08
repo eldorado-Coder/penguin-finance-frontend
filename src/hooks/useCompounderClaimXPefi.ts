@@ -10,14 +10,11 @@ const useCompounderClaimXPefi = (lpSymbol: string, type?: string) => {
   const { account } = useWeb3React()
   const strategyContract = useStrategyContract(lpSymbol, type)
 
-  const handleClaimXPefi = useCallback(
-    async () => {
-      const txHash = await claimXPefi(strategyContract, account)
-      dispatch(fetchCompounderFarmUserDataAsync(account))
-      console.info(txHash)
-    },
-    [account, dispatch, strategyContract],
-  )
+  const handleClaimXPefi = useCallback(async () => {
+    const txHash = await claimXPefi(strategyContract, account)
+    dispatch(fetchCompounderFarmUserDataAsync(account))
+    console.info(txHash)
+  }, [account, dispatch, strategyContract])
 
   return { onClaimXPefi: handleClaimXPefi }
 }

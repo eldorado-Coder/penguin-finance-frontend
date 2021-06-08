@@ -8,9 +8,7 @@ export const approve = async (lpContract, masterChefContract, account) => {
 }
 
 export const claimXPefi = async (strategyContract, account) => {
-  return strategyContract.methods
-    .claimXPEFI(account)
-    .send({ from: account })
+  return strategyContract.methods.claimXPEFI().send({ from: account })
 }
 
 export const stake = async (masterChefContract, pid, amount, account) => {
