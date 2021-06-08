@@ -150,6 +150,10 @@ const farms: FarmConfig[] = [
       43113: '',
       43114: '0xc37ECFA7Bbf1dF92Da7C4A3d92d8CF8657D1FF7f',
     },
+    swapAddresses: {
+      43113: '',
+      43114: '0xed986f982269e0319F710EC270875dE2b2A443d2',
+    },
     tokenSymbol: QuoteToken.ZETH,
     tokenAddresses: contracts.zeth,
     strategyAddress: '0xB4558486cd8fd2DD5E3B078E7822c1Bb66C782d0',
@@ -163,27 +167,31 @@ const farms: FarmConfig[] = [
     type: 'Gondola',
     name: 'pendingGondola',
   },
-  {
-    pid: 8,
-    lpSymbol: 'USDT-ZUSDT LP',
-    lpAddresses: {
-      43113: '',
-      43114: '0xE586dB7Db75B87A3E84110a73b99960F5f106c6A',
-    },
-    tokenSymbol: QuoteToken.ZUSDT,
-    tokenAddresses: contracts.zusdt,
-    strategyAddress: '0x85fc4ec9dee0DF5060f321B743838F7068499177',
-    quoteTokenSymbol: QuoteToken.USDT,
-    quoteTokenAddresses: {
-      43113: '',
-      43114: '0xde3A24028580884448a5397872046a019649b084',
-    },
+  // {
+  //   pid: 8,
+  //   lpSymbol: 'USDT-ZUSDT LP',
+  //   lpAddresses: {
+  //     43113: '',
+  //     43114: '0xE586dB7Db75B87A3E84110a73b99960F5f106c6A',
+  //   },
+  //   swapAddresses: {
+  //     43113: '',
+  //     43114: '0x3CE2B891071054ee10d4b5eD5a9446f9016F90d8',
+  //   },
+  //   tokenSymbol: QuoteToken.ZUSDT,
+  //   tokenAddresses: contracts.zusdt,
+  //   strategyAddress: '0x85fc4ec9dee0DF5060f321B743838F7068499177',
+  //   quoteTokenSymbol: QuoteToken.USDT,
+  //   quoteTokenAddresses: {
+  //     43113: '',
+  //     43114: '0xde3A24028580884448a5397872046a019649b084',
+  //   },
 
-    withdrawalFee: '3.2',
-    hardApy: '1347.55%',
-    type: 'Gondola',
-    name: 'pendingGondola',
-  },
+  //   withdrawalFee: '3.2',
+  //   hardApy: '1347.55%',
+  //   type: 'Gondola',
+  //   name: 'pendingGondola',
+  // },
   // lydia
   {
     pid: 2,

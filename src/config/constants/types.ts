@@ -73,6 +73,7 @@ export interface FarmConfig {
   name?: string
   strategyAddress?: string
   stakingAddress?: string
+  swapAddresses?: Address
 }
 
 export interface LPConfig {

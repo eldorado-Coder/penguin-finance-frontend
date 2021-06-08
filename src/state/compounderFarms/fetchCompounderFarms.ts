@@ -54,13 +54,13 @@ export const fetchCompounderFarms = async () => {
         {
           address: getAddress(farmConfig.tokenAddresses),
           name: 'balanceOf',
-          params: [lpAddress],
+          params: [farmConfig.type === 'Gondola' ? getAddress(farmConfig.swapAddresses) : lpAddress],
         },
         // Balance of quote token on LP contract
         {
           address: getAddress(farmConfig.quoteTokenAddresses),
           name: 'balanceOf',
-          params: [lpAddress],
+          params: [farmConfig.type === 'Gondola' ? getAddress(farmConfig.swapAddresses) : lpAddress],
         },
         // Balance of LP tokens in the master chef contract
         {
@@ -105,7 +105,7 @@ export const fetchCompounderFarms = async () => {
 
       // Total value in staking in quote token value
       const lpTotalInQuoteToken = new BigNumber(quoteTokenBalanceLP)
-        .div(new BigNumber(10).pow(18))
+        .div(new BigNumber(10).pow(farmConfig.lpSymbol === 'USDT-ZUSDT LP' ? 6 : 18))
         .times(new BigNumber(2))
         .times(lpTokenRatio)
 
