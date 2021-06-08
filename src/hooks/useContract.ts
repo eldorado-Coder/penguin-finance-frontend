@@ -18,10 +18,10 @@ import {
   getCharityPenguinDBAddress,
   getXPefiAddress,
 } from 'utils/addressHelpers'
-import getFarmMasterChefAddress from 'utils/getFarmMasterChefAddress';
-import getFarmMasterChefAbi from 'utils/getFarmMasterChefAbi';
-import getStrategyAddress from 'utils/getStrategyAddress';
-import getStrategyAbi from 'utils/getStrategyAbi';
+import getFarmMasterChefAddress from 'utils/getFarmMasterChefAddress'
+import getFarmMasterChefAbi from 'utils/getFarmMasterChefAbi'
+import getStrategyAddress from 'utils/getStrategyAddress'
+import getStrategyAbi from 'utils/getStrategyAbi'
 import { poolsConfig } from 'config/constants'
 import { PoolCategory } from 'config/constants/types'
 import ifo from 'config/abi/ifo.json'
@@ -97,17 +97,17 @@ export const useLotteryTicket = () => {
 
 export const useMasterchef = (type?: string) => {
   let abi = (masterChef as unknown) as AbiItem
-  let masterChefAddress = getMasterChefAddress();
+  let masterChefAddress = getMasterChefAddress()
   if (type) {
-    abi = (getFarmMasterChefAbi(type) as unknown) as AbiItem;
-    masterChefAddress = getFarmMasterChefAddress(type);
+    abi = (getFarmMasterChefAbi(type) as unknown) as AbiItem
+    masterChefAddress = getFarmMasterChefAddress(type)
   }
   return useContract(abi, masterChefAddress)
 }
 
 export const useStrategyContract = (lpSymbol: string, type: string) => {
-  const abi = (getStrategyAbi(lpSymbol, type) as unknown) as AbiItem;
-  const strategyAddress = getStrategyAddress(lpSymbol, type);
+  const abi = (getStrategyAbi(lpSymbol, type) as unknown) as AbiItem
+  const strategyAddress = getStrategyAddress(lpSymbol, type)
   return useContract(abi, strategyAddress)
 }
 
