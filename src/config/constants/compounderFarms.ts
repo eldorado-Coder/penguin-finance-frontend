@@ -158,13 +158,6 @@ const farms: FarmConfig[] = [
       43113: '',
       43114: '0xf20d962a6c8f70c731bd838a3a388D7d48fA6e15',
     },
-
-    // tokenSymbol: 'ETH',
-    // tokenAddresses: {
-    //   43113: '',
-    //   43114: '0xf20d962a6c8f70c731bd838a3a388D7d48fA6e15',
-    // },
-
     withdrawalFee: '3.2',
     hardApy: '1354.80%',
     type: 'Gondola',
@@ -177,14 +170,15 @@ const farms: FarmConfig[] = [
       43113: '',
       43114: '0xE586dB7Db75B87A3E84110a73b99960F5f106c6A',
     },
-    tokenSymbol: 'USDT',
-    tokenAddresses: {
+    tokenSymbol: QuoteToken.ZUSDT,
+    tokenAddresses: contracts.zusdt,
+    strategyAddress: '0x85fc4ec9dee0DF5060f321B743838F7068499177',
+    quoteTokenSymbol: QuoteToken.USDT,
+    quoteTokenAddresses: {
       43113: '',
       43114: '0xde3A24028580884448a5397872046a019649b084',
     },
-    strategyAddress: '0x85fc4ec9dee0DF5060f321B743838F7068499177',
-    quoteTokenSymbol: QuoteToken.ZUSDT,
-    quoteTokenAddresses: contracts.zusdt,
+
     withdrawalFee: '3.2',
     hardApy: '1347.55%',
     type: 'Gondola',

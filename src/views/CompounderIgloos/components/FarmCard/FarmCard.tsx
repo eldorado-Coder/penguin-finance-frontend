@@ -9,12 +9,13 @@ import { useStrategyApprove } from 'hooks/useApprove'
 import useWeb3 from 'hooks/useWeb3'
 import { getAddress } from 'utils/addressHelpers'
 import { getContract } from 'utils/erc20'
-import { BASE_ADD_LIQUIDITY_URL } from 'config'
+import { BASE_ADD_LIQUIDITY_URL, MAX_COMPOUND_APY } from 'config'
 import getLiquidityUrlPathParts from 'utils/getLiquidityUrlPathParts'
 import useCompounderStake from 'hooks/useCompounderStake'
 import useCompounderUnstake from 'hooks/useCompounderUnstake'
 import useCompounderClaimXPefi from 'hooks/useCompounderClaimXPefi'
 import { getBalanceNumber } from 'utils/formatBalance'
+import { getCompoundApy } from 'utils/compoundApyHelpers'
 import UnlockButton from 'components/UnlockButton'
 import DepositModal from '../DepositModal'
 import WithdrawModal from '../WithdrawModal'
@@ -208,7 +209,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
     tvl: stakedValueFormatted,
     farmTvl: totalValueFormatted,
     normalAPY: farmAPY,
-    compoundAPY: farm.hardApy,
+    compoundAPY: getCompoundApy({ normalApy: farmAPY, type: farm.type }),
   }
 
   const renderFarmLogo = () => {
@@ -338,7 +339,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
               NORMAL APY
             </Text>
             <Text className="value" bold fontSize="24px">
-              {`${data.normalAPY}%`}
+              {`${data.normalAPY ? data.normalAPY : ''}%`}
             </Text>
           </CardInfoWrapper>
         </CardInfoContainer>
@@ -348,7 +349,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
               COMPOUND APY
             </Text>
             <Text className="value" bold fontSize="24px">
-              {`${data.compoundAPY}`}
+              {`${Number(data.compoundAPY) > MAX_COMPOUND_APY ? MAX_COMPOUND_APY : data.compoundAPY}%`}
             </Text>
           </CardInfoWrapper>
         </CardInfoContainer>

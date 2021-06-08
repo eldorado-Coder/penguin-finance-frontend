@@ -109,7 +109,12 @@ const Igloos: React.FC = () => {
         let apy = pefiPriceVsAVAX.times(rewardPerYear).div(farm.lpTotalInQuoteToken)
 
         if (farm.quoteTokenSymbol === QuoteToken.USDT || farm.quoteTokenSymbol === QuoteToken.UST) {
-          apy = pefiPriceVsAVAX.times(rewardPerYear).div(farm.lpTotalInQuoteToken).times(avaxPrice)
+          if (farm.lpTotalInQuoteToken === '0') {
+            apy = new BigNumber(0)
+          } else {
+            // apy = pefiPriceVsAVAX.times(rewardPerYear).div(farm.lpTotalInQuoteToken).times(avaxPrice)
+            apy = rewardPerYear.div(farm.lpTotalInQuoteToken)
+          }
         } else if (farm.quoteTokenSymbol === QuoteToken.ETH) {
           if (farm.lpTotalInQuoteToken === '0') {
             apy = new BigNumber(0)
