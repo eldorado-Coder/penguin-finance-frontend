@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from 'react'
+import React, { useMemo } from 'react'
 import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
 import { Flex, Text, Image, Button, useModal } from 'penguinfinance-uikit2'
@@ -162,7 +162,6 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
   const web3 = useWeb3()
   const lpAddress = getAddress(lpAddresses)
   const isApproved = account && allowance && allowance.isGreaterThan(0)
-  const [requestedApproval, setRequestedApproval] = useState(false)
 
   const lpContract = useMemo(() => {
     return getContract(web3, lpAddress)
@@ -172,16 +171,6 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
   const { onClaimXPefi } = useCompounderClaimXPefi(farm.lpSymbol, farm.type)
   const { onStake } = useCompounderStake(farm.lpSymbol, type)
   const { onUnstake } = useCompounderUnstake(farm.lpSymbol, type)
-
-  const handleApprove = useCallback(async () => {
-    try {
-      setRequestedApproval(true)
-      await onApprove()
-      setRequestedApproval(false)
-    } catch (e) {
-      console.error(e)
-    }
-  }, [onApprove])
 
   const rawStakedBalance = getBalanceNumber(stakedBalance)
 
@@ -270,32 +259,26 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
   }
 
   const renderActionButtons = () => {
-    return isApproved ? (
+    return (
       <>
         <ActionButtonWrapper index={index}>
-          <Button mt="4px" scale="sm" disabled={!account} onClick={onPresentDeposit}>
+          <Button mt="4px" scale="sm" disabled={!account} onClick={isApproved ? onPresentDeposit : onApprove}>
             {TranslateString(758, 'Deposit')}
           </Button>
         </ActionButtonWrapper>
         <ActionButtonWrapper index={index}>
-          <Button mt="4px" scale="sm" disabled={!account} onClick={onPresentWithdraw}>
+          <Button mt="4px" scale="sm" disabled={!account} onClick={isApproved ? onPresentWithdraw : onApprove}>
             {TranslateString(758, 'Withdraw')}
           </Button>
         </ActionButtonWrapper>
         {farm.type === 'Penguin' && (
           <ActionButtonWrapper index={index}>
-            <Button mt="4px" scale="sm" disabled={!account} onClick={onClaimXPefi}>
+            <Button mt="4px" scale="sm" disabled={!account} onClick={isApproved ? onClaimXPefi : onApprove}>
               {TranslateString(758, 'Claim')}
             </Button>
           </ActionButtonWrapper>
         )}
       </>
-    ) : (
-      <ActionButtonWrapper index={index}>
-        <Button mt="4px" scale="sm" disabled={requestedApproval} onClick={handleApprove}>
-          {TranslateString(758, 'Approve Contract')}
-        </Button>
-      </ActionButtonWrapper>
     )
   }
 
