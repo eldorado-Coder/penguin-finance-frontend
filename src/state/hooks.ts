@@ -217,7 +217,7 @@ export const usePriceGdlUsdt = (): BigNumber => {
 
 export const usePriceZEthUsdt = (): BigNumber => {
   const lpSymbol = 'ETH-ZETH LP'
-  const farm = useFarmFromSymbol(lpSymbol)
+  const farm = useCompounderFarmFromSymbol(lpSymbol)
   const ethPriceUsdt = usePriceEthUsdt()
   return farm.tokenPriceVsQuote ? ethPriceUsdt.times(farm.tokenPriceVsQuote) : ZERO
 }
