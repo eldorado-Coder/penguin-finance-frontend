@@ -55,22 +55,33 @@ const EmperorInfoContainer = styled.div`
   z-index: 10;
 `
 
-const KingPenguinImageWrapper = styled.div`
+const KingPenguinImageWrapper = styled.div<{ penguin: string; color: string }>`
   z-index: -1;
   position: absolute;
   width: 12.5%;
   left: 44%;
   bottom: 33%;
+  svg {
+    ${({ penguin, color }) => `.${penguin}-st0 {
+          fill: #${color};
+        }`}
+  }
 `
 
-const MyPenguinImageWrapper = styled.div`
+const MyPenguinImageWrapper = styled.div<{ penguin: string; color: string }>`
   position: absolute;
   width: 9.5%;
   right: 26%;
   bottom: 17%;
+  &:hover {
+    z-index: 11;
+  }
 
   svg {
     transform: scaleX(-1);
+    ${({ penguin, color }) => `.${penguin}-st0 {
+          fill: #${color};
+        }`}
   }
 `
 
@@ -86,7 +97,7 @@ const EmperorBlock: React.FC = () => {
   return (
     <CardBlock>
       <CardBlockHeader>
-        <TitleBgWrapper color={getPenguinColor(currentEmperor).code}>
+        <TitleBgWrapper color={getPenguinColor(currentEmperor)}>
           <SvgIcon
             src={
               account
@@ -116,21 +127,17 @@ const EmperorBlock: React.FC = () => {
           </EmperorInfoContainer>
         )}
       </CardBlockContent>
-      <KingPenguinImageWrapper>
+      <KingPenguinImageWrapper penguin={`${currentEmperorPenguin}`} color={getPenguinColor(currentEmperor)}>
         <SvgIcon
-          src={`${process.env.PUBLIC_URL}/images/emperor/penguins/${currentEmperorPenguin}_${
-            getPenguinColor(currentEmperor).name
-          }.svg`}
+          src={`${process.env.PUBLIC_URL}/images/emperor/penguins/${currentEmperorPenguin}.svg`}
           width="100%"
           height="20px"
         />
       </KingPenguinImageWrapper>
       {currentEmperor.address && myEmperor.address && currentEmperor.address !== myEmperor.address && (
-        <MyPenguinImageWrapper>
+        <MyPenguinImageWrapper penguin={`${myEmperorPenguin}`} color={getPenguinColor(myEmperor)}>
           <SvgIcon
-            src={`${process.env.PUBLIC_URL}/images/emperor/penguins/${myEmperorPenguin}_${
-              getPenguinColor(myEmperor).name
-            }.svg`}
+            src={`${process.env.PUBLIC_URL}/images/emperor/penguins/${myEmperorPenguin}.svg`}
             width="100%"
             height="20px"
           />

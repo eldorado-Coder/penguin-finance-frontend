@@ -139,7 +139,7 @@ const YourScoreBlock: React.FC = () => {
   return (
     <CardBlock>
       <CardBlockHeader>
-        <TitleBgWrapper color={getPenguinColor(myEmperor).code}>
+        <TitleBgWrapper color={getPenguinColor(myEmperor)}>
           <SvgIcon
             src={
               myStatus === 'registered' || myStatus === 'king'
