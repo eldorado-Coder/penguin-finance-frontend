@@ -102,6 +102,9 @@ export const fetchCompounderFarms = async () => {
       // Ratio in % a LP tokens that are in staking, vs the total number in circulation
       const lpTokenRatio = new BigNumber(lpTokenBalanceMC).div(new BigNumber(lpTotalSupply))
 
+      // Ratio in % a LP tokens that are in strategy contract, vs the staking
+      const strategyRatio = new BigNumber(strategyTotalSupply).div(new BigNumber(lpTokenBalanceMC))
+
       // Total value in staking in quote token value
       const lpTotalInQuoteToken = new BigNumber(quoteTokenBalanceLP)
         .div(new BigNumber(10).pow(farmConfig.lpSymbol === 'USDT-ZUSDT LP' ? 6 : 18))
@@ -162,6 +165,7 @@ export const fetchCompounderFarms = async () => {
         poolWeight: poolWeight.toJSON(),
         multiplier: `${allocPoint.div(100).toString()}X`,
         rewardPerSec: new BigNumber(rewardPerSec).toNumber(),
+        strategyRatio: new BigNumber(strategyRatio).toNumber(),
       }
     }),
   )
