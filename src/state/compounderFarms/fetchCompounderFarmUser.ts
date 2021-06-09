@@ -109,3 +109,34 @@ export const fetchCompounderFarmUserEarnings = async (account: string) => {
 
   return parsedEarnings
 }
+
+export const fetchCompounderPendingXPefiBalances = async (account: string) => {
+  const results = []
+  for (let i = 0; i < farmsConfig.length; i++) {
+    if (farmsConfig[i].type === 'Penguin') {
+      const strategyAddress = farmsConfig[i].strategyAddress;
+
+      const call = [
+        {
+          address: strategyAddress,
+          name: 'pendingXPefi',
+          params: [account],
+        }
+      ]
+
+      const strategyABI = getStrategyAbi(farmsConfig[i].lpSymbol, farmsConfig[i].type)
+      const pendingXPefi = multicall(strategyABI, call)
+      results.push(pendingXPefi)
+    } else {
+      results.push([0]);
+    }
+  }
+
+  const rawPendingXPefi = await Promise.all(results)
+
+  const parsedPendingXPefi = rawPendingXPefi.map((earnings) => {
+    return new BigNumber(earnings[0]).toJSON()
+  })
+
+  return parsedPendingXPefi
+}
