@@ -154,14 +154,14 @@ export const fetchCompounderFarms = async () => {
       return {
         ...farmConfig,
         tokenAmount: tokenAmount.toJSON(),
-        totalSupply: lpTotalSupply,
-        strategySupply: strategyTotalSupply,
+        totalSupply: new BigNumber(lpTotalSupply).toNumber(),
+        strategySupply: new BigNumber(strategyTotalSupply).toNumber(),
         quoteTokenAmount: quoteTokenAmount.toJSON(),
         lpTotalInQuoteToken: lpTotalInQuoteToken.toJSON(),
         tokenPriceVsQuote: quoteTokenAmount.div(tokenAmount).toJSON(),
         poolWeight: poolWeight.toJSON(),
         multiplier: `${allocPoint.div(100).toString()}X`,
-        rewardPerSec,
+        rewardPerSec: new BigNumber(rewardPerSec).toNumber(),
       }
     }),
   )

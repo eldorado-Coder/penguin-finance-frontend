@@ -288,7 +288,11 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
         <IglooLogoContainer>{renderFarmLogo()}</IglooLogoContainer>
         <Flex flexDirection="column" pt="8px" justifyContent="center" alignItems="flex-start">
           <IglooTitleWrapper>
-            <Text bold fontSize="20px">{farm.type === 'Penguin' ? `${farm.lpSymbol.split(' ')[0]} lgloo` : `${farm.type} ${farm.lpSymbol.split(' ')[0]}`}</Text>
+            <Text bold fontSize="20px">
+              {farm.type === 'Penguin'
+                ? `${farm.lpSymbol.split(' ')[0]} lgloo`
+                : `${farm.type} ${farm.lpSymbol.split(' ')[0]}`}
+            </Text>
           </IglooTitleWrapper>
           <Flex justifyContent="center">
             {!account ? <PGUnlockButton index={index} scale="sm" mt="4px" fullWidth /> : renderActionButtons()}

@@ -102,7 +102,7 @@ const Igloos: React.FC = () => {
           rewardTokenPrice = lydPriceUsd
         }
         if (farm.type === 'Pangolin') {
-          rewardPerYear = farm.rewardPerSec.times(SECONDS_PER_YEAR)
+          rewardPerYear = new BigNumber(farm.rewardPerSec).times(SECONDS_PER_YEAR)
           rewardTokenPrice = pngPriceUsd
         }
         // pefiPriceInQuote * rewardPerWeek / lpTotalInQuoteToken
@@ -203,15 +203,16 @@ const Igloos: React.FC = () => {
 
     if (selectedProject !== 'All') {
       if (selectedProject === 'Your Farms') {
-
         filteredActiveFarmList = activeFarms.filter((farm) => farm.userData && Number(farm.userData.stakedBalance) > 0)
-        filteredInActiveFarmList = inactiveFarms.filter((farm) => farm.userData && Number(farm.userData.stakedBalance) > 0)
+        filteredInActiveFarmList = inactiveFarms.filter(
+          (farm) => farm.userData && Number(farm.userData.stakedBalance) > 0,
+        )
       } else {
         filteredActiveFarmList = activeFarms.filter((farm) => selectedProject.includes(farm.type))
         filteredInActiveFarmList = inactiveFarms.filter((farm) => selectedProject.includes(farm.type))
       }
     }
-    
+
     return {
       filteredActiveFarms: filteredActiveFarmList,
       filteredInActiveFarms: filteredInActiveFarmList,
