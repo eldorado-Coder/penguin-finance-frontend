@@ -50,7 +50,7 @@ const FCard = styled.div<{ index: number }>`
 const CardActionContainer = styled.div`
   display: flex;
   margin-right: 2rem;
-  min-width: 38%;
+  min-width: 42%;
 `
 const IglooLogoContainer = styled.div`
   margin-right: 16px;
@@ -157,7 +157,7 @@ interface FarmCardProps {
 const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
   const TranslateString = useI18n()
   const { pid, lpAddresses, type } = useCompounderFarmFromSymbol(farm.lpSymbol)
-  const { allowance, tokenBalance, stakedBalance } = useCompounderFarmUser(pid, type)
+  const { allowance, tokenBalance, stakedBalance, pendingXPefi } = useCompounderFarmUser(pid, type)
   const lpName = farm.lpSymbol.toUpperCase()
   const web3 = useWeb3()
   const lpAddress = getAddress(lpAddresses)
@@ -200,6 +200,8 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
     normalAPY: farmAPY,
     compoundAPY: getCompoundApy({ normalApy: farmAPY, type: farm.type }),
   }
+
+  const pendingXPefiValue = getBalanceNumber(pendingXPefi);
 
   const renderFarmLogo = () => {
     switch (farm.type) {
@@ -274,7 +276,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
         {farm.type === 'Penguin' && (
           <ActionButtonWrapper index={index}>
             <Button mt="4px" scale="sm" disabled={!account} onClick={isApproved ? onClaimXPefi : onApprove}>
-              {TranslateString(758, 'Claim')}
+              {pendingXPefiValue >= 1 ? TranslateString(758, `Claim ${pendingXPefiValue.toFixed(2)} xPEFI`) : TranslateString(758, 'Claim xPEFI')}
             </Button>
           </ActionButtonWrapper>
         )}
