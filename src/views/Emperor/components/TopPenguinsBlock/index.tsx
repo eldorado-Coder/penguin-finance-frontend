@@ -167,7 +167,7 @@ const TopPenguinsBlock: React.FC = () => {
                       {getShortenNickName(badWordsFilter(topEmperor.nickname))}
                     </Text>
                   </AddressField>
-                  <AvatarField color={getPenguinColor(topEmperor).code}>
+                  <AvatarField color={getPenguinColor(topEmperor)}>
                     <SvgIcon
                       src={`${process.env.PUBLIC_URL}/images/emperor/penguin_red.svg`}
                       width="30px"
