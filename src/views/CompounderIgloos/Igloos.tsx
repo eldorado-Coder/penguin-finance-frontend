@@ -203,19 +203,15 @@ const Igloos: React.FC = () => {
 
     if (selectedProject !== 'All') {
       if (selectedProject === 'Your Farms') {
-        filteredActiveFarmList = activeFarms.filter((farm) => farm.type === 'Penguin')
-        filteredInActiveFarmList = inactiveFarms.filter((farm) => farm.type === 'Penguin')
+
+        filteredActiveFarmList = activeFarms.filter((farm) => farm.userData && Number(farm.userData.stakedBalance) > 0)
+        filteredInActiveFarmList = inactiveFarms.filter((farm) => farm.userData && Number(farm.userData.stakedBalance) > 0)
       } else {
         filteredActiveFarmList = activeFarms.filter((farm) => selectedProject.includes(farm.type))
         filteredInActiveFarmList = inactiveFarms.filter((farm) => selectedProject.includes(farm.type))
       }
     }
-    // if (selectedProject === 'All' || selectedProject === 'Your Farms') {
-    //   return {
-    //     filteredActiveFarms: activeFarms,
-    //     filteredInActiveFarms: inactiveFarms
-    //   }
-    // }
+    
     return {
       filteredActiveFarms: filteredActiveFarmList,
       filteredInActiveFarms: filteredInActiveFarmList,
