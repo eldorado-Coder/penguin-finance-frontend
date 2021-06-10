@@ -74,6 +74,12 @@ const IglooLogoContainer = styled.div`
     width: 64px;
     height: 64px;
 
+    > img {
+      width: 80%;
+      height: 80%;
+      margin: 10%;
+    }
+
     @media (min-width: 768px) {
       width: 96px;
       height: 96px;
@@ -183,7 +189,7 @@ const CardInfoWrapper = styled.div<{ index?: number }>`
   }
 `
 
-const PGUnlockButton = styled(UnlockButton)<{ index: number }>`
+const PGUnlockButton = styled(UnlockButton) <{ index: number }>`
   background: ${({ index, theme }) => getButtonBackground(index, theme)};
   color: ${({ theme }) => theme.isDark && '#ffffff'};
 `
