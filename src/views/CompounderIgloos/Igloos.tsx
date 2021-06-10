@@ -145,7 +145,10 @@ const Igloos: React.FC = () => {
 
       farmsToDisplayWithAPY = farmsToDisplayWithAPY.sort((farm1, farm2) => {
         if (sortType === 'farm-tvl') {
-          return Number(farm1.totalValue) < Number(farm2.totalValue) ? 1 : -1
+          const farm1TotalValue = farm1.totalValue ? Number(farm1.totalValue.times(farm1.strategyRatio)) : 0;
+          const farm2TotalValue = farm2.totalValue ? Number(farm2.totalValue.times(farm2.strategyRatio)) : 0;
+
+          return farm1TotalValue < farm2TotalValue ? 1 : -1
         }
         return farm1.apy < farm2.apy ? 1 : -1
       })
