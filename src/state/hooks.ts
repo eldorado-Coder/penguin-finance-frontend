@@ -6,6 +6,8 @@ import { Toast, toastTypes } from 'penguinfinance-uikit2'
 import { useSelector, useDispatch } from 'react-redux'
 import { Team } from 'config/constants/types'
 import useRefresh from 'hooks/useRefresh'
+import useUsdtPrice from 'hooks/useUsdtPrice'
+
 import {
   fetchMasterChefPefiPerBlock,
   fetchFarmsPublicDataAsync,
@@ -113,12 +115,16 @@ export const useCompounderFarms = (): Farm[] => {
 }
 
 export const useCompounderFarmFromPid = (lpSymbol: string, type: string): Farm => {
-  const farm = useSelector((state: State) => state.compounderFarms.data.find((f) => f.lpSymbol === lpSymbol && f.type === type))
+  const farm = useSelector((state: State) =>
+    state.compounderFarms.data.find((f) => f.lpSymbol === lpSymbol && f.type === type),
+  )
   return farm
 }
 
 export const useCompounderFarmFromSymbol = (lpSymbol: string, type: string): Farm => {
-  const farm = useSelector((state: State) => state.compounderFarms.data.find((f) => f.lpSymbol === lpSymbol && f.type === type))
+  const farm = useSelector((state: State) =>
+    state.compounderFarms.data.find((f) => f.lpSymbol === lpSymbol && f.type === type),
+  )
   return farm
 }
 
@@ -157,9 +163,10 @@ export const usePoolFromPid = (sousId): Pool => {
 // Prices
 
 export const usePriceAvaxUsdt = (): BigNumber => {
+  const { price: usdtPrice } = useUsdtPrice()
   const lpSymbol = 'USDT-AVAX LP' // USDT-AVAX LP
   const lp = useLPFromSymbol(lpSymbol)
-  return lp.tokenPriceVsQuote ? new BigNumber(1).div(lp.tokenPriceVsQuote) : ZERO
+  return lp.tokenPriceVsQuote ? new BigNumber(usdtPrice).div(lp.tokenPriceVsQuote) : ZERO
 }
 
 export const usePricePefiUsdt = (): BigNumber => {
