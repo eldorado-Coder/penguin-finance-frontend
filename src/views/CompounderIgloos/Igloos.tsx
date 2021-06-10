@@ -29,14 +29,7 @@ import Select from 'components/Select/Select'
 import FarmCard, { FarmWithStakedValue } from './components/FarmCard/FarmCard'
 
 // temporarily hide projects that wont appear during release so that we don't have empty categories (10.06.2021)
-const PROJECTS = [
-  'All',
-  'Your Farms',
-  'Pangolin',
-  'Gondola',
-  'Lydia',
-  'Penguin Finance'
-]
+const PROJECTS = ['All', 'Your Farms', 'Pangolin', 'Gondola', 'Lydia', 'Penguin Finance']
 
 //
 const Igloos: React.FC = () => {
