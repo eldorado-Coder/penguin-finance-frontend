@@ -88,7 +88,6 @@ export const fetchCompounderFarms = async () => {
           name: 'totalSupply',
         },
       ]
-
       const [
         tokenBalanceLP,
         quoteTokenBalanceLP,
@@ -99,11 +98,40 @@ export const fetchCompounderFarms = async () => {
         strategyTotalSupply,
       ] = await multicall(erc20, calls)
 
+      let lpTokenBalanceStrategy: any = new BigNumber(0)
+      if (farmConfig.type !== 'Pangolin') {
+        const call1 = [
+          // Balance of LP tokens in the strategy contract
+          {
+            address: farmMasterChefAddress,
+            name: 'userInfo',
+            params: [farmConfig.pid, farmConfig.strategyAddress],
+          },
+        ]
+
+        const masterChefABI = getFarmMasterChefAbi(farmConfig.type)
+        const res1 = await multicall(masterChefABI, call1)
+        lpTokenBalanceStrategy = res1[0][0]
+      } else {
+        const call2 = [
+          // Balance of LP tokens in the strategy contract
+          {
+            address: farmMasterChefAddress,
+            name: 'balanceOf',
+            params: [farmConfig.strategyAddress],
+          },
+        ]
+
+        const masterChefABI = getFarmMasterChefAbi(farmConfig.type)
+        const res2 = await multicall(masterChefABI, call2)
+        lpTokenBalanceStrategy = res2[0][0]
+      }
+
       // Ratio in % a LP tokens that are in staking, vs the total number in circulation
       const lpTokenRatio = new BigNumber(lpTokenBalanceMC).div(new BigNumber(lpTotalSupply))
 
       // Ratio in % a LP tokens that are in strategy contract, vs the staking
-      const strategyRatio = new BigNumber(strategyTotalSupply).div(new BigNumber(lpTokenBalanceMC))
+      const strategyRatio = new BigNumber(lpTokenBalanceStrategy._hex).div(new BigNumber(lpTokenBalanceMC))
 
       // Total value in staking in quote token value
       const lpTotalInQuoteToken = new BigNumber(quoteTokenBalanceLP)
