@@ -7,9 +7,7 @@ const useUsdtPrice = () => {
   const [price, setPrice] = useState(1)
 
   const fetchPrice = async () => {
-    const _price = 0.996
     const url = appendParams(`${COINGECKO_API_ENDPOINT}/v3/simple/price`, { ids: 'tether', vs_currencies: 'usd' })
-
     Axios.get(url)
       .then((res) => {
         if (res.status === 200) {
@@ -19,7 +17,6 @@ const useUsdtPrice = () => {
       .catch((err) => {
         console.log('error--->', err)
       })
-    setPrice(_price)
   }
 
   useEffect(() => {
