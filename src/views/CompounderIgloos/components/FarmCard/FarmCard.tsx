@@ -24,6 +24,7 @@ export interface FarmWithStakedValue extends Farm {
   apy?: BigNumber
   totalValue?: BigNumber
   totalSupply?: BigNumber
+  strategyRatio?: BigNumber
 }
 
 const getCardBackground = (index, theme) => {
@@ -185,8 +186,8 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
 
   const lpTokenPrice = new BigNumber(farm.totalValue).div(getBalanceNumber(farm.totalSupply)).toNumber()
   const farmImage = farm.lpSymbol.split(' ')[0].toLocaleLowerCase()
-  const totalValueFormatted = farm.totalValue
-    ? `$${Number(farm.totalValue).toLocaleString(undefined, { maximumFractionDigits: 0 })}`
+  const farmTvlValueFormatted = farm.totalValue
+    ? `$${Number(farm.totalValue.times(farm.strategyRatio)).toLocaleString(undefined, { maximumFractionDigits: 0 })}`
     : '-'
 
   const stakedValueFormatted = `$${Number(rawStakedBalance * lpTokenPrice).toLocaleString(undefined, {
@@ -196,12 +197,12 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
 
   const data = {
     tvl: stakedValueFormatted,
-    farmTvl: totalValueFormatted,
+    farmTvl: farmTvlValueFormatted,
     normalAPY: farmAPY,
     compoundAPY: getCompoundApy({ normalApy: farmAPY, type: farm.type }),
   }
 
-  const pendingXPefiValue = getBalanceNumber(pendingXPefi);
+  const pendingXPefiValue = getBalanceNumber(pendingXPefi)
 
   const renderFarmLogo = () => {
     switch (farm.type) {
@@ -276,7 +277,9 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
         {farm.type === 'Penguin' && (
           <ActionButtonWrapper index={index}>
             <Button mt="4px" scale="sm" disabled={!account} onClick={isApproved ? onClaimXPefi : onApprove}>
-              {pendingXPefiValue >= 1 ? TranslateString(758, `Claim ${pendingXPefiValue.toFixed(2)} xPEFI`) : TranslateString(758, 'Claim xPEFI')}
+              {pendingXPefiValue >= 1
+                ? TranslateString(758, `Claim ${pendingXPefiValue.toFixed(2)} xPEFI`)
+                : TranslateString(758, 'Claim xPEFI')}
             </Button>
           </ActionButtonWrapper>
         )}
