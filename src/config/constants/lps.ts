@@ -20,7 +20,7 @@ const lps: LPConfig[] = [
     lpSymbol: 'LYD-USDT LP',
     lpAddresses: {
       43113: '',
-      43114: '0x35d63e319133dd77d5de06d0c90c78866dde0ccb',
+      43114: '0x752C59f22fAAA861108649F4596034796C69bC3f',
     },
     tokenSymbol: 'USDT',
     tokenAddresses: {
