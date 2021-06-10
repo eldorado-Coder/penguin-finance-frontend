@@ -53,7 +53,7 @@ const FCard = styled.div<{ index: number }>`
 
 // card action container
 const CardActionContainer = styled.div`
-  display: flex;  
+  display: flex;
   width: 100%;
 
   @media (min-width: 1200px) {
@@ -200,7 +200,7 @@ const FarmDetails = styled(Flex)`
     padding-left: 0;
     padding-right: 0;
   }
-`;
+`
 
 interface FarmCardProps {
   index: number
@@ -223,8 +223,8 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
   const web3 = useWeb3()
   const lpAddress = getAddress(lpAddresses)
   const isApproved = account && allowance && allowance.isGreaterThan(0)
-  const [requestedApproval, setRequestedApproval] = useState(false);
-  const [requestedAction, setRequestedAction] = useState(false);
+  const [requestedApproval, setRequestedApproval] = useState(false)
+  const [requestedAction, setRequestedAction] = useState(false)
 
   const lpContract = useMemo(() => {
     return getContract(web3, lpAddress)
@@ -245,25 +245,31 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
     }
   }, [onApprove])
 
-  const handleStake = useCallback(async amount => {
-    try {
-      setRequestedAction(true)
-      await onStake(amount);
-      setRequestedAction(false)
-    } catch (e) {
-      console.error(e)
-    }
-  }, [onStake])
+  const handleStake = useCallback(
+    async (amount) => {
+      try {
+        setRequestedAction(true)
+        await onStake(amount)
+        setRequestedAction(false)
+      } catch (e) {
+        console.error(e)
+      }
+    },
+    [onStake],
+  )
 
-  const handleUnstake = useCallback(async amount => {
-    try {
-      setRequestedAction(true)
-      await onUnstake(amount)
-      setRequestedAction(false)
-    } catch (e) {
-      console.error(e)
-    }
-  }, [onUnstake])
+  const handleUnstake = useCallback(
+    async (amount) => {
+      try {
+        setRequestedAction(true)
+        await onUnstake(amount)
+        setRequestedAction(false)
+      } catch (e) {
+        console.error(e)
+      }
+    },
+    [onUnstake],
+  )
 
   const handleClaimXPefi = useCallback(async () => {
     try {
@@ -284,15 +290,20 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
   const [onPresentDeposit] = useModal(
     <DepositModal max={tokenBalance} onConfirm={handleStake} tokenName={lpName} addLiquidityUrl={addLiquidityUrl} />,
   )
-  const [onPresentWithdraw] = useModal(<WithdrawModal max={stakedBalance} onConfirm={handleUnstake} tokenName={lpName} />)
+  const [onPresentWithdraw] = useModal(
+    <WithdrawModal max={stakedBalance} onConfirm={handleUnstake} tokenName={lpName} />,
+  )
 
-  const lpTokenPrice = new BigNumber(farm.totalValue).div(getBalanceNumber(farm.totalSupply)).toNumber()
+  let lpTokenPrice = new BigNumber(farm.totalValue).div(getBalanceNumber(farm.totalSupply))
+  if (farm.type === 'Penguin' && farm.lpSymbol === 'ETH-AVAX LP') {
+    lpTokenPrice = lpTokenPrice.times(8)
+  }
   const farmImage = farm.lpSymbol.split(' ')[0].toLocaleLowerCase()
   const farmTvlValueFormatted = farm.totalValue
     ? `$${Number(farm.totalValue.times(farm.strategyRatio)).toLocaleString(undefined, { maximumFractionDigits: 0 })}`
     : '-'
 
-  const stakedValueFormatted = `$${Number(rawStakedBalance * lpTokenPrice).toLocaleString(undefined, {
+  const stakedValueFormatted = `$${Number(rawStakedBalance * lpTokenPrice.toNumber()).toLocaleString(undefined, {
     maximumFractionDigits: 2,
   })}`
   const farmAPY = farm.apy && farm.apy.times(new BigNumber(100)).toNumber().toFixed(2)
@@ -364,7 +375,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
   }
 
   const renderActionButtons = () => {
-    return (requestedApproval ? 
+    return requestedApproval ? (
       <>
         <ActionButtonWrapper index={index}>
           <Button mt="4px" scale="sm" disabled={requestedApproval}>
@@ -372,21 +383,39 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
           </Button>
         </ActionButtonWrapper>
       </>
-      : <>
+    ) : (
+      <>
         <ActionButtonWrapper index={index}>
-          <Button mt="4px" scale="sm" disabled={!account || requestedAction} onClick={isApproved ? onPresentDeposit : handleApprove}>
+          <Button
+            mt="4px"
+            scale="sm"
+            disabled={!account || requestedAction}
+            onClick={isApproved ? onPresentDeposit : handleApprove}
+          >
             {TranslateString(758, 'Deposit')}
           </Button>
         </ActionButtonWrapper>
         <ActionButtonWrapper index={index}>
-          <Button mt="4px" scale="sm" disabled={!account || requestedAction} onClick={isApproved ? onPresentWithdraw : handleApprove}>
+          <Button
+            mt="4px"
+            scale="sm"
+            disabled={!account || requestedAction}
+            onClick={isApproved ? onPresentWithdraw : handleApprove}
+          >
             {TranslateString(758, 'Withdraw')}
           </Button>
         </ActionButtonWrapper>
         {farm.type === 'Penguin' && (
           <ActionButtonWrapper index={index}>
-            <Button mt="4px" scale="sm" disabled={!account || requestedAction} onClick={isApproved ? handleClaimXPefi : handleApprove}>
-              {pendingXPefiValue >= 1 ? TranslateString(758, `Claim ${pendingXPefiValue.toFixed(2)} xPEFI`) : TranslateString(758, 'Claim xPEFI')}
+            <Button
+              mt="4px"
+              scale="sm"
+              disabled={!account || requestedAction}
+              onClick={isApproved ? handleClaimXPefi : handleApprove}
+            >
+              {pendingXPefiValue >= 1
+                ? TranslateString(758, `Claim ${pendingXPefiValue.toFixed(2)} xPEFI`)
+                : TranslateString(758, 'Claim xPEFI')}
             </Button>
           </ActionButtonWrapper>
         )}
@@ -406,7 +435,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
                 : `${farm.type} ${farm.lpSymbol.split(' ')[0]}`}
             </Text>
           </IglooTitleWrapper>
-          <Flex justifyContent="flex-start" flexWrap='wrap'>
+          <Flex justifyContent="flex-start" flexWrap="wrap">
             {!account ? <PGUnlockButton index={index} scale="sm" mt="4px" fullWidth /> : renderActionButtons()}
           </Flex>
         </Flex>
