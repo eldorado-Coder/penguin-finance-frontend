@@ -7,7 +7,7 @@ export const config: MenuEntry[] = [
     href: '/',
   },
   {
-    label: 'Trade',
+    label: 'Trade $PEFI',
     icon: 'TradeIcon',
     items: [
       {
