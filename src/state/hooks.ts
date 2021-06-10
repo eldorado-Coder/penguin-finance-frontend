@@ -112,18 +112,18 @@ export const useCompounderFarms = (): Farm[] => {
   return farms
 }
 
-export const useCompounderFarmFromPid = (pid, type): Farm => {
-  const farm = useSelector((state: State) => state.compounderFarms.data.find((f) => f.pid === pid && f.type === type))
+export const useCompounderFarmFromPid = (lpSymbol: string, type: string): Farm => {
+  const farm = useSelector((state: State) => state.compounderFarms.data.find((f) => f.lpSymbol === lpSymbol && f.type === type))
   return farm
 }
 
-export const useCompounderFarmFromSymbol = (lpSymbol: string): Farm => {
-  const farm = useSelector((state: State) => state.compounderFarms.data.find((f) => f.lpSymbol === lpSymbol))
+export const useCompounderFarmFromSymbol = (lpSymbol: string, type: string): Farm => {
+  const farm = useSelector((state: State) => state.compounderFarms.data.find((f) => f.lpSymbol === lpSymbol && f.type === type))
   return farm
 }
 
-export const useCompounderFarmUser = (pid, type) => {
-  const farm = useCompounderFarmFromPid(pid, type)
+export const useCompounderFarmUser = (lpSymbol: string, type: string) => {
+  const farm = useCompounderFarmFromPid(lpSymbol, type)
 
   return {
     allowance: farm.userData ? new BigNumber(farm.userData.allowance) : new BigNumber(0),
@@ -214,13 +214,6 @@ export const usePriceGdlUsdt = (): BigNumber => {
   const farm = useLPFromSymbol(lpSymbol)
   const avaxPriceUSD = usePriceAvaxUsdt()
   return farm.tokenPriceVsQuote ? avaxPriceUSD.div(farm.tokenPriceVsQuote) : ZERO
-}
-
-export const usePriceZEthUsdt = (): BigNumber => {
-  const lpSymbol = 'ETH-ZETH LP'
-  const farm = useCompounderFarmFromSymbol(lpSymbol)
-  const ethPriceUsdt = usePriceEthUsdt()
-  return farm.tokenPriceVsQuote ? ethPriceUsdt.times(farm.tokenPriceVsQuote) : ZERO
 }
 
 // Toasts
