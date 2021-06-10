@@ -36,7 +36,6 @@ const getCardBackground = (index, theme) => {
 
 const FCard = styled.div<{ index: number }>`
   width: 100%;
-  /* background: ${(props) => props.theme.card.background}; */
   background: ${({ index, theme }) => getCardBackground(index, theme)};
   border-radius: 12px;
   box-shadow: 0px 2px 12px -8px rgba(25, 19, 38, 0.1), 0px 1px 1px rgba(25, 19, 38, 0.05);
@@ -45,20 +44,39 @@ const FCard = styled.div<{ index: number }>`
   padding: 0 16px 12px;
   position: relative;
   margin-bottom: 20px;
+  flex-direction: column;
+
+  @media (min-width: 1200px) {
+    flex-direction: row;
+  }
 `
 
 // card action container
 const CardActionContainer = styled.div`
-  display: flex;
-  margin-right: 2rem;
-  min-width: 42%;
+  display: flex;  
+  width: 100%;
+
+  @media (min-width: 1200px) {
+    min-width: 42%;
+    margin-right: 2rem;
+  }
 `
 const IglooLogoContainer = styled.div`
   margin-right: 16px;
   display: flex;
   align-items: center;
   > div {
-    width: 108px;
+    width: 64px;
+    height: 64px;
+
+    @media (min-width: 768px) {
+      width: 96px;
+      height: 96px;
+    }
+    @media (min-width: 1200px) {
+      width: 108px;
+      height: 108px;
+    }
   }
 `
 const IglooTitleWrapper = styled.div`
@@ -70,6 +88,13 @@ const IglooTitleWrapper = styled.div`
   > div {
     color: #fff;
     font-family: 'GothamUltra Font';
+    font-size: 18px;
+    @media (min-width: 768px) {
+      font-size: 20px;
+    }
+    @media (min-width: 1200px) {
+      font-size: 20px;
+    }
   }
 `
 
@@ -101,6 +126,20 @@ const ActionButtonWrapper = styled.div<{ index: number }>`
 const CardInfoContainer = styled.div<{ index?: number }>`
   display: flex;
   align-items: center;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  width: 50%;
+  justify-content: center;
+
+  @media (min-width: 768px) {
+    width: unset;
+    justify-content: flex-start;
+  }
+  @media (min-width: 1200px) {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
   &:last-child {
     > div {
       > div:last-child {
@@ -129,11 +168,13 @@ const CardInfoWrapper = styled.div<{ index?: number }>`
     font-family: 'PoppinsRegular Font';
     font-weight: 400;
     line-height: 1;
+    white-space: nowrap;
   }
 
   .value {
     font-family: 'Kanit-ExtraBold Font';
     font-weight: 800;
+    white-space: nowrap;
   }
 `
 
@@ -141,6 +182,25 @@ const PGUnlockButton = styled(UnlockButton)<{ index: number }>`
   background: ${({ index, theme }) => getButtonBackground(index, theme)};
   color: ${({ theme }) => theme.isDark && '#ffffff'};
 `
+
+const FarmDetails = styled(Flex)`
+  padding-top: 16px;
+  padding-right: 16px;
+  flex-wrap: wrap;
+  
+  @media (min-width: 768px) {
+    padding-left: 114px;
+    margin-top: -8px;
+    padding-top: 0;
+    padding-right: 0;
+    flex-wrap: nowrap;
+  }
+  @media (min-width: 1200px) {
+    padding-top: 16px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+`;
 
 interface FarmCardProps {
   index: number
@@ -157,8 +217,8 @@ interface FarmCardProps {
 
 const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
   const TranslateString = useI18n()
-  const { pid, lpAddresses, type } = useCompounderFarmFromSymbol(farm.lpSymbol)
-  const { allowance, tokenBalance, stakedBalance, pendingXPefi } = useCompounderFarmUser(pid, type)
+  const { lpAddresses, type } = useCompounderFarmFromSymbol(farm.lpSymbol, farm.type)
+  const { allowance, tokenBalance, stakedBalance, pendingXPefi } = useCompounderFarmUser(farm.lpSymbol, type)
   const lpName = farm.lpSymbol.toUpperCase()
   const web3 = useWeb3()
   const lpAddress = getAddress(lpAddresses)
@@ -299,12 +359,12 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
                 : `${farm.type} ${farm.lpSymbol.split(' ')[0]}`}
             </Text>
           </IglooTitleWrapper>
-          <Flex justifyContent="center">
+          <Flex justifyContent="flex-start" flexWrap='wrap'>
             {!account ? <PGUnlockButton index={index} scale="sm" mt="4px" fullWidth /> : renderActionButtons()}
           </Flex>
         </Flex>
       </CardActionContainer>
-      <Flex pt="16px" justifyContent="space-between" width="100%">
+      <FarmDetails justifyContent="space-between" width="100%">
         <CardInfoContainer index={index}>
           <CardInfoWrapper index={index}>
             <Text className="label" fontSize="16px">
@@ -345,7 +405,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
             </Text>
           </CardInfoWrapper>
         </CardInfoContainer>
-      </Flex>
+      </FarmDetails>
     </FCard>
   )
 }
