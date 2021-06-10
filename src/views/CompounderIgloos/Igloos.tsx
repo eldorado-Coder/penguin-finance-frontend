@@ -135,19 +135,19 @@ const Igloos: React.FC = () => {
         if (!farm.lpTotalInQuoteToken) {
           totalValue = null
         } else if (farm.quoteTokenSymbol === QuoteToken.AVAX) {
-          totalValue = avaxPrice.times(farm.lpTotalInQuoteToken).times(farm.strategyRatio)
+          totalValue = avaxPrice.times(farm.lpTotalInQuoteToken)
         } else if (farm.quoteTokenSymbol === QuoteToken.PEFI) {
-          totalValue = pefiPrice.times(farm.lpTotalInQuoteToken).times(farm.strategyRatio)
+          totalValue = pefiPrice.times(farm.lpTotalInQuoteToken)
         } else if (farm.quoteTokenSymbol === QuoteToken.ETH) {
-          totalValue = ethPriceUsd.times(farm.lpTotalInQuoteToken).times(farm.strategyRatio)
+          totalValue = ethPriceUsd.times(farm.lpTotalInQuoteToken)
         } else if (farm.quoteTokenSymbol === QuoteToken.PNG) {
-          totalValue = pngPriceUsd.times(farm.lpTotalInQuoteToken).times(farm.strategyRatio)
+          totalValue = pngPriceUsd.times(farm.lpTotalInQuoteToken)
         } else if (farm.quoteTokenSymbol === QuoteToken.LYD) {
-          totalValue = lydPriceUsd.times(farm.lpTotalInQuoteToken).times(farm.strategyRatio)
+          totalValue = lydPriceUsd.times(farm.lpTotalInQuoteToken)
         } else if (farm.quoteTokenSymbol === QuoteToken.LINK) {
-          totalValue = linkPriceUsd.times(farm.lpTotalInQuoteToken).times(farm.strategyRatio)
+          totalValue = linkPriceUsd.times(farm.lpTotalInQuoteToken)
         } else {
-          totalValue = farm.lpTotalInQuoteToken.times(farm.strategyRatio)
+          totalValue = farm.lpTotalInQuoteToken
         }
         return { ...farm, apy, totalValue }
       })
