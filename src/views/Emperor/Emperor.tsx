@@ -117,9 +117,9 @@ const Emperor: React.FC = () => {
   const { currentEmperor } = useEmperor()
   const { account } = useWeb3React()
   const [jackpotOpenSound, setJackpotOpenSound] = useState(false)
-  const [showJackpot, setShowJackpot] = useState(false);
-  const jackpotRef = useRef(jackpot);
-  jackpotRef.current = jackpot;
+  const [showJackpot, setShowJackpot] = useState(false)
+  const jackpotRef = useRef(jackpot)
+  jackpotRef.current = jackpot
 
   const handleOpenJackpot = () => {
     if (jackpotRef.current === JACKPOTS.LOCK) {
@@ -135,7 +135,7 @@ const Emperor: React.FC = () => {
   }
 
   const onJackpotLoaded = () => {
-    setShowJackpot(true);
+    setShowJackpot(true)
   }
 
   const renderEmperorStatsPage = () => {
@@ -145,14 +145,16 @@ const Emperor: React.FC = () => {
           <ChestWrapper jackpot={jackpot} onClick={handleOpenJackpot}>
             {jackpot === JACKPOTS.UNLOCK && (
               <PaperWrapper>
-                <JackpotPaper 
+                <JackpotPaper
                   onLoad={onJackpotLoaded}
-                  src={`${process.env.PUBLIC_URL}/images/emperor/jackpot/Mapefi.svg`} alt="jackpot_paper" />
-                {showJackpot && 
+                  src={`${process.env.PUBLIC_URL}/images/emperor/jackpot/Mapefi.svg`}
+                  alt="jackpot_paper"
+                />
+                {showJackpot && (
                   <Text className="price" fontSize="24px">
                     {currentEmperor.jackpot} <span>x</span>PEFI
                   </Text>
-                }
+                )}
               </PaperWrapper>
             )}
             <img className="jackpot-lock" src={JACKPOTS.LOCK} alt="jackpot_lock" />
@@ -180,7 +182,7 @@ const Emperor: React.FC = () => {
     return <>{/* <EmperorEndBgContainer /> */}</>
   }
 
-  const emperorEnded = true
+  const emperorEnded = false
   const emperorDefaultVideo = '/videos/penguin_emperor.mp4'
   // to change the video of emperor winner page background video, please change this video path
   const emperorWinnerVideo = '/videos/PenguinEmperorWinner_Final.mp4'

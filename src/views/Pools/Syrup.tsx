@@ -3,13 +3,14 @@ import { Route, useRouteMatch } from 'react-router-dom'
 import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
 import { useWeb3React } from '@web3-react/core'
-import { BLOCKS_PER_YEAR } from 'config'
+import { SECONDS_PER_YEAR } from 'config'
 import orderBy from 'lodash/orderBy'
 import partition from 'lodash/partition'
 import useBlock from 'hooks/useBlock'
 import { getBalanceNumber } from 'utils/formatBalance'
 import priceToBnb from 'utils/priceToBnb'
 import useTheme from 'hooks/useTheme'
+import useBlockGenerationTime from 'hooks/useBlockGenerationTime'
 import { useFarms, usePriceAvaxUsdt, usePools, usePriceEthAvax } from 'state/hooks'
 import { PoolCategory } from 'config/constants/types'
 import FlexLayout from 'components/layout/Flex'
@@ -24,7 +25,9 @@ const Farm: React.FC = () => {
   const avaxPriceUSD = usePriceAvaxUsdt()
   const ethPriceBnb = usePriceEthAvax()
   const block = useBlock()
-  const { isDark } = useTheme();
+  const { isDark } = useTheme()
+  const AVAX_BLOCK_TIME = useBlockGenerationTime()
+  const BLOCKS_PER_YEAR = new BigNumber(SECONDS_PER_YEAR).div(new BigNumber(AVAX_BLOCK_TIME))
 
   const poolsWithApy = pools.map((pool) => {
     const isBnbPool = pool.poolCategory === PoolCategory.BINANCE
@@ -63,12 +66,17 @@ const Farm: React.FC = () => {
     <Page>
       <NestBgContainer />
       <NestBannerContainer>
-        <BannerImage src={`${process.env.PUBLIC_URL}/images/pools/nests-${isDark ? 'dark' : 'light'}.gif`} alt="nests banner" />
+        <BannerImage
+          src={`${process.env.PUBLIC_URL}/images/pools/nests-${isDark ? 'dark' : 'light'}.gif`}
+          alt="nests banner"
+        />
       </NestBannerContainer>
       <FlexLayout>
         <Route exact path={`${path}`}>
           <>
-            {orderBy(openPools, ['sortOrder']).map((pool) => <PoolCard isNestPage key={pool.sousId} pool={pool} isMainPool />)}
+            {orderBy(openPools, ['sortOrder']).map((pool) => (
+              <PoolCard isNestPage key={pool.sousId} pool={pool} isMainPool />
+            ))}
           </>
         </Route>
         <Route path={`${path}/history`}>
@@ -82,7 +90,8 @@ const Farm: React.FC = () => {
 }
 
 const NestBgContainer = styled.div`
-  background-image: url(${({ theme }) => theme.isDark ? '/images/pools/NestBackgroundNight.png' : '/images/pools/NestBackgroundLight.png'});
+  background-image: url(${({ theme }) =>
+    theme.isDark ? '/images/pools/NestBackgroundNight.png' : '/images/pools/NestBackgroundLight.png'});
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;

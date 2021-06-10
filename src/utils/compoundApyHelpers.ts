@@ -21,3 +21,24 @@ export const apyModalRoi = ({ amountEarned, amountInvested }) => {
   const percentage = (amountEarned / amountInvested) * 100
   return percentage.toFixed(2)
 }
+
+export const getCompoundApy = ({ normalApy, type }: { normalApy: string; type: string }) => {
+  if (!normalApy) return ''
+
+  const _normalApy = Number(normalApy) / 100
+
+  if (type === 'Lydia' || type === 'Pangolin' || type === 'Gondola') {
+    const compoundApy = (1 + _normalApy / 365) ** 365 - 1
+    return (compoundApy * 100).toFixed(2)
+  }
+
+  if (type === 'Penguin') {
+    const nestStakingBips = 5000
+    const nestAPY = 474.5 / 100
+    const compoundApy1 = (1 + (_normalApy * (1 - nestStakingBips / 10000)) / 730) ** 730 - 1
+    const compoundApy2 = (nestStakingBips / 10000) * _normalApy * (((nestAPY / 2) * 729) / 730 + 1)
+    return ((compoundApy1 + compoundApy2) * 100).toFixed(2)
+  }
+
+  return normalApy
+}

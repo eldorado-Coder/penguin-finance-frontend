@@ -19,14 +19,12 @@ const colors = [
 ]
 
 const getPenguinColor = (emperor) => {
-  if (!emperor.color) return colors[0]
+  if (!emperor.color) return colors[0].code
 
-  const penguinColor = colors.find(
-    (row) =>
-      row.name.toLowerCase() === emperor.color.toLowerCase() || row.code.toLowerCase() === emperor.color.toLowerCase(),
-  )
-  if (penguinColor) return penguinColor
-  return colors[0]
+  const penguinColor = colors.find((row) => row.name.toLowerCase() === emperor.color.toLowerCase())
+  if (penguinColor) return penguinColor.code
+
+  return emperor.color.charAt(0) === '#' ? emperor.color.slice(1) : emperor.color
 }
 
 const getKingPenguin = (emperor) => {

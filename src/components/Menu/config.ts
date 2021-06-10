@@ -7,7 +7,7 @@ export const config: MenuEntry[] = [
     href: '/',
   },
   {
-    label: 'Trade',
+    label: 'Trade $PEFI',
     icon: 'TradeIcon',
     items: [
       {
@@ -25,11 +25,11 @@ export const config: MenuEntry[] = [
     icon: 'IglooIcon',
     href: '/igloos',
   },
-  // {
-  //   label: 'Compounder',
-  //   icon: 'FarmIcon',
-  //   href: '/compounder',
-  // },
+  {
+    label: 'Compounder',
+    icon: 'FarmIcon',
+    href: '/compounder',
+  },
   {
     label: 'Nests',
     icon: 'NestIcon',

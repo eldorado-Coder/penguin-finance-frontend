@@ -31,6 +31,12 @@ export enum QuoteToken {
   'UST' = 'UST',
   'ETH' = 'ETH',
   'COMP' = 'COMP',
+  'PNG' = 'PNG',
+  'LINK' = 'LINK',
+  'ZETH' = 'ZETH',
+  'ZUSDT' = 'ZUSDT',
+  'LYD' = 'LYD',
+  'GDL' = 'GDL',
 }
 
 export enum PoolCategory {
@@ -63,6 +69,11 @@ export interface FarmConfig {
   }
   withdrawalFee?: string
   hardApy?: string
+  type?: string
+  name?: string
+  strategyAddress?: string
+  stakingAddress?: string
+  swapAddresses?: Address
 }
 
 export interface LPConfig {

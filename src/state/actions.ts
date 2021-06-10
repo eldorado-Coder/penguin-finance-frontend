@@ -1,4 +1,9 @@
 export { fetchMasterChefPefiPerBlock, fetchFarmsPublicDataAsync, fetchFarmUserDataAsync } from './farms'
+export {
+  fetchMasterChefRewards,
+  fetchCompounderFarmsPublicDataAsync,
+  fetchCompounderFarmUserDataAsync,
+} from './compounderFarms'
 export { fetchLpsPublicDataAsync, fetchLpUserDataAsync } from './lps'
 export { clear, remove, push } from './toasts'
 export {

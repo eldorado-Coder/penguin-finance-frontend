@@ -5,36 +5,59 @@ import BigNumber from 'bignumber.js'
 import { Text, Flex } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import styled from 'styled-components'
-import { BLOCKS_PER_WEEK, PEFI_POOL_PID } from 'config'
+import { SECONDS_PER_YEAR, WEEKS_PER_YEAR, PEFI_POOL_PID } from 'config'
 import useTheme from 'hooks/useTheme'
+import useBlockGenerationTime from 'hooks/useBlockGenerationTime'
 import Page from 'components/layout/Page'
-import { usePefiPerBlock, useFarms, usePriceAvaxUsdt, usePricePefiUsdt, usePriceEthUsdt } from 'state/hooks'
+import {
+  usePefiPerBlock,
+  useGondolaPerSec,
+  useLydPerSec,
+  usePriceAvaxUsdt,
+  usePricePefiUsdt,
+  usePriceEthUsdt,
+  usePricePngUsdt,
+  usePriceLinkUsdt,
+  usePriceLydUsdt,
+  usePriceGdlUsdt,
+  useCompounderFarms,
+} from 'state/hooks'
 import useRefresh from 'hooks/useRefresh'
-import { fetchFarmUserDataAsync } from 'state/actions'
+import { fetchCompounderFarmUserDataAsync } from 'state/actions'
 import { QuoteToken } from 'config/constants/types'
 import Select from 'components/Select/Select'
 import FarmCard, { FarmWithStakedValue } from './components/FarmCard/FarmCard'
 
-const PROJECTS = ['All', 'Your Farms', 'Gondola', 'Olive', 'Lydia', 'Penguin Finance', 'Baguette', 'Elk Finance']
+// temporarily hide projects that wont appear during release so that we don't have empty categories (10.06.2021)
+const PROJECTS = ['All', 'Your Farms', 'Pangolin', 'Gondola', 'Lydia', 'Penguin Finance']
 
 //
 const Igloos: React.FC = () => {
   const { path } = useRouteMatch()
   const pefiPerBlock = usePefiPerBlock()
-  const farmsLP = useFarms()
+  const gondolaPerSec = useGondolaPerSec()
+  const lydPerSec = useLydPerSec()
+  const farmsLP = useCompounderFarms()
   const pefiPrice = usePricePefiUsdt()
   const avaxPrice = usePriceAvaxUsdt()
   const { account } = useWeb3React()
   const ethPriceUsd = usePriceEthUsdt()
+  const pngPriceUsd = usePricePngUsdt()
+  const linkPriceUsd = usePriceLinkUsdt()
+  const lydPriceUsd = usePriceLydUsdt()
+  const gdlPriceUsd = usePriceGdlUsdt()
   const { isDark } = useTheme()
   const [selectedProject, setProject] = useState('All')
   const [sortType, setSortType] = useState('farm-tvl')
+  const AVAX_BLOCK_TIME = useBlockGenerationTime()
+  const BLOCKS_PER_YEAR = new BigNumber(SECONDS_PER_YEAR).div(new BigNumber(AVAX_BLOCK_TIME))
+  const BLOCKS_PER_WEEK = BLOCKS_PER_YEAR.div(new BigNumber(WEEKS_PER_YEAR))
 
   const dispatch = useDispatch()
   const { fastRefresh } = useRefresh()
   useEffect(() => {
     if (account) {
-      dispatch(fetchFarmUserDataAsync(account))
+      dispatch(fetchCompounderFarmUserDataAsync(account))
     }
   }, [account, dispatch, fastRefresh])
 
@@ -44,37 +67,59 @@ const Igloos: React.FC = () => {
   // /!\ This function will be removed soon
   // This function compute the APY for each farm and will be replaced when we have a reliable API
   // to retrieve assets prices against USD
+
   const farmsList = useCallback(
     (farmsToDisplay, removed: boolean) => {
-      console.log('111--->', farmsToDisplay, removed)
       const pefiPriceVsAVAX = new BigNumber(farmsLP.find((farm) => farm.pid === PEFI_POOL_PID)?.tokenPriceVsQuote || 0)
       let farmsToDisplayWithAPY: FarmWithStakedValue[] = farmsToDisplay.map((farm) => {
-        if (!farm.tokenAmount || !farm.lpTotalInQuoteToken || !farm.lpTotalInQuoteToken) {
+        if (!farm.tokenAmount || !farm.lpTotalInQuoteToken) {
           return farm
         }
         const pefiRewardPerBlock = pefiPerBlock.times(farm.poolWeight)
-        const rewardPerWeek = pefiRewardPerBlock.times(BLOCKS_PER_WEEK)
+        const gondolaRewardPerSec = gondolaPerSec.times(farm.poolWeight)
+        const lydRewardPerSec = lydPerSec.times(farm.poolWeight)
+        const pefiRewardPerYear = pefiRewardPerBlock.times(BLOCKS_PER_WEEK).times(new BigNumber(WEEKS_PER_YEAR))
+        const gondolaRewardPerYear = gondolaRewardPerSec.times(SECONDS_PER_YEAR)
+        const lydRewardPerYear = lydRewardPerSec.times(SECONDS_PER_YEAR)
 
+        let rewardPerYear = pefiRewardPerYear
+        let rewardTokenPrice = pefiPrice
+        if (farm.type === 'Gondola') {
+          rewardPerYear = gondolaRewardPerYear
+          rewardTokenPrice = gdlPriceUsd
+        }
+        if (farm.type === 'Lydia') {
+          rewardPerYear = lydRewardPerYear
+          rewardTokenPrice = lydPriceUsd
+        }
+        if (farm.type === 'Pangolin') {
+          rewardPerYear = new BigNumber(farm.rewardPerSec).times(SECONDS_PER_YEAR)
+          rewardTokenPrice = pngPriceUsd
+        }
         // pefiPriceInQuote * rewardPerWeek / lpTotalInQuoteToken
-        let apy = pefiPriceVsAVAX.times(rewardPerWeek).div(farm.lpTotalInQuoteToken)
+        let apy = pefiPriceVsAVAX.times(rewardPerYear).div(farm.lpTotalInQuoteToken)
 
         if (farm.quoteTokenSymbol === QuoteToken.USDT || farm.quoteTokenSymbol === QuoteToken.UST) {
-          apy = pefiPriceVsAVAX.times(rewardPerWeek).div(farm.lpTotalInQuoteToken).times(avaxPrice)
+          if (farm.lpTotalInQuoteToken === '0') {
+            apy = new BigNumber(0)
+          } else {
+            // apy = pefiPriceVsAVAX.times(rewardPerYear).div(farm.lpTotalInQuoteToken).times(avaxPrice)
+            apy = rewardPerYear.div(farm.lpTotalInQuoteToken)
+          }
         } else if (farm.quoteTokenSymbol === QuoteToken.ETH) {
-          apy = pefiPrice.div(ethPriceUsd).times(rewardPerWeek).div(farm.lpTotalInQuoteToken)
+          if (farm.lpTotalInQuoteToken === '0') {
+            apy = new BigNumber(0)
+          } else {
+            apy = rewardTokenPrice.div(ethPriceUsd).times(rewardPerYear).div(farm.lpTotalInQuoteToken)
+          }
         } else if (farm.quoteTokenSymbol === QuoteToken.PEFI) {
-          apy = rewardPerWeek.div(farm.lpTotalInQuoteToken)
-        } else if (farm.dual) {
-          const pefiApy =
-            farm && pefiPriceVsAVAX.times(pefiRewardPerBlock).times(BLOCKS_PER_WEEK).div(farm.lpTotalInQuoteToken)
-          const dualApy =
-            farm.tokenPriceVsQuote &&
-            new BigNumber(farm.tokenPriceVsQuote)
-              .times(farm.dual.rewardPerBlock)
-              .times(BLOCKS_PER_WEEK)
-              .div(farm.lpTotalInQuoteToken)
-
-          apy = pefiApy && dualApy && pefiApy.plus(dualApy)
+          apy = rewardPerYear.div(farm.lpTotalInQuoteToken)
+        } else if (farm.quoteTokenSymbol === QuoteToken.AVAX) {
+          apy = rewardTokenPrice.div(avaxPrice).times(rewardPerYear).div(farm.lpTotalInQuoteToken)
+        } else if (farm.quoteTokenSymbol === QuoteToken.LYD) {
+          apy = rewardPerYear.div(farm.lpTotalInQuoteToken)
+        } else if (farm.quoteTokenSymbol === QuoteToken.PNG) {
+          apy = rewardPerYear.div(farm.lpTotalInQuoteToken)
         }
 
         let totalValue = null
@@ -86,6 +131,12 @@ const Igloos: React.FC = () => {
           totalValue = pefiPrice.times(farm.lpTotalInQuoteToken)
         } else if (farm.quoteTokenSymbol === QuoteToken.ETH) {
           totalValue = ethPriceUsd.times(farm.lpTotalInQuoteToken)
+        } else if (farm.quoteTokenSymbol === QuoteToken.PNG) {
+          totalValue = pngPriceUsd.times(farm.lpTotalInQuoteToken)
+        } else if (farm.quoteTokenSymbol === QuoteToken.LYD) {
+          totalValue = lydPriceUsd.times(farm.lpTotalInQuoteToken)
+        } else if (farm.quoteTokenSymbol === QuoteToken.LINK) {
+          totalValue = linkPriceUsd.times(farm.lpTotalInQuoteToken)
         } else {
           totalValue = farm.lpTotalInQuoteToken
         }
@@ -101,7 +152,7 @@ const Igloos: React.FC = () => {
 
       return farmsToDisplayWithAPY.map((farm, index) => (
         <FarmCard
-          key={farm.pid}
+          key={`${farm.type}-${farm.pid}`}
           index={index}
           farm={farm}
           removed={removed}
@@ -109,10 +160,28 @@ const Igloos: React.FC = () => {
           avaxPrice={avaxPrice}
           pefiPrice={pefiPrice}
           ethPrice={ethPriceUsd}
+          pngPrice={pngPriceUsd}
+          lydPrice={lydPriceUsd}
+          linkPrice={linkPriceUsd}
         />
       ))
     },
-    [pefiPerBlock, farmsLP, avaxPrice, ethPriceUsd, pefiPrice, account, sortType],
+    [
+      BLOCKS_PER_WEEK,
+      farmsLP,
+      avaxPrice,
+      ethPriceUsd,
+      pefiPrice,
+      pngPriceUsd,
+      linkPriceUsd,
+      lydPriceUsd,
+      gdlPriceUsd,
+      pefiPerBlock,
+      gondolaPerSec,
+      lydPerSec,
+      account,
+      sortType,
+    ],
   )
 
   const handleSelectProject = (project) => () => {
@@ -120,15 +189,24 @@ const Igloos: React.FC = () => {
   }
 
   const { filteredActiveFarms, filteredInActiveFarms } = useMemo(() => {
-    if (selectedProject === 'All' || selectedProject === 'Your Farms') {
-      return {
-        filteredActiveFarms: activeFarms,
-        filteredInActiveFarms: inactiveFarms,
+    let filteredActiveFarmList = [...activeFarms]
+    let filteredInActiveFarmList = [...inactiveFarms]
+
+    if (selectedProject !== 'All') {
+      if (selectedProject === 'Your Farms') {
+        filteredActiveFarmList = activeFarms.filter((farm) => farm.userData && Number(farm.userData.stakedBalance) > 0)
+        filteredInActiveFarmList = inactiveFarms.filter(
+          (farm) => farm.userData && Number(farm.userData.stakedBalance) > 0,
+        )
+      } else {
+        filteredActiveFarmList = activeFarms.filter((farm) => selectedProject.includes(farm.type))
+        filteredInActiveFarmList = inactiveFarms.filter((farm) => selectedProject.includes(farm.type))
       }
     }
+
     return {
-      filteredActiveFarms: [],
-      filteredInActiveFarms: [],
+      filteredActiveFarms: filteredActiveFarmList,
+      filteredInActiveFarms: filteredInActiveFarmList,
     }
   }, [activeFarms, inactiveFarms, selectedProject])
 

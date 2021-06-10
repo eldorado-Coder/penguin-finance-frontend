@@ -10,10 +10,10 @@ import {
 import { stake, sousStake, sousStakeBnb } from 'utils/callHelpers'
 import { useMasterchef, useSousChef } from './useContract'
 
-const useStake = (pid: number) => {
+const useStake = (pid: number, type?: string) => {
   const dispatch = useDispatch()
   const { account } = useWeb3React()
-  const masterChefContract = useMasterchef()
+  const masterChefContract = useMasterchef(type)
 
   const handleStake = useCallback(
     async (amount: string) => {

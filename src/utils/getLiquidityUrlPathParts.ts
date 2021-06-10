@@ -1,9 +1,7 @@
-// Constructing the two forward-slash-separated parts of the 'Add Liquidity' URL
-// Each part of the url represents a different side of the LP pair.
-// In the URL, using the quote token 'AVAX' is represented by 'ETH'
+
 const getLiquidityUrlPathParts = ({ quoteTokenAddresses, quoteTokenSymbol, tokenAddresses }) => {
   const chainId = process.env.REACT_APP_CHAIN_ID
-  const firstPart = quoteTokenSymbol === 'AVAX' ? 'ETH' : quoteTokenAddresses[chainId]
+  const firstPart = quoteTokenSymbol === 'AVAX' ? 'AVAX' : quoteTokenAddresses[chainId]
   const secondPart = tokenAddresses[chainId]
   return `${firstPart}/${secondPart}`
 }

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useWeb3React } from '@web3-react/core'
 import multicall from 'utils/multicall'
-import { getMasterChefAddress } from 'utils/addressHelpers'
-import masterChefABI from 'config/abi/masterchef.json'
+import getFarmMasterChefAddress from 'utils/getFarmMasterChefAddress';
+import getFarmMasterChefAbi from 'utils/getFarmMasterChefAbi';
 import { farmsConfig } from 'config/constants'
 import useRefresh from './useRefresh'
 
@@ -14,15 +14,22 @@ const useAllEarnings = () => {
 
   useEffect(() => {
     const fetchAllBalances = async () => {
-      const calls = farmsConfig.map((farm) => ({
-        address: getMasterChefAddress(),
-        name: 'pendingPEFI',
-        params: [farm.pid, account],
-      }))
+      const res = [];
 
-      const res = await multicall(masterChefABI, calls)
+      for (let i = 0; i < farmsConfig.length; i++) {
+        const call = [{
+          address: getFarmMasterChefAddress(farmsConfig[i].type),
+          name: farmsConfig[i].name,
+          params: [farmsConfig[i].pid, account],
+        }];
 
-      setBalance(res)
+        const masterChefABI = getFarmMasterChefAbi(farmsConfig[i].type);
+        const farmRes = multicall(masterChefABI, call);
+        res.push(farmRes);
+      }
+
+      const allBalances = await Promise.all(res);
+      setBalance(allBalances.map(balance => balance[0]));
     }
 
     if (account) {

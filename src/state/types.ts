@@ -23,6 +23,7 @@ export interface Farm extends FarmConfig {
     tokenBalance: BigNumber
     stakedBalance: BigNumber
     earnings: BigNumber
+    pendingXPefi: BigNumber
   }
 }
 
@@ -71,6 +72,13 @@ export interface ToastsState {
 
 export interface FarmsState {
   pefiPerBlock: number
+  data: Farm[]
+}
+
+export interface CompounderFarmsState {
+  pefiPerBlock: number
+  gondolaPerSec: number
+  lydPerSec: number
   data: Farm[]
 }
 
@@ -171,6 +179,7 @@ export interface GlobalState {
 export interface State {
   lps: LpsState
   farms: FarmsState
+  compounderFarms: CompounderFarmsState
   toasts: ToastsState
   pools: PoolsState
   profile: ProfileState

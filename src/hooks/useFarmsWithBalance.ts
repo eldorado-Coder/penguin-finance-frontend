@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 import BigNumber from 'bignumber.js'
 import { useWeb3React } from '@web3-react/core'
 import multicall from 'utils/multicall'
-import { getMasterChefAddress } from 'utils/addressHelpers'
-import masterChefABI from 'config/abi/masterchef.json'
+import getFarmMasterChefAbi from 'utils/getFarmMasterChefAbi';
+import getFarmMasterChefAddress from 'utils/getFarmMasterChefAddress';
 import { farmsConfig } from 'config/constants'
 import { FarmConfig } from 'config/constants/types'
 import useRefresh from './useRefresh'
@@ -19,14 +19,21 @@ const useFarmsWithBalance = () => {
 
   useEffect(() => {
     const fetchBalances = async () => {
-      const calls = farmsConfig.map((farm) => ({
-        address: getMasterChefAddress(),
-        name: 'pendingPEFI',
-        params: [farm.pid, account],
-      }))
+      const res = [];
+      for (let i = 0; i < farmsConfig.length; i++) {
+        const call = [{
+          address: getFarmMasterChefAddress(farmsConfig[i].type),
+          name: farmsConfig[i].name,
+          params: [farmsConfig[i].pid, account],
+        }];
 
-      const rawResults = await multicall(masterChefABI, calls)
-      const results = farmsConfig.map((farm, index) => ({ ...farm, balance: new BigNumber(rawResults[index]) }))
+        const masterChefABI = getFarmMasterChefAbi(farmsConfig[i].type);
+        const farmRes = multicall(masterChefABI, call);
+        res.push(farmRes);
+      }
+
+      const rawResults = await Promise.all(res);
+      const results = farmsConfig.map((farm, index) => ({ ...farm, balance: new BigNumber(rawResults[index][0]) }))
 
       setFarmsWithBalances(results)
     }

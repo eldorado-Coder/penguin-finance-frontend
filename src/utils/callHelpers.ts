@@ -7,6 +7,10 @@ export const approve = async (lpContract, masterChefContract, account) => {
     .send({ from: account })
 }
 
+export const claimXPefi = async (strategyContract, account) => {
+  return strategyContract.methods.claimXPEFI().send({ from: account })
+}
+
 export const stake = async (masterChefContract, pid, amount, account) => {
   // if (pid === 0) {
   //   return masterChefContract.methods
@@ -19,6 +23,15 @@ export const stake = async (masterChefContract, pid, amount, account) => {
   return masterChefContract.methods
     .deposit(pid, new BigNumber(amount).times(new BigNumber(10).pow(18)).toString())
     .send({ from: account, gas: 200000 })
+    .on('transactionHash', (tx) => {
+      return tx.transactionHash
+    })
+}
+
+export const compounderStake = async (strategyContract, amount, account) => {
+  return strategyContract.methods
+    .deposit(new BigNumber(amount).times(new BigNumber(10).pow(18)).toString())
+    .send({ from: account })
     .on('transactionHash', (tx) => {
       return tx.transactionHash
     })
@@ -55,6 +68,15 @@ export const unstake = async (masterChefContract, pid, amount, account) => {
   return masterChefContract.methods
     .withdraw(pid, new BigNumber(amount).times(new BigNumber(10).pow(18)).toString())
     .send({ from: account, gas: 200000 })
+    .on('transactionHash', (tx) => {
+      return tx.transactionHash
+    })
+}
+
+export const compounderUnstake = async (strategyContract, amount, account) => {
+  return strategyContract.methods
+    .withdraw(new BigNumber(amount).times(new BigNumber(10).pow(18)).toString())
+    .send({ from: account })
     .on('transactionHash', (tx) => {
       return tx.transactionHash
     })

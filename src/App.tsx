@@ -17,7 +17,7 @@ import history from './routerHistory'
 const Home = lazy(() => import('./views/Home'))
 const Farms = lazy(() => import('./views/Farms'))
 const Arena = lazy(() => import('./views/Arena'))
-// const Emperor = lazy(() => import('./views/Emperor'))
+const Emperor = lazy(() => import('./views/Emperor'))
 const CovidEmperor = lazy(() => import('./views/CovidEmperor'))
 const NotFound = lazy(() => import('./views/NotFound'))
 
@@ -47,9 +47,9 @@ const App: React.FC = () => {
       <Menu>
         <Suspense fallback={<PageLoader />}>
           <Switch>
-            {/* <Route path="/compounder">
+            <Route path="/compounder">
               <CompounderIgloos />
-            </Route> */}
+            </Route>
             <Route path="/" exact>
               <Home />
             </Route>
@@ -62,7 +62,6 @@ const App: React.FC = () => {
             <Route path="/arena">
               <Arena />
             </Route>
-            {/* disable for a while */}
             {/* <Route path="/emperor">
               <Emperor />
             </Route> */}
