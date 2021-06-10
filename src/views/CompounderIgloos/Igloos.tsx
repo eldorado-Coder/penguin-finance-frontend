@@ -34,11 +34,8 @@ const PROJECTS = [
   'Your Farms',
   'Pangolin',
   'Gondola',
-  // 'Olive',
   'Lydia',
-  'Penguin Finance',
-  // 'Baguette',
-  // 'Elk Finance',
+  'Penguin Finance'
 ]
 
 //

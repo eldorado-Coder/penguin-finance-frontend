@@ -9,7 +9,7 @@ import { useStrategyApprove } from 'hooks/useApprove'
 import useWeb3 from 'hooks/useWeb3'
 import { getAddress } from 'utils/addressHelpers'
 import { getContract } from 'utils/erc20'
-import { BASE_ADD_LIQUIDITY_URL, MAX_COMPOUND_APY } from 'config'
+import { BASE_ADD_LIQUIDITY_URL, MAX_COMPOUND_APY, BASE_LYDIA_LIQUIDITY_URL, BASE_GONDOLA_LIQUIDITY_POOL_URL } from 'config'
 import getLiquidityUrlPathParts from 'utils/getLiquidityUrlPathParts'
 import useCompounderStake from 'hooks/useCompounderStake'
 import useCompounderUnstake from 'hooks/useCompounderUnstake'
@@ -236,47 +236,45 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
   const { onUnstake } = useCompounderUnstake(farm.lpSymbol, type)
 
   const handleApprove = useCallback(async () => {
+    setRequestedApproval(true)
     try {
-      setRequestedApproval(true)
       await onApprove()
       setRequestedApproval(false)
     } catch (e) {
+      setRequestedApproval(false)
       console.error(e)
     }
   }, [onApprove])
 
-  const handleStake = useCallback(
-    async (amount) => {
-      try {
-        setRequestedAction(true)
-        await onStake(amount)
-        setRequestedAction(false)
-      } catch (e) {
-        console.error(e)
-      }
-    },
-    [onStake],
-  )
+  const handleStake = useCallback(async amount => {
+    setRequestedAction(true)
+    try {
+      await onStake(amount);
+      setRequestedAction(false)
+    } catch (e) {
+      setRequestedAction(false)
+      console.error(e)
+    }
+  }, [onStake])
 
-  const handleUnstake = useCallback(
-    async (amount) => {
-      try {
-        setRequestedAction(true)
-        await onUnstake(amount)
-        setRequestedAction(false)
-      } catch (e) {
-        console.error(e)
-      }
-    },
-    [onUnstake],
-  )
+  const handleUnstake = useCallback(async amount => {
+    setRequestedAction(true)
+    try {
+      await onUnstake(amount)
+      setRequestedAction(false)
+    } catch (e) {
+      setRequestedAction(false)
+      console.error(e)
+    }
+  }, [onUnstake])
 
   const handleClaimXPefi = useCallback(async () => {
+    setRequestedAction(true)
     try {
-      setRequestedAction(true)
       await onClaimXPefi()
       setRequestedAction(false)
     } catch (e) {
+      setRequestedAction(false)
       console.error(e)
     }
   }, [onClaimXPefi])
@@ -284,8 +282,25 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
   const rawStakedBalance = getBalanceNumber(stakedBalance)
 
   const { quoteTokenAddresses, quoteTokenSymbol, tokenAddresses } = farm
-  const liquidityUrlPathParts = getLiquidityUrlPathParts({ quoteTokenAddresses, quoteTokenSymbol, tokenAddresses })
-  const addLiquidityUrl = `${BASE_ADD_LIQUIDITY_URL}/${liquidityUrlPathParts}`
+
+  const getLiquidityUrl = () => {
+    if (type === 'Penguin' || type === 'Pangolin') {
+      const liquidityUrlPathParts = getLiquidityUrlPathParts({ quoteTokenAddresses, quoteTokenSymbol, tokenAddresses });
+      const addLiquidityUrl = `${BASE_ADD_LIQUIDITY_URL}/${liquidityUrlPathParts}`
+      return addLiquidityUrl;
+    } 
+    if (type === 'Lydia') {
+      const liquidityUrlPathParts = getLiquidityUrlPathParts({ quoteTokenAddresses, quoteTokenSymbol, tokenAddresses });
+      const addLiquidityUrl = `${BASE_LYDIA_LIQUIDITY_URL}/${liquidityUrlPathParts}`
+      return addLiquidityUrl;
+    }
+    if (type === 'Gondola') {
+      return `${BASE_GONDOLA_LIQUIDITY_POOL_URL}/${quoteTokenSymbol}`;
+    }
+    return ''
+  };
+
+  const addLiquidityUrl = getLiquidityUrl() 
 
   const [onPresentDeposit] = useModal(
     <DepositModal max={tokenBalance} onConfirm={handleStake} tokenName={lpName} addLiquidityUrl={addLiquidityUrl} />,
