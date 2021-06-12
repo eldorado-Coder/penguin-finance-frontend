@@ -22,6 +22,6 @@ export const LOTTERY_TICKET_PRICE = 1
 export const MAX_COMPOUND_APY = 99999
 
 export const APY_TOOLTIP_TEXT =
-  '<div>The APY  shown are estimated for your convenience, it is not a guaranteed return rate, these yields can change due to block speed, emission rates adjustments, compounding strategies, among other factors</div>'
+  '<div>The APY  shown are estimated for your convenience, it is not a guaranteed return rate. These yields can change due to block speed, emission rates adjustments, compounding strategies, among other factors</div>'
 
 export const COINGECKO_API_ENDPOINT = 'https://api.coingecko.com/api'
