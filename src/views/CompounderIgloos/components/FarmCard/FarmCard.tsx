@@ -189,7 +189,7 @@ const CardInfoWrapper = styled.div<{ index?: number }>`
   }
 `
 
-const PGUnlockButton = styled(UnlockButton) <{ index: number }>`
+const PGUnlockButton = styled(UnlockButton)<{ index: number }>`
   background: ${({ index, theme }) => getButtonBackground(index, theme)};
   color: ${({ theme }) => theme.isDark && '#ffffff'};
 `
