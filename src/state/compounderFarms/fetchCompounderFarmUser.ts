@@ -42,17 +42,8 @@ export const fetchCompounderFarmUserTokenBalances = async (account: string) => {
 }
 
 export const fetchCompounderFarmUserStakedBalances = async (account: string) => {
-  const results = []
+  const balanceResults = []
   for (let i = 0; i < farmsConfig.length; i++) {
-    // const call = [{
-    //   address: getFarmMasterChefAddress(farmsConfig[i].type),
-    //   name: 'userInfo',
-    //   params: [farmsConfig[i].pid, account],
-    // }];
-
-    // const masterChefABI = getFarmMasterChefAbi(farmsConfig[i].type);
-    // const farmRes = multicall(masterChefABI, call);
-    // results.push(farmRes);
     const call = [
       {
         address: getStrategyAddress(farmsConfig[i].lpSymbol, farmsConfig[i].type),
@@ -61,15 +52,37 @@ export const fetchCompounderFarmUserStakedBalances = async (account: string) => 
       },
     ]
 
-    const masterChefABI = getStrategyAbi(farmsConfig[i].lpSymbol, farmsConfig[i].type)
-    const farmRes = multicall(masterChefABI, call)
-    results.push(farmRes)
+    const strategyAbi = getStrategyAbi(farmsConfig[i].lpSymbol, farmsConfig[i].type)
+    const farmRes = multicall(strategyAbi, call)
+    balanceResults.push(farmRes)
   }
 
-  const rawStakedBalances = await Promise.all(results)
+  const rawBalances = await Promise.all(balanceResults)
+  const parsedBalances = rawBalances.map((balance) => {
+    return new BigNumber(balance[0][0]._hex).toJSON()
+  })
+
+  // getDepositTokensForShares
+  const depositTokensResults = []
+  for (let i = 0; i < parsedBalances.length; i++) {
+    const call = [
+      {
+        address: getStrategyAddress(farmsConfig[i].lpSymbol, farmsConfig[i].type),
+        name: 'getDepositTokensForShares',
+        params: [parsedBalances[i]],
+      },
+    ]
+
+    const strategyAbi = getStrategyAbi(farmsConfig[i].lpSymbol, farmsConfig[i].type)
+    const res = multicall(strategyAbi, call)
+    depositTokensResults.push(res)
+  }
+
+  const rawStakedBalances = await Promise.all(depositTokensResults)
   const parsedStakedBalances = rawStakedBalances.map((stakedBalance) => {
     return new BigNumber(stakedBalance[0][0]._hex).toJSON()
   })
+
   return parsedStakedBalances
 }
 
@@ -114,21 +127,21 @@ export const fetchCompounderPendingXPefiBalances = async (account: string) => {
   const results = []
   for (let i = 0; i < farmsConfig.length; i++) {
     if (farmsConfig[i].type === 'Penguin') {
-      const strategyAddress = farmsConfig[i].strategyAddress;
+      const strategyAddress = farmsConfig[i].strategyAddress
 
       const call = [
         {
           address: strategyAddress,
           name: 'pendingXPefi',
           params: [account],
-        }
+        },
       ]
 
       const strategyABI = getStrategyAbi(farmsConfig[i].lpSymbol, farmsConfig[i].type)
       const pendingXPefi = multicall(strategyABI, call)
       results.push(pendingXPefi)
     } else {
-      results.push([0]);
+      results.push([0])
     }
   }
 
