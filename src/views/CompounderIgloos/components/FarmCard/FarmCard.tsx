@@ -320,7 +320,14 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
   const addLiquidityUrl = getLiquidityUrl()
 
   const [onPresentDeposit] = useModal(
-    <DepositModal max={tokenBalance} onConfirm={handleStake} tokenName={lpName} addLiquidityUrl={addLiquidityUrl} />,
+    <DepositModal
+      max={tokenBalance}
+      stakedBalance={stakedBalance}
+      onConfirm={handleStake}
+      tokenName={lpName}
+      addLiquidityUrl={addLiquidityUrl}
+      withdrawalFee={farm.withdrawalFee}
+    />,
   )
   const [onPresentWithdraw] = useModal(
     <WithdrawModal max={stakedBalance} onConfirm={handleUnstake} tokenName={lpName} />,
