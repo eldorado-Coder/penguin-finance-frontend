@@ -46,6 +46,8 @@ export const fetchCompounderFarms = async () => {
   const data = await Promise.all(
     farmsConfig.map(async (farmConfig) => {
       const lpAddress = getAddress(farmConfig.lpAddresses)
+      const tokenAddress = getAddress(farmConfig.tokenAddresses)
+      const quoteTokenAddress = getAddress(farmConfig.quoteTokenAddresses)
       const farmMasterChefAddress =
         farmConfig.type === 'Pangolin' ? farmConfig.stakingAddress : getFarmMasterChefAddress(farmConfig.type)
       const masterChefABI = getFarmMasterChefAbi(farmConfig.type)
@@ -89,6 +91,18 @@ export const fetchCompounderFarms = async () => {
           address: farmConfig.strategyAddress,
           name: 'totalSupply',
         },
+        // Balance of basic token in LP token contract
+        {
+          address: tokenAddress,
+          name: 'balanceOf',
+          params: [lpAddress],
+        },
+        // Balance of quote token in LP token contract
+        {
+          address: quoteTokenAddress,
+          name: 'balanceOf',
+          params: [lpAddress],
+        },
       ]
       const [
         tokenBalanceLP,
@@ -98,6 +112,8 @@ export const fetchCompounderFarms = async () => {
         tokenDecimals,
         quoteTokenDecimals,
         strategyTotalSupply,
+        tokenBalanceInLp,
+        quoteTokenBalanceInLp,
       ] = await multicall(erc20, calls)
 
       let lpTokenBalanceStrategy: any = new BigNumber(0)
@@ -211,6 +227,10 @@ export const fetchCompounderFarms = async () => {
         rewardPerSec: new BigNumber(rewardPerSec).toNumber(),
         strategyRatio: new BigNumber(strategyRatio).toNumber(),
         withdrawalFee: withdrawalFee / 100,
+        tokenBalanceInLp: new BigNumber(tokenBalanceInLp).div(new BigNumber(10).pow(tokenDecimals)).toNumber(),
+        quoteTokenBalanceInLp: new BigNumber(quoteTokenBalanceInLp)
+          .div(new BigNumber(10).pow(quoteTokenDecimals))
+          .toNumber(),
       }
     }),
   )
