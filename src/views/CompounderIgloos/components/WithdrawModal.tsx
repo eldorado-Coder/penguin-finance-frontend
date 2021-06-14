@@ -87,6 +87,10 @@ const WithdrawModal: React.FC<WithdrawModalProps> = ({
     return getFullDisplayBalance(max)
   }, [max])
 
+  const _stakedBalance = useMemo(() => {
+    return getFullDisplayBalance(stakedBalance)
+  }, [stakedBalance])
+
   const handleChange = useCallback(
     (e: React.FormEvent<HTMLInputElement>) => {
       setVal(e.currentTarget.value)
@@ -95,8 +99,8 @@ const WithdrawModal: React.FC<WithdrawModalProps> = ({
   )
 
   const handleSelectMax = useCallback(() => {
-    setVal(fullBalance)
-  }, [fullBalance, setVal])
+    setVal(_stakedBalance)
+  }, [_stakedBalance, setVal])
 
   const displayBalance = !fullBalance ? '0' : parseFloat(fullBalance).toFixed(4)
   const displayStakedBalance = !stakedBalance ? '0' : parseFloat(getFullDisplayBalance(stakedBalance)).toFixed(4)
@@ -121,7 +125,7 @@ const WithdrawModal: React.FC<WithdrawModalProps> = ({
           onSelectMax={handleSelectMax}
           onChange={handleChange}
           value={val}
-          max={fullBalance}
+          max={_stakedBalance}
           symbol={tokenName}
         />
         <ModalActions>
