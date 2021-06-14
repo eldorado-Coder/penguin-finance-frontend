@@ -112,7 +112,7 @@ const DepositModal: React.FC<DepositModalProps> = ({
   return (
     <Modal title="" hideCloseButton bodyPadding="0px" onDismiss={onDismiss}>
       <ModalHeader>
-        <Heading>{TranslateString(1068, `Deposit ${tokenName.replace(' LP', '')} tokens`)}</Heading>
+        <Heading>{TranslateString(1068, `Deposit ${tokenName}`)}</Heading>
       </ModalHeader>
       <ModalContent>
         <StyledFlex justifyContent="space-between">

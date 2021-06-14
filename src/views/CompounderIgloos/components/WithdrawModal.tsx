@@ -104,7 +104,7 @@ const WithdrawModal: React.FC<WithdrawModalProps> = ({
   return (
     <Modal title="" hideCloseButton bodyPadding="0px" onDismiss={onDismiss}>
       <ModalHeader>
-        <Heading>{TranslateString(1068, `Withdraw ${tokenName.replace(' LP', '')} tokens`)}</Heading>
+        <Heading>{TranslateString(1068, `Withdraw ${tokenName}`)}</Heading>
       </ModalHeader>
       <ModalContent>
         <StyledFlex justifyContent="space-between">
