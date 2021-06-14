@@ -173,6 +173,7 @@ const CardInfoWrapper = styled.div<{ index?: number }>`
     font-family: 'Kanit';
     font-weight: 800;
     white-space: nowrap;
+    color: #fff;
   }
 `
 
@@ -207,10 +208,12 @@ const getToolTipBackground = (index, theme) => {
   return theme.isDark ? '#22214C!important' : '#D3464E!important'
 }
 
-const CustomToolTip = styled(ReactTooltip) <{ index: number }>`
+const CustomToolTipOrigin = styled.div``
+
+const CustomToolTip = styled(ReactTooltip)<{ index: number }>`
   width: 100% !important;
   max-width: 200px !important;
-  background: ${({ index, theme }) => (theme.isDark ? '#ffffff!important' :  getToolTipBackground(index, theme))};
+  background: ${({ index, theme }) => (theme.isDark ? '#ffffff!important' : getToolTipBackground(index, theme))};
   box-shadow: ${(props) => `${props.theme.card.boxShadow}!important`};
   color: ${({ theme }) => (theme.isDark ? '#2D2159!important' : '#ffffff!important')};
   opacity: 1 !important;
@@ -228,8 +231,10 @@ const CustomToolTip = styled(ReactTooltip) <{ index: number }>`
     border-bottom-color: #ffffff !important;
   }
   &:after {
-    border-top-color: ${({ index, theme }) => (theme.isDark ? '#ffffff!important' :  getToolTipBackground(index, theme))};
-    border-bottom-color: ${({ index, theme }) => (theme.isDark ? '#ffffff!important' :  getToolTipBackground(index, theme))};
+    border-top-color: ${({ index, theme }) =>
+      theme.isDark ? '#ffffff!important' : getToolTipBackground(index, theme)};
+    border-bottom-color: ${({ index, theme }) =>
+      theme.isDark ? '#ffffff!important' : getToolTipBackground(index, theme)};
   }
 `
 
@@ -490,6 +495,14 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
     )
   }
 
+  const renderTooltip = () => {
+    return `
+              <h3 style="margin-bottom: 5px;">Underlying Assets</h3>
+              <p style="margin-bottom: 5px;">5,039.29 ${farm.quoteTokenSymbol}</p>
+              <p>28.47 ${farm.tokenSymbol}</p>
+            `
+  }
+
   return (
     <FCard index={index}>
       <CardActionContainer>
@@ -521,16 +534,14 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
         <CardInfoContainer index={index}>
           <CardInfoWrapper index={index}>
             <Flex justifyContent="center">
-              <Text className="label"
-                fontSize="16px"
-                data-for={`custom-class-${index}`}
-                // TODO: update this data-tip with dynamic data
-                data-tip={`<h3>Underlying Assets</h3>
-                                <p>5,039.29 WAVAX</p>
-                                <p>28.47 ETH</p>`}
-              >
-                FARM TVL
-              </Text>
+              <CustomToolTipOrigin data-for={`custom-class-${index}`} data-tip={renderTooltip()}>
+                <Text className="label" fontSize="16px">
+                  FARM TVL
+                </Text>
+                <Text className="value" bold fontSize="24px">
+                  {data.farmTvl}
+                </Text>
+              </CustomToolTipOrigin>
               <CustomToolTip
                 id={`custom-class-${index}`}
                 wrapper="div"
@@ -542,9 +553,6 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
                 html
               />
             </Flex>
-            <Text className="value" bold fontSize="24px">
-              {data.farmTvl}
-            </Text>
           </CardInfoWrapper>
         </CardInfoContainer>
         <CardInfoContainer index={index}>
