@@ -27,7 +27,7 @@ export const config: MenuEntry[] = [
   },
   {
     label: 'Compounder',
-    icon: 'FarmIcon',
+    icon: 'CompounderIcon',
     href: '/compounder',
   },
   {

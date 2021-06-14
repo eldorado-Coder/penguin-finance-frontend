@@ -46,8 +46,12 @@ export const fetchCompounderFarms = async () => {
   const data = await Promise.all(
     farmsConfig.map(async (farmConfig) => {
       const lpAddress = getAddress(farmConfig.lpAddresses)
+      const tokenAddress = getAddress(farmConfig.tokenAddresses)
+      const quoteTokenAddress = getAddress(farmConfig.quoteTokenAddresses)
       const farmMasterChefAddress =
         farmConfig.type === 'Pangolin' ? farmConfig.stakingAddress : getFarmMasterChefAddress(farmConfig.type)
+      const masterChefABI = getFarmMasterChefAbi(farmConfig.type)
+
       const calls = [
         // Balance of token in the LP contract
         {
@@ -87,6 +91,18 @@ export const fetchCompounderFarms = async () => {
           address: farmConfig.strategyAddress,
           name: 'totalSupply',
         },
+        // Balance of basic token in LP token contract
+        {
+          address: tokenAddress,
+          name: 'balanceOf',
+          params: [lpAddress],
+        },
+        // Balance of quote token in LP token contract
+        {
+          address: quoteTokenAddress,
+          name: 'balanceOf',
+          params: [lpAddress],
+        },
       ]
       const [
         tokenBalanceLP,
@@ -96,6 +112,8 @@ export const fetchCompounderFarms = async () => {
         tokenDecimals,
         quoteTokenDecimals,
         strategyTotalSupply,
+        tokenBalanceInLp,
+        quoteTokenBalanceInLp,
       ] = await multicall(erc20, calls)
 
       let lpTokenBalanceStrategy: any = new BigNumber(0)
@@ -109,7 +127,6 @@ export const fetchCompounderFarms = async () => {
           },
         ]
 
-        const masterChefABI = getFarmMasterChefAbi(farmConfig.type)
         const res1 = await multicall(masterChefABI, call1)
         lpTokenBalanceStrategy = res1[0][0]
       } else {
@@ -122,9 +139,24 @@ export const fetchCompounderFarms = async () => {
           },
         ]
 
-        const masterChefABI = getFarmMasterChefAbi(farmConfig.type)
         const res2 = await multicall(masterChefABI, call2)
         lpTokenBalanceStrategy = res2[0][0]
+      }
+
+      // get withdrawal fee of penguin igloos
+      let withdrawalFee: any = 0
+
+      if (farmConfig.type === 'Penguin') {
+        const iglooPoolInfoCall = [
+          {
+            address: farmMasterChefAddress,
+            name: 'poolInfo',
+            params: [farmConfig.pid],
+          },
+        ]
+
+        const iglooPoolInfoRes = await multicall(masterChefABI, iglooPoolInfoCall)
+        withdrawalFee = iglooPoolInfoRes[0][4]
       }
 
       // Ratio in % a LP tokens that are in staking, vs the total number in circulation
@@ -194,8 +226,14 @@ export const fetchCompounderFarms = async () => {
         multiplier: `${allocPoint.div(100).toString()}X`,
         rewardPerSec: new BigNumber(rewardPerSec).toNumber(),
         strategyRatio: new BigNumber(strategyRatio).toNumber(),
+        withdrawalFee: withdrawalFee / 100,
+        tokenBalanceInLp: new BigNumber(tokenBalanceInLp).div(new BigNumber(10).pow(tokenDecimals)).toNumber(),
+        quoteTokenBalanceInLp: new BigNumber(quoteTokenBalanceInLp)
+          .div(new BigNumber(10).pow(quoteTokenDecimals))
+          .toNumber(),
       }
     }),
   )
+
   return data
 }
