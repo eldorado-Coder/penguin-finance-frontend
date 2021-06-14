@@ -117,16 +117,11 @@ const getButtonBackground = (index, theme) => {
 }
 
 const ActionButtonWrapper = styled.div<{ index: number }>`
-  @font-face {
-    font-family: 'Kanit-Medium Font';
-    src: url(${process.env.PUBLIC_URL}/fonts/Kanit-Medium.ttf) format('truetype');
-  }
-
   margin-right: 10px;
   button {
     background: ${({ index, theme }) => getButtonBackground(index, theme)};
     color: ${({ theme }) => theme.isDark && '#ffffff'};
-    font-family: 'Kanit-Medium Font';
+    font-family: 'Kanit';
     font-size: 14px;
     font-weight: 500;
     white-space: nowrap;
@@ -160,30 +155,20 @@ const CardInfoContainer = styled.div<{ index?: number }>`
   }
 `
 const CardInfoWrapper = styled.div<{ index?: number }>`
-  @font-face {
-    font-family: 'PoppinsRegular Font';
-    src: url(${process.env.PUBLIC_URL}/fonts/PoppinsRegular.ttf) format('truetype');
-  }
-
-  @font-face {
-    font-family: 'Kanit-ExtraBold Font';
-    src: url(${process.env.PUBLIC_URL}/fonts/Kanit-ExtraBold.ttf) format('truetype');
-  }
-
   > div {
     color: #fff;
     text-align: center;
   }
 
   .label {
-    font-family: 'PoppinsRegular Font';
+    font-family: 'Poppins';
     font-weight: 400;
     line-height: 1;
     white-space: nowrap;
   }
 
   .value {
-    font-family: 'Kanit-ExtraBold Font';
+    font-family: 'Kanit';
     font-weight: 800;
     white-space: nowrap;
   }
