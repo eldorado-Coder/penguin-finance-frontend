@@ -1,4 +1,5 @@
 import React, { useMemo, useCallback, useState } from 'react'
+import ReactTooltip from 'react-tooltip'
 import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
 import { Flex, Text, Image, Button, useModal } from 'penguinfinance-uikit2'
@@ -165,6 +166,7 @@ const CardInfoWrapper = styled.div<{ index?: number }>`
     font-weight: 400;
     line-height: 1;
     white-space: nowrap;
+    color: #fff;
   }
 
   .value {
@@ -195,6 +197,39 @@ const FarmDetails = styled(Flex)`
     padding-top: 16px;
     padding-left: 0;
     padding-right: 0;
+  }
+`
+
+const getToolTipBackground = (index, theme) => {
+  if (index % 2) {
+    return theme.isDark ? '#322C59!important' : '#383466!important'
+  }
+  return theme.isDark ? '#22214C!important' : '#D3464E!important'
+}
+
+const CustomToolTip = styled(ReactTooltip) <{ index: number }>`
+  width: 100% !important;
+  max-width: 200px !important;
+  background: ${({ index, theme }) => (theme.isDark ? '#ffffff!important' :  getToolTipBackground(index, theme))};
+  box-shadow: ${(props) => `${props.theme.card.boxShadow}!important`};
+  color: ${({ theme }) => (theme.isDark ? '#2D2159!important' : '#ffffff!important')};
+  opacity: 1 !important;
+  padding: 12px !important;
+  font-size: 16px !important;
+  border: 2px solid #fff !important;
+  border-radius: 16px !important;
+  margin-top: 0px !important;
+  > div {
+    width: 100%;
+    white-space: pre-wrap !important;
+  }
+  &:before {
+    border-top-color: #ffffff !important;
+    border-bottom-color: #ffffff !important;
+  }
+  &:after {
+    border-top-color: ${({ index, theme }) => (theme.isDark ? '#ffffff!important' :  getToolTipBackground(index, theme))};
+    border-bottom-color: ${({ index, theme }) => (theme.isDark ? '#ffffff!important' :  getToolTipBackground(index, theme))};
   }
 `
 
@@ -485,9 +520,28 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
         </CardInfoContainer>
         <CardInfoContainer index={index}>
           <CardInfoWrapper index={index}>
-            <Text className="label" fontSize="16px">
-              FARM TVL
-            </Text>
+            <Flex justifyContent="center">
+              <Text className="label"
+                fontSize="16px"
+                data-for={`custom-class-${index}`}
+                // TODO: update this data-tip with dynamic data
+                data-tip={`<h3>Underlying Assets</h3>
+                                <p>5,039.29 WAVAX</p>
+                                <p>28.47 ETH</p>`}
+              >
+                FARM TVL
+              </Text>
+              <CustomToolTip
+                id={`custom-class-${index}`}
+                wrapper="div"
+                delayHide={300}
+                effect="solid"
+                index={index}
+                multiline
+                place="top"
+                html
+              />
+            </Flex>
             <Text className="value" bold fontSize="24px">
               {data.farmTvl}
             </Text>
