@@ -39,6 +39,9 @@ const StyledInput = styled(Input)`
   width: 60px;
   margin: 0 8px;
   padding: 0 8px;
+  font-family: 'Poppins';
+  font-weight: 700;
+  font-size: 18px;
   color: ${({ theme }) => (theme.isDark ? '#ffffff' : '#373566')};
   background: ${({ theme }) => (theme.isDark ? '#614e84' : '#ebe8f1')};
   box-shadow: none !important;

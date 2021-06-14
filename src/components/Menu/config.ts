@@ -22,12 +22,12 @@ export const config: MenuEntry[] = [
   },
   {
     label: 'Igloos',
-    icon: 'CompounderIcon',
+    icon: 'IglooIcon',
     href: '/igloos',
   },
   {
     label: 'Compounder',
-    icon: 'FarmIcon',
+    icon: 'CompounderIcon',
     href: '/compounder',
   },
   {
