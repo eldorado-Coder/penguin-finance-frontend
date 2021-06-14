@@ -14,6 +14,7 @@ interface WithdrawModalProps {
   tokenName?: string
   withdrawalFee?: string
   stakedBalance?: BigNumber
+  farmType?: string
 }
 
 // header
@@ -26,7 +27,6 @@ const ModalHeader = styled.div`
 // content
 const ModalContent = styled.div`
   border-top: ${({ theme }) => (theme.isDark ? '1px solid #26183f' : '1px solid #e9eaeb')};
-  border-bottom: ${({ theme }) => (theme.isDark ? '1px solid #26183f' : '1px solid#e9eaeb')};
   padding: 24px 24px 16px;
 `
 
@@ -62,7 +62,9 @@ const StyledButton = styled(Button)`
 `
 
 // footer
-const ModalFooter = styled.div``
+const ModalFooter = styled.div`
+  border-top: ${({ theme }) => (theme.isDark ? '1px solid #26183f' : '1px solid#e9eaeb')};
+`
 
 const ModalHelper = styled.div`
   padding: 16px 24px;
@@ -79,6 +81,7 @@ const WithdrawModal: React.FC<WithdrawModalProps> = ({
   tokenName = '',
   withdrawalFee = '',
   stakedBalance,
+  farmType,
 }) => {
   const [val, setVal] = useState('')
   const [pendingTx, setPendingTx] = useState(false)
@@ -146,11 +149,13 @@ const WithdrawModal: React.FC<WithdrawModalProps> = ({
           </StyledButton>
         </ModalActions>
       </ModalContent>
-      <ModalFooter>
-        <ModalHelper>
-          {`Note: There is a ${withdrawalFee}% withdrawal fee on this farm. When auto-compounding Igloos, 50% of rewards are sent to nest.`}
-        </ModalHelper>
-      </ModalFooter>
+      {farmType === 'Penguin' && (
+        <ModalFooter>
+          <ModalHelper>
+            {`Note: There is a ${withdrawalFee}% withdrawal fee on this farm. When auto-compounding Igloos, 50% of rewards are sent to nest.`}
+          </ModalHelper>
+        </ModalFooter>
+      )}
     </Modal>
   )
 }

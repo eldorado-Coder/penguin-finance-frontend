@@ -326,6 +326,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
       addLiquidityUrl={addLiquidityUrl}
       stakedBalance={stakedBalance}
       withdrawalFee={farm.withdrawalFee}
+      farmType={farm.type}
       onConfirm={handleStake}
     />,
   )
@@ -335,6 +336,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
       max={tokenBalance}
       stakedBalance={stakedBalance}
       withdrawalFee={farm.withdrawalFee}
+      farmType={farm.type}
       onConfirm={handleUnstake}
     />,
   )
