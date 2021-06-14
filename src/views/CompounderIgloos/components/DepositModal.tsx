@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js'
 import React, { useCallback, useMemo, useState } from 'react'
-import { Button, Modal, Text, LinkExternal, Flex } from 'penguinfinance-uikit2'
+import { Button, Modal, Text, LinkExternal, Flex, Heading } from 'penguinfinance-uikit2'
 import styled from 'styled-components'
 import ModalActions from 'components/compounder/ModalActions'
 import ModalInput from 'components/compounder/ModalInput'
@@ -17,32 +17,66 @@ interface DepositModalProps {
   stakedBalance?: BigNumber
 }
 
-const StyledFlex = styled(Flex)`
-  margin-bottom: 24px;
+// header
+const ModalHeader = styled.div`
+  padding: 24px;
+  font-weight: 600;
+  margin-top: -22px;
 `
-const BalanceInfoWrapper = styled(Flex)``
+
+// content
+const ModalContent = styled.div`
+  border-top: ${({ theme }) => (theme.isDark ? '1px solid #26183f' : '1px solid #e9eaeb')};
+  border-bottom: ${({ theme }) => (theme.isDark ? '1px solid #26183f' : '1px solid#e9eaeb')};
+  padding: 24px 24px 16px;
+`
+
+const StyledFlex = styled(Flex)`
+  margin-bottom: 16px;
+  white-space: pre;
+`
+const BalanceInfoWrapper = styled(Flex)`
+  > div:first-child {
+    font-weight: 500;
+    color: ${({ theme }) => (theme.isDark ? '#ffffff' : '#373566')};
+  }
+  > div:last-child {
+    font-weight: 400;
+    color: ${({ theme }) => (theme.isDark ? '#ffffff' : '#373566')};
+  }
+`
 const StakeInfoWrapper = styled(Flex)`
-  /* margin-bottom: 24px; */
+  > div:first-child {
+    color: ${({ theme }) => (theme.isDark ? '#ffffff' : '#373566')};
+    font-weight: 500;
+  }
+  > div:last-child {
+    font-weight: 400;
+    color: ${({ theme }) => (theme.isDark ? '#ffffff' : '#373566')};
+  }
 `
 const StyledButton = styled(Button)`
   background: ${({ theme }) => (theme.isDark ? '#ffffff' : '#d2474e')};
   color: ${({ theme }) => (theme.isDark ? '#30264f' : '#ffffff')};
   font-weight: 400;
+  border-bottom: ${({ theme }) => (theme.isDark ? '3px solid #614284' : '3px solid #b73e4a')};
 `
 
 const StyledLinkExternal = styled(LinkExternal)`
   color: ${({ theme }) => (theme.isDark ? '#ffffff' : '#d2474e')};
   font-weight: 800;
-  margin-bottom: 24px;
+  margin: auto;
 `
 
+// footer
+const ModalFooter = styled.div``
+
 const ModalHelper = styled.div`
-  border-top: 1px solid #e9eaeb;
-  margin: 0px -24px;
-  padding: 24px 24px 0px;
+  padding: 16px 24px;
   max-width: 470px;
   color: ${({ theme }) => (theme.isDark ? '#614e84' : '#373566')};
   line-height: 20px;
+  font-weight: 400;
 `
 
 const DepositModal: React.FC<DepositModalProps> = ({
@@ -76,48 +110,55 @@ const DepositModal: React.FC<DepositModalProps> = ({
   const displayStakedBalance = !stakedBalance ? '0' : parseFloat(getFullDisplayBalance(stakedBalance)).toFixed(4)
 
   return (
-    <Modal title={TranslateString(1068, `Deposit ${tokenName.replace(' LP', '')} tokens`)} onDismiss={onDismiss}>
-      <StyledFlex justifyContent="space-between">
-        <BalanceInfoWrapper>
-          <Text>{`Wallet Balance: `}</Text>
-          <Text>{displayBalance}</Text>
-        </BalanceInfoWrapper>
-        <StakeInfoWrapper>
-          <Text>{`Your Stake: `}</Text>
-          <Text>{displayStakedBalance}</Text>
-        </StakeInfoWrapper>
-      </StyledFlex>
-      <ModalInput
-        value={val}
-        onSelectMax={handleSelectMax}
-        onChange={handleChange}
-        max={fullBalance}
-        symbol={tokenName}
-        addLiquidityUrl={addLiquidityUrl}
-      />
-      <ModalActions>
-        <StyledButton variant="primary" onClick={onDismiss} scale="md">
-          {TranslateString(462, 'Cancel')}
-        </StyledButton>
-        <StyledButton
-          scale="md"
-          disabled={pendingTx || fullBalance === '0' || val === '0'}
-          onClick={async () => {
-            setPendingTx(true)
-            await onConfirm(val)
-            setPendingTx(false)
-            onDismiss()
-          }}
-        >
-          {pendingTx ? TranslateString(488, 'Pending Compounding') : TranslateString(464, 'Compound')}
-        </StyledButton>
-      </ModalActions>
-      <StyledLinkExternal href={addLiquidityUrl} style={{ alignSelf: 'center' }}>
-        {TranslateString(999, 'Get')} {tokenName}
-      </StyledLinkExternal>
-      <ModalHelper>
-        {`Note there is a ${withdrawalFee}% withdrawal fee on this farm. When auto-compounding Igloos, 50% of rewards are sent to nest.`}
-      </ModalHelper>
+    <Modal title="" hideCloseButton bodyPadding="0px" onDismiss={onDismiss}>
+      <ModalHeader>
+        <Heading>{TranslateString(1068, `Deposit ${tokenName}`)}</Heading>
+      </ModalHeader>
+      <ModalContent>
+        <StyledFlex justifyContent="space-between">
+          <BalanceInfoWrapper>
+            <Text>{`Wallet Balance: `}</Text>
+            <Text>{displayBalance}</Text>
+          </BalanceInfoWrapper>
+          <StakeInfoWrapper>
+            <Text>{`Your Stake: `}</Text>
+            <Text>{displayStakedBalance}</Text>
+          </StakeInfoWrapper>
+        </StyledFlex>
+        <ModalInput
+          value={val}
+          onSelectMax={handleSelectMax}
+          onChange={handleChange}
+          max={fullBalance}
+          symbol={tokenName}
+          addLiquidityUrl={addLiquidityUrl}
+        />
+        <ModalActions>
+          <StyledButton variant="primary" onClick={onDismiss} scale="md">
+            {TranslateString(462, 'Cancel')}
+          </StyledButton>
+          <StyledButton
+            scale="md"
+            disabled={pendingTx || fullBalance === '0' || val === '0'}
+            onClick={async () => {
+              setPendingTx(true)
+              await onConfirm(val)
+              setPendingTx(false)
+              onDismiss()
+            }}
+          >
+            {pendingTx ? TranslateString(488, 'Pending Compounding') : TranslateString(464, 'Compound')}
+          </StyledButton>
+        </ModalActions>
+        <StyledLinkExternal href={addLiquidityUrl} style={{ alignSelf: 'center' }}>
+          {TranslateString(999, 'Get')} {tokenName}
+        </StyledLinkExternal>
+      </ModalContent>
+      <ModalFooter>
+        <ModalHelper>
+          {`Note: There is a ${withdrawalFee}% withdrawal fee on this farm. When auto-compounding Igloos, 50% of rewards are sent to nest.`}
+        </ModalHelper>
+      </ModalFooter>
     </Modal>
   )
 }
