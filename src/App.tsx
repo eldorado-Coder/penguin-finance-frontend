@@ -62,13 +62,13 @@ const App: React.FC = () => {
             <Route path="/arena">
               <Arena />
             </Route>
-            <Route path="/emperor">
-              <Emperor />
-            </Route>
-            {/* temporary covid penguin emperor page */}
             {/* <Route path="/emperor">
-              <CovidEmperor />
+              <Emperor />
             </Route> */}
+            {/* temporary covid penguin emperor page */}
+            <Route path="/emperor">
+              <CovidEmperor />
+            </Route>
             {/* Redirect */}
             {/* <Route path="/staking">
               <Redirect to="/pools" />
