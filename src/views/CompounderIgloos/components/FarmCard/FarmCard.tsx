@@ -547,7 +547,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
                 FARM TVL
               </Text>
               <CustomToolTip
-                id={`custom-class-${index}`} //
+                id={`custom-class-${index}`}
                 wrapper="div"
                 delayHide={300}
                 effect="solid"
