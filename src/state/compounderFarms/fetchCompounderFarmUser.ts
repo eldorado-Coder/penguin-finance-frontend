@@ -127,11 +127,9 @@ export const fetchCompounderPendingXPefiBalances = async (account: string) => {
   const results = []
   for (let i = 0; i < farmsConfig.length; i++) {
     if (farmsConfig[i].type === 'Penguin') {
-      const strategyAddress = farmsConfig[i].strategyAddress
-
       const call = [
         {
-          address: strategyAddress,
+          address: farmsConfig[i].strategyAddress,
           name: 'pendingXPefi',
           params: [account],
         },

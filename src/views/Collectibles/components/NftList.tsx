@@ -3,7 +3,6 @@ import orderBy from 'lodash/orderBy'
 import styled from 'styled-components';
 import nfts from 'config/constants/nfts'
 import { useWeb3React } from '@web3-react/core'
-import { Flex } from 'penguinfinance-uikit2'
 import { getBunnySpecialContract } from 'utils/contractHelpers'
 import useGetWalletNfts from 'hooks/useGetWalletNfts'
 import makeBatchRequest from 'utils/makeBatchRequest'

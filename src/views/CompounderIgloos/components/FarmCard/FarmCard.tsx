@@ -97,6 +97,7 @@ const IglooTitleWrapper = styled.div`
   @font-face {
     font-family: 'GothamUltra Font';
     src: url(${process.env.PUBLIC_URL}/fonts/GothamUltra.otf) format('truetype');
+    font-display: swap
   }
 
   > div {
@@ -347,10 +348,10 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
       tokenName={lpName}
       max={tokenBalance}
       addLiquidityUrl={getLiquidityUrl()}
-      stakedBalance={stakedBalance}
+      farm={farm}
       withdrawalFee={farm.withdrawalFee}
-      farmType={farm.type}
       onConfirm={handleStake}
+      onApprove={handleApprove}
     />,
   )
   const [onPresentWithdraw] = useModal(
@@ -411,7 +412,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
             mt="4px"
             scale="sm"
             disabled={!account || requestedAction}
-            onClick={isApproved ? onPresentDeposit : handleApprove}
+            onClick={onPresentDeposit}
           >
             {TranslateString(758, 'Deposit')}
           </Button>
@@ -421,7 +422,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
             mt="4px"
             scale="sm"
             disabled={!account || requestedAction}
-            onClick={isApproved ? onPresentWithdraw : handleApprove}
+            onClick={onPresentWithdraw }
           >
             {TranslateString(758, 'Withdraw')}
           </Button>
