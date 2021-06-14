@@ -238,6 +238,10 @@ const CustomToolTip = styled(ReactTooltip) <{ index: number }>`
     width: 100%;
     white-space: pre-wrap !important;
   }
+  &:before {
+    border-top-color: #ffffff !important;
+    border-bottom-color: #ffffff !important;
+  }
   &:after {
     border-top-color: ${({ index, theme }) => (theme.isDark ? '#ffffff!important' :  getToolTipBackground(index, theme))};
     border-bottom-color: ${({ index, theme }) => (theme.isDark ? '#ffffff!important' :  getToolTipBackground(index, theme))};
