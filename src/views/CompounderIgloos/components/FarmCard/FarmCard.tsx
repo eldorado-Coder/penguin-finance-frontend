@@ -33,6 +33,7 @@ export interface FarmWithStakedValue extends Farm {
   strategyRatio?: BigNumber
   tokenBalanceInLp?: number
   quoteTokenBalanceInLp?: number
+  lpTokenBalanceStrategy?: number
 }
 
 const getCardBackground = (index, theme) => {
@@ -435,10 +436,11 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
     )
   }
 
-  const getMyTVLTooltip = () => {
-    const userTokenBalanceInLp = (farm.tokenBalanceInLp * rawStakedBalance) / getBalanceNumber(farm.totalSupply)
+  const getYourTVLTooltip = () => {
+    const userTokenBalanceInLp = rawStakedBalance * (farm.tokenBalanceInLp / getBalanceNumber(farm.totalSupply))
     const userQuoteTokenBalanceInLp =
-      (farm.quoteTokenBalanceInLp * rawStakedBalance) / getBalanceNumber(farm.totalSupply)
+      rawStakedBalance * (farm.quoteTokenBalanceInLp / getBalanceNumber(farm.totalSupply))
+
     return `
               <h3 style="margin-bottom: 5px;">Underlying Assets</h3>
               <p style="margin-bottom: 5px;">${userQuoteTokenBalanceInLp.toLocaleString(undefined, {
@@ -451,10 +453,19 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
   }
 
   const getFarmTVLTooltip = () => {
+    const strategyTokenBalanceInLp =
+      farm.lpTokenBalanceStrategy * (farm.tokenBalanceInLp / getBalanceNumber(farm.totalSupply))
+    const strategyQuoteTokenBalanceInLp =
+      farm.lpTokenBalanceStrategy * (farm.quoteTokenBalanceInLp / getBalanceNumber(farm.totalSupply))
+
     return `
               <h3 style="margin-bottom: 5px;">Underlying Assets</h3>
-              <p style="margin-bottom: 5px;">5,039.29 ${farm.quoteTokenSymbol}</p>
-              <p>28.47 ${farm.tokenSymbol}</p>
+              <p style="margin-bottom: 5px;">${strategyQuoteTokenBalanceInLp.toLocaleString(undefined, {
+                maximumFractionDigits: 2,
+              })} ${farm.quoteTokenSymbol}</p>
+              <p>${strategyTokenBalanceInLp.toLocaleString(undefined, {
+                maximumFractionDigits: 2,
+              })} ${farm.tokenSymbol}</p>
             `
   }
 
@@ -478,7 +489,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
       <FarmDetails justifyContent="space-between" width="100%">
         <CardInfoContainer index={index}>
           <CardInfoWrapper index={index}>
-            <CustomToolTipOrigin data-for={`my-tvl-tooltip-${index}`} data-tip={getMyTVLTooltip()}>
+            <CustomToolTipOrigin data-for={`your-tvl-tooltip-${index}`} data-tip={getYourTVLTooltip()}>
               <Text className="label" fontSize="16px">
                 YOUR TVL
               </Text>
@@ -488,7 +499,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
             </CustomToolTipOrigin>
             {account && (
               <CustomToolTip
-                id={`my-tvl-tooltip-${index}`}
+                id={`your-tvl-tooltip-${index}`}
                 wrapper="div"
                 delayHide={0}
                 effect="solid"
@@ -511,7 +522,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
                   {data.farmTvl}
                 </Text>
               </CustomToolTipOrigin>
-              {/* <CustomToolTip
+              <CustomToolTip
                 id={`farm-tvl-tooltip-${index}`}
                 wrapper="div"
                 delayHide={0}
@@ -520,7 +531,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
                 multiline
                 place="top"
                 html
-              /> */}
+              />
             </Flex>
           </CardInfoWrapper>
         </CardInfoContainer>
