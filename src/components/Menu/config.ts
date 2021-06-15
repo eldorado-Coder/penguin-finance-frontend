@@ -52,28 +52,6 @@ export const config: MenuEntry[] = [
   //   href: '/teams',
   // },
   {
-    label: 'Info',
-    icon: 'InfoIcon',
-    items: [
-      {
-        label: 'Overview',
-        href: 'https://info.pangolin.exchange',
-      },
-      {
-        label: 'Tokens',
-        href: 'https://info.pangolin.exchange/#/tokens',
-      },
-      {
-        label: 'Pairs',
-        href: 'https://info.pangolin.exchange/#/pairs',
-      },
-      {
-        label: 'Accounts',
-        href: 'https://info.pangolin.exchange/#/accounts',
-      },
-    ],
-  },
-  {
     label: 'Learn More',
     icon: 'MoreIcon',
     items: [
