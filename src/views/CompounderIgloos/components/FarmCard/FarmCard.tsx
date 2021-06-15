@@ -30,7 +30,6 @@ export interface FarmWithStakedValue extends Farm {
   apy?: BigNumber
   totalValue?: BigNumber
   totalSupply?: BigNumber
-  strategyRatio?: BigNumber
   tokenBalanceInLp?: number
   quoteTokenBalanceInLp?: number
   lpTokenBalanceStrategy?: number

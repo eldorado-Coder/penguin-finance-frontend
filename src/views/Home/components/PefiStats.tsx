@@ -7,7 +7,17 @@ import { getBalanceNumber } from 'utils/formatBalance'
 import { useTotalSupply, useBurnedBalance } from 'hooks/useTokenBalance'
 import { useXPefi } from 'hooks/useContract'
 import { getPefiAddress } from 'utils/addressHelpers'
-import { usePefiPerBlock, useFarms, usePriceAvaxUsdt, usePricePefiUsdt, usePriceEthUsdt } from 'state/hooks'
+import {
+  usePefiPerBlock,
+  useFarms,
+  usePriceAvaxUsdt,
+  usePricePefiUsdt,
+  usePriceEthUsdt,
+  usePricePngUsdt,
+  usePriceLinkUsdt,
+  usePriceLydUsdt,
+  useCompounderFarms,
+} from 'state/hooks'
 import { Pool } from 'state/types'
 import { QuoteToken } from 'config/constants/types'
 import { PEFI_MAX_SUPPLY } from 'config'
@@ -42,9 +52,13 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
   const xPefiContract = useXPefi()
   const pefiPerBlock = usePefiPerBlock()
   const farmsLP = useFarms()
+  const compounderFarms = useCompounderFarms()
   const pefiPrice = usePricePefiUsdt()
   const avaxPrice = usePriceAvaxUsdt()
-  const ethPrice = usePriceEthUsdt()
+  const ethPriceUsd = usePriceEthUsdt()
+  const pngPriceUsd = usePricePngUsdt()
+  const linkPriceUsd = usePriceLinkUsdt()
+  const lydPriceUsd = usePriceLydUsdt()
   const [handsOnPenalty, setHandsOnPenalty] = useState(0)
 
   const fetchEarlyWithdrawalFee = useCallback(async () => {
@@ -67,23 +81,57 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
   const getTokenPrice = (tokenSymbol: string) => {
     if (tokenSymbol === QuoteToken.PEFI) return pefiPrice
     if (tokenSymbol === QuoteToken.AVAX) return avaxPrice
-    if (tokenSymbol === QuoteToken.ETH) return ethPrice
+    if (tokenSymbol === QuoteToken.ETH) return ethPriceUsd
     return new BigNumber(1)
   }
 
   // calculate TVL in igloos
   const getIgloosTVL = () => {
-    let _igloosTVL = new BigNumber(0)
+    let igloosTVL = new BigNumber(0)
     farmsLP.map((farmLP) => {
       const farmQuoteTokenPrice = getTokenPrice(farmLP.quoteTokenSymbol)
       if (farmLP.quoteTokenAmount) {
-        const _iglooTVL = farmQuoteTokenPrice.times(new BigNumber(farmLP.quoteTokenAmount)).times(new BigNumber(2))
-        if (_iglooTVL) _igloosTVL = _igloosTVL.plus(_iglooTVL)
+        const iglooTVL = farmQuoteTokenPrice.times(new BigNumber(farmLP.quoteTokenAmount)).times(new BigNumber(2))
+        if (iglooTVL) igloosTVL = igloosTVL.plus(iglooTVL)
       }
-      return _igloosTVL
+      return igloosTVL
     })
-    return _igloosTVL.toNumber()
+    return igloosTVL.toNumber()
   }
+
+  // calculate TVL in compounder farms
+  const getCompounderFarmsTVL = () => {
+    let compounderFarmsTVL = 0
+    compounderFarms.map((compounderFarm) => {
+      let totalValue = null
+      if (!compounderFarm.lpTotalInQuoteToken) {
+        totalValue = new BigNumber(0)
+      } else if (compounderFarm.quoteTokenSymbol === QuoteToken.AVAX) {
+        totalValue = avaxPrice.times(compounderFarm.lpTotalInQuoteToken)
+      } else if (compounderFarm.quoteTokenSymbol === QuoteToken.PEFI) {
+        totalValue = pefiPrice.times(compounderFarm.lpTotalInQuoteToken)
+      } else if (compounderFarm.quoteTokenSymbol === QuoteToken.ETH) {
+        totalValue = ethPriceUsd.times(compounderFarm.lpTotalInQuoteToken)
+      } else if (compounderFarm.quoteTokenSymbol === QuoteToken.PNG) {
+        totalValue = pngPriceUsd.times(compounderFarm.lpTotalInQuoteToken)
+      } else if (compounderFarm.quoteTokenSymbol === QuoteToken.LYD) {
+        totalValue = lydPriceUsd.times(compounderFarm.lpTotalInQuoteToken)
+      } else if (compounderFarm.quoteTokenSymbol === QuoteToken.LINK) {
+        totalValue = linkPriceUsd.times(compounderFarm.lpTotalInQuoteToken)
+      } else {
+        totalValue = compounderFarm.lpTotalInQuoteToken
+      }
+
+      if (compounderFarm.strategyRatio) {
+        compounderFarmsTVL += totalValue.times(compounderFarm.strategyRatio).toNumber()
+      }
+
+      return compounderFarm
+    })
+    return compounderFarmsTVL
+  }
+
+  getCompounderFarmsTVL()
 
   // calculate TVL in pefi nest
   const getNestTVL = () => {
@@ -97,7 +145,7 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
     return 0
   }
 
-  const tvl = getIgloosTVL() + getNestTVL()
+  const tvl = getIgloosTVL() + getCompounderFarmsTVL() + getNestTVL()
   const xPefiToPefiRatio = getXPefiToPefiRatio()
   const pefiMarketcap = getPefiMarketcap()
 
