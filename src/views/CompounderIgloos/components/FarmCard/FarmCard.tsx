@@ -97,6 +97,7 @@ const IglooTitleWrapper = styled.div`
   @font-face {
     font-family: 'GothamUltra Font';
     src: url(${process.env.PUBLIC_URL}/fonts/GothamUltra.otf) format('truetype');
+    font-display: swap;
   }
 
   > div {
@@ -347,10 +348,10 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
       tokenName={lpName}
       max={tokenBalance}
       addLiquidityUrl={getLiquidityUrl()}
-      stakedBalance={stakedBalance}
+      farm={farm}
       withdrawalFee={farm.withdrawalFee}
-      farmType={farm.type}
       onConfirm={handleStake}
+      onApprove={handleApprove}
     />,
   )
   const [onPresentWithdraw] = useModal(
@@ -407,22 +408,12 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
     ) : (
       <>
         <ActionButtonWrapper index={index}>
-          <Button
-            mt="4px"
-            scale="sm"
-            disabled={!account || requestedAction}
-            onClick={isApproved ? onPresentDeposit : handleApprove}
-          >
+          <Button mt="4px" scale="sm" disabled={!account || requestedAction} onClick={onPresentDeposit}>
             {TranslateString(758, 'Deposit')}
           </Button>
         </ActionButtonWrapper>
         <ActionButtonWrapper index={index}>
-          <Button
-            mt="4px"
-            scale="sm"
-            disabled={!account || requestedAction}
-            onClick={isApproved ? onPresentWithdraw : handleApprove}
-          >
+          <Button mt="4px" scale="sm" disabled={!account || requestedAction} onClick={onPresentWithdraw}>
             {TranslateString(758, 'Withdraw')}
           </Button>
         </ActionButtonWrapper>
