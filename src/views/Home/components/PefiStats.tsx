@@ -131,8 +131,6 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
     return compounderFarmsTVL
   }
 
-  getCompounderFarmsTVL()
-
   // calculate TVL in pefi nest
   const getNestTVL = () => {
     if (pool.totalSupply) return getXPefiToPefiRatio() * pefiPrice.toNumber() * getBalanceNumber(pool.totalSupply)
