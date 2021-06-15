@@ -7,18 +7,9 @@ export const config: MenuEntry[] = [
     href: '/',
   },
   {
-    label: 'Trade $PEFI',
+    label: 'Buy $PEFI',
     icon: 'TradeIcon',
-    items: [
-      {
-        label: 'Exchange',
-        href: 'https://app.pangolin.exchange/#/swap?outputCurrency=0xe896CDeaAC9615145c0cA09C8Cd5C25bced6384c',
-      },
-      {
-        label: 'Liquidity',
-        href: 'https://app.pangolin.exchange/#/pool',
-      },
-    ],
+    href: 'https://app.pangolin.exchange/#/swap?outputCurrency=0xe896CDeaAC9615145c0cA09C8Cd5C25bced6384c',
   },
   {
     label: 'Igloos',
