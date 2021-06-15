@@ -36,6 +36,11 @@ export const config: MenuEntry[] = [
     icon: 'BattleIcon',
     href: '/arena',
   },
+  {
+    label: 'Launchpad',
+    icon: 'LaunchpadIcon',
+    href: '/launchpad',
+  },
   // {
   //   label: 'Penguin lottery',
   //   icon: 'NftIcon',
