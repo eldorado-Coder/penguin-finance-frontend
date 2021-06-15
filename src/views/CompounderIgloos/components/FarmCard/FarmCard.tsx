@@ -77,12 +77,6 @@ const IglooLogoContainer = styled.div`
     width: 64px;
     height: 64px;
 
-    > img {
-      width: 80%;
-      height: 80%;
-      margin: 10%;
-    }
-
     @media (min-width: 768px) {
       width: 96px;
       height: 96px;
@@ -93,6 +87,15 @@ const IglooLogoContainer = styled.div`
     }
   }
 `
+
+const StyledImage = styled(Image)<{ type?: string }>`
+  img {
+    width: ${({ type }) => (type === 'Penguin' ? '90%' : '80%')};
+    height: ${({ type }) => (type === 'Penguin' ? '90%' : '80%')};
+    margin: ${({ type }) => (type === 'Penguin' ? '5%' : '10%')};
+  }
+`
+
 const IglooTitleWrapper = styled.div`
   @font-face {
     font-family: 'GothamUltra Font';
@@ -393,7 +396,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
     if (farm.type === 'Olive') farmLogo = `${process.env.PUBLIC_URL}/images/compounder-igloos/OliveLogo.png`
     if (farm.type === 'Gondola') farmLogo = `${process.env.PUBLIC_URL}/images/compounder-igloos/GondolaLogo.png`
 
-    return <Image mt="12px" src={farmLogo} alt={farm.tokenSymbol} width={108} height={108} />
+    return <StyledImage mt="12px" type={farm.type} src={farmLogo} alt={farm.tokenSymbol} width={108} height={108} />
   }
 
   const renderActionButtons = () => {
