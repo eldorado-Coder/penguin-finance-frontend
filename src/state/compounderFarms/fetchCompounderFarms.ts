@@ -231,6 +231,7 @@ export const fetchCompounderFarms = async () => {
         quoteTokenBalanceInLp: new BigNumber(quoteTokenBalanceInLp)
           .div(new BigNumber(10).pow(quoteTokenDecimals))
           .toNumber(),
+        lpTokenBalanceStrategy: new BigNumber(lpTokenBalanceStrategy._hex).div(new BigNumber(10).pow(18)).toNumber(),
       }
     }),
   )
