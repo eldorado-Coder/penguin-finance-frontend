@@ -29,7 +29,7 @@ import Select from 'components/Select/Select'
 import FarmCard, { FarmWithStakedValue } from './components/FarmCard/FarmCard'
 
 // temporarily hide projects that wont appear during release so that we don't have empty categories (10.06.2021)
-const PROJECTS = ['All', 'Your Farms', 'Penguin Finance', 'Pangolin', 'Gondola', 'Lydia']
+const PROJECTS = ['All', 'Your Farms', 'Penguin Finance', 'Pangolin', 'Gondola', 'Lydia', 'Snowball']
 
 //
 const Igloos: React.FC = () => {
@@ -145,8 +145,8 @@ const Igloos: React.FC = () => {
 
       farmsToDisplayWithAPY = farmsToDisplayWithAPY.sort((farm1, farm2) => {
         if (sortType === 'farm-tvl') {
-          const farm1TotalValue = farm1.totalValue ? Number(farm1.totalValue.times(farm1.strategyRatio)) : 0;
-          const farm2TotalValue = farm2.totalValue ? Number(farm2.totalValue.times(farm2.strategyRatio)) : 0;
+          const farm1TotalValue = farm1.totalValue ? Number(farm1.totalValue.times(farm1.strategyRatio)) : 0
+          const farm2TotalValue = farm2.totalValue ? Number(farm2.totalValue.times(farm2.strategyRatio)) : 0
 
           return farm1TotalValue < farm2TotalValue ? 1 : -1
         }
@@ -188,6 +188,10 @@ const Igloos: React.FC = () => {
   )
 
   const handleSelectProject = (project) => () => {
+    if (project === 'Snowball') {
+      window.open('https://app.snowball.network/snob/', '_blank')
+      return
+    }
     setProject(project)
   }
 
