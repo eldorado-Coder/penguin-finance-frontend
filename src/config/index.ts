@@ -25,3 +25,4 @@ export const APY_TOOLTIP_TEXT =
   '<div>The APY  shown are estimated for your convenience, it is not a guaranteed return rate. These yields can change due to block speed, emission rates adjustments, compounding strategies, among other factors</div>'
 
 export const COINGECKO_API_ENDPOINT = 'https://api.coingecko.com/api'
+export const ASSET_CONTENT_URL = 'https://raw.githubusercontent.com/Penguin-Finance/assets/master'

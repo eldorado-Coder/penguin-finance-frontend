@@ -15,6 +15,7 @@ import {
   MAX_COMPOUND_APY,
   BASE_LYDIA_LIQUIDITY_URL,
   BASE_GONDOLA_LIQUIDITY_POOL_URL,
+  ASSET_CONTENT_URL,
 } from 'config'
 import getLiquidityUrlPathParts from 'utils/getLiquidityUrlPathParts'
 import useCompounderStake from 'hooks/useCompounderStake'
@@ -372,7 +373,6 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
   if (farm.type === 'Penguin' && farm.lpSymbol === 'ETH-AVAX LP') {
     lpTokenPrice = lpTokenPrice.times(8)
   }
-  const farmImage = farm.lpSymbol.split(' ')[0].toLocaleLowerCase()
   const farmTvlValueFormatted = farm.totalValue
     ? `$${Number(farm.totalValue.times(farm.strategyRatio)).toLocaleString(undefined, { maximumFractionDigits: 0 })}`
     : '-'
@@ -390,11 +390,12 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
   }
 
   const renderFarmLogo = () => {
-    let farmLogo = `${process.env.PUBLIC_URL}/images/farms/${farmImage}.svg`
-    if (farm.type === 'Lydia') farmLogo = `${process.env.PUBLIC_URL}/images/compounder-igloos/LydiaLogo.png`
-    if (farm.type === 'Pangolin') farmLogo = `${process.env.PUBLIC_URL}/images/compounder-igloos/PangolinLogo.png`
-    if (farm.type === 'Olive') farmLogo = `${process.env.PUBLIC_URL}/images/compounder-igloos/OliveLogo.png`
-    if (farm.type === 'Gondola') farmLogo = `${process.env.PUBLIC_URL}/images/compounder-igloos/GondolaLogo.png`
+    let farmLogo = ''
+    if (farm.type === 'Penguin') farmLogo = `${ASSET_CONTENT_URL}/smartchain/${lpAddress}/logo.svg`
+    if (farm.type === 'Lydia') farmLogo = `${ASSET_CONTENT_URL}/project/lydia/logo.png`
+    if (farm.type === 'Pangolin') farmLogo = `${ASSET_CONTENT_URL}/project/pangolin/logo.png`
+    if (farm.type === 'Olive') farmLogo = `${ASSET_CONTENT_URL}/project/olive/logo.png`
+    if (farm.type === 'Gondola') farmLogo = `${ASSET_CONTENT_URL}/project/gondola/logo.png`
 
     return <StyledImage mt="12px" type={farm.type} src={farmLogo} alt={farm.tokenSymbol} width={108} height={108} />
   }
