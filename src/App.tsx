@@ -62,6 +62,9 @@ const App: React.FC = () => {
             <Route path="/arena">
               <Arena />
             </Route>
+            <Route path="/launchpad">
+              <Arena />
+            </Route>
             {/* <Route path="/emperor">
               <Emperor />
             </Route> */}
