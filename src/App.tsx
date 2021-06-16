@@ -19,7 +19,7 @@ const Farms = lazy(() => import('./views/Farms'))
 const Arena = lazy(() => import('./views/Arena'))
 const Launchpad = lazy(() => import('./views/Launchpad'))
 const Emperor = lazy(() => import('./views/Emperor'))
-// const CovidEmperor = lazy(() => import('./views/CovidEmperor'))
+const CovidEmperor = lazy(() => import('./views/CovidEmperor'))
 const NotFound = lazy(() => import('./views/NotFound'))
 
 // const Nests = lazy(() => import('./views/Nests'))
@@ -68,13 +68,13 @@ const App: React.FC = () => {
               <Launchpad />
             </Route>
             {/* <Route path="/emperor"> */}
-            <Route path="/emperor">
-              <Emperor />
-            </Route>
-            {/* temporary covid penguin emperor page */}
             {/* <Route path="/emperor">
-              <CovidEmperor />
+              <Emperor />
             </Route> */}
+            {/* temporary covid penguin emperor page */}
+            <Route path="/emperor">
+              <CovidEmperor />
+            </Route>
             {/* Redirect */}
             {/* <Route path="/staking">
               <Redirect to="/pools" />
