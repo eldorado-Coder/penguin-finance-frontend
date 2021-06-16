@@ -2,7 +2,7 @@ import React, { useMemo, useCallback, useState } from 'react'
 import ReactTooltip from 'react-tooltip'
 import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
-import { Flex, Text, Image, Button, useModal } from 'penguinfinance-uikit2'
+import { Flex, Text, Image, Button, useModal, Tag } from 'penguinfinance-uikit2'
 import { Farm } from 'state/types'
 import useI18n from 'hooks/useI18n'
 import { useCompounderFarmFromSymbol, useCompounderFarmUser } from 'state/hooks'
@@ -98,6 +98,8 @@ const StyledImage = styled(Image)<{ type?: string }>`
 `
 
 const IglooTitleWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
   @font-face {
     font-family: 'GothamUltra Font';
     src: url(${process.env.PUBLIC_URL}/fonts/GothamUltra.otf) format('truetype');
@@ -206,6 +208,22 @@ const FarmDetails = styled(Flex)`
     padding-left: 0;
     padding-right: 0;
   }
+`
+
+const getNoFeesTagColor = (index, theme) => {
+  if (index % 2) {
+    return theme.isDark ? '#322C59!important' : '#322C59!important'
+  }
+  return theme.isDark ? '#ce022d !important' : '#ce022d !important'
+}
+
+const NoFeesTag = styled(Tag)<{ index?: number }>`
+  color: ${({ theme }) => (theme.isDark ? '#a893ca!important' : '#ffffff!important')};
+  border-color: ${({ index, theme }) => (theme.isDark ? '#ffffff!important' : getNoFeesTagColor(index, theme))};
+  font-family: 'Poppins' !important;
+  font-size: 14px !important;
+  font-weight: 600;
+  line-height: 1;
 `
 
 const getToolTipBackground = (index, theme) => {
@@ -473,11 +491,16 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
         <IglooLogoContainer>{renderFarmLogo()}</IglooLogoContainer>
         <Flex flexDirection="column" pt="8px" justifyContent="center" alignItems="flex-start">
           <IglooTitleWrapper>
-            <Text bold fontSize="20px">
+            <Text bold fontSize="20px" mr="15px">
               {farm.type === 'Penguin'
                 ? `${farm.lpSymbol.split(' ')[0]} lgloo`
                 : `${farm.type} ${farm.lpSymbol.split(' ')[0]}`}
             </Text>
+            {farm.lpSymbol.split(' ')[0] === "AVAX-PNG" &&
+              <NoFeesTag variant="primary" index={index} outline>
+                0% FEES
+              </NoFeesTag>
+            }
           </IglooTitleWrapper>
           <Flex justifyContent="flex-start" flexWrap="wrap">
             {!account ? <PGUnlockButton index={index} scale="sm" mt="4px" fullWidth /> : renderActionButtons()}
