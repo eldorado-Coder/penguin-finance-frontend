@@ -5,14 +5,15 @@ import styled, { keyframes } from 'styled-components'
 import { Button, IconButton, useModal, AddIcon, Image, Text, Flex, Tag } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import UnlockButton from 'components/UnlockButton'
+import Balance from 'components/Balance'
 import { useERC20, useXPefi } from 'hooks/useContract'
 import { useSousApprove } from 'hooks/useApprove'
 import useI18n from 'hooks/useI18n'
 import { useSousStake } from 'hooks/useStake'
 import { useSousUnstake } from 'hooks/useUnstake'
 import useBlock from 'hooks/useBlock'
-import { getBalanceNumber } from 'utils/formatBalance'
-import Balance from 'components/Balance'
+import { getBalanceNumber, getNumberWithCommas } from 'utils/formatBalance'
+import { getNestApy } from 'utils/apyHelpers'
 import { PoolCategory } from 'config/constants/types'
 import { APY_TOOLTIP_TEXT } from 'config'
 import { Pool } from 'state/types'
@@ -171,8 +172,9 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
   const isCardActive = isFinished && accountHasStakedBalance
   const rewardTokenRatio =
     totalStaked && totalSupply ? new BigNumber(totalStaked).div(new BigNumber(totalSupply)).toJSON() : 1
-
   const convertedLimit = new BigNumber(stakingLimit).multipliedBy(new BigNumber(10).pow(tokenDecimals))
+  const displayedNestApy = (getNestApy() * 100).toFixed(2)
+
   const [onPresentDeposit] = useModal(
     <DepositModal
       max={stakingLimit && stakingTokenBalance.isGreaterThan(convertedLimit) ? convertedLimit : stakingTokenBalance}
@@ -228,7 +230,7 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
         <Flex justifyContent="flex-end">
           <APYTag variant="primary" outline>
             <a href="/" data-for="custom-class" data-tip={APY_TOOLTIP_TEXT}>
-              <span>474.5%</span> APY
+              <span>{getNumberWithCommas(displayedNestApy)}%</span> APY
             </a>
             <CustomToolTip
               id="custom-class"
