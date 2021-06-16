@@ -29,6 +29,7 @@ const CompounderIgloos = lazy(() => import('./views/CompounderIgloos'))
 // const Teams = lazy(() => import('./views/Teams'))
 // const Team = lazy(() => import('./views/Teams/Team'))
 // const Profile = lazy(() => import('./views/Profile'))
+const Audit = lazy(() => import('./views/Audit'))
 
 // This config is required for number formating
 BigNumber.config({
@@ -83,6 +84,9 @@ const App: React.FC = () => {
             {/* <Route path="/collectibles">
               <Collectibles />
             </Route> */}
+            <Route path="/audit">
+              <Audit />
+            </Route>
             {/* 404 */}
             <Route component={NotFound} />
           </Switch>

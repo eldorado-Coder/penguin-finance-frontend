@@ -151,7 +151,7 @@ const EmperorBlock: React.FC = () => {
         <TitleBgWrapper color={!account && getPenguinColor(currentEmperor)} account={account}>
           {account ? 
             <img
-              src={`${process.env.PUBLIC_URL}/images/emperor/banner/EmperorBlitzTitle.svg`}
+              src={`${process.env.PUBLIC_URL}/images/emperor/banner/emperor_blitz_title.svg`}
               width='100%'
               height="120px"
               alt='blitz-title'

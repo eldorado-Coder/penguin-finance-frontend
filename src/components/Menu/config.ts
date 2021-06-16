@@ -66,13 +66,18 @@ export const config: MenuEntry[] = [
       },
       {
         label: 'Docs',
-        href: 'https://penguin-finance.gitbook.io/penguin-finance/',
+        href: 'https://www.penguinfinance.io/b',
       },
       {
         label: 'Blog',
         href: 'https://penguin-finance.medium.com/',
       },
     ],
+  },
+  {
+    label: "Audited by CertiK",
+    icon: "AuditIcon",
+    href: "/audit",
   },
 ]
 

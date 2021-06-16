@@ -176,7 +176,7 @@ const YourScoreBlock: React.FC = () => {
         <TitleBgWrapper color={getPenguinColor(myEmperor)} account={account}>
           {account ? 
             <img
-              src={`${process.env.PUBLIC_URL}/images/emperor/banner/YourPenguinBanner.svg`}
+              src={`${process.env.PUBLIC_URL}/images/emperor/banner/your_penguin_banner.svg`}
               width="100%"
               height="120px"
               alt='blitz-title'
@@ -185,7 +185,7 @@ const YourScoreBlock: React.FC = () => {
           <SvgIcon
             src={
               myStatus === 'registered' || myStatus === 'king'
-                ? `${process.env.PUBLIC_URL}/images/emperor/banner/YourPenguinBanner.svg`
+                ? `${process.env.PUBLIC_URL}/images/emperor/banner/your_penguin_banner.svg`
                 : `${process.env.PUBLIC_URL}/images/emperor/banner/your_score_banner_locked.svg`
             }
             width="100%"

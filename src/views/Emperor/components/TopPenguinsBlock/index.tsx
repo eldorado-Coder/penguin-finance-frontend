@@ -164,7 +164,7 @@ const TopPenguinsBlock: React.FC = () => {
         <TitleBgWrapper color={headerColor} account={account}>
           {account ? 
             <img
-              src={`${process.env.PUBLIC_URL}/images/emperor/banner/TopPenguinsBanner.svg`}
+              src={`${process.env.PUBLIC_URL}/images/emperor/banner/top_penguins_banner.svg`}
               width="100%"
               height="120px"
               alt='blitz-title'

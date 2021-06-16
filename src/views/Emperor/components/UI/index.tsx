@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 import { Text, Button as NormalButton } from 'penguinfinance-uikit2'
-
 import Button from 'components/UnlockButton'
 
 export const CardBlock = styled.div`
