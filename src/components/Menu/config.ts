@@ -75,9 +75,9 @@ export const config: MenuEntry[] = [
     ],
   },
   {
-    label: "Audited by CertiK",
-    icon: "AuditIcon",
-    href: "/audit",
+    label: 'Audited by CertiK',
+    icon: 'AuditIcon',
+    href: '/audit',
   },
 ]
 
