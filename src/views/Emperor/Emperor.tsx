@@ -147,7 +147,6 @@ const Grid = styled.div<{ align: string; marginTop?: { xs?: number; sm?: number;
   width: 100%;
 `
 
-
 const EmperorBgContainer = styled.video`
   object-fit: fill;
   position: absolute;
@@ -229,7 +228,7 @@ const Emperor: React.FC = () => {
     return <>{/* <EmperorEndBgContainer /> */}</>
   }
 
-  const emperorEnded = false
+  const emperorEnded = true
   const emperorDefaultVideo = '/videos/penguin_emperor.mp4'
   // to change the video of emperor winner page background video, please change this video path
   const emperorWinnerVideo = '/videos/PenguinEmperorWinner_Final.mp4'
