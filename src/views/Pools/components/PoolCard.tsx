@@ -228,7 +228,7 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
         <Flex justifyContent="flex-end">
           <APYTag variant="primary" outline>
             <a href="/" data-for="custom-class" data-tip={APY_TOOLTIP_TEXT}>
-              <span>474.5%</span> APY
+              <span>11,054.5%</span> APY
             </a>
             <CustomToolTip
               id="custom-class"
