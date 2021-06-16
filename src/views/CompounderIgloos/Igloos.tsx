@@ -222,10 +222,12 @@ const Igloos: React.FC = () => {
       <BgWrapper>
         <IgloosBgContainer />
       </BgWrapper>
-      <BannerImage
-        src={`${process.env.PUBLIC_URL}/images/compounder-igloos/Compounder${isDark ? 'Night' : 'Day'}.gif`}
-        alt="compounder igloos banner"
-      />
+      <IgloosBannerContainer>
+        <BannerImage
+          src={`${process.env.PUBLIC_URL}/images/compounder-igloos/Compounder${isDark ? 'Night' : 'Day'}.gif`}
+          alt="compounder igloos banner"
+        />
+      </IgloosBannerContainer>
       <CompounderContent>
         <FilterContainer>
           <LabelWrapper>
@@ -278,9 +280,6 @@ const Igloos: React.FC = () => {
 
 const CompounderIglooPage = styled(Page)`
   max-width: 1200px;
-  padding-left: 0;
-  padding-right: 0;
-  padding-top: 0;
 `
 
 // bg
@@ -307,15 +306,21 @@ const BgWrapper = styled.div`
   z-index: -1;
 `
 
+// banner
+const IgloosBannerContainer = styled.div`
+  margin-bottom: 24px;
+
+  @media (min-width: 640px) {
+    margin-bottom: 64px;
+  }
+`
 const BannerImage = styled.img`
   z-index: -1;
   width: 100%;
 `
 
 // content
-const IgloosContentContainer = styled.div`
-  position: relative;
-`
+const CompounderContent = styled.div``
 
 const FilterContainer = styled.div`
   display: flex;
@@ -343,14 +348,6 @@ const FilterWrapper = styled(LabelWrapper)`
   }
 `
 
-const CompounderContent = styled.div`
-  padding: 0 16px;
-
-  ${({ theme }) => theme.mediaQueries.sm} {
-    padding: 0 40px;
-  }
-`
-
 const ProjectLabel = styled(Text)<{ active: boolean }>`
   cursor: pointer;
   margin-left: 1rem;
@@ -369,6 +366,10 @@ const ProjectFiltersWrapper = styled(Flex)`
   @media (min-width: 1200px) {
     display: flex;
   }
+`
+
+const IgloosContentContainer = styled.div`
+  position: relative;
 `
 
 export default Igloos
