@@ -135,6 +135,7 @@ export const useCompounderFarmUser = (lpSymbol: string, type: string) => {
     allowance: farm.userData ? new BigNumber(farm.userData.allowance) : new BigNumber(0),
     tokenBalance: farm.userData ? new BigNumber(farm.userData.tokenBalance) : new BigNumber(0),
     stakedBalance: farm.userData ? new BigNumber(farm.userData.stakedBalance) : new BigNumber(0),
+    stakedReceiptBalance: farm.userData ? new BigNumber(farm.userData.stakedReceiptBalance) : new BigNumber(0),
     earnings: farm.userData ? new BigNumber(farm.userData.earnings) : new BigNumber(0),
     pendingXPefi: farm.userData ? new BigNumber(farm.userData.pendingXPefi) : new BigNumber(0),
   }

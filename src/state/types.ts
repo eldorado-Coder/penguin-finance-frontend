@@ -23,6 +23,7 @@ export interface Farm extends FarmConfig {
     allowance: BigNumber
     tokenBalance: BigNumber
     stakedBalance: BigNumber
+    stakedReceiptBalance?: BigNumber
     earnings: BigNumber
     pendingXPefi: BigNumber
   }

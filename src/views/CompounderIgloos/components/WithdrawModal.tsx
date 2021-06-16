@@ -5,16 +5,16 @@ import styled from 'styled-components'
 import ModalActions from 'components/compounder/ModalActions'
 import ModalInput from 'components/compounder/ModalInput'
 import useI18n from 'hooks/useI18n'
+import { useCompounderFarmUser } from 'state/hooks'
 import { getFullDisplayBalance } from 'utils/formatBalance'
+import { Farm } from 'state/types'
 
 interface WithdrawModalProps {
   max: BigNumber
+  tokenName?: string
+  farm: Farm
   onConfirm: (amount: string) => void
   onDismiss?: () => void
-  tokenName?: string
-  withdrawalFee?: string
-  stakedBalance?: BigNumber
-  farmType?: string
 }
 
 // header
@@ -74,18 +74,13 @@ const ModalHelper = styled.div`
   font-weight: 400;
 `
 
-const WithdrawModal: React.FC<WithdrawModalProps> = ({
-  onConfirm,
-  onDismiss,
-  max,
-  tokenName = '',
-  withdrawalFee = '',
-  stakedBalance,
-  farmType,
-}) => {
+const WithdrawModal: React.FC<WithdrawModalProps> = ({ max, tokenName = '', farm, onConfirm, onDismiss }) => {
   const [val, setVal] = useState('')
   const [pendingTx, setPendingTx] = useState(false)
   const TranslateString = useI18n()
+
+  const { stakedBalance } = useCompounderFarmUser(farm.lpSymbol, farm.type)
+
   const fullBalance = useMemo(() => {
     return getFullDisplayBalance(max)
   }, [max])
@@ -149,10 +144,10 @@ const WithdrawModal: React.FC<WithdrawModalProps> = ({
           </StyledButton>
         </ModalActions>
       </ModalContent>
-      {farmType === 'Penguin' && (
+      {farm.type === 'Penguin' && (
         <ModalFooter>
           <ModalHelper>
-            {`Note: There is a ${withdrawalFee}% withdrawal fee on this farm. When auto-compounding Igloos, 50% of rewards are sent to nest.`}
+            {`Note: There is a ${farm.withdrawalFee}% withdrawal fee on this farm. When auto-compounding Igloos, 50% of rewards are sent to nest.`}
           </ModalHelper>
         </ModalFooter>
       )}

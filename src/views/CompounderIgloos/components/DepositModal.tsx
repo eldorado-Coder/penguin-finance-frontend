@@ -13,8 +13,7 @@ interface DepositModalProps {
   max: BigNumber
   tokenName?: string
   addLiquidityUrl?: string
-  withdrawalFee?: string,
-  farm: Farm,
+  farm: Farm
   onConfirm: (amount: string) => void
   onDismiss?: () => void
   onApprove: () => void
@@ -87,17 +86,16 @@ const DepositModal: React.FC<DepositModalProps> = ({
   max,
   tokenName = '',
   addLiquidityUrl,
-  withdrawalFee = '',
   farm,
   onConfirm,
   onDismiss,
-  onApprove
+  onApprove,
 }) => {
   const [val, setVal] = useState('')
   const [pendingTx, setPendingTx] = useState(false)
   const TranslateString = useI18n()
-  const [requestedApproval, setRequestedApproval] = useState(false);
-  const { allowance, stakedBalance } = useCompounderFarmUser(farm.lpSymbol, farm.type);
+  const [requestedApproval, setRequestedApproval] = useState(false)
+  const { allowance, stakedBalance } = useCompounderFarmUser(farm.lpSymbol, farm.type)
   const isApproved = allowance && allowance.isGreaterThan(0)
 
   const fullBalance = useMemo(() => {
@@ -105,14 +103,14 @@ const DepositModal: React.FC<DepositModalProps> = ({
   }, [max])
 
   const handleApprove = async () => {
-    setRequestedApproval(true);
+    setRequestedApproval(true)
     try {
-      await onApprove();
-      setRequestedApproval(false);
+      await onApprove()
+      setRequestedApproval(false)
     } catch (error) {
-      setRequestedApproval(false);
+      setRequestedApproval(false)
     }
-  }; 
+  }
 
   const handleChange = useCallback(
     (e: React.FormEvent<HTMLInputElement>) => {
@@ -156,7 +154,7 @@ const DepositModal: React.FC<DepositModalProps> = ({
           <StyledButton variant="primary" onClick={onDismiss} scale="md">
             {TranslateString(462, 'Cancel')}
           </StyledButton>
-          {isApproved ? 
+          {isApproved ? (
             <StyledButton
               scale="md"
               disabled={pendingTx || fullBalance === '0' || val === '0'}
@@ -169,15 +167,13 @@ const DepositModal: React.FC<DepositModalProps> = ({
             >
               {pendingTx ? TranslateString(488, 'Pending Compounding') : TranslateString(464, 'Compound')}
             </StyledButton>
-            : 
-            <StyledButton
-              scale="md"
-              disabled={requestedApproval}
-              onClick={handleApprove}
-            >
-              {requestedApproval ? TranslateString(488, 'Transaction Pending') : TranslateString(464, 'Approve Contract')}
+          ) : (
+            <StyledButton scale="md" disabled={requestedApproval} onClick={handleApprove}>
+              {requestedApproval
+                ? TranslateString(488, 'Transaction Pending')
+                : TranslateString(464, 'Approve Contract')}
             </StyledButton>
-          }
+          )}
         </ModalActions>
         <StyledLinkExternal href={addLiquidityUrl} style={{ alignSelf: 'center' }}>
           {TranslateString(999, 'Get')} {tokenName}
@@ -186,7 +182,7 @@ const DepositModal: React.FC<DepositModalProps> = ({
       {farm.type === 'Penguin' && (
         <ModalFooter>
           <ModalHelper>
-            {`Note: There is a ${withdrawalFee}% withdrawal fee on this farm. When auto-compounding Igloos, 50% of rewards are sent to your Nest (xPEFI).`}
+            {`Note: There is a ${farm.withdrawalFee}% withdrawal fee on this farm. When auto-compounding Igloos, 50% of rewards are sent to your Nest (xPEFI).`}
           </ModalHelper>
         </ModalFooter>
       )}

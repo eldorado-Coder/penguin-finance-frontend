@@ -42,7 +42,8 @@ export const fetchCompounderFarmUserTokenBalances = async (account: string) => {
 }
 
 export const fetchCompounderFarmUserStakedBalances = async (account: string) => {
-  const balanceResults = []
+  // get deposited Lp balances
+  const depositedLpBalanceResults = []
   for (let i = 0; i < farmsConfig.length; i++) {
     const call = [
       {
@@ -54,36 +55,36 @@ export const fetchCompounderFarmUserStakedBalances = async (account: string) => 
 
     const strategyAbi = getStrategyAbi(farmsConfig[i].lpSymbol, farmsConfig[i].type)
     const farmRes = multicall(strategyAbi, call)
-    balanceResults.push(farmRes)
+    depositedLpBalanceResults.push(farmRes)
   }
 
-  const rawBalances = await Promise.all(balanceResults)
-  const parsedBalances = rawBalances.map((balance) => {
+  const rawDepositedLpBalances = await Promise.all(depositedLpBalanceResults)
+  const depositedLpBalances = rawDepositedLpBalances.map((balance) => {
     return new BigNumber(balance[0][0]._hex).toJSON()
   })
 
-  // getDepositTokensForShares
-  const depositTokensResults = []
-  for (let i = 0; i < parsedBalances.length; i++) {
+  // get receipt Lp balances
+  const receiptLpBalanceResults = []
+  for (let i = 0; i < depositedLpBalances.length; i++) {
     const call = [
       {
         address: getStrategyAddress(farmsConfig[i].lpSymbol, farmsConfig[i].type),
         name: 'getDepositTokensForShares',
-        params: [parsedBalances[i]],
+        params: [depositedLpBalances[i]],
       },
     ]
 
     const strategyAbi = getStrategyAbi(farmsConfig[i].lpSymbol, farmsConfig[i].type)
     const res = multicall(strategyAbi, call)
-    depositTokensResults.push(res)
+    receiptLpBalanceResults.push(res)
   }
 
-  const rawStakedBalances = await Promise.all(depositTokensResults)
-  const parsedStakedBalances = rawStakedBalances.map((stakedBalance) => {
-    return new BigNumber(stakedBalance[0][0]._hex).toJSON()
+  const rawReceiptLpBalances = await Promise.all(receiptLpBalanceResults)
+  const receiptLpBalances = rawReceiptLpBalances.map((receiptBalance) => {
+    return new BigNumber(receiptBalance[0][0]._hex).toJSON()
   })
 
-  return parsedStakedBalances
+  return { depositedLpBalances, receiptLpBalances }
 }
 
 export const fetchCompounderFarmUserEarnings = async (account: string) => {
