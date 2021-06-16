@@ -79,15 +79,15 @@ const WithdrawModal: React.FC<WithdrawModalProps> = ({ max, tokenName = '', farm
   const [pendingTx, setPendingTx] = useState(false)
   const TranslateString = useI18n()
 
-  const { stakedBalance } = useCompounderFarmUser(farm.lpSymbol, farm.type)
+  const { stakedReceiptBalance } = useCompounderFarmUser(farm.lpSymbol, farm.type)
 
   const fullBalance = useMemo(() => {
     return getFullDisplayBalance(max)
   }, [max])
 
   const _stakedBalance = useMemo(() => {
-    return getFullDisplayBalance(stakedBalance)
-  }, [stakedBalance])
+    return getFullDisplayBalance(stakedReceiptBalance)
+  }, [stakedReceiptBalance])
 
   const handleChange = useCallback(
     (e: React.FormEvent<HTMLInputElement>) => {
@@ -97,11 +97,13 @@ const WithdrawModal: React.FC<WithdrawModalProps> = ({ max, tokenName = '', farm
   )
 
   const handleSelectMax = useCallback(() => {
-    setVal(_stakedBalance)
+    setVal(String(Math.round(Number(_stakedBalance) * 10000) / 10000))
   }, [_stakedBalance, setVal])
 
   const displayBalance = !fullBalance ? '0' : parseFloat(fullBalance).toFixed(4)
-  const displayStakedBalance = !stakedBalance ? '0' : parseFloat(getFullDisplayBalance(stakedBalance)).toFixed(4)
+  const displayStakedBalance = !stakedReceiptBalance
+    ? '0'
+    : parseFloat(getFullDisplayBalance(stakedReceiptBalance)).toFixed(4)
 
   return (
     <Modal title="" hideCloseButton bodyPadding="0px" onDismiss={onDismiss}>

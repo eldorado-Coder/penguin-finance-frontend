@@ -95,7 +95,7 @@ const DepositModal: React.FC<DepositModalProps> = ({
   const [pendingTx, setPendingTx] = useState(false)
   const TranslateString = useI18n()
   const [requestedApproval, setRequestedApproval] = useState(false)
-  const { allowance, stakedBalance } = useCompounderFarmUser(farm.lpSymbol, farm.type)
+  const { allowance, stakedReceiptBalance } = useCompounderFarmUser(farm.lpSymbol, farm.type)
   const isApproved = allowance && allowance.isGreaterThan(0)
 
   const fullBalance = useMemo(() => {
@@ -124,7 +124,9 @@ const DepositModal: React.FC<DepositModalProps> = ({
   }, [fullBalance, setVal])
 
   const displayBalance = !fullBalance ? '0' : parseFloat(fullBalance).toFixed(4)
-  const displayStakedBalance = !stakedBalance ? '0' : parseFloat(getFullDisplayBalance(stakedBalance)).toFixed(4)
+  const displayStakedBalance = !stakedReceiptBalance
+    ? '0'
+    : parseFloat(getFullDisplayBalance(stakedReceiptBalance)).toFixed(4)
 
   return (
     <Modal title="" hideCloseButton bodyPadding="0px" onDismiss={onDismiss}>
