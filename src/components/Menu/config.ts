@@ -36,11 +36,11 @@ export const config: MenuEntry[] = [
     icon: 'BattleIcon',
     href: '/arena',
   },
-  // {
-  //   label: 'Launchpad',
-  //   icon: 'LaunchpadIcon',
-  //   href: '/launchpad',
-  // },
+  {
+    label: 'Launchpad',
+    icon: 'LaunchpadIcon',
+    href: '/launchpad',
+  },
   // {
   //   label: 'Penguin lottery',
   //   icon: 'NftIcon',
@@ -75,9 +75,9 @@ export const config: MenuEntry[] = [
     ],
   },
   {
-    label: "Audited by CertiK",
-    icon: "AuditIcon",
-    href: "/audit",
+    label: 'Audited by CertiK',
+    icon: 'AuditIcon',
+    href: '/audit',
   },
 ]
 

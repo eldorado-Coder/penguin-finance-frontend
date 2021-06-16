@@ -22,8 +22,6 @@ const ArenaBgContainer = styled.video`
   right: 0px;
   left: 0px;
   z-index: 1;
-  /* display: block;
-  margin: auto; */
 `
 
 export default Arena
