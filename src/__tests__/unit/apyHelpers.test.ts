@@ -1,4 +1,4 @@
-import { calculateCakeEarnedPerThousandDollars, apyModalRoi } from 'utils/compoundApyHelpers'
+import { calculateCakeEarnedPerThousandDollars, apyModalRoi } from 'utils/apyHelpers'
 
 it.each([
   [{ numberOfDays: 1, farmApy: 365, pefiPrice: 1 }, 10],
