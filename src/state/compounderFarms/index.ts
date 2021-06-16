@@ -7,7 +7,7 @@ import {
   fetchCompounderFarmUserAllowances,
   fetchCompounderFarmUserTokenBalances,
   fetchCompounderFarmUserStakedBalances,
-  fetchCompounderPendingXPefiBalances
+  fetchCompounderPendingXPefiBalances,
 } from './fetchCompounderFarmUser'
 import { CompounderFarmsState, Farm } from '../types'
 
@@ -66,7 +66,10 @@ export const fetchCompounderFarmsPublicDataAsync = () => async (dispatch) => {
 export const fetchCompounderFarmUserDataAsync = (account) => async (dispatch) => {
   const userFarmAllowances = await fetchCompounderFarmUserAllowances(account)
   const userFarmTokenBalances = await fetchCompounderFarmUserTokenBalances(account)
-  const userStakedBalances = await fetchCompounderFarmUserStakedBalances(account)
+  const {
+    depositedLpBalances: userStakedBalances,
+    receiptLpBalances: userStakedReceiptBalances,
+  } = await fetchCompounderFarmUserStakedBalances(account)
   const userFarmEarnings = await fetchCompounderFarmUserEarnings(account)
   const userPendingXPefiBalances = await fetchCompounderPendingXPefiBalances(account)
 
@@ -76,8 +79,9 @@ export const fetchCompounderFarmUserDataAsync = (account) => async (dispatch) =>
       allowance: userFarmAllowances[index],
       tokenBalance: userFarmTokenBalances[index],
       stakedBalance: userStakedBalances[index],
+      stakedReceiptBalance: userStakedReceiptBalances[index],
       earnings: userFarmEarnings[index],
-      pendingXPefi: userPendingXPefiBalances[index]
+      pendingXPefi: userPendingXPefiBalances[index],
     }
   })
 

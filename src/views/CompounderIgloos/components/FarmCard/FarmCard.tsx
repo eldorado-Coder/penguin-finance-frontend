@@ -261,7 +261,10 @@ interface FarmCardProps {
 const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
   const TranslateString = useI18n()
   const { lpAddresses, type } = useCompounderFarmFromSymbol(farm.lpSymbol, farm.type)
-  const { allowance, tokenBalance, stakedBalance, pendingXPefi } = useCompounderFarmUser(farm.lpSymbol, type)
+  const { allowance, tokenBalance, stakedBalance, stakedReceiptBalance, pendingXPefi } = useCompounderFarmUser(
+    farm.lpSymbol,
+    type,
+  )
   const lpName = farm.lpSymbol.toUpperCase()
   const web3 = useWeb3()
   const lpAddress = getAddress(lpAddresses)
@@ -269,7 +272,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
   const [requestedApproval, setRequestedApproval] = useState(false)
   const [requestedAction, setRequestedAction] = useState(false)
 
-  const rawStakedBalance = getBalanceNumber(stakedBalance)
+  const rawStakedReceiptBalance = getBalanceNumber(stakedReceiptBalance)
   const pendingXPefiValue = getBalanceNumber(pendingXPefi)
   const { quoteTokenAddresses, quoteTokenSymbol, tokenAddresses } = farm
 
@@ -353,20 +356,12 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
       max={tokenBalance}
       addLiquidityUrl={getLiquidityUrl()}
       farm={farm}
-      withdrawalFee={farm.withdrawalFee}
       onConfirm={handleStake}
       onApprove={handleApprove}
     />,
   )
   const [onPresentWithdraw] = useModal(
-    <WithdrawModal
-      tokenName={lpName}
-      max={tokenBalance}
-      stakedBalance={stakedBalance}
-      withdrawalFee={farm.withdrawalFee}
-      farmType={farm.type}
-      onConfirm={handleUnstake}
-    />,
+    <WithdrawModal tokenName={lpName} max={tokenBalance} farm={farm} onConfirm={handleUnstake} />,
   )
 
   let lpTokenPrice = new BigNumber(farm.totalValue).div(getBalanceNumber(farm.totalSupply))
@@ -377,7 +372,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
     ? `$${Number(farm.totalValue.times(farm.strategyRatio)).toLocaleString(undefined, { maximumFractionDigits: 0 })}`
     : '-'
 
-  const stakedValueFormatted = `$${Number(rawStakedBalance * lpTokenPrice.toNumber()).toLocaleString(undefined, {
+  const stakedValueFormatted = `$${Number(rawStakedReceiptBalance * lpTokenPrice.toNumber()).toLocaleString(undefined, {
     maximumFractionDigits: 2,
   })}`
   const farmAPY = farm.apy && farm.apy.times(new BigNumber(100)).toNumber().toFixed(2)
@@ -440,9 +435,9 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
   }
 
   const getYourTVLTooltip = () => {
-    const userTokenBalanceInLp = rawStakedBalance * (farm.tokenBalanceInLp / getBalanceNumber(farm.totalSupply))
+    const userTokenBalanceInLp = rawStakedReceiptBalance * (farm.tokenBalanceInLp / getBalanceNumber(farm.totalSupply))
     const userQuoteTokenBalanceInLp =
-      rawStakedBalance * (farm.quoteTokenBalanceInLp / getBalanceNumber(farm.totalSupply))
+      rawStakedReceiptBalance * (farm.quoteTokenBalanceInLp / getBalanceNumber(farm.totalSupply))
 
     return `
               <h3 style="margin-bottom: 5px;">Underlying Assets</h3>
