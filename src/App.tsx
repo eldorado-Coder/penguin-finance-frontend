@@ -18,7 +18,7 @@ const Home = lazy(() => import('./views/Home'))
 const Farms = lazy(() => import('./views/Farms'))
 const Arena = lazy(() => import('./views/Arena'))
 const Emperor = lazy(() => import('./views/Emperor'))
-const CovidEmperor = lazy(() => import('./views/CovidEmperor'))
+// const CovidEmperor = lazy(() => import('./views/CovidEmperor'))
 const NotFound = lazy(() => import('./views/NotFound'))
 
 // const Nests = lazy(() => import('./views/Nests'))
@@ -29,6 +29,7 @@ const CompounderIgloos = lazy(() => import('./views/CompounderIgloos'))
 // const Teams = lazy(() => import('./views/Teams'))
 // const Team = lazy(() => import('./views/Teams/Team'))
 // const Profile = lazy(() => import('./views/Profile'))
+const Audit = lazy(() => import('./views/Audit'))
 
 // This config is required for number formating
 BigNumber.config({
@@ -65,13 +66,14 @@ const App: React.FC = () => {
             <Route path="/launchpad">
               <Arena />
             </Route>
-            {/* <Route path="/emperor">
-              <Emperor />
-            </Route> */}
-            {/* temporary covid penguin emperor page */}
+            {/* <Route path="/emperor"> */}
             <Route path="/emperor">
-              <CovidEmperor />
+              <Emperor />
             </Route>
+            {/* temporary covid penguin emperor page */}
+            {/* <Route path="/emperor">
+              <CovidEmperor />
+            </Route> */}
             {/* Redirect */}
             {/* <Route path="/staking">
               <Redirect to="/pools" />
@@ -82,6 +84,9 @@ const App: React.FC = () => {
             {/* <Route path="/collectibles">
               <Collectibles />
             </Route> */}
+            <Route path="/audit">
+              <Audit />
+            </Route>
             {/* 404 */}
             <Route component={NotFound} />
           </Switch>

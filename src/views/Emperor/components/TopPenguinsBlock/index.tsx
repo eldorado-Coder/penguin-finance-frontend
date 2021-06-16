@@ -2,29 +2,18 @@ import React from 'react'
 import styled from 'styled-components'
 import { Text } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
-import UnlockButton from 'components/UnlockButton'
 import { useEmperor } from 'state/hooks'
 import { getShortenNickName, formatTime, badWordsFilter } from 'utils/address'
 import SvgIcon from 'components/SvgIcon'
 import { getPenguinColor } from '../utils'
+import { UnlockButton as Button, CardBlockHeader, CardBlock } from '../UI'
 
-const CardBlock = styled.div``
-
-const CardBlockHeader = styled.div`
-  position: relative;
-  display: flex;
-  justify-content: center;
-  z-index: 1;
-  padding: 16px;
-  margin-bottom: -120px;
-  margin-top: -80px;
-  min-height: 314px;
-`
-
-const TitleBgWrapper = styled.div<{ color: string }>`
+const TitleBgWrapper = styled.div<{ color: string, account: string }>`
   z-index: -1;
   width: 100%;
   text-align: center;
+  position: absolute;
+  margin-top: ${props => props.account ? 0 : '-30%'};
 
   svg {
     #Banner-Avatar {
@@ -33,17 +22,57 @@ const TitleBgWrapper = styled.div<{ color: string }>`
       }
     }
   }
+
+  transform: ${props => props.account && 'scale(1.2)'};
+  @media (min-width: 640px) {
+    transform: ${props => props.account && 'scale(1.4)'};
+    margin-top: ${props => props.account ? '10%' : '-30%'};
+  }
+  @media (min-width: 768px) {
+    margin-top: ${props => props.account ? '10%' : '-20%'};
+  }
+  @media (min-width: 1200px) and (max-height: 800px) {
+    transform: ${props => props.account && 'scale(1.4)'};
+  }
 `
 
-const CardBlockContent = styled.div`
+const CardBlockContent = styled.div<{ account: string }>`
   background: ${(props) => props.theme.card.background};
-  border-radius: 16px;
-  padding: 16px;
-  padding-top: 24px;
-  padding-bottom: 8px;
+  border-radius: 8px;
   position: relative;
-  margin-top: -38px;
   text-align: center;
+  margin-top: 20%;
+  min-width: 120px;
+  padding: 44px 8px 8px;
+  padding-top: ${props => !props.account && '32px'};
+  @media (min-width: 640px) {
+    width: 100%;
+    margin-top: 28%;
+    padding: 64px 16px 12px;
+    padding-top: ${props => !props.account && '40px'};
+  }
+  @media (min-width: 768px) {
+    width: 100%;
+    padding: 56px 20px 16px;
+    padding-top: ${props => !props.account && '40px'};
+    margin-top: 32%;
+  }
+  @media (min-width: 1200px) {
+    width: 100%;
+    border-radius: 16px;
+    padding: 52px 24px 16px;
+    padding-top: ${props => !props.account && '48px'};
+    margin-top: 32%;
+  }
+  @media (min-width: 1450px) {
+    min-width: 240px;
+    padding: 44px 24px 16px;
+    padding-top: ${props => !props.account && '40px'};
+    margin-top: 36%;
+  }
+  @media (min-width: 1200px) and (max-height: 800px) {
+    padding-top: 36px;
+  }
 `
 
 const WalletContainer = styled.div`
@@ -113,6 +142,12 @@ const AvatarField = styled.div<{ color: string }>`
   }
 `
 
+const UnlockButton = styled(Button)`
+  @media (min-width: 1200px) {
+    margin-top: -8px;
+  }
+`
+
 const TopPenguinsBlock: React.FC = () => {
   const { account } = useWeb3React()
   const { currentEmperor, topEmperors } = useEmperor()
@@ -126,19 +161,23 @@ const TopPenguinsBlock: React.FC = () => {
   return (
     <CardBlock>
       <CardBlockHeader>
-        <TitleBgWrapper color={headerColor}>
-          <SvgIcon
-            src={
-              account
-                ? `${process.env.PUBLIC_URL}/images/emperor/banner/top_penguins_banner_unlocked.svg`
-                : `${process.env.PUBLIC_URL}/images/emperor/banner/top_penguins_banner_locked.svg`
-            }
-            width="100%"
-            height="20px"
-          />
+        <TitleBgWrapper color={headerColor} account={account}>
+          {account ? 
+            <img
+              src={`${process.env.PUBLIC_URL}/images/emperor/banner/top_penguins_banner.svg`}
+              width="100%"
+              height="120px"
+              alt='blitz-title'
+            />
+            : <SvgIcon
+              src={`${process.env.PUBLIC_URL}/images/emperor/banner/top_penguins_banner_locked.svg`}
+              width="100%"
+              height="20px"
+            />
+          }
         </TitleBgWrapper>
       </CardBlockHeader>
-      <CardBlockContent>
+      <CardBlockContent account={account}>
         {!account && (
           <WalletContainer>
             <UnlockButton />
