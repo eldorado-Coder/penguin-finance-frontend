@@ -17,11 +17,13 @@ export interface Farm extends FarmConfig {
   quoteTokenAmount?: BigNumber
   lpTotalInQuoteToken?: BigNumber
   tokenPriceVsQuote?: BigNumber
+  strategyRatio?: number
   poolWeight?: BigNumber
   userData?: {
     allowance: BigNumber
     tokenBalance: BigNumber
     stakedBalance: BigNumber
+    stakedReceiptBalance?: BigNumber
     earnings: BigNumber
     pendingXPefi: BigNumber
   }

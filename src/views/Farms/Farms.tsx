@@ -158,9 +158,12 @@ const BgWrapper = styled.div`
 
 // banner
 const IgloosBannerContainer = styled.div`
-  /* position: absolute; */
-`
+  margin-bottom: 24px;
 
+  @media (min-width: 640px) {
+    margin-bottom: 64px;
+  }
+`
 const BannerImage = styled.img`
   z-index: -1;
 `

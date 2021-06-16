@@ -5,17 +5,18 @@ import styled from 'styled-components'
 import ModalActions from 'components/compounder/ModalActions'
 import ModalInput from 'components/compounder/ModalInput'
 import useI18n from 'hooks/useI18n'
+import { useCompounderFarmUser } from 'state/hooks'
 import { getFullDisplayBalance } from 'utils/formatBalance'
+import { Farm } from 'state/types'
 
 interface DepositModalProps {
   max: BigNumber
-  onConfirm: (amount: string) => void
-  onDismiss?: () => void
   tokenName?: string
   addLiquidityUrl?: string
-  withdrawalFee?: string
-  stakedBalance?: BigNumber
-  farmType?: string
+  farm: Farm
+  onConfirm: (amount: string) => void
+  onDismiss?: () => void
+  onApprove: () => void
 }
 
 // header
@@ -83,20 +84,33 @@ const ModalHelper = styled.div`
 
 const DepositModal: React.FC<DepositModalProps> = ({
   max,
-  onConfirm,
-  onDismiss,
   tokenName = '',
   addLiquidityUrl,
-  withdrawalFee = '',
-  stakedBalance,
-  farmType,
+  farm,
+  onConfirm,
+  onDismiss,
+  onApprove,
 }) => {
   const [val, setVal] = useState('')
   const [pendingTx, setPendingTx] = useState(false)
   const TranslateString = useI18n()
+  const [requestedApproval, setRequestedApproval] = useState(false)
+  const { allowance, stakedBalance } = useCompounderFarmUser(farm.lpSymbol, farm.type)
+  const isApproved = allowance && allowance.isGreaterThan(0)
+
   const fullBalance = useMemo(() => {
     return getFullDisplayBalance(max)
   }, [max])
+
+  const handleApprove = async () => {
+    setRequestedApproval(true)
+    try {
+      await onApprove()
+      setRequestedApproval(false)
+    } catch (error) {
+      setRequestedApproval(false)
+    }
+  }
 
   const handleChange = useCallback(
     (e: React.FormEvent<HTMLInputElement>) => {
@@ -140,27 +154,35 @@ const DepositModal: React.FC<DepositModalProps> = ({
           <StyledButton variant="primary" onClick={onDismiss} scale="md">
             {TranslateString(462, 'Cancel')}
           </StyledButton>
-          <StyledButton
-            scale="md"
-            disabled={pendingTx || fullBalance === '0' || val === '0'}
-            onClick={async () => {
-              setPendingTx(true)
-              await onConfirm(val)
-              setPendingTx(false)
-              onDismiss()
-            }}
-          >
-            {pendingTx ? TranslateString(488, 'Pending Compounding') : TranslateString(464, 'Compound')}
-          </StyledButton>
+          {isApproved ? (
+            <StyledButton
+              scale="md"
+              disabled={pendingTx || fullBalance === '0' || val === '0'}
+              onClick={async () => {
+                setPendingTx(true)
+                await onConfirm(val)
+                setPendingTx(false)
+                onDismiss()
+              }}
+            >
+              {pendingTx ? TranslateString(488, 'Pending Compounding') : TranslateString(464, 'Compound')}
+            </StyledButton>
+          ) : (
+            <StyledButton scale="md" disabled={requestedApproval} onClick={handleApprove}>
+              {requestedApproval
+                ? TranslateString(488, 'Transaction Pending')
+                : TranslateString(464, 'Approve Contract')}
+            </StyledButton>
+          )}
         </ModalActions>
         <StyledLinkExternal href={addLiquidityUrl} style={{ alignSelf: 'center' }}>
           {TranslateString(999, 'Get')} {tokenName}
         </StyledLinkExternal>
       </ModalContent>
-      {farmType === 'Penguin' && (
+      {farm.type === 'Penguin' && (
         <ModalFooter>
           <ModalHelper>
-            {`Note: There is a ${withdrawalFee}% withdrawal fee on this farm. When auto-compounding Igloos, 50% of rewards are sent to your Nest (xPEFI).`}
+            {`Note: There is a ${farm.withdrawalFee}% withdrawal fee on this farm. When auto-compounding Igloos, 50% of rewards are sent to your Nest (xPEFI).`}
           </ModalHelper>
         </ModalFooter>
       )}

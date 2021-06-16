@@ -15,6 +15,7 @@ import {
   MAX_COMPOUND_APY,
   BASE_LYDIA_LIQUIDITY_URL,
   BASE_GONDOLA_LIQUIDITY_POOL_URL,
+  ASSET_CONTENT_URL,
 } from 'config'
 import getLiquidityUrlPathParts from 'utils/getLiquidityUrlPathParts'
 import useCompounderStake from 'hooks/useCompounderStake'
@@ -30,9 +31,9 @@ export interface FarmWithStakedValue extends Farm {
   apy?: BigNumber
   totalValue?: BigNumber
   totalSupply?: BigNumber
-  strategyRatio?: BigNumber
   tokenBalanceInLp?: number
   quoteTokenBalanceInLp?: number
+  lpTokenBalanceStrategy?: number
 }
 
 const getCardBackground = (index, theme) => {
@@ -77,12 +78,6 @@ const IglooLogoContainer = styled.div`
     width: 64px;
     height: 64px;
 
-    > img {
-      width: 80%;
-      height: 80%;
-      margin: 10%;
-    }
-
     @media (min-width: 768px) {
       width: 96px;
       height: 96px;
@@ -93,10 +88,20 @@ const IglooLogoContainer = styled.div`
     }
   }
 `
+
+const StyledImage = styled(Image)<{ type?: string }>`
+  img {
+    width: ${({ type }) => (type === 'Penguin' ? '90%' : '80%')};
+    height: ${({ type }) => (type === 'Penguin' ? '90%' : '80%')};
+    margin: ${({ type }) => (type === 'Penguin' ? '5%' : '10%')};
+  }
+`
+
 const IglooTitleWrapper = styled.div`
   @font-face {
     font-family: 'GothamUltra Font';
     src: url(${process.env.PUBLIC_URL}/fonts/GothamUltra.otf) format('truetype');
+    font-display: swap;
   }
 
   > div {
@@ -256,7 +261,10 @@ interface FarmCardProps {
 const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
   const TranslateString = useI18n()
   const { lpAddresses, type } = useCompounderFarmFromSymbol(farm.lpSymbol, farm.type)
-  const { allowance, tokenBalance, stakedBalance, pendingXPefi } = useCompounderFarmUser(farm.lpSymbol, type)
+  const { allowance, tokenBalance, stakedBalance, stakedReceiptBalance, pendingXPefi } = useCompounderFarmUser(
+    farm.lpSymbol,
+    type,
+  )
   const lpName = farm.lpSymbol.toUpperCase()
   const web3 = useWeb3()
   const lpAddress = getAddress(lpAddresses)
@@ -264,7 +272,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
   const [requestedApproval, setRequestedApproval] = useState(false)
   const [requestedAction, setRequestedAction] = useState(false)
 
-  const rawStakedBalance = getBalanceNumber(stakedBalance)
+  const rawStakedReceiptBalance = getBalanceNumber(stakedReceiptBalance)
   const pendingXPefiValue = getBalanceNumber(pendingXPefi)
   const { quoteTokenAddresses, quoteTokenSymbol, tokenAddresses } = farm
 
@@ -347,33 +355,24 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
       tokenName={lpName}
       max={tokenBalance}
       addLiquidityUrl={getLiquidityUrl()}
-      stakedBalance={stakedBalance}
-      withdrawalFee={farm.withdrawalFee}
-      farmType={farm.type}
+      farm={farm}
       onConfirm={handleStake}
+      onApprove={handleApprove}
     />,
   )
   const [onPresentWithdraw] = useModal(
-    <WithdrawModal
-      tokenName={lpName}
-      max={tokenBalance}
-      stakedBalance={stakedBalance}
-      withdrawalFee={farm.withdrawalFee}
-      farmType={farm.type}
-      onConfirm={handleUnstake}
-    />,
+    <WithdrawModal tokenName={lpName} max={tokenBalance} farm={farm} onConfirm={handleUnstake} />,
   )
 
   let lpTokenPrice = new BigNumber(farm.totalValue).div(getBalanceNumber(farm.totalSupply))
   if (farm.type === 'Penguin' && farm.lpSymbol === 'ETH-AVAX LP') {
     lpTokenPrice = lpTokenPrice.times(8)
   }
-  const farmImage = farm.lpSymbol.split(' ')[0].toLocaleLowerCase()
   const farmTvlValueFormatted = farm.totalValue
     ? `$${Number(farm.totalValue.times(farm.strategyRatio)).toLocaleString(undefined, { maximumFractionDigits: 0 })}`
     : '-'
 
-  const stakedValueFormatted = `$${Number(rawStakedBalance * lpTokenPrice.toNumber()).toLocaleString(undefined, {
+  const stakedValueFormatted = `$${Number(rawStakedReceiptBalance * lpTokenPrice.toNumber()).toLocaleString(undefined, {
     maximumFractionDigits: 2,
   })}`
   const farmAPY = farm.apy && farm.apy.times(new BigNumber(100)).toNumber().toFixed(2)
@@ -386,13 +385,14 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
   }
 
   const renderFarmLogo = () => {
-    let farmLogo = `${process.env.PUBLIC_URL}/images/farms/${farmImage}.svg`
-    if (farm.type === 'Lydia') farmLogo = `${process.env.PUBLIC_URL}/images/compounder-igloos/LydiaLogo.png`
-    if (farm.type === 'Pangolin') farmLogo = `${process.env.PUBLIC_URL}/images/compounder-igloos/PangolinLogo.png`
-    if (farm.type === 'Olive') farmLogo = `${process.env.PUBLIC_URL}/images/compounder-igloos/OliveLogo.png`
-    if (farm.type === 'Gondola') farmLogo = `${process.env.PUBLIC_URL}/images/compounder-igloos/GondolaLogo.png`
+    let farmLogo = ''
+    if (farm.type === 'Penguin') farmLogo = `${ASSET_CONTENT_URL}/smartchain/${lpAddress}/logo.svg`
+    if (farm.type === 'Lydia') farmLogo = `${ASSET_CONTENT_URL}/project/lydia/logo.png`
+    if (farm.type === 'Pangolin') farmLogo = `${ASSET_CONTENT_URL}/project/pangolin/logo.png`
+    if (farm.type === 'Olive') farmLogo = `${ASSET_CONTENT_URL}/project/olive/logo.png`
+    if (farm.type === 'Gondola') farmLogo = `${ASSET_CONTENT_URL}/project/gondola/logo.png`
 
-    return <Image mt="12px" src={farmLogo} alt={farm.tokenSymbol} width={108} height={108} />
+    return <StyledImage mt="12px" type={farm.type} src={farmLogo} alt={farm.tokenSymbol} width={108} height={108} />
   }
 
   const renderActionButtons = () => {
@@ -407,22 +407,12 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
     ) : (
       <>
         <ActionButtonWrapper index={index}>
-          <Button
-            mt="4px"
-            scale="sm"
-            disabled={!account || requestedAction}
-            onClick={isApproved ? onPresentDeposit : handleApprove}
-          >
+          <Button mt="4px" scale="sm" disabled={!account || requestedAction} onClick={onPresentDeposit}>
             {TranslateString(758, 'Deposit')}
           </Button>
         </ActionButtonWrapper>
         <ActionButtonWrapper index={index}>
-          <Button
-            mt="4px"
-            scale="sm"
-            disabled={!account || requestedAction}
-            onClick={isApproved ? onPresentWithdraw : handleApprove}
-          >
+          <Button mt="4px" scale="sm" disabled={!account || requestedAction} onClick={onPresentWithdraw}>
             {TranslateString(758, 'Withdraw')}
           </Button>
         </ActionButtonWrapper>
@@ -444,10 +434,11 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
     )
   }
 
-  const getMyTVLTooltip = () => {
-    const userTokenBalanceInLp = (farm.tokenBalanceInLp * rawStakedBalance) / getBalanceNumber(farm.totalSupply)
+  const getYourTVLTooltip = () => {
+    const userTokenBalanceInLp = rawStakedReceiptBalance * (farm.tokenBalanceInLp / getBalanceNumber(farm.totalSupply))
     const userQuoteTokenBalanceInLp =
-      (farm.quoteTokenBalanceInLp * rawStakedBalance) / getBalanceNumber(farm.totalSupply)
+      rawStakedReceiptBalance * (farm.quoteTokenBalanceInLp / getBalanceNumber(farm.totalSupply))
+
     return `
               <h3 style="margin-bottom: 5px;">Underlying Assets</h3>
               <p style="margin-bottom: 5px;">${userQuoteTokenBalanceInLp.toLocaleString(undefined, {
@@ -460,10 +451,19 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
   }
 
   const getFarmTVLTooltip = () => {
+    const strategyTokenBalanceInLp =
+      farm.lpTokenBalanceStrategy * (farm.tokenBalanceInLp / getBalanceNumber(farm.totalSupply))
+    const strategyQuoteTokenBalanceInLp =
+      farm.lpTokenBalanceStrategy * (farm.quoteTokenBalanceInLp / getBalanceNumber(farm.totalSupply))
+
     return `
               <h3 style="margin-bottom: 5px;">Underlying Assets</h3>
-              <p style="margin-bottom: 5px;">5,039.29 ${farm.quoteTokenSymbol}</p>
-              <p>28.47 ${farm.tokenSymbol}</p>
+              <p style="margin-bottom: 5px;">${strategyQuoteTokenBalanceInLp.toLocaleString(undefined, {
+                maximumFractionDigits: 2,
+              })} ${farm.quoteTokenSymbol}</p>
+              <p>${strategyTokenBalanceInLp.toLocaleString(undefined, {
+                maximumFractionDigits: 2,
+              })} ${farm.tokenSymbol}</p>
             `
   }
 
@@ -487,7 +487,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
       <FarmDetails justifyContent="space-between" width="100%">
         <CardInfoContainer index={index}>
           <CardInfoWrapper index={index}>
-            <CustomToolTipOrigin data-for={`my-tvl-tooltip-${index}`} data-tip={getMyTVLTooltip()}>
+            <CustomToolTipOrigin data-for={`your-tvl-tooltip-${index}`} data-tip={getYourTVLTooltip()}>
               <Text className="label" fontSize="16px">
                 YOUR TVL
               </Text>
@@ -497,7 +497,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
             </CustomToolTipOrigin>
             {account && (
               <CustomToolTip
-                id={`my-tvl-tooltip-${index}`}
+                id={`your-tvl-tooltip-${index}`}
                 wrapper="div"
                 delayHide={0}
                 effect="solid"
@@ -520,7 +520,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
                   {data.farmTvl}
                 </Text>
               </CustomToolTipOrigin>
-              {/* <CustomToolTip
+              <CustomToolTip
                 id={`farm-tvl-tooltip-${index}`}
                 wrapper="div"
                 delayHide={0}
@@ -529,7 +529,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
                 multiline
                 place="top"
                 html
-              /> */}
+              />
             </Flex>
           </CardInfoWrapper>
         </CardInfoContainer>

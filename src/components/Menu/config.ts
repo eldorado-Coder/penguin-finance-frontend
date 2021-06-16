@@ -7,18 +7,9 @@ export const config: MenuEntry[] = [
     href: '/',
   },
   {
-    label: 'Trade $PEFI',
+    label: 'Buy $PEFI',
     icon: 'TradeIcon',
-    items: [
-      {
-        label: 'Exchange',
-        href: 'https://app.pangolin.exchange/#/swap?outputCurrency=0xe896CDeaAC9615145c0cA09C8Cd5C25bced6384c',
-      },
-      {
-        label: 'Liquidity',
-        href: 'https://app.pangolin.exchange/#/pool',
-      },
-    ],
+    href: 'https://app.pangolin.exchange/#/swap?outputCurrency=0xe896CDeaAC9615145c0cA09C8Cd5C25bced6384c',
   },
   {
     label: 'Igloos',
@@ -46,6 +37,11 @@ export const config: MenuEntry[] = [
     href: '/arena',
   },
   // {
+  //   label: 'Launchpad',
+  //   icon: 'LaunchpadIcon',
+  //   href: '/launchpad',
+  // },
+  // {
   //   label: 'Penguin lottery',
   //   icon: 'NftIcon',
   //   href: '/lottery',
@@ -60,28 +56,6 @@ export const config: MenuEntry[] = [
   //   icon: 'NftIcon',
   //   href: '/teams',
   // },
-  {
-    label: 'Info',
-    icon: 'InfoIcon',
-    items: [
-      {
-        label: 'Overview',
-        href: 'https://info.pangolin.exchange',
-      },
-      {
-        label: 'Tokens',
-        href: 'https://info.pangolin.exchange/#/tokens',
-      },
-      {
-        label: 'Pairs',
-        href: 'https://info.pangolin.exchange/#/pairs',
-      },
-      {
-        label: 'Accounts',
-        href: 'https://info.pangolin.exchange/#/accounts',
-      },
-    ],
-  },
   {
     label: 'Learn More',
     icon: 'MoreIcon',

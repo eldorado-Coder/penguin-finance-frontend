@@ -29,7 +29,7 @@ import Select from 'components/Select/Select'
 import FarmCard, { FarmWithStakedValue } from './components/FarmCard/FarmCard'
 
 // temporarily hide projects that wont appear during release so that we don't have empty categories (10.06.2021)
-const PROJECTS = ['All', 'Your Farms', 'Penguin Finance', 'Pangolin', 'Gondola', 'Lydia']
+const PROJECTS = ['All', 'Your Farms', 'Penguin Finance', 'Pangolin', 'Gondola', 'Lydia', 'Snowball']
 
 //
 const Igloos: React.FC = () => {
@@ -145,8 +145,8 @@ const Igloos: React.FC = () => {
 
       farmsToDisplayWithAPY = farmsToDisplayWithAPY.sort((farm1, farm2) => {
         if (sortType === 'farm-tvl') {
-          const farm1TotalValue = farm1.totalValue ? Number(farm1.totalValue.times(farm1.strategyRatio)) : 0;
-          const farm2TotalValue = farm2.totalValue ? Number(farm2.totalValue.times(farm2.strategyRatio)) : 0;
+          const farm1TotalValue = farm1.totalValue ? Number(farm1.totalValue.times(farm1.strategyRatio)) : 0
+          const farm2TotalValue = farm2.totalValue ? Number(farm2.totalValue.times(farm2.strategyRatio)) : 0
 
           return farm1TotalValue < farm2TotalValue ? 1 : -1
         }
@@ -188,6 +188,10 @@ const Igloos: React.FC = () => {
   )
 
   const handleSelectProject = (project) => () => {
+    if (project === 'Snowball') {
+      window.open('https://app.snowball.network/snob/', '_blank')
+      return
+    }
     setProject(project)
   }
 
@@ -218,10 +222,12 @@ const Igloos: React.FC = () => {
       <BgWrapper>
         <IgloosBgContainer />
       </BgWrapper>
-      <BannerImage
-        src={`${process.env.PUBLIC_URL}/images/compounder-igloos/Compounder${isDark ? 'Night' : 'Day'}.gif`}
-        alt="compounder igloos banner"
-      />
+      <IgloosBannerContainer>
+        <BannerImage
+          src={`${process.env.PUBLIC_URL}/images/compounder-igloos/Compounder${isDark ? 'Night' : 'Day'}.gif`}
+          alt="compounder igloos banner"
+        />
+      </IgloosBannerContainer>
       <CompounderContent>
         <FilterContainer>
           <LabelWrapper>
@@ -274,9 +280,6 @@ const Igloos: React.FC = () => {
 
 const CompounderIglooPage = styled(Page)`
   max-width: 1200px;
-  padding-left: 0;
-  padding-right: 0;
-  padding-top: 0;
 `
 
 // bg
@@ -303,15 +306,21 @@ const BgWrapper = styled.div`
   z-index: -1;
 `
 
+// banner
+const IgloosBannerContainer = styled.div`
+  margin-bottom: 24px;
+
+  @media (min-width: 640px) {
+    margin-bottom: 64px;
+  }
+`
 const BannerImage = styled.img`
   z-index: -1;
   width: 100%;
 `
 
 // content
-const IgloosContentContainer = styled.div`
-  position: relative;
-`
+const CompounderContent = styled.div``
 
 const FilterContainer = styled.div`
   display: flex;
@@ -339,14 +348,6 @@ const FilterWrapper = styled(LabelWrapper)`
   }
 `
 
-const CompounderContent = styled.div`
-  padding: 0 16px;
-
-  ${({ theme }) => theme.mediaQueries.sm} {
-    padding: 0 40px;
-  }
-`
-
 const ProjectLabel = styled(Text)<{ active: boolean }>`
   cursor: pointer;
   margin-left: 1rem;
@@ -365,6 +366,10 @@ const ProjectFiltersWrapper = styled(Flex)`
   @media (min-width: 1200px) {
     display: flex;
   }
+`
+
+const IgloosContentContainer = styled.div`
+  position: relative;
 `
 
 export default Igloos
