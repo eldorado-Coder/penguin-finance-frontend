@@ -7,6 +7,7 @@ BigNumber.config({
 
 export const PEFI_MAX_SUPPLY = 21000000
 export const AVAX_BLOCK_TIME = 8.2
+export const DAYS_PER_YEAR = 365
 export const WEEKS_PER_YEAR = 52
 export const SECONDS_PER_YEAR = 60 * 60 * 24 * 365
 export const PEFI_POOL_PID = 0
@@ -20,6 +21,7 @@ export const LOTTERY_MAX_NUMBER_OF_TICKETS = 50
 export const LOTTERY_TICKET_PRICE = 1
 
 export const MAX_COMPOUND_APY = 99999
+export const NEST_APR_PER_DAY = 1.3
 
 export const APY_TOOLTIP_TEXT =
   '<div>The APY  shown are estimated for your convenience, it is not a guaranteed return rate. These yields can change due to block speed, emission rates adjustments, compounding strategies, among other factors</div>'
