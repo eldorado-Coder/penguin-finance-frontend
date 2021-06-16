@@ -16,6 +16,11 @@ const JACKPOTS = {
   UNLOCK: `${process.env.PUBLIC_URL}/images/emperor/jackpot/jackpot_unlock.gif`,
 }
 
+const EmperorPage = styled(Page)`
+  max-width: 100%; //1120px;
+  overflow: hidden;
+`
+
 const ChestWrapper = styled.div<{ jackpot: string }>`
   position: absolute;
   width: 15%;
@@ -89,18 +94,59 @@ const JackpotPaper = styled.img`
 
 const GridItem = styled.div`
   margin-bottom: '10px';
-  width: 315px;
+  max-width: 280px;
   margin: 0px 4px;
+
+  @media (min-width: 640px) {
+    max-width: 280px;
+    width: 260px;
+  }
+  @media (min-width: 768px) {
+    max-width: 260px;
+  }
+  @media (min-width: 1200px) {
+    width: 280px;
+    max-width: 280px;
+  }
 `
 
-const Grid = styled.div<{ align: string }>`
+const Grid = styled.div<{ align: string; marginTop?: { xs?: number; sm?: number; md?: number; lg?: number } }>`
   display: flex;
   margin-bottom: 24px;
-  justify-content: space-between;
+  justify-content: space-around;
   justify-content: ${({ align }) => (align === 'center' ? 'center' : 'space-between')};
-  margin: 0px -50px;
-  margin-top: -20px;
+  margin-top: ${({ marginTop }) => `${marginTop.xs}px`};
+  @media (min-width: 640px) {
+    ${({ marginTop }) =>
+      marginTop.xs && {
+        marginTop: `${marginTop.xs}px`,
+      }}
+  }
+  @media (min-width: 768px) {
+    ${({ marginTop }) =>
+      marginTop.sm && {
+        marginTop: `${marginTop.sm}px`,
+      }}
+  }
+  @media (min-width: 1200px) {
+    ${({ marginTop }) =>
+      marginTop.md && {
+        marginTop: `${marginTop.md}px`,
+      }}
+  }
+  @media (min-width: 1450px) {
+    ${({ marginTop }) =>
+      marginTop.lg && {
+        marginTop: `${marginTop.lg}px`,
+      }}
+  }
+  @media (max-width: 1600px) {
+    font-size: 24px;
+  }
+  padding: 0 5%;
+  width: 100%;
 `
+
 
 const EmperorBgContainer = styled.video`
   object-fit: fill;
@@ -162,13 +208,14 @@ const Emperor: React.FC = () => {
             <img className="jackpot-unlock" src={JACKPOTS.UNLOCK} alt="jackpot_unlock" />
           </ChestWrapper>
         )}
-
-        <Grid align="between">
-          <GridItem>
-            <TopPenguinsBlock />
-          </GridItem>
+        <Grid align="center" marginTop={{ xs: 100, sm: 120 }}>
           <GridItem>
             <EmperorBlock />
+          </GridItem>
+        </Grid>
+        <Grid align="between" marginTop={{ xs: -40, sm: -80, md: -120, lg: -160 }}>
+          <GridItem>
+            <TopPenguinsBlock />
           </GridItem>
           <GridItem>
             <YourScoreBlock />
@@ -188,7 +235,7 @@ const Emperor: React.FC = () => {
   const emperorWinnerVideo = '/videos/PenguinEmperorWinner_Final.mp4'
 
   return (
-    <Page>
+    <EmperorPage>
       <Sound
         url={`${emperorEnded ? '/sounds/penguin_emperor_winner.mp3' : '/sounds/penguin_emperor_page.mp3'} `}
         playStatus={Sound.status.PLAYING}
@@ -207,7 +254,7 @@ const Emperor: React.FC = () => {
       </EmperorBgContainer>
 
       {!emperorEnded ? <>{renderEmperorStatsPage()}</> : <>{renderEmperorEndPage()}</>}
-    </Page>
+    </EmperorPage>
   )
 }
 

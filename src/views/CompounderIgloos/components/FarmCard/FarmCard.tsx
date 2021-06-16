@@ -279,7 +279,7 @@ interface FarmCardProps {
 const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
   const TranslateString = useI18n()
   const { lpAddresses, type } = useCompounderFarmFromSymbol(farm.lpSymbol, farm.type)
-  const { allowance, tokenBalance, stakedBalance, stakedReceiptBalance, pendingXPefi } = useCompounderFarmUser(
+  const { allowance, tokenBalance, stakedReceiptBalance, pendingXPefi } = useCompounderFarmUser(
     farm.lpSymbol,
     type,
   )
