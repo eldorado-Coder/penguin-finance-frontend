@@ -17,6 +17,7 @@ import history from './routerHistory'
 const Home = lazy(() => import('./views/Home'))
 const Farms = lazy(() => import('./views/Farms'))
 const Arena = lazy(() => import('./views/Arena'))
+const Launchpad = lazy(() => import('./views/Launchpad'))
 const Emperor = lazy(() => import('./views/Emperor'))
 const CovidEmperor = lazy(() => import('./views/CovidEmperor'))
 const NotFound = lazy(() => import('./views/NotFound'))
@@ -63,7 +64,7 @@ const App: React.FC = () => {
               <Arena />
             </Route>
             <Route path="/launchpad">
-              <Arena />
+              <Launchpad />
             </Route>
             {/* <Route path="/emperor">
               <Emperor />
