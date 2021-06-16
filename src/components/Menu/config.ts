@@ -77,7 +77,7 @@ export const config: MenuEntry[] = [
   {
     label: 'Audited by CertiK',
     icon: 'AuditIcon',
-    href: '/audit',
+    href: 'https://www.certik.org/projects/penguinfinance',
   },
 ]
 
