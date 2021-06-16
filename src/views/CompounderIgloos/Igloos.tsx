@@ -308,7 +308,7 @@ const BgWrapper = styled.div`
 
 // banner
 const IgloosBannerContainer = styled.div`
-  margin-bottom: 16px;
+  margin-bottom: 24px;
 
   @media (min-width: 640px) {
     margin-bottom: 64px;
