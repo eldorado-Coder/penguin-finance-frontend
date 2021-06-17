@@ -1,8 +1,15 @@
 import React, { useCallback, useState } from 'react'
-import { Button, Modal } from 'penguinfinance-uikit2'
+import styled from 'styled-components';
+import { Button, Modal, Flex } from 'penguinfinance-uikit2'
 import ModalActions from 'components/ModalActions'
 import FieldInput from 'components/FieldInput'
 import useI18n from 'hooks/useI18n'
+import PenguinSelect from '../UI/PenguinSelect/PenguinSelect';
+import { penguinImages } from '../utils';
+
+const PenguinSelectContainer = styled.div`
+  padding: 8px 24px 0;
+`;
 
 interface RegisterModalProps {
   onConfirm: (nickName: string, color: string, style: string) => void
@@ -22,13 +29,6 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ onConfirm, onDismiss }) =
       setNickName(e.currentTarget.value)
     },
     [setNickName],
-  )
-
-  const onChangeStyle = useCallback(
-    (e: React.FormEvent<HTMLInputElement>) => {
-      setStyle(e.currentTarget.value)
-    },
-    [setStyle],
   )
 
   const onChangeColor = useCallback(
@@ -52,28 +52,34 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ onConfirm, onDismiss }) =
         onChange={onChangeColor}
         inputTitle={TranslateString(1070, 'Color')}
       />
-      <FieldInput
-        value={style}
-        placeholder="1, 2, 3, 4"
-        onChange={onChangeStyle}
-        inputTitle={TranslateString(1070, 'Style')}
-      />
+      <PenguinSelectContainer>
+        <PenguinSelect
+          value={style}
+          placeholder='Select your penguin'
+          options={penguinImages.map(penguin => ({
+            label: penguin.name, value: penguin.id
+          }))}
+          onChange={setStyle}
+        />
+      </PenguinSelectContainer>
       <ModalActions>
-        <Button variant="primary" onClick={onDismiss} scale="md">
-          {TranslateString(462, 'Cancel')}
-        </Button>
-        <Button
-          scale="md"
-          disabled={pendingTx || nickName.length === 0 || color.length === 0 || style.length === 0}
-          onClick={async () => {
-            setPendingTx(true)
-            await onConfirm(nickName, color, style)
-            setPendingTx(false)
-            onDismiss()
-          }}
-        >
-          {pendingTx ? TranslateString(488, 'Pending Confirmation') : TranslateString(464, 'Confirm')}
-        </Button>
+        <Flex justifyContent='space-between' pl='24px' pr='24px'>
+          <Button variant="primary" onClick={onDismiss} scale="md">
+            {TranslateString(462, 'Cancel')}
+          </Button>
+          <Button
+            scale="md"
+            disabled={pendingTx || nickName.length === 0 || color.length === 0 || style.length === 0}
+            onClick={async () => {
+              setPendingTx(true)
+              await onConfirm(nickName, color, style)
+              setPendingTx(false)
+              onDismiss()
+            }}
+          >
+            {pendingTx ? TranslateString(488, 'Pending Confirmation') : TranslateString(464, 'Confirm')}
+          </Button>
+        </Flex>
       </ModalActions>
     </Modal>
   )

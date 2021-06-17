@@ -1,8 +1,15 @@
-const images = [
-  { id: '1', kingSrc: 'penguin_top_hat', normalSrc: 'penguin_top_hat_no_crown' },
-  { id: '2', kingSrc: 'penguin_fedora', normalSrc: 'penguin_fedora_no_crown' },
-  { id: '3', kingSrc: 'penguin_eye_patch_with_crown', normalSrc: 'penguin_eye_patch_no_crown' },
-  { id: '4', kingSrc: 'penguin_sunglass_with_crown', normalSrc: 'penguin_sunglass_no_crown' },
+const penguinImages = [
+  { id: '1', kingSrc: 'penguin_top_hat', normalSrc: 'penguin_top_hat_no_crown', name: 'Top hat' },
+  { id: '2', kingSrc: 'penguin_fedora', normalSrc: 'penguin_fedora_no_crown', name: 'Fedora' },
+  { id: '3', kingSrc: 'penguin_eye_patch_with_crown', normalSrc: 'penguin_eye_patch_no_crown', name: 'Eye patch' },
+  { id: '4', kingSrc: 'penguin_sunglass_with_crown', normalSrc: 'penguin_sunglass_no_crown', name: 'Sunglass' },
+  { id: '5', kingSrc: 'penguin_suit', normalSrc: 'penguin_suit_no_crown', name: 'Suit' },
+  { id: '6', kingSrc: 'penguin_senpai', normalSrc: 'penguin_senpai_no_crown', name: 'Senpai' },
+  { id: '7', kingSrc: 'penguin_chef', normalSrc: 'penguin_chef_no_crown', name: 'Chef' },
+  { id: '8', kingSrc: 'penguin_scarf_with_crown', normalSrc: 'penguin_scarf_no_crown', name: 'Scarf' },
+  { id: '9', kingSrc: 'penguin_sombrero', normalSrc: 'penguin_sombrero_no_crown', name: 'Sombrero' },
+  { id: '10', kingSrc: 'penguin_sasquatch', normalSrc: 'penguin_sasquatch_no_crown', name: 'Sasquatch' },
+  { id: '11', kingSrc: 'penguin_lydian_with_crown', normalSrc: 'penguin_lydian_no_crown', name: 'Lydian' },
 ]
 
 const colors = [
@@ -28,17 +35,17 @@ const getPenguinColor = (emperor) => {
 }
 
 const getKingPenguin = (emperor) => {
-  const emperorPenguin = images.find((row) => String(row.id) === String(emperor.style))
+  const emperorPenguin = penguinImages.find((row) => String(row.id) === String(emperor.style))
   if (emperorPenguin) return emperorPenguin.kingSrc
-  if (emperor.style) return images[0].kingSrc
+  if (emperor.style) return penguinImages[0].kingSrc
   return ''
 }
 
 const getNormalPenguin = (emperor) => {
-  const emperorPenguin = images.find((row) => String(row.id) === String(emperor.style))
+  const emperorPenguin = penguinImages.find((row) => String(row.id) === String(emperor.style))
   if (emperorPenguin) return emperorPenguin.normalSrc
-  if (emperor.style && emperor.style !== '0') return images[0].normalSrc
+  if (emperor.style && emperor.style !== '0') return penguinImages[0].normalSrc
   return ''
 }
 
-export { getPenguinColor, getKingPenguin, getNormalPenguin }
+export { getPenguinColor, getKingPenguin, getNormalPenguin, penguinImages }
