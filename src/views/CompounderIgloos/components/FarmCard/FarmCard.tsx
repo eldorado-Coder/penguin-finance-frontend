@@ -279,10 +279,7 @@ interface FarmCardProps {
 const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
   const TranslateString = useI18n()
   const { lpAddresses, type } = useCompounderFarmFromSymbol(farm.lpSymbol, farm.type)
-  const { allowance, tokenBalance, stakedReceiptBalance, pendingXPefi } = useCompounderFarmUser(
-    farm.lpSymbol,
-    type,
-  )
+  const { allowance, tokenBalance, stakedReceiptBalance, pendingXPefi } = useCompounderFarmUser(farm.lpSymbol, type)
   const lpName = farm.lpSymbol.toUpperCase()
   const web3 = useWeb3()
   const lpAddress = getAddress(lpAddresses)
@@ -382,7 +379,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
     <WithdrawModal tokenName={lpName} max={tokenBalance} farm={farm} onConfirm={handleUnstake} />,
   )
 
-  let lpTokenPrice = new BigNumber(farm.totalValue).div(getBalanceNumber(farm.totalSupply))
+  let lpTokenPrice = new BigNumber(farm.totalValue).div(getBalanceNumber(new BigNumber(farm.totalSupply)))
   if (farm.type === 'Penguin' && farm.lpSymbol === 'ETH-AVAX LP') {
     lpTokenPrice = lpTokenPrice.times(8)
   }
@@ -453,9 +450,10 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
   }
 
   const getYourTVLTooltip = () => {
-    const userTokenBalanceInLp = rawStakedReceiptBalance * (farm.tokenBalanceInLp / getBalanceNumber(farm.totalSupply))
+    const userTokenBalanceInLp =
+      rawStakedReceiptBalance * (farm.tokenBalanceInLp / getBalanceNumber(new BigNumber(farm.totalSupply)))
     const userQuoteTokenBalanceInLp =
-      rawStakedReceiptBalance * (farm.quoteTokenBalanceInLp / getBalanceNumber(farm.totalSupply))
+      rawStakedReceiptBalance * (farm.quoteTokenBalanceInLp / getBalanceNumber(new BigNumber(farm.totalSupply)))
 
     return `
               <h3 style="margin-bottom: 5px;">Underlying Assets</h3>
@@ -470,9 +468,9 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
 
   const getFarmTVLTooltip = () => {
     const strategyTokenBalanceInLp =
-      farm.lpTokenBalanceStrategy * (farm.tokenBalanceInLp / getBalanceNumber(farm.totalSupply))
+      farm.lpTokenBalanceStrategy * (farm.tokenBalanceInLp / getBalanceNumber(new BigNumber(farm.totalSupply)))
     const strategyQuoteTokenBalanceInLp =
-      farm.lpTokenBalanceStrategy * (farm.quoteTokenBalanceInLp / getBalanceNumber(farm.totalSupply))
+      farm.lpTokenBalanceStrategy * (farm.quoteTokenBalanceInLp / getBalanceNumber(new BigNumber(farm.totalSupply)))
 
     return `
               <h3 style="margin-bottom: 5px;">Underlying Assets</h3>
@@ -496,11 +494,11 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
                 ? `${farm.lpSymbol.split(' ')[0]} lgloo`
                 : `${farm.type} ${farm.lpSymbol.split(' ')[0]}`}
             </Text>
-            {farm.lpSymbol.split(' ')[0] === "AVAX-PNG" &&
+            {farm.lpSymbol.split(' ')[0] === 'AVAX-PNG' && (
               <NoFeesTag variant="primary" index={index} outline>
                 0% FEES
               </NoFeesTag>
-            }
+            )}
           </IglooTitleWrapper>
           <Flex justifyContent="flex-start" flexWrap="wrap">
             {!account ? <PGUnlockButton index={index} scale="sm" mt="4px" fullWidth /> : renderActionButtons()}
