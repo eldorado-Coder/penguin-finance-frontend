@@ -6,7 +6,7 @@ import ModalActions from 'components/compounder/ModalActions'
 import ModalInput from 'components/compounder/ModalInput'
 import useI18n from 'hooks/useI18n'
 import { useCompounderFarmUser } from 'state/hooks'
-import { getFullDisplayBalance } from 'utils/formatBalance'
+import { getBalanceNumber, getFullDisplayBalance } from 'utils/formatBalance'
 import { Farm } from 'state/types'
 
 interface WithdrawModalProps {
@@ -86,7 +86,7 @@ const WithdrawModal: React.FC<WithdrawModalProps> = ({ max, tokenName = '', farm
   }, [max])
 
   const _stakedBalance = useMemo(() => {
-    return getFullDisplayBalance(stakedReceiptBalance)
+    return String(getBalanceNumber(stakedReceiptBalance))
   }, [stakedReceiptBalance])
 
   const handleChange = useCallback(
