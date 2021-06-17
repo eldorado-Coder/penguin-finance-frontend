@@ -30,7 +30,7 @@ export const stake = async (masterChefContract, pid, amount, account) => {
 
 export const compounderStake = async (strategyContract, amount, account) => {
   return strategyContract.methods
-    .deposit(new BigNumber(amount).times(new BigNumber(10).pow(18)).toString())
+    .deposit(amount)
     .send({ from: account })
     .on('transactionHash', (tx) => {
       return tx.transactionHash
@@ -75,7 +75,7 @@ export const unstake = async (masterChefContract, pid, amount, account) => {
 
 export const compounderUnstake = async (strategyContract, amount, account) => {
   return strategyContract.methods
-    .withdraw(new BigNumber(amount).times(new BigNumber(10).pow(18)).toString())
+    .withdraw(amount)
     .send({ from: account })
     .on('transactionHash', (tx) => {
       return tx.transactionHash

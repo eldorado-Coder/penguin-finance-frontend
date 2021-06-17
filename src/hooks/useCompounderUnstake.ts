@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux'
 import BigNumber from 'bignumber.js'
 import { fetchCompounderFarmUserDataAsync } from 'state/actions'
 import { compounderUnstake } from 'utils/callHelpers'
-import { getBalanceNumber } from 'utils/formatBalance'
 import { useStrategyContract } from './useContract'
 
 const useUnstake = (lpSymbol: string, type?: string) => {
@@ -17,8 +16,8 @@ const useUnstake = (lpSymbol: string, type?: string) => {
       const realAmount = await strategyContract.methods
         .getSharesForDepositTokens(new BigNumber(amount).times(new BigNumber(10).pow(18)).toString())
         .call()
-
-      const txHash = await compounderUnstake(strategyContract, getBalanceNumber(realAmount), account)
+      const maxAmount = await strategyContract.methods.balanceOf(account).call()
+      const txHash = await compounderUnstake(strategyContract, realAmount > maxAmount ? maxAmount : realAmount, account)
       dispatch(fetchCompounderFarmUserDataAsync(account))
       console.info(txHash)
     },
