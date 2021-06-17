@@ -97,7 +97,7 @@ const WithdrawModal: React.FC<WithdrawModalProps> = ({ max, tokenName = '', farm
   )
 
   const handleSelectMax = useCallback(() => {
-    setVal(String(Math.round(Number(_stakedBalance) * 10000) / 10000))
+    setVal(_stakedBalance)
   }, [_stakedBalance, setVal])
 
   const displayBalance = !fullBalance ? '0' : parseFloat(fullBalance).toFixed(4)
