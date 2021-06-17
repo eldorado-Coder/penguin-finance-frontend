@@ -1,5 +1,6 @@
 import addresses from 'config/constants/contracts'
 import { Address } from 'config/constants/types'
+import compounderFarms from 'config/constants/compounderFarms'
 
 export const getAddress = (address: Address): string => {
   const mainNetChainId = 43114
@@ -20,7 +21,7 @@ export const getLydiaMasterChefAddress = () => {
   return getAddress(addresses.lydiaMasterChef)
 }
 export const getPangolinAddress = () => {
-  return getAddress(addresses.pangolinManager);
+  return getAddress(addresses.pangolinManager)
 }
 export const getEmperorAddress = () => {
   return getAddress(addresses.emperor)
@@ -63,4 +64,8 @@ export const getWithoutBordersAddress = () => {
 }
 export const getCharityPenguinDBAddress = () => {
   return getAddress(addresses.charityPenguinDB)
+}
+export const getCompounderFarmLpAddress = (lpSymbol: string, farmType: string) => {
+  const farm = compounderFarms.find((farmItem) => farmItem.lpSymbol === lpSymbol && farmItem.type === farmType)
+  return getAddress(farm.lpAddresses)
 }
