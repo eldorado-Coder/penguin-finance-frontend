@@ -21,7 +21,7 @@ export default {
   },
   emperor: {
     43113: '',
-    43114: '0xbEfECD5D04a21136600B1E31b4d53e0fdF076c25',
+    43114: '0x63df1E246C0c0665489bd448a4174B348430225D',
   },
   lottery: {
     43113: '',
