@@ -8,7 +8,7 @@ const Arena: React.FC = () => {
     <Page>
       <Sound url="/sounds/penguin_arena_page.mp3" playStatus={Sound.status.PLAYING} loop />
       <ArenaBgContainer width="100%" height="100%" autoPlay loop muted>
-        <source src="/videos/penguinarena.mp4" />
+        <source src="/videos/penguin_arena.mp4" />
       </ArenaBgContainer>
     </Page>
   )

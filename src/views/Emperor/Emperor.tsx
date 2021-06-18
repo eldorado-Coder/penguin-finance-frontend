@@ -231,7 +231,7 @@ const Emperor: React.FC = () => {
   const emperorEnded = true
   const emperorDefaultVideo = '/videos/penguin_emperor.mp4'
   // to change the video of emperor winner page background video, please change this video path
-  const emperorWinnerVideo = '/videos/PenguinEmperorWinner_Final.mp4'
+  const emperorWinnerVideo = '/videos/penguin_emperor_winner.mp4'
 
   return (
     <EmperorPage>
