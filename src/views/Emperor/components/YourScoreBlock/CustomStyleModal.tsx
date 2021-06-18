@@ -3,6 +3,8 @@ import { Button, Modal } from 'penguinfinance-uikit2'
 import styled from 'styled-components'
 import FieldInput from 'components/FieldInput'
 import useI18n from 'hooks/useI18n'
+import PenguinSelect from '../UI/PenguinSelect/PenguinSelect';
+import { penguinImages } from '../utils';
 
 interface CustomStyleModalProps {
   onConfirmChangeStyle: (color: string) => void
@@ -19,6 +21,10 @@ const ButtonContainer = styled.div`
   }
 `
 
+const PenguinSelectContainer = styled.div`
+  padding: 0 24px;
+`;
+
 const CustomStyleModal: React.FC<CustomStyleModalProps> = ({
   onConfirmChangeStyle,
   onConfirmChangeColor,
@@ -29,13 +35,6 @@ const CustomStyleModal: React.FC<CustomStyleModalProps> = ({
 
   const [pendingTx, setPendingTx] = useState(false)
   const TranslateString = useI18n()
-
-  const onChangeStyle = useCallback(
-    (e: React.FormEvent<HTMLInputElement>) => {
-      setStyle(e.currentTarget.value)
-    },
-    [setStyle],
-  )
 
   const onChangeColor = useCallback(
     (e: React.FormEvent<HTMLInputElement>) => {
@@ -66,12 +65,16 @@ const CustomStyleModal: React.FC<CustomStyleModalProps> = ({
           {pendingTx ? TranslateString(488, 'Pending Confirmation') : TranslateString(464, 'Confirm Change')}
         </Button>
       </ButtonContainer>
-      <FieldInput
-        value={style}
-        placeholder="1, 2, 3, 4"
-        onChange={onChangeStyle}
-        inputTitle={TranslateString(1070, 'Style')}
-      />
+      <PenguinSelectContainer>
+        <PenguinSelect
+          value={style}
+          placeholder='Select your penguin'
+          options={penguinImages.map(penguin => ({
+            label: penguin.name, value: penguin.id
+          }))}
+          onChange={setStyle}
+        />
+      </PenguinSelectContainer>
       <ButtonContainer>
         <Button
           scale="md"
