@@ -52,73 +52,81 @@ const StealCrownModal: React.FC<StealCrownModalProps> = ({ onConfirm, onDismiss 
   }
 
   return (
-    <Modal title={TranslateString(1068, 'Steal the Crown')} onDismiss={onDismiss}>
-      <ModalInput
-        value={amount}
-        onSelectMax={handleSelectMax}
-        max={maxAmount}
-        symbol="xPEFI"
-        onChange={onChangeAmount}
-        inputTitle={TranslateString(1070, 'Amount')}
-        showError={false}
-      />
-      <BidInfoContainer>
-        <Text bold color="secondary" fontSize="18px">
-          You should bid with a bigger amount than the current emperor bid.
-        </Text>
-        <Flex justifyContent="space-between" alignItems="center">
-          <Text fontSize="14px">Current emperor bid:</Text>
-          <Text fontSize="14px" style={{ display: 'flex', alignItems: 'center' }}>
-            {currentBidAmount}
+    <Modal title={TranslateString(1068, 'Steal the Crown')} bodyPadding="0px" onDismiss={onDismiss}>
+      <ModalContent>
+        <ModalInput
+          value={amount}
+          onSelectMax={handleSelectMax}
+          max={maxAmount}
+          symbol="xPEFI"
+          onChange={onChangeAmount}
+          inputTitle={TranslateString(1070, 'Amount')}
+          showError={false}
+        />
+        <BidInfoContainer>
+          <Text bold color="secondary" fontSize="18px">
+            You should bid with a bigger amount than the current emperor bid.
           </Text>
-        </Flex>
-        <Flex justifyContent="space-between" alignItems="center">
-          <Text fontSize="14px">Min bid increase:</Text>
-          <Text fontSize="14px" style={{ display: 'flex', alignItems: 'center' }}>
-            {minBidIncrease}
-          </Text>
-        </Flex>
-        <Flex justifyContent="space-between" alignItems="center">
-          <Text fontSize="14px">Max bid increase:</Text>
-          <Text fontSize="14px" style={{ display: 'flex', alignItems: 'center' }}>
-            {maxBidIncrease}
-          </Text>
-        </Flex>
-      </BidInfoContainer>
-
-      <ModalActions>
-        <Button variant="primary" onClick={onDismiss} scale="md">
-          {TranslateString(462, 'Cancel')}
-        </Button>
-        <ButtonGroupContainer>
-          <Link fontSize="14px" bold={false} href="./nests" external color="failure">
-            <Button variant="primary" onClick={onDismiss} scale="md">
-              {TranslateString(462, 'Get xPEFI')}
-            </Button>
-          </Link>
-          <Button
-            scale="md"
-            disabled={!checkCanConfirm()}
-            onClick={async () => {
-              setPendingTx(true)
-              await onConfirm(amount)
-              setPendingTx(false)
-              onDismiss()
-            }}
-          >
-            {pendingTx ? TranslateString(488, 'Pending Confirmation') : TranslateString(464, 'Confirm')}
+          <Flex justifyContent="space-between" alignItems="center">
+            <Text fontSize="14px">Current emperor bid:</Text>
+            <Text fontSize="14px" style={{ display: 'flex', alignItems: 'center' }}>
+              {currentBidAmount}
+            </Text>
+          </Flex>
+          <Flex justifyContent="space-between" alignItems="center">
+            <Text fontSize="14px">Min bid increase:</Text>
+            <Text fontSize="14px" style={{ display: 'flex', alignItems: 'center' }}>
+              {minBidIncrease}
+            </Text>
+          </Flex>
+          <Flex justifyContent="space-between" alignItems="center">
+            <Text fontSize="14px">Max bid increase:</Text>
+            <Text fontSize="14px" style={{ display: 'flex', alignItems: 'center' }}>
+              {maxBidIncrease}
+            </Text>
+          </Flex>
+        </BidInfoContainer>
+        <ModalActions>
+          <Button variant="primary" onClick={onDismiss} scale="md">
+            {TranslateString(462, 'Cancel')}
           </Button>
-        </ButtonGroupContainer>
-      </ModalActions>
+          <ButtonGroupContainer>
+            <Link fontSize="14px" bold={false} href="./nests" external color="failure">
+              <Button variant="primary" onClick={onDismiss} scale="md">
+                {TranslateString(462, 'Get xPEFI')}
+              </Button>
+            </Link>
+            <Button
+              scale="md"
+              disabled={!checkCanConfirm()}
+              onClick={async () => {
+                setPendingTx(true)
+                await onConfirm(amount)
+                setPendingTx(false)
+                onDismiss()
+              }}
+            >
+              {pendingTx ? TranslateString(488, 'Pending Confirmation') : TranslateString(464, 'Confirm')}
+            </Button>
+          </ButtonGroupContainer>
+        </ModalActions>
+      </ModalContent>
     </Modal>
   )
 }
+
+// content
+const ModalContent = styled.div`
+  border-top: ${({ theme }) => (theme.isDark ? '1px solid #26183f' : '1px solid #e9eaeb')};
+  padding: 24px 24px 16px;
+`
 
 const BidInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 10px;
   padding: 0px 12px;
+  max-width: 450px;
 `
 
 const ButtonGroupContainer = styled.div`
