@@ -22,6 +22,7 @@ import WithdrawModal from './WithdrawModal'
 import CardTitle from './CardTitle'
 import Card from './Card'
 import CardFooter from './CardFooter'
+import PenaltyConfirmModal from './PenaltyConfirmModal'
 
 const RainbowLight = keyframes`
 	0% {
@@ -187,6 +188,10 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
     <WithdrawModal max={stakedBalance} onConfirm={onUnstake} tokenName={`x${stakingTokenName}`} />,
   )
 
+  const [onPresentPenaltyConfirm] = useModal(
+    <PenaltyConfirmModal handsOnPenalty={handsOnPenalty} onConfirm={onPresentWithdraw} />,
+  )
+
   const fetchEarlyWithdrawalFee = useCallback(async () => {
     const earlyWithdrawalFee = await xPefiContract.methods.earlyWithdrawalFee().call()
     const maxEarlyWithdrawalFee = await xPefiContract.methods.MAX_EARLY_WITHDRAW_FEE().call()
@@ -276,7 +281,7 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
               </div>
             ) : (
               <>
-                <Button disabled={stakedBalance.eq(new BigNumber(0))} onClick={onPresentWithdraw}>
+                <Button disabled={stakedBalance.eq(new BigNumber(0))} onClick={onPresentPenaltyConfirm}>
                   {`Unstake ${stakingTokenName}`}
                 </Button>
                 <StyledActionSpacer />
