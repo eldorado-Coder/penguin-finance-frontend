@@ -225,7 +225,7 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
       {isFinished && sousId !== 0 && <PoolFinishedSash />}
       <CardContent>
         <CardTitle isFinished={isFinished && sousId !== 0}>
-          {tokenName} {TranslateString(348, 'Nest')}
+          {`x${tokenName}`} {TranslateString(348, 'Nest')}
         </CardTitle>
         <Flex justifyContent="flex-end">
           <APYTag variant="primary" outline>
