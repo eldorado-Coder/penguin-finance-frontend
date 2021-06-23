@@ -87,6 +87,8 @@ const APYTag = styled(Tag)`
 
 const HelperTag = styled(Tag)`
   margin-right: 6px;
+  width: 28px;
+  border-radius: 50%;
   span {
     color: #ce022d;
   }
