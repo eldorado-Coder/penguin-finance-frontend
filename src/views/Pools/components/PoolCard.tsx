@@ -13,7 +13,7 @@ import { useSousStake } from 'hooks/useStake'
 import { useSousUnstake } from 'hooks/useUnstake'
 import useBlock from 'hooks/useBlock'
 import { getBalanceNumber, getNumberWithCommas } from 'utils/formatBalance'
-import { getNestApy } from 'utils/apyHelpers'
+import { getNestApr, getNestApy } from 'utils/apyHelpers'
 import { PoolCategory } from 'config/constants/types'
 import { APY_TOOLTIP_TEXT } from 'config'
 import { Pool } from 'state/types'
@@ -36,6 +36,7 @@ const RainbowLight = keyframes`
 `
 
 const StyledCard = styled(Card)<{ isNestPage?: boolean }>`
+  min-width: 350px;
   @media (min-width: 640px) {
     transform: ${(props) => props.isNestPage && 'scale(1.3)'};
     margin-top: ${(props) => props.isNestPage && '60px'};
@@ -74,11 +75,10 @@ const StyledCardAccent = styled.div`
   z-index: -1;
 `
 
-const MultiplierTag = styled(Tag)`
-  margin-left: 4px;
-`
+const MultiplierTag = styled(Tag)``
 
 const APYTag = styled(Tag)`
+  margin-right: 8px;
   span {
     color: #ce022d;
     margin-right: 4px;
@@ -173,6 +173,7 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
   const rewardTokenRatio =
     totalStaked && totalSupply ? new BigNumber(totalStaked).div(new BigNumber(totalSupply)).toJSON() : 1
   const convertedLimit = new BigNumber(stakingLimit).multipliedBy(new BigNumber(10).pow(tokenDecimals))
+  const displayedNestApr = (getNestApr() * 100).toFixed(2)
   const displayedNestApy = (getNestApy() * 100).toFixed(2)
 
   const [onPresentDeposit] = useModal(
@@ -228,6 +229,11 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
           {tokenName} {TranslateString(348, 'Nest')}
         </CardTitle>
         <Flex justifyContent="flex-end">
+          <APYTag variant="primary" outline>
+            <a href="/" data-for="custom-class">
+              <span>{getNumberWithCommas(displayedNestApr)}%</span> APR
+            </a>
+          </APYTag>
           <APYTag variant="primary" outline>
             <a href="/" data-for="custom-class" data-tip={APY_TOOLTIP_TEXT}>
               <span>{getNumberWithCommas(displayedNestApy)}%</span> APY
