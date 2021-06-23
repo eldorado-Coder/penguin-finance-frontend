@@ -32,6 +32,7 @@ import FarmCard, { FarmWithStakedValue } from './components/FarmCard/FarmCard'
 // temporarily hide projects that wont appear during release so that we don't have empty categories (10.06.2021)
 const PROJECTS = ['All', 'Your Farms', 'Penguin Finance', 'Pangolin', 'Gondola', 'Lydia', 'Snowball']
 
+
 //
 const Igloos: React.FC = () => {
   const { path } = useRouteMatch()
@@ -281,33 +282,13 @@ const Igloos: React.FC = () => {
             <Text textTransform="uppercase">Filter by</Text>
             <Select
               value={selectedProject}
-              options={PROJECTS.filter((project) => project !== "Snowball").map((project) => ({
+              options={PROJECTS.map((project) => ({
                 label: project,
                 value: project,
               }))}
               onChange={setProject}
             />
           </FilterWrapper>
-          <SnowballMobileWrapper>
-            <ProjectLabel
-              active={false}
-              data-for="custom-class" 
-              data-tip={SNOWBALL_TOOLTIP_TEXT}
-              fontSize="18px"
-              key="test"
-            >
-              Snowball
-            </ProjectLabel>
-            <CustomToolTip
-              id="custom-class"
-              wrapper="div"
-              delayHide={300}
-              effect="solid"
-              multiline
-              place="left"
-              html
-            />
-          </SnowballMobileWrapper>
         </FilterContainer>
         <IgloosContentContainer>
           <Route exact path={`${path}`}>
@@ -412,12 +393,8 @@ const ProjectFiltersWrapper = styled(Flex)`
   }
 `
 
-const SnowballMobileWrapper = styled.div`
-  margin-top: 10px;
-  display: block;
-  @media (min-width: 1200px) {
-    display: none;
-  }
+const IgloosContentContainer = styled.div`
+  position: relative;
 `
 
 const CustomToolTip = styled(ReactTooltip)`
@@ -440,10 +417,6 @@ const CustomToolTip = styled(ReactTooltip)`
     border-left-color: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#383466!important')};
     border-right-color: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#383466!important')};
   }
-`
-
-const IgloosContentContainer = styled.div`
-  position: relative;
 `
 
 export default Igloos
