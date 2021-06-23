@@ -140,6 +140,9 @@ const AvatarField = styled.div<{ color: string }>`
       }
     }
   }
+  @media only screen and (min-width: 1200px) and (max-width: 1450px) {
+      width: 38px;
+    }
 `
 
 const UnlockButton = styled(Button)`
