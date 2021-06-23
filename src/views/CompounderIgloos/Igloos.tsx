@@ -32,27 +32,6 @@ import FarmCard, { FarmWithStakedValue } from './components/FarmCard/FarmCard'
 // temporarily hide projects that wont appear during release so that we don't have empty categories (10.06.2021)
 const PROJECTS = ['All', 'Your Farms', 'Penguin Finance', 'Pangolin', 'Gondola', 'Lydia', 'Snowball']
 
-const CustomToolTip = styled(ReactTooltip)`
-  width: 100% !important;
-  max-width: 300px !important;
-  background: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#383466!important')};
-  box-shadow: ${(props) => `${props.theme.card.boxShadow}!important`};
-  color: ${({ theme }) => (theme.isDark ? '#2D2159!important' : '#ffffff!important')};
-  opacity: 1 !important;
-  padding: 16px !important;
-  font-size: 16px !important;
-  border-radius: 16px !important;
-  margin-top: 0px !important;
-  > div {
-    width: 100%;
-    white-space: pre-wrap !important;
-  }
-  &:after {
-    border-left-color: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#383466!important')};
-    border-right-color: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#383466!important')};
-  }
-`
-
 //
 const Igloos: React.FC = () => {
   const { path } = useRouteMatch()
@@ -302,13 +281,33 @@ const Igloos: React.FC = () => {
             <Text textTransform="uppercase">Filter by</Text>
             <Select
               value={selectedProject}
-              options={PROJECTS.map((project) => ({
+              options={PROJECTS.filter((project) => project !== "Snowball").map((project) => ({
                 label: project,
                 value: project,
               }))}
               onChange={setProject}
             />
           </FilterWrapper>
+          <SnowballMobileWrapper>
+            <ProjectLabel
+              active={false}
+              data-for="custom-class" 
+              data-tip={SNOWBALL_TOOLTIP_TEXT}
+              fontSize="18px"
+              key="test"
+            >
+              Snowball
+            </ProjectLabel>
+            <CustomToolTip
+              id="custom-class"
+              wrapper="div"
+              delayHide={300}
+              effect="solid"
+              multiline
+              place="left"
+              html
+            />
+          </SnowballMobileWrapper>
         </FilterContainer>
         <IgloosContentContainer>
           <Route exact path={`${path}`}>
@@ -410,6 +409,36 @@ const ProjectFiltersWrapper = styled(Flex)`
   display: none;
   @media (min-width: 1200px) {
     display: flex;
+  }
+`
+
+const SnowballMobileWrapper = styled.div`
+  margin-top: 10px;
+  display: block;
+  @media (min-width: 1200px) {
+    display: none;
+  }
+`
+
+const CustomToolTip = styled(ReactTooltip)`
+  width: 100% !important;
+  max-width: 300px !important;
+  background: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#383466!important')};
+  box-shadow: ${(props) => `${props.theme.card.boxShadow}!important`};
+  color: ${({ theme }) => (theme.isDark ? '#2D2159!important' : '#ffffff!important')};
+  opacity: 1 !important;
+  padding: 16px !important;
+  font-size: 16px !important;
+  border-radius: 16px !important;
+  margin-top: 0px !important;
+  line-height: 25px !important;
+  > div {
+    width: 100%;
+    white-space: pre-wrap !important;
+  }
+  &:after {
+    border-left-color: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#383466!important')};
+    border-right-color: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#383466!important')};
   }
 `
 
