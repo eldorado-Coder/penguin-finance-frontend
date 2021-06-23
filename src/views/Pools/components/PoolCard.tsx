@@ -78,10 +78,17 @@ const StyledCardAccent = styled.div`
 const MultiplierTag = styled(Tag)``
 
 const APYTag = styled(Tag)`
-  margin-right: 8px;
+  margin-right: 6px;
   span {
     color: #ce022d;
     margin-right: 4px;
+  }
+`
+
+const HelperTag = styled(Tag)`
+  margin-right: 6px;
+  span {
+    color: #ce022d;
   }
 `
 
@@ -230,7 +237,7 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
         </CardTitle>
         <Flex justifyContent="flex-end">
           {/* <APYTag variant="primary" outline>
-            <a href="/" data-for="custom-class">
+            <a href="/">
               <span>{getNumberWithCommas(displayedNestApr)}%</span> APR
             </a>
           </APYTag> */}
@@ -248,6 +255,15 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
               html
             />
           </APYTag>
+          <HelperTag variant="primary" outline>
+            <a
+              href="https://penguin-finance.gitbook.io/penguin-finance/summary/penguin-nests-staking-and-fee-collection"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span>?</span>
+            </a>
+          </HelperTag>
           <MultiplierTag variant="primary">160X</MultiplierTag>
         </Flex>
         <div style={{ marginBottom: '8px', display: 'flex', alignItems: 'center' }}>
