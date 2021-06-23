@@ -97,6 +97,10 @@ const GridItem = styled.div`
   max-width: 280px;
   margin: 0px 4px;
 
+  @media only screen and (min-width: 1200px) {
+      margin-left: 80px;
+  }
+
   @media (min-width: 640px) {
     max-width: 280px;
     width: 260px;
@@ -207,7 +211,7 @@ const Emperor: React.FC = () => {
             <img className="jackpot-unlock" src={JACKPOTS.UNLOCK} alt="jackpot_unlock" />
           </ChestWrapper>
         )}
-        <Grid align="center" marginTop={{ xs: 100, sm: 120 }}>
+        <Grid align="center" marginTop={{ xs: 80, sm: 100 }}>
           <GridItem>
             <EmperorBlock />
           </GridItem>

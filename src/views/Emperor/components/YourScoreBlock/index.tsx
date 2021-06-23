@@ -107,6 +107,9 @@ const RegisterButtonContainer = styled.div`
   button {
     width: 200px;
     border-radius: 30px;
+    @media only screen and (min-width: 1200px) and (max-width: 1450px) {
+      width: 140px;
+    }
   }
 `
 
@@ -115,6 +118,9 @@ const CustomizeStyleButtonContainer = styled.div`
     width: 200px;
     background: ${(props) => props.theme.colors.secondary};
     border-radius: 30px;
+    @media only screen and (min-width: 1200px) and (max-width: 1450px) {
+      width: 140px;
+    }
   }
 `
 
