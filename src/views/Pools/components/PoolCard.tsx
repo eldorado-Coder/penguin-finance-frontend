@@ -229,11 +229,11 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
           {tokenName} {TranslateString(348, 'Nest')}
         </CardTitle>
         <Flex justifyContent="flex-end">
-          <APYTag variant="primary" outline>
+          {/* <APYTag variant="primary" outline>
             <a href="/" data-for="custom-class">
               <span>{getNumberWithCommas(displayedNestApr)}%</span> APR
             </a>
-          </APYTag>
+          </APYTag> */}
           <APYTag variant="primary" outline>
             <a href="/" data-for="custom-class" data-tip={APY_TOOLTIP_TEXT}>
               <span>{getNumberWithCommas(displayedNestApy)}%</span> APY
