@@ -362,8 +362,9 @@ export const useNestApy = () => {
 }
 
 export const useCompoundApy = ({ normalApy, type }: { normalApy: string; type: string }) => {
-  if (!normalApy) return ''
+  const nestAPY = useNestApr()
 
+  if (!normalApy) return ''
   const _normalApy = Number(normalApy) / 100
 
   if (type === 'Lydia' || type === 'Pangolin' || type === 'Gondola') {
@@ -373,8 +374,6 @@ export const useCompoundApy = ({ normalApy, type }: { normalApy: string; type: s
 
   if (type === 'Penguin') {
     const nestStakingBips = 5000
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const nestAPY = useNestApr()
     const compoundApy1 = (1 + (_normalApy * (1 - nestStakingBips / 10000)) / 730) ** 730 - 1
     const compoundApy2 = (nestStakingBips / 10000) * _normalApy * (((nestAPY / 2) * 729) / 730 + 1)
     return ((compoundApy1 + compoundApy2) * 100).toFixed(2)
