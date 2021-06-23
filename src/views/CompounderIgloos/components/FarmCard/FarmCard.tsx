@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { Flex, Text, Image, Button, useModal, Tag } from 'penguinfinance-uikit2'
 import { Farm } from 'state/types'
 import useI18n from 'hooks/useI18n'
-import { useCompounderFarmFromSymbol, useCompounderFarmUser } from 'state/hooks'
+import { useCompounderFarmFromSymbol, useCompounderFarmUser, useCompoundApy } from 'state/hooks'
 import { useStrategyApprove } from 'hooks/useApprove'
 import useWeb3 from 'hooks/useWeb3'
 import { getAddress } from 'utils/addressHelpers'
@@ -22,7 +22,7 @@ import useCompounderStake from 'hooks/useCompounderStake'
 import useCompounderUnstake from 'hooks/useCompounderUnstake'
 import useCompounderClaimXPefi from 'hooks/useCompounderClaimXPefi'
 import { getBalanceNumber } from 'utils/formatBalance'
-import { getCompoundApy } from 'utils/apyHelpers'
+// import { getCompoundApy } from 'utils/apyHelpers'
 import UnlockButton from 'components/UnlockButton'
 import DepositModal from '../DepositModal'
 import WithdrawModal from '../WithdrawModal'
@@ -396,7 +396,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
     tvl: stakedValueFormatted,
     farmTvl: farmTvlValueFormatted,
     normalAPY: farmAPY,
-    compoundAPY: getCompoundApy({ normalApy: farmAPY, type: farm.type }),
+    compoundAPY: useCompoundApy({ normalApy: farmAPY, type: farm.type }),
   }
 
   const renderFarmLogo = () => {
