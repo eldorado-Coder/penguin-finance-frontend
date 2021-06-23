@@ -2,10 +2,11 @@ import React, { useEffect, useCallback, useState, useMemo } from 'react'
 import { Route, useRouteMatch } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import BigNumber from 'bignumber.js'
-import { Text, Flex } from 'penguinfinance-uikit2'
+import { Text, Flex, Tag } from 'penguinfinance-uikit2'
+import ReactTooltip from 'react-tooltip'
 import { useWeb3React } from '@web3-react/core'
 import styled from 'styled-components'
-import { SECONDS_PER_YEAR, WEEKS_PER_YEAR, PEFI_POOL_PID } from 'config'
+import { SECONDS_PER_YEAR, WEEKS_PER_YEAR, PEFI_POOL_PID, SNOWBALL_TOOLTIP_TEXT } from 'config'
 import useTheme from 'hooks/useTheme'
 import useBlockGenerationTime from 'hooks/useBlockGenerationTime'
 import Page from 'components/layout/Page'
@@ -30,6 +31,27 @@ import FarmCard, { FarmWithStakedValue } from './components/FarmCard/FarmCard'
 
 // temporarily hide projects that wont appear during release so that we don't have empty categories (10.06.2021)
 const PROJECTS = ['All', 'Your Farms', 'Penguin Finance', 'Pangolin', 'Gondola', 'Lydia', 'Snowball']
+
+const CustomToolTip = styled(ReactTooltip)`
+  width: 100% !important;
+  max-width: 300px !important;
+  background: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#383466!important')};
+  box-shadow: ${(props) => `${props.theme.card.boxShadow}!important`};
+  color: ${({ theme }) => (theme.isDark ? '#2D2159!important' : '#ffffff!important')};
+  opacity: 1 !important;
+  padding: 16px !important;
+  font-size: 16px !important;
+  border-radius: 16px !important;
+  margin-top: 0px !important;
+  > div {
+    width: 100%;
+    white-space: pre-wrap !important;
+  }
+  &:after {
+    border-top-color: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#383466!important')};
+    border-bottom-color: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#383466!important')};
+  }
+`
 
 //
 const Igloos: React.FC = () => {
@@ -242,7 +264,29 @@ const Igloos: React.FC = () => {
             />
           </LabelWrapper>
           <ProjectFiltersWrapper>
-            {PROJECTS.map((project) => (
+            {PROJECTS.map((project) => project === "Snowball" ? (
+              <Tag variant="primary" outline>
+                <ProjectLabel
+                  data-for="custom-class" 
+                  data-tip={SNOWBALL_TOOLTIP_TEXT}
+                  fontSize="18px"
+                  active={project === selectedProject}
+                  key={project}
+                  onClick={handleSelectProject(project)}
+                >
+                  {project}
+                </ProjectLabel>
+                <CustomToolTip
+                  id="custom-class"
+                  wrapper="div"
+                  delayHide={300}
+                  effect="solid"
+                  multiline
+                  place="bottom"
+                  html
+                />
+              </Tag>
+            ) : (
               <ProjectLabel
                 fontSize="18px"
                 active={project === selectedProject}
@@ -251,7 +295,8 @@ const Igloos: React.FC = () => {
               >
                 {project}
               </ProjectLabel>
-            ))}
+            )
+            )}
           </ProjectFiltersWrapper>
           <FilterWrapper>
             <Text textTransform="uppercase">Filter by</Text>
