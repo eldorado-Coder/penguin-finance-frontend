@@ -2,7 +2,7 @@ import React, { useEffect, useCallback, useState, useMemo } from 'react'
 import { Route, useRouteMatch } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import BigNumber from 'bignumber.js'
-import { Text, Flex, Tag } from 'penguinfinance-uikit2'
+import { Text, Flex } from 'penguinfinance-uikit2'
 import ReactTooltip from 'react-tooltip'
 import { useWeb3React } from '@web3-react/core'
 import styled from 'styled-components'
@@ -48,8 +48,8 @@ const CustomToolTip = styled(ReactTooltip)`
     white-space: pre-wrap !important;
   }
   &:after {
-    border-top-color: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#383466!important')};
-    border-bottom-color: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#383466!important')};
+    border-left-color: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#383466!important')};
+    border-right-color: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#383466!important')};
   }
 `
 
@@ -265,7 +265,7 @@ const Igloos: React.FC = () => {
           </LabelWrapper>
           <ProjectFiltersWrapper>
             {PROJECTS.map((project) => project === "Snowball" ? (
-              <Tag variant="primary" outline>
+              <div>
                 <ProjectLabel
                   data-for="custom-class" 
                   data-tip={SNOWBALL_TOOLTIP_TEXT}
@@ -282,10 +282,10 @@ const Igloos: React.FC = () => {
                   delayHide={300}
                   effect="solid"
                   multiline
-                  place="bottom"
+                  place="left"
                   html
                 />
-              </Tag>
+              </div>
             ) : (
               <ProjectLabel
                 fontSize="18px"
