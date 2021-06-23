@@ -13,7 +13,7 @@ import { useSousStake } from 'hooks/useStake'
 import { useSousUnstake } from 'hooks/useUnstake'
 import useBlock from 'hooks/useBlock'
 import { getBalanceNumber, getNumberWithCommas } from 'utils/formatBalance'
-import { getNestApr, getNestApy } from 'utils/apyHelpers'
+import { useNestApr, useNestApy } from 'state/hooks'
 import { PoolCategory } from 'config/constants/types'
 import { APY_TOOLTIP_TEXT } from 'config'
 import { Pool } from 'state/types'
@@ -173,8 +173,8 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
   const rewardTokenRatio =
     totalStaked && totalSupply ? new BigNumber(totalStaked).div(new BigNumber(totalSupply)).toJSON() : 1
   const convertedLimit = new BigNumber(stakingLimit).multipliedBy(new BigNumber(10).pow(tokenDecimals))
-  const displayedNestApr = (getNestApr() * 100).toFixed(2)
-  const displayedNestApy = (getNestApy() * 100).toFixed(2)
+  const displayedNestApr = (useNestApr() * 100).toFixed(2)
+  const displayedNestApy = (useNestApy() * 100).toFixed(2)
 
   const [onPresentDeposit] = useModal(
     <DepositModal
