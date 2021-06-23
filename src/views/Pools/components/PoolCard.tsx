@@ -248,7 +248,7 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
               html
             />
           </APYTag>
-          <MultiplierTag variant="primary">10X</MultiplierTag>
+          <MultiplierTag variant="primary">160X</MultiplierTag>
         </Flex>
         <div style={{ marginBottom: '8px', display: 'flex', alignItems: 'center' }}>
           <Flex minWidth="100%" alignItems="center">
