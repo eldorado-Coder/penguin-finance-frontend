@@ -496,7 +496,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
             </Text>
             {farm.lpSymbol.split(' ')[0] === 'AVAX-PNG' && (
               <NoFeesTag variant="primary" index={index} outline>
-                0% FEES
+                0% REWARD FEES
               </NoFeesTag>
             )}
           </IglooTitleWrapper>
