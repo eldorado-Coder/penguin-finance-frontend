@@ -98,7 +98,7 @@ const GridItem = styled.div`
   margin: 0px 4px;
 
   @media only screen and (min-width: 1200px) {
-      margin-left: 80px;
+    margin-left: 80px;
   }
 
   @media (min-width: 640px) {
@@ -233,7 +233,7 @@ const Emperor: React.FC = () => {
   }
 
   const emperorEnded = false
-  const emperorDefaultVideo = '/videos/penguin_emperor.mp4'
+  const emperorDefaultVideo = 'https://res.cloudinary.com/dbyunrpzq/video/upload/v1624544908/penguin_emperor_ldeorc.mp4'
   // to change the video of emperor winner page background video, please change this video path
   const emperorWinnerVideo = '/videos/penguin_emperor_winner.mp4'
 
