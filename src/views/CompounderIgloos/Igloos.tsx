@@ -32,7 +32,6 @@ import FarmCard, { FarmWithStakedValue } from './components/FarmCard/FarmCard'
 // temporarily hide projects that wont appear during release so that we don't have empty categories (10.06.2021)
 const PROJECTS = ['All', 'Your Farms', 'Penguin Finance', 'Pangolin', 'Gondola', 'Lydia', 'Snowball']
 
-
 //
 const Igloos: React.FC = () => {
   const { path } = useRouteMatch()
@@ -244,11 +243,31 @@ const Igloos: React.FC = () => {
             />
           </LabelWrapper>
           <ProjectFiltersWrapper>
-            {PROJECTS.map((project) => project === "Snowball" ? (
-              <div>
+            {PROJECTS.map((project) =>
+              project === 'Snowball' ? (
+                <div>
+                  <ProjectLabel
+                    data-for="custom-class"
+                    data-tip={SNOWBALL_TOOLTIP_TEXT}
+                    fontSize="18px"
+                    active={project === selectedProject}
+                    key={project}
+                    onClick={handleSelectProject(project)}
+                  >
+                    {project}
+                  </ProjectLabel>
+                  <CustomToolTip
+                    id="custom-class"
+                    wrapper="div"
+                    delayHide={300}
+                    effect="solid"
+                    multiline
+                    place="left"
+                    html
+                  />
+                </div>
+              ) : (
                 <ProjectLabel
-                  data-for="custom-class" 
-                  data-tip={SNOWBALL_TOOLTIP_TEXT}
                   fontSize="18px"
                   active={project === selectedProject}
                   key={project}
@@ -256,26 +275,7 @@ const Igloos: React.FC = () => {
                 >
                   {project}
                 </ProjectLabel>
-                <CustomToolTip
-                  id="custom-class"
-                  wrapper="div"
-                  delayHide={300}
-                  effect="solid"
-                  multiline
-                  place="left"
-                  html
-                />
-              </div>
-            ) : (
-              <ProjectLabel
-                fontSize="18px"
-                active={project === selectedProject}
-                key={project}
-                onClick={handleSelectProject(project)}
-              >
-                {project}
-              </ProjectLabel>
-            )
+              ),
             )}
           </ProjectFiltersWrapper>
           <FilterWrapper>
@@ -406,12 +406,17 @@ const CustomToolTip = styled(ReactTooltip)`
   opacity: 1 !important;
   padding: 16px !important;
   font-size: 16px !important;
+  border: 2px solid #fff !important;
   border-radius: 16px !important;
   margin-top: 0px !important;
   line-height: 25px !important;
   > div {
     width: 100%;
     white-space: pre-wrap !important;
+  }
+  &:before {
+    border-right-color: #ffffff !important;
+    border-left-color: #ffffff !important;
   }
   &:after {
     border-left-color: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#383466!important')};
