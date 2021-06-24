@@ -350,7 +350,7 @@ export const useDonations = () => {
 export const useNestAprPerDay = (): number => {
   const nestPool = usePoolFromPid(1)
   const totalStakedInNest = nestPool.totalStaked
-  return (CURRENT_NEST_DAILY_REWARDS / getBalanceNumber(totalStakedInNest)) * 100
+  return ((CURRENT_NEST_DAILY_REWARDS / getBalanceNumber(totalStakedInNest)) * 100)
 }
 
 export const useNestApr = (): number => {
@@ -358,7 +358,7 @@ export const useNestApr = (): number => {
 }
 
 export const useNestApy = () => {
-  return ((1 + (useNestAprPerDay()/100) / 1000) ** 1000 - 1)*100
+  return (((1 + (useNestApr()/100) / 1000) ** 1000 - 1) * 100)
 }
 
 export const useCompoundApy = ({ normalApy, type }: { normalApy: string; type: string }) => {
