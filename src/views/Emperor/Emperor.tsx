@@ -96,9 +96,10 @@ const GridItem = styled.div`
   margin-bottom: '10px';
   max-width: 280px;
   margin: 0px 4px;
+  width: 200px;
 
   @media only screen and (min-width: 1200px) {
-      margin-left: 80px;
+    margin-left: 80px;
   }
 
   @media (min-width: 640px) {
@@ -150,6 +151,21 @@ const Grid = styled.div<{ align: string; marginTop?: { xs?: number; sm?: number;
   padding: 0 5%;
   width: 100%;
 `
+
+const PGGRid = styled(Grid)`
+  @media (min-width: 640px) and (max-height: 900px) {
+    margin-top: -80px;
+  }
+  @media (min-width: 768px) and (max-height: 900px) {
+    margin-top: -140px;
+  }
+  @media (min-width: 992px) and (max-height: 900px) {
+    margin-top: -160px;
+  }
+  @media (min-width: 1200px) and (max-height: 900px) {
+    margin-top: -140px;
+  }
+`;
 
 const EmperorBgContainer = styled.video`
   object-fit: fill;
@@ -216,14 +232,14 @@ const Emperor: React.FC = () => {
             <EmperorBlock />
           </GridItem>
         </Grid>
-        <Grid align="between" marginTop={{ xs: -40, sm: -80, md: -120, lg: -160 }}>
+        <PGGRid align="between" marginTop={{ xs: -40, sm: -190, md: -200, lg: -200 }}>
           <GridItem>
             <TopPenguinsBlock />
           </GridItem>
           <GridItem>
             <YourScoreBlock />
           </GridItem>
-        </Grid>
+        </PGGRid>
       </>
     )
   }

@@ -43,7 +43,8 @@ const TitleBgWrapper = styled.div<{ color: string, account: string }>`
     transform: ${props => props.account && 'scale(1.5)'};
   }
   @media (min-width: 1200px) and (max-height: 800px) {
-    transform: ${props => props.account && 'scale(1.3)'};
+    transform: ${props => props.account && 'scale(1.4)'};
+    margin-top: 16px;
   }
 `
 

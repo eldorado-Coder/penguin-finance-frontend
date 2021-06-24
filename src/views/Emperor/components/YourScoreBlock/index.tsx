@@ -99,7 +99,7 @@ const RegisterContainer = styled.div`
   position: relative;
   z-index: 10;
   button {
-    margin-top: 10px;
+    margin-top: 8px;
   }
 `
 
