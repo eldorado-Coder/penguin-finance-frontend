@@ -494,11 +494,9 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
                 ? `${farm.lpSymbol.split(' ')[0]} lgloo`
                 : `${farm.type} ${farm.lpSymbol.split(' ')[0]}`}
             </Text>
-            {farm.lpSymbol.split(' ')[0] === 'AVAX-PNG' && (
-              <NoFeesTag variant="primary" index={index} outline>
-                0% REWARD FEES
-              </NoFeesTag>
-            )}
+            <NoFeesTag variant="primary" index={index} outline>
+              0% REWARD FEES
+            </NoFeesTag>
           </IglooTitleWrapper>
           <Flex justifyContent="flex-start" flexWrap="wrap">
             {!account ? <PGUnlockButton index={index} scale="sm" mt="4px" fullWidth /> : renderActionButtons()}
