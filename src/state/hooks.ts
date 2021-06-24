@@ -358,7 +358,8 @@ export const useNestApr = (): number => {
 }
 
 export const useNestApy = () => {
-  return (1 + useNestApr() / DAYS_PER_YEAR) ** DAYS_PER_YEAR - 1
+  const staticFee = 20
+  return (1 + useNestApr() / DAYS_PER_YEAR) ** DAYS_PER_YEAR - 1 + staticFee
 }
 
 export const useCompoundApy = ({ normalApy, type }: { normalApy: string; type: string }) => {
