@@ -6,8 +6,11 @@ export const CardBlock = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
   width: 100%;
+  position: relative;
+  &:hover {
+    z-index: 15;
+  }
   @media (min-width: 1200px) and (max-height: 800px) {
     width: 70%;
     margin-left: 15%;

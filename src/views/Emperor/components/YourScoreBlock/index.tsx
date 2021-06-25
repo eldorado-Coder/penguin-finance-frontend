@@ -15,29 +15,29 @@ import CustomStyleModal from './CustomStyleModal'
 import { getPenguinColor } from '../utils'
 import { UnlockButton, CardBlockHeader, CardBlock } from '../UI'
 
-const TitleBgWrapper = styled.div<{ color: string, account: string }>`
+const TitleBgWrapper = styled.div<{ color: string; account: string }>`
   z-index: -1;
   width: 100%;
   text-align: center;
-  margin-top: ${props => props.account ? '7%' : '-30%'};
+  margin-top: ${(props) => (props.account ? '7%' : '-30%')};
   position: absolute;
 
   svg {
     width: 300px;
   }
 
-  transform: ${props => props.account && 'scale(1.3)'};
+  transform: ${(props) => props.account && 'scale(1.3)'};
   @media (min-width: 640px) {
-    transform: ${props => props.account && 'scale(1.4)'};
+    transform: ${(props) => props.account && 'scale(1.4)'};
   }
   @media (min-width: 768px) {
-    margin-top: ${props => props.account ? '7%' : '-32%'};
+    margin-top: ${(props) => (props.account ? '7%' : '-32%')};
   }
   @media (min-width: 1200px) {
-    margin-top: ${props => props.account ? '7%' : '-24%'};
+    margin-top: ${(props) => (props.account ? '7%' : '-24%')};
   }
   @media (min-width: 1200px) and (max-height: 800px) {
-    transform: ${props => props.account && 'scale(1.5)'};
+    transform: ${(props) => props.account && 'scale(1.5)'};
   }
 `
 
@@ -51,6 +51,7 @@ const CardBlockContent = styled.div<{ account: string }>`
   margin-top: 25%;
   min-width: 120px;
   padding: 24px 8px 8px;
+
   @media (min-width: 640px) {
     width: 100%;
     margin-top: 25%;
@@ -59,20 +60,20 @@ const CardBlockContent = styled.div<{ account: string }>`
   @media (min-width: 768px) {
     width: 100%;
     padding: 64px 20px 16px;
-    padding-top: ${props => !props.account && '24px'};
+    padding-top: ${(props) => !props.account && '24px'};
     margin-top: 22%;
   }
   @media (min-width: 1200px) {
     width: 100%;
     border-radius: 16px;
     padding: 48px 24px 16px;
-    padding-top: ${props => !props.account && '24px'};
+    padding-top: ${(props) => !props.account && '24px'};
     margin-top: 30%;
   }
   @media (min-width: 1450px) {
     min-width: 240px;
     padding: 40px 24px 16px;
-    padding-top: ${props => !props.account && '24px'};
+    padding-top: ${(props) => !props.account && '24px'};
     margin-top: 32%;
   }
   @media (min-width: 1200px) and (max-height: 800px) {
@@ -180,24 +181,24 @@ const YourScoreBlock: React.FC = () => {
     <CardBlock>
       <CardBlockHeader>
         <TitleBgWrapper color={getPenguinColor(myEmperor)} account={account}>
-          {account ? 
+          {account ? (
             <img
               src={`${process.env.PUBLIC_URL}/images/emperor/banner/your_penguin_banner.svg`}
               width="100%"
               height="120px"
-              alt='blitz-title'
+              alt="blitz-title"
             />
-            :
-          <SvgIcon
-            src={
-              myStatus === 'registered' || myStatus === 'king'
-                ? `${process.env.PUBLIC_URL}/images/emperor/banner/your_penguin_banner.svg`
-                : `${process.env.PUBLIC_URL}/images/emperor/banner/your_score_banner_locked.svg`
-            }
-            width="100%"
-            height="20px"
-          />
-        }
+          ) : (
+            <SvgIcon
+              src={
+                myStatus === 'registered' || myStatus === 'king'
+                  ? `${process.env.PUBLIC_URL}/images/emperor/banner/your_penguin_banner.svg`
+                  : `${process.env.PUBLIC_URL}/images/emperor/banner/your_score_banner_locked.svg`
+              }
+              width="100%"
+              height="20px"
+            />
+          )}
         </TitleBgWrapper>
       </CardBlockHeader>
       <CardBlockContent account={account}>

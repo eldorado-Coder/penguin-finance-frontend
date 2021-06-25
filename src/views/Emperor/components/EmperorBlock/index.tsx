@@ -114,9 +114,7 @@ const MyPenguinImageWrapper = styled.div<{ penguin: string; color: string }>`
   width: 9.5%;
   right: 26%;
   bottom: 17%;
-  &:hover {
-    z-index: 11;
-  }
+  z-index: 11;
 
   svg {
     transform: scaleX(-1);
