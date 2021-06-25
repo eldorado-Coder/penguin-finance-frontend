@@ -26,10 +26,7 @@ const ChestWrapper = styled.div<{ jackpot: string }>`
   width: 15%;
   left: 22%;
   bottom: 18%;
-
-  &:hover {
-    z-index: 15;
-  }
+  z-index: 11;
 
   img {
     cursor: pointer;
@@ -161,7 +158,7 @@ const PGGRid = styled(Grid)`
   @media (min-width: 1200px) and (max-height: 900px) {
     margin-top: -140px;
   }
-`;
+`
 
 const EmperorBgContainer = styled.video`
   object-fit: fill;
@@ -228,7 +225,7 @@ const Emperor: React.FC = () => {
             <EmperorBlock />
           </GridItem>
         </Grid>
-        {account && 
+        {account && (
           <PGGRid align="between" marginTop={{ xs: -40, sm: -190, md: -200, lg: -200 }}>
             <GridItem>
               <TopPenguinsBlock />
@@ -237,7 +234,7 @@ const Emperor: React.FC = () => {
               <YourScoreBlock />
             </GridItem>
           </PGGRid>
-        }
+        )}
       </>
     )
   }

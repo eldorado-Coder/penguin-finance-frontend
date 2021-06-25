@@ -316,9 +316,9 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
             ))}
         </StyledCardActions>
         <StyledDetails>
-          <div style={{ flex: 1 }}>
-            <Text color="primary">{TranslateString(384, 'Your Stake')}:</Text>
-          </div>
+          <Label style={{ flex: 1 }}>
+            <Text color="primary">{TranslateString(384, 'Your Stake:')}</Text>
+          </Label>
           <Balance fontSize="14px" isDisabled={isFinished} value={getBalanceNumber(stakedBalance)} />
           <TokenSymbol>
             <Text color="primary" fontSize="14px">
@@ -327,7 +327,9 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
           </TokenSymbol>
         </StyledDetails>
         <StyledDetails>
-          <div style={{ flex: 1 }}> </div>
+          <Label style={{ flex: 1 }}>
+            <Text color="primary">{TranslateString(384, 'PEFI equivalent:')}</Text>
+          </Label>
           <Balance
             fontSize="14px"
             isDisabled={isFinished}
@@ -381,6 +383,10 @@ const StyledActionSpacer = styled.div`
 const StyledDetails = styled.div`
   display: flex;
   font-size: 14px;
+`
+
+const Label = styled.div`
+  margin-left: 20px;
 `
 
 const TokenSymbol = styled.div`
