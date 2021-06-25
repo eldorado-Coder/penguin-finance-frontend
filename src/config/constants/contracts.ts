@@ -19,10 +19,6 @@ export default {
     43113: '',
     43114: '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7',
   },
-  emperor: {
-    43113: '',
-    43114: '0x1b70719e9bFb956606F5e90a9Ee7d4b1e7Ae2E6e',
-  },
   lottery: {
     43113: '',
     43114: '0x7b7b1583De1DeB32Ce6605F6deEbF24A0671c17C',
@@ -75,14 +71,6 @@ export default {
     43113: '',
     43114: '0xD79A36056c271B988C5F1953e664E61416A9820F',
   },
-  withoutBorders: {
-    43113: '',
-    43114: '0xCDcdF40215929d5b73Fa566791B19832ce1B4b51',
-  },
-  charityPenguinDB: {
-    43113: '',
-    43114: '0xaAD41CCf76c035DAF80d662584823215f2e0487D',
-  },
   png: {
     43113: '',
     43114: '0x60781C2586D68229fde47564546784ab3fACA982',
@@ -110,5 +98,25 @@ export default {
   pangolinManager: {
     43113: '',
     43114: '0x912b5D41656048Ef681eFa9D32488a3fFE397994',
+  },
+
+  // emperor
+  emperor: {
+    43113: '',
+    43114: '0x1b70719e9bFb956606F5e90a9Ee7d4b1e7Ae2E6e',
+  },
+  emperorPenguinDB: {
+    43113: '',
+    43114: '0x5B0A609AdA79F37054cBeEb35C00cC64B748f1eF',
+  },
+
+  // covid emperor
+  withoutBorders: {
+    43113: '',
+    43114: '0xCDcdF40215929d5b73Fa566791B19832ce1B4b51',
+  },
+  charityPenguinDB: {
+    43113: '',
+    43114: '0xaAD41CCf76c035DAF80d662584823215f2e0487D',
   },
 }

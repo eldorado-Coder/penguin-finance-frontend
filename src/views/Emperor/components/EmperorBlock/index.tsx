@@ -17,12 +17,12 @@ const CardBlock = styled(Block)`
   }
 `
 
-const TitleBgWrapper = styled.div<{ color: string, account: string }>`
+const TitleBgWrapper = styled.div<{ color: string; account: string }>`
   z-index: -1;
   width: 100%;
   text-align: center;
   position: absolute;
-  margin-top: ${props => props.account ? 0 : '-30%'};
+  margin-top: ${(props) => (props.account ? 0 : '-30%')};
 
   svg {
     #Banner-Avatar {
@@ -34,16 +34,16 @@ const TitleBgWrapper = styled.div<{ color: string, account: string }>`
 
   transform: scale(1);
   @media (min-width: 640px) {
-    transform: ${props => props.account && 'scale(1.3)'};
+    transform: ${(props) => props.account && 'scale(1.3)'};
   }
   @media (min-width: 768px) {
-    margin-top: ${props => props.account ? '-5%' : '-30%'};
+    margin-top: ${(props) => (props.account ? '-5%' : '-30%')};
   }
   @media (min-width: 1200px) {
-    transform: ${props => props.account && 'scale(1.5)'};
+    transform: ${(props) => props.account && 'scale(1.5)'};
   }
   @media (min-width: 1200px) and (max-height: 800px) {
-    transform: ${props => props.account && 'scale(1.4)'};
+    transform: ${(props) => props.account && 'scale(1.4)'};
     margin-top: 16px;
   }
 `
@@ -150,19 +150,20 @@ const EmperorBlock: React.FC = () => {
     <CardBlock>
       <CardBlockHeader>
         <TitleBgWrapper color={!account && getPenguinColor(currentEmperor)} account={account}>
-          {account ? 
+          {account ? (
             <img
               src={`${process.env.PUBLIC_URL}/images/emperor/banner/emperor_blitz_title.svg`}
-              width='100%'
+              width="100%"
               height="120px"
-              alt='blitz-title'
+              alt="blitz-title"
             />
-            : <SvgIcon
+          ) : (
+            <SvgIcon
               src={`${process.env.PUBLIC_URL}/images/emperor/banner/emperor_banner_locked.svg`}
               width="100%"
               height="120px"
             />
-          }
+          )}
         </TitleBgWrapper>
       </CardBlockHeader>
       <CardBlockContent>
@@ -176,7 +177,6 @@ const EmperorBlock: React.FC = () => {
             <Text bold color="secondary" fontSize="22px">
               {TranslateString(1074, currentEmperorNickname)}
             </Text>
-            {/* <Text color="secondary" fontSize="14px">{getShortenAddress(currentEmperorAddress)}</Text> */}
             <Text bold color="secondary" fontSize="14px">{`Current Bid: ${currentEmperorBidAmount.toFixed(
               2,
             )} xPEFI`}</Text>
