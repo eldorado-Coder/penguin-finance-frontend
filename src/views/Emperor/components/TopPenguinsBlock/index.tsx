@@ -125,6 +125,10 @@ const AddressField = styled.div`
   align-items: center;
   display: flex;
   justify-content: center;
+  
+  @media only screen and (min-width: 1200px) and (max-width: 1450px) {
+    width: 30%;
+  }
 `
 
 const AvatarField = styled.div<{ color: string }>`
@@ -141,8 +145,9 @@ const AvatarField = styled.div<{ color: string }>`
     }
   }
   @media only screen and (min-width: 1200px) and (max-width: 1450px) {
-      width: 38px;
-    }
+    width: 30px;
+    min-width: 30px;
+  }
 `
 
 const UnlockButton = styled(Button)`
