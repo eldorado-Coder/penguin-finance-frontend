@@ -21,7 +21,7 @@ import getLiquidityUrlPathParts from 'utils/getLiquidityUrlPathParts'
 import useCompounderStake from 'hooks/useCompounderStake'
 import useCompounderUnstake from 'hooks/useCompounderUnstake'
 import useCompounderClaimXPefi from 'hooks/useCompounderClaimXPefi'
-import { getBalanceNumber } from 'utils/formatBalance'
+import { getBalanceNumber, getFullDisplayBalance } from 'utils/formatBalance'
 // import { getCompoundApy } from 'utils/apyHelpers'
 import UnlockButton from 'components/UnlockButton'
 import DepositModal from '../DepositModal'
@@ -288,6 +288,11 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
   const [requestedAction, setRequestedAction] = useState(false)
 
   const rawStakedReceiptBalance = getBalanceNumber(stakedReceiptBalance)
+
+  const displayStakedBalance = (!stakedReceiptBalance || Number(stakedReceiptBalance) === 0)
+    ? '0'
+    : parseFloat(getFullDisplayBalance(stakedReceiptBalance)).toFixed(3)
+
   const pendingXPefiValue = getBalanceNumber(pendingXPefi)
   const { quoteTokenAddresses, quoteTokenSymbol, tokenAddresses } = farm
 
@@ -393,7 +398,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
   const farmAPY = farm.apy && farm.apy.times(new BigNumber(100)).toNumber().toFixed(2)
 
   const data = {
-    tvl: stakedValueFormatted,
+    tvl: displayStakedBalance,
     farmTvl: farmTvlValueFormatted,
     normalAPY: farmAPY,
     compoundAPY: useCompoundApy({ normalApy: farmAPY, type: farm.type }),
@@ -457,6 +462,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
 
     return `
               <h3 style="margin-bottom: 5px;">Underlying Assets</h3>
+              <p style="margin-bottom: 5px;">${stakedValueFormatted}</p>
               <p style="margin-bottom: 5px;">${userQuoteTokenBalanceInLp.toLocaleString(undefined, {
                 maximumFractionDigits: 2,
               })} ${farm.quoteTokenSymbol}</p>
