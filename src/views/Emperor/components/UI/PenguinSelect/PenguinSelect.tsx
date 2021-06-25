@@ -72,6 +72,10 @@ const DropDownContainer = styled.div<{ isOpen: boolean; width: number; height: n
         border-radius: 0 0 16px 16px;
         box-shadow: ${({ theme }) => theme.tooltip.boxShadow};
 
+        @media (max-height: 900px) {
+          max-height: 180px;
+        }
+
         &::-webkit-scrollbar {
           width: 4px;
         }
