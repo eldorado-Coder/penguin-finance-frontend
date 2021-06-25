@@ -14,6 +14,11 @@
                 "internalType": "address"
             },
             {
+                "type": "address",
+                "name": "_penguinDatabase",
+                "internalType": "address"
+            },
+            {
                 "type": "uint256",
                 "name": "_jackpotFeeBP",
                 "internalType": "uint256"
@@ -24,8 +29,18 @@
                 "internalType": "uint256"
             },
             {
+                "type": "uint256[5]",
+                "name": "_jackpotSplit",
+                "internalType": "uint256[5]"
+            },
+            {
                 "type": "uint256",
                 "name": "_competitionDuration",
+                "internalType": "uint256"
+            },
+            {
+                "type": "uint256",
+                "name": "_openingBid",
                 "internalType": "uint256"
             },
             {
@@ -39,6 +54,45 @@
                 "internalType": "uint256"
             }
         ]
+    },
+    {
+        "type": "event",
+        "name": "CrownStolen",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "newEmperor",
+                "internalType": "address",
+                "indexed": true
+            }
+        ],
+        "anonymous": false
+    },
+    {
+        "type": "event",
+        "name": "JackpotClaimed",
+        "inputs": [
+            {
+                "type": "uint256",
+                "name": "jackpotSize",
+                "internalType": "uint256",
+                "indexed": false
+            }
+        ],
+        "anonymous": false
+    },
+    {
+        "type": "event",
+        "name": "PefiDistributed",
+        "inputs": [
+            {
+                "type": "uint256",
+                "name": "amountPEFI",
+                "internalType": "uint256",
+                "indexed": false
+            }
+        ],
+        "anonymous": false
     },
     {
         "type": "function",
@@ -57,37 +111,11 @@
         "type": "function",
         "stateMutability": "nonpayable",
         "outputs": [],
-        "name": "changeColor",
-        "inputs": [
-            {
-                "type": "string",
-                "name": "_newColor",
-                "internalType": "string"
-            }
-        ]
-    },
-    {
-        "type": "function",
-        "stateMutability": "nonpayable",
-        "outputs": [],
         "name": "changeFinalDate",
         "inputs": [
             {
                 "type": "uint256",
                 "name": "_newFinalDateInSeconds",
-                "internalType": "uint256"
-            }
-        ]
-    },
-    {
-        "type": "function",
-        "stateMutability": "nonpayable",
-        "outputs": [],
-        "name": "changeStyle",
-        "inputs": [
-            {
-                "type": "uint256",
-                "name": "_newStyle",
                 "internalType": "uint256"
             }
         ]
@@ -200,6 +228,25 @@
                 "internalType": "uint256"
             }
         ],
+        "name": "jackpotSplit",
+        "inputs": [
+            {
+                "type": "uint256",
+                "name": "",
+                "internalType": "uint256"
+            }
+        ]
+    },
+    {
+        "type": "function",
+        "stateMutability": "view",
+        "outputs": [
+            {
+                "type": "uint256",
+                "name": "",
+                "internalType": "uint256"
+            }
+        ],
         "name": "longestReigns",
         "inputs": [
             {
@@ -266,19 +313,13 @@
         "stateMutability": "view",
         "outputs": [
             {
-                "type": "bool",
+                "type": "uint256",
                 "name": "",
-                "internalType": "bool"
+                "internalType": "uint256"
             }
         ],
-        "name": "nicknameDB",
-        "inputs": [
-            {
-                "type": "string",
-                "name": "",
-                "internalType": "string"
-            }
-        ]
+        "name": "openingBid",
+        "inputs": []
     },
     {
         "type": "function",
@@ -298,25 +339,18 @@
         "stateMutability": "view",
         "outputs": [
             {
-                "type": "string",
-                "name": "nickname",
-                "internalType": "string"
-            },
-            {
-                "type": "string",
-                "name": "color",
-                "internalType": "string"
-            },
-            {
-                "type": "bool",
-                "name": "isRegistered",
-                "internalType": "bool"
-            },
-            {
-                "type": "uint256",
-                "name": "style",
-                "internalType": "uint256"
-            },
+                "type": "address",
+                "name": "",
+                "internalType": "address"
+            }
+        ],
+        "name": "penguinDatabase",
+        "inputs": []
+    },
+    {
+        "type": "function",
+        "stateMutability": "view",
+        "outputs": [
             {
                 "type": "uint256",
                 "name": "timeAsEmperor",
@@ -328,35 +362,12 @@
                 "internalType": "uint256"
             }
         ],
-        "name": "penguDB",
+        "name": "playerDB",
         "inputs": [
             {
                 "type": "address",
                 "name": "",
                 "internalType": "address"
-            }
-        ]
-    },
-    {
-        "type": "function",
-        "stateMutability": "nonpayable",
-        "outputs": [],
-        "name": "registerYourPenguin",
-        "inputs": [
-            {
-                "type": "string",
-                "name": "_nickname",
-                "internalType": "string"
-            },
-            {
-                "type": "string",
-                "name": "_color",
-                "internalType": "string"
-            },
-            {
-                "type": "uint256",
-                "name": "_style",
-                "internalType": "uint256"
             }
         ]
     },
@@ -391,5 +402,18 @@
                 "internalType": "uint256"
             }
         ]
+    },
+    {
+        "type": "function",
+        "stateMutability": "view",
+        "outputs": [
+            {
+                "type": "uint256",
+                "name": "",
+                "internalType": "uint256"
+            }
+        ],
+        "name": "totalNestDistribution",
+        "inputs": []
     }
 ]

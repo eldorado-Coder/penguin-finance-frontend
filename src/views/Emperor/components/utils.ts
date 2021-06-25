@@ -37,7 +37,7 @@ const getPenguinColor = (emperor) => {
 const getKingPenguin = (emperor) => {
   const emperorPenguin = penguinImages.find((row) => String(row.id) === String(emperor.style))
   if (emperorPenguin) return emperorPenguin.kingSrc
-  if (emperor.style) return penguinImages[0].kingSrc
+  if (Number(emperor.style) > 0) return penguinImages[0].kingSrc
   return ''
 }
 

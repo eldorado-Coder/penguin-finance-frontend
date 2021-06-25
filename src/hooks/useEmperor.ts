@@ -3,57 +3,69 @@ import { useWeb3React } from '@web3-react/core'
 import { useDispatch } from 'react-redux'
 import { fetchEmperor, fetchDonations } from 'state/actions'
 import {
+  // normal emperor
   registerEmperor,
   stealCrown,
   changeEmperorStyle,
   changeEmperorColor,
-  approveXPefi,
-  approvePefi,
   // charity emperor
   registerCharityEmperor,
   changeCharityEmperorStyle,
   changeCharityEmperorColor,
   donateAvax,
   donatePefi,
+  // approve
+  approveXPefi,
+  approvePefi,
 } from 'utils/callHelpers'
 import { getEmperorAddress, getWithoutBordersAddress } from 'utils/addressHelpers'
-import { useEmperor, useCharityEmperor, useCharityPenguinDB, useXPefi, usePenguin } from './useContract'
+import {
+  // emperor
+  useEmperor,
+  useEmperorPenguinDB,
+  // covid emperor
+  useCharityEmperor,
+  useCharityPenguinDB,
+  useXPefi,
+  usePenguin,
+} from './useContract'
 
 const useEmperorActions = () => {
   const dispatch = useDispatch()
   const { account } = useWeb3React()
   const emperorContract = useEmperor()
+  const emperorPenguinDBContract = useEmperorPenguinDB()
 
   const handleRegister = useCallback(
     async (nickName: string, color: string, style: string) => {
-      const txHash = await registerEmperor(emperorContract, { nickName, color, style }, account)
+      const txHash = await registerEmperor(emperorPenguinDBContract, { nickName, color, style }, account)
       dispatch(fetchEmperor(account))
       console.info(txHash)
     },
-    [account, dispatch, emperorContract],
+    [account, dispatch, emperorPenguinDBContract],
+  )
+
+  const handleChangeColor = useCallback(
+    async (color: string) => {
+      const txHash = await changeEmperorColor(emperorPenguinDBContract, color, account)
+      dispatch(fetchEmperor(account))
+      console.info(txHash)
+    },
+    [account, dispatch, emperorPenguinDBContract],
+  )
+
+  const handleChangeStyle = useCallback(
+    async (style: string) => {
+      const txHash = await changeEmperorStyle(emperorPenguinDBContract, style, account)
+      dispatch(fetchEmperor(account))
+      console.info(txHash)
+    },
+    [account, dispatch, emperorPenguinDBContract],
   )
 
   const handleStealCrown = useCallback(
     async (amount: string) => {
       const txHash = await stealCrown(emperorContract, amount, account)
-      dispatch(fetchEmperor(account))
-      console.info(txHash)
-    },
-    [account, dispatch, emperorContract],
-  )
-
-  const handleChangeColor = useCallback(
-    async (color: string) => {
-      const txHash = await changeEmperorColor(emperorContract, color, account)
-      dispatch(fetchEmperor(account))
-      console.info(txHash)
-    },
-    [account, dispatch, emperorContract],
-  )
-
-  const handleChangeStyle = useCallback(
-    async (style: string) => {
-      const txHash = await changeEmperorStyle(emperorContract, style, account)
       dispatch(fetchEmperor(account))
       console.info(txHash)
     },

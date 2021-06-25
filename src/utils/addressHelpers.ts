@@ -23,9 +23,6 @@ export const getLydiaMasterChefAddress = () => {
 export const getPangolinAddress = () => {
   return getAddress(addresses.pangolinManager)
 }
-export const getEmperorAddress = () => {
-  return getAddress(addresses.emperor)
-}
 export const getXPefiAddress = () => {
   return getAddress(addresses.xPefi)
 }
@@ -59,12 +56,21 @@ export const getPointCenterIfoAddress = () => {
 export const getBunnySpecialAddress = () => {
   return getAddress(addresses.bunnySpecial)
 }
+// emperor
+export const getEmperorAddress = () => {
+  return getAddress(addresses.emperor)
+}
+export const getEmperorPenguinDBAddress = () => {
+  return getAddress(addresses.emperorPenguinDB)
+}
+// covid emperor
 export const getWithoutBordersAddress = () => {
   return getAddress(addresses.withoutBorders)
 }
 export const getCharityPenguinDBAddress = () => {
   return getAddress(addresses.charityPenguinDB)
 }
+
 export const getCompounderFarmLpAddress = (lpSymbol: string, farmType: string) => {
   const farm = compounderFarms.find((farmItem) => farmItem.lpSymbol === lpSymbol && farmItem.type === farmType)
   return getAddress(farm.lpAddresses)

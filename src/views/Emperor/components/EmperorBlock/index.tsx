@@ -17,7 +17,7 @@ const CardBlock = styled(Block)`
   }
 `
 
-const TitleBgWrapper = styled.div<{ color: string, account: string }>`
+const TitleBgWrapper = styled.div<{ color: string; account: string }>`
   z-index: -1;
   width: 100%;
   text-align: center;
@@ -33,7 +33,7 @@ const TitleBgWrapper = styled.div<{ color: string, account: string }>`
 
   transform: scale(1);
   @media (min-width: 640px) {
-    transform: scale(1.3)
+    transform: scale(1.3);
   }
   @media (min-width: 768px) {
     margin-top: -5%;
@@ -56,7 +56,7 @@ const CardBlockContent = styled.div<{ account?: string }>`
   text-align: center;
   margin-top: 25%;
   min-width: 150px;
-  max-width: ${props => !props.account && '220px'};
+  max-width: ${(props) => !props.account && '220px'};
   padding: 8px;
   @media (min-width: 640px) {
     width: 100%;
@@ -76,12 +76,12 @@ const CardBlockContent = styled.div<{ account?: string }>`
     padding: 24px 24px 16px;
   }
   @media (min-width: 1450px) {
-    min-width: ${({ account }) => account ? '240px' : '200px'};
+    min-width: ${({ account }) => (account ? '240px' : '200px')};
     padding: 20px 24px 16px;
     margin-top: 26%;
   }
   @media (min-width: 1200px) and (max-height: 800px) {
-    min-width: ${({ account }) => account ? '240px' : '200px'};
+    min-width: ${({ account }) => (account ? '240px' : '200px')};
     padding: 32px 24px 16px;
   }
 `
@@ -154,9 +154,9 @@ const EmperorBlock: React.FC = () => {
         <TitleBgWrapper color={!account && getPenguinColor(currentEmperor)} account={account}>
           <img
             src={`${process.env.PUBLIC_URL}/images/emperor/banner/emperor_blitz_title.svg`}
-            width='100%'
+            width="100%"
             height="120px"
-            alt='blitz-title'
+            alt="blitz-title"
           />
         </TitleBgWrapper>
       </CardBlockHeader>
@@ -171,7 +171,6 @@ const EmperorBlock: React.FC = () => {
             <Text bold color="secondary" fontSize="22px">
               {TranslateString(1074, currentEmperorNickname)}
             </Text>
-            {/* <Text color="secondary" fontSize="14px">{getShortenAddress(currentEmperorAddress)}</Text> */}
             <Text bold color="secondary" fontSize="14px">{`Current Bid: ${currentEmperorBidAmount.toFixed(
               2,
             )} xPEFI`}</Text>

@@ -134,5 +134,3 @@ export const fetchDonorData = async (address) => {
     return {}
   }
 }
-
-// charityPenguinDBContract
