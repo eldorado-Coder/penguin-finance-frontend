@@ -10,6 +10,7 @@ export const CardBlock = styled.div`
   width: 100%;
   @media (min-width: 1200px) and (max-height: 800px) {
     width: 70%;
+    margin-left: 15%;
   }
 `
 

@@ -98,10 +98,6 @@ const GridItem = styled.div`
   margin: 0px 4px;
   width: 200px;
 
-  @media only screen and (min-width: 1200px) {
-    margin-left: 80px;
-  }
-
   @media (min-width: 640px) {
     max-width: 280px;
     width: 260px;
@@ -232,14 +228,16 @@ const Emperor: React.FC = () => {
             <EmperorBlock />
           </GridItem>
         </Grid>
-        <PGGRid align="between" marginTop={{ xs: -40, sm: -190, md: -200, lg: -200 }}>
-          <GridItem>
-            <TopPenguinsBlock />
-          </GridItem>
-          <GridItem>
-            <YourScoreBlock />
-          </GridItem>
-        </PGGRid>
+        {account && 
+          <PGGRid align="between" marginTop={{ xs: -40, sm: -190, md: -200, lg: -200 }}>
+            <GridItem>
+              <TopPenguinsBlock />
+            </GridItem>
+            <GridItem>
+              <YourScoreBlock />
+            </GridItem>
+          </PGGRid>
+        }
       </>
     )
   }

@@ -69,9 +69,6 @@ const PaperWrapper = styled.div`
     margin-left: 30%;
     margin-top: 5%;
 
-    @media (min-width: 640px) {
-      margin-left: 15%;
-    }
     @media (min-width: 1200px) {
       min-width: 120px;
     }
