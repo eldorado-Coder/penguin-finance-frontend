@@ -15,6 +15,14 @@ import CustomStyleModal from './CustomStyleModal'
 import { getPenguinColor } from '../utils'
 import { UnlockButton, CardBlockHeader, CardBlock } from '../UI'
 
+const CardBlockContent = styled.div`
+  display: block;
+  position: relative;
+  &:hover {
+    z-index: 15;
+  }
+`
+
 const TitleBgWrapper = styled.div<{ color: string; account: string }>`
   z-index: -1;
   width: 100%;
@@ -41,7 +49,7 @@ const TitleBgWrapper = styled.div<{ color: string; account: string }>`
   }
 `
 
-const CardBlockContent = styled.div<{ account: string }>`
+const CardBlockBody = styled.div<{ account: string }>`
   background: ${(props) => props.theme.card.background};
   border-radius: 16px;
   padding: 16px;
@@ -179,84 +187,86 @@ const YourScoreBlock: React.FC = () => {
 
   return (
     <CardBlock>
-      <CardBlockHeader>
-        <TitleBgWrapper color={getPenguinColor(myEmperor)} account={account}>
-          {account ? (
-            <img
-              src={`${process.env.PUBLIC_URL}/images/emperor/banner/your_penguin_banner.svg`}
-              width="100%"
-              height="120px"
-              alt="blitz-title"
-            />
-          ) : (
-            <SvgIcon
-              src={
-                myStatus === 'registered' || myStatus === 'king'
-                  ? `${process.env.PUBLIC_URL}/images/emperor/banner/your_penguin_banner.svg`
-                  : `${process.env.PUBLIC_URL}/images/emperor/banner/your_score_banner_locked.svg`
-              }
-              width="100%"
-              height="20px"
-            />
+      <CardBlockContent>
+        <CardBlockHeader>
+          <TitleBgWrapper color={getPenguinColor(myEmperor)} account={account}>
+            {account ? (
+              <img
+                src={`${process.env.PUBLIC_URL}/images/emperor/banner/your_penguin_banner.svg`}
+                width="100%"
+                height="120px"
+                alt="blitz-title"
+              />
+            ) : (
+              <SvgIcon
+                src={
+                  myStatus === 'registered' || myStatus === 'king'
+                    ? `${process.env.PUBLIC_URL}/images/emperor/banner/your_penguin_banner.svg`
+                    : `${process.env.PUBLIC_URL}/images/emperor/banner/your_score_banner_locked.svg`
+                }
+                width="100%"
+                height="20px"
+              />
+            )}
+          </TitleBgWrapper>
+        </CardBlockHeader>
+        <CardBlockBody account={account}>
+          {myStatus === 'not connected' && (
+            <WalletContainer>
+              <Text bold color="secondary" fontSize="22px">
+                {TranslateString(1074, 'Check your Rank')}
+              </Text>
+              <Text fontSize="14px">Connect wallet to view</Text>
+              <UnlockButton />
+            </WalletContainer>
           )}
-        </TitleBgWrapper>
-      </CardBlockHeader>
-      <CardBlockContent account={account}>
-        {myStatus === 'not connected' && (
-          <WalletContainer>
-            <Text bold color="secondary" fontSize="22px">
-              {TranslateString(1074, 'Check your Rank')}
-            </Text>
-            <Text fontSize="14px">Connect wallet to view</Text>
-            <UnlockButton />
-          </WalletContainer>
-        )}
-        {myStatus === 'not registered' && (
-          <RegisterContainer>
-            <Text bold color="secondary" fontSize="18px">
-              {TranslateString(1074, 'You must register your penguin before attempting to steal the Throne')}
-            </Text>
-            <RegisterButtonContainer>
-              <Button onClick={onToggleRegister}>{TranslateString(292, 'Register')}</Button>
-            </RegisterButtonContainer>
-          </RegisterContainer>
-        )}
+          {myStatus === 'not registered' && (
+            <RegisterContainer>
+              <Text bold color="secondary" fontSize="18px">
+                {TranslateString(1074, 'You must register your penguin before attempting to steal the Throne')}
+              </Text>
+              <RegisterButtonContainer>
+                <Button onClick={onToggleRegister}>{TranslateString(292, 'Register')}</Button>
+              </RegisterButtonContainer>
+            </RegisterContainer>
+          )}
 
-        {myStatus === 'registered' && (
-          <RegisterContainer>
-            <Text bold color="primary" fontSize="22px">
-              {TranslateString(1074, myEmperor && badWordsFilter(myEmperor.nickname))}
-            </Text>
-            <Text bold color="secondary" fontSize="18px">
-              {TranslateString(1074, 'You have been Emperor for:')}
-            </Text>
-            <Text bold color="primary" fontSize="18px">
-              {`${myEmperor.timeAsEmperor} seconds`}
-            </Text>
-            <RegisterButtonContainer>
-              <Button onClick={onToggleStealModal} endIcon={<div>{` `}</div>}>
-                {TranslateString(292, 'Steal the Crown')}
-              </Button>
-            </RegisterButtonContainer>
-            <CustomizeStyleButtonContainer>
-              <Button onClick={onToggleCustomModal}>{TranslateString(292, 'Customize Penguin')}</Button>
-            </CustomizeStyleButtonContainer>
-          </RegisterContainer>
-        )}
+          {myStatus === 'registered' && (
+            <RegisterContainer>
+              <Text bold color="primary" fontSize="22px">
+                {TranslateString(1074, myEmperor && badWordsFilter(myEmperor.nickname))}
+              </Text>
+              <Text bold color="secondary" fontSize="18px">
+                {TranslateString(1074, 'You have been Emperor for:')}
+              </Text>
+              <Text bold color="primary" fontSize="18px">
+                {`${myEmperor.timeAsEmperor} seconds`}
+              </Text>
+              <RegisterButtonContainer>
+                <Button onClick={onToggleStealModal} endIcon={<div>{` `}</div>}>
+                  {TranslateString(292, 'Steal the Crown')}
+                </Button>
+              </RegisterButtonContainer>
+              <CustomizeStyleButtonContainer>
+                <Button onClick={onToggleCustomModal}>{TranslateString(292, 'Customize Penguin')}</Button>
+              </CustomizeStyleButtonContainer>
+            </RegisterContainer>
+          )}
 
-        {myStatus === 'king' && (
-          <RegisterContainer>
-            <Text bold color="secondary" fontSize="22px">
-              {TranslateString(1074, myEmperor && badWordsFilter(myEmperor.nickname))}
-            </Text>
-            <Text bold color="secondary" fontSize="18px">
-              {TranslateString(1074, 'You have been Emperor for:')}
-            </Text>
-            <Text bold color="primary" fontSize="22px">
-              {`${myEmperor.timeAsEmperor} seconds`}
-            </Text>
-          </RegisterContainer>
-        )}
+          {myStatus === 'king' && (
+            <RegisterContainer>
+              <Text bold color="secondary" fontSize="22px">
+                {TranslateString(1074, myEmperor && badWordsFilter(myEmperor.nickname))}
+              </Text>
+              <Text bold color="secondary" fontSize="18px">
+                {TranslateString(1074, 'You have been Emperor for:')}
+              </Text>
+              <Text bold color="primary" fontSize="22px">
+                {`${myEmperor.timeAsEmperor} seconds`}
+              </Text>
+            </RegisterContainer>
+          )}
+        </CardBlockBody>
       </CardBlockContent>
     </CardBlock>
   )
