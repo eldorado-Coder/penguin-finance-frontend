@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import styled from 'styled-components'
 import { Button, Text, useModal } from 'penguinfinance-uikit2'
 import useI18n from 'hooks/useI18n'
@@ -10,7 +10,7 @@ import { getEmperorAddress } from 'utils/addressHelpers'
 import { badWordsFilter } from 'utils/address'
 import { useEmperorActions, useXPefiApprove } from 'hooks/useEmperor'
 import RegisterModal from './RegisterModal'
-import StealCrownModal from './StealCrownModal'
+// import StealCrownModal from './StealCrownModal'
 import CustomStyleModal from './CustomStyleModal'
 import { getPenguinColor } from '../utils'
 import { UnlockButton, CardBlockHeader, CardBlock } from '../UI'
@@ -140,6 +140,18 @@ const YourScoreBlock: React.FC = () => {
   const { onRegister, onSteal, onChangeStyle, onChangeColor } = useEmperorActions()
   const { onApproveXPefi } = useXPefiApprove()
   const xPefiContract = useXPefi()
+  const [pendingTx, setPendingTx] = useState(false)
+  const [maxAmount, setMaxAmount] = useState('')
+  const currentEmperorBidAmount = (currentEmperor && currentEmperor.bidAmount) || 0
+
+  const fetchXPefiBalance = useCallback(async () => {
+    const xPefiBalance = (await xPefiContract.methods.balanceOf(account).call()) / 1e18
+    setMaxAmount(xPefiBalance.toString())
+  }, [account, xPefiContract])
+
+  useEffect(() => {
+    fetchXPefiBalance()
+  }, [fetchXPefiBalance])
 
   const getMyStatus = () => {
     if (account) {
@@ -160,13 +172,26 @@ const YourScoreBlock: React.FC = () => {
     await onRegister(nickName, color, style)
   }
 
-  const onStealCrown = async (amount: string) => {
-    const allowanceBalance = (await xPefiContract.methods.allowance(account, getEmperorAddress()).call()) / 1e18
-    if (allowanceBalance === 0) {
-      // call approve function
-      await onApproveXPefi()
+  const checkCanConfirm = () => {
+    if (pendingTx) return false
+    if (Number(currentEmperorBidAmount) + 0.05 > Number(maxAmount)) return false
+    return true
+  }
+
+  const onStealCrown = async () => {
+    setPendingTx(true)
+    try {
+      const amount = currentEmperorBidAmount + 0.05
+      const allowanceBalance = (await xPefiContract.methods.allowance(account, getEmperorAddress()).call()) / 1e18
+      if (allowanceBalance === 0) {
+        // call approve function
+        await onApproveXPefi()
+      }
+      await onSteal(String(amount))
+      setPendingTx(false)
+    } catch (error) {
+      setPendingTx(false)
     }
-    await onSteal(amount)
   }
 
   const onChangeEmperorStyle = async (style: string) => {
@@ -179,7 +204,7 @@ const YourScoreBlock: React.FC = () => {
 
   const [onToggleRegister] = useModal(<RegisterModal onConfirm={onRegisterPenguin} />)
 
-  const [onToggleStealModal] = useModal(<StealCrownModal onConfirm={onStealCrown} />)
+  // const [onToggleStealModal] = useModal(<StealCrownModal onConfirm={onStealCrown} />)
 
   const [onToggleCustomModal] = useModal(
     <CustomStyleModal onConfirmChangeStyle={onChangeEmperorStyle} onConfirmChangeColor={onChangeEmperorColor} />,
@@ -243,7 +268,7 @@ const YourScoreBlock: React.FC = () => {
                 {`${myEmperor.timeAsEmperor} seconds`}
               </Text>
               <RegisterButtonContainer>
-                <Button onClick={onToggleStealModal} endIcon={<div>{` `}</div>}>
+                <Button disabled={!checkCanConfirm()} onClick={onStealCrown} endIcon={<div>{` `}</div>}>
                   {TranslateString(292, 'Steal the Crown')}
                 </Button>
               </RegisterButtonContainer>
