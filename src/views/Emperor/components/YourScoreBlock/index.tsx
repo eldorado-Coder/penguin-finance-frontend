@@ -9,6 +9,7 @@ import { useXPefi } from 'hooks/useContract'
 import { getEmperorAddress } from 'utils/addressHelpers'
 import { badWordsFilter } from 'utils/address'
 import { useEmperorActions, useXPefiApprove } from 'hooks/useEmperor'
+import { NON_ADDRESS } from 'config'
 import RegisterModal from './RegisterModal'
 // import StealCrownModal from './StealCrownModal'
 import CustomStyleModal from './CustomStyleModal'
@@ -136,7 +137,7 @@ const CustomizeStyleButtonContainer = styled.div`
 const YourScoreBlock: React.FC = () => {
   const TranslateString = useI18n()
   const { account } = useWeb3React()
-  const { myEmperor, currentEmperor, maxBidIncrease } = useEmperor()
+  const { myEmperor, currentEmperor, maxBidIncrease, openingBib } = useEmperor()
   const { onRegister, onSteal, onChangeStyle, onChangeColor } = useEmperorActions()
   const { onApproveXPefi } = useXPefiApprove()
   const xPefiContract = useXPefi()
@@ -181,7 +182,7 @@ const YourScoreBlock: React.FC = () => {
   const onStealCrown = async () => {
     setPendingTx(true)
     try {
-      const amount = currentEmperorBidAmount + maxBidIncrease
+      const amount = currentEmperor.address === NON_ADDRESS ? openingBib : currentEmperorBidAmount + maxBidIncrease
       const allowanceBalance = (await xPefiContract.methods.allowance(account, getEmperorAddress()).call()) / 1e18
       if (allowanceBalance === 0) {
         // call approve function

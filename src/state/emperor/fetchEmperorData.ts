@@ -51,6 +51,15 @@ export const fetchMinBidIncrease = async () => {
   }
 }
 
+export const fetchOpeningBid = async () => {
+  try {
+    const openingBid = await emperorContract.methods.openingBid().call()
+    return getBalanceNumber(openingBid)
+  } catch (error) {
+    return 0
+  }
+}
+
 export const fetchCurrentEmperorJackpot = async () => {
   try {
     const currentEmperorJackpot = await emperorContract.methods.jackpot().call()

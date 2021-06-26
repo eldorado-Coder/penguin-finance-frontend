@@ -162,6 +162,7 @@ export interface EmperorState {
   topEmperors: Emperor[]
   maxBidIncrease: number
   minBidIncrease: number
+  openingBib?: number
 }
 
 export interface DonationsState {

@@ -6,8 +6,9 @@ import {
   fetchCurrentEmperorBid,
   fetchMaxBidIncrease,
   fetchMinBidIncrease,
+  fetchOpeningBid,
   fetchTopEmperors,
-  fetchCurrentEmperorJackpot
+  fetchCurrentEmperorJackpot,
 } from './fetchEmperorData'
 import { EmperorState } from '../types'
 
@@ -16,7 +17,8 @@ const initialState: EmperorState = {
   currentEmperor: {},
   topEmperors: [],
   maxBidIncrease: 0,
-  minBidIncrease: 0
+  minBidIncrease: 0,
+  openingBib: 0,
 }
 
 export const EmperorSlice = createSlice({
@@ -46,7 +48,10 @@ export const EmperorSlice = createSlice({
     },
     setMinBidIncrease: (state, action) => {
       state.minBidIncrease = action.payload
-    }
+    },
+    setopeningBib: (state, action) => {
+      state.openingBib = action.payload
+    },
   },
 })
 
@@ -57,7 +62,8 @@ export const {
   setCurrentEmperor,
   setTopEmperors,
   setMaxBidIncrease,
-  setMinBidIncrease
+  setMinBidIncrease,
+  setopeningBib,
 } = EmperorSlice.actions
 
 // Thunks
@@ -75,6 +81,9 @@ export const fetchEmperor = (account) => async (dispatch) => {
 
   const minBidIncrease = await fetchMinBidIncrease()
   dispatch(setMinBidIncrease(minBidIncrease))
+
+  const openingBid = await fetchOpeningBid()
+  dispatch(setopeningBib(openingBid))
 
   // fetch current emperor
   const currentEmperorAddress = await fetchCurrentEmperorAddress()
