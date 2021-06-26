@@ -269,7 +269,7 @@ const YourScoreBlock: React.FC = () => {
               </Text>
               <RegisterButtonContainer>
                 <Button disabled={!checkCanConfirm()} onClick={onStealCrown} endIcon={<div>{` `}</div>}>
-                  {TranslateString(292, 'Steal the Crown')}
+                  {TranslateString(292, 'Steal Crown')}
                 </Button>
               </RegisterButtonContainer>
               <CustomizeStyleButtonContainer>
