@@ -136,7 +136,7 @@ const CustomizeStyleButtonContainer = styled.div`
 const YourScoreBlock: React.FC = () => {
   const TranslateString = useI18n()
   const { account } = useWeb3React()
-  const { myEmperor, currentEmperor } = useEmperor()
+  const { myEmperor, currentEmperor, maxBidIncrease } = useEmperor()
   const { onRegister, onSteal, onChangeStyle, onChangeColor } = useEmperorActions()
   const { onApproveXPefi } = useXPefiApprove()
   const xPefiContract = useXPefi()
@@ -181,7 +181,7 @@ const YourScoreBlock: React.FC = () => {
   const onStealCrown = async () => {
     setPendingTx(true)
     try {
-      const amount = currentEmperorBidAmount + 0.05
+      const amount = currentEmperorBidAmount + maxBidIncrease
       const allowanceBalance = (await xPefiContract.methods.allowance(account, getEmperorAddress()).call()) / 1e18
       if (allowanceBalance === 0) {
         // call approve function
