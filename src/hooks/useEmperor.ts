@@ -6,6 +6,7 @@ import {
   // normal emperor
   registerEmperor,
   stealCrown,
+  stealCrownAndPoison,
   changeEmperorStyle,
   changeEmperorColor,
   // charity emperor
@@ -72,9 +73,19 @@ const useEmperorActions = () => {
     [account, dispatch, emperorContract],
   )
 
+  const handleStealCrownAndPoison = useCallback(
+    async (amount: string) => {
+      const txHash = await stealCrownAndPoison(emperorContract, amount, account)
+      dispatch(fetchEmperor(account))
+      console.info(txHash)
+    },
+    [account, dispatch, emperorContract],
+  )
+
   return {
     onRegister: handleRegister,
     onSteal: handleStealCrown,
+    onStealAndPoison: handleStealCrownAndPoison,
     onChangeStyle: handleChangeStyle,
     onChangeColor: handleChangeColor,
   }

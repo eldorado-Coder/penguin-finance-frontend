@@ -7,6 +7,7 @@ import {
   fetchMaxBidIncrease,
   fetchMinBidIncrease,
   fetchOpeningBid,
+  fetchCanBePoisoned,
   fetchTopEmperors,
   fetchCurrentEmperorJackpot,
 } from './fetchEmperorData'
@@ -19,6 +20,7 @@ const initialState: EmperorState = {
   maxBidIncrease: 0,
   minBidIncrease: 0,
   openingBib: 0,
+  canBePoisoned: false,
 }
 
 export const EmperorSlice = createSlice({
@@ -49,8 +51,11 @@ export const EmperorSlice = createSlice({
     setMinBidIncrease: (state, action) => {
       state.minBidIncrease = action.payload
     },
-    setopeningBib: (state, action) => {
+    setOpeningBib: (state, action) => {
       state.openingBib = action.payload
+    },
+    setCanBePoisoned: (state, action) => {
+      state.canBePoisoned = action.payload
     },
   },
 })
@@ -63,7 +68,8 @@ export const {
   setTopEmperors,
   setMaxBidIncrease,
   setMinBidIncrease,
-  setopeningBib,
+  setOpeningBib,
+  setCanBePoisoned,
 } = EmperorSlice.actions
 
 // Thunks
@@ -76,6 +82,9 @@ export const fetchEmperor = (account) => async (dispatch) => {
   if (!account) return
 
   // fetch general Info
+  const canBePoisoned = await fetchCanBePoisoned(account)
+  dispatch(setCanBePoisoned(canBePoisoned))
+
   const maxBidIncrease = await fetchMaxBidIncrease()
   dispatch(setMaxBidIncrease(maxBidIncrease))
 
@@ -83,7 +92,7 @@ export const fetchEmperor = (account) => async (dispatch) => {
   dispatch(setMinBidIncrease(minBidIncrease))
 
   const openingBid = await fetchOpeningBid()
-  dispatch(setopeningBib(openingBid))
+  dispatch(setOpeningBib(openingBid))
 
   // fetch current emperor
   const currentEmperorAddress = await fetchCurrentEmperorAddress()
