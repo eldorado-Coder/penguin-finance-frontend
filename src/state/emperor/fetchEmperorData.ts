@@ -60,6 +60,15 @@ export const fetchOpeningBid = async () => {
   }
 }
 
+export const fetchCanBePoisoned = async (account) => {
+  try {
+    const canBePoisoned = await emperorContract.methods.canBePoisoned(account).call()
+    return canBePoisoned
+  } catch (error) {
+    return 0
+  }
+}
+
 export const fetchCurrentEmperorJackpot = async () => {
   try {
     const currentEmperorJackpot = await emperorContract.methods.jackpot().call()

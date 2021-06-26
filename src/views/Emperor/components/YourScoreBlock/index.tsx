@@ -123,6 +123,27 @@ const RegisterButtonContainer = styled.div`
   }
 `
 
+const StealButtonContainer = styled.div`
+  button {
+    width: 200px;
+    border-radius: 30px;
+    @media only screen and (min-width: 1200px) and (max-width: 1450px) {
+      width: 140px;
+    }
+  }
+`
+
+const StealAndPoisonButtonContainer = styled.div`
+  button {
+    width: 200px;
+    border-radius: 30px;
+    background: #f5c83b;
+    @media only screen and (min-width: 1200px) and (max-width: 1450px) {
+      width: 140px;
+    }
+  }
+`
+
 const CustomizeStyleButtonContainer = styled.div`
   button {
     width: 200px;
@@ -137,8 +158,8 @@ const CustomizeStyleButtonContainer = styled.div`
 const YourScoreBlock: React.FC = () => {
   const TranslateString = useI18n()
   const { account } = useWeb3React()
-  const { myEmperor, currentEmperor, maxBidIncrease, openingBib } = useEmperor()
-  const { onRegister, onSteal, onChangeStyle, onChangeColor } = useEmperorActions()
+  const { myEmperor, canBePoisoned, currentEmperor, maxBidIncrease, openingBib } = useEmperor()
+  const { onRegister, onSteal, onStealAndPoison, onChangeStyle, onChangeColor } = useEmperorActions()
   const { onApproveXPefi } = useXPefiApprove()
   const xPefiContract = useXPefi()
   const [pendingTx, setPendingTx] = useState(false)
@@ -173,9 +194,22 @@ const YourScoreBlock: React.FC = () => {
     await onRegister(nickName, color, style)
   }
 
-  const checkCanConfirm = () => {
+  const checkCanStealConfirm = () => {
     if (pendingTx) return false
-    if (Number(currentEmperorBidAmount) + 0.05 > Number(maxAmount)) return false
+
+    const amount = currentEmperor.address === NON_ADDRESS ? openingBib : currentEmperorBidAmount + maxBidIncrease
+    if (amount > Number(maxAmount)) return false
+
+    return true
+  }
+
+  const checkCanStealAndPoisonConfirm = () => {
+    if (pendingTx) return false
+    if (!canBePoisoned) return false
+
+    // const amount = currentEmperor.address === NON_ADDRESS ? openingBib : currentEmperorBidAmount + maxBidIncrease
+    // if (amount > Number(maxAmount)) return false
+
     return true
   }
 
@@ -189,6 +223,22 @@ const YourScoreBlock: React.FC = () => {
         await onApproveXPefi()
       }
       await onSteal(String(amount))
+      setPendingTx(false)
+    } catch (error) {
+      setPendingTx(false)
+    }
+  }
+
+  const onStealCrownAndPoison = async () => {
+    setPendingTx(true)
+    try {
+      const amount = currentEmperor.address === NON_ADDRESS ? openingBib : currentEmperorBidAmount + maxBidIncrease
+      const allowanceBalance = (await xPefiContract.methods.allowance(account, getEmperorAddress()).call()) / 1e18
+      if (allowanceBalance === 0) {
+        // call approve function
+        await onApproveXPefi()
+      }
+      await onStealAndPoison(String(amount))
       setPendingTx(false)
     } catch (error) {
       setPendingTx(false)
@@ -268,11 +318,20 @@ const YourScoreBlock: React.FC = () => {
               <Text bold color="primary" fontSize="18px">
                 {`${myEmperor.timeAsEmperor} seconds`}
               </Text>
-              <RegisterButtonContainer>
-                <Button disabled={!checkCanConfirm()} onClick={onStealCrown} endIcon={<div>{` `}</div>}>
+              <StealButtonContainer>
+                <Button disabled={!checkCanStealConfirm()} onClick={onStealCrown} endIcon={<div>{` `}</div>}>
                   {TranslateString(292, 'Steal Crown')}
                 </Button>
-              </RegisterButtonContainer>
+              </StealButtonContainer>
+              <StealAndPoisonButtonContainer>
+                <Button
+                  disabled={!checkCanStealAndPoisonConfirm()}
+                  onClick={onStealCrownAndPoison}
+                  endIcon={<div>{` `}</div>}
+                >
+                  {TranslateString(292, 'Steal & Poison')}
+                </Button>
+              </StealAndPoisonButtonContainer>
               <CustomizeStyleButtonContainer>
                 <Button onClick={onToggleCustomModal}>{TranslateString(292, 'Customize Penguin')}</Button>
               </CustomizeStyleButtonContainer>

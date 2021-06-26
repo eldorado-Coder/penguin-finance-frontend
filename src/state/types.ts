@@ -163,6 +163,7 @@ export interface EmperorState {
   maxBidIncrease: number
   minBidIncrease: number
   openingBib?: number
+  canBePoisoned?: boolean
 }
 
 export interface DonationsState {
