@@ -60,10 +60,56 @@ export const fetchOpeningBid = async () => {
   }
 }
 
+export const fetchFinalDate = async () => {
+  try {
+    const finalDate = await emperorContract.methods.finalDate().call()
+    return Number(finalDate)
+  } catch (error) {
+    return 0
+  }
+}
+
+export const fetchPoisonDuration = async () => {
+  try {
+    const poisonDuration = await emperorContract.methods.poisonDuration().call()
+    return Number(poisonDuration)
+  } catch (error) {
+    return 0
+  }
+}
+
 export const fetchCanBePoisoned = async (account) => {
   try {
     const canBePoisoned = await emperorContract.methods.canBePoisoned(account).call()
     return canBePoisoned
+  } catch (error) {
+    return 0
+  }
+}
+
+export const fetchLastTimePoisoned = async (account) => {
+  try {
+    const lastTimePoisoned = await emperorContract.methods.lastTimePoisoned(account).call()
+    return Number(lastTimePoisoned)
+  } catch (error) {
+    return 0
+  }
+}
+
+export const fetchLastPoisonedBy = async (account) => {
+  try {
+    const lastPoisonedByAddress = await emperorContract.methods.lastPoisonedBy(account).call()
+    const lastPoisonedByNickname = await penguinDBContract.methods.nickname(lastPoisonedByAddress).call()
+    return lastPoisonedByNickname
+  } catch (error) {
+    return 0
+  }
+}
+
+export const fetchTimeLeftForPoison = async (account) => {
+  try {
+    const timeLeftForPoison = await emperorContract.methods.timeLeftForPoison(account).call()
+    return Number(timeLeftForPoison)
   } catch (error) {
     return 0
   }
