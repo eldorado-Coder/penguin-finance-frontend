@@ -7,9 +7,14 @@ import {
   fetchMaxBidIncrease,
   fetchMinBidIncrease,
   fetchOpeningBid,
-  fetchCanBePoisoned,
+  fetchFinalDate,
+  fetchPoisonDuration,
   fetchTopEmperors,
   fetchCurrentEmperorJackpot,
+  fetchCanBePoisoned,
+  fetchLastTimePoisoned,
+  fetchLastPoisonedBy,
+  fetchTimeLeftForPoison,
 } from './fetchEmperorData'
 import { EmperorState } from '../types'
 
@@ -20,7 +25,8 @@ const initialState: EmperorState = {
   maxBidIncrease: 0,
   minBidIncrease: 0,
   openingBib: 0,
-  canBePoisoned: false,
+  finalDate: 0,
+  poisonDuration: 0,
 }
 
 export const EmperorSlice = createSlice({
@@ -54,8 +60,11 @@ export const EmperorSlice = createSlice({
     setOpeningBib: (state, action) => {
       state.openingBib = action.payload
     },
-    setCanBePoisoned: (state, action) => {
-      state.canBePoisoned = action.payload
+    setFinalDate: (state, action) => {
+      state.finalDate = action.payload
+    },
+    setPoisonDuration: (state, action) => {
+      state.poisonDuration = action.payload
     },
   },
 })
@@ -69,7 +78,8 @@ export const {
   setMaxBidIncrease,
   setMinBidIncrease,
   setOpeningBib,
-  setCanBePoisoned,
+  setFinalDate,
+  setPoisonDuration,
 } = EmperorSlice.actions
 
 // Thunks
@@ -82,9 +92,6 @@ export const fetchEmperor = (account) => async (dispatch) => {
   if (!account) return
 
   // fetch general Info
-  const canBePoisoned = await fetchCanBePoisoned(account)
-  dispatch(setCanBePoisoned(canBePoisoned))
-
   const maxBidIncrease = await fetchMaxBidIncrease()
   dispatch(setMaxBidIncrease(maxBidIncrease))
 
@@ -93,6 +100,12 @@ export const fetchEmperor = (account) => async (dispatch) => {
 
   const openingBid = await fetchOpeningBid()
   dispatch(setOpeningBib(openingBid))
+
+  const finalDate = await fetchFinalDate()
+  dispatch(setFinalDate(finalDate))
+
+  const poisonDuration = await fetchPoisonDuration()
+  dispatch(setPoisonDuration(poisonDuration))
 
   // fetch current emperor
   const currentEmperorAddress = await fetchCurrentEmperorAddress()
@@ -111,7 +124,21 @@ export const fetchEmperor = (account) => async (dispatch) => {
 
   // fetch my emperor
   const myEmperor = await fetchEmperorData(account)
-  dispatch(setMyEmperor({ ...myEmperor, address: account }))
+  const canBePoisoned = await fetchCanBePoisoned(account)
+  const lastTimePoisoned = await fetchLastTimePoisoned(account)
+  const lastPoisonedBy = await fetchLastPoisonedBy(account)
+  const timeLeftForPoison = await fetchTimeLeftForPoison(account)
+
+  dispatch(
+    setMyEmperor({
+      ...myEmperor,
+      address: account,
+      canBePoisoned,
+      lastTimePoisoned,
+      lastPoisonedBy,
+      timeLeftForPoison,
+    }),
+  )
 
   // fetch top 5 emperor
   if (currentEmperorAddress && currentEmperorAddress.length > 0) {

@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import styled from 'styled-components'
 import { Button, Text, useModal } from 'penguinfinance-uikit2'
+import ReactTooltip from 'react-tooltip'
 import useI18n from 'hooks/useI18n'
 import { useWeb3React } from '@web3-react/core'
 import SvgIcon from 'components/SvgIcon'
@@ -13,7 +14,7 @@ import { NON_ADDRESS } from 'config'
 import RegisterModal from './RegisterModal'
 // import StealCrownModal from './StealCrownModal'
 import CustomStyleModal from './CustomStyleModal'
-import { getPenguinColor } from '../utils'
+import { getPenguinColor, getStealCrownTooltip } from '../utils'
 import { UnlockButton, CardBlockHeader, CardBlock } from '../UI'
 
 const CardBlockContent = styled.div`
@@ -155,16 +156,40 @@ const CustomizeStyleButtonContainer = styled.div`
   }
 `
 
+const CustomToolTip = styled(ReactTooltip)`
+  width: 100% !important;
+  max-width: 300px !important;
+  background: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#383466!important')};
+  box-shadow: ${(props) => `${props.theme.card.boxShadow}!important`};
+  color: ${({ theme }) => (theme.isDark ? '#2D2159!important' : '#ffffff!important')};
+  opacity: 1 !important;
+  padding: 16px !important;
+  font-size: 18px !important;
+  line-height: 24px !important;
+  border-radius: 16px !important;
+  margin-top: 0px !important;
+  > div {
+    width: 100%;
+    white-space: pre-wrap !important;
+  }
+  &:after {
+    border-top-color: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#383466!important')};
+    border-bottom-color: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#383466!important')};
+  }
+`
+
 const YourScoreBlock: React.FC = () => {
   const TranslateString = useI18n()
   const { account } = useWeb3React()
-  const { myEmperor, canBePoisoned, currentEmperor, maxBidIncrease, openingBib } = useEmperor()
+  const { myEmperor, currentEmperor, maxBidIncrease, openingBib, finalDate, poisonDuration } = useEmperor()
   const { onRegister, onSteal, onStealAndPoison, onChangeStyle, onChangeColor } = useEmperorActions()
   const { onApproveXPefi } = useXPefiApprove()
   const xPefiContract = useXPefi()
   const [pendingTx, setPendingTx] = useState(false)
   const [maxAmount, setMaxAmount] = useState('')
   const currentEmperorBidAmount = (currentEmperor && currentEmperor.bidAmount) || 0
+  const stealCrownTooltip = getStealCrownTooltip(myEmperor.lastPoisonedBy, myEmperor.timeLeftForPoison)
+  const isMyEmperorPoisoned = Date.now() / 1000 < myEmperor.lastTimePoisoned + poisonDuration
 
   const fetchXPefiBalance = useCallback(async () => {
     const xPefiBalance = (await xPefiContract.methods.balanceOf(account).call()) / 1e18
@@ -196,6 +221,8 @@ const YourScoreBlock: React.FC = () => {
 
   const checkCanStealConfirm = () => {
     if (pendingTx) return false
+    if (Number(finalDate) < Date.now() / 1000) return false
+    if (isMyEmperorPoisoned) return false
 
     const amount = currentEmperor.address === NON_ADDRESS ? openingBib : currentEmperorBidAmount + maxBidIncrease
     if (amount > Number(maxAmount)) return false
@@ -205,10 +232,9 @@ const YourScoreBlock: React.FC = () => {
 
   const checkCanStealAndPoisonConfirm = () => {
     if (pendingTx) return false
-    if (!canBePoisoned) return false
-
-    // const amount = currentEmperor.address === NON_ADDRESS ? openingBib : currentEmperorBidAmount + maxBidIncrease
-    // if (amount > Number(maxAmount)) return false
+    if (!myEmperor.canBePoisoned) return false
+    if (Number(finalDate) < Date.now() / 1000) return false
+    if (isMyEmperorPoisoned) return false
 
     return true
   }
@@ -319,18 +345,44 @@ const YourScoreBlock: React.FC = () => {
                 {`${myEmperor.timeAsEmperor} seconds`}
               </Text>
               <StealButtonContainer>
-                <Button disabled={!checkCanStealConfirm()} onClick={onStealCrown} endIcon={<div>{` `}</div>}>
-                  {TranslateString(292, 'Steal Crown')}
-                </Button>
+                <a href="/" data-for="custom-class" data-tip={stealCrownTooltip}>
+                  <Button disabled={!checkCanStealConfirm()} onClick={onStealCrown} endIcon={<div>{` `}</div>}>
+                    {TranslateString(292, 'Steal Crown')}
+                  </Button>
+                </a>
+                {isMyEmperorPoisoned && (
+                  <CustomToolTip
+                    id="custom-class"
+                    wrapper="div"
+                    delayHide={0}
+                    effect="solid"
+                    multiline
+                    place="bottom"
+                    html
+                  />
+                )}
               </StealButtonContainer>
               <StealAndPoisonButtonContainer>
-                <Button
-                  disabled={!checkCanStealAndPoisonConfirm()}
-                  onClick={onStealCrownAndPoison}
-                  endIcon={<div>{` `}</div>}
-                >
-                  {TranslateString(292, 'Steal & Poison')}
-                </Button>
+                <a href="/" data-for="custom-class-poison" data-tip={stealCrownTooltip}>
+                  <Button
+                    disabled={!checkCanStealAndPoisonConfirm()}
+                    onClick={onStealCrownAndPoison}
+                    endIcon={<div>{` `}</div>}
+                  >
+                    {TranslateString(292, 'Steal & Poison')}
+                  </Button>
+                </a>
+                {isMyEmperorPoisoned && (
+                  <CustomToolTip
+                    id="custom-class-poison"
+                    wrapper="div"
+                    delayHide={0}
+                    effect="solid"
+                    multiline
+                    place="bottom"
+                    html
+                  />
+                )}
               </StealAndPoisonButtonContainer>
               <CustomizeStyleButtonContainer>
                 <Button onClick={onToggleCustomModal}>{TranslateString(292, 'Customize Penguin')}</Button>
