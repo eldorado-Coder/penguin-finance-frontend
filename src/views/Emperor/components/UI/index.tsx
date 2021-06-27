@@ -3,13 +3,12 @@ import { Text, Button as NormalButton } from 'penguinfinance-uikit2'
 import Button from 'components/UnlockButton'
 
 export const CardBlock = styled.div`
-  display: flex;
   flex-direction: column;
   align-items: center;
-
   width: 100%;
   @media (min-width: 1200px) and (max-height: 800px) {
     width: 70%;
+    margin-left: 15%;
   }
 `
 

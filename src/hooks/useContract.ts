@@ -16,6 +16,7 @@ import {
   getEmperorAddress,
   getWithoutBordersAddress as getCharityEmperorAddress,
   getCharityPenguinDBAddress,
+  getEmperorPenguinDBAddress,
   getXPefiAddress,
 } from 'utils/addressHelpers'
 import getFarmMasterChefAddress from 'utils/getFarmMasterChefAddress'
@@ -39,6 +40,7 @@ import bunnySpecial from 'config/abi/bunnySpecial.json'
 import emperor from 'config/abi/emperor.json'
 import donations from 'config/abi/donations.json'
 import charityPenguinDB from 'config/abi/charityPenguin.json'
+import emperorPenguinDB from 'config/abi/emperorPenguinDB.json'
 import xPefi from 'config/abi/xPefi.json'
 
 const useContract = (abi: AbiItem, address: string, contractOptions?: ContractOptions) => {
@@ -128,11 +130,18 @@ export const useBunnySpecialContract = () => {
   return useContract(abi, getBunnySpecialAddress())
 }
 
+// emperor
 export const useEmperor = () => {
   const abi = (emperor as unknown) as AbiItem
   return useContract(abi, getEmperorAddress())
 }
 
+export const useEmperorPenguinDB = () => {
+  const abi = (emperorPenguinDB as unknown) as AbiItem
+  return useContract(abi, getEmperorPenguinDBAddress())
+}
+
+// covid emperor
 export const useCharityEmperor = () => {
   const abi = (donations as unknown) as AbiItem
   return useContract(abi, getCharityEmperorAddress())

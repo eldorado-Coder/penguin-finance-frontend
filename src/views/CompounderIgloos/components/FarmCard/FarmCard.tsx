@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { Flex, Text, Image, Button, useModal, Tag } from 'penguinfinance-uikit2'
 import { Farm } from 'state/types'
 import useI18n from 'hooks/useI18n'
-import { useCompounderFarmFromSymbol, useCompounderFarmUser } from 'state/hooks'
+import { useCompounderFarmFromSymbol, useCompounderFarmUser, useCompoundApy } from 'state/hooks'
 import { useStrategyApprove } from 'hooks/useApprove'
 import useWeb3 from 'hooks/useWeb3'
 import { getAddress } from 'utils/addressHelpers'
@@ -21,8 +21,8 @@ import getLiquidityUrlPathParts from 'utils/getLiquidityUrlPathParts'
 import useCompounderStake from 'hooks/useCompounderStake'
 import useCompounderUnstake from 'hooks/useCompounderUnstake'
 import useCompounderClaimXPefi from 'hooks/useCompounderClaimXPefi'
-import { getBalanceNumber } from 'utils/formatBalance'
-import { getCompoundApy } from 'utils/apyHelpers'
+import { getBalanceNumber, getFullDisplayBalance } from 'utils/formatBalance'
+// import { getCompoundApy } from 'utils/apyHelpers'
 import UnlockButton from 'components/UnlockButton'
 import DepositModal from '../DepositModal'
 import WithdrawModal from '../WithdrawModal'
@@ -288,6 +288,11 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
   const [requestedAction, setRequestedAction] = useState(false)
 
   const rawStakedReceiptBalance = getBalanceNumber(stakedReceiptBalance)
+
+  const displayStakedBalance = (!stakedReceiptBalance || Number(stakedReceiptBalance) === 0)
+    ? '0'
+    : parseFloat(getFullDisplayBalance(stakedReceiptBalance)).toFixed(3)
+
   const pendingXPefiValue = getBalanceNumber(pendingXPefi)
   const { quoteTokenAddresses, quoteTokenSymbol, tokenAddresses } = farm
 
@@ -393,10 +398,10 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
   const farmAPY = farm.apy && farm.apy.times(new BigNumber(100)).toNumber().toFixed(2)
 
   const data = {
-    tvl: stakedValueFormatted,
+    tvl: displayStakedBalance,
     farmTvl: farmTvlValueFormatted,
     normalAPY: farmAPY,
-    compoundAPY: getCompoundApy({ normalApy: farmAPY, type: farm.type }),
+    compoundAPY: useCompoundApy({ normalApy: farmAPY, type: farm.type }),
   }
 
   const renderFarmLogo = () => {
@@ -456,14 +461,16 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
       rawStakedReceiptBalance * (farm.quoteTokenBalanceInLp / getBalanceNumber(new BigNumber(farm.totalSupply)))
 
     return `
-              <h3 style="margin-bottom: 5px;">Underlying Assets</h3>
-              <p style="margin-bottom: 5px;">${userQuoteTokenBalanceInLp.toLocaleString(undefined, {
-                maximumFractionDigits: 2,
-              })} ${farm.quoteTokenSymbol}</p>
-              <p>${userTokenBalanceInLp.toLocaleString(undefined, {
-                maximumFractionDigits: 2,
-              })} ${farm.tokenSymbol}</p>
-            `
+      <h3 style="margin-bottom: 5px;">Your TVL</h3>
+      <p style="margin-bottom: 16px;">${stakedValueFormatted}</p>    
+      <h3 style="margin-bottom: 5px;">Underlying Assets</h3>
+      <p style="margin-bottom: 5px;">${userQuoteTokenBalanceInLp.toLocaleString(undefined, {
+        maximumFractionDigits: 2,
+      })} ${farm.quoteTokenSymbol}</p>
+      <p>${userTokenBalanceInLp.toLocaleString(undefined, {
+        maximumFractionDigits: 2,
+      })} ${farm.tokenSymbol}</p>
+    `
   }
 
   const getFarmTVLTooltip = () => {
@@ -473,14 +480,14 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
       farm.lpTokenBalanceStrategy * (farm.quoteTokenBalanceInLp / getBalanceNumber(new BigNumber(farm.totalSupply)))
 
     return `
-              <h3 style="margin-bottom: 5px;">Underlying Assets</h3>
-              <p style="margin-bottom: 5px;">${strategyQuoteTokenBalanceInLp.toLocaleString(undefined, {
-                maximumFractionDigits: 2,
-              })} ${farm.quoteTokenSymbol}</p>
-              <p>${strategyTokenBalanceInLp.toLocaleString(undefined, {
-                maximumFractionDigits: 2,
-              })} ${farm.tokenSymbol}</p>
-            `
+      <h3 style="margin-bottom: 5px;">Underlying Assets</h3>
+      <p style="margin-bottom: 5px;">${strategyQuoteTokenBalanceInLp.toLocaleString(undefined, {
+        maximumFractionDigits: 2,
+      })} ${farm.quoteTokenSymbol}</p>
+      <p>${strategyTokenBalanceInLp.toLocaleString(undefined, {
+        maximumFractionDigits: 2,
+      })} ${farm.tokenSymbol}</p>
+    `
   }
 
   return (
@@ -494,11 +501,9 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
                 ? `${farm.lpSymbol.split(' ')[0]} lgloo`
                 : `${farm.type} ${farm.lpSymbol.split(' ')[0]}`}
             </Text>
-            {farm.lpSymbol.split(' ')[0] === 'AVAX-PNG' && (
-              <NoFeesTag variant="primary" index={index} outline>
-                0% FEES
-              </NoFeesTag>
-            )}
+            <NoFeesTag variant="primary" index={index} outline>
+              0% REWARD FEES
+            </NoFeesTag>
           </IglooTitleWrapper>
           <Flex justifyContent="flex-start" flexWrap="wrap">
             {!account ? <PGUnlockButton index={index} scale="sm" mt="4px" fullWidth /> : renderActionButtons()}
@@ -510,7 +515,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
           <CardInfoWrapper index={index}>
             <CustomToolTipOrigin data-for={`your-tvl-tooltip-${index}`} data-tip={getYourTVLTooltip()}>
               <Text className="label" fontSize="16px">
-                YOUR TVL
+                LP Balance
               </Text>
               <Text className="value" bold fontSize="24px">
                 {data.tvl}

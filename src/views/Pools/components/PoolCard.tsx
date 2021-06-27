@@ -13,7 +13,7 @@ import { useSousStake } from 'hooks/useStake'
 import { useSousUnstake } from 'hooks/useUnstake'
 import useBlock from 'hooks/useBlock'
 import { getBalanceNumber, getNumberWithCommas } from 'utils/formatBalance'
-import { getNestApy } from 'utils/apyHelpers'
+import { useNestApr, useNestApy } from 'state/hooks'
 import { PoolCategory } from 'config/constants/types'
 import { APY_TOOLTIP_TEXT } from 'config'
 import { Pool } from 'state/types'
@@ -22,6 +22,7 @@ import WithdrawModal from './WithdrawModal'
 import CardTitle from './CardTitle'
 import Card from './Card'
 import CardFooter from './CardFooter'
+import PenaltyConfirmModal from './PenaltyConfirmModal'
 
 const RainbowLight = keyframes`
 	0% {
@@ -36,6 +37,7 @@ const RainbowLight = keyframes`
 `
 
 const StyledCard = styled(Card)<{ isNestPage?: boolean }>`
+  min-width: 350px;
   @media (min-width: 640px) {
     transform: ${(props) => props.isNestPage && 'scale(1.3)'};
     margin-top: ${(props) => props.isNestPage && '60px'};
@@ -74,14 +76,22 @@ const StyledCardAccent = styled.div`
   z-index: -1;
 `
 
-const MultiplierTag = styled(Tag)`
-  margin-left: 4px;
-`
+const MultiplierTag = styled(Tag)``
 
 const APYTag = styled(Tag)`
+  margin-right: 6px;
   span {
     color: #ce022d;
     margin-right: 4px;
+  }
+`
+
+const HelperTag = styled(Tag)`
+  margin-right: 6px;
+  width: 28px;
+  border-radius: 50%;
+  span {
+    color: #ce022d;
   }
 `
 
@@ -173,7 +183,8 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
   const rewardTokenRatio =
     totalStaked && totalSupply ? new BigNumber(totalStaked).div(new BigNumber(totalSupply)).toJSON() : 1
   const convertedLimit = new BigNumber(stakingLimit).multipliedBy(new BigNumber(10).pow(tokenDecimals))
-  const displayedNestApy = (getNestApy() * 100).toFixed(2)
+  const displayedNestApr = (useNestApr() * 100).toFixed(2)
+  const displayedNestApy = (useNestApy() * 100).toFixed(2)
 
   const [onPresentDeposit] = useModal(
     <DepositModal
@@ -185,6 +196,10 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
 
   const [onPresentWithdraw] = useModal(
     <WithdrawModal max={stakedBalance} onConfirm={onUnstake} tokenName={`x${stakingTokenName}`} />,
+  )
+
+  const [onPresentPenaltyConfirm] = useModal(
+    <PenaltyConfirmModal handsOnPenalty={handsOnPenalty} onConfirm={onPresentWithdraw} />,
   )
 
   const fetchEarlyWithdrawalFee = useCallback(async () => {
@@ -225,9 +240,14 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
       {isFinished && sousId !== 0 && <PoolFinishedSash />}
       <CardContent>
         <CardTitle isFinished={isFinished && sousId !== 0}>
-          {tokenName} {TranslateString(348, 'Nest')}
+          {`x${tokenName}`} {TranslateString(348, 'Nest')}
         </CardTitle>
         <Flex justifyContent="flex-end">
+          {/* <APYTag variant="primary" outline>
+            <a href="/">
+              <span>{getNumberWithCommas(displayedNestApr)}%</span> APR
+            </a>
+          </APYTag> */}
           <APYTag variant="primary" outline>
             <a href="/" data-for="custom-class" data-tip={APY_TOOLTIP_TEXT}>
               <span>{getNumberWithCommas(displayedNestApy)}%</span> APY
@@ -242,7 +262,16 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
               html
             />
           </APYTag>
-          <MultiplierTag variant="primary">10X</MultiplierTag>
+          <HelperTag variant="primary" outline>
+            <a
+              href="https://penguin-finance.gitbook.io/penguin-finance/summary/penguin-nests-staking-and-fee-collection"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span>?</span>
+            </a>
+          </HelperTag>
+          <MultiplierTag variant="primary">160X</MultiplierTag>
         </Flex>
         <div style={{ marginBottom: '8px', display: 'flex', alignItems: 'center' }}>
           <Flex minWidth="100%" alignItems="center">
@@ -276,7 +305,7 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
               </div>
             ) : (
               <>
-                <Button disabled={stakedBalance.eq(new BigNumber(0))} onClick={onPresentWithdraw}>
+                <Button disabled={stakedBalance.eq(new BigNumber(0))} onClick={onPresentPenaltyConfirm}>
                   {`Unstake ${stakingTokenName}`}
                 </Button>
                 <StyledActionSpacer />
@@ -287,9 +316,9 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
             ))}
         </StyledCardActions>
         <StyledDetails>
-          <div style={{ flex: 1 }}>
-            <Text color="primary">{TranslateString(384, 'Your Stake')}:</Text>
-          </div>
+          <Label style={{ flex: 1 }}>
+            <Text color="primary">{TranslateString(384, 'Your Stake:')}</Text>
+          </Label>
           <Balance fontSize="14px" isDisabled={isFinished} value={getBalanceNumber(stakedBalance)} />
           <TokenSymbol>
             <Text color="primary" fontSize="14px">
@@ -298,7 +327,9 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
           </TokenSymbol>
         </StyledDetails>
         <StyledDetails>
-          <div style={{ flex: 1 }}> </div>
+          <Label style={{ flex: 1 }}>
+            <Text color="primary">{TranslateString(384, 'PEFI equivalent:')}</Text>
+          </Label>
           <Balance
             fontSize="14px"
             isDisabled={isFinished}
@@ -352,6 +383,10 @@ const StyledActionSpacer = styled.div`
 const StyledDetails = styled.div`
   display: flex;
   font-size: 14px;
+`
+
+const Label = styled.div`
+  margin-left: 20px;
 `
 
 const TokenSymbol = styled.div`

@@ -3,12 +3,14 @@ import Sound from 'react-sound'
 import styled from 'styled-components'
 import Page from 'components/layout/Page'
 
+const arenaBgVideoUrl = 'https://res.cloudinary.com/dbyunrpzq/video/upload/v1624544901/penguin_arena_clpyb0.mp4'
+
 const Arena: React.FC = () => {
   return (
     <Page>
       <Sound url="/sounds/penguin_arena_page.mp3" playStatus={Sound.status.PLAYING} loop />
       <ArenaBgContainer width="100%" height="100%" autoPlay loop muted>
-        <source src="/videos/penguinarena.mp4" />
+        <source src={arenaBgVideoUrl} />
       </ArenaBgContainer>
     </Page>
   )

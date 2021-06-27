@@ -154,19 +154,11 @@ export const soushHarvestBnb = async (sousChefContract, account) => {
     })
 }
 
+// normal emperor events
 export const registerEmperor = async (emperorContract, { nickName, color, style }, account) => {
   return emperorContract.methods
     .registerYourPenguin(nickName, color, style.toString())
     .send({ from: account, gas: 200000 })
-    .on('transactionHash', (tx) => {
-      return tx.transactionHash
-    })
-}
-
-export const stealCrown = async (emperorContract, amount, account) => {
-  return emperorContract.methods
-    .stealCrown(new BigNumber(amount).times(new BigNumber(10).pow(18)).toString())
-    .send({ from: account, gas: 400000 })
     .on('transactionHash', (tx) => {
       return tx.transactionHash
     })
@@ -185,6 +177,15 @@ export const changeEmperorColor = async (emperorContract, color, account) => {
   return emperorContract.methods
     .changeColor(color)
     .send({ from: account, gas: 200000 })
+    .on('transactionHash', (tx) => {
+      return tx.transactionHash
+    })
+}
+
+export const stealCrown = async (emperorContract, amount, account) => {
+  return emperorContract.methods
+    .stealCrown(new BigNumber(amount).times(new BigNumber(10).pow(18)).toString())
+    .send({ from: account, gas: 400000 })
     .on('transactionHash', (tx) => {
       return tx.transactionHash
     })

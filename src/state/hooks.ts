@@ -7,7 +7,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Team } from 'config/constants/types'
 import useRefresh from 'hooks/useRefresh'
 import useUsdtPrice from 'hooks/useUsdtPrice'
-
+import { DAYS_PER_YEAR, CURRENT_NEST_DAILY_REWARDS } from 'config'
+import { getBalanceNumber } from 'utils/formatBalance'
 import {
   fetchMasterChefPefiPerBlock,
   fetchFarmsPublicDataAsync,
@@ -55,7 +56,6 @@ export const useFetchPublicData = () => {
 }
 
 // Farms
-
 export const usePefiPerBlock = (): BigNumber => {
   const pefiPerBlock = useSelector((state: State) => state.compounderFarms.pefiPerBlock)
   return new BigNumber(pefiPerBlock)
@@ -103,7 +103,6 @@ export const useFarmUser = (pid, type) => {
 }
 
 // Compounder Farms
-
 export const useCompounderPefiPerBlock = (): BigNumber => {
   const pefiPerBlock = useSelector((state: State) => state.compounderFarms.pefiPerBlock)
   return new BigNumber(pefiPerBlock)
@@ -142,7 +141,6 @@ export const useCompounderFarmUser = (lpSymbol: string, type: string) => {
 }
 
 // Pools
-
 export const usePools = (account): Pool[] => {
   const { fastRefresh } = useRefresh()
   const dispatch = useDispatch()
@@ -162,7 +160,6 @@ export const usePoolFromPid = (sousId): Pool => {
 }
 
 // Prices
-
 export const usePriceAvaxUsdt = (): BigNumber => {
   const { price: usdtPrice } = useUsdtPrice()
   const lpSymbol = 'USDT-AVAX LP' // USDT-AVAX LP
@@ -269,7 +266,6 @@ export const useProfile = () => {
 }
 
 // Teams
-
 export const useTeam = (id: number) => {
   const team: Team = useSelector((state: State) => state.teams.data[id])
   const dispatch = useDispatch()
@@ -348,4 +344,41 @@ export const useDonations = () => {
   }, [dispatch, account])
 
   return donationsState
+}
+
+// APY/APR
+export const useNestAprPerDay = (): number => {
+  const nestPool = usePoolFromPid(1)
+  const totalStakedInNest = nestPool.totalStaked
+  return (CURRENT_NEST_DAILY_REWARDS / getBalanceNumber(totalStakedInNest)) * 100
+}
+
+export const useNestApr = (): number => {
+  return (DAYS_PER_YEAR * useNestAprPerDay()) / 100
+}
+
+export const useNestApy = () => {
+  const staticFee = 20
+  return (1 + useNestApr() / DAYS_PER_YEAR) ** DAYS_PER_YEAR - 1 + staticFee
+}
+
+export const useCompoundApy = ({ normalApy, type }: { normalApy: string; type: string }) => {
+  const nestAPY = useNestApr()
+
+  if (!normalApy) return ''
+  const _normalApy = Number(normalApy) / 100
+
+  if (type === 'Lydia' || type === 'Pangolin' || type === 'Gondola') {
+    const compoundApy = (1 + _normalApy / DAYS_PER_YEAR) ** DAYS_PER_YEAR - 1
+    return (compoundApy * 100).toFixed(2)
+  }
+
+  if (type === 'Penguin') {
+    const nestStakingBips = 5000
+    const compoundApy1 = (1 + (_normalApy * (1 - nestStakingBips / 10000)) / 730) ** 730 - 1
+    const compoundApy2 = (nestStakingBips / 10000) * _normalApy * (((nestAPY / 2) * 729) / 730 + 1)
+    return ((compoundApy1 + compoundApy2) * 100).toFixed(2)
+  }
+
+  return normalApy
 }

@@ -6,7 +6,7 @@ import { allLanguages } from 'config/localisation/languageCodes'
 import { LanguageContext } from 'contexts/Localisation/languageContext'
 import useTheme from 'hooks/useTheme'
 import useAuth from 'hooks/useAuth'
-import { usePricePefiUsdt, usePools } from 'state/hooks'
+import { usePricePefiUsdt, usePools, useEmperor } from 'state/hooks'
 import WalletConnectGuideModal from 'components/Modal/WalletConnectGuideModal'
 import { config, socials } from './config'
 
@@ -18,6 +18,8 @@ const Menu = (props) => {
   const pefiPriceUsd = usePricePefiUsdt()
   const pools = usePools(account)
   const pefiPool = pools.length > 0 ? pools[0] : null
+  const { myEmperor } = useEmperor()
+  const myNickname = myEmperor.nickname
 
   const getXPefiToPefiRatio = (pool) => {
     return pool.totalStaked && pool.totalSupply
@@ -49,6 +51,7 @@ const Menu = (props) => {
       <WalletConnectGuideModal />
       <UikitMenu
         account={account}
+        nickname={myNickname || ''}
         login={login}
         logout={logout}
         isDark={isDark}

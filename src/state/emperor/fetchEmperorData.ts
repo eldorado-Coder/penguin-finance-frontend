@@ -1,8 +1,8 @@
 import { AbiItem } from 'web3-utils'
 import { getWeb3 } from 'utils/web3'
 import emperorAbi from 'config/abi/emperor.json'
-
-import { getEmperorAddress } from 'utils/addressHelpers'
+import emperorPenguinDBAbi from 'config/abi/charityPenguin.json'
+import { getEmperorAddress, getEmperorPenguinDBAddress } from 'utils/addressHelpers'
 import { Emperor } from 'state/types'
 import { getBalanceNumber } from 'utils/formatBalance'
 
@@ -10,6 +10,10 @@ import { getBalanceNumber } from 'utils/formatBalance'
 // AVAX pools use the native AVAX token (wrapping ? unwrapping is done at the contract level)
 const web3 = getWeb3()
 const emperorContract = new web3.eth.Contract((emperorAbi as unknown) as AbiItem, getEmperorAddress())
+const penguinDBContract = new web3.eth.Contract(
+  (emperorPenguinDBAbi as unknown) as AbiItem,
+  getEmperorPenguinDBAddress(),
+)
 
 export const fetchCurrentEmperorAddress = async () => {
   try {
@@ -56,17 +60,22 @@ export const fetchCurrentEmperorJackpot = async () => {
   }
 }
 
-export const fetchEmperorData = async (currentEmperorAddress) => {
+export const fetchEmperorData = async (emperorAddress) => {
   try {
-    const currentEmperor = await emperorContract.methods.penguDB(currentEmperorAddress).call()
-    const { color, isRegistered, lastCrowningBlockTimestamp, nickname, style, timeAsEmperor } = currentEmperor
+    // from emperor contract
+    const emperorData = await emperorContract.methods.playerDB(emperorAddress).call()
+    const { timeAsEmperor, lastCrowningBlockTimestamp } = emperorData
+
+    // from emperorPenguinDB contract
+    const emperorPenguinData = await penguinDBContract.methods.penguDB(emperorAddress).call()
+    const { nickname, color, isRegistered, style } = emperorPenguinData
 
     return {
+      nickname,
       color,
       isRegistered,
-      lastCrowningBlockTimestamp,
-      nickname,
       style,
+      lastCrowningBlockTimestamp,
       timeAsEmperor,
     }
   } catch (error) {

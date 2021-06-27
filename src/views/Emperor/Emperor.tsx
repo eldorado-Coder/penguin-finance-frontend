@@ -26,10 +26,7 @@ const ChestWrapper = styled.div<{ jackpot: string }>`
   width: 15%;
   left: 22%;
   bottom: 18%;
-
-  &:hover {
-    z-index: 15;
-  }
+  z-index: 11;
 
   img {
     cursor: pointer;
@@ -96,6 +93,7 @@ const GridItem = styled.div`
   margin-bottom: '10px';
   max-width: 280px;
   margin: 0px 4px;
+  width: 200px;
 
   @media (min-width: 640px) {
     max-width: 280px;
@@ -145,6 +143,21 @@ const Grid = styled.div<{ align: string; marginTop?: { xs?: number; sm?: number;
   }
   padding: 0 5%;
   width: 100%;
+`
+
+const PGGRid = styled(Grid)`
+  @media (min-width: 640px) and (max-height: 900px) {
+    margin-top: -80px;
+  }
+  @media (min-width: 768px) and (max-height: 900px) {
+    margin-top: -140px;
+  }
+  @media (min-width: 992px) and (max-height: 900px) {
+    margin-top: -160px;
+  }
+  @media (min-width: 1200px) and (max-height: 900px) {
+    margin-top: -140px;
+  }
 `
 
 const EmperorBgContainer = styled.video`
@@ -207,19 +220,21 @@ const Emperor: React.FC = () => {
             <img className="jackpot-unlock" src={JACKPOTS.UNLOCK} alt="jackpot_unlock" />
           </ChestWrapper>
         )}
-        <Grid align="center" marginTop={{ xs: 100, sm: 120 }}>
+        <Grid align="center" marginTop={{ xs: 80, sm: 100 }}>
           <GridItem>
             <EmperorBlock />
           </GridItem>
         </Grid>
-        <Grid align="between" marginTop={{ xs: -40, sm: -80, md: -120, lg: -160 }}>
-          <GridItem>
-            <TopPenguinsBlock />
-          </GridItem>
-          <GridItem>
-            <YourScoreBlock />
-          </GridItem>
-        </Grid>
+        {account && (
+          <PGGRid align="between" marginTop={{ xs: -40, sm: -190, md: -200, lg: -200 }}>
+            <GridItem>
+              <TopPenguinsBlock />
+            </GridItem>
+            <GridItem>
+              <YourScoreBlock />
+            </GridItem>
+          </PGGRid>
+        )}
       </>
     )
   }
@@ -228,10 +243,10 @@ const Emperor: React.FC = () => {
     return <>{/* <EmperorEndBgContainer /> */}</>
   }
 
-  const emperorEnded = true
-  const emperorDefaultVideo = '/videos/penguin_emperor.mp4'
+  const emperorEnded = false
+  const emperorDefaultVideo = 'https://res.cloudinary.com/dbyunrpzq/video/upload/v1624544908/penguin_emperor_ldeorc.mp4'
   // to change the video of emperor winner page background video, please change this video path
-  const emperorWinnerVideo = '/videos/PenguinEmperorWinner_Final.mp4'
+  const emperorWinnerVideo = '/videos/penguin_emperor_winner.mp4'
 
   return (
     <EmperorPage>

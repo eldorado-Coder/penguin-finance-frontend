@@ -22,9 +22,13 @@ export const LOTTERY_TICKET_PRICE = 1
 
 export const MAX_COMPOUND_APY = 99999
 export const NEST_APR_PER_DAY = 1.3
+export const CURRENT_NEST_DAILY_REWARDS = 63000
 
 export const APY_TOOLTIP_TEXT =
   '<div>The APY  shown are estimated for your convenience, it is not a guaranteed return rate. These yields can change due to block speed, emission rates adjustments, compounding strategies, among other factors</div>'
+
+export const SNOWBALL_TOOLTIP_TEXT =
+  '<div>Snowball Finance is partnered with Penguin Finance. By clicking here you\'ll be redirected to their wonderful site.</div>'
 
 export const COINGECKO_API_ENDPOINT = 'https://api.coingecko.com/api'
 export const ASSET_CONTENT_URL = 'https://raw.githubusercontent.com/Penguin-Finance/assets/master'

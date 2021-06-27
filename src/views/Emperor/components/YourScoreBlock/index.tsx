@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import styled from 'styled-components'
 import { Button, Text, useModal } from 'penguinfinance-uikit2'
 import useI18n from 'hooks/useI18n'
@@ -10,38 +10,46 @@ import { getEmperorAddress } from 'utils/addressHelpers'
 import { badWordsFilter } from 'utils/address'
 import { useEmperorActions, useXPefiApprove } from 'hooks/useEmperor'
 import RegisterModal from './RegisterModal'
-import StealCrownModal from './StealCrownModal'
+// import StealCrownModal from './StealCrownModal'
 import CustomStyleModal from './CustomStyleModal'
 import { getPenguinColor } from '../utils'
 import { UnlockButton, CardBlockHeader, CardBlock } from '../UI'
 
-const TitleBgWrapper = styled.div<{ color: string, account: string }>`
+const CardBlockContent = styled.div`
+  display: block;
+  position: relative;
+  &:hover {
+    z-index: 15;
+  }
+`
+
+const TitleBgWrapper = styled.div<{ color: string; account: string }>`
   z-index: -1;
   width: 100%;
   text-align: center;
-  margin-top: ${props => props.account ? '7%' : '-30%'};
+  margin-top: ${(props) => (props.account ? '7%' : '-30%')};
   position: absolute;
 
   svg {
     width: 300px;
   }
 
-  transform: ${props => props.account && 'scale(1.3)'};
+  transform: ${(props) => props.account && 'scale(1.3)'};
   @media (min-width: 640px) {
-    transform: ${props => props.account && 'scale(1.4)'};
+    transform: ${(props) => props.account && 'scale(1.4)'};
   }
   @media (min-width: 768px) {
-    margin-top: ${props => props.account ? '7%' : '-32%'};
+    margin-top: ${(props) => (props.account ? '7%' : '-32%')};
   }
   @media (min-width: 1200px) {
-    margin-top: ${props => props.account ? '7%' : '-24%'};
+    margin-top: ${(props) => (props.account ? '7%' : '-24%')};
   }
   @media (min-width: 1200px) and (max-height: 800px) {
-    transform: ${props => props.account && 'scale(1.5)'};
+    transform: ${(props) => props.account && 'scale(1.5)'};
   }
 `
 
-const CardBlockContent = styled.div<{ account: string }>`
+const CardBlockBody = styled.div<{ account: string }>`
   background: ${(props) => props.theme.card.background};
   border-radius: 16px;
   padding: 16px;
@@ -51,6 +59,7 @@ const CardBlockContent = styled.div<{ account: string }>`
   margin-top: 25%;
   min-width: 120px;
   padding: 24px 8px 8px;
+
   @media (min-width: 640px) {
     width: 100%;
     margin-top: 25%;
@@ -59,20 +68,20 @@ const CardBlockContent = styled.div<{ account: string }>`
   @media (min-width: 768px) {
     width: 100%;
     padding: 64px 20px 16px;
-    padding-top: ${props => !props.account && '24px'};
+    padding-top: ${(props) => !props.account && '24px'};
     margin-top: 22%;
   }
   @media (min-width: 1200px) {
     width: 100%;
     border-radius: 16px;
     padding: 48px 24px 16px;
-    padding-top: ${props => !props.account && '24px'};
+    padding-top: ${(props) => !props.account && '24px'};
     margin-top: 30%;
   }
   @media (min-width: 1450px) {
     min-width: 240px;
     padding: 40px 24px 16px;
-    padding-top: ${props => !props.account && '24px'};
+    padding-top: ${(props) => !props.account && '24px'};
     margin-top: 32%;
   }
   @media (min-width: 1200px) and (max-height: 800px) {
@@ -99,7 +108,7 @@ const RegisterContainer = styled.div`
   position: relative;
   z-index: 10;
   button {
-    margin-top: 10px;
+    margin-top: 8px;
   }
 `
 
@@ -107,6 +116,9 @@ const RegisterButtonContainer = styled.div`
   button {
     width: 200px;
     border-radius: 30px;
+    @media only screen and (min-width: 1200px) and (max-width: 1450px) {
+      width: 140px;
+    }
   }
 `
 
@@ -115,6 +127,9 @@ const CustomizeStyleButtonContainer = styled.div`
     width: 200px;
     background: ${(props) => props.theme.colors.secondary};
     border-radius: 30px;
+    @media only screen and (min-width: 1200px) and (max-width: 1450px) {
+      width: 140px;
+    }
   }
 `
 
@@ -125,6 +140,18 @@ const YourScoreBlock: React.FC = () => {
   const { onRegister, onSteal, onChangeStyle, onChangeColor } = useEmperorActions()
   const { onApproveXPefi } = useXPefiApprove()
   const xPefiContract = useXPefi()
+  const [pendingTx, setPendingTx] = useState(false)
+  const [maxAmount, setMaxAmount] = useState('')
+  const currentEmperorBidAmount = (currentEmperor && currentEmperor.bidAmount) || 0
+
+  const fetchXPefiBalance = useCallback(async () => {
+    const xPefiBalance = (await xPefiContract.methods.balanceOf(account).call()) / 1e18
+    setMaxAmount(xPefiBalance.toString())
+  }, [account, xPefiContract])
+
+  useEffect(() => {
+    fetchXPefiBalance()
+  }, [fetchXPefiBalance])
 
   const getMyStatus = () => {
     if (account) {
@@ -145,13 +172,26 @@ const YourScoreBlock: React.FC = () => {
     await onRegister(nickName, color, style)
   }
 
-  const onStealCrown = async (amount: string) => {
-    const allowanceBalance = (await xPefiContract.methods.allowance(account, getEmperorAddress()).call()) / 1e18
-    if (allowanceBalance === 0) {
-      // call approve function
-      await onApproveXPefi()
+  const checkCanConfirm = () => {
+    if (pendingTx) return false
+    if (Number(currentEmperorBidAmount) + 0.05 > Number(maxAmount)) return false
+    return true
+  }
+
+  const onStealCrown = async () => {
+    setPendingTx(true)
+    try {
+      const amount = currentEmperorBidAmount + 0.05
+      const allowanceBalance = (await xPefiContract.methods.allowance(account, getEmperorAddress()).call()) / 1e18
+      if (allowanceBalance === 0) {
+        // call approve function
+        await onApproveXPefi()
+      }
+      await onSteal(String(amount))
+      setPendingTx(false)
+    } catch (error) {
+      setPendingTx(false)
     }
-    await onSteal(amount)
   }
 
   const onChangeEmperorStyle = async (style: string) => {
@@ -164,7 +204,7 @@ const YourScoreBlock: React.FC = () => {
 
   const [onToggleRegister] = useModal(<RegisterModal onConfirm={onRegisterPenguin} />)
 
-  const [onToggleStealModal] = useModal(<StealCrownModal onConfirm={onStealCrown} />)
+  // const [onToggleStealModal] = useModal(<StealCrownModal onConfirm={onStealCrown} />)
 
   const [onToggleCustomModal] = useModal(
     <CustomStyleModal onConfirmChangeStyle={onChangeEmperorStyle} onConfirmChangeColor={onChangeEmperorColor} />,
@@ -172,84 +212,86 @@ const YourScoreBlock: React.FC = () => {
 
   return (
     <CardBlock>
-      <CardBlockHeader>
-        <TitleBgWrapper color={getPenguinColor(myEmperor)} account={account}>
-          {account ? 
-            <img
-              src={`${process.env.PUBLIC_URL}/images/emperor/banner/your_penguin_banner.svg`}
-              width="100%"
-              height="120px"
-              alt='blitz-title'
-            />
-            :
-          <SvgIcon
-            src={
-              myStatus === 'registered' || myStatus === 'king'
-                ? `${process.env.PUBLIC_URL}/images/emperor/banner/your_penguin_banner.svg`
-                : `${process.env.PUBLIC_URL}/images/emperor/banner/your_score_banner_locked.svg`
-            }
-            width="100%"
-            height="20px"
-          />
-        }
-        </TitleBgWrapper>
-      </CardBlockHeader>
-      <CardBlockContent account={account}>
-        {myStatus === 'not connected' && (
-          <WalletContainer>
-            <Text bold color="secondary" fontSize="22px">
-              {TranslateString(1074, 'Check your Rank')}
-            </Text>
-            <Text fontSize="14px">Connect wallet to view</Text>
-            <UnlockButton />
-          </WalletContainer>
-        )}
-        {myStatus === 'not registered' && (
-          <RegisterContainer>
-            <Text bold color="secondary" fontSize="18px">
-              {TranslateString(1074, 'You must register your penguin before attempting to steal the Throne')}
-            </Text>
-            <RegisterButtonContainer>
-              <Button onClick={onToggleRegister}>{TranslateString(292, 'Register')}</Button>
-            </RegisterButtonContainer>
-          </RegisterContainer>
-        )}
+      <CardBlockContent>
+        <CardBlockHeader>
+          <TitleBgWrapper color={getPenguinColor(myEmperor)} account={account}>
+            {account ? (
+              <img
+                src={`${process.env.PUBLIC_URL}/images/emperor/banner/your_penguin_banner.svg`}
+                width="100%"
+                height="120px"
+                alt="blitz-title"
+              />
+            ) : (
+              <SvgIcon
+                src={
+                  myStatus === 'registered' || myStatus === 'king'
+                    ? `${process.env.PUBLIC_URL}/images/emperor/banner/your_penguin_banner.svg`
+                    : `${process.env.PUBLIC_URL}/images/emperor/banner/your_score_banner_locked.svg`
+                }
+                width="100%"
+                height="20px"
+              />
+            )}
+          </TitleBgWrapper>
+        </CardBlockHeader>
+        <CardBlockBody account={account}>
+          {myStatus === 'not connected' && (
+            <WalletContainer>
+              <Text bold color="secondary" fontSize="22px">
+                {TranslateString(1074, 'Check your Rank')}
+              </Text>
+              <Text fontSize="14px">Connect wallet to view</Text>
+              <UnlockButton />
+            </WalletContainer>
+          )}
+          {myStatus === 'not registered' && (
+            <RegisterContainer>
+              <Text bold color="secondary" fontSize="18px">
+                {TranslateString(1074, 'You must register your penguin before attempting to steal the Throne')}
+              </Text>
+              <RegisterButtonContainer>
+                <Button onClick={onToggleRegister}>{TranslateString(292, 'Register')}</Button>
+              </RegisterButtonContainer>
+            </RegisterContainer>
+          )}
 
-        {myStatus === 'registered' && (
-          <RegisterContainer>
-            <Text bold color="primary" fontSize="22px">
-              {TranslateString(1074, myEmperor && badWordsFilter(myEmperor.nickname))}
-            </Text>
-            <Text bold color="secondary" fontSize="18px">
-              {TranslateString(1074, 'You have been Emperor for:')}
-            </Text>
-            <Text bold color="primary" fontSize="18px">
-              {`${myEmperor.timeAsEmperor} seconds`}
-            </Text>
-            <RegisterButtonContainer>
-              <Button onClick={onToggleStealModal} endIcon={<div>{` `}</div>}>
-                {TranslateString(292, 'Steal the Crown')}
-              </Button>
-            </RegisterButtonContainer>
-            <CustomizeStyleButtonContainer>
-              <Button onClick={onToggleCustomModal}>{TranslateString(292, 'Customize Penguin')}</Button>
-            </CustomizeStyleButtonContainer>
-          </RegisterContainer>
-        )}
+          {myStatus === 'registered' && (
+            <RegisterContainer>
+              <Text bold color="primary" fontSize="22px">
+                {TranslateString(1074, myEmperor && badWordsFilter(myEmperor.nickname))}
+              </Text>
+              <Text bold color="secondary" fontSize="18px">
+                {TranslateString(1074, 'You have been Emperor for:')}
+              </Text>
+              <Text bold color="primary" fontSize="18px">
+                {`${myEmperor.timeAsEmperor} seconds`}
+              </Text>
+              <RegisterButtonContainer>
+                <Button disabled={!checkCanConfirm()} onClick={onStealCrown} endIcon={<div>{` `}</div>}>
+                  {TranslateString(292, 'Steal the Crown')}
+                </Button>
+              </RegisterButtonContainer>
+              <CustomizeStyleButtonContainer>
+                <Button onClick={onToggleCustomModal}>{TranslateString(292, 'Customize Penguin')}</Button>
+              </CustomizeStyleButtonContainer>
+            </RegisterContainer>
+          )}
 
-        {myStatus === 'king' && (
-          <RegisterContainer>
-            <Text bold color="secondary" fontSize="22px">
-              {TranslateString(1074, myEmperor && badWordsFilter(myEmperor.nickname))}
-            </Text>
-            <Text bold color="secondary" fontSize="18px">
-              {TranslateString(1074, 'You have been Emperor for:')}
-            </Text>
-            <Text bold color="primary" fontSize="22px">
-              {`${myEmperor.timeAsEmperor} seconds`}
-            </Text>
-          </RegisterContainer>
-        )}
+          {myStatus === 'king' && (
+            <RegisterContainer>
+              <Text bold color="secondary" fontSize="22px">
+                {TranslateString(1074, myEmperor && badWordsFilter(myEmperor.nickname))}
+              </Text>
+              <Text bold color="secondary" fontSize="18px">
+                {TranslateString(1074, 'You have been Emperor for:')}
+              </Text>
+              <Text bold color="primary" fontSize="22px">
+                {`${myEmperor.timeAsEmperor} seconds`}
+              </Text>
+            </RegisterContainer>
+          )}
+        </CardBlockBody>
       </CardBlockContent>
     </CardBlock>
   )
