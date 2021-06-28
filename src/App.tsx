@@ -4,12 +4,13 @@ import { ResetCSS } from 'penguinfinance-uikit2'
 import BigNumber from 'bignumber.js'
 // import { useWeb3React } from '@web3-react/core'
 import { useFetchProfile, useFetchPublicData } from 'state/hooks'
-import GlobalStyle from './style/Global'
-import Menu from './components/Menu'
-import ToastListener from './components/ToastListener'
-import PageLoader from './components/PageLoader'
-import Pools from './views/Pools'
-import GlobalCheckBullHiccupClaimStatus from './views/Collectibles/components/GlobalCheckBullHiccupClaimStatus'
+import GlobalStyle from 'style/Global'
+import Menu from 'components/Menu'
+import ToastListener from 'components/ToastListener'
+import PageLoader from 'components/PageLoader'
+import CurrentBlockWrapper from 'components/CurrentBlockWrapper'
+import Pools from 'views/Pools'
+import GlobalCheckBullHiccupClaimStatus from 'views/Collectibles/components/GlobalCheckBullHiccupClaimStatus'
 import history from './routerHistory'
 
 // Route-based code splitting
@@ -95,6 +96,7 @@ const App: React.FC = () => {
       </Menu>
       <ToastListener />
       <GlobalCheckBullHiccupClaimStatus />
+      <CurrentBlockWrapper />
     </Router>
   )
 }
