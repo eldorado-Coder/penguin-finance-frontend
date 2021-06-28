@@ -58,6 +58,8 @@ const CardBlockContent = styled.div<{ account?: string }>`
   min-width: 150px;
   max-width: ${(props) => !props.account && '220px'};
   padding: 8px;
+  margin-left: auto;
+  margin-right: auto;
   @media (min-width: 640px) {
     width: 100%;
     margin-top: 25%;
