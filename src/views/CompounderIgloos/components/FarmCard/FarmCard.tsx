@@ -461,15 +461,16 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
       rawStakedReceiptBalance * (farm.quoteTokenBalanceInLp / getBalanceNumber(new BigNumber(farm.totalSupply)))
 
     return `
-              <h3 style="margin-bottom: 5px;">Underlying Assets</h3>
-              <p style="margin-bottom: 5px;">${stakedValueFormatted}</p>
-              <p style="margin-bottom: 5px;">${userQuoteTokenBalanceInLp.toLocaleString(undefined, {
-                maximumFractionDigits: 2,
-              })} ${farm.quoteTokenSymbol}</p>
-              <p>${userTokenBalanceInLp.toLocaleString(undefined, {
-                maximumFractionDigits: 2,
-              })} ${farm.tokenSymbol}</p>
-            `
+      <h3 style="margin-bottom: 5px;">Your TVL</h3>
+      <p style="margin-bottom: 16px;">${stakedValueFormatted}</p>    
+      <h3 style="margin-bottom: 5px;">Underlying Assets</h3>
+      <p style="margin-bottom: 5px;">${userQuoteTokenBalanceInLp.toLocaleString(undefined, {
+        maximumFractionDigits: 2,
+      })} ${farm.quoteTokenSymbol}</p>
+      <p>${userTokenBalanceInLp.toLocaleString(undefined, {
+        maximumFractionDigits: 2,
+      })} ${farm.tokenSymbol}</p>
+    `
   }
 
   const getFarmTVLTooltip = () => {
@@ -479,14 +480,14 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
       farm.lpTokenBalanceStrategy * (farm.quoteTokenBalanceInLp / getBalanceNumber(new BigNumber(farm.totalSupply)))
 
     return `
-              <h3 style="margin-bottom: 5px;">Underlying Assets</h3>
-              <p style="margin-bottom: 5px;">${strategyQuoteTokenBalanceInLp.toLocaleString(undefined, {
-                maximumFractionDigits: 2,
-              })} ${farm.quoteTokenSymbol}</p>
-              <p>${strategyTokenBalanceInLp.toLocaleString(undefined, {
-                maximumFractionDigits: 2,
-              })} ${farm.tokenSymbol}</p>
-            `
+      <h3 style="margin-bottom: 5px;">Underlying Assets</h3>
+      <p style="margin-bottom: 5px;">${strategyQuoteTokenBalanceInLp.toLocaleString(undefined, {
+        maximumFractionDigits: 2,
+      })} ${farm.quoteTokenSymbol}</p>
+      <p>${strategyTokenBalanceInLp.toLocaleString(undefined, {
+        maximumFractionDigits: 2,
+      })} ${farm.tokenSymbol}</p>
+    `
   }
 
   return (
@@ -514,7 +515,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
           <CardInfoWrapper index={index}>
             <CustomToolTipOrigin data-for={`your-tvl-tooltip-${index}`} data-tip={getYourTVLTooltip()}>
               <Text className="label" fontSize="16px">
-                YOUR TVL
+                LP Balance
               </Text>
               <Text className="value" bold fontSize="24px">
                 {data.tvl}
