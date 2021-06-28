@@ -10,6 +10,7 @@ import teamsReducer from './teams'
 import emperorReducer from './emperor'
 import achievementsReducer from './achievements'
 import globalReducer from './global'
+import settingReducer from './setting'
 import donationsReducer from './donations'
 
 const store = configureStore({
@@ -25,7 +26,8 @@ const store = configureStore({
     teams: teamsReducer,
     achievements: achievementsReducer,
     global: globalReducer,
-    donations: donationsReducer
+    setting: settingReducer,
+    donations: donationsReducer,
   },
 })
 

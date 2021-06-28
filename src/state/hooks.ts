@@ -32,6 +32,7 @@ import {
   EmperorState,
   GlobalState,
   DonationsState,
+  SettingState,
 } from './types'
 import { fetchProfile } from './profile'
 import { fetchTeam, fetchTeams } from './teams'
@@ -250,7 +251,6 @@ export const useToast = () => {
 }
 
 // Profile
-
 export const useFetchProfile = () => {
   const { account } = useWeb3React()
   const dispatch = useDispatch()
@@ -344,6 +344,12 @@ export const useDonations = () => {
   }, [dispatch, account])
 
   return donationsState
+}
+
+// Setting
+export const useSetting = () => {
+  const settingState: SettingState = useSelector((state: State) => state.setting)
+  return settingState
 }
 
 // APY/APR
