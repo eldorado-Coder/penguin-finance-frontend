@@ -11,6 +11,9 @@ const GlobalStyle = createGlobalStyle`
   * {
     font-family: 'Kanit', sans-serif;
   }
+  #root {
+    position: relative;
+  }
   body {
     background-color: ${({ theme }) => theme.colors.background};
     background: ${({ theme }) => theme.isDark && '#171027'};

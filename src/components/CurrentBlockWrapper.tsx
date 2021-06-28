@@ -5,7 +5,7 @@ import useBlock from 'hooks/useBlock'
 import { useSetting } from 'state/hooks'
 
 const CurrentBlockNumber = styled(Text)`
-  position: sticky;
+  position: absolute;
   right: 16px;
   bottom: 16px;
   font-size: 16px;

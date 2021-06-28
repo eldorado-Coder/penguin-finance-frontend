@@ -3,8 +3,8 @@ import { createSlice } from '@reduxjs/toolkit'
 import { SettingState } from 'state/types'
 
 const initialState: SettingState = {
-  isCurrentBlockShowed: true,
-  isMusicEnabled: true,
+  isCurrentBlockShowed: false,
+  isMusicEnabled: false,
 }
 
 export const SettingSlice = createSlice({
