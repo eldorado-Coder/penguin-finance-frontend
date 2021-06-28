@@ -69,7 +69,7 @@ export const config: MenuEntry[] = [
         href: 'https://www.penguinfinance.io/b',
       },
       {
-        label: 'Blog',
+        label: 'Medium Articles',
         href: 'https://penguin-finance.medium.com/',
       },
     ],
