@@ -28,7 +28,7 @@ const BlockContextProvider = ({ children }) => {
         previousBlock.current = currentBlockNumber
         setBlock(currentBlockNumber)
       }
-    }, 6000)
+    }, 3000)
 
     return () => clearInterval(interval)
     // eslint-disable-next-line react-hooks/exhaustive-deps
