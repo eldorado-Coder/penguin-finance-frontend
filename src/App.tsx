@@ -21,6 +21,7 @@ const Arena = lazy(() => import('./views/Arena'))
 const Launchpad = lazy(() => import('./views/Launchpad'))
 const Emperor = lazy(() => import('./views/Emperor'))
 const CovidEmperor = lazy(() => import('./views/CovidEmperor'))
+const Club = lazy(() => import('./views/Club'));
 const NotFound = lazy(() => import('./views/NotFound'))
 
 // const Nests = lazy(() => import('./views/Nests'))
@@ -31,7 +32,6 @@ const CompounderIgloos = lazy(() => import('./views/CompounderIgloos'))
 // const Teams = lazy(() => import('./views/Teams'))
 // const Team = lazy(() => import('./views/Teams/Team'))
 // const Profile = lazy(() => import('./views/Profile'))
-const Audit = lazy(() => import('./views/Audit'))
 
 // This config is required for number formating
 BigNumber.config({
@@ -68,6 +68,9 @@ const App: React.FC = () => {
             <Route path="/launchpad">
               <Launchpad />
             </Route>
+            <Route path="/club">
+              <Club />
+            </Route>
             {/* <Route path="/emperor"> */}
             <Route path="/emperor">
               <Emperor />
@@ -86,9 +89,6 @@ const App: React.FC = () => {
             {/* <Route path="/collectibles">
               <Collectibles />
             </Route> */}
-            <Route path="/audit">
-              <Audit />
-            </Route>
             {/* 404 */}
             <Route component={NotFound} />
           </Switch>

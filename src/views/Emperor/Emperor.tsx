@@ -23,8 +23,8 @@ const EmperorPage = styled(Page)`
 
 const ChestWrapper = styled.div<{ jackpot: string }>`
   position: absolute;
-  width: 15%;
-  left: 22%;
+  width: 9.5%;
+  left: 26%;
   bottom: 18%;
   z-index: 11;
 
@@ -69,16 +69,16 @@ const PaperWrapper = styled.div`
       font-size: 12px;
     }
     @media (min-width: 768px) {
-      font-size: 12px;
+      font-size: 14px;
     }
     @media (min-width: 1200px) {
       font-size: 14px;
     }
     @media (min-width: 1450px) {
-      font-size: 20px;
+      font-size: 16px;
     }
     @media (min-width: 1600px) {
-      font-size: 24px;
+      font-size: 20px;
     }
   }
 `

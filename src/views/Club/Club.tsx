@@ -2,15 +2,15 @@ import React from 'react'
 import styled from 'styled-components'
 import Page from 'components/layout/Page'
 
-const Audit: React.FC = () => {
+const Club: React.FC = () => {
   return (
     <Page>
-      <AuditBgContainer width="100%" height="100%" />
+      <ClubBgContainer width="100%" height="100%" />
     </Page>
   )
 }
 
-const AuditBgContainer = styled.video`
+const ClubBgContainer = styled.video`
   object-fit: fill;
   position: absolute;
   top: 0px;
@@ -20,4 +20,4 @@ const AuditBgContainer = styled.video`
   z-index: 1;
 `
 
-export default Audit
+export default Club
