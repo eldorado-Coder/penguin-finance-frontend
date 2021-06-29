@@ -6,8 +6,8 @@ import { useSetting } from 'state/hooks'
 
 const CurrentBlockNumber = styled(Text)`
   position: absolute;
-  right: 16px;
-  bottom: 16px;
+  right: 12px;
+  bottom: 12px;
   font-size: 16px;
   float: right;
 `
