@@ -186,12 +186,6 @@ export interface GlobalState {
   wrongNetworkGuideModalOpened: boolean
 }
 
-// Setting state
-export interface SettingState {
-  isCurrentBlockShowed: boolean
-  isMusicEnabled: boolean
-}
-
 export interface State {
   lps: LpsState
   farms: FarmsState
@@ -205,6 +199,4 @@ export interface State {
   global: GlobalState
   emperor: EmperorState
   donations: DonationsState
-  // setting
-  setting: SettingState
 }
