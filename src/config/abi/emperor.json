@@ -564,12 +564,31 @@
         "stateMutability": "view",
         "outputs": [
             {
-                "type": "int256",
+                "type": "uint256",
                 "name": "",
-                "internalType": "int256"
+                "internalType": "uint256"
             }
         ],
         "name": "timeLeftForPoison",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "penguinAddress",
+                "internalType": "address"
+            }
+        ]
+    },
+    {
+        "type": "function",
+        "stateMutability": "view",
+        "outputs": [
+            {
+                "type": "uint256",
+                "name": "",
+                "internalType": "uint256"
+            }
+        ],
+        "name": "timePoisonedRemaining",
         "inputs": [
             {
                 "type": "address",
