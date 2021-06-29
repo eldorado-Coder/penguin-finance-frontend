@@ -86,6 +86,8 @@ const APYTag = styled(Tag)`
   }
 `
 
+const APYToolTipWrapper = styled.div``
+
 const HelperTag = styled(Tag)`
   margin-right: 6px;
   width: 28px;
@@ -249,9 +251,9 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
             </a>
           </APYTag> */}
           <APYTag variant="primary" outline>
-            <a href="/" data-for="custom-class" data-tip={APY_TOOLTIP_TEXT}>
+            <APYToolTipWrapper data-for="custom-class" data-tip={APY_TOOLTIP_TEXT}>
               <span>{getNumberWithCommas(displayedNestApy)}%</span> APY
-            </a>
+            </APYToolTipWrapper>
             <CustomToolTip
               id="custom-class"
               wrapper="div"
