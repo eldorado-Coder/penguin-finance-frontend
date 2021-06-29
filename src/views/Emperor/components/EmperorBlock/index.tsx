@@ -1,13 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Text } from 'penguinfinance-uikit2'
+import { Text, Button, Flex } from 'penguinfinance-uikit2'
 import useI18n from 'hooks/useI18n'
 import { useWeb3React } from '@web3-react/core'
 import { useEmperor } from 'state/hooks'
 import { badWordsFilter } from 'utils/address'
 import SvgIcon from 'components/SvgIcon'
 import { getPenguinColor, getKingPenguin, getNormalPenguin } from '../utils'
-import { UnlockButton as Button, CardBlockHeader, CardBlock as Block } from '../UI'
+import { UnlockButton, CardBlockHeader, CardBlock as Block } from '../UI'
 
 const CardBlock = styled(Block)`
   margin-top: -100px;
@@ -88,9 +88,35 @@ const CardBlockContent = styled.div<{ account?: string }>`
   }
 `
 
-const WalletContainer = styled.div`
+const WalletContainer = styled(Flex)`
   position: relative;
   z-index: 10;
+
+  .starter-button {
+    background: #f5c83b;
+    font-size: 10px;
+    padding: 0 8px;
+    height: 28px;
+    margin-top: 4px;
+    margin-bottom: 8px;
+    
+    @media (min-width: 640px) {
+      font-size: 12px;
+      padding: 0 12px;
+      height: 36px;
+    }
+    @media (min-width: 768px) {
+      font-size: 14px;
+      padding: 0 24px;
+      height: 48px;
+    }
+    @media (min-width: 1200px) {
+      margin-top: 8px;
+      font-size: 16px;
+      padding: 0 24px;
+      height: 48px;
+    }
+  }
 `
 
 const EmperorInfoContainer = styled.div`
@@ -126,19 +152,6 @@ const MyPenguinImageWrapper = styled.div<{ penguin: string; color: string }>`
   }
 `
 
-const UnlockButton = styled(Button)`
-  margin-top: 4px;
-  @media (min-width: 640px) {
-    margin-top: 4px;
-  }
-  @media (min-width: 768px) {
-    margin-top: 16px;
-  }
-  @media (min-width: 1200px) {
-    margin-top: 8px;
-  }
-`
-
 const EmperorBlock: React.FC = () => {
   const TranslateString = useI18n()
   const { account } = useWeb3React()
@@ -147,6 +160,10 @@ const EmperorBlock: React.FC = () => {
   const currentEmperorBidAmount = (currentEmperor && currentEmperor.bidAmount) || 0
   const currentEmperorPenguin = getKingPenguin(currentEmperor)
   const myEmperorPenguin = getNormalPenguin(myEmperor)
+
+  const handleViewStarterGuide = () => {
+    window.open('https://app.gitbook.com/@penguin-finance/s/penguin-finance/summary/penguin-emperor', '_blank');
+  };
 
   return (
     <CardBlock>
@@ -162,7 +179,10 @@ const EmperorBlock: React.FC = () => {
       </CardBlockHeader>
       <CardBlockContent account={account}>
         {!account && (
-          <WalletContainer>
+          <WalletContainer flexDirection='column' alignItems='center'>
+            <Button className='starter-button' onClick={handleViewStarterGuide}>
+              Starter Guide
+            </Button>
             <UnlockButton />
           </WalletContainer>
         )}

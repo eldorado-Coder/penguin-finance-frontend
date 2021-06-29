@@ -51,6 +51,10 @@ const DetailsButton = styled(Button).attrs({ variant: 'text', fullWidth: true })
 
 const InfoBlock = styled.div`
   padding: 16px 24px 24px;
+
+  p {
+    text-align: center;
+  }
 `
 
 const Footer = styled(CardFooter)`
@@ -129,8 +133,11 @@ const NftCard: React.FC<NftCardProps> = ({ nft, onSuccess, canClaim = false, tok
         </DetailsButton>
         {isOpen && (
           <InfoBlock>
-            <Text as="p" color="textSubtle" style={{ textAlign: 'center' }}>
+            <Text as="p" color="textSubtle">
               {description}
+            </Text>
+            <Text as="p" color="primary" mt='8px'>
+              Coming Soon
             </Text>
           </InfoBlock>
         )}
