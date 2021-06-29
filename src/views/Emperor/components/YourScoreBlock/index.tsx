@@ -150,6 +150,8 @@ const StealAndPoisonButtonContainer = styled.div`
   }
 `
 
+const ButtonToolTipWrapper = styled.div``
+
 const CustomizeStyleButtonContainer = styled.div`
   button {
     width: 200px;
@@ -350,11 +352,17 @@ const YourScoreBlock: React.FC = () => {
                 {`${myEmperor.timeAsEmperor} seconds`}
               </Text>
               <StealButtonContainer>
-                <a href="/" data-for="custom-class" data-tip={stealCrownTooltip}>
-                  <Button disabled={!checkCanStealConfirm()} onClick={onStealCrown} endIcon={<div>{` `}</div>}>
+                <ButtonToolTipWrapper data-for="custom-class" data-tip={stealCrownTooltip}>
+                  <Button
+                    data-for="custom-class"
+                    data-tip={stealCrownTooltip}
+                    disabled={!checkCanStealConfirm()}
+                    onClick={onStealCrown}
+                    endIcon={<div>{` `}</div>}
+                  >
                     {TranslateString(292, 'Steal Crown')}
                   </Button>
-                </a>
+                </ButtonToolTipWrapper>
                 {isMyEmperorPoisoned && (
                   <CustomToolTip
                     id="custom-class"
@@ -368,7 +376,7 @@ const YourScoreBlock: React.FC = () => {
                 )}
               </StealButtonContainer>
               <StealAndPoisonButtonContainer>
-                <a href="/" data-for="custom-class-poison" data-tip={stealCrownTooltip}>
+                <ButtonToolTipWrapper data-for="custom-class-poison" data-tip={stealCrownTooltip}>
                   <Button
                     disabled={!checkCanStealAndPoisonConfirm()}
                     onClick={onStealCrownAndPoison}
@@ -376,7 +384,7 @@ const YourScoreBlock: React.FC = () => {
                   >
                     {TranslateString(292, 'Steal & Poison')}
                   </Button>
-                </a>
+                </ButtonToolTipWrapper>
                 {isMyEmperorPoisoned && (
                   <CustomToolTip
                     id="custom-class-poison"
