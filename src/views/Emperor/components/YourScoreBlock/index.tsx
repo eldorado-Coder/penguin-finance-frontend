@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { Button, Text, useModal } from 'penguinfinance-uikit2'
 import ReactTooltip from 'react-tooltip'
 import useI18n from 'hooks/useI18n'
+import BigNumber from 'bignumber.js'
 import { useWeb3React } from '@web3-react/core'
 import SvgIcon from 'components/SvgIcon'
 import { useEmperor } from 'state/hooks'
@@ -249,7 +250,10 @@ const YourScoreBlock: React.FC = () => {
   const onStealCrown = async () => {
     setPendingTx(true)
     try {
-      const amount = currentEmperor.address === NON_ADDRESS ? openingBib : currentEmperorBidAmount + maxBidIncrease
+      const amount =
+        currentEmperor.address === NON_ADDRESS
+          ? new BigNumber(openingBib).toString()
+          : new BigNumber(currentEmperorBidAmount).plus(new BigNumber(maxBidIncrease)).toString()
       const allowanceBalance = (await xPefiContract.methods.allowance(account, getEmperorAddress()).call()) / 1e18
       if (allowanceBalance === 0) {
         // call approve function
@@ -265,7 +269,10 @@ const YourScoreBlock: React.FC = () => {
   const onStealCrownAndPoison = async () => {
     setPendingTx(true)
     try {
-      const amount = currentEmperor.address === NON_ADDRESS ? openingBib : currentEmperorBidAmount + maxBidIncrease
+      const amount =
+        currentEmperor.address === NON_ADDRESS
+          ? new BigNumber(openingBib).toString()
+          : new BigNumber(currentEmperorBidAmount).plus(new BigNumber(maxBidIncrease)).toString()
       const allowanceBalance = (await xPefiContract.methods.allowance(account, getEmperorAddress()).call()) / 1e18
       if (allowanceBalance === 0) {
         // call approve function
