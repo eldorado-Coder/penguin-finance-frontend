@@ -114,6 +114,7 @@ const Grid = styled.div<{ align: string; marginTop?: { xs?: number; sm?: number;
   justify-content: space-around;
   justify-content: ${({ align }) => (align === 'center' ? 'center' : 'space-between')};
   margin-top: ${({ marginTop }) => `${marginTop.xs}px`};
+  padding: 0 3%;
   @media (min-width: 640px) {
     ${({ marginTop }) =>
       marginTop.xs && {
@@ -141,7 +142,6 @@ const Grid = styled.div<{ align: string; marginTop?: { xs?: number; sm?: number;
   @media (max-width: 1600px) {
     font-size: 24px;
   }
-  padding: 0 5%;
   width: 100%;
 `
 
