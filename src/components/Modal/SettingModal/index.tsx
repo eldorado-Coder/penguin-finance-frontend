@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text, Toggle, Modal, Heading } from 'penguinfinance-uikit2'
 import styled from 'styled-components'
-import useUserSetting from 'hooks/useUserSetting';
+import useUserSetting from 'hooks/useUserSetting'
 
 interface SettingModalProps {
   onDismiss?: () => void
@@ -36,7 +36,7 @@ const CustomToggle = styled(Toggle)`
 `
 
 const SettingModal: React.FC<SettingModalProps> = ({ onDismiss }) => {
-  const { isMusic, toggleMusic, visibleBlock, toggleVisibleBlock } = useUserSetting();
+  const { isMusic, toggleMusic, visibleBlock, toggleVisibleBlock } = useUserSetting()
 
   return (
     <Modal title="" hideCloseButton bodyPadding="0px" onDismiss={onDismiss}>
