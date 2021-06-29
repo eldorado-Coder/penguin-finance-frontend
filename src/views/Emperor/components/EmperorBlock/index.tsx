@@ -78,12 +78,12 @@ const CardBlockContent = styled.div<{ account?: string }>`
     padding: 24px 24px 16px;
   }
   @media (min-width: 1450px) {
-    min-width: ${({ account }) => (account ? '240px' : '200px')};
+    min-width: 200px;
     padding: 20px 24px 16px;
     margin-top: 26%;
   }
   @media (min-width: 1200px) and (max-height: 800px) {
-    min-width: ${({ account }) => (account ? '240px' : '200px')};
+    min-width: 200px;
     padding: 32px 24px 16px;
   }
 `

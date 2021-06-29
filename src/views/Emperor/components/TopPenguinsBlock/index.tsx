@@ -42,6 +42,11 @@ const TitleBgWrapper = styled.div<{ color: string; account: string }>`
   @media (min-width: 1200px) and (max-height: 800px) {
     transform: ${(props) => props.account && 'scale(1.4)'};
   }
+  @media (min-width: 1450px) and (max-height: 800px) {
+    img {
+      margin-left: 8%;
+    }
+  }
 `
 
 const CardBlockBody = styled.div<{ account: string }>`
