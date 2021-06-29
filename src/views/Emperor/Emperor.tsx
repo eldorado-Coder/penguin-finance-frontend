@@ -6,6 +6,7 @@ import { Text } from 'penguinfinance-uikit2'
 
 import { useEmperor } from 'state/hooks'
 import Page from 'components/layout/Page'
+import useUserSetting from 'hooks/useUserSetting';
 import EmperorBlock from './components/EmperorBlock'
 import YourScoreBlock from './components/YourScoreBlock'
 import TopPenguinsBlock from './components/TopPenguinsBlock'
@@ -177,6 +178,7 @@ const Emperor: React.FC = () => {
   const [jackpotOpenSound, setJackpotOpenSound] = useState(false)
   const [showJackpot, setShowJackpot] = useState(false)
   const jackpotRef = useRef(jackpot)
+  const { isMusic } = useUserSetting()
   jackpotRef.current = jackpot
 
   const handleOpenJackpot = () => {
@@ -253,13 +255,13 @@ const Emperor: React.FC = () => {
       <Sound
         url={`${emperorEnded ? '/sounds/penguin_emperor_winner.mp3' : '/sounds/penguin_emperor_page.mp3'} `}
         playStatus={Sound.status.PLAYING}
-        volume={20}
+        volume={isMusic ? 20 : 0}
         loop
       />
       <Sound
         url="/sounds/jackpot_open.mp3"
         playStatus={jackpotOpenSound ? Sound.status.PLAYING : Sound.status.STOPPED}
-        volume={100}
+        volume={isMusic ? 100 : 0}
       />
 
       {/* background video */}

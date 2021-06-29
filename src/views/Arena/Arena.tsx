@@ -2,13 +2,13 @@ import React from 'react'
 import Sound from 'react-sound'
 import styled from 'styled-components'
 import Page from 'components/layout/Page'
-import { useSetting } from 'state/hooks'
+import useUserSetting from 'hooks/useUserSetting'
 
 const arenaBgVideoUrl = 'https://res.cloudinary.com/dbyunrpzq/video/upload/v1624544901/penguin_arena_clpyb0.mp4'
 
 const Arena: React.FC = () => {
-  const { isMusicEnabled } = useSetting()
-  const volumeSize = isMusicEnabled ? 100 : 0
+  const { isMusic } = useUserSetting()
+  const volumeSize = isMusic ? 100 : 0
 
   return (
     <Page>

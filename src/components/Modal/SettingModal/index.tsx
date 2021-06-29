@@ -1,13 +1,9 @@
-import React, { useCallback } from 'react'
+import React from 'react'
 import { Text, Toggle, Modal, Heading } from 'penguinfinance-uikit2'
 import styled from 'styled-components'
-import { useDispatch } from 'react-redux'
-import { useSetting } from 'state/hooks'
-import { updateCurrentBlockShowed, updateMusicEnabled } from 'state/actions'
+import useUserSetting from 'hooks/useUserSetting';
 
 interface SettingModalProps {
-  onConfirmChangeStyle: (color: string) => void
-  onConfirmChangeColor: (style: string) => void
   onDismiss?: () => void
 }
 
@@ -40,16 +36,7 @@ const CustomToggle = styled(Toggle)`
 `
 
 const SettingModal: React.FC<SettingModalProps> = ({ onDismiss }) => {
-  const dispatch = useDispatch()
-  const { isCurrentBlockShowed, isMusicEnabled } = useSetting()
-
-  const onChangeCurrentBlockShowed = useCallback(() => {
-    dispatch(updateCurrentBlockShowed(!isCurrentBlockShowed))
-  }, [dispatch, isCurrentBlockShowed])
-
-  const onChangeMusicEnabled = useCallback(() => {
-    dispatch(updateMusicEnabled(!isMusicEnabled))
-  }, [dispatch, isMusicEnabled])
+  const { isMusic, toggleMusic, visibleBlock, toggleVisibleBlock } = useUserSetting();
 
   return (
     <Modal title="" hideCloseButton bodyPadding="0px" onDismiss={onDismiss}>
@@ -57,17 +44,17 @@ const SettingModal: React.FC<SettingModalProps> = ({ onDismiss }) => {
         <Heading>Settings</Heading>
       </ModalHeader>
       <ModalContent>
-        <ToggleContainer checked={isCurrentBlockShowed}>
+        <ToggleContainer checked={visibleBlock}>
           <Text color="primary" fontSize="14px">
             Show current block
           </Text>
-          <CustomToggle scale="sm" checked={isCurrentBlockShowed} onChange={onChangeCurrentBlockShowed} />
+          <CustomToggle scale="sm" checked={visibleBlock} onChange={toggleVisibleBlock} />
         </ToggleContainer>
-        <ToggleContainer checked={isMusicEnabled}>
+        <ToggleContainer checked={isMusic}>
           <Text color="primary" fontSize="14px">
             Music
           </Text>
-          <CustomToggle scale="sm" checked={isMusicEnabled} onChange={onChangeMusicEnabled} />
+          <CustomToggle scale="sm" checked={isMusic} onChange={toggleMusic} />
         </ToggleContainer>
       </ModalContent>
     </Modal>

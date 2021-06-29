@@ -18,5 +18,3 @@ export { profileFetchStart, profileFetchSucceeded, profileFetchFailed } from './
 export { fetchStart, teamFetchSucceeded, fetchFailed, teamsFetchSucceeded } from './teams'
 export { fetchEmperor } from './emperor'
 export { fetchDonations } from './donations'
-// setting
-export { updateCurrentBlockShowed, updateMusicEnabled } from './setting'
