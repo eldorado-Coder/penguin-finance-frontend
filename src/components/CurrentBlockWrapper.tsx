@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Link, Text } from 'penguinfinance-uikit2'
 import useBlock from 'hooks/useBlock'
-import { useSetting } from 'state/hooks'
+import useUserSetting from 'hooks/useUserSetting'
 
 const CurrentBlockNumber = styled(Text)`
   position: absolute;
@@ -14,9 +14,9 @@ const CurrentBlockNumber = styled(Text)`
 
 const CurrentBlockWrapper = () => {
   const currentBlockNumber = useBlock()
-  const { isCurrentBlockShowed } = useSetting()
+  const { visibleBlock } = useUserSetting()
 
-  if (!isCurrentBlockShowed) {
+  if (!visibleBlock) {
     return null
   }
 

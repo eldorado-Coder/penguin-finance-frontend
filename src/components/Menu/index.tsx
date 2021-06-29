@@ -30,14 +30,7 @@ const Menu = (props) => {
   }
 
   const [onToggleSettingModal] = useModal(
-    <SettingModal
-      onConfirmChangeStyle={() => {
-        alert(1)
-      }}
-      onConfirmChangeColor={() => {
-        alert(1)
-      }}
-    />,
+    <SettingModal />,
   )
 
   const xPefiToPefiRatio = getXPefiToPefiRatio(pefiPool)
