@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import orderBy from 'lodash/orderBy'
-import styled from 'styled-components';
+import styled from 'styled-components'
 import nfts from 'config/constants/nfts'
 import { useWeb3React } from '@web3-react/core'
 import { getBunnySpecialContract } from 'utils/contractHelpers'
@@ -20,7 +20,7 @@ const CardGrid = styled(NftGrid)`
   @media (min-width: 768px) {
     padding: 0 40px 24px;
   }
-`;
+`
 
 const bunnySpecialContract = getBunnySpecialContract()
 
@@ -49,10 +49,10 @@ const NftList = () => {
         )
       } catch (error) {
         console.error(error)
-        toastError('Error checking NFT claimable status')
+        // toastError('Error checking NFT claimable status')
       }
     },
-    [setClaimableNfts, toastError],
+    [setClaimableNfts],
   )
 
   const handleSuccess = () => {
@@ -65,7 +65,7 @@ const NftList = () => {
       fetchClaimableStatuses(account)
     }
   }, [account, fetchClaimableStatuses])
-  
+
   return (
     <CardGrid>
       {orderBy(nfts, 'sortOrder').map((nft) => {
