@@ -44,18 +44,18 @@ export const config: MenuEntry[] = [
   {
     label: 'Club Penguin',
     icon: 'BattleIcon',
-    href: '/club'
+    href: '/club',
   },
   // {
   //   label: 'Penguin lottery',
   //   icon: 'NftIcon',
   //   href: '/lottery',
   // },
-  // {
-  //   label: 'Collectibles',
-  //   icon: 'NftIcon',
-  //   href: '/collectibles',
-  // },
+  {
+    label: 'Collectibles',
+    icon: 'NftIcon',
+    href: '/collectibles',
+  },
   // {
   //   label: 'Penguin teams',
   //   icon: 'NftIcon',
