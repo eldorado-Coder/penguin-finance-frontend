@@ -104,7 +104,8 @@ export default {
   emperor: {
     43113: '',
     // 43114: '0xfd162b5733b01C0b6aD7575A0A18a8EA3Fd69A83',
-    43114: '0xF36DA227A479a49D823Af1E7b3df632A698a9Ac6',
+    // 43114: '0xF36DA227A479a49D823Af1E7b3df632A698a9Ac6', 
+    43114: '0xB8bcBfc4Aed1aE1B166c5197e054Fc0D9833D5e5',
   },
   emperorPenguinDB: {
     43113: '',
