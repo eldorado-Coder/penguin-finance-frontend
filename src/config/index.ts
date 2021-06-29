@@ -1,10 +1,5 @@
 import BigNumber from 'bignumber.js/bignumber'
 
-BigNumber.config({
-  EXPONENTIAL_AT: 1000,
-  DECIMAL_PLACES: 80,
-})
-
 export const PEFI_MAX_SUPPLY = 21000000
 export const AVAX_BLOCK_TIME = 8.2
 export const DAYS_PER_YEAR = 365
