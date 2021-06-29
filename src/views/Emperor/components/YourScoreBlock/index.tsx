@@ -329,8 +329,8 @@ const YourScoreBlock: React.FC = () => {
           )}
           {myStatus === 'not registered' && (
             <RegisterContainer>
-              <Text bold color="secondary" fontSize="18px">
-                {TranslateString(1074, 'You must register your penguin before attempting to steal the Throne')}
+              <Text bold color="secondary" fontSize="16px">
+                {TranslateString(1074, 'Start by styling your Penguin. Your crown awaits.')}
               </Text>
               <RegisterButtonContainer>
                 <Button onClick={onToggleRegister}>{TranslateString(292, 'Register')}</Button>
