@@ -43,12 +43,13 @@ const ChestWrapper = styled.div<{ jackpot: string }>`
   }
 `
 
-const PaperWrapper = styled.div`
+const PaperWrapper = styled.div<{ isOpen: boolean }>`
   @font-face {
     font-family: 'GothamBold Font';
     src: url(${process.env.PUBLIC_URL}/fonts/GothamBold.ttf) format('truetype');
   }
 
+  opacity: ${({ isOpen }) => isOpen ? 1 : 0};
   position: relative;
   display: flex;
   align-items: center;
@@ -73,14 +74,22 @@ const PaperWrapper = styled.div`
       font-size: 14px;
     }
     @media (min-width: 1200px) {
-      font-size: 14px;
+      min-width: 180px;
+      font-size: 16px;
     }
     @media (min-width: 1450px) {
+      min-width: 12 0px;
       font-size: 16px;
     }
     @media (min-width: 1600px) {
       font-size: 20px;
     }
+  }
+  @media (min-width: 1200px) {
+    margin-bottom: 14%;
+  }
+  @media (min-width: 1450px) {
+    margin-bottom: 12%;
   }
 `
 
@@ -88,6 +97,10 @@ const JackpotPaper = styled.img`
   object-fit: cover;
   position: absolute;
   min-width: 120px;
+
+  @media (min-width: 1200px) {
+    min-width: 180px;
+  }
 `
 
 const GridItem = styled.div`
@@ -203,20 +216,18 @@ const Emperor: React.FC = () => {
       <>
         {account && (
           <ChestWrapper jackpot={jackpot} onClick={handleOpenJackpot}>
-            {jackpot === JACKPOTS.UNLOCK && (
-              <PaperWrapper>
-                <JackpotPaper
-                  onLoad={onJackpotLoaded}
-                  src={`${process.env.PUBLIC_URL}/images/emperor/jackpot/Mapefi.svg`}
-                  alt="jackpot_paper"
-                />
-                {showJackpot && (
-                  <Text className="price" fontSize="24px">
-                    {currentEmperor.jackpot} <span>x</span>PEFI
-                  </Text>
-                )}
-              </PaperWrapper>
-            )}
+            <PaperWrapper isOpen={jackpot === JACKPOTS.UNLOCK}>
+              <JackpotPaper
+                onLoad={onJackpotLoaded}
+                src={`${process.env.PUBLIC_URL}/images/emperor/jackpot/Mapefi.svg`}
+                alt="jackpot_paper"
+              />
+              {showJackpot && (
+                <Text className="price" fontSize="24px">
+                  {currentEmperor.jackpot} <span>x</span>PEFI
+                </Text>
+              )}
+            </PaperWrapper>
             <img className="jackpot-lock" src={JACKPOTS.LOCK} alt="jackpot_lock" />
             <img className="jackpot-open" src={JACKPOTS.OPEN} alt="jackpot_open" />
             <img className="jackpot-unlock" src={JACKPOTS.UNLOCK} alt="jackpot_unlock" />
