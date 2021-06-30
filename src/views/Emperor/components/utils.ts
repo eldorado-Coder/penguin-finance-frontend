@@ -51,7 +51,7 @@ const getNormalPenguin = (emperor) => {
 }
 
 const getStealCrownTooltip = (poisonedBy, timeLeftForPoison) => {
-  return `You have been poisoned by ${badWordsFilter(
+  return `You were poisoned by ${badWordsFilter(
     poisonedBy,
   )}, you must wait ${timeLeftForPoison} seconds before attempting to steal the crown.`
 }
