@@ -382,7 +382,7 @@ const YourScoreBlock: React.FC = () => {
                   />
                 )}
               </StealButtonContainer>
-              <StealAndPoisonButtonContainer>
+              {/* <StealAndPoisonButtonContainer>
                 <ButtonToolTipWrapper data-for="custom-class-poison" data-tip={stealCrownTooltip}>
                   <Button
                     disabled={!checkCanStealAndPoisonConfirm()}
@@ -403,7 +403,7 @@ const YourScoreBlock: React.FC = () => {
                     html
                   />
                 )}
-              </StealAndPoisonButtonContainer>
+              </StealAndPoisonButtonContainer> */}
               <CustomizeStyleButtonContainer>
                 <Button onClick={onToggleCustomModal}>{TranslateString(292, 'Customize Penguin')}</Button>
               </CustomizeStyleButtonContainer>
