@@ -165,6 +165,13 @@ const CustomizeStyleButtonContainer = styled.div`
 `
 
 const CustomToolTip = styled(ReactTooltip)`
+  .poisoned-by {
+    color: #f5c83b;
+  }
+  .left-time-for-duration {
+    color: #ce022d;
+  }
+
   width: 100% !important;
   max-width: 300px !important;
   background: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#383466!important')};
