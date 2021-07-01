@@ -124,6 +124,16 @@ const EmperorInfoContainer = styled.div`
   z-index: 10;
 `
 
+const ShieldContainer = styled.div`
+  height: 22px;
+  margin-right: 4px;
+
+  svg {
+    fill: ${({ theme }) => theme.colors.secondary};
+    height: 22px;
+  }
+`;
+
 const KingPenguinImageWrapper = styled.div<{ penguin: string; color: string }>`
   z-index: -1;
   position: absolute;
@@ -188,9 +198,20 @@ const EmperorBlock: React.FC = () => {
         )}
         {account && (
           <EmperorInfoContainer>
-            <Text bold color="secondary" fontSize="22px">
-              {TranslateString(1074, currentEmperorNickname)}
-            </Text>
+            <Flex alignItems='center' justifyContent='center'>
+              {(currentEmperor.nickname && !currentEmperor.canBePoisoned) && 
+                <ShieldContainer>
+                  <SvgIcon
+                    src={`${process.env.PUBLIC_URL}/images/emperor/shield.svg`}
+                    width="22px"
+                    height="22px"
+                  />
+                </ShieldContainer>
+              }
+              <Text bold color="secondary" fontSize="22px">
+                {TranslateString(1074, currentEmperorNickname)}
+              </Text>
+            </Flex>
             <Text bold color="secondary" fontSize="14px">{`Current Bid: ${currentEmperorBidAmount.toFixed(
               2,
             )} xPEFI`}</Text>

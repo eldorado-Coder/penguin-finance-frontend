@@ -151,7 +151,19 @@ const StealAndPoisonButtonContainer = styled.div`
   }
 `
 
-const ButtonToolTipWrapper = styled.div``
+const ButtonToolTipWrapper = styled.div<{ disabled?: boolean }>`
+  button {
+    div {
+      height: 18px;
+      
+      svg {
+        height: 18px;
+        fill: ${({ theme, disabled }) => disabled ? theme.colors.textDisabled : theme.colors.textColour};
+        margin-right: 0.25rem;
+      }
+    }
+  }
+`
 
 const CustomizeStyleButtonContainer = styled.div`
   button {
@@ -379,13 +391,23 @@ const YourScoreBlock: React.FC = () => {
                 {`${myEmperor.timeAsEmperor} seconds`}
               </Text>
               <StealButtonContainer>
-                <ButtonToolTipWrapper data-for="custom-class" data-tip={stealCrownTooltip}>
+                <ButtonToolTipWrapper 
+                  disabled={!checkCanStealConfirm()}
+                  data-for="custom-class" 
+                  data-tip={stealCrownTooltip}>
                   <Button
                     data-for="custom-class"
                     data-tip={stealCrownTooltip}
                     disabled={!checkCanStealConfirm()}
                     onClick={onStealCrown}
                     endIcon={<div>{` `}</div>}
+                    startIcon={
+                      <SvgIcon
+                        src={`${process.env.PUBLIC_URL}/images/emperor/crown.svg`}
+                        width="16px"
+                        height="16px"
+                      />
+                    }
                   >
                     {TranslateString(292, 'Steal Crown')}
                   </Button>
@@ -403,11 +425,21 @@ const YourScoreBlock: React.FC = () => {
                 )}
               </StealButtonContainer>
               <StealAndPoisonButtonContainer>
-                <ButtonToolTipWrapper data-for="custom-class-poison" data-tip={stealAndPoisonTooltip}>
+                <ButtonToolTipWrapper 
+                  disabled={!checkCanStealAndPoisonConfirm()}
+                  data-for="custom-class-poison" 
+                  data-tip={stealCrownTooltip}>
                   <Button
                     disabled={!checkCanStealAndPoisonConfirm()}
                     onClick={onStealCrownAndPoison}
                     endIcon={<div>{` `}</div>}
+                    startIcon={
+                      <SvgIcon
+                        src={`${process.env.PUBLIC_URL}/images/emperor/poison.svg`}
+                        width="16px"
+                        height="16px"
+                      />
+                    }
                   >
                     {TranslateString(292, 'Steal & Poison')}
                   </Button>
