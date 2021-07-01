@@ -106,10 +106,10 @@ export const fetchLastPoisonedBy = async (account) => {
   }
 }
 
-export const fetchTimeLeftForPoison = async (account) => {
+export const fetchTimePoisonedRemaining = async (account) => {
   try {
-    const timeLeftForPoison = await emperorContract.methods.timeLeftForPoison(account).call()
-    return Number(timeLeftForPoison)
+    const timePoisonedRemaining = await emperorContract.methods.timePoisonedRemaining(account).call()
+    return Number(timePoisonedRemaining)
   } catch (error) {
     return 0
   }
