@@ -146,7 +146,7 @@ export interface Emperor {
   canBePoisoned?: boolean
   lastTimePoisoned?: number
   lastPoisonedBy?: string
-  timeLeftForPoison?: number
+  timePoisonedRemaining?: number
 }
 
 export interface Player {

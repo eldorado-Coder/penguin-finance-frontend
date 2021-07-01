@@ -14,7 +14,7 @@ import {
   fetchCanBePoisoned,
   fetchLastTimePoisoned,
   fetchLastPoisonedBy,
-  fetchTimeLeftForPoison,
+  fetchTimePoisonedRemaining,
 } from './fetchEmperorData'
 import { EmperorState } from '../types'
 
@@ -127,7 +127,7 @@ export const fetchEmperor = (account) => async (dispatch) => {
   const canBePoisoned = await fetchCanBePoisoned(account)
   const lastTimePoisoned = await fetchLastTimePoisoned(account)
   const lastPoisonedBy = await fetchLastPoisonedBy(account)
-  const timeLeftForPoison = await fetchTimeLeftForPoison(account)
+  const timePoisonedRemaining = await fetchTimePoisonedRemaining(account)
 
   dispatch(
     setMyEmperor({
@@ -136,7 +136,7 @@ export const fetchEmperor = (account) => async (dispatch) => {
       canBePoisoned,
       lastTimePoisoned,
       lastPoisonedBy,
-      timeLeftForPoison,
+      timePoisonedRemaining,
     }),
   )
 

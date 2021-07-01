@@ -189,15 +189,15 @@ const CustomToolTip = styled(ReactTooltip)`
 const YourScoreBlock: React.FC = () => {
   const TranslateString = useI18n()
   const { account } = useWeb3React()
-  const { myEmperor, currentEmperor, maxBidIncrease, openingBib, finalDate, poisonDuration } = useEmperor()
+  const { myEmperor, currentEmperor, maxBidIncrease, openingBib, finalDate } = useEmperor()
   const { onRegister, onSteal, onStealAndPoison, onChangeStyle, onChangeColor } = useEmperorActions()
   const { onApproveXPefi } = useXPefiApprove()
   const xPefiContract = useXPefi()
   const [pendingTx, setPendingTx] = useState(false)
   const [maxAmount, setMaxAmount] = useState('')
   const currentEmperorBidAmount = (currentEmperor && currentEmperor.bidAmount) || 0
-  const stealCrownTooltip = getStealCrownTooltip(myEmperor.lastPoisonedBy, myEmperor.timeLeftForPoison)
-  const isMyEmperorPoisoned = Date.now() / 1000 < myEmperor.lastTimePoisoned + poisonDuration
+  const stealCrownTooltip = getStealCrownTooltip(myEmperor.lastPoisonedBy, myEmperor.timePoisonedRemaining)
+  const isMyEmperorPoisoned = myEmperor.timePoisonedRemaining > 0
 
   const fetchXPefiBalance = useCallback(async () => {
     const xPefiBalance = (await xPefiContract.methods.balanceOf(account).call()) / 1e18
@@ -382,7 +382,7 @@ const YourScoreBlock: React.FC = () => {
                   />
                 )}
               </StealButtonContainer>
-              {/* <StealAndPoisonButtonContainer>
+              <StealAndPoisonButtonContainer>
                 <ButtonToolTipWrapper data-for="custom-class-poison" data-tip={stealCrownTooltip}>
                   <Button
                     disabled={!checkCanStealAndPoisonConfirm()}
@@ -403,7 +403,7 @@ const YourScoreBlock: React.FC = () => {
                     html
                   />
                 )}
-              </StealAndPoisonButtonContainer> */}
+              </StealAndPoisonButtonContainer>
               <CustomizeStyleButtonContainer>
                 <Button onClick={onToggleCustomModal}>{TranslateString(292, 'Customize Penguin')}</Button>
               </CustomizeStyleButtonContainer>
