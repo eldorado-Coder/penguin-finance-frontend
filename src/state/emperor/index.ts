@@ -12,6 +12,7 @@ import {
   fetchTopEmperors,
   fetchCurrentEmperorJackpot,
   fetchCanBePoisoned,
+  fetchTimeLeftForPoison,
   fetchLastTimePoisoned,
   fetchLastPoisonedBy,
   fetchTimePoisonedRemaining,
@@ -111,32 +112,31 @@ export const fetchEmperor = (account) => async (dispatch) => {
   const currentEmperorAddress = await fetchCurrentEmperorAddress()
   dispatch(setCurrentEmperor({ address: currentEmperorAddress }))
 
-  const currentEmperorBid = await fetchCurrentEmperorBid()
-  dispatch(setCurrentEmperor({ bidAmount: currentEmperorBid }))
-
-  const currentEmperorJackpot = await fetchCurrentEmperorJackpot()
-  dispatch(setCurrentEmperor({ jackpot: currentEmperorJackpot }))
-
   if (currentEmperorAddress && currentEmperorAddress.length > 0) {
     const currentEmperor = await fetchEmperorData(currentEmperorAddress)
-    dispatch(setCurrentEmperor(currentEmperor))
+    dispatch(
+      setCurrentEmperor({
+        ...currentEmperor,
+        address: await fetchCurrentEmperorAddress(),
+        bidAmount: await fetchCurrentEmperorBid(),
+        jackpot: await fetchCurrentEmperorJackpot(),
+        canBePoisoned: await fetchCanBePoisoned(currentEmperorAddress),
+        timeLeftForPoison: await fetchTimeLeftForPoison(currentEmperorAddress),
+      }),
+    )
   }
 
   // fetch my emperor
   const myEmperor = await fetchEmperorData(account)
-  const canBePoisoned = await fetchCanBePoisoned(account)
-  const lastTimePoisoned = await fetchLastTimePoisoned(account)
-  const lastPoisonedBy = await fetchLastPoisonedBy(account)
-  const timePoisonedRemaining = await fetchTimePoisonedRemaining(account)
 
   dispatch(
     setMyEmperor({
       ...myEmperor,
       address: account,
-      canBePoisoned,
-      lastTimePoisoned,
-      lastPoisonedBy,
-      timePoisonedRemaining,
+      canBePoisoned: await fetchCanBePoisoned(account),
+      lastTimePoisoned: await fetchLastTimePoisoned(account),
+      lastPoisonedBy: await fetchLastPoisonedBy(account),
+      timePoisonedRemaining: await fetchTimePoisonedRemaining(account),
     }),
   )
 

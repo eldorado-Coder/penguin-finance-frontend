@@ -15,7 +15,7 @@ import { NON_ADDRESS } from 'config'
 import RegisterModal from './RegisterModal'
 // import StealCrownModal from './StealCrownModal'
 import CustomStyleModal from './CustomStyleModal'
-import { getPenguinColor, getStealCrownTooltip } from '../utils'
+import { getPenguinColor, getStealCrownTooltip, getStealAndPoisonTooltip } from '../utils'
 import { UnlockButton, CardBlockHeader, CardBlock } from '../UI'
 
 const CardBlockContent = styled.div`
@@ -165,7 +165,7 @@ const CustomizeStyleButtonContainer = styled.div`
 `
 
 const CustomToolTip = styled(ReactTooltip)`
-  .poisoned-by {
+  .emperor-account {
     color: #f5c83b;
   }
   .left-time-for-duration {
@@ -173,16 +173,17 @@ const CustomToolTip = styled(ReactTooltip)`
   }
 
   width: 100% !important;
-  max-width: 300px !important;
+  max-width: 260px !important;
   background: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#383466!important')};
   box-shadow: ${(props) => `${props.theme.card.boxShadow}!important`};
   color: ${({ theme }) => (theme.isDark ? '#2D2159!important' : '#ffffff!important')};
   opacity: 1 !important;
-  padding: 16px !important;
-  font-size: 18px !important;
-  line-height: 24px !important;
+  padding: 12px 12px !important;
+  font-size: 16px !important;
+  line-height: 20px !important;
   border-radius: 16px !important;
   margin-top: 0px !important;
+  text-align: center;
   > div {
     width: 100%;
     white-space: pre-wrap !important;
@@ -202,9 +203,20 @@ const YourScoreBlock: React.FC = () => {
   const xPefiContract = useXPefi()
   const [pendingTx, setPendingTx] = useState(false)
   const [maxAmount, setMaxAmount] = useState('')
+
   const currentEmperorBidAmount = (currentEmperor && currentEmperor.bidAmount) || 0
-  const stealCrownTooltip = getStealCrownTooltip(myEmperor.lastPoisonedBy, myEmperor.timePoisonedRemaining)
   const isMyEmperorPoisoned = myEmperor.timePoisonedRemaining > 0
+  const currentEmperorCanBePoisoned = currentEmperor.canBePoisoned
+
+  const stealCrownTooltip = getStealCrownTooltip(myEmperor.lastPoisonedBy, myEmperor.timePoisonedRemaining)
+
+  let stealAndPoisonTooltip = ''
+  if (currentEmperorCanBePoisoned !== undefined && !currentEmperorCanBePoisoned) {
+    stealAndPoisonTooltip = getStealAndPoisonTooltip(currentEmperor.nickname, '', currentEmperor.timeLeftForPoison)
+  }
+  if (isMyEmperorPoisoned) {
+    stealAndPoisonTooltip = getStealAndPoisonTooltip('', myEmperor.lastPoisonedBy, myEmperor.timePoisonedRemaining)
+  }
 
   const fetchXPefiBalance = useCallback(async () => {
     const xPefiBalance = (await xPefiContract.methods.balanceOf(account).call()) / 1e18
@@ -248,6 +260,7 @@ const YourScoreBlock: React.FC = () => {
   const checkCanStealAndPoisonConfirm = () => {
     if (pendingTx) return false
     if (!myEmperor.canBePoisoned) return false
+    if (!currentEmperor.canBePoisoned) return false
     if (Number(finalDate) < Date.now() / 1000) return false
     if (isMyEmperorPoisoned) return false
 
@@ -390,7 +403,7 @@ const YourScoreBlock: React.FC = () => {
                 )}
               </StealButtonContainer>
               <StealAndPoisonButtonContainer>
-                <ButtonToolTipWrapper data-for="custom-class-poison" data-tip={stealCrownTooltip}>
+                <ButtonToolTipWrapper data-for="custom-class-poison" data-tip={stealAndPoisonTooltip}>
                   <Button
                     disabled={!checkCanStealAndPoisonConfirm()}
                     onClick={onStealCrownAndPoison}
@@ -399,7 +412,7 @@ const YourScoreBlock: React.FC = () => {
                     {TranslateString(292, 'Steal & Poison')}
                   </Button>
                 </ButtonToolTipWrapper>
-                {isMyEmperorPoisoned && (
+                {stealAndPoisonTooltip.length > 0 && (
                   <CustomToolTip
                     id="custom-class-poison"
                     wrapper="div"
