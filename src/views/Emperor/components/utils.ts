@@ -52,10 +52,30 @@ const getNormalPenguin = (emperor) => {
 
 const getStealCrownTooltip = (poisonedBy, timeLeftForPoison) =>
   `
-    You were poisoned by <span class="poisoned-by">${badWordsFilter(
+    You were poisoned by <span class="emperor-account">${badWordsFilter(
       poisonedBy,
     )}</span>, you must wait <span class="left-time-for-duration">${timeLeftForPoison} seconds</span>
     before attempting to steal the crown.
   `
 
-export { getPenguinColor, getKingPenguin, getNormalPenguin, penguinImages, getStealCrownTooltip }
+const getStealAndPoisonTooltip = (account, poisonedBy, timeLeftForPoison) =>
+  account
+    ? `
+        <span class="emperor-account">${account}</span> was poisoned recently. He is immune for poison for the next 
+        <span class="left-time-for-duration">${timeLeftForPoison + 600} seconds.</span>
+      `
+    : `
+        You were poisoned by <span class="emperor-account">${badWordsFilter(
+          poisonedBy,
+        )}</span>, you must wait <span class="left-time-for-duration">${timeLeftForPoison} seconds</span>
+        before attempting to steal the crown.
+      `
+
+export {
+  getPenguinColor,
+  getKingPenguin,
+  getNormalPenguin,
+  penguinImages,
+  getStealCrownTooltip,
+  getStealAndPoisonTooltip,
+}

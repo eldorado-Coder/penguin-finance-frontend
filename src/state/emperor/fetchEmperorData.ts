@@ -115,6 +115,15 @@ export const fetchTimePoisonedRemaining = async (account) => {
   }
 }
 
+export const fetchTimeLeftForPoison = async (account) => {
+  try {
+    const timeLeftForPoison = await emperorContract.methods.timeLeftForPoison(account).call()
+    return Number(timeLeftForPoison)
+  } catch (error) {
+    return 0
+  }
+}
+
 export const fetchCurrentEmperorJackpot = async () => {
   try {
     const currentEmperorJackpot = await emperorContract.methods.jackpot().call()
