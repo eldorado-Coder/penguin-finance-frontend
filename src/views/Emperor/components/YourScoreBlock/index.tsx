@@ -173,16 +173,17 @@ const CustomToolTip = styled(ReactTooltip)`
   }
 
   width: 100% !important;
-  max-width: 300px !important;
+  max-width: 260px !important;
   background: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#383466!important')};
   box-shadow: ${(props) => `${props.theme.card.boxShadow}!important`};
   color: ${({ theme }) => (theme.isDark ? '#2D2159!important' : '#ffffff!important')};
   opacity: 1 !important;
-  padding: 16px !important;
-  font-size: 18px !important;
-  line-height: 24px !important;
+  padding: 12px 12px !important;
+  font-size: 16px !important;
+  line-height: 20px !important;
   border-radius: 16px !important;
   margin-top: 0px !important;
+  text-align: center;
   > div {
     width: 100%;
     white-space: pre-wrap !important;
