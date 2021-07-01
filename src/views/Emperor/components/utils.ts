@@ -61,7 +61,9 @@ const getStealCrownTooltip = (poisonedBy, timeLeftForPoison) =>
 const getStealAndPoisonTooltip = (account, poisonedBy, timeLeftForPoison) =>
   account
     ? `
-        <span class="emperor-account">${account}</span> was poisoned recently. He is immune for poison for the next 
+        <span class="emperor-account">${badWordsFilter(
+          account,
+        )}</span> was poisoned recently. He is immune for poison for the next 
         <span class="left-time-for-duration">${timeLeftForPoison + 600} seconds.</span>
       `
     : `
