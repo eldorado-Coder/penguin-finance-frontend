@@ -8,6 +8,7 @@ import { ChevronDown, ChevronUp } from 'react-feather'
 import Balance from 'components/Balance'
 import { CommunityTag, CoreTag, BinanceTag } from 'components/Tags'
 import { PoolCategory } from 'config/constants/types'
+import { usePricePefiUsdt } from 'state/hooks'
 
 const tags = {
   [PoolCategory.BINANCE]: BinanceTag,
@@ -17,7 +18,8 @@ const tags = {
 
 interface Props {
   penguinNestsGuideLink: string
-  totalStaked: BigNumber
+  totalPefiStaked: BigNumber
+  totalXPefiBalance: BigNumber
   blocksRemaining: number
   isFinished: boolean
   blocksUntilStart: number
@@ -75,7 +77,8 @@ const TokenLink = styled.a`
 
 const CardFooter: React.FC<Props> = ({
   penguinNestsGuideLink,
-  totalStaked,
+  totalPefiStaked,
+  totalXPefiBalance,
   blocksRemaining,
   isFinished,
   blocksUntilStart,
@@ -83,10 +86,18 @@ const CardFooter: React.FC<Props> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false)
   const TranslateString = useI18n()
+  const pefiPrice = usePricePefiUsdt()
+
   const Icon = isOpen ? ChevronUp : ChevronDown
 
   const handleClick = () => setIsOpen(!isOpen)
   const Tag = tags[poolCategory]
+
+  // calculate TVL in pefi nest
+  const getNestTVL = () => {
+    if (totalPefiStaked) return pefiPrice.toNumber() * getBalanceNumber(totalPefiStaked)
+    return 0
+  }
 
   return (
     <StyledFooter isFinished={isFinished}>
@@ -104,11 +115,21 @@ const CardFooter: React.FC<Props> = ({
             <FlexFull>
               <Label>
                 <Text color="primary" fontSize="14px">
-                  {TranslateString(408, 'Total')}
+                  {TranslateString(408, 'Total Liquidity')}
                 </Text>
               </Label>
             </FlexFull>
-            <Balance fontSize="14px" isDisabled={isFinished} value={getBalanceNumber(totalStaked)} />
+            <Balance fontSize="14px" isDisabled={isFinished} value={getNestTVL()} />
+          </Row>
+          <Row style={{ marginBottom: '4px' }}>
+            <FlexFull>
+              <Label>
+                <Text color="primary" fontSize="14px">
+                  {TranslateString(408, 'Total Supply(xPEFI)')}
+                </Text>
+              </Label>
+            </FlexFull>
+            <Balance fontSize="14px" isDisabled={isFinished} value={getBalanceNumber(totalXPefiBalance)} />
           </Row>
           {blocksUntilStart > 0 && (
             <Row>
@@ -128,7 +149,7 @@ const CardFooter: React.FC<Props> = ({
           )}
           <TokenLink href={penguinNestsGuideLink} target="_blank">
             <Text color="primary" fontSize="14px">
-              {TranslateString(412, 'Learn more about Nests')}
+              {TranslateString(412, 'Learn more about xPEFI')}
             </Text>
           </TokenLink>
         </Details>

@@ -217,7 +217,7 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
 
   const getXPefiToPefiRatio = () => {
     return pool.totalStaked && pool.totalSupply
-      ? new BigNumber(pool.totalStaked).div(new BigNumber(pool.totalSupply)).toJSON()
+      ? new BigNumber(pool.totalStaked).div(new BigNumber(pool.totalSupply)).toNumber()
       : 1
   }
 
@@ -284,7 +284,7 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
                   xPEFI to PEFI:
                 </Text>
                 <Text color="textSubtle" bold fontSize="14px">
-                  {Number(Number(xPefiToPefiRatio).toFixed(3))}
+                  {Number(xPefiToPefiRatio.toFixed(3))}
                 </Text>
               </Flex>
               <Flex ml="8px" justifyContent="space-between">
@@ -347,7 +347,8 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
       <CardAction>
         <CardFooter
           penguinNestsGuideLink={penguinNestsGuideLink}
-          totalStaked={totalStaked}
+          totalPefiStaked={totalStaked}
+          totalXPefiBalance={totalSupply}
           blocksRemaining={blocksRemaining}
           isFinished={isFinished}
           blocksUntilStart={blocksUntilStart}
