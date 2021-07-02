@@ -4,7 +4,7 @@ import { PenguinTheme } from 'penguinfinance-uikit2/dist/theme'
 
 declare module 'styled-components' {
   /* eslint-disable @typescript-eslint/no-empty-interface */
-  export interface DefaultTheme extends PenguinTheme { }
+  export interface DefaultTheme extends PenguinTheme {}
 }
 
 const GlobalStyle = createGlobalStyle`
@@ -21,8 +21,6 @@ const GlobalStyle = createGlobalStyle`
       height: auto;
       max-width: 100%;
     }
-    padding-bottom: 10px;
-    overflow: no-content;
   }
 `
 
