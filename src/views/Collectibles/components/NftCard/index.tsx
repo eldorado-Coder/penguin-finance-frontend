@@ -11,6 +11,7 @@ import {
   Text,
   CardFooter,
   useModal,
+  Flex
 } from 'penguinfinance-uikit2'
 import { useProfile } from 'state/hooks'
 import useI18n from 'hooks/useI18n'
@@ -49,11 +50,23 @@ const DetailsButton = styled(Button).attrs({ variant: 'text', fullWidth: true })
   }
 `
 
-const InfoBlock = styled.div`
-  padding: 16px 24px 24px;
+const InfoBlock = styled(Flex)`
+  padding: 0px 24px 24px;
 
   p {
     text-align: center;
+  }
+
+  button {
+    border-radius: 30px;
+    background: #f5c83b;
+    font-size: 14px;
+    height: 36px;
+    cursor: default;
+
+    &:hover:not(:disabled):not(.button--disabled):not(:active), :active {
+      opacity: 1 !important;
+    }
   }
 `
 
@@ -132,13 +145,16 @@ const NftCard: React.FC<NftCardProps> = ({ nft, onSuccess, canClaim = false, tok
           {TranslateString(658, 'Details')}
         </DetailsButton>
         {isOpen && (
-          <InfoBlock>
+          <InfoBlock flexDirection='column' alignItems='center'>
+            <Text as="p" color="textSubtle" mb='8px' mt='4px'>
+              1 / 8
+            </Text>
             <Text as="p" color="textSubtle">
               {description}
             </Text>
-            <Text as="p" color="primary" mt='8px'>
+            <Button mt='16px'>
               Coming Soon
-            </Text>
+            </Button>
           </InfoBlock>
         )}
       </Footer>
