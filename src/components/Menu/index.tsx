@@ -36,7 +36,7 @@ const Menu = (props) => {
   const xPefiToPefiRatio = getXPefiToPefiRatio(pefiPool)
 
   // add badge to "emperor" and "launchpad" menu
-  const isEmperorLive = false // event status
+  const isEmperorLive = true // event status
   const isLaunchpadLive = false // event status
 
   const links = [...config]
