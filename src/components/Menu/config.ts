@@ -51,11 +51,11 @@ export const config: MenuEntry[] = [
   //   icon: 'NftIcon',
   //   href: '/lottery',
   // },
-  // {
-  //   label: 'Collectibles',
-  //   icon: 'NftIcon',
-  //   href: '/collectibles',
-  // },
+  {
+    label: 'Collectibles',
+    icon: 'NftIcon',
+    href: '/collectibles',
+  },
   // {
   //   label: 'Penguin teams',
   //   icon: 'NftIcon',
