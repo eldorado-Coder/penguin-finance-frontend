@@ -3,7 +3,7 @@ import { Nft } from './types'
 const Nfts: Nft[] = [
   {
     name: 'Doctor Aukee',
-    description: 'The second wave of the pandemic is turning out to be extremely fatal for all and especially for the healthcare workers who are at the forefront',
+    description: 'The cutest doctor in the whole wide world. Always ready to help their fellow Penguins.',
     images: {
       lg: 'Doctor_Aukee.jpg',
       md: 'Doctor_Aukee.jpg',
@@ -15,7 +15,7 @@ const Nfts: Nft[] = [
   },
   {
     name: 'Penguin Nurse',
-    description: "She can help patients to be survive",
+    description: "Whole hearted Penguins, willing to risk their life for others. Some of the bravest birds on Earth.",
     images: {
       lg: 'Penguin_Nurse.jpg',
       md: 'Penguin_Nurse.jpg',
