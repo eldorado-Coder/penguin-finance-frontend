@@ -44,7 +44,16 @@ const REFRESH_RATE_OPTIONS = [
 ];
 
 const SettingModal: React.FC<SettingModalProps> = ({ onDismiss }) => {
-  const { isMusic, toggleMusic, visibleBlock, toggleVisibleBlock, refreshRate, updateRefreshRate } = useUserSetting()
+  const { 
+    isMusic, 
+    toggleMusic, 
+    visibleBlock, 
+    toggleVisibleBlock, 
+    refreshRate, 
+    updateRefreshRate,
+    visiblePlayer,
+    toggleVisiblePlayer 
+  } = useUserSetting()
 
   return (
     <Modal title="" hideCloseButton bodyPadding="0px" onDismiss={onDismiss}>
@@ -63,6 +72,12 @@ const SettingModal: React.FC<SettingModalProps> = ({ onDismiss }) => {
             Music
           </Text>
           <CustomToggle scale="sm" checked={isMusic} onChange={toggleMusic} />
+        </ToggleContainer>
+        <ToggleContainer checked={visiblePlayer}>
+          <Text color="primary" fontSize="14px">
+            Show video player
+          </Text>
+          <CustomToggle scale="sm" checked={visiblePlayer} onChange={toggleVisiblePlayer} />
         </ToggleContainer>
         <ToggleContainer>
           <Text color="primary" fontSize="14px">
