@@ -2,20 +2,13 @@
 import { createSlice } from '@reduxjs/toolkit'
 import {
   fetchEmperorData,
-  fetchCurrentEmperorAddress,
-  fetchCurrentEmperorBid,
+  fetchCurrentEmperorData,
   fetchMaxBidIncrease,
   fetchMinBidIncrease,
   fetchOpeningBid,
   fetchFinalDate,
   fetchPoisonDuration,
   fetchTopEmperors,
-  fetchCurrentEmperorJackpot,
-  fetchCanBePoisoned,
-  fetchTimeLeftForPoison,
-  fetchLastTimePoisoned,
-  fetchLastPoisonedBy,
-  fetchTimePoisonedRemaining,
 } from './fetchEmperorData'
 import { EmperorState } from '../types'
 
@@ -84,13 +77,34 @@ export const {
 } = EmperorSlice.actions
 
 // Thunks
-
 export const setInit = () => async (dispatch) => {
   dispatch(setInitialData())
 }
 
 export const fetchEmperor = (account) => async (dispatch) => {
   if (!account) return
+
+  // fetch my emperor
+  const myEmperor = await fetchEmperorData(account)
+
+  dispatch(
+    setMyEmperor({
+      ...myEmperor,
+    }),
+  )
+
+  // fetch current emperor
+  const currentEmperorData = await fetchCurrentEmperorData()
+
+  dispatch(
+    setCurrentEmperor({
+      ...currentEmperorData,
+    }),
+  )
+
+  // fetch top 5 emperor
+  const topEmperors = await fetchTopEmperors()
+  dispatch(setTopEmperors(topEmperors))
 
   // fetch general Info
   const maxBidIncrease = await fetchMaxBidIncrease()
@@ -107,44 +121,6 @@ export const fetchEmperor = (account) => async (dispatch) => {
 
   const poisonDuration = await fetchPoisonDuration()
   dispatch(setPoisonDuration(poisonDuration))
-
-  // fetch current emperor
-  const currentEmperorAddress = await fetchCurrentEmperorAddress()
-  dispatch(setCurrentEmperor({ address: currentEmperorAddress }))
-
-  if (currentEmperorAddress && currentEmperorAddress.length > 0) {
-    const currentEmperor = await fetchEmperorData(currentEmperorAddress)
-    dispatch(
-      setCurrentEmperor({
-        ...currentEmperor,
-        address: await fetchCurrentEmperorAddress(),
-        bidAmount: await fetchCurrentEmperorBid(),
-        jackpot: await fetchCurrentEmperorJackpot(),
-        canBePoisoned: await fetchCanBePoisoned(currentEmperorAddress),
-        timeLeftForPoison: await fetchTimeLeftForPoison(currentEmperorAddress),
-      }),
-    )
-  }
-
-  // fetch my emperor
-  const myEmperor = await fetchEmperorData(account)
-
-  dispatch(
-    setMyEmperor({
-      ...myEmperor,
-      address: account,
-      canBePoisoned: await fetchCanBePoisoned(account),
-      lastTimePoisoned: await fetchLastTimePoisoned(account),
-      lastPoisonedBy: await fetchLastPoisonedBy(account),
-      timePoisonedRemaining: await fetchTimePoisonedRemaining(account),
-    }),
-  )
-
-  // fetch top 5 emperor
-  if (currentEmperorAddress && currentEmperorAddress.length > 0) {
-    const topEmperors = await fetchTopEmperors()
-    dispatch(setTopEmperors(topEmperors))
-  }
 }
 
 export default EmperorSlice.reducer

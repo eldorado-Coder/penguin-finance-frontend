@@ -1,12 +1,13 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import Sound from 'react-sound'
 import { useWeb3React } from '@web3-react/core'
 import { Text } from 'penguinfinance-uikit2'
-
+import { useDispatch } from 'react-redux'
+import { fetchEmperor } from 'state/emperor'
 import { useEmperor } from 'state/hooks'
 import Page from 'components/layout/Page'
-import useUserSetting from 'hooks/useUserSetting';
+import useUserSetting from 'hooks/useUserSetting'
 import EmperorBlock from './components/EmperorBlock'
 import YourScoreBlock from './components/YourScoreBlock'
 import TopPenguinsBlock from './components/TopPenguinsBlock'
@@ -49,7 +50,7 @@ const PaperWrapper = styled.div<{ isOpen: boolean }>`
     src: url(${process.env.PUBLIC_URL}/fonts/GothamBold.ttf) format('truetype');
   }
 
-  opacity: ${({ isOpen }) => isOpen ? 1 : 0};
+  opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
   position: relative;
   display: flex;
   align-items: center;
@@ -193,6 +194,19 @@ const Emperor: React.FC = () => {
   const jackpotRef = useRef(jackpot)
   const { isMusic } = useUserSetting()
   jackpotRef.current = jackpot
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(fetchEmperor(account))
+
+    const refreshInterval = setInterval(() => {
+      dispatch(fetchEmperor(account))
+    }, 5000)
+
+    return () => clearInterval(refreshInterval)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, account])
 
   const handleOpenJackpot = () => {
     if (jackpotRef.current === JACKPOTS.LOCK) {
