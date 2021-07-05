@@ -36,7 +36,6 @@ import {
 import { fetchProfile } from './profile'
 import { fetchTeam, fetchTeams } from './teams'
 import { fetchAchievements } from './achievements'
-import { fetchEmperor } from './emperor'
 import { fetchDonations } from './donations'
 
 const ZERO = new BigNumber(0)
@@ -289,18 +288,7 @@ export const useTeams = () => {
 
 // Emperor
 export const useEmperor = () => {
-  const { account } = useWeb3React()
   const emperorState: EmperorState = useSelector((state: State) => state.emperor)
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    const refreshInterval = setInterval(() => {
-      dispatch(fetchEmperor(account))
-    }, 5000)
-
-    return () => clearInterval(refreshInterval)
-  }, [dispatch, account])
-
   return emperorState
 }
 
