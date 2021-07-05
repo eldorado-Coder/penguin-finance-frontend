@@ -12,10 +12,11 @@ const Nfts: Nft[] = [
     },
     sortOrder: 999,
     bunnyId: 11,
+    rarity: 2,
   },
   {
     name: 'Penguin Nurse',
-    description: "Whole hearted Penguins, willing to risk their life for others. Some of the bravest birds on Earth.",
+    description: 'Whole hearted Penguins, willing to risk their life for others. Some of the bravest birds on Earth.',
     images: {
       lg: 'Penguin_Nurse.jpg',
       md: 'Penguin_Nurse.jpg',
@@ -24,6 +25,7 @@ const Nfts: Nft[] = [
     },
     sortOrder: 999,
     bunnyId: 10,
+    rarity: 37,
   },
   // {
   //   name: 'Sleepy',

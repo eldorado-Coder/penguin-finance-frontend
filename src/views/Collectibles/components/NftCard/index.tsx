@@ -11,7 +11,7 @@ import {
   Text,
   CardFooter,
   useModal,
-  Flex
+  Flex,
 } from 'penguinfinance-uikit2'
 import { useProfile } from 'state/hooks'
 import useI18n from 'hooks/useI18n'
@@ -38,7 +38,7 @@ const DetailsButton = styled(Button).attrs({ variant: 'text', fullWidth: true })
   padding: 4px 24px;
   margin-bottom: 8px;
   font-weight: 500;
-  background-color: ${({ theme }) => theme.isDark ? '#121021' : '#fbca30'};
+  background-color: ${({ theme }) => (theme.isDark ? '#121021' : '#fbca30')};
   color: #ffffff;
 
   svg {
@@ -64,7 +64,8 @@ const InfoBlock = styled(Flex)`
     height: 36px;
     cursor: default;
 
-    &:hover:not(:disabled):not(.button--disabled):not(:active), :active {
+    &:hover:not(:disabled):not(.button--disabled):not(:active),
+    :active {
       opacity: 1 !important;
     }
   }
@@ -75,7 +76,7 @@ const Footer = styled(CardFooter)`
   flex-direction: column;
   align-items: center;
   border-top: none;
-`;
+`
 
 const PGCard = styled(Card)`
   border-radius: 20px;
@@ -89,13 +90,13 @@ const PGCard = styled(Card)`
   ${({ theme }) => theme.mediaQueries.md} {
     max-width: 360px;
   }
-`;
+`
 
 const PGCardBody = styled(CardBody)`
   display: flex;
   justify-content: center;
   padding: 8px 0 12px;
-`;
+`
 
 const NftCard: React.FC<NftCardProps> = ({ nft, onSuccess, canClaim = false, tokenIds = [] }) => {
   const [isOpen, setIsOpen] = useState(false)
@@ -116,7 +117,7 @@ const NftCard: React.FC<NftCardProps> = ({ nft, onSuccess, canClaim = false, tok
     <PGCard isActive={walletOwnsNft || canClaim}>
       <PGCardBody>
         <Header>
-          <Heading size='lg'>{name}</Heading>
+          <Heading size="lg">{name}</Heading>
           {walletOwnsNft && (
             <Tag outline variant="secondary">
               {TranslateString(999, 'In Wallet')}
@@ -145,16 +146,14 @@ const NftCard: React.FC<NftCardProps> = ({ nft, onSuccess, canClaim = false, tok
           {TranslateString(658, 'Details')}
         </DetailsButton>
         {isOpen && (
-          <InfoBlock flexDirection='column' alignItems='center'>
-            <Text as="p" color="textSubtle" mb='8px' mt='4px'>
-              1 / 8
+          <InfoBlock flexDirection="column" alignItems="center">
+            <Text as="p" color="textSubtle" mb="8px" mt="4px">
+              {`1 / ${nft.rarity}`}
             </Text>
             <Text as="p" color="textSubtle">
               {description}
             </Text>
-            <Button mt='16px'>
-              Coming Soon
-            </Button>
+            <Button mt="16px">Coming Soon</Button>
           </InfoBlock>
         )}
       </Footer>
