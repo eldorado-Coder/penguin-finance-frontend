@@ -19,11 +19,11 @@ const Providers: React.FC = ({ children }) => {
           <ThemeContextProvider>
             <SettingContextProvider>
               <LanguageContextProvider>
-                <BlockContextProvider>
-                  <RefreshContextProvider>
+                <RefreshContextProvider>
+                  <BlockContextProvider>
                     <ModalProvider>{children}</ModalProvider>
-                  </RefreshContextProvider>
-                </BlockContextProvider>
+                  </BlockContextProvider>
+                </RefreshContextProvider>
               </LanguageContextProvider>
             </SettingContextProvider>
           </ThemeContextProvider>

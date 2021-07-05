@@ -2,9 +2,9 @@ import React, { useState, useRef, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 import { ArrowDropDownIcon, Text } from 'penguinfinance-uikit2'
 
-const DropDownHeader = styled.div`
+const DropDownHeader = styled.div<{ size: string }>`
   width: 100%;
-  height: 40px;
+  height: ${props => props.size === 'sm' ? '32px' : '40px'};
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -16,7 +16,7 @@ const DropDownHeader = styled.div`
   transition: border-radius 0.15s;
 `
 
-const DropDownListContainer = styled.div`
+const DropDownListContainer = styled.div<{ selectWidth: number }>`
   min-width: 136px;
   height: 0;
   position: absolute;
@@ -29,22 +29,22 @@ const DropDownListContainer = styled.div`
   opacity: 0;
 
   ${({ theme }) => theme.mediaQueries.sm} {
-    min-width: 168px;
+    min-width: ${({ selectWidth }) => selectWidth || 168}px;
   }
 `
 
-const DropDownContainer = styled.div<{ isOpen: boolean; width: number; height: number }>`
+const DropDownContainer = styled.div<{ isOpen: boolean; width: number; height: number; size: string; selectWidth: number }>`
   cursor: pointer;
-  width: ${({ width }) => width}px;
-  position: relative;
+  width: ${({ width, selectWidth }) => selectWidth || width}px;
+  // position: relative;
   background: ${({ theme }) => theme.colors.input};
   border-radius: 16px;
-  height: 40px;
+  height: ${props => props.size === 'sm' ? '32px' : '40px'};
   min-width: 136px;
   user-select: none;
 
   ${({ theme }) => theme.mediaQueries.sm} {
-    min-width: 168px;
+    min-width: ${({ selectWidth }) => selectWidth || 168}px;
   }
 
   ${(props) =>
@@ -58,12 +58,22 @@ const DropDownContainer = styled.div<{ isOpen: boolean; width: number; height: n
 
       ${DropDownListContainer} {
         height: auto;
+        max-height: 260px; // for modal
+        overflow-y: auto; // for modal
         transform: scaleY(1);
         opacity: 1;
         border: 1px solid ${({ theme }) => theme.colors.inputSecondary};
         border-top-width: 0;
         border-radius: 0 0 16px 16px;
         box-shadow: ${({ theme }) => theme.tooltip.boxShadow};
+
+        @media (max-height: 900px) {
+          max-height: 200px;
+        }
+
+        &::-webkit-scrollbar {
+          width: 4px;
+        }
       }
     `}
 
@@ -74,6 +84,11 @@ const DropDownContainer = styled.div<{ isOpen: boolean; width: number; height: n
     transform: translateY(-50%);
   }
 `
+
+const InputContainer = styled.div`
+  width: 100%;
+  position: relative;
+`;
 
 const DropDownList = styled.ul`
   padding: 0;
@@ -91,8 +106,10 @@ const ListItem = styled.li`
 `
 
 export interface SelectProps {
-  value?: string
-  options: OptionProps[]
+  value?: any
+  options: OptionProps[],
+  size?: string
+  selectWidth?: number
   onChange?: (option: string) => void
 }
 
@@ -101,7 +118,7 @@ export interface OptionProps {
   value: any
 }
 
-const Select: React.FunctionComponent<SelectProps> = ({ value, options, onChange }) => {
+const Select: React.FunctionComponent<SelectProps> = ({ value, selectWidth, options, size, onChange }) => {
   const containerRef = useRef(null)
   const dropdownRef = useRef(null)
   const [isOpen, setIsOpen] = useState(false)
@@ -126,12 +143,14 @@ const Select: React.FunctionComponent<SelectProps> = ({ value, options, onChange
 
   const selectedOption = options.find(option => option.value === value);
   return (
-    <DropDownContainer isOpen={isOpen} ref={containerRef} {...containerSize}>
-      <DropDownHeader onClick={toggling}>
-        <Text>{selectedOption ? selectedOption.label : ""}</Text>
-      </DropDownHeader>
-      <ArrowDropDownIcon color="text" onClick={toggling} />
-      <DropDownListContainer>
+    <DropDownContainer selectWidth={selectWidth} size={size} isOpen={isOpen} ref={containerRef} {...containerSize}>
+      <InputContainer>
+        <DropDownHeader size={size} onClick={toggling}>
+          <Text>{selectedOption ? selectedOption.label : ""}</Text>
+        </DropDownHeader>
+        <ArrowDropDownIcon color="text" onClick={toggling} />
+      </InputContainer>
+      <DropDownListContainer selectWidth={selectWidth}>
         <DropDownList ref={dropdownRef}>
           {options.map((option) =>
             option.value !== value ? (
