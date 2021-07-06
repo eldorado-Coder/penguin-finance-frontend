@@ -242,7 +242,7 @@ export const fetchTopEmperors = async () => {
     for (let i = 0; i < 5; i++) {
       const topEmperorAddress = topEmperorAddresses[i][0]
       if (topEmperorAddress === NON_ADDRESS) {
-        return
+        break
       }
       promises = [...promises, fetchEmperorData(topEmperorAddress)]
     }
