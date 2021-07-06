@@ -275,6 +275,7 @@ const YourScoreBlock: React.FC = () => {
     if (!currentEmperor.canBePoisoned) return false
     if (Number(finalDate) < Date.now() / 1000) return false
     if (isMyEmperorPoisoned) return false
+    if (currentEmperorCanBePoisoned !== undefined && !currentEmperorCanBePoisoned) return false
 
     return true
   }
