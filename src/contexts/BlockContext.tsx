@@ -1,3 +1,5 @@
+import useInterval from 'hooks/useInterval'
+import useUserSetting from 'hooks/useUserSetting'
 import React, { useState, useEffect, useRef } from 'react'
 import { getWeb3 } from 'utils/web3'
 
@@ -8,6 +10,16 @@ const BlockContextProvider = ({ children }) => {
   const [block, setBlock] = useState(0)
   const [blockGenerationTime, setBlockGenerationTime] = useState(3)
   const web3 = getWeb3()
+  const { refreshRate } = useUserSetting();
+  
+  useInterval(async () => {
+    const currentBlockNumber = await web3.eth.getBlockNumber()
+    calculateBlockGenerationTime()
+    if (currentBlockNumber !== previousBlock.current) {
+      previousBlock.current = currentBlockNumber
+      setBlock(currentBlockNumber)
+    }
+  }, refreshRate);
 
   const calculateBlockGenerationTime = async () => {
     const currentBlockNumber = await web3.eth.getBlockNumber()
@@ -20,17 +32,7 @@ const BlockContextProvider = ({ children }) => {
   }
 
   useEffect(() => {
-    calculateBlockGenerationTime()
-    const interval = setInterval(async () => {
-      const currentBlockNumber = await web3.eth.getBlockNumber()
-      calculateBlockGenerationTime()
-      if (currentBlockNumber !== previousBlock.current) {
-        previousBlock.current = currentBlockNumber
-        setBlock(currentBlockNumber)
-      }
-    }, 3000)
-
-    return () => clearInterval(interval)
+    calculateBlockGenerationTime();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
