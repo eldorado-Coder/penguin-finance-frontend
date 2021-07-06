@@ -278,7 +278,7 @@ const Emperor: React.FC = () => {
   return (
     <EmperorPage>
       <Sound
-        url={`${emperorEnded ? '/sounds/penguin_emperor_winner.mp3' : '/sounds/emperor_blitz.mp3'} `}
+        url={`${emperorEnded ? '/sounds/penguin_emperor_winner.mp3' : '/sounds/emperor_blitz1.mp3'} `}
         playStatus={Sound.status.PLAYING}
         volume={isMusic ? 20 : 0}
         loop
