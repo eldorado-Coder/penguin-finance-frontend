@@ -82,16 +82,6 @@ export const setInit = () => async (dispatch) => {
 }
 
 export const fetchEmperor = (account) => async (dispatch) => {
-  if (!account) return
-
-  // fetch my emperor
-  const myEmperor = await fetchEmperorData(account)
-
-  dispatch(
-    setMyEmperor({
-      ...myEmperor,
-    }),
-  )
 
   // fetch current emperor
   const currentEmperorData = await fetchCurrentEmperorData()
@@ -121,6 +111,18 @@ export const fetchEmperor = (account) => async (dispatch) => {
 
   const poisonDuration = await fetchPoisonDuration()
   dispatch(setPoisonDuration(poisonDuration))
+
+
+  if (!account) return
+
+  // fetch my emperor
+  const myEmperor = await fetchEmperorData(account)
+
+  dispatch(
+    setMyEmperor({
+      ...myEmperor,
+    }),
+  )
 }
 
 export default EmperorSlice.reducer
