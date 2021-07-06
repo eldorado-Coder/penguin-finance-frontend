@@ -209,7 +209,7 @@ const CustomToolTip = styled(ReactTooltip)`
 const YourScoreBlock: React.FC = () => {
   const TranslateString = useI18n()
   const { account } = useWeb3React()
-  const { myEmperor, currentEmperor, maxBidIncrease, openingBib, finalDate } = useEmperor()
+  const { myEmperor, currentEmperor, maxBidIncrease, openingBid, finalDate } = useEmperor()
   const { onRegister, onSteal, onStealAndPoison, onChangeStyle, onChangeColor } = useEmperorActions()
   const { onApproveXPefi } = useXPefiApprove()
   const xPefiContract = useXPefi()
@@ -263,7 +263,7 @@ const YourScoreBlock: React.FC = () => {
     if (Number(finalDate) < Date.now() / 1000) return false
     if (isMyEmperorPoisoned) return false
 
-    const amount = currentEmperor.address === NON_ADDRESS ? openingBib : currentEmperorBidAmount + maxBidIncrease
+    const amount = currentEmperor.address === NON_ADDRESS ? openingBid : currentEmperorBidAmount + maxBidIncrease
     if (amount > Number(maxAmount)) return false
 
     return true
@@ -284,7 +284,7 @@ const YourScoreBlock: React.FC = () => {
     try {
       const amount =
         currentEmperor.address === NON_ADDRESS
-          ? new BigNumber(openingBib).toString()
+          ? new BigNumber(openingBid).toString()
           : new BigNumber(currentEmperorBidAmount).plus(new BigNumber(maxBidIncrease)).toString()
       const allowanceBalance = (await xPefiContract.methods.allowance(account, getEmperorAddress()).call()) / 1e18
       if (allowanceBalance === 0) {
@@ -303,7 +303,7 @@ const YourScoreBlock: React.FC = () => {
     try {
       const amount =
         currentEmperor.address === NON_ADDRESS
-          ? new BigNumber(openingBib).toString()
+          ? new BigNumber(openingBid).toString()
           : new BigNumber(currentEmperorBidAmount).plus(new BigNumber(maxBidIncrease)).toString()
       const allowanceBalance = (await xPefiContract.methods.allowance(account, getEmperorAddress()).call()) / 1e18
       if (allowanceBalance === 0) {
