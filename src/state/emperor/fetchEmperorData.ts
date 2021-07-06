@@ -253,7 +253,7 @@ export const fetchCurrentEmperorData = async () => {
       ...data,
       currentEmperorAddress,
       bidAmount: getBalanceNumber(currentEmperorBid),
-      jackpot: getBalanceNumber(currentEmperorJackpot[0]),
+      jackpot: getBalanceNumber(currentEmperorJackpot),
     }
   } catch (error) {
     return {}
