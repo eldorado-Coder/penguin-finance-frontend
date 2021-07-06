@@ -167,7 +167,7 @@ export interface EmperorState {
   topEmperors: Emperor[]
   maxBidIncrease: number
   minBidIncrease: number
-  openingBib?: number
+  openingBid?: number
   finalDate?: number
   poisonDuration?: number
 }
