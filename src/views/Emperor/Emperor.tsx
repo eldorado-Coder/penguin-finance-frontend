@@ -1,11 +1,13 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import Sound from 'react-sound'
 import { useWeb3React } from '@web3-react/core'
 import { Text } from 'penguinfinance-uikit2'
-
+import { useDispatch } from 'react-redux'
+import { fetchEmperor } from 'state/emperor'
 import { useEmperor } from 'state/hooks'
 import Page from 'components/layout/Page'
+import useUserSetting from 'hooks/useUserSetting'
 import EmperorBlock from './components/EmperorBlock'
 import YourScoreBlock from './components/YourScoreBlock'
 import TopPenguinsBlock from './components/TopPenguinsBlock'
@@ -23,8 +25,8 @@ const EmperorPage = styled(Page)`
 
 const ChestWrapper = styled.div<{ jackpot: string }>`
   position: absolute;
-  width: 15%;
-  left: 22%;
+  width: 9.5%;
+  left: 26%;
   bottom: 18%;
   z-index: 11;
 
@@ -42,12 +44,13 @@ const ChestWrapper = styled.div<{ jackpot: string }>`
   }
 `
 
-const PaperWrapper = styled.div`
+const PaperWrapper = styled.div<{ isOpen: boolean }>`
   @font-face {
     font-family: 'GothamBold Font';
     src: url(${process.env.PUBLIC_URL}/fonts/GothamBold.ttf) format('truetype');
   }
 
+  opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
   position: relative;
   display: flex;
   align-items: center;
@@ -69,17 +72,25 @@ const PaperWrapper = styled.div`
       font-size: 12px;
     }
     @media (min-width: 768px) {
-      font-size: 12px;
-    }
-    @media (min-width: 1200px) {
       font-size: 14px;
     }
+    @media (min-width: 1200px) {
+      min-width: 180px;
+      font-size: 16px;
+    }
     @media (min-width: 1450px) {
-      font-size: 20px;
+      min-width: 12 0px;
+      font-size: 16px;
     }
     @media (min-width: 1600px) {
-      font-size: 24px;
+      font-size: 20px;
     }
+  }
+  @media (min-width: 1200px) {
+    margin-bottom: 14%;
+  }
+  @media (min-width: 1450px) {
+    margin-bottom: 12%;
   }
 `
 
@@ -87,6 +98,10 @@ const JackpotPaper = styled.img`
   object-fit: cover;
   position: absolute;
   min-width: 120px;
+
+  @media (min-width: 1200px) {
+    min-width: 180px;
+  }
 `
 
 const GridItem = styled.div`
@@ -114,6 +129,7 @@ const Grid = styled.div<{ align: string; marginTop?: { xs?: number; sm?: number;
   justify-content: space-around;
   justify-content: ${({ align }) => (align === 'center' ? 'center' : 'space-between')};
   margin-top: ${({ marginTop }) => `${marginTop.xs}px`};
+  padding: 0 3%;
   @media (min-width: 640px) {
     ${({ marginTop }) =>
       marginTop.xs && {
@@ -141,7 +157,6 @@ const Grid = styled.div<{ align: string; marginTop?: { xs?: number; sm?: number;
   @media (max-width: 1600px) {
     font-size: 24px;
   }
-  padding: 0 5%;
   width: 100%;
 `
 
@@ -177,7 +192,21 @@ const Emperor: React.FC = () => {
   const [jackpotOpenSound, setJackpotOpenSound] = useState(false)
   const [showJackpot, setShowJackpot] = useState(false)
   const jackpotRef = useRef(jackpot)
+  const { isMusic } = useUserSetting()
   jackpotRef.current = jackpot
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(fetchEmperor(account))
+
+    const refreshInterval = setInterval(() => {
+      dispatch(fetchEmperor(account))
+    }, 5000)
+
+    return () => clearInterval(refreshInterval)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, account])
 
   const handleOpenJackpot = () => {
     if (jackpotRef.current === JACKPOTS.LOCK) {
@@ -201,20 +230,18 @@ const Emperor: React.FC = () => {
       <>
         {account && (
           <ChestWrapper jackpot={jackpot} onClick={handleOpenJackpot}>
-            {jackpot === JACKPOTS.UNLOCK && (
-              <PaperWrapper>
-                <JackpotPaper
-                  onLoad={onJackpotLoaded}
-                  src={`${process.env.PUBLIC_URL}/images/emperor/jackpot/Mapefi.svg`}
-                  alt="jackpot_paper"
-                />
-                {showJackpot && (
-                  <Text className="price" fontSize="24px">
-                    {currentEmperor.jackpot} <span>x</span>PEFI
-                  </Text>
-                )}
-              </PaperWrapper>
-            )}
+            <PaperWrapper isOpen={jackpot === JACKPOTS.UNLOCK}>
+              <JackpotPaper
+                onLoad={onJackpotLoaded}
+                src={`${process.env.PUBLIC_URL}/images/emperor/jackpot/Mapefi.svg`}
+                alt="jackpot_paper"
+              />
+              {showJackpot && (
+                <Text className="price" fontSize="24px">
+                  {currentEmperor.jackpot} <span>x</span>PEFI
+                </Text>
+              )}
+            </PaperWrapper>
             <img className="jackpot-lock" src={JACKPOTS.LOCK} alt="jackpot_lock" />
             <img className="jackpot-open" src={JACKPOTS.OPEN} alt="jackpot_open" />
             <img className="jackpot-unlock" src={JACKPOTS.UNLOCK} alt="jackpot_unlock" />
@@ -251,15 +278,15 @@ const Emperor: React.FC = () => {
   return (
     <EmperorPage>
       <Sound
-        url={`${emperorEnded ? '/sounds/penguin_emperor_winner.mp3' : '/sounds/penguin_emperor_page.mp3'} `}
+        url={`${emperorEnded ? '/sounds/penguin_emperor_winner.mp3' : '/sounds/emperor_blitz1.mp3'} `}
         playStatus={Sound.status.PLAYING}
-        volume={20}
+        volume={isMusic ? 20 : 0}
         loop
       />
       <Sound
         url="/sounds/jackpot_open.mp3"
         playStatus={jackpotOpenSound ? Sound.status.PLAYING : Sound.status.STOPPED}
-        volume={100}
+        volume={isMusic ? 100 : 0}
       />
 
       {/* background video */}

@@ -52,6 +52,21 @@
                 "type": "uint256",
                 "name": "_maxBidIncrease",
                 "internalType": "uint256"
+            },
+            {
+                "type": "uint256",
+                "name": "_poisonFee",
+                "internalType": "uint256"
+            },
+            {
+                "type": "uint256",
+                "name": "_poisonDuration",
+                "internalType": "uint256"
+            },
+            {
+                "type": "uint256",
+                "name": "_poisonCooldown",
+                "internalType": "uint256"
             }
         ]
     },
@@ -64,6 +79,31 @@
                 "name": "newEmperor",
                 "internalType": "address",
                 "indexed": true
+            }
+        ],
+        "anonymous": false
+    },
+    {
+        "type": "event",
+        "name": "EmperorPoisoned",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "poisonedEmperor",
+                "internalType": "address",
+                "indexed": true
+            },
+            {
+                "type": "address",
+                "name": "poisoner",
+                "internalType": "address",
+                "indexed": true
+            },
+            {
+                "type": "uint256",
+                "name": "timePoisoned",
+                "internalType": "uint256",
+                "indexed": false
             }
         ],
         "anonymous": false
@@ -106,6 +146,25 @@
         ],
         "name": "admin",
         "inputs": []
+    },
+    {
+        "type": "function",
+        "stateMutability": "view",
+        "outputs": [
+            {
+                "type": "bool",
+                "name": "",
+                "internalType": "bool"
+            }
+        ],
+        "name": "canBePoisoned",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "penguinAddress",
+                "internalType": "address"
+            }
+        ]
     },
     {
         "type": "function",
@@ -234,6 +293,44 @@
                 "type": "uint256",
                 "name": "",
                 "internalType": "uint256"
+            }
+        ]
+    },
+    {
+        "type": "function",
+        "stateMutability": "view",
+        "outputs": [
+            {
+                "type": "address",
+                "name": "",
+                "internalType": "address"
+            }
+        ],
+        "name": "lastPoisonedBy",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "",
+                "internalType": "address"
+            }
+        ]
+    },
+    {
+        "type": "function",
+        "stateMutability": "view",
+        "outputs": [
+            {
+                "type": "uint256",
+                "name": "",
+                "internalType": "uint256"
+            }
+        ],
+        "name": "lastTimePoisoned",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "",
+                "internalType": "address"
             }
         ]
     },
@@ -373,6 +470,58 @@
     },
     {
         "type": "function",
+        "stateMutability": "view",
+        "outputs": [
+            {
+                "type": "uint256",
+                "name": "",
+                "internalType": "uint256"
+            }
+        ],
+        "name": "poisonCooldown",
+        "inputs": []
+    },
+    {
+        "type": "function",
+        "stateMutability": "view",
+        "outputs": [
+            {
+                "type": "uint256",
+                "name": "",
+                "internalType": "uint256"
+            }
+        ],
+        "name": "poisonCost",
+        "inputs": []
+    },
+    {
+        "type": "function",
+        "stateMutability": "view",
+        "outputs": [
+            {
+                "type": "uint256",
+                "name": "",
+                "internalType": "uint256"
+            }
+        ],
+        "name": "poisonDuration",
+        "inputs": []
+    },
+    {
+        "type": "function",
+        "stateMutability": "view",
+        "outputs": [
+            {
+                "type": "uint256",
+                "name": "",
+                "internalType": "uint256"
+            }
+        ],
+        "name": "poisonFee",
+        "inputs": []
+    },
+    {
+        "type": "function",
         "stateMutability": "nonpayable",
         "outputs": [],
         "name": "stealCrown",
@@ -381,6 +530,89 @@
                 "type": "uint256",
                 "name": "_amount",
                 "internalType": "uint256"
+            }
+        ]
+    },
+    {
+        "type": "function",
+        "stateMutability": "nonpayable",
+        "outputs": [],
+        "name": "stealCrownAndPoison",
+        "inputs": [
+            {
+                "type": "uint256",
+                "name": "_amount",
+                "internalType": "uint256"
+            }
+        ]
+    },
+    {
+        "type": "function",
+        "stateMutability": "nonpayable",
+        "outputs": [],
+        "name": "stuckXPEFIretrieval",
+        "inputs": [
+            {
+                "type": "uint256",
+                "name": "_amount",
+                "internalType": "uint256"
+            }
+        ]
+    },
+    {
+        "type": "function",
+        "stateMutability": "view",
+        "outputs": [
+            {
+                "type": "uint256",
+                "name": "",
+                "internalType": "uint256"
+            }
+        ],
+        "name": "timeLeftForPoison",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "penguinAddress",
+                "internalType": "address"
+            }
+        ]
+    },
+    {
+        "type": "function",
+        "stateMutability": "view",
+        "outputs": [
+            {
+                "type": "uint256",
+                "name": "",
+                "internalType": "uint256"
+            }
+        ],
+        "name": "timePoisonedRemaining",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "penguinAddress",
+                "internalType": "address"
+            }
+        ]
+    },
+    {
+        "type": "function",
+        "stateMutability": "view",
+        "outputs": [
+            {
+                "type": "uint256",
+                "name": "",
+                "internalType": "uint256"
+            }
+        ],
+        "name": "timesPoisoned",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "",
+                "internalType": "address"
             }
         ]
     },

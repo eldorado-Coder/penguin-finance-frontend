@@ -4,12 +4,20 @@ import { PenguinTheme } from 'penguinfinance-uikit2/dist/theme'
 
 declare module 'styled-components' {
   /* eslint-disable @typescript-eslint/no-empty-interface */
-  export interface DefaultTheme extends PenguinTheme {}
+  export interface DefaultTheme extends PenguinTheme { }
 }
 
 const GlobalStyle = createGlobalStyle`
   * {
     font-family: 'Kanit', sans-serif;
+  }
+  #root {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: auto;
   }
   body {
     background-color: ${({ theme }) => theme.colors.background};
@@ -18,6 +26,7 @@ const GlobalStyle = createGlobalStyle`
       height: auto;
       max-width: 100%;
     }
+    overflow: hidden;
   }
 `
 

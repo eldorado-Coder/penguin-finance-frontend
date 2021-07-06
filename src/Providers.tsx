@@ -7,6 +7,7 @@ import { ThemeContextProvider } from 'contexts/ThemeContext'
 import { BlockContextProvider } from 'contexts/BlockContext'
 import { RefreshContextProvider } from 'contexts/RefreshContext'
 import { ToastsProvider } from 'contexts/ToastsContext'
+import { SettingContextProvider } from 'contexts/SettingContext'
 import store from 'state'
 import { getLibrary } from 'utils/web3React'
 
@@ -16,13 +17,15 @@ const Providers: React.FC = ({ children }) => {
       <Provider store={store}>
         <ToastsProvider>
           <ThemeContextProvider>
-            <LanguageContextProvider>
-              <BlockContextProvider>
+            <SettingContextProvider>
+              <LanguageContextProvider>
                 <RefreshContextProvider>
-                  <ModalProvider>{children}</ModalProvider>
+                  <BlockContextProvider>
+                    <ModalProvider>{children}</ModalProvider>
+                  </BlockContextProvider>
                 </RefreshContextProvider>
-              </BlockContextProvider>
-            </LanguageContextProvider>
+              </LanguageContextProvider>
+            </SettingContextProvider>
           </ThemeContextProvider>
         </ToastsProvider>
       </Provider>

@@ -1,3 +1,5 @@
+import { badWordsFilter } from 'utils/address'
+
 const penguinImages = [
   { id: '1', kingSrc: 'penguin_top_hat', normalSrc: 'penguin_top_hat_no_crown', name: 'Top hat' },
   { id: '2', kingSrc: 'penguin_fedora', normalSrc: 'penguin_fedora_no_crown', name: 'Fedora' },
@@ -48,4 +50,34 @@ const getNormalPenguin = (emperor) => {
   return ''
 }
 
-export { getPenguinColor, getKingPenguin, getNormalPenguin, penguinImages }
+const getStealCrownTooltip = (poisonedBy, timeLeftForPoison) =>
+  `
+    You were poisoned by <span class="emperor-account">${badWordsFilter(
+      poisonedBy,
+    )}</span>, you must wait <span class="left-time-for-duration">${timeLeftForPoison} seconds</span>
+    before attempting to steal the crown.
+  `
+
+const getStealAndPoisonTooltip = (account, poisonedBy, timeLeftForPoison) =>
+  account
+    ? `
+        <span class="emperor-account">${badWordsFilter(
+          account,
+        )}</span> was poisoned recently. He/she is immune to poison for 
+        <span class="left-time-for-duration">${timeLeftForPoison} seconds.</span>
+      `
+    : `
+        You were poisoned by <span class="emperor-account">${badWordsFilter(
+          poisonedBy,
+        )}</span>, you must wait <span class="left-time-for-duration">${timeLeftForPoison} seconds</span>
+        before attempting to steal the crown.
+      `
+
+export {
+  getPenguinColor,
+  getKingPenguin,
+  getNormalPenguin,
+  penguinImages,
+  getStealCrownTooltip,
+  getStealAndPoisonTooltip,
+}

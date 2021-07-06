@@ -25,7 +25,7 @@ const store = configureStore({
     teams: teamsReducer,
     achievements: achievementsReducer,
     global: globalReducer,
-    donations: donationsReducer
+    donations: donationsReducer,
   },
 })
 

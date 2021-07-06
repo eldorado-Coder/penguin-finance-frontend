@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Menu as UikitMenu } from 'penguinfinance-uikit2'
+import { Menu as UikitMenu, useModal } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import BigNumber from 'bignumber.js'
 import { allLanguages } from 'config/localisation/languageCodes'
@@ -8,6 +8,8 @@ import useTheme from 'hooks/useTheme'
 import useAuth from 'hooks/useAuth'
 import { usePricePefiUsdt, usePools, useEmperor } from 'state/hooks'
 import WalletConnectGuideModal from 'components/Modal/WalletConnectGuideModal'
+import SettingModal from 'components/Modal/SettingModal'
+
 import { config, socials } from './config'
 
 const Menu = (props) => {
@@ -27,10 +29,14 @@ const Menu = (props) => {
       : 1
   }
 
+  const [onToggleSettingModal] = useModal(
+    <SettingModal />,
+  )
+
   const xPefiToPefiRatio = getXPefiToPefiRatio(pefiPool)
 
   // add badge to "emperor" and "launchpad" menu
-  const isEmperorLive = false // event status
+  const isEmperorLive = true // event status
   const isLaunchpadLive = false // event status
 
   const links = [...config]
@@ -63,6 +69,7 @@ const Menu = (props) => {
         pefiRatio={Number(xPefiToPefiRatio)}
         links={links}
         socials={socials}
+        onSettingClick={onToggleSettingModal}
         // profile={{
         //   username: profile?.username,
         //   image: profile?.nft ? `/images/nfts/${profile.nft?.images.sm}` : undefined,

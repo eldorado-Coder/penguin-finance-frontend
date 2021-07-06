@@ -42,15 +42,20 @@ export const config: MenuEntry[] = [
     href: '/launchpad',
   },
   // {
+  //   label: 'Club Penguin',
+  //   icon: 'BattleIcon',
+  //   href: '/club',
+  // },
+  // {
   //   label: 'Penguin lottery',
   //   icon: 'NftIcon',
   //   href: '/lottery',
   // },
-  // {
-  //   label: 'Collectibles',
-  //   icon: 'NftIcon',
-  //   href: '/collectibles',
-  // },
+  {
+    label: 'Collectibles',
+    icon: 'NftIcon',
+    href: '/collectibles',
+  },
   // {
   //   label: 'Penguin teams',
   //   icon: 'NftIcon',
@@ -69,7 +74,7 @@ export const config: MenuEntry[] = [
         href: 'https://www.penguinfinance.io/b',
       },
       {
-        label: 'Blog',
+        label: 'Medium Articles',
         href: 'https://penguin-finance.medium.com/',
       },
     ],

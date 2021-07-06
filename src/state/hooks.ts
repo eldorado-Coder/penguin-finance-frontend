@@ -7,6 +7,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Team } from 'config/constants/types'
 import useRefresh from 'hooks/useRefresh'
 import useUsdtPrice from 'hooks/useUsdtPrice'
+import useUserSetting from 'hooks/useUserSetting'
+import useInterval from 'hooks/useInterval'
 import { DAYS_PER_YEAR, CURRENT_NEST_DAILY_REWARDS } from 'config'
 import { getBalanceNumber } from 'utils/formatBalance'
 import {
@@ -17,6 +19,7 @@ import {
   fetchLpsPublicDataAsync,
   fetchPoolsPublicDataAsync,
   fetchPoolsUserDataAsync,
+  fetchEmperor,
   push as pushToast,
   remove as removeToast,
   clear as clearToast,
@@ -36,8 +39,8 @@ import {
 import { fetchProfile } from './profile'
 import { fetchTeam, fetchTeams } from './teams'
 import { fetchAchievements } from './achievements'
-import { fetchEmperor } from './emperor'
 import { fetchDonations } from './donations'
+
 
 const ZERO = new BigNumber(0)
 
@@ -250,7 +253,6 @@ export const useToast = () => {
 }
 
 // Profile
-
 export const useFetchProfile = () => {
   const { account } = useWeb3React()
   const dispatch = useDispatch()
@@ -293,14 +295,11 @@ export const useEmperor = () => {
   const { account } = useWeb3React()
   const emperorState: EmperorState = useSelector((state: State) => state.emperor)
   const dispatch = useDispatch()
-
-  useEffect(() => {
-    const refreshInterval = setInterval(() => {
-      dispatch(fetchEmperor(account))
-    }, 5000)
-
-    return () => clearInterval(refreshInterval)
-  }, [dispatch, account])
+  const { refreshRate } = useUserSetting()
+  
+  useInterval(() => {
+    dispatch(fetchEmperor(account))
+  }, refreshRate);
 
   return emperorState
 }
@@ -334,14 +333,11 @@ export const useDonations = () => {
   const { account } = useWeb3React()
   const donationsState: DonationsState = useSelector((state: State) => state.donations)
   const dispatch = useDispatch()
-
-  useEffect(() => {
-    const refreshInterval = setInterval(() => {
-      dispatch(fetchDonations(account))
-    }, 5000)
-
-    return () => clearInterval(refreshInterval)
-  }, [dispatch, account])
+  const { refreshRate } = useUserSetting()
+  
+  useInterval(() => {
+    dispatch(fetchDonations(account))
+  }, refreshRate);
 
   return donationsState
 }

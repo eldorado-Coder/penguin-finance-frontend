@@ -86,6 +86,8 @@ const APYTag = styled(Tag)`
   }
 `
 
+const APYToolTipWrapper = styled.div``
+
 const HelperTag = styled(Tag)`
   margin-right: 6px;
   width: 28px;
@@ -215,7 +217,7 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
 
   const getXPefiToPefiRatio = () => {
     return pool.totalStaked && pool.totalSupply
-      ? new BigNumber(pool.totalStaked).div(new BigNumber(pool.totalSupply)).toJSON()
+      ? new BigNumber(pool.totalStaked).div(new BigNumber(pool.totalSupply)).toNumber()
       : 1
   }
 
@@ -249,9 +251,9 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
             </a>
           </APYTag> */}
           <APYTag variant="primary" outline>
-            <a href="/" data-for="custom-class" data-tip={APY_TOOLTIP_TEXT}>
+            <APYToolTipWrapper data-for="custom-class" data-tip={APY_TOOLTIP_TEXT}>
               <span>{getNumberWithCommas(displayedNestApy)}%</span> APY
-            </a>
+            </APYToolTipWrapper>
             <CustomToolTip
               id="custom-class"
               wrapper="div"
@@ -282,7 +284,7 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
                   xPEFI to PEFI:
                 </Text>
                 <Text color="textSubtle" bold fontSize="14px">
-                  {Number(Number(xPefiToPefiRatio).toFixed(3))}
+                  {Number(xPefiToPefiRatio.toFixed(3))}
                 </Text>
               </Flex>
               <Flex ml="8px" justifyContent="space-between">
@@ -345,7 +347,8 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
       <CardAction>
         <CardFooter
           penguinNestsGuideLink={penguinNestsGuideLink}
-          totalStaked={totalStaked}
+          totalPefiStaked={totalStaked}
+          totalXPefiBalance={totalSupply}
           blocksRemaining={blocksRemaining}
           isFinished={isFinished}
           blocksUntilStart={blocksUntilStart}

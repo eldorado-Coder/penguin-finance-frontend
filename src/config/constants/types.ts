@@ -126,6 +126,7 @@ export type Nft = {
   sortOrder: number
   bunnyId: number
   video?: NftVideo
+  rarity?: number
 }
 
 export type TeamImages = {

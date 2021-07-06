@@ -1,124 +1,258 @@
-import { AbiItem } from 'web3-utils'
-import { getWeb3 } from 'utils/web3'
 import emperorAbi from 'config/abi/emperor.json'
 import emperorPenguinDBAbi from 'config/abi/charityPenguin.json'
 import { getEmperorAddress, getEmperorPenguinDBAddress } from 'utils/addressHelpers'
 import { Emperor } from 'state/types'
 import { getBalanceNumber } from 'utils/formatBalance'
+import multicall from 'utils/multicall'
+import { NON_ADDRESS } from 'config'
 
-// Pool 0, Cake / Cake is a different kind of contract (master chef)
-// AVAX pools use the native AVAX token (wrapping ? unwrapping is done at the contract level)
-const web3 = getWeb3()
-const emperorContract = new web3.eth.Contract((emperorAbi as unknown) as AbiItem, getEmperorAddress())
-const penguinDBContract = new web3.eth.Contract(
-  (emperorPenguinDBAbi as unknown) as AbiItem,
-  getEmperorPenguinDBAddress(),
-)
+const emperorContractAddress = getEmperorAddress()
+const emperorPenguinDBContractAddress = getEmperorPenguinDBAddress()
 
-export const fetchCurrentEmperorAddress = async () => {
+/*
+ * Fetch general data
+ */
+export const fetchGeneralData = async () => {
   try {
-    const currentEmperorAddress = await emperorContract.methods.currentEmperor().call()
-    return currentEmperorAddress
+    // get general data from emperor contract
+    const generalDataCalls = [
+      // maxBidIncrease
+      {
+        address: emperorContractAddress,
+        name: 'maxBidIncrease',
+      },
+      // minBidIncrease
+      {
+        address: emperorContractAddress,
+        name: 'minBidIncrease',
+      },
+      // openingBid
+      {
+        address: emperorContractAddress,
+        name: 'openingBid',
+      },
+      // finalDate
+      {
+        address: emperorContractAddress,
+        name: 'finalDate',
+      },
+      // poisonDuration
+      {
+        address: emperorContractAddress,
+        name: 'poisonDuration',
+      },
+    ]
+    const [maxBidIncrease, minBidIncrease, openingBid, finalDate, poisonDuration] = await multicall(
+      emperorAbi,
+      generalDataCalls,
+    )
+
+    return {
+      maxBidIncrease: getBalanceNumber(maxBidIncrease),
+      minBidIncrease: getBalanceNumber(minBidIncrease),
+      openingBid: getBalanceNumber(openingBid),
+      finalDate: finalDate[0].toNumber(),
+      poisonDuration: poisonDuration[0].toNumber(),
+    }
   } catch (error) {
     return {}
   }
 }
 
-export const fetchCurrentEmperorBid = async () => {
+/*
+ * Fetch Emperor data
+ * param: account: address
+ */
+export const fetchEmperorData = async (account) => {
   try {
-    const currentEmperorBid = await emperorContract.methods.currentEmperorBid().call()
-    return getBalanceNumber(currentEmperorBid)
-  } catch (error) {
-    return 0
-  }
-}
+    // from data from emperor contract
+    const emperorContractCalls = [
+      // emperorData with timeAsEmperor, lastCrowningBlockTimestamp
+      {
+        address: emperorContractAddress,
+        name: 'playerDB',
+        params: [account],
+      },
+      // canBePoisoned
+      {
+        address: emperorContractAddress,
+        name: 'canBePoisoned',
+        params: [account],
+      },
+      // lastTimePoisoned
+      {
+        address: emperorContractAddress,
+        name: 'lastTimePoisoned',
+        params: [account],
+      },
+      // lastPoisonedBy
+      {
+        address: emperorContractAddress,
+        name: 'lastPoisonedBy',
+        params: [account],
+      },
+      // timePoisonedRemaining
+      {
+        address: emperorContractAddress,
+        name: 'timePoisonedRemaining',
+        params: [account],
+      },
+      // timeLeftForPoison
+      {
+        address: emperorContractAddress,
+        name: 'timeLeftForPoison',
+        params: [account],
+      },
 
-export const fetchMaxBidIncrease = async () => {
-  try {
-    const maxBidIncrease = await emperorContract.methods.maxBidIncrease().call()
-    return getBalanceNumber(maxBidIncrease)
-  } catch (error) {
-    return 0
-  }
-}
+      // current emperor bid
+      {
+        address: emperorContractAddress,
+        name: 'currentEmperorBid',
+      },
+    ]
+    const [
+      emperorData,
+      canBePoisoned,
+      lastTimePoisoned,
+      lastPoisonedByAddress,
+      timePoisonedRemaining,
+      timeLeftForPoison,
+    ] = await multicall(emperorAbi, emperorContractCalls)
 
-export const fetchMinBidIncrease = async () => {
-  try {
-    const minBidIncrease = await emperorContract.methods.minBidIncrease().call()
-    return getBalanceNumber(minBidIncrease)
-  } catch (error) {
-    return 0
-  }
-}
+    // from data from emperorPenguinDB contract
+    const emperorPenguinDBContractCalls = [
+      // emperorPenguinData
+      {
+        address: emperorPenguinDBContractAddress,
+        name: 'penguDB',
+        params: [account],
+      },
+      // lastPoisonedByNickname
+      {
+        address: emperorPenguinDBContractAddress,
+        name: 'nickname',
+        params: [lastPoisonedByAddress[0]],
+      },
+    ]
+    const [emperorPenguinData, lastPoisonedByNickname] = await multicall(
+      emperorPenguinDBAbi,
+      emperorPenguinDBContractCalls,
+    )
 
-export const fetchCurrentEmperorJackpot = async () => {
-  try {
-    const currentEmperorJackpot = await emperorContract.methods.jackpot().call()
-    return getBalanceNumber(currentEmperorJackpot)
-  } catch (error) {
-    return 0
-  }
-}
-
-export const fetchEmperorData = async (emperorAddress) => {
-  try {
-    // from emperor contract
-    const emperorData = await emperorContract.methods.playerDB(emperorAddress).call()
     const { timeAsEmperor, lastCrowningBlockTimestamp } = emperorData
-
-    // from emperorPenguinDB contract
-    const emperorPenguinData = await penguinDBContract.methods.penguDB(emperorAddress).call()
     const { nickname, color, isRegistered, style } = emperorPenguinData
 
     return {
+      // emperor
+      address: account,
+      lastCrowningBlockTimestamp: lastCrowningBlockTimestamp.toNumber(),
+      timeAsEmperor: timeAsEmperor.toNumber(),
+      canBePoisoned: canBePoisoned[0],
+      lastTimePoisoned: lastTimePoisoned[0].toNumber(),
+      lastPoisonedBy: lastPoisonedByNickname[0],
+      timePoisonedRemaining: timePoisonedRemaining[0].toNumber(),
+      timeLeftForPoison: timeLeftForPoison[0].toNumber(),
+      // db data
       nickname,
       color,
       isRegistered,
-      style,
-      lastCrowningBlockTimestamp,
-      timeAsEmperor,
+      style: style.toNumber(),
     }
   } catch (error) {
     return {}
   }
 }
 
-export const fetchTopEmperors = async () => {
-  const NON_ADDRESS = '0x0000000000000000000000000000000000000000'
+/*
+ * fetch current emperor data
+ */
+export const fetchCurrentEmperorData = async () => {
   try {
-    let topEmperors: Emperor[] = []
-    const topEmperor1Address = await emperorContract.methods.topEmperors(0).call()
-    if (topEmperor1Address !== NON_ADDRESS) {
-      const topEmperor1 = await fetchEmperorData(topEmperor1Address)
-      topEmperors = [...topEmperors, { ...topEmperor1, address: topEmperor1Address }]
-    }
+    // from current emperor data from emperor contract
+    const emperorContractCalls = [
+      // current emperor address
+      {
+        address: emperorContractAddress,
+        name: 'currentEmperor',
+      },
+      // current emperor bid
+      {
+        address: emperorContractAddress,
+        name: 'currentEmperorBid',
+      },
+      // current emperor jackpot
+      {
+        address: emperorContractAddress,
+        name: 'jackpot',
+      },
+    ]
+    const [currentEmperorAddress, currentEmperorBid, currentEmperorJackpot] = await multicall(
+      emperorAbi,
+      emperorContractCalls,
+    )
+    const data = await fetchEmperorData(currentEmperorAddress[0])
 
-    const topEmperor2Address = await emperorContract.methods.topEmperors(1).call()
-    if (topEmperor2Address !== NON_ADDRESS) {
-      const topEmperor2 = await fetchEmperorData(topEmperor2Address)
-      topEmperors = [...topEmperors, { ...topEmperor2, address: topEmperor2Address }]
+    return {
+      ...data,
+      currentEmperorAddress,
+      bidAmount: getBalanceNumber(currentEmperorBid),
+      jackpot: getBalanceNumber(currentEmperorJackpot),
     }
-
-    const topEmperor3Address = await emperorContract.methods.topEmperors(2).call()
-    if (topEmperor3Address !== NON_ADDRESS) {
-      const topEmperor3 = await fetchEmperorData(topEmperor3Address)
-      topEmperors = [...topEmperors, { ...topEmperor3, address: topEmperor3Address }]
-    }
-
-    const topEmperor4Address = await emperorContract.methods.topEmperors(3).call()
-    if (topEmperor4Address !== NON_ADDRESS) {
-      const topEmperor4 = await fetchEmperorData(topEmperor4Address)
-      topEmperors = [...topEmperors, { ...topEmperor4, address: topEmperor4Address }]
-    }
-
-    const topEmperor5Address = await emperorContract.methods.topEmperors(4).call()
-    if (topEmperor5Address !== NON_ADDRESS) {
-      const topEmperor5 = await fetchEmperorData(topEmperor5Address)
-      topEmperors = [...topEmperors, { ...topEmperor5, address: topEmperor5Address }]
-    }
-
-    return topEmperors
   } catch (error) {
     return {}
+  }
+}
+
+/*
+ * Fetch top 5 emperor data
+ */
+export const fetchTopEmperors = async () => {
+  const emperorContractCalls = [
+    // current emperor address
+    {
+      address: emperorContractAddress,
+      name: 'topEmperors',
+      params: [0],
+    },
+    {
+      address: emperorContractAddress,
+      name: 'topEmperors',
+      params: [1],
+    },
+    {
+      address: emperorContractAddress,
+      name: 'topEmperors',
+      params: [2],
+    },
+    {
+      address: emperorContractAddress,
+      name: 'topEmperors',
+      params: [3],
+    },
+    {
+      address: emperorContractAddress,
+      name: 'topEmperors',
+      params: [4],
+    },
+  ]
+  const topEmperorAddresses = await multicall(emperorAbi, emperorContractCalls)
+
+  try {
+    let promises = []
+    for (let i = 0; i < 5; i++) {
+      const topEmperorAddress = topEmperorAddresses[i][0]
+      if (topEmperorAddress === NON_ADDRESS) {
+        break
+      }
+      promises = [...promises, fetchEmperorData(topEmperorAddress)]
+    }
+
+    const topEmperors: Emperor[] = await Promise.all(promises)
+
+    // eslint-disable-next-line consistent-return
+    return topEmperors
+  } catch (error) {
+    // eslint-disable-next-line consistent-return
+    return []
   }
 }

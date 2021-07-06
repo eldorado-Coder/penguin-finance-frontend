@@ -42,6 +42,11 @@ const TitleBgWrapper = styled.div<{ color: string; account: string }>`
   @media (min-width: 1200px) and (max-height: 800px) {
     transform: ${(props) => props.account && 'scale(1.4)'};
   }
+  @media (min-width: 1450px) and (max-height: 800px) {
+    img {
+      margin-left: 8%;
+    }
+  }
 `
 
 const CardBlockBody = styled.div<{ account: string }>`
@@ -96,6 +101,7 @@ const EmperorInfoContainer = styled.div`
 const EmperorRow = styled.div`
   padding: 6px 0px;
   border-top: 1px solid #42bcf5;
+  border-color: ${({ theme }) => (theme.isDark ? '#9A6AFF' : '#42bcf5')};
   display: flex;
   min-height: 44px;
   &:last-child {

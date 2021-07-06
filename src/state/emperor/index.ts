@@ -1,14 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
-import {
-  fetchEmperorData,
-  fetchCurrentEmperorAddress,
-  fetchCurrentEmperorBid,
-  fetchMaxBidIncrease,
-  fetchMinBidIncrease,
-  fetchTopEmperors,
-  fetchCurrentEmperorJackpot
-} from './fetchEmperorData'
+import { fetchGeneralData, fetchEmperorData, fetchCurrentEmperorData, fetchTopEmperors } from './fetchEmperorData'
 import { EmperorState } from '../types'
 
 const initialState: EmperorState = {
@@ -16,7 +8,10 @@ const initialState: EmperorState = {
   currentEmperor: {},
   topEmperors: [],
   maxBidIncrease: 0,
-  minBidIncrease: 0
+  minBidIncrease: 0,
+  openingBid: 0,
+  finalDate: 0,
+  poisonDuration: 0,
 }
 
 export const EmperorSlice = createSlice({
@@ -26,6 +21,25 @@ export const EmperorSlice = createSlice({
     setInitialData: (state) => {
       state.currentEmperor = {}
     },
+    setGeneralData: (state, action) => {
+      const { finalDate, maxBidIncrease, minBidIncrease, openingBid, poisonDuration } = action.payload
+      if (finalDate) {
+        state.finalDate = finalDate
+      }
+      if (maxBidIncrease) {
+        state.maxBidIncrease = maxBidIncrease
+      }
+      if (minBidIncrease) {
+        state.minBidIncrease = minBidIncrease
+      }
+      if (openingBid) {
+        state.openingBid = openingBid
+      }
+      if (poisonDuration) {
+        state.poisonDuration = poisonDuration
+      }
+    },
+
     setMyEmperor: (state, action) => {
       state.myEmperor = {
         ...state.myEmperor,
@@ -41,65 +55,43 @@ export const EmperorSlice = createSlice({
     setTopEmperors: (state, action) => {
       state.topEmperors = [...action.payload]
     },
-    setMaxBidIncrease: (state, action) => {
-      state.maxBidIncrease = action.payload
-    },
-    setMinBidIncrease: (state, action) => {
-      state.minBidIncrease = action.payload
-    }
   },
 })
 
 // Actions
-export const {
-  setInitialData,
-  setMyEmperor,
-  setCurrentEmperor,
-  setTopEmperors,
-  setMaxBidIncrease,
-  setMinBidIncrease
-} = EmperorSlice.actions
+export const { setGeneralData, setInitialData, setMyEmperor, setCurrentEmperor, setTopEmperors } = EmperorSlice.actions
 
 // Thunks
-
 export const setInit = () => async (dispatch) => {
   dispatch(setInitialData())
 }
 
 export const fetchEmperor = (account) => async (dispatch) => {
-  if (!account) return
+  // fetch my emperor
+  if (account) {
+    const myEmperor = await fetchEmperorData(account)
+    dispatch(
+      setMyEmperor({
+        ...myEmperor,
+      }),
+    )
+  }
 
   // fetch general Info
-  const maxBidIncrease = await fetchMaxBidIncrease()
-  dispatch(setMaxBidIncrease(maxBidIncrease))
-
-  const minBidIncrease = await fetchMinBidIncrease()
-  dispatch(setMinBidIncrease(minBidIncrease))
+  const generalData = await fetchGeneralData()
+  dispatch(setGeneralData({ ...generalData }))
 
   // fetch current emperor
-  const currentEmperorAddress = await fetchCurrentEmperorAddress()
-  dispatch(setCurrentEmperor({ address: currentEmperorAddress }))
+  const currentEmperorData = await fetchCurrentEmperorData()
+  dispatch(
+    setCurrentEmperor({
+      ...currentEmperorData,
+    }),
+  )
 
-  const currentEmperorBid = await fetchCurrentEmperorBid()
-  dispatch(setCurrentEmperor({ bidAmount: currentEmperorBid }))
-
-  const currentEmperorJackpot = await fetchCurrentEmperorJackpot()
-  dispatch(setCurrentEmperor({ jackpot: currentEmperorJackpot }))
-
-  if (currentEmperorAddress && currentEmperorAddress.length > 0) {
-    const currentEmperor = await fetchEmperorData(currentEmperorAddress)
-    dispatch(setCurrentEmperor(currentEmperor))
-  }
-
-  // fetch my emperor
-  const myEmperor = await fetchEmperorData(account)
-  dispatch(setMyEmperor({ ...myEmperor, address: account }))
-
-  // fetch top 5 emperor
-  if (currentEmperorAddress && currentEmperorAddress.length > 0) {
-    const topEmperors = await fetchTopEmperors()
-    dispatch(setTopEmperors(topEmperors))
-  }
+  // fetch top 5 emperors
+  const topEmperors = await fetchTopEmperors()
+  dispatch(setTopEmperors(topEmperors))
 }
 
 export default EmperorSlice.reducer

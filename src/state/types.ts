@@ -143,6 +143,11 @@ export interface Emperor {
   lastCrowningBlockTimestamp?: number
   bidAmount?: number
   jackpot?: number
+  canBePoisoned?: boolean
+  lastTimePoisoned?: number
+  lastPoisonedBy?: string
+  timePoisonedRemaining?: number
+  timeLeftForPoison?: number
 }
 
 export interface Player {
@@ -162,6 +167,9 @@ export interface EmperorState {
   topEmperors: Emperor[]
   maxBidIncrease: number
   minBidIncrease: number
+  openingBid?: number
+  finalDate?: number
+  poisonDuration?: number
 }
 
 export interface DonationsState {
@@ -178,6 +186,7 @@ export interface DonationsState {
 export interface GlobalState {
   wrongNetworkGuideModalOpened: boolean
 }
+
 export interface State {
   lps: LpsState
   farms: FarmsState

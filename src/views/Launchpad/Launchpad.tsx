@@ -6,7 +6,7 @@ const Launchpad: React.FC = () => {
   return (
     <Page>
       <LaunchpadBgContainer width="100%" height="100%" autoPlay loop controls>
-        <source src="https://res.cloudinary.com/dbyunrpzq/video/upload/v1623865596/final_launchpad_trailer_n3aur4.mp4" />
+        <source src="https://res.cloudinary.com/dbyunrpzq/video/upload/v1624954572/Sample_Final_02_p5ubch.mp4" />
       </LaunchpadBgContainer>
     </Page>
   )
