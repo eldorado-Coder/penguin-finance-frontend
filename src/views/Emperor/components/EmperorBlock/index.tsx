@@ -172,7 +172,7 @@ const EmperorBlock: React.FC = () => {
   const myEmperorPenguin = getNormalPenguin(myEmperor)
 
   const handleViewStarterGuide = () => {
-    window.open('https://app.gitbook.com/@penguin-finance/s/penguin-finance/summary/penguin-emperor', '_blank')
+    window.open('https://penguin-finance.medium.com/introducing-the-penguin-emperor-blitz-15e4bb9f6278', '_blank')
   }
 
   const renderPenguins = () => {
