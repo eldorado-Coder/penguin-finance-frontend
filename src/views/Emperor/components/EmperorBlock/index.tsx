@@ -99,7 +99,7 @@ const WalletContainer = styled(Flex)`
     height: 28px;
     margin-top: 4px;
     margin-bottom: 8px;
-    
+
     @media (min-width: 640px) {
       font-size: 12px;
       padding: 0 12px;
@@ -132,7 +132,7 @@ const ShieldContainer = styled.div`
     fill: ${({ theme }) => theme.colors.secondary};
     height: 22px;
   }
-`;
+`
 
 const KingPenguinImageWrapper = styled.div<{ penguin: string; color: string }>`
   z-index: -1;
@@ -172,8 +172,32 @@ const EmperorBlock: React.FC = () => {
   const myEmperorPenguin = getNormalPenguin(myEmperor)
 
   const handleViewStarterGuide = () => {
-    window.open('https://app.gitbook.com/@penguin-finance/s/penguin-finance/summary/penguin-emperor', '_blank');
-  };
+    window.open('https://app.gitbook.com/@penguin-finance/s/penguin-finance/summary/penguin-emperor', '_blank')
+  }
+
+  const renderPenguins = () => {
+    if (!account) return null
+    return (
+      <>
+        <KingPenguinImageWrapper penguin={`${currentEmperorPenguin}`} color={getPenguinColor(currentEmperor)}>
+          <SvgIcon
+            src={`${process.env.PUBLIC_URL}/images/emperor/penguins/${currentEmperorPenguin}.svg`}
+            width="100%"
+            height="20px"
+          />
+        </KingPenguinImageWrapper>
+        {currentEmperor.address && myEmperor.address && currentEmperor.address !== myEmperor.address && (
+          <MyPenguinImageWrapper penguin={`${myEmperorPenguin}`} color={getPenguinColor(myEmperor)}>
+            <SvgIcon
+              src={`${process.env.PUBLIC_URL}/images/emperor/penguins/${myEmperorPenguin}.svg`}
+              width="100%"
+              height="20px"
+            />
+          </MyPenguinImageWrapper>
+        )}
+      </>
+    )
+  }
 
   return (
     <CardBlock>
@@ -189,8 +213,8 @@ const EmperorBlock: React.FC = () => {
       </CardBlockHeader>
       <CardBlockContent account={account}>
         {!account && (
-          <WalletContainer flexDirection='column' alignItems='center'>
-            <Button className='starter-button' onClick={handleViewStarterGuide}>
+          <WalletContainer flexDirection="column" alignItems="center">
+            <Button className="starter-button" onClick={handleViewStarterGuide}>
               Starter Guide
             </Button>
             <UnlockButton />
@@ -198,16 +222,12 @@ const EmperorBlock: React.FC = () => {
         )}
         {account && (
           <EmperorInfoContainer>
-            <Flex alignItems='center' justifyContent='center'>
-              {(currentEmperor.nickname && !currentEmperor.canBePoisoned) && 
+            <Flex alignItems="center" justifyContent="center">
+              {currentEmperor.nickname && !currentEmperor.canBePoisoned && (
                 <ShieldContainer>
-                  <SvgIcon
-                    src={`${process.env.PUBLIC_URL}/images/emperor/shield.svg`}
-                    width="22px"
-                    height="22px"
-                  />
+                  <SvgIcon src={`${process.env.PUBLIC_URL}/images/emperor/shield.svg`} width="22px" height="22px" />
                 </ShieldContainer>
-              }
+              )}
               <Text bold color="secondary" fontSize="22px">
                 {TranslateString(1074, currentEmperorNickname)}
               </Text>
@@ -218,22 +238,7 @@ const EmperorBlock: React.FC = () => {
           </EmperorInfoContainer>
         )}
       </CardBlockContent>
-      <KingPenguinImageWrapper penguin={`${currentEmperorPenguin}`} color={getPenguinColor(currentEmperor)}>
-        <SvgIcon
-          src={`${process.env.PUBLIC_URL}/images/emperor/penguins/${currentEmperorPenguin}.svg`}
-          width="100%"
-          height="20px"
-        />
-      </KingPenguinImageWrapper>
-      {currentEmperor.address && myEmperor.address && currentEmperor.address !== myEmperor.address && (
-        <MyPenguinImageWrapper penguin={`${myEmperorPenguin}`} color={getPenguinColor(myEmperor)}>
-          <SvgIcon
-            src={`${process.env.PUBLIC_URL}/images/emperor/penguins/${myEmperorPenguin}.svg`}
-            width="100%"
-            height="20px"
-          />
-        </MyPenguinImageWrapper>
-      )}
+      {renderPenguins()}
     </CardBlock>
   )
 }

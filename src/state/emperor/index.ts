@@ -1,15 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
-import {
-  fetchEmperorData,
-  fetchCurrentEmperorData,
-  fetchMaxBidIncrease,
-  fetchMinBidIncrease,
-  fetchOpeningBid,
-  fetchFinalDate,
-  fetchPoisonDuration,
-  fetchTopEmperors,
-} from './fetchEmperorData'
+import { fetchGeneralData, fetchEmperorData, fetchCurrentEmperorData, fetchTopEmperors } from './fetchEmperorData'
 import { EmperorState } from '../types'
 
 const initialState: EmperorState = {
@@ -30,6 +21,10 @@ export const EmperorSlice = createSlice({
     setInitialData: (state) => {
       state.currentEmperor = {}
     },
+    setGeneralData: (state, action) => {
+      state = { ...state, ...action.payload }
+    },
+
     setMyEmperor: (state, action) => {
       state.myEmperor = {
         ...state.myEmperor,
@@ -45,36 +40,11 @@ export const EmperorSlice = createSlice({
     setTopEmperors: (state, action) => {
       state.topEmperors = [...action.payload]
     },
-    setMaxBidIncrease: (state, action) => {
-      state.maxBidIncrease = action.payload
-    },
-    setMinBidIncrease: (state, action) => {
-      state.minBidIncrease = action.payload
-    },
-    setOpeningBib: (state, action) => {
-      state.openingBib = action.payload
-    },
-    setFinalDate: (state, action) => {
-      state.finalDate = action.payload
-    },
-    setPoisonDuration: (state, action) => {
-      state.poisonDuration = action.payload
-    },
   },
 })
 
 // Actions
-export const {
-  setInitialData,
-  setMyEmperor,
-  setCurrentEmperor,
-  setTopEmperors,
-  setMaxBidIncrease,
-  setMinBidIncrease,
-  setOpeningBib,
-  setFinalDate,
-  setPoisonDuration,
-} = EmperorSlice.actions
+export const { setGeneralData, setInitialData, setMyEmperor, setCurrentEmperor, setTopEmperors } = EmperorSlice.actions
 
 // Thunks
 export const setInit = () => async (dispatch) => {
@@ -82,45 +52,31 @@ export const setInit = () => async (dispatch) => {
 }
 
 export const fetchEmperor = (account) => async (dispatch) => {
-  if (!account) return
-
   // fetch my emperor
-  const myEmperor = await fetchEmperorData(account)
+  if (account) {
+    const myEmperor = await fetchEmperorData(account)
+    dispatch(
+      setMyEmperor({
+        ...myEmperor,
+      }),
+    )
+  }
 
-  dispatch(
-    setMyEmperor({
-      ...myEmperor,
-    }),
-  )
+  // fetch general Info
+  const generalData = await fetchGeneralData()
+  dispatch(setGeneralData({ ...generalData }))
 
   // fetch current emperor
   const currentEmperorData = await fetchCurrentEmperorData()
-
   dispatch(
     setCurrentEmperor({
       ...currentEmperorData,
     }),
   )
 
-  // fetch top 5 emperor
+  // fetch top 5 emperors
   const topEmperors = await fetchTopEmperors()
   dispatch(setTopEmperors(topEmperors))
-
-  // fetch general Info
-  const maxBidIncrease = await fetchMaxBidIncrease()
-  dispatch(setMaxBidIncrease(maxBidIncrease))
-
-  const minBidIncrease = await fetchMinBidIncrease()
-  dispatch(setMinBidIncrease(minBidIncrease))
-
-  const openingBid = await fetchOpeningBid()
-  dispatch(setOpeningBib(openingBid))
-
-  const finalDate = await fetchFinalDate()
-  dispatch(setFinalDate(finalDate))
-
-  const poisonDuration = await fetchPoisonDuration()
-  dispatch(setPoisonDuration(poisonDuration))
 }
 
 export default EmperorSlice.reducer
