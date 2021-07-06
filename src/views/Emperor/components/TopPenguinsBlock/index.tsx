@@ -101,6 +101,7 @@ const EmperorInfoContainer = styled.div`
 const EmperorRow = styled.div`
   padding: 6px 0px;
   border-top: 1px solid #42bcf5;
+  border-color: ${({ theme }) => (theme.isDark ? '#9A6AFF' : '#42bcf5')};
   display: flex;
   min-height: 44px;
   &:last-child {
