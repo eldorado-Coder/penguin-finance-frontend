@@ -18,6 +18,7 @@ import {
   getCharityPenguinDBAddress,
   getEmperorPenguinDBAddress,
   getXPefiAddress,
+  getIPefiAddress,
   getLaunchpadAddress,
   getTestXPefiAddress,
   // booster rocket
@@ -52,6 +53,7 @@ import donations from 'config/abi/donations.json'
 import charityPenguinDB from 'config/abi/charityPenguin.json'
 import emperorPenguinDB from 'config/abi/emperorPenguinDB.json'
 import xPefi from 'config/abi/xPefi.json'
+import iPefi from 'config/abi/iPefi.json'
 import launchpad from 'config/abi/launchpad.json'
 import boosterRocket from 'config/abi/boosterRocket.json'
 import boosterRocketPefi from 'config/abi/launchpad/pefi.json'
@@ -174,6 +176,11 @@ export const useCharityPenguinDB = () => {
 export const useXPefi = () => {
   const abi = (xPefi as unknown) as AbiItem
   return useContract(abi, getXPefiAddress())
+}
+
+export const useIPefi = () => {
+  const abi = (iPefi as unknown) as AbiItem
+  return useContract(abi, getIPefiAddress())
 }
 
 export const useTestXPefi = () => {

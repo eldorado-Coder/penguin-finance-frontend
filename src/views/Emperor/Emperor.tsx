@@ -252,7 +252,7 @@ const Emperor: React.FC = () => {
               />
               {showJackpot && (
                 <Text className="price" fontSize="24px">
-                  {currentEmperor.jackpot} <span>x</span>PEFI
+                  {currentEmperor.jackpot} <span>i</span>PEFI
                 </Text>
               )}
             </PaperWrapper>

@@ -241,6 +241,16 @@ export const approveXPefi = async (xPefiContract, account, address) => {
     })
 }
 
+export const approveIPefi = async (iPefiContract, account, address) => {
+  const approveAmount = '1000000000000000000000000000'
+  return iPefiContract.methods
+    .approve(address, new BigNumber(approveAmount).times(new BigNumber(10).pow(18)).toString())
+    .send({ from: account, gas: 200000 })
+    .on('transactionHash', (tx) => {
+      return tx.transactionHash
+    })
+}
+
 export const approvePefi = async (pefiContract, account, address) => {
   const approveAmount = '1000000000000000000000000000'
   return pefiContract.methods
