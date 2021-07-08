@@ -308,7 +308,7 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
             ) : (
               <>
                 <Button disabled={stakedBalance.eq(new BigNumber(0))} onClick={onPresentPenaltyConfirm}>
-                  {`Unstake ${stakingTokenName}`}
+                  {`Unstake x${stakingTokenName}`}
                 </Button>
                 <StyledActionSpacer />
                 <IconButton disabled={isFinished && sousId !== 0} onClick={onPresentDeposit}>
