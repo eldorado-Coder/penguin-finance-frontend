@@ -29,14 +29,12 @@ const Menu = (props) => {
       : 1
   }
 
-  const [onToggleSettingModal] = useModal(
-    <SettingModal />,
-  )
+  const [onToggleSettingModal] = useModal(<SettingModal />)
 
   const xPefiToPefiRatio = getXPefiToPefiRatio(pefiPool)
 
   // add badge to "emperor" and "launchpad" menu
-  const isEmperorLive = true // event status
+  const isEmperorLive = false // event status
   const isLaunchpadLive = false // event status
 
   const links = [...config]
