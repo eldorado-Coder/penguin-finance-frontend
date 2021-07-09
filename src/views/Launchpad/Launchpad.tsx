@@ -10,13 +10,14 @@ import partition from 'lodash/partition'
 import useBlock from 'hooks/useBlock'
 import { getBalanceNumber } from 'utils/formatBalance'
 import priceToBnb from 'utils/priceToBnb'
-import useTheme from 'hooks/useTheme'
 import useBlockGenerationTime from 'hooks/useBlockGenerationTime'
 import { useFarms, usePriceAvaxUsdt, usePools, usePriceEthAvax } from 'state/hooks'
 import { PoolCategory } from 'config/constants/types'
 import FlexLayout from 'components/layout/Flex'
 import Page from 'components/layout/Page'
 import PoolCard from './components/PoolCard'
+import YourTierCard from './components/YourTierCard';
+import SherpaCard from './components/SherpaCard'
 
 const Launchpad: React.FC = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -63,7 +64,6 @@ const Launchpad: React.FC = () => {
 
   
   const [finishedPools, openPools] = partition(poolsWithApy, (pool) => pool.isFinished)
-  console.log('ant : openPools => ', openPools, finishedPools);
 
   const handleSwitchTab = tab => {
     setActiveTab(tab);
@@ -80,30 +80,17 @@ const Launchpad: React.FC = () => {
           <OptionItem>Past</OptionItem>
         </ButtonMenu>
       </Flex>
-      <FlexLayout>
+      <CardLayout>
+        <SherpaCard />
         <Route exact path={`${path}`}>
           <>
             {orderBy(openPools, ['sortOrder']).map((pool) => (
-              <PoolCard key={pool.sousId} pool={pool} isMainPool />
+              <PoolCard key={pool.sousId} pool={pool} />
             ))}
           </>
         </Route>
-        <Route path={`${path}/history`}>
-          {orderBy(finishedPools, ['sortOrder']).map((pool) => (
-            <PoolCard key={pool.sousId} pool={pool} isMainPool />
-          ))}
-        </Route>
-      </FlexLayout>
-      {/* <IgloosContentContainer>
-        <FlexLayout>
-          <Route exact path={`${path}`}>
-            {farmsList(activeFarms, false)}
-          </Route>
-          <Route exact path={`${path}/history`}>
-            {farmsList(inactiveFarms, true)}
-          </Route>
-        </FlexLayout>
-      </IgloosContentContainer> */}
+        <YourTierCard />
+      </CardLayout>
     </FarmPage>
   )
 }
@@ -123,5 +110,31 @@ const BannerImage = styled.img`
 const OptionItem = styled(ButtonMenuItem)`
   min-width: 100px;
 `;
+
+const CardLayout = styled(FlexLayout)`
+  & > * {
+    margin: 0 8px;
+    margin-bottom: 32px;
+    width: 100%;
+
+    @media (min-width: 640px) {
+      min-width: 320px;
+      max-width: 50%;
+      width: unset;
+    }
+    @media (min-width: 768px) {
+      min-width: 320px;
+      // max-width: 31.5%;
+      max-width: 340px;
+      width: 100%;
+    }
+  }
+  @media (min-width: 992px) {
+    justify-content: space-around;
+  }
+  @media (min-width: 1450px) {
+    justify-content: space-between;
+  }
+`
 
 export default Launchpad

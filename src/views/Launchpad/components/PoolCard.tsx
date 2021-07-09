@@ -1,7 +1,6 @@
 import BigNumber from 'bignumber.js'
 import React, { useCallback, useState, useEffect } from 'react'
-import ReactTooltip from 'react-tooltip'
-import styled, { keyframes } from 'styled-components'
+import styled from 'styled-components'
 import { Button, useModal, Image, Text, Flex, Tag } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import UnlockButton from 'components/UnlockButton'
@@ -13,12 +12,10 @@ import { useSousStake } from 'hooks/useStake'
 import { useSousUnstake } from 'hooks/useUnstake'
 import useBlock from 'hooks/useBlock'
 import { getBalanceNumber } from 'utils/formatBalance'
-import { useNestApr, useNestApy } from 'state/hooks'
 import { PoolCategory } from 'config/constants/types'
 import { Pool } from 'state/types'
 import DepositModal from './DepositModal'
 import WithdrawModal from './WithdrawModal'
-import Card from './Card'
 import CardFooter from './CardFooter'
 import PenaltyConfirmModal from './PenaltyConfirmModal'
 
@@ -26,6 +23,15 @@ const PGUnlockButton = styled(UnlockButton)<{ isHomePage?: boolean }>`
   background: ${({ theme, isHomePage }) => !theme.isDark && isHomePage && '#383466'};
   border-radius: 10px;
   width: 100%;
+`
+
+const FCard = styled.div`
+  align-self: flex-start;
+  background: ${(props) => props.theme.card.background};
+  border-radius: 32px;
+  box-shadow: 0px 2px 12px -8px rgba(25, 19, 38, 0.1), 0px 1px 1px rgba(25, 19, 38, 0.05);
+  position: relative;
+  min-height: 510px;
 `
 
 const HelperTag = styled(Tag)`
@@ -82,16 +88,12 @@ interface PoolWithApy extends Pool {
 
 interface HarvestProps {
   pool: PoolWithApy
-  isMainPool: boolean
-  isNestPage?: boolean
   isHomePage?: boolean
 }
 
-const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHomePage }) => {
+const PoolCard: React.FC<HarvestProps> = ({ pool, isHomePage }) => {
   const {
     sousId,
-    image,
-    tokenName,
     stakingTokenName,
     stakingTokenAddress,
     penguinNestsGuideLink,
@@ -132,9 +134,7 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
   const rewardTokenRatio =
     totalStaked && totalSupply ? new BigNumber(totalStaked).div(new BigNumber(totalSupply)).toJSON() : 1
   const convertedLimit = new BigNumber(stakingLimit).multipliedBy(new BigNumber(10).pow(tokenDecimals))
-  const displayedNestApr = (useNestApr() * 100).toFixed(2)
-  const displayedNestApy = (useNestApy() * 100).toFixed(2)
-
+ 
   const [onPresentDeposit] = useModal(
     <DepositModal
       max={stakingLimit && stakingTokenBalance.isGreaterThan(convertedLimit) ? convertedLimit : stakingTokenBalance}
@@ -181,14 +181,12 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
     }
   }, [onApprove, setRequestedApproval])
 
-  const xPefiToPefiRatio = getXPefiToPefiRatio()
-
   return (
-    <Card isActive={isCardActive} isFinished={isFinished && sousId !== 0}>
+    <FCard>
       {isFinished && sousId !== 0 && <PoolFinishedSash />}
       <CardHeader justifyContent='space-between' alignItems='center' pr='32px' pl='32px'>
         <Image src='/images/launchpad/PEFI.png' width={64} height={64} alt='XPEFI' />
-        <Text bold fontSize='36px'>STAKE XPEFI</Text>
+        <Text fontSize='32px' bold>STAKE XPEFI</Text>
       </CardHeader>
       <CardContent>
         <CurrentTiersWrapper>
@@ -208,27 +206,6 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
           <Text bold className='penguineer'>Penguineer (+1500 xPEFI)</Text>
           <Text bold className='spacelord'>Spacelord (+15000 xPEFI)</Text>
         </CurrentTiersWrapper>
-        {/* <div style={{ marginBottom: '8px', display: 'flex', alignItems: 'center' }}>
-          <Flex minWidth="100%" alignItems="center">
-            <Image src={`/images/pools/${image || tokenName}.png`} width={64} height={64} alt={tokenName} />
-            <Flex flexDirection="column" width="100%">
-              <Flex ml="8px" justifyContent="space-between">
-                <Text color="textSubtle" bold fontSize="14px">
-                  xPEFI to PEFI:
-                </Text>
-                <Text color="textSubtle" bold fontSize="14px">
-                  {Number(xPefiToPefiRatio.toFixed(3))}
-                </Text>
-              </Flex>
-              <Flex ml="8px" justifyContent="space-between">
-                <Text color="textSubtle" bold fontSize="14px">
-                  Paper Hands Penalty:
-                </Text>
-                <Text color="textSubtle" bold fontSize="14px">{`${Number(handsOnPenalty).toFixed(2)}%`}</Text>
-              </Flex>
-            </Flex>
-          </Flex>
-        </div> */}
         <StyledCardActions>
           {!account && <PGUnlockButton isHomePage={isHomePage} />}
           {account &&
@@ -308,7 +285,7 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
           poolCategory={poolCategory}
         />
       </CardAction>
-    </Card>
+    </FCard>
   )
 }
 
