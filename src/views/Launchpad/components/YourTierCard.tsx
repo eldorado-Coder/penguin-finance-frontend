@@ -6,7 +6,7 @@ import { useWeb3React } from '@web3-react/core'
 
 const YourTierCard: React.FC = () => {
   const { account } = useWeb3React()
-  const myTier = 'Penguineer'; 
+  const myTier = 'Spacelord'
 
   return (
     <FCard>

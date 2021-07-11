@@ -1,23 +1,19 @@
 import BigNumber from 'bignumber.js'
-import React, { useCallback, useState, useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { Button, useModal, Image, Text, Flex, Tag } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import UnlockButton from 'components/UnlockButton'
 import Balance from 'components/Balance'
-import { useERC20, useXPefi } from 'hooks/useContract'
-import { useSousApprove } from 'hooks/useApprove'
 import useI18n from 'hooks/useI18n'
-import { useSousStake } from 'hooks/useStake'
-import { useSousUnstake } from 'hooks/useUnstake'
-import useBlock from 'hooks/useBlock'
+import { useLaunchpadStake } from 'hooks/useStake'
+import { useLaunchpadUnstake } from 'hooks/useUnstake'
+import { usePools } from 'state/hooks';
 import { getBalanceNumber } from 'utils/formatBalance'
-import { PoolCategory } from 'config/constants/types'
 import { Pool } from 'state/types'
 import DepositModal from './DepositModal'
 import WithdrawModal from './WithdrawModal'
-import CardFooter from './CardFooter'
-import PenaltyConfirmModal from './PenaltyConfirmModal'
+import PoolCardFooter from './PoolCardFooter';
 
 const PGUnlockButton = styled(UnlockButton)<{ isHomePage?: boolean }>`
   background: ${({ theme, isHomePage }) => !theme.isDark && isHomePage && '#383466'};
@@ -91,99 +87,38 @@ interface HarvestProps {
   isHomePage?: boolean
 }
 
-const PoolCard: React.FC<HarvestProps> = ({ pool, isHomePage }) => {
-  const {
-    sousId,
-    stakingTokenName,
-    stakingTokenAddress,
-    penguinNestsGuideLink,
-    tokenDecimals,
-    poolCategory,
-    totalStaked,
-    totalSupply,
-    startBlock,
-    endBlock,
-    isFinished,
-    userData,
-    stakingLimit,
-  } = pool
-
-  // Pools using native AVAX behave differently than pools using a token
-  const isBnbPool = poolCategory === PoolCategory.BINANCE
-  const TranslateString = useI18n()
-  const stakingTokenContract = useERC20(stakingTokenAddress)
-  const { account } = useWeb3React()
-  const block = useBlock()
-  const { onApprove } = useSousApprove(stakingTokenContract, sousId)
-  const { onStake } = useSousStake(sousId, isBnbPool)
-  const { onUnstake } = useSousUnstake(sousId)
-  const xPefiContract = useXPefi()
-
-  const [requestedApproval, setRequestedApproval] = useState(false)
-  const [handsOnPenalty, setHandsOnPenalty] = useState(0)
-
-  const allowance = new BigNumber(userData?.allowance || 0)
-  const stakingTokenBalance = new BigNumber(userData?.stakingTokenBalance || 0)
+const PoolCard: React.FC<HarvestProps> = () => {
+  const { account } = useWeb3React();
+  const TranslateString = useI18n();
+  const pools = usePools(account)
+  const pefiPool = pools.length > 0 ? pools[0] : null 
+  const { userData } = pefiPool
+  const { onStake } = useLaunchpadStake()
+  const { onUnstake } = useLaunchpadUnstake()
+  
   const stakedBalance = new BigNumber(userData?.stakedBalance || 0)
 
-  const blocksUntilStart = Math.max(startBlock - block, 0)
-  const blocksRemaining = Math.max(endBlock - block, 0)
-  const accountHasStakedBalance = stakedBalance?.toNumber() > 0
-  const needsApproval = !accountHasStakedBalance && !allowance.toNumber() && !isBnbPool
-  const isCardActive = isFinished && accountHasStakedBalance
-  const rewardTokenRatio =
-    totalStaked && totalSupply ? new BigNumber(totalStaked).div(new BigNumber(totalSupply)).toJSON() : 1
-  const convertedLimit = new BigNumber(stakingLimit).multipliedBy(new BigNumber(10).pow(tokenDecimals))
- 
+  const getXPefiToPefiRatio = (pool) => {
+    return pool.totalStaked && pool.totalSupply
+      ? new BigNumber(pool.totalStaked).div(new BigNumber(pool.totalSupply)).toJSON()
+      : 1
+  };
+  const xPefiToPefiRatio = getXPefiToPefiRatio(pefiPool)
+
   const [onPresentDeposit] = useModal(
     <DepositModal
-      max={stakingLimit && stakingTokenBalance.isGreaterThan(convertedLimit) ? convertedLimit : stakingTokenBalance}
+      max={stakedBalance}
       onConfirm={onStake}
-      tokenName={stakingLimit ? `${stakingTokenName} (${stakingLimit} max)` : stakingTokenName}
+      tokenName='xPEFI'
     />,
   )
 
   const [onPresentWithdraw] = useModal(
-    <WithdrawModal max={stakedBalance} onConfirm={onUnstake} tokenName={`x${stakingTokenName}`} />,
+    <WithdrawModal max={stakedBalance} onConfirm={onUnstake} tokenName='xPEFI' />,
   )
-
-  const [onPresentPenaltyConfirm] = useModal(
-    <PenaltyConfirmModal handsOnPenalty={handsOnPenalty} onConfirm={onPresentWithdraw} />,
-  )
-
-  const fetchEarlyWithdrawalFee = useCallback(async () => {
-    const earlyWithdrawalFee = await xPefiContract.methods.earlyWithdrawalFee().call()
-    const maxEarlyWithdrawalFee = await xPefiContract.methods.MAX_EARLY_WITHDRAW_FEE().call()
-    const penalty = (earlyWithdrawalFee / maxEarlyWithdrawalFee) * 100
-    setHandsOnPenalty(penalty)
-  }, [xPefiContract])
-
-  useEffect(() => {
-    fetchEarlyWithdrawalFee()
-  }, [fetchEarlyWithdrawalFee])
-
-  const getXPefiToPefiRatio = () => {
-    return pool.totalStaked && pool.totalSupply
-      ? new BigNumber(pool.totalStaked).div(new BigNumber(pool.totalSupply)).toNumber()
-      : 1
-  }
-
-  const handleApprove = useCallback(async () => {
-    try {
-      setRequestedApproval(true)
-      const txHash = await onApprove()
-      // user rejected tx or didn't go thru
-      if (!txHash) {
-        setRequestedApproval(false)
-      }
-    } catch (e) {
-      console.error(e)
-    }
-  }, [onApprove, setRequestedApproval])
 
   return (
     <FCard>
-      {isFinished && sousId !== 0 && <PoolFinishedSash />}
       <CardHeader justifyContent='space-between' alignItems='center' pr='32px' pl='32px'>
         <Image src='/images/launchpad/PEFI.png' width={64} height={64} alt='XPEFI' />
         <Text fontSize='32px' bold>STAKE XPEFI</Text>
@@ -207,34 +142,27 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isHomePage }) => {
           <Text bold className='spacelord'>Spacelord (+15000 xPEFI)</Text>
         </CurrentTiersWrapper>
         <StyledCardActions>
-          {!account && <PGUnlockButton isHomePage={isHomePage} />}
+          {!account && <PGUnlockButton />}
           {account &&
-            (needsApproval ? (
-              <div style={{ flex: 1 }}>
-                <NormalButton width='100%' disabled={isFinished || requestedApproval} onClick={handleApprove} scale="md">
-                  Approve xPEFI
-                </NormalButton>
-              </div>
-            ) : (
-              <>
-                <NormalButton width='100%' disabled={isFinished && sousId !== 0} onClick={onPresentDeposit}>
-                  Stake xPEFI
-                </NormalButton>
-                <StyledActionSpacer />
-                <NormalButton disabled={stakedBalance.eq(new BigNumber(0))} onClick={onPresentPenaltyConfirm}>
-                  Unstake
-                </NormalButton>
-              </>
-            ))}
+            <>
+              <NormalButton width='100%' onClick={onPresentDeposit}>
+                Stake xPEFI
+              </NormalButton>
+              <StyledActionSpacer />
+              <NormalButton disabled={stakedBalance.eq(new BigNumber(0))} onClick={onPresentWithdraw}>
+                Unstake
+              </NormalButton>
+            </>
+          }
         </StyledCardActions>
         <StyledDetails>
           <Label style={{ flex: 1 }}>
             <Text color="primary">{TranslateString(384, 'Your Stake:')}</Text>
           </Label>
-          <Balance fontSize="16px" isDisabled={isFinished} value={getBalanceNumber(stakedBalance)} />
+          <Balance fontSize="16px" value={getBalanceNumber(stakedBalance)} />
           <TokenSymbol>
             <Text color="primary" fontSize="16px">
-              {`x${stakingTokenName}`}
+              xPEFI
             </Text>
           </TokenSymbol>
         </StyledDetails>
@@ -244,12 +172,11 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isHomePage }) => {
           </Label>
           <Balance
             fontSize="16px"
-            isDisabled={isFinished}
-            value={new BigNumber(getBalanceNumber(stakedBalance)).times(new BigNumber(rewardTokenRatio)).toNumber()}
+            value={new BigNumber(getBalanceNumber(stakedBalance)).times(new BigNumber(xPefiToPefiRatio)).toNumber()}
           />
           <TokenSymbol>
             <Text color="primary" fontSize="16px">
-              {stakingTokenName}
+              PEFI
             </Text>
           </TokenSymbol>
         </StyledDetails>
@@ -275,30 +202,11 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isHomePage }) => {
         </StyledDetails>
       </CardContent>
       <CardAction>
-        <CardFooter
-          penguinNestsGuideLink={penguinNestsGuideLink}
-          totalPefiStaked={totalStaked}
-          totalXPefiBalance={totalSupply}
-          blocksRemaining={blocksRemaining}
-          isFinished={isFinished}
-          blocksUntilStart={blocksUntilStart}
-          poolCategory={poolCategory}
-        />
+        <PoolCardFooter />
       </CardAction>
     </FCard>
   )
 }
-
-const PoolFinishedSash = styled.div`
-  background-image: url('/images/pool-finished-sash.svg');
-  background-position: top right;
-  background-repeat: not-repeat;
-  height: 135px;
-  position: absolute;
-  right: -24px;
-  top: -24px;
-  width: 135px;
-`
 
 const StyledCardActions = styled.div`
   display: flex;
