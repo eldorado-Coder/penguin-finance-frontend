@@ -8,9 +8,8 @@ import Balance from 'components/Balance'
 import useI18n from 'hooks/useI18n'
 import { useLaunchpadStake } from 'hooks/useStake'
 import { useLaunchpadUnstake } from 'hooks/useUnstake'
-import { usePools } from 'state/hooks';
+import { usePools, useLaunchpad } from 'state/hooks';
 import { getBalanceNumber } from 'utils/formatBalance'
-import { Pool } from 'state/types'
 import DepositModal from './DepositModal'
 import WithdrawModal from './WithdrawModal'
 import PoolCardFooter from './PoolCardFooter';
@@ -78,16 +77,7 @@ const NormalButton = styled(Button)`
   padding: 0 16px;
 `;
 
-interface PoolWithApy extends Pool {
-  apy: BigNumber
-}
-
-interface HarvestProps {
-  pool: PoolWithApy
-  isHomePage?: boolean
-}
-
-const PoolCard: React.FC<HarvestProps> = () => {
+const PoolCard: React.FC = () => {
   const { account } = useWeb3React();
   const TranslateString = useI18n();
   const pools = usePools(account)
@@ -95,7 +85,8 @@ const PoolCard: React.FC<HarvestProps> = () => {
   const { userData } = pefiPool
   const { onStake } = useLaunchpadStake()
   const { onUnstake } = useLaunchpadUnstake()
-  
+  const { stakedBalance: staked } = useLaunchpad(account);
+  const launchpadStaked = new BigNumber(staked);
   const stakedBalance = new BigNumber(userData?.stakedBalance || 0)
 
   const getXPefiToPefiRatio = (pool) => {
@@ -114,7 +105,7 @@ const PoolCard: React.FC<HarvestProps> = () => {
   )
 
   const [onPresentWithdraw] = useModal(
-    <WithdrawModal max={stakedBalance} onConfirm={onUnstake} tokenName='xPEFI' />,
+    <WithdrawModal max={launchpadStaked} onConfirm={onUnstake} tokenName='xPEFI' />,
   )
 
   return (
@@ -149,7 +140,7 @@ const PoolCard: React.FC<HarvestProps> = () => {
                 Stake xPEFI
               </NormalButton>
               <StyledActionSpacer />
-              <NormalButton disabled={stakedBalance.eq(new BigNumber(0))} onClick={onPresentWithdraw}>
+              <NormalButton disabled={launchpadStaked.eq(new BigNumber(0))} onClick={onPresentWithdraw}>
                 Unstake
               </NormalButton>
             </>
@@ -159,7 +150,7 @@ const PoolCard: React.FC<HarvestProps> = () => {
           <Label style={{ flex: 1 }}>
             <Text color="primary">{TranslateString(384, 'Your Stake:')}</Text>
           </Label>
-          <Balance fontSize="16px" value={getBalanceNumber(stakedBalance)} />
+          <Balance fontSize="16px" value={getBalanceNumber(launchpadStaked)} />
           <TokenSymbol>
             <Text color="primary" fontSize="16px">
               xPEFI
@@ -172,7 +163,7 @@ const PoolCard: React.FC<HarvestProps> = () => {
           </Label>
           <Balance
             fontSize="16px"
-            value={new BigNumber(getBalanceNumber(stakedBalance)).times(new BigNumber(xPefiToPefiRatio)).toNumber()}
+            value={new BigNumber(getBalanceNumber(launchpadStaked)).times(new BigNumber(xPefiToPefiRatio)).toNumber()}
           />
           <TokenSymbol>
             <Text color="primary" fontSize="16px">

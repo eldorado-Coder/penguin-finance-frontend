@@ -92,6 +92,11 @@ export interface PoolsState {
   data: Pool[]
 }
 
+export interface LaunchpadState {
+  allowance: number
+  stakedBalance: number
+}
+
 export interface ProfileState {
   isInitialized: boolean
   isLoading: boolean
@@ -200,4 +205,5 @@ export interface State {
   global: GlobalState
   emperor: EmperorState
   donations: DonationsState
+  launchpad: LaunchpadState
 }

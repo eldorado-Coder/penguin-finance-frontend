@@ -226,6 +226,25 @@
   },
   {
     "type": "function",
+    "stateMutability": "view",
+    "outputs": [
+      {
+        "type": "uint8",
+        "name": "",
+        "internalType": "enum PenguinTiers.Tiers"
+      }
+    ],
+    "name": "penguinTiers",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "",
+        "internalType": "address"
+      }
+    ]
+  },
+  {
+    "type": "function",
     "stateMutability": "nonpayable",
     "outputs": [],
     "name": "reduceStakingDuration",
