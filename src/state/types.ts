@@ -99,6 +99,7 @@ export interface LaunchpadState {
   allocation: number
   canUnstake: boolean
   depositEnd: number
+  xPefi: number
 }
 
 export interface ProfileState {

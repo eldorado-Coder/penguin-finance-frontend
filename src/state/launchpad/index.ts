@@ -6,7 +6,8 @@ import {
   fetchUserPenguinTier,
   fetchUserAllocation,
   fetchUserCanUnstake,
-  fetchDepositEnd
+  fetchDepositEnd,
+  fetchUserXPefiBalance
 } from './fetchLaunchpadUser'
 import { LaunchpadState } from '../types'
 
@@ -16,7 +17,8 @@ const initialState: LaunchpadState = {
   yourPenguinTier: 0,
   allocation: 0,
   canUnstake: false,
-  depositEnd: 0
+  depositEnd: 0,
+  xPefi: 0
 };
 
 export const LaunchpadSlice = createSlice({
@@ -30,6 +32,7 @@ export const LaunchpadSlice = createSlice({
       state.allocation = action.payload.allocation
       state.canUnstake = action.payload.canUnstake
       state.depositEnd = action.payload.depositEnd
+      state.xPefi = action.payload.xPefi
     },
     setStakedValance: (state, action) => {
       state.stakedBalance = action.payload
@@ -50,6 +53,7 @@ export const fetchLaunchpadUserDataAsync = (account: string) => async (dispatch)
   const allocation = await fetchUserAllocation(account)
   const canUnstake = await fetchUserCanUnstake(account)
   const depositEnd = await fetchDepositEnd()
+  const xPefi = await fetchUserXPefiBalance(account)
 
   dispatch(setLaunchpadUserData({
     allowance,
@@ -57,7 +61,8 @@ export const fetchLaunchpadUserDataAsync = (account: string) => async (dispatch)
     yourPenguinTier,
     allocation,
     canUnstake,
-    depositEnd
+    depositEnd,
+    xPefi
   }))
 }
 

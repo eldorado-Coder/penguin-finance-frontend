@@ -82,12 +82,11 @@ const PoolCard: React.FC = () => {
   const TranslateString = useI18n();
   const pools = usePools(account)
   const pefiPool = pools.length > 0 ? pools[0] : null 
-  const { userData } = pefiPool
   const { onStake } = useLaunchpadStake()
   const { onUnstake } = useLaunchpadUnstake()
-  const { stakedBalance: staked, allocation, canUnstake, depositEnd } = useLaunchpad(account);
+  const { stakedBalance: staked, allocation, canUnstake, depositEnd, xPefi } = useLaunchpad(account);
+  const xPefiBalance = new BigNumber(xPefi);
   const launchpadStaked = new BigNumber(staked);
-  const stakedBalance = new BigNumber(userData?.stakedBalance || 0)
   const currentDate = new Date().getTime();
 
   const getXPefiToPefiRatio = (pool) => {
@@ -99,7 +98,7 @@ const PoolCard: React.FC = () => {
 
   const [onPresentDeposit] = useModal(
     <DepositModal
-      max={stakedBalance}
+      max={xPefiBalance}
       onConfirm={onStake}
       tokenName='xPEFI'
     />,
@@ -137,7 +136,7 @@ const PoolCard: React.FC = () => {
           {!account && <PGUnlockButton />}
           {account &&
             <>
-              <NormalButton disabled={(currentDate/1000) > depositEnd} width='100%' onClick={onPresentDeposit}>
+              <NormalButton disabled={xPefiBalance.eq(new BigNumber(0)) || (currentDate/1000 > depositEnd)} width='100%' onClick={onPresentDeposit}>
                 Stake xPEFI
               </NormalButton>
               <StyledActionSpacer />

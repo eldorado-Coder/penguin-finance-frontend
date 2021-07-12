@@ -75,3 +75,12 @@ export const fetchDepositEnd = async () => {
   const depositEnd = await multicall(launchpadABI, calls)
   return depositEnd[0][0].toNumber();
 }
+
+export const fetchUserXPefiBalance = async account => {
+  const web3 = getWeb3();  
+  const abi = (xPefi as unknown) as AbiItem
+  const xPefiContract = new web3.eth.Contract(abi, getXPefiAddress());
+  const balanceOf = (await xPefiContract.methods.balanceOf(account).call())
+
+  return balanceOf;
+};
