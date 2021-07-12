@@ -41,7 +41,6 @@ import { fetchTeam, fetchTeams } from './teams'
 import { fetchAchievements } from './achievements'
 import { fetchDonations } from './donations'
 
-
 const ZERO = new BigNumber(0)
 
 export const useFetchPublicData = () => {
@@ -296,10 +295,10 @@ export const useEmperor = () => {
   const emperorState: EmperorState = useSelector((state: State) => state.emperor)
   const dispatch = useDispatch()
   const { refreshRate } = useUserSetting()
-  
+
   useInterval(() => {
     dispatch(fetchEmperor(account))
-  }, refreshRate);
+  }, refreshRate)
 
   return emperorState
 }
@@ -334,10 +333,10 @@ export const useDonations = () => {
   const donationsState: DonationsState = useSelector((state: State) => state.donations)
   const dispatch = useDispatch()
   const { refreshRate } = useUserSetting()
-  
+
   useInterval(() => {
     dispatch(fetchDonations(account))
-  }, refreshRate);
+  }, refreshRate)
 
   return donationsState
 }
@@ -354,7 +353,7 @@ export const useNestApr = (): number => {
 }
 
 export const useNestApy = () => {
-  const staticFee = 20
+  const staticFee = 12.45
   return (1 + useNestApr() / DAYS_PER_YEAR) ** DAYS_PER_YEAR - 1 + staticFee
 }
 
