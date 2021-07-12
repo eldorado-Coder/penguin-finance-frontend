@@ -11,6 +11,7 @@ import emperorReducer from './emperor'
 import achievementsReducer from './achievements'
 import globalReducer from './global'
 import donationsReducer from './donations'
+import launchpadReducer from './launchpad';
 
 const store = configureStore({
   devTools: process.env.NODE_ENV !== 'production',
@@ -26,6 +27,7 @@ const store = configureStore({
     achievements: achievementsReducer,
     global: globalReducer,
     donations: donationsReducer,
+    launchpad: launchpadReducer
   },
 })
 

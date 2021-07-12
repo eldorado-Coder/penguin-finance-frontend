@@ -7,6 +7,7 @@ import {
   updateUserStakedBalance,
   updateUserBalance,
   fetchPoolsPublicDataAsync,
+  fetchLaunchpadUserDataAsync,
 } from 'state/actions'
 import { stake, sousStake, sousStakeBnb, launchpadStake } from 'utils/callHelpers'
 import { useLaunchPad, useMasterchef, useSousChef } from './useContract'
@@ -61,7 +62,7 @@ export const useLaunchpadStake = () => {
   const handleStake = useCallback(
     async (amount: string) => {
       const txHash = await launchpadStake(launchpadContract, amount, account)
-      dispatch(fetchPoolsPublicDataAsync())
+      dispatch(fetchLaunchpadUserDataAsync(account))
       console.info(txHash)
     },
     [account, dispatch, launchpadContract],

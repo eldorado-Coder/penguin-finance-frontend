@@ -19,10 +19,11 @@ import {
   fetchLpsPublicDataAsync,
   fetchPoolsPublicDataAsync,
   fetchPoolsUserDataAsync,
+  fetchLaunchpadUserDataAsync,
   fetchEmperor,
   push as pushToast,
   remove as removeToast,
-  clear as clearToast,
+  clear as clearToast
 } from './actions'
 import {
   State,
@@ -35,6 +36,7 @@ import {
   EmperorState,
   GlobalState,
   DonationsState,
+  LaunchpadState
 } from './types'
 import { fetchProfile } from './profile'
 import { fetchTeam, fetchTeams } from './teams'
@@ -159,6 +161,23 @@ export const usePools = (account): Pool[] => {
 export const usePoolFromPid = (sousId): Pool => {
   const pool = useSelector((state: State) => state.pools.data.find((p) => p.sousId === sousId))
   return pool
+}
+
+export const useLaunchpad = (account): LaunchpadState => {
+  const { fastRefresh } = useRefresh()
+  const dispatch = useDispatch()
+  useEffect(() => {
+    const fetchLaunchpadData = async () => {
+      dispatch(fetchLaunchpadUserDataAsync(account));
+    }
+
+    if (account) {
+      fetchLaunchpadData();
+    }
+  }, [account, dispatch, fastRefresh])
+
+  const launchpad = useSelector((state: State) => state.launchpad)
+  return launchpad
 }
 
 // Prices

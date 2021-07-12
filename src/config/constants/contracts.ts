@@ -124,6 +124,6 @@ export default {
   // launchpad
   launchPad: {
     43113: '',
-    43114: '0x24749d1304c2926E8dd7AA43163cB124abe44E5F'
+    43114: '0xF4eff909aEb6C32f6988f09c6611c5b4F23d6eC5'
   }
 }
