@@ -36,7 +36,7 @@ const Details = styled.div`
   margin-top: 24px;
 `
 
-const PoolCardFooter: React.FC = () => {
+const StakeCardFooter: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false)
   const TranslateString = useI18n()
 
@@ -58,4 +58,4 @@ const PoolCardFooter: React.FC = () => {
   )
 }
 
-export default React.memo(PoolCardFooter)
+export default React.memo(StakeCardFooter)

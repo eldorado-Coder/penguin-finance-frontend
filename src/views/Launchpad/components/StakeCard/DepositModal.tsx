@@ -6,9 +6,9 @@ import { useXPefi } from 'hooks/useContract'
 import { useWeb3React } from '@web3-react/core'
 import useLaunchpadXPefiApprove from 'hooks/useLaunchpadXPefiApprove'
 import { getLaunchpadAddress } from 'utils/addressHelpers';
-import TokenInput from '../../../components/TokenInput'
-import useI18n from '../../../hooks/useI18n'
-import { getFullDisplayBalance } from '../../../utils/formatBalance'
+import TokenInput from '../../../../components/TokenInput'
+import useI18n from '../../../../hooks/useI18n'
+import { getFullDisplayBalance } from '../../../../utils/formatBalance'
 
 interface DepositModalProps {
   max: BigNumber
@@ -53,7 +53,6 @@ const DepositModal: React.FC<DepositModalProps> = ({ max, onConfirm, onDismiss, 
       setPendingTx(false)
       onDismiss();
     } catch (error) {
-      console.log('ant : Stake xPefi Error => ', error);
       setPendingTx(false)
     }
   };

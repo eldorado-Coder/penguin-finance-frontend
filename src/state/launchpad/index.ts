@@ -1,15 +1,24 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
-import BigNumber from 'bignumber.js'
 import {
   fetchLaunchpadAllowance,
   fetchUserStakedBalance,
+  fetchUserPenguinTier,
+  fetchUserAllocation,
+  fetchUserCanUnstake,
+  fetchDepositEnd,
+  fetchUserXPefiBalance
 } from './fetchLaunchpadUser'
 import { LaunchpadState } from '../types'
 
 const initialState: LaunchpadState = { 
   stakedBalance: 0,
-  allowance: 0
+  allowance: 0,
+  yourPenguinTier: 0,
+  allocation: 0,
+  canUnstake: false,
+  depositEnd: 0,
+  xPefi: 0
 };
 
 export const LaunchpadSlice = createSlice({
@@ -19,6 +28,11 @@ export const LaunchpadSlice = createSlice({
     setLaunchpadUserData: (state, action) => {
       state.allowance = action.payload.allowance
       state.stakedBalance = action.payload.stakedBalance
+      state.yourPenguinTier = action.payload.yourPenguinTier
+      state.allocation = action.payload.allocation
+      state.canUnstake = action.payload.canUnstake
+      state.depositEnd = action.payload.depositEnd
+      state.xPefi = action.payload.xPefi
     },
     setStakedValance: (state, action) => {
       state.stakedBalance = action.payload
@@ -35,10 +49,20 @@ export const { setAllowance, setStakedValance, setLaunchpadUserData } = Launchpa
 export const fetchLaunchpadUserDataAsync = (account: string) => async (dispatch) => {
   const allowance = await fetchLaunchpadAllowance(account)
   const stakedBalance = await fetchUserStakedBalance(account)
+  const yourPenguinTier = await fetchUserPenguinTier(account)
+  const allocation = await fetchUserAllocation(account)
+  const canUnstake = await fetchUserCanUnstake(account)
+  const depositEnd = await fetchDepositEnd()
+  const xPefi = await fetchUserXPefiBalance(account)
 
   dispatch(setLaunchpadUserData({
     allowance,
-    stakedBalance
+    stakedBalance,
+    yourPenguinTier,
+    allocation,
+    canUnstake,
+    depositEnd,
+    xPefi
   }))
 }
 

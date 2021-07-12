@@ -12,7 +12,7 @@ import { usePools, useLaunchpad } from 'state/hooks';
 import { getBalanceNumber } from 'utils/formatBalance'
 import DepositModal from './DepositModal'
 import WithdrawModal from './WithdrawModal'
-import PoolCardFooter from './PoolCardFooter';
+import PoolCardFooter from './StakeCardFooter';
 
 const PGUnlockButton = styled(UnlockButton)<{ isHomePage?: boolean }>`
   background: ${({ theme, isHomePage }) => !theme.isDark && isHomePage && '#383466'};
@@ -77,17 +77,17 @@ const NormalButton = styled(Button)`
   padding: 0 16px;
 `;
 
-const PoolCard: React.FC = () => {
+const StakeCard: React.FC = () => {
   const { account } = useWeb3React();
   const TranslateString = useI18n();
   const pools = usePools(account)
   const pefiPool = pools.length > 0 ? pools[0] : null 
-  const { userData } = pefiPool
   const { onStake } = useLaunchpadStake()
   const { onUnstake } = useLaunchpadUnstake()
-  const { stakedBalance: staked } = useLaunchpad(account);
+  const { stakedBalance: staked, allocation, canUnstake, depositEnd, xPefi } = useLaunchpad(account);
+  const xPefiBalance = new BigNumber(xPefi);
   const launchpadStaked = new BigNumber(staked);
-  const stakedBalance = new BigNumber(userData?.stakedBalance || 0)
+  const currentDate = new Date().getTime();
 
   const getXPefiToPefiRatio = (pool) => {
     return pool.totalStaked && pool.totalSupply
@@ -98,7 +98,7 @@ const PoolCard: React.FC = () => {
 
   const [onPresentDeposit] = useModal(
     <DepositModal
-      max={stakedBalance}
+      max={xPefiBalance}
       onConfirm={onStake}
       tokenName='xPEFI'
     />,
@@ -136,11 +136,11 @@ const PoolCard: React.FC = () => {
           {!account && <PGUnlockButton />}
           {account &&
             <>
-              <NormalButton width='100%' onClick={onPresentDeposit}>
+              <NormalButton disabled={xPefiBalance.eq(new BigNumber(0)) || (currentDate/1000 > depositEnd)} width='100%' onClick={onPresentDeposit}>
                 Stake xPEFI
               </NormalButton>
               <StyledActionSpacer />
-              <NormalButton disabled={launchpadStaked.eq(new BigNumber(0))} onClick={onPresentWithdraw}>
+              <NormalButton disabled={launchpadStaked.eq(new BigNumber(0)) || !canUnstake} onClick={onPresentWithdraw}>
                 Unstake
               </NormalButton>
             </>
@@ -187,7 +187,7 @@ const PoolCard: React.FC = () => {
           </Label>
           <TokenSymbol>
             <Text className='allocation' color="primary" fontSize="16px">
-              1 AP
+              {`${allocation} AP`}
             </Text>
           </TokenSymbol>
         </StyledDetails>
@@ -231,4 +231,4 @@ const TokenSymbol = styled.div`
   margin-left: 5px;
 `
 
-export default PoolCard
+export default StakeCard

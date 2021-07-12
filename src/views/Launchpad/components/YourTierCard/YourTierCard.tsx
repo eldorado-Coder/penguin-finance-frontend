@@ -3,10 +3,13 @@ import React from 'react'
 import styled from 'styled-components'
 import { Image, Text, Flex } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
+import { useLaunchpad } from 'state/hooks';
+
+const PENGUIN_TIERS = ['Astronaut', 'Penguineer', 'Starlord'];
 
 const YourTierCard: React.FC = () => {
   const { account } = useWeb3React()
-  const myTier = 'Spacelord'
+  const { yourPenguinTier } = useLaunchpad(account);
 
   return (
     <FCard>
@@ -15,7 +18,7 @@ const YourTierCard: React.FC = () => {
         <Text bold fontSize='32px'>YOUR TIER</Text>
       </CardHeader>
       <CardContent>
-        <img src={`images/launchpad/${myTier}.png`} alt='my-tier' />
+        <img src={`images/launchpad/${PENGUIN_TIERS[yourPenguinTier]}.png`} alt='my-tier' />
       </CardContent>
     </FCard>
   )

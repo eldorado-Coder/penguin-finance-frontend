@@ -1,4 +1,3 @@
-import BigNumber from 'bignumber.js/bignumber'
 
 export const PEFI_MAX_SUPPLY = 21000000
 export const AVAX_BLOCK_TIME = 8.2

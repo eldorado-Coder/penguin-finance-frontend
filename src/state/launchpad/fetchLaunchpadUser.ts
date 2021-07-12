@@ -28,3 +28,59 @@ export const fetchLaunchpadAllowance = async account => {
 
   return allowanceBalance;
 };
+
+export const fetchUserPenguinTier = async account => {
+  const calls = [{
+    address: getLaunchpadAddress(),
+    name: 'penguinTiers',
+    params: [account],
+  }];
+
+  const penguinTiers = await multicall(launchpadABI, calls)
+
+  const penguinTier = new BigNumber(penguinTiers[0]).toJSON();
+  return penguinTier;
+};
+
+export const fetchUserAllocation = async account => {
+  const calls = [{
+    address: getLaunchpadAddress(),
+    name: 'allocations',
+    params: [account],
+  }];
+
+  const allocations = await multicall(launchpadABI, calls)
+
+  const allocation = new BigNumber(allocations[0]).toJSON();
+  return allocation;
+}
+
+export const fetchUserCanUnstake = async account => {
+  const calls = [{
+    address: getLaunchpadAddress(),
+    name: 'canUnstake',
+    params: [account],
+  }];
+
+  const canUnStake = await multicall(launchpadABI, calls)
+  return canUnStake[0][0];
+}
+
+export const fetchDepositEnd = async () => {
+  const calls = [{
+    address: getLaunchpadAddress(),
+    name: 'depositEnd'
+  }];
+
+  const depositEnd = await multicall(launchpadABI, calls)
+  return depositEnd[0][0].toNumber();
+}
+
+export const fetchUserXPefiBalance = async account => {
+  const web3 = getWeb3();  
+  const abi = (xPefi as unknown) as AbiItem
+  const xPefiContract = new web3.eth.Contract(abi, getXPefiAddress());
+  const balanceOf = (await xPefiContract.methods.balanceOf(account).call())
+
+  return balanceOf;
+};

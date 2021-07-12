@@ -95,6 +95,11 @@ export interface PoolsState {
 export interface LaunchpadState {
   allowance: number
   stakedBalance: number
+  yourPenguinTier: number
+  allocation: number
+  canUnstake: boolean
+  depositEnd: number
+  xPefi: number
 }
 
 export interface ProfileState {
