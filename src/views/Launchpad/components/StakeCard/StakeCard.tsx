@@ -12,7 +12,7 @@ import { usePools, useLaunchpad } from 'state/hooks';
 import { getBalanceNumber } from 'utils/formatBalance'
 import DepositModal from './DepositModal'
 import WithdrawModal from './WithdrawModal'
-import PoolCardFooter from './PoolCardFooter';
+import PoolCardFooter from './StakeCardFooter';
 
 const PGUnlockButton = styled(UnlockButton)<{ isHomePage?: boolean }>`
   background: ${({ theme, isHomePage }) => !theme.isDark && isHomePage && '#383466'};
@@ -77,7 +77,7 @@ const NormalButton = styled(Button)`
   padding: 0 16px;
 `;
 
-const PoolCard: React.FC = () => {
+const StakeCard: React.FC = () => {
   const { account } = useWeb3React();
   const TranslateString = useI18n();
   const pools = usePools(account)
@@ -231,4 +231,4 @@ const TokenSymbol = styled.div`
   margin-left: 5px;
 `
 
-export default PoolCard
+export default StakeCard

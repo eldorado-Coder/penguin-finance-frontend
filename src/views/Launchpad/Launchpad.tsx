@@ -3,9 +3,9 @@ import styled from 'styled-components'
 import { ButtonMenu, ButtonMenuItem, Flex } from 'penguinfinance-uikit2';
 import FlexLayout from 'components/layout/Flex'
 import Page from 'components/layout/Page'
-import PoolCard from './components/PoolCard'
-import YourTierCard from './components/YourTierCard';
-import SherpaCard from './components/SherpaCard'
+import StakeCard from './components/StakeCard/StakeCard'
+import YourTierCard from './components/YourTierCard/YourTierCard';
+import SherpaCard from './components/SherpaCard/SherpaCard'
 
 const Launchpad: React.FC = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -27,7 +27,7 @@ const Launchpad: React.FC = () => {
       </Flex>
       <CardLayout>
         <SherpaCard />
-        <PoolCard />
+        <StakeCard />
         <YourTierCard />
       </CardLayout>
     </FarmPage>
