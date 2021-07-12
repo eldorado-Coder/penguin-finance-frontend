@@ -53,7 +53,6 @@ const DepositModal: React.FC<DepositModalProps> = ({ max, onConfirm, onDismiss, 
       setPendingTx(false)
       onDismiss();
     } catch (error) {
-      console.log('ant : Stake xPefi Error => ', error);
       setPendingTx(false)
     }
   };
