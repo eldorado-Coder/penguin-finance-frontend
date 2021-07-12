@@ -7,8 +7,8 @@ import {
   updateUserBalance,
   fetchPoolsPublicDataAsync,
 } from 'state/actions'
-import { unstake, sousUnstake, sousEmegencyUnstake } from 'utils/callHelpers'
-import { useMasterchef, useSousChef } from './useContract'
+import { unstake, sousUnstake, sousEmegencyUnstake, launchpadUnstake } from 'utils/callHelpers'
+import { useLaunchPad, useMasterchef, useSousChef } from './useContract'
 
 const useUnstake = (pid: number, type?: string) => {
   const dispatch = useDispatch()
@@ -51,6 +51,23 @@ export const useSousUnstake = (sousId) => {
       dispatch(fetchPoolsPublicDataAsync())
     },
     [account, dispatch, isOldSyrup, masterChefContract, sousChefContract, sousId],
+  )
+
+  return { onUnstake: handleUnstake }
+}
+
+export const useLaunchpadUnstake = () => {
+  const dispatch = useDispatch()
+  const { account } = useWeb3React()
+  const launchpadContract = useLaunchPad();
+
+  const handleUnstake = useCallback(
+    async (amount: string) => {
+      const txHash = await launchpadUnstake(launchpadContract, amount, account)
+      dispatch(fetchPoolsPublicDataAsync())
+      console.info(txHash)
+    },
+    [account, dispatch, launchpadContract],
   )
 
   return { onUnstake: handleUnstake }

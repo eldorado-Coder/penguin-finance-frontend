@@ -1,3 +1,4 @@
+import BigNumber from 'bignumber.js'
 import { useCallback } from 'react'
 import { useWeb3React } from '@web3-react/core'
 import { useDispatch } from 'react-redux'
@@ -7,8 +8,8 @@ import {
   updateUserBalance,
   fetchPoolsPublicDataAsync,
 } from 'state/actions'
-import { stake, sousStake, sousStakeBnb } from 'utils/callHelpers'
-import { useMasterchef, useSousChef } from './useContract'
+import { stake, sousStake, sousStakeBnb, launchpadStake } from 'utils/callHelpers'
+import { useLaunchPad, useMasterchef, useSousChef } from './useContract'
 
 const useStake = (pid: number, type?: string) => {
   const dispatch = useDispatch()
@@ -47,6 +48,23 @@ export const useSousStake = (sousId, isUsingBnb = false) => {
       dispatch(fetchPoolsPublicDataAsync())
     },
     [account, dispatch, isUsingBnb, masterChefContract, sousChefContract, sousId],
+  )
+
+  return { onStake: handleStake }
+}
+
+export const useLaunchpadStake = () => {
+  const dispatch = useDispatch()
+  const { account } = useWeb3React()
+  const launchpadContract = useLaunchPad();
+
+  const handleStake = useCallback(
+    async (amount: string) => {
+      const txHash = await launchpadStake(launchpadContract, amount, account)
+      dispatch(fetchPoolsPublicDataAsync())
+      console.info(txHash)
+    },
+    [account, dispatch, launchpadContract],
   )
 
   return { onStake: handleStake }

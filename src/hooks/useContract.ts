@@ -18,6 +18,7 @@ import {
   getCharityPenguinDBAddress,
   getEmperorPenguinDBAddress,
   getXPefiAddress,
+  getLaunchpadAddress
 } from 'utils/addressHelpers'
 import getFarmMasterChefAddress from 'utils/getFarmMasterChefAddress'
 import getFarmMasterChefAbi from 'utils/getFarmMasterChefAbi'
@@ -42,6 +43,7 @@ import donations from 'config/abi/donations.json'
 import charityPenguinDB from 'config/abi/charityPenguin.json'
 import emperorPenguinDB from 'config/abi/emperorPenguinDB.json'
 import xPefi from 'config/abi/xPefi.json'
+import launchpad from 'config/abi/launchpad.json';
 
 const useContract = (abi: AbiItem, address: string, contractOptions?: ContractOptions) => {
   const web3 = useWeb3()
@@ -155,6 +157,11 @@ export const useCharityPenguinDB = () => {
 export const useXPefi = () => {
   const abi = (xPefi as unknown) as AbiItem
   return useContract(abi, getXPefiAddress())
+}
+
+export const useLaunchPad = () => {
+  const abi = (launchpad as unknown) as AbiItem
+  return useContract(abi, getLaunchpadAddress())
 }
 
 export default useContract
