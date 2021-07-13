@@ -7,6 +7,7 @@ import {
   fetchUserXPefiBalance,
   // launchpad
   fetchUserData,
+  fetchTierHurdles
 } from './fetchLaunchpadUser'
 import { LaunchpadState } from '../types'
 
@@ -18,6 +19,7 @@ const initialState: LaunchpadState = {
   canUnstake: false,
   depositEnd: 0,
   xPefi: 0,
+  tierHurdles: []
 }
 
 export const LaunchpadSlice = createSlice({
@@ -39,11 +41,14 @@ export const LaunchpadSlice = createSlice({
     setAllowance: (state, action) => {
       state.allowance = action.payload
     },
+    setTierHurdles: (state, action) => {
+      state.tierHurdles = [...action.payload]
+    }
   },
 })
 
 // Actions
-export const { setAllowance, setStakedValance, setLaunchpadUserData } = LaunchpadSlice.actions
+export const { setTierHurdles, setAllowance, setStakedValance, setLaunchpadUserData } = LaunchpadSlice.actions
 
 export const fetchLaunchpadUserDataAsync = (account: string) => async (dispatch) => {
   const allowance = await fetchLaunchpadAllowance(account)
@@ -73,6 +78,11 @@ export const updateLaunchpadAllowance = (account: string) => async (dispatch) =>
 export const updateLaunchpadStakedBalance = (account: string) => async (dispatch) => {
   const stakedBalance = await fetchUserStakedBalance(account)
   dispatch(setStakedValance(stakedBalance))
+}
+
+export const updateLaunchpadTierHurdles = () => async (dispatch) => {
+  const tierHurdles = await fetchTierHurdles();
+  dispatch(setTierHurdles(tierHurdles))
 }
 
 export default LaunchpadSlice.reducer
