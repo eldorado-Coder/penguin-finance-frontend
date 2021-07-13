@@ -120,7 +120,7 @@ const StakeCard: React.FC = () => {
             <Text>Current tiers:</Text>
             <HelperTag variant="primary" outline>
               <a
-                href="https://penguin-finance.gitbook.io/penguin-finance/summary/penguin-nests-staking-and-fee-collection"
+                href="https://penguin-finance.medium.com/introducing-the-penguin-launchpad-the-best-launchpad-on-avalanche-19929735d309"
                 target="_blank"
                 rel="noopener noreferrer"
               >
