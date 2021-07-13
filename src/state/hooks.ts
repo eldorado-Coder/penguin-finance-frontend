@@ -21,6 +21,7 @@ import {
   fetchPoolsUserDataAsync,
   fetchLaunchpadUserDataAsync,
   fetchEmperor,
+  updateLaunchpadTierHurdles,
   push as pushToast,
   remove as removeToast,
   clear as clearToast
@@ -178,6 +179,17 @@ export const useLaunchpad = (account): LaunchpadState => {
 
   const launchpad = useSelector((state: State) => state.launchpad)
   return launchpad
+}
+
+export const useLaunchpadTierHurdles = () => {
+  const { fastRefresh } = useRefresh()
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(updateLaunchpadTierHurdles());
+  }, [dispatch, fastRefresh])
+
+  const tierHurdles = useSelector((state: State) => state.launchpad.tierHurdles)
+  return tierHurdles
 }
 
 // Prices

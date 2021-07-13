@@ -105,6 +105,21 @@ export const fetchDepositEnd = async () => {
   return depositEnd[0].toNumber()
 }
 
+export const fetchTierHurdles = async () => {
+  const calls = [];
+  for (let i = 0; i < 3; i ++) {
+    calls.push({
+      address: getLaunchpadAddress(),
+      name: 'tierHurdles',
+      params: [i],
+    });
+  }
+
+  const tierHurdles = await multicall(launchpadABI, calls);
+  
+  return tierHurdles.map(tierHurdle => tierHurdle[0] / 1e18);
+}
+
 // xPefi allowance and balance
 export const fetchLaunchpadAllowance = async (account) => {
   const web3 = getWeb3()

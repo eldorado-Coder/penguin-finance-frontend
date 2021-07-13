@@ -8,7 +8,7 @@ import Balance from 'components/Balance'
 import useI18n from 'hooks/useI18n'
 import { useLaunchpadStake } from 'hooks/useStake'
 import { useLaunchpadUnstake } from 'hooks/useUnstake'
-import { usePools, useLaunchpad } from 'state/hooks'
+import { usePools, useLaunchpad, useLaunchpadTierHurdles } from 'state/hooks'
 import { getBalanceNumber } from 'utils/formatBalance'
 import DepositModal from './DepositModal'
 import WithdrawModal from './WithdrawModal'
@@ -67,7 +67,7 @@ const CurrentTiersWrapper = styled.div`
   .penguineer {
     color: #0098a1;
   }
-  .spacelord {
+  .starlord {
     color: #9a6aff;
   }
 `
@@ -76,6 +76,8 @@ const NormalButton = styled(Button)`
   border-radius: 10px;
   padding: 0 16px;
 `
+
+const PENGUIN_TIERS = ['Astronaut', 'Penguineer', 'Starlord']
 
 const StakeCard: React.FC = () => {
   const { account } = useWeb3React()
@@ -88,6 +90,7 @@ const StakeCard: React.FC = () => {
   const xPefiBalance = new BigNumber(xPefi)
   const launchpadStaked = new BigNumber(staked)
   const currentDate = new Date().getTime()
+  const tierHurdles = useLaunchpadTierHurdles();
 
   const getXPefiToPefiRatio = (pool) => {
     return pool.totalStaked && pool.totalSupply
@@ -122,15 +125,11 @@ const StakeCard: React.FC = () => {
               </a>
             </HelperTag>
           </Flex>
-          <Text bold className="astronaut">
-            Astronaut (+300 xPEFI)
-          </Text>
-          <Text bold className="penguineer">
-            Penguineer (+1500 xPEFI)
-          </Text>
-          <Text bold className="spacelord">
-            Spacelord (+15000 xPEFI)
-          </Text>
+          {PENGUIN_TIERS.map((penguinTier, index) => (
+            <Text key={penguinTier} bold className={penguinTier.toLowerCase()}>
+              {`${penguinTier} (+${tierHurdles.length > 0 ? tierHurdles[index] : 0} xPEFI)`}
+            </Text>
+          ))}
         </CurrentTiersWrapper>
         <StyledCardActions>
           {!account && <PGUnlockButton />}

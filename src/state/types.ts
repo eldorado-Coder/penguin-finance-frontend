@@ -100,6 +100,7 @@ export interface LaunchpadState {
   canUnstake: boolean
   depositEnd: number
   xPefi: number
+  tierHurdles: number[]
 }
 
 export interface ProfileState {

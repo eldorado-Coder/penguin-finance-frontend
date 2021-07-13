@@ -18,4 +18,4 @@ export { profileFetchStart, profileFetchSucceeded, profileFetchFailed } from './
 export { fetchStart, teamFetchSucceeded, fetchFailed, teamsFetchSucceeded } from './teams'
 export { fetchEmperor } from './emperor'
 export { fetchDonations } from './donations'
-export { fetchLaunchpadUserDataAsync } from './launchpad';
+export { fetchLaunchpadUserDataAsync, updateLaunchpadTierHurdles } from './launchpad';
