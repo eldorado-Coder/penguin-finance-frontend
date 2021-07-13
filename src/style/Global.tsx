@@ -4,7 +4,7 @@ import { PenguinTheme } from 'penguinfinance-uikit2/dist/theme'
 
 declare module 'styled-components' {
   /* eslint-disable @typescript-eslint/no-empty-interface */
-  export interface DefaultTheme extends PenguinTheme { }
+  export interface DefaultTheme extends PenguinTheme {}
 }
 
 const GlobalStyle = createGlobalStyle`
@@ -18,6 +18,7 @@ const GlobalStyle = createGlobalStyle`
     left: 0;
     right: 0;
     overflow: auto;
+    overflow-x: hidden;
   }
   body {
     background-color: ${({ theme }) => theme.colors.background};

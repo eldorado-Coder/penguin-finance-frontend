@@ -1,25 +1,25 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { ButtonMenu, ButtonMenuItem, Flex } from 'penguinfinance-uikit2';
+import { ButtonMenu, ButtonMenuItem, Flex } from 'penguinfinance-uikit2'
 import FlexLayout from 'components/layout/Flex'
 import Page from 'components/layout/Page'
 import StakeCard from './components/StakeCard/StakeCard'
-import YourTierCard from './components/YourTierCard/YourTierCard';
+import YourTierCard from './components/YourTierCard/YourTierCard'
 import SherpaCard from './components/SherpaCard/SherpaCard'
 
 const Launchpad: React.FC = () => {
-  const [activeTab, setActiveTab] = useState(0);
+  const [activeTab, setActiveTab] = useState(0)
 
-  const handleSwitchTab = tab => {
-    setActiveTab(tab);
-  };
+  const handleSwitchTab = (tab) => {
+    setActiveTab(tab)
+  }
 
   return (
     <FarmPage>
       <IgloosBannerContainer>
         <BannerImage src={`${process.env.PUBLIC_URL}/images/farms/IglooHeader.gif`} alt="igloos banner" />
       </IgloosBannerContainer>
-      <Flex justifyContent='center' pb='32px'>
+      <Flex justifyContent="center" pb="32px">
         <ButtonMenu activeIndex={activeTab} onItemClick={handleSwitchTab} scale="sm">
           <OptionItem>Next</OptionItem>
           <OptionItem>Past</OptionItem>
@@ -48,7 +48,7 @@ const BannerImage = styled.img`
 
 const OptionItem = styled(ButtonMenuItem)`
   min-width: 100px;
-`;
+`
 
 const CardLayout = styled(FlexLayout)`
   & > * {
