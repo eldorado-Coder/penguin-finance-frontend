@@ -3,6 +3,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Image, Text, Flex, Progress, Input, Button } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
+import CardValue from 'components/CardValue';
 import SherpaCardFooter from './SherpaCardFooter';
 
 const SherpaCard: React.FC = () => {
@@ -41,7 +42,7 @@ const SherpaCard: React.FC = () => {
         </Flex>
         <Flex justifyContent='space-between' mb='16px'>
           <Text fontSize='12px'>For Sale</Text>
-          <Text fontSize='14px'>600,000 SHERPA</Text>
+          <CardValue fontSize='14px' suffix=' SHERPA' value={600000} />
         </Flex>
         <Text fontSize='12px' mb='4px'>Progress</Text>
         <ProgressWrapper>
@@ -49,7 +50,7 @@ const SherpaCard: React.FC = () => {
         </ProgressWrapper>
         <Flex justifyContent='space-between' mt='4px'>
           <Text fontSize='12px'>0.00%</Text>
-          <Text fontSize='12px'>600,000</Text>
+          <CardValue fontSize='12px' value={600000} />
         </Flex>
         <ClaimsWrapper>
           <Text className='your-token' fontSize='12px' mb='4px'>Your tokens to claim</Text>
