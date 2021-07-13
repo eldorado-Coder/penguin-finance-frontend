@@ -3,23 +3,22 @@ import { createSlice } from '@reduxjs/toolkit'
 import {
   fetchLaunchpadAllowance,
   fetchUserStakedBalance,
-  fetchUserPenguinTier,
-  fetchUserAllocation,
-  fetchUserCanUnstake,
   fetchDepositEnd,
-  fetchUserXPefiBalance
+  fetchUserXPefiBalance,
+  // launchpad
+  fetchUserData,
 } from './fetchLaunchpadUser'
 import { LaunchpadState } from '../types'
 
-const initialState: LaunchpadState = { 
+const initialState: LaunchpadState = {
   stakedBalance: 0,
   allowance: 0,
   yourPenguinTier: 0,
   allocation: 0,
   canUnstake: false,
   depositEnd: 0,
-  xPefi: 0
-};
+  xPefi: 0,
+}
 
 export const LaunchpadSlice = createSlice({
   name: 'Launchpad',
@@ -39,7 +38,7 @@ export const LaunchpadSlice = createSlice({
     },
     setAllowance: (state, action) => {
       state.allowance = action.payload
-    }
+    },
   },
 })
 
@@ -48,32 +47,32 @@ export const { setAllowance, setStakedValance, setLaunchpadUserData } = Launchpa
 
 export const fetchLaunchpadUserDataAsync = (account: string) => async (dispatch) => {
   const allowance = await fetchLaunchpadAllowance(account)
-  const stakedBalance = await fetchUserStakedBalance(account)
-  const yourPenguinTier = await fetchUserPenguinTier(account)
-  const allocation = await fetchUserAllocation(account)
-  const canUnstake = await fetchUserCanUnstake(account)
-  const depositEnd = await fetchDepositEnd()
   const xPefi = await fetchUserXPefiBalance(account)
+  const depositEnd = await fetchDepositEnd()
+  // from launchpad
+  const { stakedBalance, penguinTier: yourPenguinTier, allocation, canUnstake } = await fetchUserData(account)
 
-  dispatch(setLaunchpadUserData({
-    allowance,
-    stakedBalance,
-    yourPenguinTier,
-    allocation,
-    canUnstake,
-    depositEnd,
-    xPefi
-  }))
-}
-
-export const updateLaunchpadStakedBalance = (account: string) => async (dispatch) => {
-  const stakedBalance = await fetchUserStakedBalance(account)
-  dispatch(setStakedValance(stakedBalance))
+  dispatch(
+    setLaunchpadUserData({
+      allowance,
+      stakedBalance,
+      yourPenguinTier,
+      allocation,
+      canUnstake,
+      depositEnd,
+      xPefi,
+    }),
+  )
 }
 
 export const updateLaunchpadAllowance = (account: string) => async (dispatch) => {
   const allowance = await fetchLaunchpadAllowance(account)
   dispatch(setAllowance(allowance))
+}
+
+export const updateLaunchpadStakedBalance = (account: string) => async (dispatch) => {
+  const stakedBalance = await fetchUserStakedBalance(account)
+  dispatch(setStakedValance(stakedBalance))
 }
 
 export default LaunchpadSlice.reducer
