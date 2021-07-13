@@ -10,6 +10,7 @@ const CurrentBlockNumberWrapper = styled.div`
   width: 100vw;
   margin-top: -100vh;
   margin-right: -100vw;
+  z-index: -1;
 `
 
 const CurrentBlockNumber = styled(Text)`
