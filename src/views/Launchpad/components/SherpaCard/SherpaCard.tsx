@@ -2,10 +2,23 @@ import React from 'react'
 import styled from 'styled-components'
 import { Image, Text, Flex, Progress, Input, Button } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
+import CardValue from 'components/CardValue'
 import SherpaCardFooter from './SherpaCardFooter'
 
 const SherpaCard: React.FC = () => {
   const { account } = useWeb3React()
+
+  const handleViewHomePage = () => {
+    window.open('https://www.sherpa.cash/', '_blank')
+  }
+
+  const handleViewDocumentation = () => {
+    window.open('https://sherpa-cash.gitbook.io/sherpa-cash/', '_blank')
+  }
+
+  const handleViewMedium = () => {
+    window.open('https://hariseldon2.medium.com/sherpas-version-of-a-fair-launch-53b8cd383be9', '_blank')
+  }
 
   return (
     <FCard>
@@ -18,37 +31,43 @@ const SherpaCard: React.FC = () => {
               SHERPA CASH (SHERPA)
             </Text>
             <Details>
-              <Text fontSize="12px">Homepage</Text>
-              <Text fontSize="12px">Whitepaper</Text>
-              <Text fontSize="12px">Medium</Text>
+              <Text fontSize="12px" onClick={handleViewHomePage}>
+                Homepage
+              </Text>
+              <Text fontSize="12px" onClick={handleViewDocumentation}>
+                Documentation
+              </Text>
+              <Text fontSize="12px" onClick={handleViewMedium}>
+                Medium
+              </Text>
             </Details>
           </div>
         </Flex>
         <Flex justifyContent="space-between" mb="4px">
-          <Text fontSize="12px">Launch Time</Text>
-          <Text fontSize="14px">June 21, 13:00 UTC</Text>
+          <Text fontSize="12px">Launch Date</Text>
+          <Text fontSize="14px">July, 2021</Text>
         </Flex>
         <Flex justifyContent="space-between" mb="16px">
           <Text fontSize="12px">For Sale</Text>
-          <Text fontSize="14px">600.000 SHERPA</Text>
+          <CardValue fontSize="14px" suffix=" SHERPA" value={600000} />
         </Flex>
         <Text fontSize="12px" mb="4px">
           Progress
         </Text>
         <ProgressWrapper>
-          <Progress primaryStep={10} />
+          <Progress primaryStep={0} />
         </ProgressWrapper>
         <Flex justifyContent="space-between" mt="4px">
-          <Text fontSize="12px">10.00%</Text>
-          <Text fontSize="12px">600.000</Text>
+          <Text fontSize="12px">0.00%</Text>
+          <CardValue fontSize="12px" value={600000} />
         </Flex>
         <ClaimsWrapper>
           <Text className="your-token" fontSize="12px" mb="4px">
-            Your tokens to cliam
+            Your tokens to claim
           </Text>
           <div className="claim-container">
             <StyledInput scale="sm" />
-            <ClaimButton height="32px" size="sm">
+            <ClaimButton disabled height="32px" size="sm">
               Claim
             </ClaimButton>
           </div>
@@ -85,7 +104,8 @@ const CardHeader = styled(Flex)`
 
 const Details = styled(Flex)`
   div {
-    margin-right: 16px;
+    margin-right: 12px;
+    cursor: pointer;
   }
 `
 
