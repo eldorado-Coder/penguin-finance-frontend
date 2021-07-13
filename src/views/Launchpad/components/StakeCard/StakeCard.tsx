@@ -8,11 +8,11 @@ import Balance from 'components/Balance'
 import useI18n from 'hooks/useI18n'
 import { useLaunchpadStake } from 'hooks/useStake'
 import { useLaunchpadUnstake } from 'hooks/useUnstake'
-import { usePools, useLaunchpad } from 'state/hooks';
+import { usePools, useLaunchpad } from 'state/hooks'
 import { getBalanceNumber } from 'utils/formatBalance'
 import DepositModal from './DepositModal'
 import WithdrawModal from './WithdrawModal'
-import PoolCardFooter from './StakeCardFooter';
+import PoolCardFooter from './StakeCardFooter'
 
 const PGUnlockButton = styled(UnlockButton)<{ isHomePage?: boolean }>`
   background: ${({ theme, isHomePage }) => !theme.isDark && isHomePage && '#383466'};
@@ -26,7 +26,7 @@ const FCard = styled.div`
   border-radius: 32px;
   box-shadow: 0px 2px 12px -8px rgba(25, 19, 38, 0.1), 0px 1px 1px rgba(25, 19, 38, 0.05);
   position: relative;
-  min-height: 510px;
+  min-height: 480px;
 `
 
 const HelperTag = styled(Tag)`
@@ -49,11 +49,11 @@ const CardHeader = styled(Flex)`
   background-size: cover;
   background-position: center center;
   border-radius: 32px 32px 0 0;
-  
+
   div {
     color: white;
   }
-`;
+`
 
 const CardAction = styled.div`
   background: ${(props) => props.theme.card.background};
@@ -65,58 +65,52 @@ const CurrentTiersWrapper = styled.div`
     color: #4040ff;
   }
   .penguineer {
-    color: #0098A1;
+    color: #0098a1;
   }
   .spacelord {
-    color: #9A6AFF;
+    color: #9a6aff;
   }
-`;
+`
 
 const NormalButton = styled(Button)`
   border-radius: 10px;
   padding: 0 16px;
-`;
+`
 
 const StakeCard: React.FC = () => {
-  const { account } = useWeb3React();
-  const TranslateString = useI18n();
+  const { account } = useWeb3React()
+  const TranslateString = useI18n()
   const pools = usePools(account)
-  const pefiPool = pools.length > 0 ? pools[0] : null 
+  const pefiPool = pools.length > 0 ? pools[0] : null
   const { onStake } = useLaunchpadStake()
   const { onUnstake } = useLaunchpadUnstake()
-  const { stakedBalance: staked, allocation, canUnstake, depositEnd, xPefi } = useLaunchpad(account);
-  const xPefiBalance = new BigNumber(xPefi);
-  const launchpadStaked = new BigNumber(staked);
-  const currentDate = new Date().getTime();
+  const { stakedBalance: staked, allocation, canUnstake, depositEnd, xPefi } = useLaunchpad(account)
+  const xPefiBalance = new BigNumber(xPefi)
+  const launchpadStaked = new BigNumber(staked)
+  const currentDate = new Date().getTime()
 
   const getXPefiToPefiRatio = (pool) => {
     return pool.totalStaked && pool.totalSupply
       ? new BigNumber(pool.totalStaked).div(new BigNumber(pool.totalSupply)).toJSON()
       : 1
-  };
+  }
   const xPefiToPefiRatio = getXPefiToPefiRatio(pefiPool)
 
-  const [onPresentDeposit] = useModal(
-    <DepositModal
-      max={xPefiBalance}
-      onConfirm={onStake}
-      tokenName='xPEFI'
-    />,
-  )
+  const [onPresentDeposit] = useModal(<DepositModal max={xPefiBalance} onConfirm={onStake} tokenName="xPEFI" />)
 
-  const [onPresentWithdraw] = useModal(
-    <WithdrawModal max={launchpadStaked} onConfirm={onUnstake} tokenName='xPEFI' />,
-  )
+  const [onPresentWithdraw] = useModal(<WithdrawModal max={launchpadStaked} onConfirm={onUnstake} tokenName="xPEFI" />)
 
   return (
     <FCard>
-      <CardHeader justifyContent='space-between' alignItems='center' pr='32px' pl='32px'>
-        <Image src='/images/launchpad/PEFI.png' width={64} height={64} alt='XPEFI' />
-        <Text fontSize='32px' bold>STAKE XPEFI</Text>
+      <CardHeader justifyContent="space-between" alignItems="center" pr="32px" pl="32px">
+        <Image src="/images/launchpad/PEFI.png" width={64} height={64} alt="XPEFI" />
+        <Text fontSize="32px" bold>
+          STAKE XPEFI
+        </Text>
       </CardHeader>
       <CardContent>
         <CurrentTiersWrapper>
-          <Flex justifyContent='space-between' alignItems='center' mb='8px'>
+          <Flex justifyContent="space-between" alignItems="center" mb="8px">
             <Text>Current tiers:</Text>
             <HelperTag variant="primary" outline>
               <a
@@ -128,15 +122,25 @@ const StakeCard: React.FC = () => {
               </a>
             </HelperTag>
           </Flex>
-          <Text bold className='astronaut'>Astronaut (+300 xPEFI)</Text>
-          <Text bold className='penguineer'>Penguineer (+1500 xPEFI)</Text>
-          <Text bold className='spacelord'>Spacelord (+15000 xPEFI)</Text>
+          <Text bold className="astronaut">
+            Astronaut (+300 xPEFI)
+          </Text>
+          <Text bold className="penguineer">
+            Penguineer (+1500 xPEFI)
+          </Text>
+          <Text bold className="spacelord">
+            Spacelord (+15000 xPEFI)
+          </Text>
         </CurrentTiersWrapper>
         <StyledCardActions>
           {!account && <PGUnlockButton />}
-          {account &&
+          {account && (
             <>
-              <NormalButton disabled={xPefiBalance.eq(new BigNumber(0)) || (currentDate/1000 > depositEnd)} width='100%' onClick={onPresentDeposit}>
+              <NormalButton
+                disabled={xPefiBalance.eq(new BigNumber(0)) || currentDate / 1000 > depositEnd}
+                width="100%"
+                onClick={onPresentDeposit}
+              >
                 Stake xPEFI
               </NormalButton>
               <StyledActionSpacer />
@@ -144,7 +148,7 @@ const StakeCard: React.FC = () => {
                 Unstake
               </NormalButton>
             </>
-          }
+          )}
         </StyledCardActions>
         <StyledDetails>
           <Label style={{ flex: 1 }}>
@@ -171,7 +175,7 @@ const StakeCard: React.FC = () => {
             </Text>
           </TokenSymbol>
         </StyledDetails>
-        <Flex mt='20px'>
+        <Flex mt="20px">
           <Label style={{ flex: 1 }}>
             <Text color="primary">{TranslateString(384, 'Price per SHERPA:')}</Text>
           </Label>
@@ -186,15 +190,15 @@ const StakeCard: React.FC = () => {
             <Text color="primary">{TranslateString(384, 'Your Allocation:')}</Text>
           </Label>
           <TokenSymbol>
-            <Text className='allocation' color="primary" fontSize="16px">
+            <Text className="allocation" color="primary" fontSize="16px">
               {`${allocation} AP`}
             </Text>
           </TokenSymbol>
         </StyledDetails>
       </CardContent>
-      <CardAction>
+      {/* <CardAction>
         <PoolCardFooter />
-      </CardAction>
+      </CardAction> */}
     </FCard>
   )
 }
@@ -217,7 +221,7 @@ const StyledDetails = styled.div`
   font-size: 14px;
 
   .allocation {
-    color: #9A6AFF;
+    color: #9a6aff;
   }
 `
 
