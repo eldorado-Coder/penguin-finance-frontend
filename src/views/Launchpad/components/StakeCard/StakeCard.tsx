@@ -13,7 +13,7 @@ import { usePools, useLaunchpad, useLaunchpadTierHurdles } from 'state/hooks'
 import { getBalanceNumber } from 'utils/formatBalance'
 import DepositModal from './DepositModal'
 import WithdrawModal from './WithdrawModal'
-import { PENGUIN_TIERS, PRICE_PER_SHERPA, getUnstakeTooltip, getAllocation } from '../../utils'
+import { PENGUIN_TIERS, PRICE_PER_SHERPA, getUnstakeTooltip, getAllocation, getXPefiToPefiRatio } from '../../utils'
 
 const StakeCard: React.FC = () => {
   const { account } = useWeb3React()
@@ -30,18 +30,12 @@ const StakeCard: React.FC = () => {
     xPefi,
     yourPenguinTier,
   } = useLaunchpad(account)
+  const tierHurdles = useLaunchpadTierHurdles()
   const xPefiBalance = new BigNumber(xPefi)
   const launchpadStaked = new BigNumber(staked)
   const currentDate = new Date().getTime()
-  const tierHurdles = useLaunchpadTierHurdles()
   const unstakeTooltip = getUnstakeTooltip(timeRemainingToUnstake)
   const allocation = getAllocation(getBalanceNumber(launchpadStaked))
-
-  const getXPefiToPefiRatio = (pool) => {
-    return pool.totalStaked && pool.totalSupply
-      ? new BigNumber(pool.totalStaked).div(new BigNumber(pool.totalSupply)).toJSON()
-      : 1
-  }
   const xPefiToPefiRatio = getXPefiToPefiRatio(pefiPool)
 
   const [onPresentDeposit] = useModal(<DepositModal max={xPefiBalance} onConfirm={onStake} tokenName="xPEFI" />)
