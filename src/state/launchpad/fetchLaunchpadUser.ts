@@ -28,16 +28,30 @@ export const fetchUserData = async (account) => {
       name: 'canUnstake',
       params: [account],
     },
+    {
+      address: getLaunchpadAddress(),
+      name: 'timeRemainingToUnstake',
+      params: [account],
+    },
   ]
 
-  const [amountStaked, penguinTiers, allocations, canUnStake] = await multicall(launchpadABI, calls)
+  const [amountStaked, penguinTiers, allocations, canUnStake, timeRemainingToUnstake] = await multicall(
+    launchpadABI,
+    calls,
+  )
 
-  const stakedBalance = new BigNumber(amountStaked).toJSON()
-  const penguinTier = new BigNumber(penguinTiers).toJSON()
-  const allocation = new BigNumber(allocations).toJSON()
+  const stakedBalance = new BigNumber(amountStaked).toNumber()
+  const penguinTier = new BigNumber(penguinTiers).toNumber()
+  const allocation = new BigNumber(allocations).toNumber()
   const _canUnStake = canUnStake[0]
 
-  return { stakedBalance, penguinTier, allocation, canUnstake: _canUnStake }
+  return {
+    stakedBalance,
+    penguinTier,
+    allocation,
+    canUnstake: _canUnStake,
+    timeRemainingToUnstake: new BigNumber(timeRemainingToUnstake).toNumber(),
+  }
 }
 
 export const fetchUserStakedBalance = async (account) => {
@@ -50,7 +64,7 @@ export const fetchUserStakedBalance = async (account) => {
   ]
 
   const [amountStaked] = await multicall(launchpadABI, calls)
-  return new BigNumber(amountStaked).toJSON()
+  return new BigNumber(amountStaked).toNumber()
 }
 
 export const fetchUserPenguinTier = async (account) => {
@@ -64,7 +78,7 @@ export const fetchUserPenguinTier = async (account) => {
 
   const [penguinTiers] = await multicall(launchpadABI, calls)
 
-  return new BigNumber(penguinTiers).toJSON()
+  return new BigNumber(penguinTiers).toNumber()
 }
 
 export const fetchUserAllocation = async (account) => {
@@ -77,7 +91,7 @@ export const fetchUserAllocation = async (account) => {
   ]
 
   const allocations = await multicall(launchpadABI, calls)
-  return new BigNumber(allocations[0]).toJSON()
+  return new BigNumber(allocations[0]).toNumber()
 }
 
 export const fetchUserCanUnstake = async (account) => {
@@ -106,18 +120,18 @@ export const fetchDepositEnd = async () => {
 }
 
 export const fetchTierHurdles = async () => {
-  const calls = [];
-  for (let i = 0; i < 3; i ++) {
+  const calls = []
+  for (let i = 0; i < 3; i++) {
     calls.push({
       address: getLaunchpadAddress(),
       name: 'tierHurdles',
       params: [i],
-    });
+    })
   }
 
-  const tierHurdles = await multicall(launchpadABI, calls);
-  
-  return tierHurdles.map(tierHurdle => tierHurdle[0] / 1e18);
+  const tierHurdles = await multicall(launchpadABI, calls)
+
+  return tierHurdles.map((tierHurdle) => tierHurdle[0] / 1e18)
 }
 
 // xPefi allowance and balance

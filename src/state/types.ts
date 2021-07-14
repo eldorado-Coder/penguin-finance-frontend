@@ -98,6 +98,7 @@ export interface LaunchpadState {
   yourPenguinTier: number
   allocation: number
   canUnstake: boolean
+  timeRemainingToUnstake: number
   depositEnd: number
   xPefi: number
   tierHurdles: number[]

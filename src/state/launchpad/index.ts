@@ -7,7 +7,7 @@ import {
   fetchUserXPefiBalance,
   // launchpad
   fetchUserData,
-  fetchTierHurdles
+  fetchTierHurdles,
 } from './fetchLaunchpadUser'
 import { LaunchpadState } from '../types'
 
@@ -17,9 +17,10 @@ const initialState: LaunchpadState = {
   yourPenguinTier: 0,
   allocation: 0,
   canUnstake: false,
+  timeRemainingToUnstake: 0,
   depositEnd: 0,
   xPefi: 0,
-  tierHurdles: []
+  tierHurdles: [],
 }
 
 export const LaunchpadSlice = createSlice({
@@ -32,6 +33,7 @@ export const LaunchpadSlice = createSlice({
       state.yourPenguinTier = action.payload.yourPenguinTier
       state.allocation = action.payload.allocation
       state.canUnstake = action.payload.canUnstake
+      state.timeRemainingToUnstake = action.payload.timeRemainingToUnstake
       state.depositEnd = action.payload.depositEnd
       state.xPefi = action.payload.xPefi
     },
@@ -43,7 +45,7 @@ export const LaunchpadSlice = createSlice({
     },
     setTierHurdles: (state, action) => {
       state.tierHurdles = [...action.payload]
-    }
+    },
   },
 })
 
@@ -55,7 +57,13 @@ export const fetchLaunchpadUserDataAsync = (account: string) => async (dispatch)
   const xPefi = await fetchUserXPefiBalance(account)
   const depositEnd = await fetchDepositEnd()
   // from launchpad
-  const { stakedBalance, penguinTier: yourPenguinTier, allocation, canUnstake } = await fetchUserData(account)
+  const {
+    stakedBalance,
+    penguinTier: yourPenguinTier,
+    allocation,
+    canUnstake,
+    timeRemainingToUnstake,
+  } = await fetchUserData(account)
 
   dispatch(
     setLaunchpadUserData({
@@ -64,6 +72,7 @@ export const fetchLaunchpadUserDataAsync = (account: string) => async (dispatch)
       yourPenguinTier,
       allocation,
       canUnstake,
+      timeRemainingToUnstake,
       depositEnd,
       xPefi,
     }),
@@ -81,7 +90,7 @@ export const updateLaunchpadStakedBalance = (account: string) => async (dispatch
 }
 
 export const updateLaunchpadTierHurdles = () => async (dispatch) => {
-  const tierHurdles = await fetchTierHurdles();
+  const tierHurdles = await fetchTierHurdles()
   dispatch(setTierHurdles(tierHurdles))
 }
 
