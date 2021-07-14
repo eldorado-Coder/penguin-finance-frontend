@@ -13,7 +13,6 @@ import { usePools, useLaunchpad, useLaunchpadTierHurdles } from 'state/hooks'
 import { getBalanceNumber } from 'utils/formatBalance'
 import DepositModal from './DepositModal'
 import WithdrawModal from './WithdrawModal'
-import PoolCardFooter from './StakeCardFooter'
 
 const PGUnlockButton = styled(UnlockButton)<{ isHomePage?: boolean }>`
   background: ${({ theme, isHomePage }) => !theme.isDark && isHomePage && '#383466'};
@@ -124,6 +123,7 @@ const CustomToolTip = styled(ReactTooltip)`
 `
 
 const PENGUIN_TIERS = ['Astronaut', 'Penguineer', 'Starlord']
+const PRICE_PER_SHERPA = [0.15, 0.135, 0.1275];
 
 const getUnstakeTooltip = (timeLeftForUnstaking) =>
   `
@@ -137,7 +137,7 @@ const StakeCard: React.FC = () => {
   const pefiPool = pools.length > 0 ? pools[0] : null
   const { onStake } = useLaunchpadStake()
   const { onUnstake } = useLaunchpadUnstake()
-  const { stakedBalance: staked, allocation, canUnstake, depositEnd, xPefi } = useLaunchpad(account)
+  const { stakedBalance: staked, allocation, canUnstake, depositEnd, xPefi, yourPenguinTier } = useLaunchpad(account)
   const xPefiBalance = new BigNumber(xPefi)
   const launchpadStaked = new BigNumber(staked)
   const currentDate = new Date().getTime()
@@ -254,7 +254,7 @@ const StakeCard: React.FC = () => {
           </Label>
           <TokenSymbol>
             <Text color="primary" fontSize="16px">
-              $0.15
+              {`$${PRICE_PER_SHERPA[yourPenguinTier]}`}
             </Text>
           </TokenSymbol>
         </Flex>
