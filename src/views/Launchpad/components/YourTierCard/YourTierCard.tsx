@@ -15,8 +15,6 @@ const YourTierCard: React.FC = () => {
   const launchpadStaked = getBalanceNumber(new BigNumber(staked))
   const hasTier = launchpadStaked > 299
 
-  console.log('111--->', hasTier)
-
   return (
     <FCard>
       <CardHeader justifyContent="space-between" alignItems="center" pr="32px" pl="32px">
