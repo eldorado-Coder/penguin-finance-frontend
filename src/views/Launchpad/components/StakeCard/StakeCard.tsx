@@ -3,6 +3,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Button, useModal, Image, Text, Flex, Tag } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
+import ReactTooltip from 'react-tooltip'
 import UnlockButton from 'components/UnlockButton'
 import Balance from 'components/Balance'
 import useI18n from 'hooks/useI18n'
@@ -77,7 +78,57 @@ const NormalButton = styled(Button)`
   padding: 0 16px;
 `
 
+const UnstakeButtonContainer = styled.div``
+const ButtonToolTipWrapper = styled.div<{ disabled?: boolean }>`
+  button {
+    div {
+      height: 18px;
+
+      svg {
+        height: 18px;
+        fill: ${({ theme, disabled }) => (disabled ? theme.colors.textDisabled : theme.colors.textColour)};
+        margin-right: 0.25rem;
+      }
+    }
+  }
+`
+
+const CustomToolTip = styled(ReactTooltip)`
+  .emperor-account {
+    color: #f5c83b;
+  }
+  .left-time-for-duration {
+    color: #ce022d;
+  }
+
+  width: 100% !important;
+  max-width: 260px !important;
+  background: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#383466!important')};
+  box-shadow: ${(props) => `${props.theme.card.boxShadow}!important`};
+  color: ${({ theme }) => (theme.isDark ? '#2D2159!important' : '#ffffff!important')};
+  opacity: 1 !important;
+  padding: 12px 12px !important;
+  font-size: 16px !important;
+  line-height: 20px !important;
+  border-radius: 16px !important;
+  margin-top: 0px !important;
+  text-align: center;
+  > div {
+    width: 100%;
+    white-space: pre-wrap !important;
+  }
+  &:after {
+    border-top-color: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#383466!important')};
+    border-bottom-color: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#383466!important')};
+  }
+`
+
 const PENGUIN_TIERS = ['Astronaut', 'Penguineer', 'Starlord']
+
+const getUnstakeTooltip = (timeLeftForUnstaking) =>
+  `
+    You'll be able to unstake in <span class="left-time-for-duration">${timeLeftForUnstaking}</span> days.
+  `
 
 const StakeCard: React.FC = () => {
   const { account } = useWeb3React()
@@ -90,7 +141,8 @@ const StakeCard: React.FC = () => {
   const xPefiBalance = new BigNumber(xPefi)
   const launchpadStaked = new BigNumber(staked)
   const currentDate = new Date().getTime()
-  const tierHurdles = useLaunchpadTierHurdles();
+  const tierHurdles = useLaunchpadTierHurdles()
+  const unstakeTooltip = getUnstakeTooltip(1234)
 
   const getXPefiToPefiRatio = (pool) => {
     return pool.totalStaked && pool.totalSupply
@@ -143,9 +195,31 @@ const StakeCard: React.FC = () => {
                 Stake xPEFI
               </NormalButton>
               <StyledActionSpacer />
-              <NormalButton disabled={launchpadStaked.eq(new BigNumber(0)) || !canUnstake} onClick={onPresentWithdraw}>
-                Unstake
-              </NormalButton>
+              <UnstakeButtonContainer>
+                <ButtonToolTipWrapper
+                  disabled={launchpadStaked.eq(new BigNumber(0)) || !canUnstake}
+                  data-for="custom-class"
+                  data-tip={unstakeTooltip}
+                >
+                  <NormalButton
+                    disabled={launchpadStaked.eq(new BigNumber(0)) || !canUnstake}
+                    onClick={onPresentWithdraw}
+                  >
+                    Unstake
+                  </NormalButton>
+                </ButtonToolTipWrapper>
+                {canUnstake && (
+                  <CustomToolTip
+                    id="custom-class"
+                    wrapper="div"
+                    delayHide={0}
+                    effect="solid"
+                    multiline
+                    place="bottom"
+                    html
+                  />
+                )}
+              </UnstakeButtonContainer>
             </>
           )}
         </StyledCardActions>
