@@ -22,12 +22,19 @@ const StakeCard: React.FC = () => {
   const pefiPool = pools.length > 0 ? pools[0] : null
   const { onStake } = useLaunchpadStake()
   const { onUnstake } = useLaunchpadUnstake()
-  const { stakedBalance: staked, canUnstake, depositEnd, xPefi, yourPenguinTier } = useLaunchpad(account)
+  const {
+    stakedBalance: staked,
+    canUnstake,
+    timeRemainingToUnstake,
+    depositEnd,
+    xPefi,
+    yourPenguinTier,
+  } = useLaunchpad(account)
   const xPefiBalance = new BigNumber(xPefi)
   const launchpadStaked = new BigNumber(staked)
   const currentDate = new Date().getTime()
   const tierHurdles = useLaunchpadTierHurdles()
-  const unstakeTooltip = getUnstakeTooltip(1234)
+  const unstakeTooltip = getUnstakeTooltip(timeRemainingToUnstake)
   const allocation = getAllocation(getBalanceNumber(launchpadStaked))
 
   const getXPefiToPefiRatio = (pool) => {
