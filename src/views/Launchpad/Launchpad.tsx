@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 // import { ButtonMenu, ButtonMenuItem, Flex } from 'penguinfinance-uikit2'
+import useTheme from 'hooks/useTheme'
 import FlexLayout from 'components/layout/Flex'
 import Page from 'components/layout/Page'
 import StakeCard from './components/StakeCard/StakeCard'
@@ -8,16 +9,25 @@ import YourTierCard from './components/YourTierCard/YourTierCard'
 import SherpaCard from './components/SherpaCard/SherpaCard'
 
 const Launchpad: React.FC = () => {
-//   const [activeTab, setActiveTab] = useState(0)
+  const { isDark } = useTheme()
 
-//   const handleSwitchTab = (tab) => {
-//     setActiveTab(tab)
-//   }
+  //   const [activeTab, setActiveTab] = useState(0)
+
+  //   const handleSwitchTab = (tab) => {
+  //     setActiveTab(tab)
+  //   }
 
   return (
     <FarmPage>
       <IgloosBannerContainer>
-        <BannerImage src={`${process.env.PUBLIC_URL}/images/farms/IglooHeader.gif`} alt="igloos banner" />
+        <BannerImage
+          src={
+            isDark
+              ? `${process.env.PUBLIC_URL}/images/launchpad/banners/launchpad_banner_dark.png`
+              : `${process.env.PUBLIC_URL}/images/launchpad/banners/launchpad_banner_light.png`
+          }
+          alt="launchpad banner"
+        />
       </IgloosBannerContainer>
       {/* <Flex justifyContent="center" pb="32px">
         <ButtonMenu activeIndex={activeTab} onItemClick={handleSwitchTab} scale="sm">
@@ -42,7 +52,7 @@ const FarmPage = styled(Page)`
 const IgloosBannerContainer = styled.div`
   margin-bottom: 32px;
 
-  @media (min-width: 1200px) {  
+  @media (min-width: 1200px) {
     margin-bottom: 60px;
   }
 `
