@@ -17,11 +17,12 @@ const YourTierCard: React.FC = () => {
 
   return (
     <FCard>
-      <CardHeader justifyContent="space-between" alignItems="center" pr="32px" pl="32px">
-        <Image src="/images/launchpad/PEFI.png" width={64} height={64} alt="XPEFI" />
+      <CardHeader justifyContent="space-between" alignItems="center">
+        {/* <Image src={`${process.env.PUBLIC_URL}/images/launchpad/banners/launchpad_banner_dark.png`} width={64} height={64} alt="XPEFI" />
         <Text bold fontSize="32px">
           YOUR TIER
-        </Text>
+        </Text> */}
+        <CardBannerImage src={`${process.env.PUBLIC_URL}/images/launchpad/banners/your_tier_banner.png`} alt="banner" />
       </CardHeader>
       <CardContent>
         {hasTier ? (
@@ -56,6 +57,8 @@ const CardHeader = styled(Flex)`
     color: white;
   }
 `
+
+const CardBannerImage = styled.img``
 
 const CardContent = styled.div`
   padding: 24px 32px;
