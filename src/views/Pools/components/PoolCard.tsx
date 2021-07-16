@@ -389,7 +389,7 @@ const StyledDetails = styled.div`
 `
 
 const Label = styled.div`
-  margin-left: 40px;
+  margin-left: 80px;
 `
 
 const TokenSymbol = styled.div`
