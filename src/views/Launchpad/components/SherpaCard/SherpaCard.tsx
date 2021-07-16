@@ -22,10 +22,13 @@ const SherpaCard: React.FC = () => {
 
   return (
     <FCard>
-      <CardHeader justifyContent="space-between" alignItems="center" pr="32px" pl="32px" />
+      <CardHeader justifyContent="space-between" alignItems="center">
+        <CardBannerImage src={`${process.env.PUBLIC_URL}/images/launchpad/banners/sherpa_banner.png`} alt="banner" />
+      </CardHeader>
       <CardContent>
         <Flex alignItems="center" mb="24px">
           <Image src="/images/launchpad/sherpalogo.png" width={64} height={64} alt="sherpa" mr="16px" />
+
           <div>
             <Text fontSize="18px" bold>
               SHERPA CASH (SHERPA)
@@ -92,7 +95,7 @@ const CardContent = styled.div`
 
 const CardHeader = styled(Flex)`
   height: 96px;
-  background-image: url('/images/launchpad/sherpa_banner.png');
+  background-image: url('/images/launchpad/banners/sherpa_banner.png');
   background-size: cover;
   background-position: center center;
   border-radius: 32px 32px 0 0;
@@ -100,6 +103,10 @@ const CardHeader = styled(Flex)`
   div {
     color: white;
   }
+`
+
+const CardBannerImage = styled.img`
+  border-radius: 32px 32px 0 0;
 `
 
 const Details = styled(Flex)`

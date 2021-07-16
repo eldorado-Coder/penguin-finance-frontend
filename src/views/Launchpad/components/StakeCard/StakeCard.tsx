@@ -44,11 +44,15 @@ const StakeCard: React.FC = () => {
 
   return (
     <FCard>
-      <CardHeader justifyContent="space-between" alignItems="center" pr="32px" pl="32px">
-        <Image src="/images/launchpad/PEFI.png" width={64} height={64} alt="XPEFI" />
+      <CardHeader justifyContent="space-between" alignItems="center">
+        {/* <Image src="/images/launchpad/PEFI.png" width={64} height={64} alt="XPEFI" />
         <Text fontSize="32px" bold>
           STAKE XPEFI
-        </Text>
+        </Text> */}
+        <CardBannerImage
+          src={`${process.env.PUBLIC_URL}/images/launchpad/banners/stake_xPefi_banner.png`}
+          alt="banner"
+        />
       </CardHeader>
       <CardContent>
         <CurrentTiersWrapper>
@@ -235,6 +239,8 @@ const CardHeader = styled(Flex)`
     color: white;
   }
 `
+
+const CardBannerImage = styled.img``
 
 const CardAction = styled.div`
   background: ${(props) => props.theme.card.background};
