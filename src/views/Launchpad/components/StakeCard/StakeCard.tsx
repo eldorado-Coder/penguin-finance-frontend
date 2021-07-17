@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js'
 import React from 'react'
 import styled from 'styled-components'
-import { Button, useModal, Image, Text, Flex, Tag } from 'penguinfinance-uikit2'
+import { Button, useModal, Text, Flex, Tag } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import ReactTooltip from 'react-tooltip'
 import UnlockButton from 'components/UnlockButton'
@@ -69,9 +69,14 @@ const StakeCard: React.FC = () => {
             </HelperTag>
           </Flex>
           {PENGUIN_TIERS.map((penguinTier, index) => (
-            <Text key={penguinTier} bold className={penguinTier.toLowerCase()}>
-              {`${penguinTier} (+${tierHurdles.length > 0 ? tierHurdles[index] : 0} xPEFI)`}
-            </Text>
+            <Flex justifyContent='space-between'>
+              <Text key={penguinTier} bold className={penguinTier.toLowerCase()}>
+                {penguinTier}
+              </Text>
+              <Text key={penguinTier} bold className={penguinTier.toLowerCase()}>
+                {`(+${tierHurdles.length > 0 ? tierHurdles[index] : 0} xPEFI)`}
+              </Text>
+            </Flex>
           ))}
         </CurrentTiersWrapper>
         <StyledCardActions>
@@ -115,43 +120,43 @@ const StakeCard: React.FC = () => {
           )}
         </StyledCardActions>
         <StyledDetails>
-          <Label style={{ flex: 1 }}>
-            <Text color="primary">{TranslateString(384, 'Your Stake:')}</Text>
+          <Label>
+            <CardLabel>{TranslateString(384, 'Your Stake:')}</CardLabel>
           </Label>
           <Balance fontSize="16px" value={getBalanceNumber(launchpadStaked)} />
           <TokenSymbol>
-            <Text color="primary" fontSize="16px">
+            <CardLabel fontSize="16px">
               xPEFI
-            </Text>
+            </CardLabel>
           </TokenSymbol>
         </StyledDetails>
         <StyledDetails>
-          <Label style={{ flex: 1 }}>
-            <Text color="primary">{TranslateString(384, 'PEFI Equivalent:')}</Text>
+          <Label>
+            <CardLabel>{TranslateString(384, 'PEFI Equivalent:')}</CardLabel>
           </Label>
           <Balance
             fontSize="16px"
             value={new BigNumber(getBalanceNumber(launchpadStaked)).times(new BigNumber(xPefiToPefiRatio)).toNumber()}
           />
           <TokenSymbol>
-            <Text color="primary" fontSize="16px">
+            <CardLabel fontSize="16px">
               PEFI
-            </Text>
+            </CardLabel>
           </TokenSymbol>
         </StyledDetails>
         <Flex mt="20px">
-          <Label style={{ flex: 1 }}>
-            <Text color="primary">{TranslateString(384, 'Price per SHERPA:')}</Text>
+          <Label>
+            <CardLabel>{TranslateString(384, 'Price per SHERPA:')}</CardLabel>
           </Label>
           <TokenSymbol>
-            <Text color="primary" fontSize="16px">
+            <CardLabel fontSize="16px">
               {`$${PRICE_PER_SHERPA[yourPenguinTier]}`}
-            </Text>
+            </CardLabel>
           </TokenSymbol>
         </Flex>
         <StyledDetails>
-          <Label style={{ flex: 1 }}>
-            <Text color="primary">{TranslateString(384, 'Your Allocation:')}</Text>
+          <Label>
+            <CardLabel>{TranslateString(384, 'Your Allocation:')}</CardLabel>
           </Label>
           <TokenSymbol>
             <Text className="allocation" color="primary" fontSize="16px">
@@ -190,13 +195,21 @@ const StyledDetails = styled.div`
 `
 
 const Label = styled.div`
-  // margin-left: 20px;
+  flex: 1;
 `
+
+const CardLabel = styled(Text)`
+  color: ${({ theme }) => theme.isDark ? 'white' : 'black'};
+`;
 
 const TokenSymbol = styled.div`
   display: flex;
   align-items: center;
   margin-left: 5px;
+
+  .allocation {
+    color: #9200E7;
+  }
 `
 
 const PGUnlockButton = styled(UnlockButton)<{ isHomePage?: boolean }>`
@@ -220,6 +233,11 @@ const HelperTag = styled(Tag)`
   height: 22px;
   border-radius: 50%;
   justify-content: center;
+
+  border-color: ${({ theme }) => theme.isDark ? 'white' : 'black'};
+  span {
+    color: ${({ theme }) => theme.isDark ? 'white' : 'black'};
+  }
 `
 
 const CardContent = styled.div`
@@ -242,20 +260,16 @@ const CardHeader = styled(Flex)`
 
 const CardBannerImage = styled.img``
 
-const CardAction = styled.div`
-  background: ${(props) => props.theme.card.background};
-  border-radius: 0 0 32px 32px;
-`
 
 const CurrentTiersWrapper = styled.div`
   .astronaut {
-    color: #4040ff;
+    color: #2C77E5;
   }
   .penguineer {
-    color: #0098a1;
+    color: #1AB1E5;
   }
   .starlord {
-    color: #9a6aff;
+    color: #9200E7;
   }
 `
 
