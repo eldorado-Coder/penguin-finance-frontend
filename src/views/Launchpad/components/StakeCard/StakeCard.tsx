@@ -123,7 +123,7 @@ const StakeCard: React.FC = () => {
           <Label>
             <CardLabel>{TranslateString(384, 'Your Stake:')}</CardLabel>
           </Label>
-          <Balance fontSize="16px" value={getBalanceNumber(launchpadStaked)} />
+          <Balance fontSize="16px" decimals={2} value={getBalanceNumber(launchpadStaked)} />
           <TokenSymbol>
             <CardLabel fontSize="16px">xPEFI</CardLabel>
           </TokenSymbol>
@@ -134,6 +134,7 @@ const StakeCard: React.FC = () => {
           </Label>
           <Balance
             fontSize="16px"
+            decimals={2}
             value={new BigNumber(getBalanceNumber(launchpadStaked)).times(new BigNumber(xPefiToPefiRatio)).toNumber()}
           />
           <TokenSymbol>
