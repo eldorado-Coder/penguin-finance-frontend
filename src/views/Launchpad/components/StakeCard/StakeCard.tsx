@@ -194,6 +194,7 @@ const Label = styled.div`
 
 const CardLabel = styled(Text)`
   color: ${({ theme }) => (theme.isDark ? 'white' : 'black')};
+  font-weight: 600;
 `
 
 const TokenSymbol = styled.div`
