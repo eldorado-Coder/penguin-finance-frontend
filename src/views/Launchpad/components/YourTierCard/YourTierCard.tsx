@@ -77,11 +77,11 @@ const NoneTierWrapper = styled.div`
   svg {
     width: 140px !important;
     height: 140px;
-    path {
-      fill: #d4444c;
+    .none-tier-st1 {
+      fill: ${({ theme }) => !theme.isDark && 'black!important'};
     }
-    circle {
-      stroke: #d4444c;
+    .none-tier-st3 {
+      fill: ${({ theme }) => !theme.isDark && 'white!important'};
     }
   }
 `
