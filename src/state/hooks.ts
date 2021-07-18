@@ -24,7 +24,7 @@ import {
   updateLaunchpadTierHurdles,
   push as pushToast,
   remove as removeToast,
-  clear as clearToast
+  clear as clearToast,
 } from './actions'
 import {
   State,
@@ -37,7 +37,7 @@ import {
   EmperorState,
   GlobalState,
   DonationsState,
-  LaunchpadState
+  LaunchpadState,
 } from './types'
 import { fetchProfile } from './profile'
 import { fetchTeam, fetchTeams } from './teams'
@@ -169,11 +169,11 @@ export const useLaunchpad = (account): LaunchpadState => {
   const dispatch = useDispatch()
   useEffect(() => {
     const fetchLaunchpadData = async () => {
-      dispatch(fetchLaunchpadUserDataAsync(account));
+      dispatch(fetchLaunchpadUserDataAsync(account))
     }
 
     if (account) {
-      fetchLaunchpadData();
+      fetchLaunchpadData()
     }
   }, [account, dispatch, fastRefresh])
 
@@ -185,7 +185,7 @@ export const useLaunchpadTierHurdles = () => {
   const { fastRefresh } = useRefresh()
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(updateLaunchpadTierHurdles());
+    dispatch(updateLaunchpadTierHurdles())
   }, [dispatch, fastRefresh])
 
   const tierHurdles = useSelector((state: State) => state.launchpad.tierHurdles)
@@ -384,7 +384,7 @@ export const useNestApr = (): number => {
 }
 
 export const useNestApy = () => {
-  const staticFee = 12.45
+  const staticFee = 4
   return (1 + useNestApr() / DAYS_PER_YEAR) ** DAYS_PER_YEAR - 1 + staticFee
 }
 
