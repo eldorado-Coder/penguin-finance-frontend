@@ -18,7 +18,8 @@ const Launchpad: React.FC = () => {
   //   }
 
   return (
-    <FarmPage>
+    <LaunchpadPage>
+      <LaunchpadBgContainer />
       <IgloosBannerContainer>
         <BannerImage
           src={
@@ -40,12 +41,25 @@ const Launchpad: React.FC = () => {
         <StakeCard />
         <YourTierCard />
       </CardLayout>
-    </FarmPage>
+    </LaunchpadPage>
   )
 }
 
-const FarmPage = styled(Page)`
+const LaunchpadPage = styled(Page)`
   max-width: 1200px;
+`
+
+const LaunchpadBgContainer = styled.div`
+  background-image: url(/images/launchpad/launchpad_background.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  right: 0px;
+  left: 0px;
+  z-index: -1;
 `
 
 // banner
