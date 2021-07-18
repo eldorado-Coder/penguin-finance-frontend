@@ -69,11 +69,11 @@ const StakeCard: React.FC = () => {
             </HelperTag>
           </Flex>
           {PENGUIN_TIERS.map((penguinTier, index) => (
-            <Flex justifyContent='space-between'>
-              <Text key={penguinTier} bold className={penguinTier.toLowerCase()}>
+            <Flex justifyContent="space-between" key={penguinTier}>
+              <Text bold className={penguinTier.toLowerCase()}>
                 {penguinTier}
               </Text>
-              <Text key={penguinTier} bold className={penguinTier.toLowerCase()}>
+              <Text bold className={penguinTier.toLowerCase()}>
                 {`(+${tierHurdles.length > 0 ? tierHurdles[index] : 0} xPEFI)`}
               </Text>
             </Flex>
@@ -125,9 +125,7 @@ const StakeCard: React.FC = () => {
           </Label>
           <Balance fontSize="16px" value={getBalanceNumber(launchpadStaked)} />
           <TokenSymbol>
-            <CardLabel fontSize="16px">
-              xPEFI
-            </CardLabel>
+            <CardLabel fontSize="16px">xPEFI</CardLabel>
           </TokenSymbol>
         </StyledDetails>
         <StyledDetails>
@@ -139,9 +137,7 @@ const StakeCard: React.FC = () => {
             value={new BigNumber(getBalanceNumber(launchpadStaked)).times(new BigNumber(xPefiToPefiRatio)).toNumber()}
           />
           <TokenSymbol>
-            <CardLabel fontSize="16px">
-              PEFI
-            </CardLabel>
+            <CardLabel fontSize="16px">PEFI</CardLabel>
           </TokenSymbol>
         </StyledDetails>
         <Flex mt="20px">
@@ -149,9 +145,7 @@ const StakeCard: React.FC = () => {
             <CardLabel>{TranslateString(384, 'Price per SHERPA:')}</CardLabel>
           </Label>
           <TokenSymbol>
-            <CardLabel fontSize="16px">
-              {`$${PRICE_PER_SHERPA[yourPenguinTier]}`}
-            </CardLabel>
+            <CardLabel fontSize="16px">{`$${PRICE_PER_SHERPA[yourPenguinTier]}`}</CardLabel>
           </TokenSymbol>
         </Flex>
         <StyledDetails>
@@ -199,8 +193,8 @@ const Label = styled.div`
 `
 
 const CardLabel = styled(Text)`
-  color: ${({ theme }) => theme.isDark ? 'white' : 'black'};
-`;
+  color: ${({ theme }) => (theme.isDark ? 'white' : 'black')};
+`
 
 const TokenSymbol = styled.div`
   display: flex;
@@ -208,7 +202,7 @@ const TokenSymbol = styled.div`
   margin-left: 5px;
 
   .allocation {
-    color: #9200E7;
+    color: #9200e7;
   }
 `
 
@@ -234,9 +228,9 @@ const HelperTag = styled(Tag)`
   border-radius: 50%;
   justify-content: center;
 
-  border-color: ${({ theme }) => theme.isDark ? 'white' : 'black'};
+  border-color: ${({ theme }) => (theme.isDark ? 'white' : 'black')};
   span {
-    color: ${({ theme }) => theme.isDark ? 'white' : 'black'};
+    color: ${({ theme }) => (theme.isDark ? 'white' : 'black')};
   }
 `
 
@@ -260,16 +254,15 @@ const CardHeader = styled(Flex)`
 
 const CardBannerImage = styled.img``
 
-
 const CurrentTiersWrapper = styled.div`
   .astronaut {
-    color: #2C77E5;
+    color: #2c77e5;
   }
   .penguineer {
-    color: #1AB1E5;
+    color: #1ab1e5;
   }
   .starlord {
-    color: #9200E7;
+    color: #9200e7;
   }
 `
 
