@@ -37,6 +37,15 @@ export const compounderStake = async (strategyContract, amount, account) => {
     })
 }
 
+export const launchpadStake = async (launchpadContract, amount, account) => {
+  return launchpadContract.methods
+    .stake(new BigNumber(amount).times(new BigNumber(10).pow(18)).toString())
+    .send({ from: account })
+    .on('transactionHash', (tx) => {
+      return tx.transactionHash
+    })
+}
+
 export const sousStake = async (sousChefContract, amount, account) => {
   return sousChefContract.methods
     .enter(new BigNumber(amount).times(new BigNumber(10).pow(18)).toString())
@@ -76,6 +85,15 @@ export const unstake = async (masterChefContract, pid, amount, account) => {
 export const compounderUnstake = async (strategyContract, amount, account) => {
   return strategyContract.methods
     .withdraw(amount)
+    .send({ from: account })
+    .on('transactionHash', (tx) => {
+      return tx.transactionHash
+    })
+}
+
+export const launchpadUnstake = async (launchpadContract, amount, account) => {
+  return launchpadContract.methods
+    .unstake(new BigNumber(amount).times(new BigNumber(10).pow(18)).toString())
     .send({ from: account })
     .on('transactionHash', (tx) => {
       return tx.transactionHash

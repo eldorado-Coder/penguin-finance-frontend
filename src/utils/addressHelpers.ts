@@ -26,6 +26,9 @@ export const getPangolinAddress = () => {
 export const getXPefiAddress = () => {
   return getAddress(addresses.xPefi)
 }
+export const getTestXPefiAddress = () => {
+  return getAddress(addresses.testXPefi)
+}
 export const getMulticallAddress = () => {
   return getAddress(addresses.mulltiCall)
 }
@@ -74,4 +77,9 @@ export const getCharityPenguinDBAddress = () => {
 export const getCompounderFarmLpAddress = (lpSymbol: string, farmType: string) => {
   const farm = compounderFarms.find((farmItem) => farmItem.lpSymbol === lpSymbol && farmItem.type === farmType)
   return getAddress(farm.lpAddresses)
+}
+
+// launchpad
+export const getLaunchpadAddress = () => {
+  return getAddress(addresses.launchPad)
 }

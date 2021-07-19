@@ -30,8 +30,17 @@ const Balance: React.FC<BalanceProps> = ({ value, fontSize, color, decimals, isD
 
   return (
     <StyledText bold color={color} fontSize={fontSize} isDisabled={isDisabled}>
-      <CountUp start={previousValue.current} end={value} decimals={decimals} duration={1} separator="," />
-      {value && unit && <span>{` ${unit}`}</span>}
+      {value === 0 ? (
+        <>
+          <span>0.00</span>
+          {unit && <span>{` ${unit}`}</span>}
+        </>
+      ) : (
+        <>
+          <CountUp start={previousValue.current} end={value} decimals={decimals} duration={1} separator="," />
+          {unit && <span>{` ${unit}`}</span>}
+        </>
+      )}
     </StyledText>
   )
 }
@@ -40,7 +49,7 @@ Balance.defaultProps = {
   fontSize: '32px',
   isDisabled: false,
   color: 'text',
-  decimals: 3,
+  decimals: 2,
 }
 
 export default Balance

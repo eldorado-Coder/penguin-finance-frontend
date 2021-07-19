@@ -92,6 +92,18 @@ export interface PoolsState {
   data: Pool[]
 }
 
+export interface LaunchpadState {
+  allowance: number
+  stakedBalance: number
+  yourPenguinTier: number
+  allocation: number
+  canUnstake: boolean
+  timeRemainingToUnstake: number
+  depositEnd: number
+  xPefi: number
+  tierHurdles: number[]
+}
+
 export interface ProfileState {
   isInitialized: boolean
   isLoading: boolean
@@ -200,4 +212,5 @@ export interface State {
   global: GlobalState
   emperor: EmperorState
   donations: DonationsState
+  launchpad: LaunchpadState
 }

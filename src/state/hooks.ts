@@ -19,7 +19,9 @@ import {
   fetchLpsPublicDataAsync,
   fetchPoolsPublicDataAsync,
   fetchPoolsUserDataAsync,
+  fetchLaunchpadUserDataAsync,
   fetchEmperor,
+  updateLaunchpadTierHurdles,
   push as pushToast,
   remove as removeToast,
   clear as clearToast,
@@ -35,12 +37,12 @@ import {
   EmperorState,
   GlobalState,
   DonationsState,
+  LaunchpadState,
 } from './types'
 import { fetchProfile } from './profile'
 import { fetchTeam, fetchTeams } from './teams'
 import { fetchAchievements } from './achievements'
 import { fetchDonations } from './donations'
-
 
 const ZERO = new BigNumber(0)
 
@@ -160,6 +162,34 @@ export const usePools = (account): Pool[] => {
 export const usePoolFromPid = (sousId): Pool => {
   const pool = useSelector((state: State) => state.pools.data.find((p) => p.sousId === sousId))
   return pool
+}
+
+export const useLaunchpad = (account): LaunchpadState => {
+  const { fastRefresh } = useRefresh()
+  const dispatch = useDispatch()
+  useEffect(() => {
+    const fetchLaunchpadData = async () => {
+      dispatch(fetchLaunchpadUserDataAsync(account))
+    }
+
+    if (account) {
+      fetchLaunchpadData()
+    }
+  }, [account, dispatch, fastRefresh])
+
+  const launchpad = useSelector((state: State) => state.launchpad)
+  return launchpad
+}
+
+export const useLaunchpadTierHurdles = () => {
+  const { fastRefresh } = useRefresh()
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(updateLaunchpadTierHurdles())
+  }, [dispatch, fastRefresh])
+
+  const tierHurdles = useSelector((state: State) => state.launchpad.tierHurdles)
+  return tierHurdles
 }
 
 // Prices
@@ -296,10 +326,10 @@ export const useEmperor = () => {
   const emperorState: EmperorState = useSelector((state: State) => state.emperor)
   const dispatch = useDispatch()
   const { refreshRate } = useUserSetting()
-  
+
   useInterval(() => {
     dispatch(fetchEmperor(account))
-  }, refreshRate);
+  }, refreshRate)
 
   return emperorState
 }
@@ -334,10 +364,10 @@ export const useDonations = () => {
   const donationsState: DonationsState = useSelector((state: State) => state.donations)
   const dispatch = useDispatch()
   const { refreshRate } = useUserSetting()
-  
+
   useInterval(() => {
     dispatch(fetchDonations(account))
-  }, refreshRate);
+  }, refreshRate)
 
   return donationsState
 }
@@ -354,7 +384,7 @@ export const useNestApr = (): number => {
 }
 
 export const useNestApy = () => {
-  const staticFee = 20
+  const staticFee = 4
   return (1 + useNestApr() / DAYS_PER_YEAR) ** DAYS_PER_YEAR - 1 + staticFee
 }
 
