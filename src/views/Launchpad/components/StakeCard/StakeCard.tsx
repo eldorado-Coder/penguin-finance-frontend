@@ -41,7 +41,7 @@ const StakeCard: React.FC = () => {
   const [onPresentDeposit] = useModal(<DepositModal max={xPefiBalance} onConfirm={onStake} tokenName="xPEFI" />)
 
   const [onPresentWithdraw] = useModal(<WithdrawModal max={launchpadStaked} onConfirm={onUnstake} tokenName="xPEFI" />)
-  
+
   return (
     <FCard>
       <CardHeader justifyContent="space-between" alignItems="center">
@@ -263,7 +263,7 @@ const CurrentTiersWrapper = styled.div`
   .penguineer {
     color: #1ab1e5;
   }
-  .starlord {
+  .spacelord {
     color: #9200e7;
   }
 `
