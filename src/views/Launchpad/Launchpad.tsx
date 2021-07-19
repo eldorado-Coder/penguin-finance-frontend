@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-// import { ButtonMenu, ButtonMenuItem, Flex } from 'penguinfinance-uikit2'
+import { Text, Button, Flex } from 'penguinfinance-uikit2'
 import useTheme from 'hooks/useTheme'
 import FlexLayout from 'components/layout/Flex'
 import Page from 'components/layout/Page'
@@ -41,6 +41,14 @@ const Launchpad: React.FC = () => {
         <StakeCard />
         <YourTierCard />
       </CardLayout>
+      <FCard>
+        <Text color='text' textAlign='center'>
+          <span>The Penguin Launchpad</span> is a fundraising platform built on Avalanche with fairness, decentralization, and transparency as core principles. By utilizing <span>xPEFI</span>, we ensure that your token is distributed to a vast and committed userbase with through DeFi experience. If you&apos;d like to launch an Avalanche-native project, fill out the form below.
+        </Text>
+        <Flex justifyContent='center' mt='32px'>
+          <NormalButton scale='sm'>Launch My Token To Space</NormalButton>
+        </Flex>
+      </FCard>
     </LaunchpadPage>
   )
 }
@@ -102,6 +110,33 @@ const CardLayout = styled(FlexLayout)`
   @media (min-width: 1450px) {
     justify-content: space-between;
   }
+`
+
+const FCard = styled.div`
+  align-self: flex-start;
+  background: ${(props) => props.theme.card.background};
+  border-radius: 32px;
+  box-shadow: 0px 2px 12px -8px rgba(25, 19, 38, 0.1), 0px 1px 1px rgba(25, 19, 38, 0.05);
+  position: relative;
+  padding: 32px 24px;
+  margin-top: 16px;
+
+  @media (min-width: 1450px) {
+    margin-left: 8px;
+    margin-right: 8px;
+  }
+
+  span {
+    color: ${({ theme }) => theme.colors.success};
+    font-weight: bold;
+  }
+`
+
+const NormalButton = styled(Button)`
+  border-radius: 10px;
+  padding: 0 40px;
+  color: white;
+  background: #7645D9;
 `
 
 export default Launchpad

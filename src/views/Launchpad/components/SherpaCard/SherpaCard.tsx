@@ -20,13 +20,17 @@ const SherpaCard: React.FC = () => {
     window.open('https://hariseldon2.medium.com/sherpas-version-of-a-fair-launch-53b8cd383be9', '_blank')
   }
 
+  const handleViewTrailer = () => {
+    window.open('https://res.cloudinary.com/dbyunrpzq/video/upload/v1624954572/Sample_Final_02_p5ubch.mp4', '_blank');
+  }
+
   return (
     <FCard>
       <CardHeader justifyContent="space-between" alignItems="center">
         <CardBannerImage src={`${process.env.PUBLIC_URL}/images/launchpad/banners/sherpa_banner.png`} alt="banner" />
       </CardHeader>
       <CardContent>
-        <Flex alignItems="center" mb="24px">
+        <Flex alignItems="center" mb="12px">
           <Image src="/images/launchpad/sherpalogo.png" width={64} height={64} alt="sherpa" mr="16px" />
 
           <div>
@@ -46,15 +50,19 @@ const SherpaCard: React.FC = () => {
             </Details>
           </div>
         </Flex>
+        <Text fontSize="12px" mb='16px'>A fully decentralized protocol for private transactions on Avalanche</Text>
         <Flex justifyContent="space-between" mb="4px">
           <Text fontSize="12px">Launch Date</Text>
           <Text fontSize="14px">July, 2021</Text>
         </Flex>
-        <Flex justifyContent="space-between" mb="16px">
+        <Flex justifyContent="space-between" mb="24px">
           <Text fontSize="12px">For Sale</Text>
           <CardValue fontSize="14px" suffix=" SHERPA" value={600000} />
         </Flex>
-        <Text fontSize="12px" mb="4px">
+        <Flex justifyContent='center'>
+          <NormalButton onClick={handleViewTrailer}>View Trailer</NormalButton>
+        </Flex>
+        {/* <Text fontSize="12px" mb="4px">
           Progress
         </Text>
         <ProgressWrapper>
@@ -63,7 +71,7 @@ const SherpaCard: React.FC = () => {
         <Flex justifyContent="space-between" mt="4px">
           <Text fontSize="12px">0.00%</Text>
           <CardValue fontSize="12px" value={600000} />
-        </Flex>
+        </Flex> */}
         <ClaimsWrapper>
           <Text className="your-token" fontSize="12px" mb="4px">
             Your tokens to claim
@@ -131,7 +139,7 @@ const ProgressWrapper = styled.div`
 // `
 
 const ClaimsWrapper = styled.div`
-  margin-top: 60px;
+  margin-top: 24px;
   .your-token {
     text-decoration: underline;
   }
@@ -173,6 +181,12 @@ const ClaimButton = styled(Button)`
   width: 80px;
   background: ${({ theme }) => theme.isDark && theme.colors.textDisabled};
   color: white;
+`
+
+const NormalButton = styled(Button)`
+  border-radius: 10px;
+  padding: 0 16px;
+  min-width: 160px;
 `
 
 export default SherpaCard
