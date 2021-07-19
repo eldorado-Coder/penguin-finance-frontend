@@ -6,8 +6,7 @@ import BigNumber from 'bignumber.js'
 import SvgIcon from 'components/SvgIcon'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { useLaunchpad } from 'state/hooks'
-
-const PENGUIN_TIERS = ['Astronaut', 'Penguineer', 'Starlord']
+import { PENGUIN_TIERS } from 'views/Launchpad/utils'
 
 const YourTierCard: React.FC = () => {
   const { account } = useWeb3React()
