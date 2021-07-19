@@ -1,12 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Image, Text, Flex, Progress, Input, Button } from 'penguinfinance-uikit2'
-import { useWeb3React } from '@web3-react/core'
+// import { useWeb3React } from '@web3-react/core'
 import CardValue from 'components/CardValue'
-import SherpaCardFooter from './SherpaCardFooter'
+// import SherpaCardFooter from './SherpaCardFooter'
 
 const SherpaCard: React.FC = () => {
-  const { account } = useWeb3React()
+  // const { account } = useWeb3React()
 
   const handleViewHomePage = () => {
     window.open('https://www.sherpa.cash/', '_blank')
@@ -125,10 +125,10 @@ const ProgressWrapper = styled.div`
   }
 `
 
-const CardAction = styled.div`
-  background: ${(props) => props.theme.card.background};
-  border-radius: 0 0 32px 32px;
-`
+// const CardAction = styled.div`
+//   background: ${(props) => props.theme.card.background};
+//   border-radius: 0 0 32px 32px;
+// `
 
 const ClaimsWrapper = styled.div`
   margin-top: 60px;

@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js'
 import React, { useCallback, useMemo, useState } from 'react'
 import { Button, Modal } from 'penguinfinance-uikit2'
 import ModalActions from 'components/ModalActions'
-import { useXPefi } from 'hooks/useContract'
+import { useXPefi, useTestXPefi } from 'hooks/useContract'
 import { useWeb3React } from '@web3-react/core'
 import useLaunchpadXPefiApprove from 'hooks/useLaunchpadXPefiApprove'
 import { getLaunchpadAddress } from 'utils/addressHelpers';
@@ -22,7 +22,8 @@ const DepositModal: React.FC<DepositModalProps> = ({ max, onConfirm, onDismiss, 
   const [pendingTx, setPendingTx] = useState(false)
   const TranslateString = useI18n()
   const { onApproveXPefi } = useLaunchpadXPefiApprove()
-  const xPefiContract = useXPefi()
+  // const xPefiContract = useXPefi()
+  const xPefiContract = useTestXPefi();
   const { account } = useWeb3React();
 
   const fullBalance = useMemo(() => {

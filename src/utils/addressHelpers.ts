@@ -26,6 +26,9 @@ export const getPangolinAddress = () => {
 export const getXPefiAddress = () => {
   return getAddress(addresses.xPefi)
 }
+export const getTestXPefiAddress = () => {
+  return getAddress(addresses.testXPefi)
+}
 export const getMulticallAddress = () => {
   return getAddress(addresses.mulltiCall)
 }

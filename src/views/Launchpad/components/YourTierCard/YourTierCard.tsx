@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Image, Text, Flex } from 'penguinfinance-uikit2'
+import { Flex } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import BigNumber from 'bignumber.js'
 import SvgIcon from 'components/SvgIcon'
@@ -18,10 +18,6 @@ const YourTierCard: React.FC = () => {
   return (
     <FCard>
       <CardHeader justifyContent="space-between" alignItems="center">
-        {/* <Image src={`${process.env.PUBLIC_URL}/images/launchpad/banners/launchpad_banner_dark.png`} width={64} height={64} alt="XPEFI" />
-        <Text bold fontSize="32px">
-          YOUR TIER
-        </Text> */}
         <CardBannerImage src={`${process.env.PUBLIC_URL}/images/launchpad/banners/your_tier_banner.png`} alt="banner" />
       </CardHeader>
       <CardContent>

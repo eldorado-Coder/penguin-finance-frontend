@@ -2,7 +2,7 @@ import launchpadABI from 'config/abi/launchpad.json'
 import { AbiItem } from 'web3-utils'
 import xPefiAbi from 'config/abi/xPefi.json'
 import multicall from 'utils/multicall'
-import { getLaunchpadAddress, getXPefiAddress } from 'utils/addressHelpers'
+import { getLaunchpadAddress, getXPefiAddress, getTestXPefiAddress } from 'utils/addressHelpers'
 import BigNumber from 'bignumber.js'
 import { getWeb3 } from 'utils/web3'
 
@@ -138,7 +138,8 @@ export const fetchTierHurdles = async () => {
 export const fetchLaunchpadAllowance = async (account) => {
   const web3 = getWeb3()
   const abi = (xPefiAbi as unknown) as AbiItem
-  const xPefiContract = new web3.eth.Contract(abi, getXPefiAddress())
+  // const xPefiContract = new web3.eth.Contract(abi, getXPefiAddress())
+  const xPefiContract = new web3.eth.Contract(abi, getTestXPefiAddress())
   const allowanceBalance = (await xPefiContract.methods.allowance(account, getLaunchpadAddress()).call()) / 1e18
 
   return allowanceBalance
@@ -147,7 +148,8 @@ export const fetchLaunchpadAllowance = async (account) => {
 export const fetchUserXPefiBalance = async (account) => {
   const web3 = getWeb3()
   const abi = (xPefiAbi as unknown) as AbiItem
-  const xPefiContract = new web3.eth.Contract(abi, getXPefiAddress())
+  // const xPefiContract = new web3.eth.Contract(abi, getXPefiAddress())
+  const xPefiContract = new web3.eth.Contract(abi, getTestXPefiAddress())
   const balanceOf = await xPefiContract.methods.balanceOf(account).call()
 
   return balanceOf

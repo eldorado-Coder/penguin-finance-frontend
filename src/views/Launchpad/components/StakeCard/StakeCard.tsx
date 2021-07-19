@@ -41,7 +41,7 @@ const StakeCard: React.FC = () => {
   const [onPresentDeposit] = useModal(<DepositModal max={xPefiBalance} onConfirm={onStake} tokenName="xPEFI" />)
 
   const [onPresentWithdraw] = useModal(<WithdrawModal max={launchpadStaked} onConfirm={onUnstake} tokenName="xPEFI" />)
-
+  
   return (
     <FCard>
       <CardHeader justifyContent="space-between" alignItems="center">
@@ -154,7 +154,7 @@ const StakeCard: React.FC = () => {
             <CardLabel>{TranslateString(384, 'Your Allocation:')}</CardLabel>
           </Label>
           <TokenSymbol>
-            <Text className="allocation" color="primary" fontSize="16px">
+            <Text className="allocation" bold color="primary" fontSize="16px">
               {`${allocation} AP`}
             </Text>
           </TokenSymbol>

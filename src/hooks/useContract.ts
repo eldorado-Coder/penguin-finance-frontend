@@ -18,7 +18,8 @@ import {
   getCharityPenguinDBAddress,
   getEmperorPenguinDBAddress,
   getXPefiAddress,
-  getLaunchpadAddress
+  getLaunchpadAddress,
+  getTestXPefiAddress
 } from 'utils/addressHelpers'
 import getFarmMasterChefAddress from 'utils/getFarmMasterChefAddress'
 import getFarmMasterChefAbi from 'utils/getFarmMasterChefAbi'
@@ -157,6 +158,11 @@ export const useCharityPenguinDB = () => {
 export const useXPefi = () => {
   const abi = (xPefi as unknown) as AbiItem
   return useContract(abi, getXPefiAddress())
+}
+
+export const useTestXPefi = () => {
+  const abi = (xPefi as unknown) as AbiItem
+  return useContract(abi, getTestXPefiAddress())
 }
 
 export const useLaunchPad = () => {
