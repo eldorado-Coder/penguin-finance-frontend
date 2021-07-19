@@ -12,7 +12,7 @@ const YourTierCard: React.FC = () => {
   const { account } = useWeb3React()
   const { stakedBalance: staked, yourPenguinTier } = useLaunchpad(account)
   const launchpadStaked = getBalanceNumber(new BigNumber(staked))
-  const hasTier = launchpadStaked > 299
+  const hasTier = launchpadStaked >= 300
 
   return (
     <FCard>
