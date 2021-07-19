@@ -128,6 +128,7 @@ export default {
   // launchpad
   launchPad: {
     43113: '',
+    // TODO: test purpose only
     43114: '0xfcB9591B5E7eA546F8eBae21FC2a47912278f0d8',
   },
 }
