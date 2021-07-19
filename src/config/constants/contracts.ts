@@ -73,7 +73,7 @@ export default {
   },
   testXPefi: {
     43113: '',
-    43114: '0x3D75E0DD0c20C445e38ba4e38456453E67c160b7',
+    43114: '0xD79A36056c271B988C5F1953e664E61416A9820F',
   },
   png: {
     43113: '',
@@ -128,7 +128,7 @@ export default {
   // launchpad
   launchPad: {
     43113: '',
-    // TODO: test purpose only
-    43114: '0xfcB9591B5E7eA546F8eBae21FC2a47912278f0d8',
+    // TODO: final version
+    43114: '0x1c0fe0A000f6DF48B2DaBf86A19934dd6B6F9477',
   },
 }

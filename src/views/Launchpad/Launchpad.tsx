@@ -17,6 +17,13 @@ const Launchpad: React.FC = () => {
   //     setActiveTab(tab)
   //   }
 
+  const onClickLaunchToken = () => {
+    window.open(
+      'https://docs.google.com/forms/d/e/1FAIpQLSdgM5oq-3shkNQeEhTGHP-JDiRY6Y3URaGnKCf6QVt4qSJVMA/viewform',
+      '_blank',
+    )
+  }
+
   return (
     <LaunchpadPage>
       <LaunchpadBgContainer />
@@ -42,11 +49,16 @@ const Launchpad: React.FC = () => {
         <YourTierCard />
       </CardLayout>
       <FCard>
-        <Text color='text' textAlign='center'>
-          <span>The Penguin Launchpad</span> is a fundraising platform built on Avalanche with fairness, decentralization, and transparency as core principles. By utilizing <span>xPEFI</span>, we ensure that your token is distributed to a vast and committed userbase with through DeFi experience. If you&apos;d like to launch an Avalanche-native project, fill out the form below.
+        <Text color="text" textAlign="center">
+          <span>The Penguin Launchpad</span> is a fundraising platform built on Avalanche with fairness,
+          decentralization, and transparency as core principles. By utilizing <span>xPEFI</span>, we ensure that your
+          token is distributed to a vast and committed userbase with through DeFi experience. If you&apos;d like to
+          launch an Avalanche-native project, fill out the form below.
         </Text>
-        <Flex justifyContent='center' mt='32px'>
-          <NormalButton scale='sm'>Launch My Token To Space</NormalButton>
+        <Flex justifyContent="center" mt="32px">
+          <NormalButton scale="sm" onClick={onClickLaunchToken}>
+            Launch My Token To Space
+          </NormalButton>
         </Flex>
       </FCard>
     </LaunchpadPage>
@@ -136,7 +148,7 @@ const NormalButton = styled(Button)`
   border-radius: 10px;
   padding: 0 40px;
   color: white;
-  background: #7645D9;
+  background: #7645d9;
 `
 
 export default Launchpad
