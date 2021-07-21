@@ -156,7 +156,7 @@ const StakeCard: React.FC = () => {
           </Label>
           <TokenSymbol>
             <Text className="allocation" bold color="primary" fontSize="16px">
-              {`${allocation} AP`}
+              {`${getBalanceNumber(new BigNumber(allocation))} AP`}
             </Text>
           </TokenSymbol>
         </StyledDetails>
