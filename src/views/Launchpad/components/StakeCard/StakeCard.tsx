@@ -29,13 +29,14 @@ const StakeCard: React.FC = () => {
     depositEnd,
     xPefi,
     yourPenguinTier,
+    allocation,
   } = useLaunchpad(account)
   const tierHurdles = useLaunchpadTierHurdles()
   const xPefiBalance = new BigNumber(xPefi)
   const launchpadStaked = new BigNumber(staked)
   const currentDate = new Date().getTime()
   const unstakeTooltip = getUnstakeTooltip(timeRemainingToUnstake)
-  const allocation = getAllocation(getBalanceNumber(launchpadStaked))
+  // const allocation = getAllocation(getBalanceNumber(launchpadStaked))
   const xPefiToPefiRatio = getXPefiToPefiRatio(pefiPool)
 
   const [onPresentDeposit] = useModal(<DepositModal max={xPefiBalance} onConfirm={onStake} tokenName="xPEFI" />)
