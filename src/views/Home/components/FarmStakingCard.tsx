@@ -65,7 +65,7 @@ const FarmedStakingCard = () => {
         <Title size="xl" mb="24px">
           {TranslateString(542, 'Farms & Staking')}
         </Title>
-        <CardImage src="/images/penguin-logo.png" alt="penguin logo" width={64} height={64} />
+        <CardImage src="/images/penguin-finance-logo.svg" alt="penguin logo" width={64} height={64} />
         <Block>
           <Label>{TranslateString(544, 'PEFI to Harvest')}:</Label>
           <PefiHarvestBalance />
