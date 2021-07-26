@@ -61,10 +61,7 @@ const SherpaCard: React.FC = () => {
           <Text fontSize="12px">To Be Distributed</Text>
           <CardValue fontSize="14px" suffix=" SHERPA" value={600000} />
         </Flex>
-        <Flex justifyContent="center">
-          <NormalButton onClick={handleViewTrailer}>View Trailer</NormalButton>
-        </Flex>
-        {/* <Text fontSize="12px" mb="4px">
+        <Text fontSize="12px" mb="4px">
           Progress
         </Text>
         <ProgressWrapper>
@@ -73,18 +70,10 @@ const SherpaCard: React.FC = () => {
         <Flex justifyContent="space-between" mt="4px">
           <Text fontSize="12px">0.00%</Text>
           <CardValue fontSize="12px" value={600000} />
-        </Flex> */}
-        <ClaimsWrapper>
-          <Text className="your-token" fontSize="12px" mb="4px">
-            Your tokens to claim
-          </Text>
-          <div className="claim-container">
-            <StyledInput scale="sm" />
-            <ClaimButton disabled height="32px" size="sm">
-              Claim
-            </ClaimButton>
-          </div>
-        </ClaimsWrapper>
+        </Flex>
+        <Flex justifyContent="center">
+          <NormalButton onClick={handleViewTrailer}>View Trailer</NormalButton>
+        </Flex>
       </CardContent>
       {/* <CardAction>
         <SherpaCardFooter />
@@ -139,17 +128,6 @@ const ProgressWrapper = styled.div`
 //   background: ${(props) => props.theme.card.background};
 //   border-radius: 0 0 32px 32px;
 // `
-
-const ClaimsWrapper = styled.div`
-  margin-top: 24px;
-  .your-token {
-    text-decoration: underline;
-  }
-
-  .claim-container {
-    position: relative;
-  }
-`
 
 const FCard = styled.div`
   align-self: flex-start;
