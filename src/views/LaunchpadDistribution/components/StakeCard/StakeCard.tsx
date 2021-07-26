@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js'
 import React from 'react'
 import styled from 'styled-components'
-import { Button, useModal, Text, Flex, Tag } from 'penguinfinance-uikit2'
+import { Button, useModal, Text, Flex, Input } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import ReactTooltip from 'react-tooltip'
 import UnlockButton from 'components/UnlockButton'
@@ -9,12 +9,14 @@ import Balance from 'components/Balance'
 import useI18n from 'hooks/useI18n'
 import { useLaunchpadStake } from 'hooks/useStake'
 import { useLaunchpadUnstake } from 'hooks/useUnstake'
-import { usePools, useLaunchpad, useLaunchpadTierHurdles } from 'state/hooks'
+import { usePools, useLaunchpad } from 'state/hooks'
 import { getBalanceNumber } from 'utils/formatBalance'
 import DepositModal from './DepositModal'
 import WithdrawModal from './WithdrawModal'
-import { PENGUIN_TIERS, PRICE_PER_SHERPA, getUnstakeTooltip, getAllocation, getXPefiToPefiRatio } from '../../utils'
+import { PRICE_PER_SHERPA, getUnstakeTooltip } from '../../utils'
 
+const helperText =
+  'In order to participate, you must first read & agree to the terms & conditions. The "Trade" button will unlock afterwards, allowing you to exchange your PEFI for SHERPA tokens.'
 const StakeCard: React.FC = () => {
   const { account } = useWeb3React()
   const TranslateString = useI18n()
@@ -31,13 +33,10 @@ const StakeCard: React.FC = () => {
     yourPenguinTier,
     allocation,
   } = useLaunchpad(account)
-  const tierHurdles = useLaunchpadTierHurdles()
   const xPefiBalance = new BigNumber(xPefi)
   const launchpadStaked = new BigNumber(staked)
   const currentDate = new Date().getTime()
   const unstakeTooltip = getUnstakeTooltip(timeRemainingToUnstake)
-  // const allocation = getAllocation(getBalanceNumber(launchpadStaked))
-  const xPefiToPefiRatio = getXPefiToPefiRatio(pefiPool)
 
   const [onPresentDeposit] = useModal(<DepositModal max={xPefiBalance} onConfirm={onStake} tokenName="xPEFI" />)
 
@@ -46,40 +45,15 @@ const StakeCard: React.FC = () => {
   return (
     <FCard>
       <CardHeader justifyContent="space-between" alignItems="center">
-        {/* <Image src="/images/launchpad/PEFI.png" width={64} height={64} alt="XPEFI" />
-        <Text fontSize="32px" bold>
-          STAKE XPEFI
-        </Text> */}
         <CardBannerImage
           src={`${process.env.PUBLIC_URL}/images/launchpad/banners/stake_xPefi_banner.png`}
           alt="banner"
         />
       </CardHeader>
       <CardContent>
-        <CurrentTiersWrapper>
-          <Flex justifyContent="space-between" alignItems="center" mb="8px">
-            <Text>Current tiers:</Text>
-            <HelperTag variant="primary" outline>
-              <a
-                href="https://penguin-finance.medium.com/introducing-the-penguin-launchpad-the-best-launchpad-on-avalanche-19929735d309"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span>?</span>
-              </a>
-            </HelperTag>
-          </Flex>
-          {PENGUIN_TIERS.map((penguinTier, index) => (
-            <Flex justifyContent="space-between" key={penguinTier}>
-              <Text bold className={penguinTier.toLowerCase()}>
-                {penguinTier}
-              </Text>
-              <Text bold className={penguinTier.toLowerCase()}>
-                {`(+${tierHurdles.length > 0 ? tierHurdles[index] : 0} xPEFI)`}
-              </Text>
-            </Flex>
-          ))}
-        </CurrentTiersWrapper>
+        <Text fontSize="14px" mb="16px">
+          {helperText}
+        </Text>
         <StyledCardActions>
           {!account && <PGUnlockButton />}
           {account && (
@@ -89,7 +63,7 @@ const StakeCard: React.FC = () => {
                 width="100%"
                 onClick={onPresentDeposit}
               >
-                Stake xPEFI
+                View Terms & Conditions
               </NormalButton>
               <StyledActionSpacer />
               <UnstakeButtonContainer>
@@ -120,28 +94,17 @@ const StakeCard: React.FC = () => {
             </>
           )}
         </StyledCardActions>
-        <StyledDetails>
-          <Label>
-            <CardLabel>{TranslateString(384, 'Your Stake:')}</CardLabel>
-          </Label>
-          <Balance fontSize="16px" decimals={2} value={Math.floor(getBalanceNumber(launchpadStaked) * 100) / 100} />
-          <TokenSymbol>
-            <CardLabel fontSize="16px">xPEFI</CardLabel>
-          </TokenSymbol>
-        </StyledDetails>
-        <StyledDetails>
-          <Label>
-            <CardLabel>{TranslateString(384, 'PEFI Equivalent:')}</CardLabel>
-          </Label>
-          <Balance
-            fontSize="16px"
-            decimals={2}
-            value={new BigNumber(getBalanceNumber(launchpadStaked)).times(new BigNumber(xPefiToPefiRatio)).toNumber()}
-          />
-          <TokenSymbol>
-            <CardLabel fontSize="16px">PEFI</CardLabel>
-          </TokenSymbol>
-        </StyledDetails>
+        <TradeWrapper>
+          <Text className="your-token" fontSize="12px" mb="4px">
+            Your tokens to acquire
+          </Text>
+          <div className="claim-container">
+            <StyledInput scale="sm" />
+            <TradeButton disabled height="32px" size="sm">
+              Trade
+            </TradeButton>
+          </div>
+        </TradeWrapper>
         <Flex mt="20px">
           <Label>
             <CardLabel>{TranslateString(384, 'Price per SHERPA:')}</CardLabel>
@@ -160,10 +123,16 @@ const StakeCard: React.FC = () => {
             </Text>
           </TokenSymbol>
         </StyledDetails>
+        <StyledDetails>
+          <Label>
+            <CardLabel>{TranslateString(384, 'Your Stake:')}</CardLabel>
+          </Label>
+          <Balance fontSize="16px" decimals={2} value={Math.floor(getBalanceNumber(launchpadStaked) * 100) / 100} />
+          <TokenSymbol>
+            <CardLabel fontSize="16px">xPEFI</CardLabel>
+          </TokenSymbol>
+        </StyledDetails>
       </CardContent>
-      {/* <CardAction>
-        <PoolCardFooter />
-      </CardAction> */}
     </FCard>
   )
 }
@@ -224,19 +193,6 @@ const FCard = styled.div`
   min-height: 480px;
 `
 
-const HelperTag = styled(Tag)`
-  margin-right: 6px;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  justify-content: center;
-
-  border-color: ${({ theme }) => (theme.isDark ? 'white' : 'black')};
-  span {
-    color: ${({ theme }) => (theme.isDark ? 'white' : 'black')};
-  }
-`
-
 const CardContent = styled.div`
   padding: 24px 32px;
   background: ${(props) => props.theme.card.background};
@@ -256,18 +212,6 @@ const CardHeader = styled(Flex)`
 `
 
 const CardBannerImage = styled.img``
-
-const CurrentTiersWrapper = styled.div`
-  .astronaut {
-    color: #2c77e5;
-  }
-  .penguineer {
-    color: #1ab1e5;
-  }
-  .spacelord {
-    color: #9200e7;
-  }
-`
 
 const NormalButton = styled(Button)`
   border-radius: 10px;
@@ -317,6 +261,43 @@ const CustomToolTip = styled(ReactTooltip)`
     border-top-color: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#383466!important')};
     border-bottom-color: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#383466!important')};
   }
+`
+
+// claims wrapper
+const TradeWrapper = styled.div`
+  margin-top: 24px;
+  .your-token {
+    text-decoration: underline;
+  }
+
+  .claim-container {
+    position: relative;
+  }
+`
+
+const StyledInput = styled(Input)`
+  box-shadow: none;
+  width: 100%;
+  background: transparent;
+  border: 2px solid ${({ theme }) => theme.colors.input} !important;
+  padding: 0 88px 0 12px;
+  border-radius: 12px;
+  font-size: 14px;
+
+  &:focus:not(:disabled) {
+    box-shadow: none;
+  }
+`
+
+const TradeButton = styled(Button)`
+  height: 32px;
+  border-radius: 12px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 80px;
+  background: ${({ theme }) => theme.isDark && theme.colors.textDisabled};
+  color: white;
 `
 
 export default StakeCard

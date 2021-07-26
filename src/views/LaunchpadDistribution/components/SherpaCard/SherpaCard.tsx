@@ -32,7 +32,6 @@ const SherpaCard: React.FC = () => {
       <CardContent>
         <Flex alignItems="center" mb="12px">
           <Image src="/images/launchpad/sherpalogo.png" width={64} height={64} alt="sherpa" mr="16px" />
-
           <div>
             <Text fontSize="18px" bold>
               SHERPA CASH (SHERPA)
