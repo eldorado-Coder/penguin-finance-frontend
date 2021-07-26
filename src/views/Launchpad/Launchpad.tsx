@@ -92,6 +92,7 @@ const IgloosBannerContainer = styled.div`
 `
 const BannerImage = styled.img`
   z-index: -1;
+  width: 100%;
 `
 
 // const OptionItem = styled(ButtonMenuItem)`
