@@ -19,6 +19,7 @@ const Home = lazy(() => import('./views/Home'))
 const Farms = lazy(() => import('./views/Farms'))
 const Arena = lazy(() => import('./views/Arena'))
 const Launchpad = lazy(() => import('./views/Launchpad'))
+const LaunchpadDistribution = lazy(() => import('./views/LaunchpadDistribution'))
 const Emperor = lazy(() => import('./views/Emperor'))
 const CovidEmperor = lazy(() => import('./views/CovidEmperor'))
 const Club = lazy(() => import('./views/Club'))
@@ -67,6 +68,10 @@ const App: React.FC = () => {
             </Route>
             <Route path="/launchpad">
               <Launchpad />
+            </Route>
+            {/* after stake xPefi */}
+            <Route path="/launchpad-distribution">
+              <LaunchpadDistribution />
             </Route>
             <Route path="/club">
               <Club />
