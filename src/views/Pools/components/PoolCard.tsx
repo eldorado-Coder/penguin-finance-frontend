@@ -277,7 +277,7 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
         </Flex>
         <div style={{ marginBottom: '8px', display: 'flex', alignItems: 'center' }}>
           <Flex minWidth="100%" alignItems="center">
-            <Image src={`/images/pools/${image || tokenName}.png`} width={64} height={64} alt={tokenName} />
+            <Image src="/images/pools/xPefi.png" width={64} height={64} alt={tokenName} />
             <Flex flexDirection="column" width="100%">
               <Flex ml="8px" justifyContent="space-between">
                 <Text color="textSubtle" bold fontSize="14px">

@@ -21,7 +21,7 @@ const SherpaCard: React.FC = () => {
   }
 
   const handleViewTrailer = () => {
-    window.open('https://res.cloudinary.com/dbyunrpzq/video/upload/v1624954572/Sample_Final_02_p5ubch.mp4', '_blank');
+    window.open('https://res.cloudinary.com/dbyunrpzq/video/upload/v1624954572/Sample_Final_02_p5ubch.mp4', '_blank')
   }
 
   return (
@@ -50,16 +50,18 @@ const SherpaCard: React.FC = () => {
             </Details>
           </div>
         </Flex>
-        <Text fontSize="12px" mb='16px'>A fully decentralized protocol for private transactions on Avalanche</Text>
+        <Text fontSize="12px" mb="16px">
+          A fully decentralized protocol for private transactions on Avalanche
+        </Text>
         <Flex justifyContent="space-between" mb="4px">
           <Text fontSize="12px">Launch Date</Text>
-          <Text fontSize="14px">July, 2021</Text>
+          <Text fontSize="14px">July 29th, 2021</Text>
         </Flex>
         <Flex justifyContent="space-between" mb="24px">
           <Text fontSize="12px">For Sale</Text>
           <CardValue fontSize="14px" suffix=" SHERPA" value={600000} />
         </Flex>
-        <Flex justifyContent='center'>
+        <Flex justifyContent="center">
           <NormalButton onClick={handleViewTrailer}>View Trailer</NormalButton>
         </Flex>
         {/* <Text fontSize="12px" mb="4px">
