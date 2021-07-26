@@ -9,7 +9,7 @@ import Balance from 'components/Balance'
 import useI18n from 'hooks/useI18n'
 import { useLaunchpadStake } from 'hooks/useStake'
 import { useLaunchpadUnstake } from 'hooks/useUnstake'
-import { usePools, useLaunchpad } from 'state/hooks'
+import { useLaunchpad } from 'state/hooks'
 import { getBalanceNumber } from 'utils/formatBalance'
 import DepositModal from './DepositModal'
 import WithdrawModal from './WithdrawModal'
@@ -20,8 +20,6 @@ const helperText =
 const StakeCard: React.FC = () => {
   const { account } = useWeb3React()
   const TranslateString = useI18n()
-  const pools = usePools(account)
-  const pefiPool = pools.length > 0 ? pools[0] : null
   const { onStake } = useLaunchpadStake()
   const { onUnstake } = useLaunchpadUnstake()
   const {
