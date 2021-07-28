@@ -7,11 +7,12 @@ import ReactTooltip from 'react-tooltip'
 import UnlockButton from 'components/UnlockButton'
 import Balance from 'components/Balance'
 import useI18n from 'hooks/useI18n'
-import { useLaunchpadStake } from 'hooks/useStake'
+import { useBoosterRocketActions } from 'hooks/useBoosterRocket'
 import { useLaunchpadUnstake } from 'hooks/useUnstake'
-import { usePools, useLaunchpad } from 'state/hooks'
+import { usePools, useLaunchpad, useBoosterRocket as useBoosterRocketStore } from 'state/hooks'
 import { getBalanceNumber } from 'utils/formatBalance'
 import TermsAndConditionModal from './TermsAndConditionModal'
+import TradeModal from './TradeModal'
 import WithdrawModal from './WithdrawModal'
 import { PRICE_PER_SHERPA, getUnstakeTooltip, getXPefiToPefiRatio } from '../../utils'
 
@@ -21,7 +22,8 @@ const StakeCard: React.FC = () => {
   const TranslateString = useI18n()
   const pools = usePools(account)
   const pefiPool = pools.length > 0 ? pools[0] : null
-  const { onStake } = useLaunchpadStake()
+  const { hasTheUserAgreed } = useBoosterRocketStore(account)
+  const { onAgreeTerms, onPurchaseToken } = useBoosterRocketActions()
   const { onUnstake } = useLaunchpadUnstake()
   const { stakedBalance: staked, canUnstake, timeRemainingToUnstake, yourPenguinTier, allocation } = useLaunchpad(
     account,
@@ -30,8 +32,15 @@ const StakeCard: React.FC = () => {
   const unstakeTooltip = getUnstakeTooltip(timeRemainingToUnstake)
   const xPefiToPefiRatio = getXPefiToPefiRatio(pefiPool)
 
-  const [onPresentTermsAndConditions] = useModal(<TermsAndConditionModal onConfirm={onStake} />)
-
+  const [onPresentTradeModal] = useModal(
+    <TradeModal
+      onConfirm={onPurchaseToken}
+      payTokenName="PEFI"
+      buyTokenName="SHERPA"
+      sherpaPrice={PRICE_PER_SHERPA[yourPenguinTier]}
+    />,
+  )
+  const [onPresentTermsAndConditions] = useModal(<TermsAndConditionModal onConfirm={onAgreeTerms} />)
   const [onPresentWithdraw] = useModal(<WithdrawModal max={launchpadStaked} onConfirm={onUnstake} tokenName="xPEFI" />)
 
   return (
@@ -52,7 +61,7 @@ const StakeCard: React.FC = () => {
           </Text>
           <div className="claim-container">
             <StyledInput scale="sm" />
-            <TradeButton height="32px" size="sm">
+            <TradeButton height="32px" size="sm" disabled={!account || !hasTheUserAgreed} onClick={onPresentTradeModal}>
               Trade
             </TradeButton>
           </div>

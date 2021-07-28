@@ -1,13 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Image, Text, Flex, Progress, Button } from 'penguinfinance-uikit2'
+import { useWeb3React } from '@web3-react/core'
 import CardValue from 'components/CardValue'
+import { useBoosterRocket as useBoosterRocketStore } from 'state/hooks'
 
 const SherpaCard: React.FC = () => {
-  // const { account } = useWeb3React()
-  const tokensLeft = 100000;
-  const totalTokensToDistribute = 600000;
-  const distributedPercentage = (totalTokensToDistribute - tokensLeft) * 100 / totalTokensToDistribute;
+  const { account } = useWeb3React()
+  const { tokensLeftToDistribute, totalTokensSold } = useBoosterRocketStore(account)
+
+  const totalTokensToDistribute = tokensLeftToDistribute + totalTokensSold
+  const distributedPercentage = totalTokensToDistribute !== 0 ? (100 * totalTokensSold) / totalTokensToDistribute : 10
 
   const handleViewHomePage = () => {
     window.open('https://www.sherpa.cash/', '_blank')
@@ -71,7 +74,7 @@ const SherpaCard: React.FC = () => {
           <Text fontSize="12px">{distributedPercentage.toFixed(2)}%</Text>
           <CardValue fontSize="12px" value={totalTokensToDistribute} />
         </Flex>
-        <Flex justifyContent="center" mt='16px'>
+        <Flex justifyContent="center" mt="16px">
           <NormalButton onClick={handleViewTrailer}>View Trailer</NormalButton>
         </Flex>
       </CardContent>
@@ -81,7 +84,7 @@ const SherpaCard: React.FC = () => {
 
 const CardContent = styled.div`
   padding: 16px;
-  background: ${(props) => props.theme.isDark ? '#332654' : props.theme.card.background};
+  background: ${(props) => (props.theme.isDark ? '#332654' : props.theme.card.background)};
   border-radius: 32px 32px 0 0;
 
   img {
@@ -117,14 +120,14 @@ const ProgressWrapper = styled.div`
     height: 8px;
     div {
       border-radius: 2rem;
-      background: linear-gradient(90deg, #00DEFF 0%, #8F00C1 100%);
+      background: linear-gradient(90deg, #00deff 0%, #8f00c1 100%);
     }
   }
 `
 
 const FCard = styled.div`
   align-self: flex-start;
-  background: ${(props) => props.theme.isDark ? '#332654' : props.theme.card.background};
+  background: ${(props) => (props.theme.isDark ? '#332654' : props.theme.card.background)};
   border-radius: 32px;
   box-shadow: 0px 2px 12px -8px rgba(25, 19, 38, 0.1), 0px 1px 1px rgba(25, 19, 38, 0.05);
   position: relative;

@@ -33,7 +33,7 @@ const ModalFooter = styled.div`
 `
 
 interface TermsAndConditionProps {
-  onConfirm: (amount: string) => void
+  onConfirm: () => void
   onDismiss?: () => void
 }
 
@@ -45,14 +45,8 @@ const TermsAndConditionModal: React.FC<TermsAndConditionProps> = ({ onConfirm, o
   const onAgree = async () => {
     setPendingTx(true)
     try {
-      // const allowanceBalance = (await xPefiContract.methods.allowance(account, getLaunchpadAddress()).call()) / 1e18
-      // if (allowanceBalance === 0) {
-      //   // call approve function
-      //   await onApproveXPefi()
-      // }
-
-      // await onConfirm(val)
-      // setPendingTx(false)
+      await onConfirm()
+      setPendingTx(false)
       onDismiss()
     } catch (error) {
       setPendingTx(false)

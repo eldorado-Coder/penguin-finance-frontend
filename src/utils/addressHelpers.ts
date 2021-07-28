@@ -83,3 +83,16 @@ export const getCompounderFarmLpAddress = (lpSymbol: string, farmType: string) =
 export const getLaunchpadAddress = () => {
   return getAddress(addresses.launchPad)
 }
+
+// booster rocket
+export const getBoosterRocketAddress = () => {
+  return getAddress(addresses.boosterRocket)
+}
+
+export const getBoosterRocketPefiAddress = () => {
+  return getAddress(addresses.boosterRocketPefi)
+}
+
+export const getBoosterRocketSherpaAddress = () => {
+  return getAddress(addresses.boosterRocketSherpa)
+}
