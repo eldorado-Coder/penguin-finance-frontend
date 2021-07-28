@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Image, Text, Flex, Progress, Input, Button } from 'penguinfinance-uikit2'
+import { Image, Text, Flex, Input, Button } from 'penguinfinance-uikit2'
 // import { useWeb3React } from '@web3-react/core'
 import CardValue from 'components/CardValue'
 // import SherpaCardFooter from './SherpaCardFooter'
@@ -125,20 +125,6 @@ const Details = styled(Flex)`
     cursor: pointer;
   }
 `
-
-const ProgressWrapper = styled.div`
-  div {
-    height: 8px;
-    div {
-      background-color: #53dee9;
-    }
-  }
-`
-
-// const CardAction = styled.div`
-//   background: ${(props) => props.theme.card.background};
-//   border-radius: 0 0 32px 32px;
-// `
 
 const ClaimsWrapper = styled.div`
   margin-top: 24px;
