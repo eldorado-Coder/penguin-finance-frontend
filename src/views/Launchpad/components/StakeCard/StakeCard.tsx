@@ -126,7 +126,9 @@ const StakeCard: React.FC = () => {
           </Label>
           <Balance fontSize="16px" decimals={2} value={Math.floor(getBalanceNumber(launchpadStaked) * 100) / 100} />
           <TokenSymbol>
-            <Text fontSize="16px" color='text' fontWeight={600}>xPEFI</Text>
+            <Text fontSize="16px" color="text" fontWeight={600}>
+              xPEFI
+            </Text>
           </TokenSymbol>
         </StyledDetails>
         <StyledDetails>
@@ -139,7 +141,9 @@ const StakeCard: React.FC = () => {
             value={new BigNumber(getBalanceNumber(launchpadStaked)).times(new BigNumber(xPefiToPefiRatio)).toNumber()}
           />
           <TokenSymbol>
-            <Text fontSize="16px" color='text' fontWeight={600}>PEFI</Text>
+            <Text fontSize="16px" color="text" fontWeight={600}>
+              PEFI
+            </Text>
           </TokenSymbol>
         </StyledDetails>
         <Flex mt="20px">
@@ -147,7 +151,7 @@ const StakeCard: React.FC = () => {
             <CardLabel>{TranslateString(384, 'Price per SHERPA:')}</CardLabel>
           </Label>
           <TokenSymbol>
-            <Text fontSize="16px" color='text' fontWeight={600}>{`$${PRICE_PER_SHERPA[yourPenguinTier]}`}</Text>
+            <Text fontSize="16px" color="text" fontWeight={600}>{`$${PRICE_PER_SHERPA[yourPenguinTier]}`}</Text>
           </TokenSymbol>
         </Flex>
         <StyledDetails>
@@ -217,7 +221,7 @@ const PGUnlockButton = styled(UnlockButton)<{ isHomePage?: boolean }>`
 
 const FCard = styled.div`
   align-self: flex-start;
-  background: ${(props) => props.theme.isDark ? '#332654' : props.theme.card.background};
+  background: ${(props) => (props.theme.isDark ? '#332654' : props.theme.card.background)};
   border-radius: 32px;
   box-shadow: 0px 2px 12px -8px rgba(25, 19, 38, 0.1), 0px 1px 1px rgba(25, 19, 38, 0.05);
   position: relative;
@@ -239,13 +243,11 @@ const HelperTag = styled(Tag)`
 
 const CardContent = styled.div`
   padding: 24px 32px;
-  background: ${(props) => props.theme.isDark ? '#332654' : props.theme.card.background};
   border-radius: 32px 32px 0 0;
 `
 
 const CardHeader = styled(Flex)`
   height: 96px;
-  background-image: url('/images/launchpad/banner.png');
   background-size: cover;
   background-position: center center;
   border-radius: 32px 32px 0 0;

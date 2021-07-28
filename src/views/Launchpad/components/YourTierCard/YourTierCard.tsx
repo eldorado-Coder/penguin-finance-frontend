@@ -43,7 +43,6 @@ const FCard = styled.div`
 
 const CardHeader = styled(Flex)`
   height: 96px;
-  background-image: url('/images/launchpad/banner.png');
   background-size: cover;
   background-position: center center;
   border-radius: 32px 32px 0 0;
@@ -57,7 +56,6 @@ const CardBannerImage = styled.img``
 
 const CardContent = styled.div`
   padding: 24px 32px;
-  background: ${(props) => (props.theme.isDark ? '#332654' : props.theme.card.background)};
   border-radius: 32px 32px 0 0;
   display: flex;
   justify-content: center;
