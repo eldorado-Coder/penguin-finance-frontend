@@ -131,4 +131,9 @@ export default {
     // TODO: final version
     43114: '0x1c0fe0A000f6DF48B2DaBf86A19934dd6B6F9477',
   },
+  boosterRocker: {
+    43113: '',
+    // TODO: final version
+    43114: '0x0B99Ae6D2E31770Ea9fe1f838d9ADf6f1DC08470',
+  },
 }
