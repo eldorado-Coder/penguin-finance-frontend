@@ -70,8 +70,8 @@ const CardContent = styled.div`
 const NoneTierWrapper = styled.div`
   margin-top: 70px;
   svg {
-    width: 180px !important;
-    height: 180px;
+    width: 200px !important;
+    height: 200px;
     .none-tier-st1 {
       fill: ${({ theme }) => !theme.isDark && 'black!important'};
     }
