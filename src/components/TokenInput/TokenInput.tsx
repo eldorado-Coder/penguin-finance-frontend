@@ -7,16 +7,26 @@ import Input, { InputProps } from '../Input'
 interface TokenInputProps extends InputProps {
   max: number | string
   symbol: string
+  maxBalanceShow?: boolean
   onSelectMax?: () => void
 }
 
-const TokenInput: React.FC<TokenInputProps> = ({ max, symbol, onChange, onSelectMax, value }) => {
+const TokenInput: React.FC<TokenInputProps> = ({
+  value,
+  max,
+  symbol,
+  maxBalanceShow = true,
+  onChange,
+  onSelectMax,
+}) => {
   const TranslateString = useI18n()
   return (
     <StyledTokenInput>
-      <StyledMaxText>
-        {max.toLocaleString()} {symbol} {TranslateString(526, 'Available')}
-      </StyledMaxText>
+      {maxBalanceShow && (
+        <StyledMaxText>
+          {max.toLocaleString()} {symbol} {TranslateString(526, 'Available')}
+        </StyledMaxText>
+      )}
       <Input
         endAdornment={
           <StyledTokenAdornmentWrapper>

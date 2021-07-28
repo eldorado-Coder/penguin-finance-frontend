@@ -5,11 +5,15 @@ import multicall from 'utils/multicall'
 import {
   getLaunchpadAddress,
   getBoosterRocketAddress,
+  getBoosterRocketPefiAddress,
+  getBoosterRocketSherpaAddress,
   getXPefiAddress,
   getTestXPefiAddress,
 } from 'utils/addressHelpers'
 import { getBalanceNumber } from 'utils/formatBalance'
 import boosterRocketABI from 'config/abi/boosterRocket.json'
+import pefiABI from 'config/abi/launchpad/pefi.json'
+import sherpaABI from 'config/abi/launchpad/sherpa.json'
 
 export const fetchGlobalData = async () => {
   const calls = [
@@ -59,6 +63,7 @@ export const fetchGlobalData = async () => {
 }
 
 export const fetchUserData = async (account) => {
+  // from boosterRocket contract
   const calls = [
     {
       address: getBoosterRocketAddress(),
@@ -81,41 +86,28 @@ export const fetchUserData = async (account) => {
   }
 }
 
-export const fetchUserStakedBalance = async (account) => {
+export const fetchUserPayTokenBalance = async (account) => {
   const calls = [
     {
-      address: getLaunchpadAddress(),
-      name: 'amountStaked',
+      address: getBoosterRocketPefiAddress(),
+      name: 'balanceOf',
       params: [account],
     },
   ]
 
-  const [amountStaked] = await multicall(boosterRocketABI, calls)
-  return new BigNumber(amountStaked).toNumber()
+  const [pefiBalance] = await multicall(pefiABI, calls)
+  return getBalanceNumber(new BigNumber(pefiBalance))
 }
 
-export const fetchUserPenguinTier = async (account) => {
+export const fetchUserBuyTokenBalance = async (account) => {
   const calls = [
     {
-      address: getLaunchpadAddress(),
-      name: 'penguinTiers',
+      address: getBoosterRocketSherpaAddress(),
+      name: 'balanceOf',
       params: [account],
     },
   ]
 
-  const [penguinTiers] = await multicall(boosterRocketABI, calls)
-
-  return new BigNumber(penguinTiers).toNumber()
-}
-
-export const fetchDepositEnd = async () => {
-  const calls = [
-    {
-      address: getLaunchpadAddress(),
-      name: 'depositEnd',
-    },
-  ]
-
-  const [depositEnd] = await multicall(boosterRocketABI, calls)
-  return depositEnd[0].toNumber()
+  const [pefiBalance] = await multicall(sherpaABI, calls)
+  return getBalanceNumber(new BigNumber(pefiBalance))
 }

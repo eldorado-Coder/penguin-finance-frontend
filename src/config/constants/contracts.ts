@@ -131,9 +131,18 @@ export default {
     // TODO: final version
     43114: '0x1c0fe0A000f6DF48B2DaBf86A19934dd6B6F9477',
   },
-  boosterRocker: {
+  // boosterRocket
+  boosterRocket: {
     43113: '',
     // TODO: final version
-    43114: '0x6F1759960694cdDe31320291536dF1B9b107F050',
+    43114: '0x901C9Bf654b8992f7bfD82C2F911743d8dD771d8',
+  },
+  boosterRocketPefi: {
+    43113: '',
+    43114: '0x7fa8a5b88693bc1922d4b90ba00b6756606b8f83',
+  },
+  boosterRocketSherpa: {
+    43113: '',
+    43114: '0x78c313f1ae889c80a6d24cdadd587f37d8e07aa7',
   },
 }

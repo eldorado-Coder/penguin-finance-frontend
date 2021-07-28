@@ -1,8 +1,8 @@
 import { useCallback } from 'react'
 import { useWeb3React } from '@web3-react/core'
 import { useDispatch } from 'react-redux'
-import { fetchLaunchpadUserDataAsync } from 'state/actions'
-import { boosterRocketAgreeTerms } from 'utils/callHelpers'
+import { fetchBoosterRocketUserDataAsync } from 'state/actions'
+import { boosterRocketAgreeTerms, boosterRocketPurchaseTokens } from 'utils/callHelpers'
 import { useBoosterRocket as useBoosterRocketContract } from './useContract'
 
 export const useBoosterRocketActions = () => {
@@ -12,11 +12,20 @@ export const useBoosterRocketActions = () => {
 
   const handleAgreeTerms = useCallback(async () => {
     const txHash = await boosterRocketAgreeTerms(boosterRocketContract, account)
-    dispatch(fetchLaunchpadUserDataAsync(account))
+    dispatch(fetchBoosterRocketUserDataAsync(account))
     console.info(txHash)
   }, [account, dispatch, boosterRocketContract])
 
-  return { onAgreeTerms: handleAgreeTerms }
+  const handlePurchaseToken = useCallback(
+    async (amount) => {
+      const txHash = await boosterRocketPurchaseTokens(boosterRocketContract, amount, account)
+      dispatch(fetchBoosterRocketUserDataAsync(account))
+      console.info(txHash)
+    },
+    [account, dispatch, boosterRocketContract],
+  )
+
+  return { onAgreeTerms: handleAgreeTerms, onPurchaseToken: handlePurchaseToken }
 }
 
 export const useBoosterRocketActions1 = () => {
@@ -26,7 +35,7 @@ export const useBoosterRocketActions1 = () => {
 
   const handleAgreeTerms = useCallback(async () => {
     const txHash = await boosterRocketAgreeTerms(boosterRocketContract, account)
-    dispatch(fetchLaunchpadUserDataAsync(account))
+    dispatch(fetchBoosterRocketUserDataAsync(account))
     console.info(txHash)
   }, [account, dispatch, boosterRocketContract])
 

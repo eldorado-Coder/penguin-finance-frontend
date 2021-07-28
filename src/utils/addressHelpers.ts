@@ -86,5 +86,13 @@ export const getLaunchpadAddress = () => {
 
 // booster rocket
 export const getBoosterRocketAddress = () => {
-  return getAddress(addresses.boosterRocker)
+  return getAddress(addresses.boosterRocket)
+}
+
+export const getBoosterRocketPefiAddress = () => {
+  return getAddress(addresses.boosterRocketPefi)
+}
+
+export const getBoosterRocketSherpaAddress = () => {
+  return getAddress(addresses.boosterRocketSherpa)
 }

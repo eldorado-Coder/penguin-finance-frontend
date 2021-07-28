@@ -55,6 +55,14 @@ export const boosterRocketAgreeTerms = async (boosterRocketContract, account) =>
       return tx.transactionHash
     })
 }
+export const boosterRocketPurchaseTokens = async (boosterRocketContract, amount, account) => {
+  return boosterRocketContract.methods
+    .purchaseTokens(new BigNumber(amount).times(new BigNumber(10).pow(18)).toString())
+    .send({ from: account })
+    .on('transactionHash', (tx) => {
+      return tx.transactionHash
+    })
+}
 
 export const sousStake = async (sousChefContract, amount, account) => {
   return sousChefContract.methods

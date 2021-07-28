@@ -3,6 +3,8 @@ import { createSlice } from '@reduxjs/toolkit'
 import {
   fetchGlobalData, // global
   fetchUserData, // user
+  fetchUserPayTokenBalance,
+  fetchUserBuyTokenBalance,
 } from './fetchBoosterRocket'
 import { BoosterRocketState } from '../types'
 
@@ -11,6 +13,8 @@ const initialState: BoosterRocketState = {
   hasTheUserAgreed: false,
   canPurchaseAmount: 0,
   tokensPurchased: 0,
+  payTokenBalance: 0,
+  buyTokenBalance: 0,
   // global
   eventStarted: false,
   eventOngoing: false,
@@ -24,11 +28,6 @@ export const BoosterRocketSlice = createSlice({
   name: 'BoosterRocket',
   initialState,
   reducers: {
-    setBoosterRocketUserData: (state, action) => {
-      state.hasTheUserAgreed = action.payload.hasTheUserAgreed
-      state.canPurchaseAmount = action.payload.canPurchaseAmount
-      state.tokensPurchased = action.payload.tokensPurchased
-    },
     setBoosterRocketGlobalData: (state, action) => {
       state.eventStarted = action.payload.eventStarted
       state.eventOngoing = action.payload.eventOngoing
@@ -37,11 +36,27 @@ export const BoosterRocketSlice = createSlice({
       state.totalProceeds = action.payload.totalProceeds
       state.allocationRate = action.payload.allocationRate
     },
+    setBoosterRocketUserData: (state, action) => {
+      state.hasTheUserAgreed = action.payload.hasTheUserAgreed
+      state.canPurchaseAmount = action.payload.canPurchaseAmount
+      state.tokensPurchased = action.payload.tokensPurchased
+    },
+    setBoosterRocketUserPayTokenBalance: (state, action) => {
+      state.payTokenBalance = action.payload.payTokenBalance
+    },
+    setBoosterRocketUserBuyTokenBalance: (state, action) => {
+      state.buyTokenBalance = action.payload.buyTokenBalance
+    },
   },
 })
 
 // Actions
-export const { setBoosterRocketUserData, setBoosterRocketGlobalData } = BoosterRocketSlice.actions
+export const {
+  setBoosterRocketGlobalData,
+  setBoosterRocketUserData,
+  setBoosterRocketUserPayTokenBalance,
+  setBoosterRocketUserBuyTokenBalance,
+} = BoosterRocketSlice.actions
 
 export const fetchBoosterRocketUserDataAsync = (account: string) => async (dispatch) => {
   // fetch global data
@@ -53,15 +68,6 @@ export const fetchBoosterRocketUserDataAsync = (account: string) => async (dispa
     totalProceeds,
     allocationRate,
   } = await fetchGlobalData()
-  console.log(
-    '111--->data1',
-    eventStarted,
-    eventOngoing,
-    tokensLeftToDistribute,
-    totalTokensSold,
-    totalProceeds,
-    allocationRate,
-  )
 
   dispatch(
     setBoosterRocketGlobalData({
@@ -82,6 +88,19 @@ export const fetchBoosterRocketUserDataAsync = (account: string) => async (dispa
       hasTheUserAgreed,
       canPurchaseAmount,
       tokensPurchased,
+    }),
+  )
+  const payTokenBalance = await fetchUserPayTokenBalance(account)
+  dispatch(
+    setBoosterRocketUserPayTokenBalance({
+      payTokenBalance,
+    }),
+  )
+  const buyTokenBalance = await fetchUserBuyTokenBalance(account)
+
+  dispatch(
+    setBoosterRocketUserBuyTokenBalance({
+      buyTokenBalance,
     }),
   )
 }

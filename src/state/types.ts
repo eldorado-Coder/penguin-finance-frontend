@@ -109,6 +109,8 @@ export interface BoosterRocketState {
   hasTheUserAgreed: boolean
   canPurchaseAmount: number
   tokensPurchased: number
+  payTokenBalance: number
+  buyTokenBalance: number
   // global
   eventStarted: boolean
   eventOngoing: boolean
