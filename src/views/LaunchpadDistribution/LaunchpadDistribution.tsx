@@ -17,8 +17,8 @@ const LaunchpadDistribution: React.FC = () => {
         <BannerImage
           src={
             isDark
-              ? `${process.env.PUBLIC_URL}/images/launchpad/banners/launchpad_banner_dark.png`
-              : `${process.env.PUBLIC_URL}/images/launchpad/banners/launchpad_banner_light.png`
+              ? `${process.env.PUBLIC_URL}/images/launchpad/banners/launchpad_banner_dark.gif`
+              : `${process.env.PUBLIC_URL}/images/launchpad/banners/launchpad_banner_light.gif`
           }
           alt="launchpad banner"
         />

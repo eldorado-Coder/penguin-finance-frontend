@@ -44,7 +44,7 @@ const StakeCard: React.FC = () => {
     <FCard>
       <CardHeader justifyContent="space-between" alignItems="center">
         <CardBannerImage
-          src={`${process.env.PUBLIC_URL}/images/launchpad/banners/stake_xPefi_banner.png`}
+          src={`${process.env.PUBLIC_URL}/images/launchpad-distribution/banners/stake_xPefi_banner.png`}
           alt="banner"
         />
       </CardHeader>
@@ -209,7 +209,9 @@ const CardHeader = styled(Flex)`
   }
 `
 
-const CardBannerImage = styled.img``
+const CardBannerImage = styled.img`
+  width: 100%;
+`
 
 const NormalButton = styled(Button)`
   border-radius: 10px;
