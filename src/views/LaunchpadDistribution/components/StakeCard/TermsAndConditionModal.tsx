@@ -40,6 +40,7 @@ interface TermsAndConditionProps {
 const TermsAndConditionModal: React.FC<TermsAndConditionProps> = ({ onConfirm, onDismiss }) => {
   const [pendingTx, setPendingTx] = useState(false)
   const TranslateString = useI18n()
+  const [disableAgree, setDisableAgree] = useState(true);
 
   const onAgree = async () => {
     setPendingTx(true)
@@ -58,13 +59,19 @@ const TermsAndConditionModal: React.FC<TermsAndConditionProps> = ({ onConfirm, o
     }
   }
 
+  const handleScroll = event => {
+    if (event.target.scrollHeight - event.target.scrollTop === event.target.clientHeight) {
+      setDisableAgree(false);
+    }
+  }
+
   return (
     <StyledModal title="Terms and conditions" bodyPadding="0px" onDismiss={onDismiss}>
-      <ModalContent>
+      <ModalContent onScroll={handleScroll}>
         {termsAndConditions.map((row) => {
           return (
             <TermRow>
-              <Text color="primary" fontSize="14px">
+              <Text color="text" fontSize="14px">
                 {row}
               </Text>
             </TermRow>
@@ -76,7 +83,7 @@ const TermsAndConditionModal: React.FC<TermsAndConditionProps> = ({ onConfirm, o
           <Button scale="md" variant="secondary" onClick={onDismiss}>
             {TranslateString(462, 'Decline')}
           </Button>
-          <Button scale="md" disabled={pendingTx} onClick={onAgree}>
+          <Button scale="md" disabled={pendingTx || disableAgree} onClick={onAgree}>
             {pendingTx ? TranslateString(488, 'Pending Confirmation') : TranslateString(464, 'Agree & Sign')}
           </Button>
         </ModalActions>
