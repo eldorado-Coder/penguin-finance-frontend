@@ -13,7 +13,7 @@ import { usePools, useLaunchpad, useLaunchpadTierHurdles } from 'state/hooks'
 import { getBalanceNumber } from 'utils/formatBalance'
 import DepositModal from './DepositModal'
 import WithdrawModal from './WithdrawModal'
-import { PENGUIN_TIERS, PRICE_PER_SHERPA, getUnstakeTooltip, getAllocation, getXPefiToPefiRatio } from '../../utils'
+import { PENGUIN_TIERS, PRICE_PER_SHERPA, getUnstakeTooltip, getXPefiToPefiRatio } from '../../utils'
 
 const StakeCard: React.FC = () => {
   const { account } = useWeb3React()
