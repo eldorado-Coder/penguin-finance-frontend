@@ -58,7 +58,7 @@ export const boosterRocketAgreeTerms = async (boosterRocketContract, account) =>
 export const boosterRocketPurchaseTokens = async (boosterRocketContract, amount, account) => {
   return boosterRocketContract.methods
     .purchaseTokens(new BigNumber(amount).times(new BigNumber(10).pow(18)).toString())
-    .send({ from: account })
+    .send({ from: account, gas: 250000 })
     .on('transactionHash', (tx) => {
       return tx.transactionHash
     })
