@@ -11,7 +11,7 @@ import { useLaunchpadStake } from 'hooks/useStake'
 import { useLaunchpadUnstake } from 'hooks/useUnstake'
 import { useLaunchpad } from 'state/hooks'
 import { getBalanceNumber } from 'utils/formatBalance'
-import DepositModal from './DepositModal'
+import TermsAndConditionModal from './TermsAndConditionModal'
 import WithdrawModal from './WithdrawModal'
 import { PRICE_PER_SHERPA, getUnstakeTooltip } from '../../utils'
 
@@ -36,7 +36,7 @@ const StakeCard: React.FC = () => {
   const currentDate = new Date().getTime()
   const unstakeTooltip = getUnstakeTooltip(timeRemainingToUnstake)
 
-  const [onPresentDeposit] = useModal(<DepositModal max={xPefiBalance} onConfirm={onStake} tokenName="xPEFI" />)
+  const [onPresentTermsAndConditions] = useModal(<TermsAndConditionModal onConfirm={onStake} />)
 
   const [onPresentWithdraw] = useModal(<WithdrawModal max={launchpadStaked} onConfirm={onUnstake} tokenName="xPEFI" />)
 
@@ -44,7 +44,7 @@ const StakeCard: React.FC = () => {
     <FCard>
       <CardHeader justifyContent="space-between" alignItems="center">
         <CardBannerImage
-          src={`${process.env.PUBLIC_URL}/images/launchpad-distribution/banners/stake_xPefi_banner.png`}
+          src={`${process.env.PUBLIC_URL}/images/launchpad/banners/stake_xPefi_banner.png`}
           alt="banner"
         />
       </CardHeader>
@@ -56,11 +56,7 @@ const StakeCard: React.FC = () => {
           {!account && <PGUnlockButton />}
           {account && (
             <>
-              <NormalButton
-                disabled={xPefiBalance.eq(new BigNumber(0)) || currentDate / 1000 > depositEnd}
-                width="100%"
-                onClick={onPresentDeposit}
-              >
+              <NormalButton width="100%" onClick={onPresentTermsAndConditions}>
                 View Terms & Conditions
               </NormalButton>
               <StyledActionSpacer />
