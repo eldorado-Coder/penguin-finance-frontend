@@ -52,6 +52,17 @@ const StakeCard: React.FC = () => {
         <Text fontSize="14px" mb="16px">
           {helperText}
         </Text>
+        <TradeWrapper>
+          <Text className="your-token" fontSize="12px" mb="4px">
+            Your tokens to acquire
+          </Text>
+          <div className="claim-container">
+            <StyledInput scale="sm" />
+            <TradeButton height="32px" size="sm">
+              Trade
+            </TradeButton>
+          </div>
+        </TradeWrapper>
         <StyledCardActions>
           {!account && <PGUnlockButton />}
           {account && (
@@ -92,23 +103,12 @@ const StakeCard: React.FC = () => {
             </>
           )}
         </StyledCardActions>
-        <TradeWrapper>
-          <Text className="your-token" fontSize="12px" mb="4px">
-            Your tokens to acquire
-          </Text>
-          <div className="claim-container">
-            <StyledInput scale="sm" />
-            <TradeButton disabled height="32px" size="sm">
-              Trade
-            </TradeButton>
-          </div>
-        </TradeWrapper>
         <Flex mt="20px">
           <Label>
             <CardLabel>{TranslateString(384, 'Price per SHERPA:')}</CardLabel>
           </Label>
           <TokenSymbol>
-            <CardLabel fontSize="16px">{`$${PRICE_PER_SHERPA[yourPenguinTier]}`}</CardLabel>
+            <Text fontSize="16px" color='text' fontWeight={600}>{`$${PRICE_PER_SHERPA[yourPenguinTier]}`}</Text>
           </TokenSymbol>
         </Flex>
         <StyledDetails>
@@ -116,7 +116,7 @@ const StakeCard: React.FC = () => {
             <CardLabel>{TranslateString(384, 'Your Allocation:')}</CardLabel>
           </Label>
           <TokenSymbol>
-            <Text className="allocation" bold color="primary" fontSize="16px">
+            <Text className="allocation" fontWeight={600} color="primary" fontSize="16px">
               {`${getBalanceNumber(new BigNumber(allocation)).toFixed(2)} AP`}
             </Text>
           </TokenSymbol>
@@ -127,7 +127,7 @@ const StakeCard: React.FC = () => {
           </Label>
           <Balance fontSize="16px" decimals={2} value={Math.floor(getBalanceNumber(launchpadStaked) * 100) / 100} />
           <TokenSymbol>
-            <CardLabel fontSize="16px">xPEFI</CardLabel>
+            <Text fontSize="16px" color='text' fontWeight={600}>xPEFI</Text>
           </TokenSymbol>
         </StyledDetails>
       </CardContent>
@@ -138,7 +138,7 @@ const StakeCard: React.FC = () => {
 const StyledCardActions = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 16px 0;
+  margin: 24px 0 16px;
   width: 100%;
   box-sizing: border-box;
 `
@@ -162,8 +162,8 @@ const Label = styled.div`
 `
 
 const CardLabel = styled(Text)`
-  color: ${({ theme }) => (theme.isDark ? 'white' : 'black')};
-  font-weight: 600;
+  color: ${({ theme }) => (theme.isDark ? '#D8CFE2' : 'black')};
+  font-weight: 400;
 `
 
 const TokenSymbol = styled.div`
@@ -172,7 +172,7 @@ const TokenSymbol = styled.div`
   margin-left: 5px;
 
   .allocation {
-    color: #9200e7;
+    color: ${({ theme }) => (theme.isDark ? '#9200e7' : 'black')};
   }
 `
 
@@ -184,16 +184,16 @@ const PGUnlockButton = styled(UnlockButton)<{ isHomePage?: boolean }>`
 
 const FCard = styled.div`
   align-self: flex-start;
-  background: ${(props) => props.theme.card.background};
+  background: ${(props) => props.theme.isDark ? '#332654' : props.theme.card.background};
   border-radius: 32px;
   box-shadow: 0px 2px 12px -8px rgba(25, 19, 38, 0.1), 0px 1px 1px rgba(25, 19, 38, 0.05);
   position: relative;
-  min-height: 480px;
+  min-height: 490px;
 `
 
 const CardContent = styled.div`
   padding: 24px 32px;
-  background: ${(props) => props.theme.card.background};
+  background: ${(props) => props.theme.isDark ? '#332654' : props.theme.card.background};
   border-radius: 32px 32px 0 0;
 `
 
@@ -263,7 +263,7 @@ const CustomToolTip = styled(ReactTooltip)`
 
 // claims wrapper
 const TradeWrapper = styled.div`
-  margin-top: 24px;
+  margin-top: 16px;
   .your-token {
     text-decoration: underline;
   }
@@ -277,7 +277,7 @@ const StyledInput = styled(Input)`
   box-shadow: none;
   width: 100%;
   background: transparent;
-  border: 2px solid ${({ theme }) => theme.colors.input} !important;
+  border: 2px solid #B2B2CE !important;
   padding: 0 88px 0 12px;
   border-radius: 12px;
   font-size: 14px;
@@ -294,8 +294,9 @@ const TradeButton = styled(Button)`
   right: 0;
   top: 0;
   width: 80px;
-  background: ${({ theme }) => theme.isDark && theme.colors.textDisabled};
+  background-color: #707070;
   color: white;
+  font-weight: 400;
 `
 
 export default StakeCard

@@ -126,7 +126,7 @@ const StakeCard: React.FC = () => {
           </Label>
           <Balance fontSize="16px" decimals={2} value={Math.floor(getBalanceNumber(launchpadStaked) * 100) / 100} />
           <TokenSymbol>
-            <CardLabel fontSize="16px">xPEFI</CardLabel>
+            <Text fontSize="16px" color='text' fontWeight={600}>xPEFI</Text>
           </TokenSymbol>
         </StyledDetails>
         <StyledDetails>
@@ -139,7 +139,7 @@ const StakeCard: React.FC = () => {
             value={new BigNumber(getBalanceNumber(launchpadStaked)).times(new BigNumber(xPefiToPefiRatio)).toNumber()}
           />
           <TokenSymbol>
-            <CardLabel fontSize="16px">PEFI</CardLabel>
+            <Text fontSize="16px" color='text' fontWeight={600}>PEFI</Text>
           </TokenSymbol>
         </StyledDetails>
         <Flex mt="20px">
@@ -147,7 +147,7 @@ const StakeCard: React.FC = () => {
             <CardLabel>{TranslateString(384, 'Price per SHERPA:')}</CardLabel>
           </Label>
           <TokenSymbol>
-            <CardLabel fontSize="16px">{`$${PRICE_PER_SHERPA[yourPenguinTier]}`}</CardLabel>
+            <Text fontSize="16px" color='text' fontWeight={600}>{`$${PRICE_PER_SHERPA[yourPenguinTier]}`}</Text>
           </TokenSymbol>
         </Flex>
         <StyledDetails>
@@ -155,7 +155,7 @@ const StakeCard: React.FC = () => {
             <CardLabel>{TranslateString(384, 'Your Allocation:')}</CardLabel>
           </Label>
           <TokenSymbol>
-            <Text className="allocation" bold color="primary" fontSize="16px">
+            <Text className="allocation" fontWeight={600} color="primary" fontSize="16px">
               {`${getBalanceNumber(new BigNumber(allocation)).toFixed(2)} AP`}
             </Text>
           </TokenSymbol>
@@ -195,8 +195,8 @@ const Label = styled.div`
 `
 
 const CardLabel = styled(Text)`
-  color: ${({ theme }) => (theme.isDark ? 'white' : 'black')};
-  font-weight: 600;
+  color: ${({ theme }) => (theme.isDark ? '#D8CFE2' : 'black')};
+  font-weight: 400;
 `
 
 const TokenSymbol = styled.div`
@@ -205,7 +205,7 @@ const TokenSymbol = styled.div`
   margin-left: 5px;
 
   .allocation {
-    color: #9200e7;
+    color: ${({ theme }) => (theme.isDark ? '#9200e7' : 'black')};
   }
 `
 
@@ -217,7 +217,7 @@ const PGUnlockButton = styled(UnlockButton)<{ isHomePage?: boolean }>`
 
 const FCard = styled.div`
   align-self: flex-start;
-  background: ${(props) => props.theme.card.background};
+  background: ${(props) => props.theme.isDark ? '#332654' : props.theme.card.background};
   border-radius: 32px;
   box-shadow: 0px 2px 12px -8px rgba(25, 19, 38, 0.1), 0px 1px 1px rgba(25, 19, 38, 0.05);
   position: relative;
@@ -239,7 +239,7 @@ const HelperTag = styled(Tag)`
 
 const CardContent = styled.div`
   padding: 24px 32px;
-  background: ${(props) => props.theme.card.background};
+  background: ${(props) => props.theme.isDark ? '#332654' : props.theme.card.background};
   border-radius: 32px 32px 0 0;
 `
 

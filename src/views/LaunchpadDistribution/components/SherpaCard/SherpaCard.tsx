@@ -1,9 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Image, Text, Flex, Progress, Input, Button } from 'penguinfinance-uikit2'
-// import { useWeb3React } from '@web3-react/core'
+import { Image, Text, Flex, Progress, Button } from 'penguinfinance-uikit2'
 import CardValue from 'components/CardValue'
-// import SherpaCardFooter from './SherpaCardFooter'
 
 const SherpaCard: React.FC = () => {
   // const { account } = useWeb3React()
@@ -70,20 +68,17 @@ const SherpaCard: React.FC = () => {
           <Text fontSize="12px">0.00%</Text>
           <CardValue fontSize="12px" value={600000} />
         </Flex>
-        <Flex justifyContent="center">
+        <Flex justifyContent="center" mt='16px'>
           <NormalButton onClick={handleViewTrailer}>View Trailer</NormalButton>
         </Flex>
       </CardContent>
-      {/* <CardAction>
-        <SherpaCardFooter />
-      </CardAction> */}
     </FCard>
   )
 }
 
 const CardContent = styled.div`
   padding: 16px;
-  background: ${(props) => props.theme.card.background};
+  background: ${(props) => props.theme.isDark ? '#332654' : props.theme.card.background};
   border-radius: 32px 32px 0 0;
 
   img {
@@ -123,43 +118,13 @@ const ProgressWrapper = styled.div`
   }
 `
 
-// const CardAction = styled.div`
-//   background: ${(props) => props.theme.card.background};
-//   border-radius: 0 0 32px 32px;
-// `
-
 const FCard = styled.div`
   align-self: flex-start;
-  background: ${(props) => props.theme.card.background};
+  background: ${(props) => props.theme.isDark ? '#332654' : props.theme.card.background};
   border-radius: 32px;
   box-shadow: 0px 2px 12px -8px rgba(25, 19, 38, 0.1), 0px 1px 1px rgba(25, 19, 38, 0.05);
   position: relative;
-  min-height: 480px;
-`
-
-const StyledInput = styled(Input)`
-  box-shadow: none;
-  width: 100%;
-  background: transparent;
-  border: 2px solid ${({ theme }) => theme.colors.input} !important;
-  padding: 0 88px 0 12px;
-  border-radius: 12px;
-  font-size: 14px;
-
-  &:focus:not(:disabled) {
-    box-shadow: none;
-  }
-`
-
-const ClaimButton = styled(Button)`
-  height: 32px;
-  border-radius: 12px;
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 80px;
-  background: ${({ theme }) => theme.isDark && theme.colors.textDisabled};
-  color: white;
+  min-height: 490px;
 `
 
 const NormalButton = styled(Button)`
