@@ -5,6 +5,9 @@ import CardValue from 'components/CardValue'
 
 const SherpaCard: React.FC = () => {
   // const { account } = useWeb3React()
+  const tokensLeft = 100000;
+  const totalTokensToDistribute = 600000;
+  const distributedPercentage = (totalTokensToDistribute - tokensLeft) * 100 / totalTokensToDistribute;
 
   const handleViewHomePage = () => {
     window.open('https://www.sherpa.cash/', '_blank')
@@ -56,17 +59,17 @@ const SherpaCard: React.FC = () => {
         </Flex>
         <Flex justifyContent="space-between" mb="24px">
           <Text fontSize="12px">To Be Distributed</Text>
-          <CardValue fontSize="14px" suffix=" SHERPA" value={600000} />
+          <CardValue fontSize="14px" suffix=" SHERPA" value={totalTokensToDistribute} />
         </Flex>
         <Text fontSize="12px" mb="4px">
           Progress
         </Text>
         <ProgressWrapper>
-          <Progress primaryStep={0} />
+          <Progress primaryStep={distributedPercentage} />
         </ProgressWrapper>
         <Flex justifyContent="space-between" mt="4px">
-          <Text fontSize="12px">0.00%</Text>
-          <CardValue fontSize="12px" value={600000} />
+          <Text fontSize="12px">{distributedPercentage.toFixed(2)}%</Text>
+          <CardValue fontSize="12px" value={totalTokensToDistribute} />
         </Flex>
         <Flex justifyContent="center" mt='16px'>
           <NormalButton onClick={handleViewTrailer}>View Trailer</NormalButton>
@@ -113,7 +116,8 @@ const ProgressWrapper = styled.div`
   div {
     height: 8px;
     div {
-      background-color: #53dee9;
+      border-radius: 2rem;
+      background: linear-gradient(90deg, #00DEFF 0%, #8F00C1 100%);
     }
   }
 `
