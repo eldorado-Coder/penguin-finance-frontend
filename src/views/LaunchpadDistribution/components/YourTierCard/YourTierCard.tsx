@@ -34,7 +34,7 @@ const YourTierCard: React.FC = () => {
 
 const FCard = styled.div`
   align-self: flex-start;
-  background: ${(props) => props.theme.isDark ? '#332654' : props.theme.card.background};
+  background: ${(props) => (props.theme.isDark ? '#332654' : props.theme.card.background)};
   border-radius: 32px;
   box-shadow: 0px 2px 12px -8px rgba(25, 19, 38, 0.1), 0px 1px 1px rgba(25, 19, 38, 0.05);
   position: relative;
@@ -43,7 +43,6 @@ const FCard = styled.div`
 
 const CardHeader = styled(Flex)`
   height: 96px;
-  background-image: url('/images/launchpad/banner.png');
   background-size: cover;
   background-position: center center;
   border-radius: 32px 32px 0 0;
@@ -57,7 +56,6 @@ const CardBannerImage = styled.img``
 
 const CardContent = styled.div`
   padding: 24px 32px;
-  background: ${(props) => props.theme.isDark ? '#332654' : props.theme.card.background};
   border-radius: 32px 32px 0 0;
   display: flex;
   justify-content: center;
@@ -70,8 +68,8 @@ const CardContent = styled.div`
 const NoneTierWrapper = styled.div`
   margin-top: 70px;
   svg {
-    width: 140px !important;
-    height: 140px;
+    width: 200px !important;
+    height: 200px;
     .none-tier-st1 {
       fill: ${({ theme }) => !theme.isDark && 'black!important'};
     }

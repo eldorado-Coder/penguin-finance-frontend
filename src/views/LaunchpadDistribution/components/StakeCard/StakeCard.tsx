@@ -9,32 +9,26 @@ import Balance from 'components/Balance'
 import useI18n from 'hooks/useI18n'
 import { useLaunchpadStake } from 'hooks/useStake'
 import { useLaunchpadUnstake } from 'hooks/useUnstake'
-import { useLaunchpad } from 'state/hooks'
+import { usePools, useLaunchpad } from 'state/hooks'
 import { getBalanceNumber } from 'utils/formatBalance'
 import TermsAndConditionModal from './TermsAndConditionModal'
 import WithdrawModal from './WithdrawModal'
-import { PRICE_PER_SHERPA, getUnstakeTooltip } from '../../utils'
+import { PRICE_PER_SHERPA, getUnstakeTooltip, getXPefiToPefiRatio } from '../../utils'
 
-const helperText =
-  'In order to participate, you must first read & agree to the terms & conditions. The "Trade" button will unlock afterwards, allowing you to exchange your PEFI for SHERPA tokens.'
+const helperText = 'In order to participate, you must first read & agree to the terms & conditions.'
 const StakeCard: React.FC = () => {
   const { account } = useWeb3React()
   const TranslateString = useI18n()
+  const pools = usePools(account)
+  const pefiPool = pools.length > 0 ? pools[0] : null
   const { onStake } = useLaunchpadStake()
   const { onUnstake } = useLaunchpadUnstake()
-  const {
-    stakedBalance: staked,
-    canUnstake,
-    timeRemainingToUnstake,
-    depositEnd,
-    xPefi,
-    yourPenguinTier,
-    allocation,
-  } = useLaunchpad(account)
-  const xPefiBalance = new BigNumber(xPefi)
+  const { stakedBalance: staked, canUnstake, timeRemainingToUnstake, yourPenguinTier, allocation } = useLaunchpad(
+    account,
+  )
   const launchpadStaked = new BigNumber(staked)
-  const currentDate = new Date().getTime()
   const unstakeTooltip = getUnstakeTooltip(timeRemainingToUnstake)
+  const xPefiToPefiRatio = getXPefiToPefiRatio(pefiPool)
 
   const [onPresentTermsAndConditions] = useModal(<TermsAndConditionModal onConfirm={onStake} />)
 
@@ -104,7 +98,7 @@ const StakeCard: React.FC = () => {
             <CardLabel>{TranslateString(384, 'Price per SHERPA:')}</CardLabel>
           </Label>
           <TokenSymbol>
-            <Text fontSize="16px" color='text' fontWeight={600}>{`$${PRICE_PER_SHERPA[yourPenguinTier]}`}</Text>
+            <Text fontSize="16px" color="text" fontWeight={600}>{`$${PRICE_PER_SHERPA[yourPenguinTier]}`}</Text>
           </TokenSymbol>
         </Flex>
         <StyledDetails>
@@ -123,7 +117,24 @@ const StakeCard: React.FC = () => {
           </Label>
           <Balance fontSize="16px" decimals={2} value={Math.floor(getBalanceNumber(launchpadStaked) * 100) / 100} />
           <TokenSymbol>
-            <Text fontSize="16px" color='text' fontWeight={600}>xPEFI</Text>
+            <Text fontSize="16px" color="text" fontWeight={600}>
+              xPEFI
+            </Text>
+          </TokenSymbol>
+        </StyledDetails>
+        <StyledDetails>
+          <Label>
+            <CardLabel>{TranslateString(384, 'PEFI Equivalent:')}</CardLabel>
+          </Label>
+          <Balance
+            fontSize="16px"
+            decimals={2}
+            value={new BigNumber(getBalanceNumber(launchpadStaked)).times(new BigNumber(xPefiToPefiRatio)).toNumber()}
+          />
+          <TokenSymbol>
+            <Text fontSize="16px" color="text" fontWeight={600}>
+              PEFI
+            </Text>
           </TokenSymbol>
         </StyledDetails>
       </CardContent>
@@ -180,7 +191,7 @@ const PGUnlockButton = styled(UnlockButton)<{ isHomePage?: boolean }>`
 
 const FCard = styled.div`
   align-self: flex-start;
-  background: ${(props) => props.theme.isDark ? '#332654' : props.theme.card.background};
+  background: ${(props) => (props.theme.isDark ? '#332654' : props.theme.card.background)};
   border-radius: 32px;
   box-shadow: 0px 2px 12px -8px rgba(25, 19, 38, 0.1), 0px 1px 1px rgba(25, 19, 38, 0.05);
   position: relative;
@@ -189,13 +200,11 @@ const FCard = styled.div`
 
 const CardContent = styled.div`
   padding: 24px 32px;
-  background: ${(props) => props.theme.isDark ? '#332654' : props.theme.card.background};
   border-radius: 32px 32px 0 0;
 `
 
 const CardHeader = styled(Flex)`
   height: 96px;
-  background-image: url('/images/launchpad/banner.png');
   background-size: cover;
   background-position: center center;
   border-radius: 32px 32px 0 0;
@@ -275,7 +284,7 @@ const StyledInput = styled(Input)`
   box-shadow: none;
   width: 100%;
   background: transparent;
-  border: 2px solid #B2B2CE !important;
+  border: 2px solid #b2b2ce !important;
   padding: 0 88px 0 12px;
   border-radius: 12px;
   font-size: 14px;
