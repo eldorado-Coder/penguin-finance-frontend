@@ -66,7 +66,6 @@ const TradeModal: React.FC<TradeModalProps> = ({
   const [pendingTx, setPendingTx] = useState(false)
 
   const TranslateString = useI18n()
-  const { onApproveXPefi } = useLaunchpadXPefiApprove()
   const payTokenContract = useBoosterRocketPayToken()
   const boosterRocketContract = useBoosterRocketContract()
   const { account } = useWeb3React()

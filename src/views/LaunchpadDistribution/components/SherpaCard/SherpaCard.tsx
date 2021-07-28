@@ -1,13 +1,18 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Image, Text, Flex, Progress, Button } from 'penguinfinance-uikit2'
+import { useWeb3React } from '@web3-react/core'
 import CardValue from 'components/CardValue'
+import { useBoosterRocket as useBoosterRocketStore } from 'state/hooks'
 
 const SherpaCard: React.FC = () => {
-  // const { account } = useWeb3React()
-  const tokensLeft = 100000
-  const totalTokensToDistribute = 600000
-  const distributedPercentage = ((totalTokensToDistribute - tokensLeft) * 100) / totalTokensToDistribute
+  const { account } = useWeb3React()
+  const { tokensLeftToDistribute, totalTokensSold } = useBoosterRocketStore(account)
+
+  console.log('111--->', tokensLeftToDistribute, totalTokensSold)
+
+  const totalTokensToDistribute = tokensLeftToDistribute + totalTokensSold
+  const distributedPercentage = totalTokensToDistribute !== 0 ? (100 * totalTokensSold) / totalTokensToDistribute : 10
 
   const handleViewHomePage = () => {
     window.open('https://www.sherpa.cash/', '_blank')

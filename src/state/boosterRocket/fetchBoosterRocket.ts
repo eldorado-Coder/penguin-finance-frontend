@@ -1,14 +1,9 @@
 import BigNumber from 'bignumber.js'
-import { AbiItem } from 'web3-utils'
-import xPefiAbi from 'config/abi/xPefi.json'
 import multicall from 'utils/multicall'
 import {
-  getLaunchpadAddress,
   getBoosterRocketAddress,
   getBoosterRocketPefiAddress,
   getBoosterRocketSherpaAddress,
-  getXPefiAddress,
-  getTestXPefiAddress,
 } from 'utils/addressHelpers'
 import { getBalanceNumber } from 'utils/formatBalance'
 import boosterRocketABI from 'config/abi/boosterRocket.json'
