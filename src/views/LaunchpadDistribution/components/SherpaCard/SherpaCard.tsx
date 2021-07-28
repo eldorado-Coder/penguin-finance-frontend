@@ -9,8 +9,6 @@ const SherpaCard: React.FC = () => {
   const { account } = useWeb3React()
   const { tokensLeftToDistribute, totalTokensSold } = useBoosterRocketStore(account)
 
-  console.log('111--->', tokensLeftToDistribute, totalTokensSold)
-
   const totalTokensToDistribute = tokensLeftToDistribute + totalTokensSold
   const distributedPercentage = totalTokensToDistribute !== 0 ? (100 * totalTokensSold) / totalTokensToDistribute : 10
 

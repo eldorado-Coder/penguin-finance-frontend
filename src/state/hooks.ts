@@ -204,9 +204,7 @@ export const useBoosterRocket = (account): BoosterRocketState => {
       dispatch(fetchBoosterRocketUserDataAsync(account))
     }
 
-    if (account) {
-      fetchBoosterRocketData()
-    }
+    fetchBoosterRocketData()
   }, [account, dispatch, fastRefresh])
 
   const boosterRocket = useSelector((state: State) => state.boosterRocket)
