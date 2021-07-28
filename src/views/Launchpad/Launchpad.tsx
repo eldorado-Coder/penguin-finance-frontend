@@ -52,7 +52,7 @@ const Launchpad: React.FC = () => {
         <Text color="text" textAlign="center">
           <span>The Penguin Launchpad</span> is a fundraising platform built on Avalanche with fairness,
           decentralization, and transparency as core principles. By utilizing <span>xPEFI</span>, we ensure that your
-          token is distributed to a vast and committed userbase with through DeFi experience. If you&apos;d like to
+          token is distributed to a vast and committed userbase with thorough DeFi experience. If you&apos;d like to
           launch an Avalanche-native project, fill out the form below.
         </Text>
         <Flex justifyContent="center" mt="32px">
