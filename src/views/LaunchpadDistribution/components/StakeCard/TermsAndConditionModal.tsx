@@ -12,14 +12,19 @@ import useI18n from '../../../../hooks/useI18n'
 import { getFullDisplayBalance } from '../../../../utils/formatBalance'
 import { termsAndConditions } from '../../utils'
 
-const StyledModal = styled(Modal)`
-  max-width: 300px;
-`
+const StyledModal = styled(Modal)``
 
 // content
 const ModalContent = styled.div`
   border-top: ${({ theme }) => (theme.isDark ? '1px solid #26183f' : '1px solid #e9eaeb')};
   padding: 24px 24px 16px;
+  max-width: 400px;
+  max-height: 500px;
+  height: calc(100vh - 300px);
+  overflow: auto;
+`
+const TermRow = styled.div`
+  margin-bottom: 16px;
 `
 
 // footer
@@ -33,11 +38,8 @@ interface TermsAndConditionProps {
 }
 
 const TermsAndConditionModal: React.FC<TermsAndConditionProps> = ({ onConfirm, onDismiss }) => {
-  const [val, setVal] = useState('')
   const [pendingTx, setPendingTx] = useState(false)
   const TranslateString = useI18n()
-  const { onApproveXPefi } = useLaunchpadXPefiApprove()
-  const { account } = useWeb3React()
 
   const onAgree = async () => {
     setPendingTx(true)
@@ -56,16 +58,16 @@ const TermsAndConditionModal: React.FC<TermsAndConditionProps> = ({ onConfirm, o
     }
   }
 
-  console.log('111--->', termsAndConditions)
-
   return (
     <StyledModal title="Terms and conditions" bodyPadding="0px" onDismiss={onDismiss}>
       <ModalContent>
         {termsAndConditions.map((row) => {
           return (
-            <Text color="primary" fontSize="14px">
-              {row}
-            </Text>
+            <TermRow>
+              <Text color="primary" fontSize="14px">
+                {row}
+              </Text>
+            </TermRow>
           )
         })}
       </ModalContent>
