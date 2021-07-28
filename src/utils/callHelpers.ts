@@ -46,6 +46,16 @@ export const launchpadStake = async (launchpadContract, amount, account) => {
     })
 }
 
+// boosterRocket
+export const boosterRocketAgreeTerms = async (boosterRocketContract, account) => {
+  return boosterRocketContract.methods
+    .agreeToTermsAndConditions()
+    .send({ from: account })
+    .on('transactionHash', (tx) => {
+      return tx.transactionHash
+    })
+}
+
 export const sousStake = async (sousChefContract, amount, account) => {
   return sousChefContract.methods
     .enter(new BigNumber(amount).times(new BigNumber(10).pow(18)).toString())

@@ -19,7 +19,8 @@ import {
   getEmperorPenguinDBAddress,
   getXPefiAddress,
   getLaunchpadAddress,
-  getTestXPefiAddress
+  getTestXPefiAddress,
+  getBoosterRocketAddress,
 } from 'utils/addressHelpers'
 import getFarmMasterChefAddress from 'utils/getFarmMasterChefAddress'
 import getFarmMasterChefAbi from 'utils/getFarmMasterChefAbi'
@@ -44,7 +45,8 @@ import donations from 'config/abi/donations.json'
 import charityPenguinDB from 'config/abi/charityPenguin.json'
 import emperorPenguinDB from 'config/abi/emperorPenguinDB.json'
 import xPefi from 'config/abi/xPefi.json'
-import launchpad from 'config/abi/launchpad.json';
+import launchpad from 'config/abi/launchpad.json'
+import boosterRocket from 'config/abi/boosterRocket.json'
 
 const useContract = (abi: AbiItem, address: string, contractOptions?: ContractOptions) => {
   const web3 = useWeb3()
@@ -168,6 +170,11 @@ export const useTestXPefi = () => {
 export const useLaunchPad = () => {
   const abi = (launchpad as unknown) as AbiItem
   return useContract(abi, getLaunchpadAddress())
+}
+
+export const useBoosterRocket = () => {
+  const abi = (boosterRocket as unknown) as AbiItem
+  return useContract(abi, getBoosterRocketAddress())
 }
 
 export default useContract

@@ -7,9 +7,9 @@ import ReactTooltip from 'react-tooltip'
 import UnlockButton from 'components/UnlockButton'
 import Balance from 'components/Balance'
 import useI18n from 'hooks/useI18n'
-import { useLaunchpadStake } from 'hooks/useStake'
+import { useBoosterRocketActions } from 'hooks/useBoosterRocket'
 import { useLaunchpadUnstake } from 'hooks/useUnstake'
-import { usePools, useLaunchpad } from 'state/hooks'
+import { usePools, useLaunchpad, useBoosterRocket as useBoosterRocketStore } from 'state/hooks'
 import { getBalanceNumber } from 'utils/formatBalance'
 import TermsAndConditionModal from './TermsAndConditionModal'
 import WithdrawModal from './WithdrawModal'
@@ -21,7 +21,9 @@ const StakeCard: React.FC = () => {
   const TranslateString = useI18n()
   const pools = usePools(account)
   const pefiPool = pools.length > 0 ? pools[0] : null
-  const { onStake } = useLaunchpadStake()
+  const data1 = useBoosterRocketStore(account)
+
+  const { onAgreeTerms } = useBoosterRocketActions()
   const { onUnstake } = useLaunchpadUnstake()
   const { stakedBalance: staked, canUnstake, timeRemainingToUnstake, yourPenguinTier, allocation } = useLaunchpad(
     account,
@@ -30,7 +32,7 @@ const StakeCard: React.FC = () => {
   const unstakeTooltip = getUnstakeTooltip(timeRemainingToUnstake)
   const xPefiToPefiRatio = getXPefiToPefiRatio(pefiPool)
 
-  const [onPresentTermsAndConditions] = useModal(<TermsAndConditionModal onConfirm={onStake} />)
+  const [onPresentTermsAndConditions] = useModal(<TermsAndConditionModal onConfirm={onAgreeTerms} />)
 
   const [onPresentWithdraw] = useModal(<WithdrawModal max={launchpadStaked} onConfirm={onUnstake} tokenName="xPEFI" />)
 
