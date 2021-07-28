@@ -80,8 +80,8 @@ const SherpaCard: React.FC = () => {
           </Text>
           <div className="claim-container">
             <StyledInput scale="sm" />
-            <ClaimButton disabled height="32px" size="sm">
-              Claim
+            <ClaimButton height="32px" size="sm">
+              Trade
             </ClaimButton>
           </div>
         </ClaimsWrapper>
@@ -95,7 +95,7 @@ const SherpaCard: React.FC = () => {
 
 const CardContent = styled.div`
   padding: 16px;
-  background: ${(props) => props.theme.card.background};
+  background: ${(props) => props.theme.isDark ? '#332654' : props.theme.card.background};
   border-radius: 32px 32px 0 0;
 
   img {
@@ -153,7 +153,7 @@ const ClaimsWrapper = styled.div`
 
 const FCard = styled.div`
   align-self: flex-start;
-  background: ${(props) => props.theme.card.background};
+  background: ${(props) => props.theme.isDark ? '#332654' : props.theme.card.background};
   border-radius: 32px;
   box-shadow: 0px 2px 12px -8px rgba(25, 19, 38, 0.1), 0px 1px 1px rgba(25, 19, 38, 0.05);
   position: relative;
@@ -164,7 +164,7 @@ const StyledInput = styled(Input)`
   box-shadow: none;
   width: 100%;
   background: transparent;
-  border: 2px solid ${({ theme }) => theme.colors.input} !important;
+  border: 2px solid #B2B2CE !important;
   padding: 0 88px 0 12px;
   border-radius: 12px;
   font-size: 14px;
@@ -181,8 +181,9 @@ const ClaimButton = styled(Button)`
   right: 0;
   top: 0;
   width: 80px;
-  background: ${({ theme }) => theme.isDark && theme.colors.textDisabled};
+  background-color: #707070 !important;
   color: white;
+  font-weight: 400;
 `
 
 const NormalButton = styled(Button)`
