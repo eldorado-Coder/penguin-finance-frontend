@@ -71,13 +71,29 @@ const TradeModal: React.FC<TradeModalProps> = ({
   const { account } = useWeb3React()
   const boosterRocketData = useBoosterRocketStore(account)
 
-  const { payTokenBalance, tokensLeftToDistribute } = boosterRocketData
+  const {
+    payTokenBalance,
+    tokensLeftToDistribute,
+    eventOngoing,
+    canPurchaseAmount,
+    hasTheUserAgreed,
+  } = boosterRocketData
   const buyTokenMaxBalance = String(tokensLeftToDistribute)
+  const canPurchase =
+    eventOngoing &&
+    hasTheUserAgreed &&
+    Number(buyTokenBalance) > 0 &&
+    Number(buyTokenBalance) < canPurchaseAmount &&
+    Number(buyTokenBalance) < Number(buyTokenMaxBalance)
 
   const updatePayTokenBalance = async (value) => {
-    const amount = new BigNumber(value).times(new BigNumber(10).pow(18)).toString()
-    const findAmountToPay = await boosterRocketContract.methods.findAmountToPay(amount, account).call()
-    setPayTokenCost(getBalanceNumber(new BigNumber(findAmountToPay)))
+    if (Number(value) > 0) {
+      const amount = new BigNumber(value).times(new BigNumber(10).pow(18)).toString()
+      const findAmountToPay = await boosterRocketContract.methods.findAmountToPay(amount, account).call()
+      setPayTokenCost(getBalanceNumber(new BigNumber(findAmountToPay)))
+    } else {
+      setPayTokenCost(0)
+    }
   }
 
   const handleChange = useCallback(
@@ -98,6 +114,7 @@ const TradeModal: React.FC<TradeModalProps> = ({
   }, [setBuyTokenBalance, buyTokenMaxBalance])
 
   const handlePurchaseToken = async () => {
+    if (!canPurchase) return
     setPendingTx(true)
     try {
       const allowanceBalance =
@@ -161,7 +178,7 @@ const TradeModal: React.FC<TradeModalProps> = ({
           <Button scale="md" variant="secondary" onClick={onDismiss}>
             {TranslateString(462, 'Cancel')}
           </Button>
-          <Button scale="md" disabled={pendingTx} onClick={handlePurchaseToken}>
+          <Button scale="md" disabled={pendingTx || !canPurchase} onClick={handlePurchaseToken}>
             {pendingTx ? TranslateString(488, 'Pending Confirmation') : `Get ${buyTokenName}`}
           </Button>
         </ModalActions>
