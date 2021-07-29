@@ -40,7 +40,7 @@ interface TermsAndConditionProps {
 const TermsAndConditionModal: React.FC<TermsAndConditionProps> = ({ onConfirm, onDismiss }) => {
   const [pendingTx, setPendingTx] = useState(false)
   const TranslateString = useI18n()
-  const [disableAgree, setDisableAgree] = useState(true);
+  const [disableAgree, setDisableAgree] = useState(true)
 
   const onAgree = async () => {
     setPendingTx(true)
@@ -53,9 +53,9 @@ const TermsAndConditionModal: React.FC<TermsAndConditionProps> = ({ onConfirm, o
     }
   }
 
-  const handleScroll = event => {
-    if (event.target.scrollHeight - event.target.scrollTop === event.target.clientHeight) {
-      setDisableAgree(false);
+  const handleScroll = (event) => {
+    if (event.target.scrollHeight - event.target.scrollTop < event.target.clientHeight + 100) {
+      setDisableAgree(false)
     }
   }
 
