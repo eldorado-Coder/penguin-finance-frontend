@@ -1,15 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Image, Text, Flex, Input, Button } from 'penguinfinance-uikit2'
+import { Image, Text, Flex, Progress, Button } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import CardValue from 'components/CardValue'
 import { useBoosterRocket as useBoosterRocketStore } from 'state/hooks'
-// import SherpaCardFooter from './SherpaCardFooter'
 
 const SherpaCard: React.FC = () => {
   const { account } = useWeb3React()
   const { tokensLeftToDistribute, totalTokensSold } = useBoosterRocketStore(account)
+
   const totalTokensToDistribute = tokensLeftToDistribute + totalTokensSold
+  const distributedPercentage = totalTokensToDistribute > 0 ? (100 * totalTokensSold) / totalTokensToDistribute : 0
 
   const handleViewHomePage = () => {
     window.open('https://www.sherpa.cash/', '_blank')
@@ -35,7 +36,6 @@ const SherpaCard: React.FC = () => {
       <CardContent>
         <Flex alignItems="center" mb="12px">
           <Image src="/images/launchpad/sherpalogo.png" width={64} height={64} alt="sherpa" mr="16px" />
-
           <div>
             <Text fontSize="18px" bold>
               SHERPA CASH (SHERPA)
@@ -56,42 +56,30 @@ const SherpaCard: React.FC = () => {
         <Text fontSize="12px" mb="16px">
           A fully decentralized protocol for private transactions on Avalanche
         </Text>
-        <Flex justifyContent="space-between" mb="4px" alignItems='center'>
-          <CardLabel fontSize="12px">Launch Date</CardLabel>
-          <Text fontSize="14px" color="text" fontWeight={600}>July 29th, 2021</Text>
+        <Flex justifyContent="space-between" mb="4px" alignItems="center">
+          <CardLabel fontSize="12px">Sale End Time</CardLabel>
+          <Text fontSize="14px" color="text" fontWeight={600}>
+            August 3rd
+          </Text>
         </Flex>
-        <Flex justifyContent="space-between" mb="24px" alignItems='center'>
-          <CardLabel fontSize="12px">For Sale</CardLabel>
-          <CardValue fontSize="14px" suffix=" SHERPA" decimals={2} value={totalTokensToDistribute} />
+        <Flex justifyContent="space-between" mb="24px" alignItems="center">
+          <CardLabel fontSize="12px">To Be Distributed</CardLabel>
+          <CardValue fontSize="14px" color="text" suffix=" SHERPA" decimals={2} value={totalTokensToDistribute} />
         </Flex>
-        <Flex justifyContent="center">
-          <NormalButton onClick={handleViewTrailer}>View Trailer</NormalButton>
-        </Flex>
-        {/* <Text fontSize="12px" mb="4px">
+        <Text fontSize="12px" mb="4px">
           Progress
         </Text>
         <ProgressWrapper>
-          <Progress primaryStep={0} />
+          <Progress primaryStep={distributedPercentage} />
         </ProgressWrapper>
         <Flex justifyContent="space-between" mt="4px">
-          <Text fontSize="12px">0.00%</Text>
-          <CardValue fontSize="12px" value={600000} />
-        </Flex> */}
-        <ClaimsWrapper>
-          <Text className="your-token" fontSize="12px" mb="4px">
-            Your tokens to claim
-          </Text>
-          <div className="claim-container">
-            <StyledInput scale="sm" />
-            <ClaimButton height="32px" size="sm">
-              Trade
-            </ClaimButton>
-          </div>
-        </ClaimsWrapper>
+          <Text fontSize="12px">{distributedPercentage.toFixed(2)}%</Text>
+          <CardValue fontSize="12px" decimals={2} value={totalTokensToDistribute} />
+        </Flex>
+        <Flex justifyContent="center" mt="16px">
+          <NormalButton onClick={handleViewTrailer}>View Trailer</NormalButton>
+        </Flex>
       </CardContent>
-      {/* <CardAction>
-        <SherpaCardFooter />
-      </CardAction> */}
     </FCard>
   )
 }
@@ -134,14 +122,13 @@ const Details = styled(Flex)`
   }
 `
 
-const ClaimsWrapper = styled.div`
-  margin-top: 24px;
-  .your-token {
-    text-decoration: underline;
-  }
-
-  .claim-container {
-    position: relative;
+const ProgressWrapper = styled.div`
+  div {
+    height: 8px;
+    div {
+      border-radius: 2rem;
+      background: linear-gradient(90deg, #00deff 0%, #8f00c1 100%);
+    }
   }
 `
 
@@ -151,33 +138,7 @@ const FCard = styled.div`
   border-radius: 32px;
   box-shadow: 0px 2px 12px -8px rgba(25, 19, 38, 0.1), 0px 1px 1px rgba(25, 19, 38, 0.05);
   position: relative;
-  min-height: 480px;
-`
-
-const StyledInput = styled(Input)`
-  box-shadow: none;
-  width: 100%;
-  background: transparent;
-  border: 2px solid #b2b2ce !important;
-  padding: 0 88px 0 12px;
-  border-radius: 12px;
-  font-size: 14px;
-
-  &:focus:not(:disabled) {
-    box-shadow: none;
-  }
-`
-
-const ClaimButton = styled(Button)`
-  height: 32px;
-  border-radius: 12px;
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 80px;
-  background-color: #707070 !important;
-  color: white;
-  font-weight: 400;
+  min-height: 490px;
 `
 
 const NormalButton = styled(Button)`

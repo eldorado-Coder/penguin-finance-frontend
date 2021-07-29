@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Button } from 'penguinfinance-uikit2'
-import useI18n from '../../hooks/useI18n'
-import Input, { InputProps } from '../Input'
+import useI18n from 'hooks/useI18n'
+import Input, { InputProps } from 'components/Input'
 
 interface TokenInputProps extends InputProps {
   max: number | string
@@ -21,7 +21,7 @@ const TokenInput: React.FC<TokenInputProps> = ({
 }) => {
   const TranslateString = useI18n()
   return (
-    <StyledTokenInput>
+    <StyledTokenInputWrapper>
       {maxBalanceShow && (
         <StyledMaxText>
           {max.toLocaleString()} {symbol} {TranslateString(526, 'Available')}
@@ -43,11 +43,21 @@ const TokenInput: React.FC<TokenInputProps> = ({
         placeholder="0"
         value={value}
       />
-    </StyledTokenInput>
+    </StyledTokenInputWrapper>
   )
 }
 
-const StyledTokenInput = styled.div``
+const StyledTokenInputWrapper = styled.div`
+  > div {
+    background: ${({ theme }) => theme.isDark && '#604284'};
+  }
+  input {
+    color: ${({ theme }) => (theme.isDark ? '#D8CFE2' : '#373566')};
+    font-weight: 700;
+    font-size: 24px;
+    font-family: 'Poppins';
+  }
+`
 
 const StyledSpacer = styled.div`
   width: ${(props) => props.theme.spacing[3]}px;
@@ -56,6 +66,14 @@ const StyledSpacer = styled.div`
 const StyledTokenAdornmentWrapper = styled.div`
   align-items: center;
   display: flex;
+  padding-left: 10px;
+  button {
+    background: ${({ theme }) => (theme.isDark ? '#ffffff' : '#d2464e')};
+    color: ${({ theme }) => theme.isDark && '#30264f'};
+    height: 40px;
+    border-radius: 8px;
+    font-weight: 600;
+  }
 `
 
 const StyledMaxText = styled.div`
@@ -69,8 +87,10 @@ const StyledMaxText = styled.div`
 `
 
 const StyledTokenSymbol = styled.span`
-  color: ${(props) => props.theme.colors.primary};
+  color: ${({ theme }) => (theme.isDark ? '#D8CFE2' : '#373566')};
   font-weight: 700;
+  font-size: 24px;
+  font-family: 'Poppins';
 `
 
 export default TokenInput

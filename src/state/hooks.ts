@@ -20,6 +20,7 @@ import {
   fetchPoolsPublicDataAsync,
   fetchPoolsUserDataAsync,
   fetchLaunchpadUserDataAsync,
+  fetchBoosterRocketUserDataAsync, // boosterRocket
   fetchEmperor,
   updateLaunchpadTierHurdles,
   push as pushToast,
@@ -38,6 +39,7 @@ import {
   GlobalState,
   DonationsState,
   LaunchpadState,
+  BoosterRocketState,
 } from './types'
 import { fetchProfile } from './profile'
 import { fetchTeam, fetchTeams } from './teams'
@@ -164,6 +166,7 @@ export const usePoolFromPid = (sousId): Pool => {
   return pool
 }
 
+// launchpad
 export const useLaunchpad = (account): LaunchpadState => {
   const { fastRefresh } = useRefresh()
   const dispatch = useDispatch()
@@ -190,6 +193,22 @@ export const useLaunchpadTierHurdles = () => {
 
   const tierHurdles = useSelector((state: State) => state.launchpad.tierHurdles)
   return tierHurdles
+}
+
+// boosterRocket
+export const useBoosterRocket = (account): BoosterRocketState => {
+  const { fastRefresh } = useRefresh()
+  const dispatch = useDispatch()
+  useEffect(() => {
+    const fetchBoosterRocketData = async () => {
+      dispatch(fetchBoosterRocketUserDataAsync(account))
+    }
+
+    fetchBoosterRocketData()
+  }, [account, dispatch, fastRefresh])
+
+  const boosterRocket = useSelector((state: State) => state.boosterRocket)
+  return boosterRocket
 }
 
 // Prices

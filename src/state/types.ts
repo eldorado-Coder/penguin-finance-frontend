@@ -104,6 +104,22 @@ export interface LaunchpadState {
   tierHurdles: number[]
 }
 
+export interface BoosterRocketState {
+  // user
+  hasTheUserAgreed: boolean
+  canPurchaseAmount: number
+  tokensPurchased: number
+  payTokenBalance: number
+  buyTokenBalance: number
+  // global
+  eventStarted: boolean
+  eventOngoing: boolean
+  tokensLeftToDistribute: number
+  totalTokensSold: number
+  totalProceeds: number
+  allocationRate: number
+}
+
 export interface ProfileState {
   isInitialized: boolean
   isLoading: boolean
@@ -213,4 +229,5 @@ export interface State {
   emperor: EmperorState
   donations: DonationsState
   launchpad: LaunchpadState
+  boosterRocket: BoosterRocketState
 }
