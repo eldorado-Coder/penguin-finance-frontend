@@ -306,12 +306,14 @@ const StyledInput = styled(Input)`
 
 const TradeButton = styled(Button)`
   height: 32px;
-  border-radius: 12px;
+  border-radius: 10px;
   position: absolute;
   right: 0;
   top: 0;
   width: 80px;
-  background-color: #707070;
+  background: ${({ theme }) => (theme.isDark ? '#6221B7' : '#CE022D')};
+  border-bottom: 1px solid #771515;
+  border-bottom-color: ${({ theme }) => (theme.isDark ? '#3F187C' : '#771515')};
   color: white;
   font-weight: 400;
 `
