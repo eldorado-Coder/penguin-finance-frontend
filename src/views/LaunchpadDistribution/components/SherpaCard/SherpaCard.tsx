@@ -10,7 +10,7 @@ const SherpaCard: React.FC = () => {
   const { tokensLeftToDistribute, totalTokensSold } = useBoosterRocketStore(account)
 
   const totalTokensToDistribute = tokensLeftToDistribute + totalTokensSold
-  const distributedPercentage = (100 * totalTokensSold) / totalTokensToDistribute
+  const distributedPercentage = totalTokensToDistribute > 0 ? (100 * totalTokensSold) / totalTokensToDistribute : 0
 
   const handleViewHomePage = () => {
     window.open('https://www.sherpa.cash/', '_blank')
