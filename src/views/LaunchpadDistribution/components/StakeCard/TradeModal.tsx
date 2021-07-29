@@ -150,7 +150,7 @@ const TradeModal: React.FC<TradeModalProps> = ({
           </RowItem>
         </Row>
         <TokenInput
-          value={buyTokenBalance}
+          value={Number(buyTokenBalance).toFixed(2)}
           max={buyTokenMaxBalance}
           symbol={buyTokenName}
           maxBalanceShow={false}
@@ -162,7 +162,7 @@ const TradeModal: React.FC<TradeModalProps> = ({
             <Text color="primary" fontSize="14px">
               {`Price/${buyTokenName}: `}
             </Text>
-            <CardValue value={sherpaPrice} fontSize="14px" decimals={2} prefix="$" bold={false} />
+            <CardValue value={sherpaPrice} fontSize="14px" prefix="$" bold={false} />
           </RowItem>
           <RowItem>
             <Text color="primary" fontSize="14px">
