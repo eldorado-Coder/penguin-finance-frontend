@@ -139,7 +139,9 @@ const TradeModal: React.FC<TradeModalProps> = ({
       if (allowanceBalance === 0) {
         // call approve function
         const approveAmount = '1000000000000000000000000000'
-        await payTokenContract.methods.approve(getBoosterRocketAddress(), approveAmount).send({ from: account })
+        await payTokenContract.methods
+          .approve(getBoosterRocketAddress(), approveAmount)
+          .send({ from: account, gas: 70000 })
       }
 
       await onConfirm(buyTokenBalance)
