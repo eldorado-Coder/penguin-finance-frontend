@@ -5,17 +5,17 @@ import { Button, Modal, Text } from 'penguinfinance-uikit2'
 import styled from 'styled-components'
 import { useBoosterRocketPayToken, useBoosterRocket as useBoosterRocketContract } from 'hooks/useContract'
 import useI18n from 'hooks/useI18n'
-import TokenInput from 'components/TokenInput'
-import CardValue from 'components/CardValue'
 import { useBoosterRocket as useBoosterRocketStore } from 'state/hooks'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { getBoosterRocketAddress } from 'utils/addressHelpers'
+import TokenInput from '../common/TokenInput'
+import CardValue from '../common/CardValue'
 
 // content
 const ModalContent = styled.div`
   border-top: ${({ theme }) => (theme.isDark ? '1px solid #26183f' : '1px solid #e9eaeb')};
   padding: 24px 24px;
-  padding-bottom: 24px;
+  padding-bottom: 12px;
   padding-top: 8px;
   max-width: 400px;
   overflow: auto;
@@ -25,19 +25,27 @@ const Row = styled.div`
   display: flex;
   font-size: 14px;
   justify-content: space-between;
-  margin: 16px 0px;
+  margin: 12px 0px 16px;
 `
 
 const RowItem = styled.div`
   display: flex;
   align-items: center;
   white-space: break-spaces;
+  color: ${({ theme }) => (theme.isDark ? '#D8CFE2' : '#373566 !important')};
 `
 
 const CardLabel = styled(Text)`
-  color: ${({ theme }) => (theme.isDark ? '#D8CFE2' : 'black')};
-  font-weight: 400;
+  color: ${({ theme }) => (theme.isDark ? '#D8CFE2' : '#373566')};
+  font-weight: 500;
   font-size: 14px;
+  font-family: 'Kanit';
+`
+
+const StyledTokenInput = styled(TokenInput)`
+  input {
+    color: ${({ theme }) => (theme.isDark ? '#D8CFE2' : 'black !important')};
+  }
 `
 
 // footer
@@ -49,6 +57,10 @@ const ModalFooter = styled.div`
 const ModalActions = styled.div`
   display: flex;
   justify-content: space-between;
+  button {
+    background: ${({ theme }) => (theme.isDark ? '#ffffff' : '#d2464e')};
+    font-weight: normal;
+  }
 `
 
 interface TradeModalProps {
@@ -151,7 +163,7 @@ const TradeModal: React.FC<TradeModalProps> = ({
             <CardValue value={canPurchaseAmount} fontSize="14px" decimals={2} bold={false} />
           </RowItem>
         </Row>
-        <TokenInput
+        <StyledTokenInput
           value={buyTokenBalance}
           max={buyTokenMaxBalance}
           symbol={buyTokenName}
@@ -175,7 +187,7 @@ const TradeModal: React.FC<TradeModalProps> = ({
           <Button scale="md" onClick={onDismiss}>
             {TranslateString(462, 'Cancel')}
           </Button>
-          <Button scale="md" disabled={pendingTx || canPurchase} onClick={handlePurchaseToken}>
+          <Button scale="md" disabled={pendingTx || !canPurchase} onClick={handlePurchaseToken}>
             {pendingTx ? TranslateString(488, 'Pending Confirmation') : `Get ${buyTokenName}`}
           </Button>
         </ModalActions>
