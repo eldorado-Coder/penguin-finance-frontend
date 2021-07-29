@@ -179,6 +179,7 @@ const NormalButton = styled(Button)`
   border-radius: 10px;
   padding: 0 16px;
   min-width: 160px;
+  color: ${(props) => props.theme.isDark && '#332654'};
 `
 
 export default SherpaCard

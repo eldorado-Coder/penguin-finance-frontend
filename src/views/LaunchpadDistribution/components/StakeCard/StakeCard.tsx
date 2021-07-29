@@ -230,6 +230,7 @@ const CardBannerImage = styled.img`
 const NormalButton = styled(Button)`
   border-radius: 10px;
   padding: 0 16px;
+  color: ${(props) => props.theme.isDark && '#332654'};
 `
 
 const UnstakeButtonContainer = styled.div``
