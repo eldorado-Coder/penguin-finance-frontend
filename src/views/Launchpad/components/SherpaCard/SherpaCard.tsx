@@ -56,12 +56,12 @@ const SherpaCard: React.FC = () => {
         <Text fontSize="12px" mb="16px">
           A fully decentralized protocol for private transactions on Avalanche
         </Text>
-        <Flex justifyContent="space-between" mb="4px">
-          <Text fontSize="12px">Launch Date</Text>
-          <Text fontSize="14px">July 29th, 2021</Text>
+        <Flex justifyContent="space-between" mb="4px" alignItems='center'>
+          <CardLabel fontSize="12px">Launch Date</CardLabel>
+          <Text fontSize="14px" color="text" fontWeight={600}>July 29th, 2021</Text>
         </Flex>
-        <Flex justifyContent="space-between" mb="24px">
-          <Text fontSize="12px">For Sale</Text>
+        <Flex justifyContent="space-between" mb="24px" alignItems='center'>
+          <CardLabel fontSize="12px">For Sale</CardLabel>
           <CardValue fontSize="14px" suffix=" SHERPA" decimals={2} value={totalTokensToDistribute} />
         </Flex>
         <Flex justifyContent="center">
@@ -116,6 +116,11 @@ const CardHeader = styled(Flex)`
   div {
     color: white;
   }
+`
+
+const CardLabel = styled(Text)`
+  color: ${({ theme }) => (theme.isDark ? '#D8CFE2' : 'black')};
+  font-weight: 400;
 `
 
 const CardBannerImage = styled.img`
@@ -179,6 +184,7 @@ const NormalButton = styled(Button)`
   border-radius: 10px;
   padding: 0 16px;
   min-width: 160px;
+  color: ${(props) => props.theme.isDark && '#332654'};
 `
 
 export default SherpaCard
