@@ -34,6 +34,12 @@ const RowItem = styled.div`
   white-space: break-spaces;
 `
 
+const CardLabel = styled(Text)`
+  color: ${({ theme }) => (theme.isDark ? '#D8CFE2' : 'black')};
+  font-weight: 400;
+  font-size: 14px;
+`
+
 // footer
 const ModalFooter = styled.div`
   padding: 24px 24px;
@@ -137,15 +143,11 @@ const TradeModal: React.FC<TradeModalProps> = ({
       <ModalContent>
         <Row>
           <RowItem>
-            <Text color="primary" fontSize="14px">
-              {`${payTokenName} Balance: `}
-            </Text>
+            <CardLabel>{`${payTokenName} Balance: `}</CardLabel>
             <CardValue value={payTokenBalance} fontSize="14px" decimals={2} bold={false} />
           </RowItem>
           <RowItem>
-            <Text color="primary" fontSize="14px">
-              {`Available ${buyTokenName}: `}
-            </Text>
+            <CardLabel>{`Available ${buyTokenName}: `}</CardLabel>
             <CardValue value={canPurchaseAmount} fontSize="14px" decimals={2} bold={false} />
           </RowItem>
         </Row>
@@ -159,15 +161,11 @@ const TradeModal: React.FC<TradeModalProps> = ({
         />
         <Row>
           <RowItem>
-            <Text color="primary" fontSize="14px">
-              {`Price/${buyTokenName}: `}
-            </Text>
+            <CardLabel>{`Price/${buyTokenName}: `}</CardLabel>
             <CardValue value={sherpaPrice} fontSize="14px" prefix="$" bold={false} />
           </RowItem>
           <RowItem>
-            <Text color="primary" fontSize="14px">
-              {`Cost: `}
-            </Text>
+            <CardLabel>{`Cost: `}</CardLabel>
             <CardValue value={payTokenCost} fontSize="14px" decimals={2} suffix={` ${payTokenName}`} bold={false} />
           </RowItem>
         </Row>
