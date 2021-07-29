@@ -62,11 +62,11 @@ const TermsAndConditionModal: React.FC<TermsAndConditionProps> = ({ onConfirm, o
   return (
     <StyledModal title="Terms and conditions" bodyPadding="0px" onDismiss={onDismiss}>
       <ModalContent onScroll={handleScroll}>
-        {termsAndConditions.map((row) => {
+        {termsAndConditions.map(row => {
           return (
-            <TermRow>
-              <Text color="text" fontSize="14px">
-                {row}
+            <TermRow key={row.text}>
+              <Text color="text" fontSize={row.fontSize} pl={row.padding}>
+                {row.text}
               </Text>
             </TermRow>
           )
