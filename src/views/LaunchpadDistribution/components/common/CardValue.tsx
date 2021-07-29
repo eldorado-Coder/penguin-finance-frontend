@@ -4,7 +4,7 @@ import { Text } from 'penguinfinance-uikit2'
 import styled from 'styled-components'
 
 const StyledText = styled(Text)`
-  color: ${({ theme }) => (theme.isDark ? '#D8CFE2' : '#373566')};
+  color: ${({ theme }) => (theme.isDark ? '#ECE8F2' : '#373566')};
 `
 
 export interface CardValueProps {
