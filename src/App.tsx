@@ -66,11 +66,10 @@ const App: React.FC = () => {
             <Route path="/arena">
               <Arena />
             </Route>
-            <Route path="/launchpad">
+            {/* <Route path="/launchpad">
               <Launchpad />
-            </Route>
-            {/* after stake xPefi */}
-            <Route path="/launchpad-distribution">
+            </Route> */}
+            <Route path="/launchpad">
               <LaunchpadDistribution />
             </Route>
             <Route path="/club">
