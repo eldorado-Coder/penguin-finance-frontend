@@ -9,8 +9,9 @@ const SherpaCard: React.FC = () => {
   const { account } = useWeb3React()
   const { tokensLeftToDistribute, totalTokensSold } = useBoosterRocketStore(account)
 
-  const totalTokensToDistribute = tokensLeftToDistribute + totalTokensSold
-  const distributedPercentage = totalTokensToDistribute !== 0 ? (100 * totalTokensSold) / totalTokensToDistribute : 10
+  // const totalTokensToDistribute = tokensLeftToDistribute + totalTokensSold
+  const totalTokensToDistribute = 550000
+  const distributedPercentage = (100 * totalTokensSold) / totalTokensToDistribute
 
   const handleViewHomePage = () => {
     window.open('https://www.sherpa.cash/', '_blank')
@@ -56,11 +57,13 @@ const SherpaCard: React.FC = () => {
         <Text fontSize="12px" mb="16px">
           A fully decentralized protocol for private transactions on Avalanche
         </Text>
-        <Flex justifyContent="space-between" mb="4px" alignItems='center'>
+        <Flex justifyContent="space-between" mb="4px" alignItems="center">
           <CardLabel fontSize="12px">Sale End Time</CardLabel>
-          <Text fontSize="14px" color="text" fontWeight={600}>August 3rd</Text>
+          <Text fontSize="14px" color="text" fontWeight={600}>
+            August 3rd
+          </Text>
         </Flex>
-        <Flex justifyContent="space-between" mb="24px" alignItems='center'>
+        <Flex justifyContent="space-between" mb="24px" alignItems="center">
           <CardLabel fontSize="12px">To Be Distributed</CardLabel>
           <CardValue fontSize="14px" color="text" suffix=" SHERPA" decimals={2} value={totalTokensToDistribute} />
         </Flex>
