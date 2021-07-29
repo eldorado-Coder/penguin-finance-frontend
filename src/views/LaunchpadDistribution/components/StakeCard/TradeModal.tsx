@@ -78,13 +78,13 @@ const TradeModal: React.FC<TradeModalProps> = ({
     canPurchaseAmount,
     hasTheUserAgreed,
   } = boosterRocketData
-  const buyTokenMaxBalance = String(tokensLeftToDistribute)
+  const buyTokenMaxBalance = String(canPurchaseAmount)
   const canPurchase =
     eventOngoing &&
     hasTheUserAgreed &&
     Number(buyTokenBalance) > 0 &&
-    Number(buyTokenBalance) < canPurchaseAmount &&
-    Number(buyTokenBalance) < Number(buyTokenMaxBalance)
+    Number(buyTokenBalance) <= canPurchaseAmount &&
+    Number(buyTokenBalance) <= tokensLeftToDistribute
 
   const updatePayTokenBalance = async (value) => {
     if (Number(value) > 0) {
@@ -147,7 +147,7 @@ const TradeModal: React.FC<TradeModalProps> = ({
             <Text color="primary" fontSize="14px">
               {`Available ${buyTokenName}: `}
             </Text>
-            <CardValue value={tokensLeftToDistribute} fontSize="14px" decimals={2} bold={false} />
+            <CardValue value={canPurchaseAmount} fontSize="14px" decimals={2} bold={false} />
           </RowItem>
         </Row>
         <TokenInput
