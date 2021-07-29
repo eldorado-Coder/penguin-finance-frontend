@@ -56,13 +56,13 @@ const SherpaCard: React.FC = () => {
         <Text fontSize="12px" mb="16px">
           A fully decentralized protocol for private transactions on Avalanche
         </Text>
-        <Flex justifyContent="space-between" mb="4px">
-          <Text fontSize="12px">Sale End Time</Text>
-          <Text fontSize="14px">August 3rd</Text>
+        <Flex justifyContent="space-between" mb="4px" alignItems='center'>
+          <CardLabel fontSize="12px">Sale End Time</CardLabel>
+          <Text fontSize="14px" color="text" fontWeight={600}>August 3rd</Text>
         </Flex>
-        <Flex justifyContent="space-between" mb="24px">
-          <Text fontSize="12px">To Be Distributed</Text>
-          <CardValue fontSize="14px" suffix=" SHERPA" decimals={2} value={totalTokensToDistribute} />
+        <Flex justifyContent="space-between" mb="24px" alignItems='center'>
+          <CardLabel fontSize="12px">To Be Distributed</CardLabel>
+          <CardValue fontSize="14px" color="text" suffix=" SHERPA" decimals={2} value={totalTokensToDistribute} />
         </Flex>
         <Text fontSize="12px" mb="4px">
           Progress
@@ -102,6 +102,11 @@ const CardHeader = styled(Flex)`
   div {
     color: white;
   }
+`
+
+const CardLabel = styled(Text)`
+  color: ${({ theme }) => (theme.isDark ? '#D8CFE2' : 'black')};
+  font-weight: 400;
 `
 
 const CardBannerImage = styled.img`
