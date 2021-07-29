@@ -47,7 +47,14 @@ const TokenInput: React.FC<TokenInputProps> = ({
   )
 }
 
-const StyledTokenInput = styled.div``
+const StyledTokenInput = styled.div`
+  input {
+    color: ${({ theme }) => (theme.isDark ? '#D8CFE2' : '#373566')};
+    font-weight: 700;
+    font-size: 24px;
+    font-family: 'Poppins';
+  }
+`
 
 const StyledSpacer = styled.div`
   width: ${(props) => props.theme.spacing[3]}px;
@@ -56,6 +63,11 @@ const StyledSpacer = styled.div`
 const StyledTokenAdornmentWrapper = styled.div`
   align-items: center;
   display: flex;
+  padding-left: 10px;
+  button {
+    background: ${({ theme }) => (theme.isDark ? '#ffffff' : '#d2464e')};
+    height: 40px;
+  }
 `
 
 const StyledMaxText = styled.div`
@@ -69,8 +81,11 @@ const StyledMaxText = styled.div`
 `
 
 const StyledTokenSymbol = styled.span`
-  color: ${(props) => props.theme.colors.primary};
+  color: ${({ theme }) => (theme.isDark ? '#D8CFE2' : '#373566')};
   font-weight: 700;
+  font-size: 24px;
+  font-family: 'Poppins';
+  margin-right: 60px;
 `
 
 export default TokenInput
