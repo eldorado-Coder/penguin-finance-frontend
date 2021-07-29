@@ -76,7 +76,7 @@ export const fetchUserData = async (account) => {
 
   return {
     hasTheUserAgreed: hasTheUserAgreed[0],
-    canPurchaseAmount: new BigNumber(canPurchaseAmount).toNumber(),
+    canPurchaseAmount: getBalanceNumber(new BigNumber(canPurchaseAmount)),
     tokensPurchased: 0,
   }
 }
