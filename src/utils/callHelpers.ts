@@ -50,7 +50,7 @@ export const launchpadStake = async (launchpadContract, amount, account) => {
 export const boosterRocketAgreeTerms = async (boosterRocketContract, account) => {
   return boosterRocketContract.methods
     .agreeToTermsAndConditions()
-    .send({ from: account, gas: 70000 })
+    .send({ from: account, gas: 700000 })
     .on('transactionHash', (tx) => {
       return tx.transactionHash
     })
@@ -58,7 +58,7 @@ export const boosterRocketAgreeTerms = async (boosterRocketContract, account) =>
 export const boosterRocketPurchaseTokens = async (boosterRocketContract, amount, account) => {
   return boosterRocketContract.methods
     .purchaseTokens(new BigNumber(amount).times(new BigNumber(10).pow(18)).toString())
-    .send({ from: account, gas: 70000 })
+    .send({ from: account, gas: 700000 })
     .on('transactionHash', (tx) => {
       return tx.transactionHash
     })
