@@ -32,11 +32,11 @@ const RowItem = styled.div`
   display: flex;
   align-items: center;
   white-space: break-spaces;
-  color: ${({ theme }) => (theme.isDark ? '#D8CFE2' : '#373566 !important')};
+  color: ${({ theme }) => (theme.isDark ? '#ECE8F2' : '#373566 !important')};
 `
 
 const CardLabel = styled(Text)`
-  color: ${({ theme }) => (theme.isDark ? '#D8CFE2' : '#373566')};
+  color: ${({ theme }) => (theme.isDark ? '#ECE8F2' : '#373566')};
   font-weight: 500;
   font-size: 14px;
   font-family: 'Kanit';
@@ -44,7 +44,7 @@ const CardLabel = styled(Text)`
 
 const StyledTokenInput = styled(TokenInput)`
   input {
-    color: ${({ theme }) => (theme.isDark ? '#D8CFE2' : 'black !important')};
+    color: ${({ theme }) => (theme.isDark ? '#ECE8F2' : 'black !important')};
   }
 `
 
@@ -60,6 +60,7 @@ const ModalActions = styled.div`
   button {
     background: ${({ theme }) => (theme.isDark ? '#ffffff' : '#d2464e')};
     font-weight: normal;
+    color: ${({ theme }) => theme.isDark && '#30264f'};
   }
 `
 

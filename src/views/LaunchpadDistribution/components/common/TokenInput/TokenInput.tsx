@@ -21,7 +21,7 @@ const TokenInput: React.FC<TokenInputProps> = ({
 }) => {
   const TranslateString = useI18n()
   return (
-    <StyledTokenInput>
+    <StyledTokenInputWrapper>
       {maxBalanceShow && (
         <StyledMaxText>
           {max.toLocaleString()} {symbol} {TranslateString(526, 'Available')}
@@ -43,11 +43,14 @@ const TokenInput: React.FC<TokenInputProps> = ({
         placeholder="0"
         value={value}
       />
-    </StyledTokenInput>
+    </StyledTokenInputWrapper>
   )
 }
 
-const StyledTokenInput = styled.div`
+const StyledTokenInputWrapper = styled.div`
+  > div {
+    background: ${({ theme }) => theme.isDark && '#604284'};
+  }
   input {
     color: ${({ theme }) => (theme.isDark ? '#D8CFE2' : '#373566')};
     font-weight: 700;
@@ -66,8 +69,10 @@ const StyledTokenAdornmentWrapper = styled.div`
   padding-left: 10px;
   button {
     background: ${({ theme }) => (theme.isDark ? '#ffffff' : '#d2464e')};
+    color: ${({ theme }) => theme.isDark && '#30264f'};
     height: 40px;
     border-radius: 8px;
+    font-weight: 600;
   }
 `
 
