@@ -67,6 +67,7 @@ const StyledTokenAdornmentWrapper = styled.div`
   button {
     background: ${({ theme }) => (theme.isDark ? '#ffffff' : '#d2464e')};
     height: 40px;
+    border-radius: 8px;
   }
 `
 
