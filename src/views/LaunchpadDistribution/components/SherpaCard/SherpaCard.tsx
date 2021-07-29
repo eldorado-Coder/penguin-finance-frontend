@@ -62,7 +62,7 @@ const SherpaCard: React.FC = () => {
         </Flex>
         <Flex justifyContent="space-between" mb="24px">
           <Text fontSize="12px">To Be Distributed</Text>
-          <CardValue fontSize="14px" suffix=" SHERPA" value={totalTokensToDistribute} />
+          <CardValue fontSize="14px" suffix=" SHERPA" decimals={2} value={totalTokensToDistribute} />
         </Flex>
         <Text fontSize="12px" mb="4px">
           Progress
@@ -72,7 +72,7 @@ const SherpaCard: React.FC = () => {
         </ProgressWrapper>
         <Flex justifyContent="space-between" mt="4px">
           <Text fontSize="12px">{distributedPercentage.toFixed(2)}%</Text>
-          <CardValue fontSize="12px" value={totalTokensToDistribute} />
+          <CardValue fontSize="12px" decimals={2} value={totalTokensToDistribute} />
         </Flex>
         <Flex justifyContent="center" mt="16px">
           <NormalButton onClick={handleViewTrailer}>View Trailer</NormalButton>
