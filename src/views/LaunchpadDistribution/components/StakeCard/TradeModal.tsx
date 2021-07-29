@@ -174,10 +174,10 @@ const TradeModal: React.FC<TradeModalProps> = ({
       </ModalContent>
       <ModalFooter>
         <ModalActions>
-          <Button scale="md" variant="secondary" onClick={onDismiss}>
+          <Button scale="md" onClick={onDismiss}>
             {TranslateString(462, 'Cancel')}
           </Button>
-          <Button scale="md" disabled={pendingTx || !canPurchase} onClick={handlePurchaseToken}>
+          <Button scale="md" disabled={pendingTx || canPurchase} onClick={handlePurchaseToken}>
             {pendingTx ? TranslateString(488, 'Pending Confirmation') : `Get ${buyTokenName}`}
           </Button>
         </ModalActions>
