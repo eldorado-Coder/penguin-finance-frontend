@@ -113,7 +113,7 @@ const TradeModal: React.FC<TradeModalProps> = ({
   )
 
   const handleSelectMax = useCallback(() => {
-    setBuyTokenBalance(buyTokenMaxBalance)
+    setBuyTokenBalance(Number(buyTokenMaxBalance).toFixed(2))
     updatePayTokenBalance(buyTokenMaxBalance)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setBuyTokenBalance, buyTokenMaxBalance])
@@ -152,7 +152,7 @@ const TradeModal: React.FC<TradeModalProps> = ({
           </RowItem>
         </Row>
         <TokenInput
-          value={Number(buyTokenBalance).toFixed(2)}
+          value={buyTokenBalance}
           max={buyTokenMaxBalance}
           symbol={buyTokenName}
           maxBalanceShow={false}
