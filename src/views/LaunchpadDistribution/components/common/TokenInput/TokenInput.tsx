@@ -85,7 +85,6 @@ const StyledTokenSymbol = styled.span`
   font-weight: 700;
   font-size: 24px;
   font-family: 'Poppins';
-  margin-right: 60px;
 `
 
 export default TokenInput
