@@ -145,7 +145,8 @@ const TradeModal: React.FC<TradeModalProps> = ({
           .send({ from: account, gas: 700000 })
       }
 
-      await onConfirm(buyTokenBalance)
+      const amount = Math.min(Number(buyTokenBalance), Number(buyTokenMaxBalance))
+      await onConfirm(String(amount))
       setPendingTx(false)
       onDismiss()
     } catch (error) {
