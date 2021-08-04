@@ -200,7 +200,7 @@ const PGUnlockButton = styled(UnlockButton)<{ isHomePage?: boolean }>`
 
 const FCard = styled.div`
   align-self: flex-start;
-  background: ${(props) => (props.theme.isDark ? '#332654' : props.theme.card.background)};
+  background: ${(props) => props.theme.card.background};
   border-radius: 32px;
   box-shadow: 0px 2px 12px -8px rgba(25, 19, 38, 0.1), 0px 1px 1px rgba(25, 19, 38, 0.05);
   position: relative;
@@ -311,7 +311,7 @@ const TradeButton = styled(Button)`
   right: 0;
   top: 0;
   width: 80px;
-  background: ${({ theme }) => (theme.isDark ? '#6221B7' : '#CE022D')};
+  background: ${({ theme }) => (theme.isDark ? '#6221B7' : theme.colors.primary)};
   border-bottom: 1px solid #771515;
   border-bottom-color: ${({ theme }) => (theme.isDark ? '#3F187C' : '#771515')};
   color: white;

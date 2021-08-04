@@ -85,7 +85,7 @@ const PGCard = styled(Card)`
   width: 100%;
   margin-left: auto;
   margin-right: auto;
-  background: ${({ theme }) => theme.isDark && '#443C7C'};
+  background: ${({ theme }) => theme.card.background};
 
   ${({ theme }) => theme.mediaQueries.md} {
     max-width: 360px;
