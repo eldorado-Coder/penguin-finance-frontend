@@ -2,25 +2,44 @@ import React from 'react'
 import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
 import { getBalanceNumber } from 'utils/formatBalance'
-import { Card, CardBody, Heading, Skeleton } from 'penguinfinance-uikit2'
+import { Card, CardBody, Heading, Flex, Skeleton } from 'penguinfinance-uikit2'
+import { NavLink } from 'react-router-dom'
+import SvgIcon from 'components/SvgIcon'
 import { useTotalSupply } from 'hooks/useTokenBalance'
 import useI18n from 'hooks/useI18n'
 import { Pool } from 'state/types'
 
 const StyledCard = styled(Card)`
+  margin-left: auto;
+  margin-right: auto;
   align-items: center;
-  display: flex;
-  flex: 1;
+  position: relative;
+  width: 100%;
   background: ${({ theme }) => theme.colors.secondary};
+
+  ${({ theme }) => theme.mediaQueries.lg} {
+    margin: 0;
+    max-width: none;
+  }
 `
 const CardMidContent = styled(Heading).attrs({ size: 'xl' })`
   line-height: 44px;
   color: #ffffff;
+  font-weight: 800;
 `
 
 const Title = styled(Heading)`
   color: #ffffff;
 `
+
+const StyledNavLink = styled(NavLink)`
+  svg {
+    path {
+      fill: white;
+    }
+  }
+`
+
 interface PoolWithApy extends Pool {
   apy: BigNumber
 }
@@ -48,7 +67,12 @@ const PercentagePefiStakedNests: React.FC<HarvestProps> = ({ pool }) => {
               <Skeleton animation="pulse" variant="rect" height="44px" />
             )}
           </CardMidContent>
-          <Title size="md">{TranslateString(764, 'Staked in Penguin Nests')}</Title>
+          <Flex justifyContent="space-between">
+            <Title size="md">{TranslateString(764, 'Staked in Penguin Nests')}</Title>
+            <StyledNavLink exact activeClassName="active" to="/nests" id="farm-apy-cta">
+              <SvgIcon src={`${process.env.PUBLIC_URL}/images/home/arrow-right.svg`} width="25px" height="25px" />
+            </StyledNavLink>
+          </Flex>
         </CardBody>
       </StyledCard>
     )
