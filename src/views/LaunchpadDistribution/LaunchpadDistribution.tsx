@@ -127,7 +127,7 @@ const CardLayout = styled(FlexLayout)`
 const TabWrapper = styled.div`
   div {
     border: 2px solid ${({ theme }) => (theme.isDark ? '#221b38' : '#b2b2ce')};
-    background-color: ${({ theme }) => (theme.isDark ? theme.colors.secondary : '#e8e4ef')};
+    background-color: ${({ theme }) => (theme.isDark ? '#332654' : '#e8e4ef')};
     border-radius: 18px;
   }
 `
