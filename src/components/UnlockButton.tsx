@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import { Button, useWalletModal } from 'penguinfinance-uikit2'
 import useAuth from 'hooks/useAuth'
 import useI18n from 'hooks/useI18n'
-import { ProjectsGroups } from '@crowdin/crowdin-api-client'
 
 const StyledUnlockedButton = styled(Button)`
   background: ${({ theme }) => (theme.isDark ? '#EC3E3F' : theme.colors.secondary)};
