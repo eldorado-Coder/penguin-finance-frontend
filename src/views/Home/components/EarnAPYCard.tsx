@@ -6,18 +6,18 @@ import useI18n from 'hooks/useI18n'
 import useBlockGenerationTime from 'hooks/useBlockGenerationTime'
 import BigNumber from 'bignumber.js'
 import { QuoteToken } from 'config/constants/types'
-import { usePefiPerBlock, useFarms, usePriceAvaxUsdt } from 'state/hooks'
+import { usePefiPerBlock, useFarms, usePriceAvaxUsdt, useNestApy } from 'state/hooks'
 import { PEFI_POOL_PID, SECONDS_PER_YEAR } from 'config'
+import { getNumberWithCommas } from 'utils/formatBalance'
 
-const StyledFarmStakingCard = styled(Card)`
-  background-image: url('/images/Big_Igloo_EarnUp.png');
-  background-repeat: no-repeat;
-  background-position: top right;
+const StyledFarmCard = styled(Card)`
   min-height: 150px;
-
   margin-left: auto;
   margin-right: auto;
+  position: relative;
   width: 100%;
+  background: #d4444c;
+  background: ${({ theme }) => theme.isDark && '#30264F'};
 
   ${({ theme }) => theme.mediaQueries.lg} {
     margin: 0;
@@ -26,7 +26,13 @@ const StyledFarmStakingCard = styled(Card)`
 `
 const CardMidContent = styled(Heading).attrs({ size: 'xl' })`
   line-height: 44px;
+  color: #ffffff;
 `
+
+const Text = styled(Heading)`
+  color: #ffffff;
+`
+
 const EarnAPYCard = () => {
   const TranslateString = useI18n()
   const pefiPerBlock = usePefiPerBlock()
@@ -35,6 +41,8 @@ const EarnAPYCard = () => {
   const maxAPY = useRef(Number.MIN_VALUE)
   const AVAX_BLOCK_TIME = useBlockGenerationTime()
   const BLOCKS_PER_YEAR = new BigNumber(SECONDS_PER_YEAR).div(new BigNumber(AVAX_BLOCK_TIME))
+
+  const displayedNestApy = (useNestApy() * 100).toFixed(2)
 
   const getHighestAPY = () => {
     const activeFarms = farmsLP.filter((farm) => farm.pid !== 0 && farm.multiplier !== '0X')
@@ -83,28 +91,24 @@ const EarnAPYCard = () => {
   )
 
   return (
-    <StyledFarmStakingCard>
+    <StyledFarmCard>
       <CardBody>
-        <Heading color="contrast" size="md">
-          Earn up to
-        </Heading>
+        <Text size="md">Enjoy a comfy</Text>
         <CardMidContent color="primary">
-          {getHighestAPY() ? (
-            `${getHighestAPY()}% ${TranslateString(736, 'APR')}`
+          {displayedNestApy ? (
+            `${getNumberWithCommas(displayedNestApy)}% APY`
           ) : (
             <Skeleton animation="pulse" variant="rect" height="44px" />
           )}
         </CardMidContent>
         <Flex justifyContent="space-between">
-          <Heading color="contrast" size="md">
-            in Igloos
-          </Heading>
+          <Text size="md">by holding xPEFI</Text>
           {/* <NavLink exact activeClassName="active" to="/farms" id="farm-apy-cta">
             <ArrowForwardIcon mt={30} color="primary" />
           </NavLink> */}
         </Flex>
       </CardBody>
-    </StyledFarmStakingCard>
+    </StyledFarmCard>
   )
 }
 
