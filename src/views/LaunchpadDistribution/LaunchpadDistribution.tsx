@@ -15,7 +15,7 @@ const LaunchpadDistribution: React.FC = () => {
 
   const handleSwitchTab = (tab) => {
     setActiveTab(tab)
-  };
+  }
 
   const onClickLaunchToken = () => {
     window.open(
@@ -39,13 +39,13 @@ const LaunchpadDistribution: React.FC = () => {
       </IgloosBannerContainer>
       <Flex justifyContent="center" pb="40px">
         <TabWrapper>
-          <ButtonMenu variant='subtle' activeIndex={activeTab} onItemClick={handleSwitchTab} scale="sm">
+          <ButtonMenu variant="subtle" activeIndex={activeTab} onItemClick={handleSwitchTab} scale="sm">
             <OptionItem active={activeTab === 0}>Next</OptionItem>
             <OptionItem active={activeTab === 1}>Past</OptionItem>
           </ButtonMenu>
         </TabWrapper>
       </Flex>
-      {activeTab === 0 ? 
+      {activeTab === 0 ? (
         <FCard>
           <Text color="text" textAlign="center">
             <span>The Penguin Launchpad</span> is a fundraising platform built on Avalanche with fairness,
@@ -54,18 +54,16 @@ const LaunchpadDistribution: React.FC = () => {
             launch an Avalanche-native project, fill out the form below.
           </Text>
           <Flex justifyContent="center" mt="32px">
-            <NormalButton onClick={onClickLaunchToken}>
-              Launch My Token To Space
-            </NormalButton>
+            <NormalButton onClick={onClickLaunchToken}>Launch My Token To Space</NormalButton>
           </Flex>
         </FCard>
-        : 
+      ) : (
         <CardLayout>
           <SherpaCard />
           <StakeCard />
           <YourTierCard />
         </CardLayout>
-      }
+      )}
     </LaunchpadPage>
   )
 }
@@ -128,17 +126,17 @@ const CardLayout = styled(FlexLayout)`
 
 const TabWrapper = styled.div`
   div {
-    border: 2px solid ${({ theme }) => theme.isDark ? '#221b38' : '#b2b2ce'};
-    background-color: ${({ theme }) => theme.isDark ? '#332654' : '#e8e4ef'};
+    border: 2px solid ${({ theme }) => (theme.isDark ? '#221b38' : '#b2b2ce')};
+    background-color: ${({ theme }) => (theme.isDark ? theme.colors.secondary : '#e8e4ef')};
     border-radius: 18px;
   }
-`;
+`
 
 const OptionItem = styled(ButtonMenuItem)<{ active: boolean }>`
   min-width: 100px;
 
   background-color: ${({ active }) => active && '#ec3e3f'};
-  color: ${({ active }) => active ? 'white' : '#b2b2ce'};
+  color: ${({ active }) => (active ? 'white' : '#b2b2ce')};
 `
 
 const FCard = styled.div`
@@ -156,7 +154,7 @@ const FCard = styled.div`
   }
 
   span {
-    color: ${({ theme }) => theme.isDark ? theme.colors.success : theme.colors.primaryBright};
+    color: ${({ theme }) => (theme.isDark ? theme.colors.success : theme.colors.primaryBright)};
     font-weight: bold;
   }
 `
@@ -166,7 +164,7 @@ const NormalButton = styled(Button)`
   padding: 0 60px;
   color: white;
   font-size: 20px;
-  background:  ${({ theme }) => theme.isDark ? '#7645d9' : theme.colors.primaryBright};
+  background: ${({ theme }) => (theme.isDark ? '#7645d9' : theme.colors.primaryBright)};
 `
 
 export default LaunchpadDistribution

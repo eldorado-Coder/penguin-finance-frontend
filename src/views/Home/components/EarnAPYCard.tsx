@@ -16,8 +16,7 @@ const StyledFarmCard = styled(Card)`
   margin-right: auto;
   position: relative;
   width: 100%;
-  background: #d4444c;
-  background: ${({ theme }) => theme.isDark && '#30264F'};
+  background: ${({ theme }) => (theme.isDark ? theme.colors.secondary : theme.colors.primary)};
 
   ${({ theme }) => theme.mediaQueries.lg} {
     margin: 0;

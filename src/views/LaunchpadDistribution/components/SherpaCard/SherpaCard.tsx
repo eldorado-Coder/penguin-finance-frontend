@@ -84,9 +84,18 @@ const SherpaCard: React.FC = () => {
   )
 }
 
+const FCard = styled.div`
+  align-self: flex-start;
+  background: ${(props) => props.theme.card.background};
+  border-radius: 32px;
+  box-shadow: 0px 2px 12px -8px rgba(25, 19, 38, 0.1), 0px 1px 1px rgba(25, 19, 38, 0.05);
+  position: relative;
+  min-height: 490px;
+`
+
 const CardContent = styled.div`
   padding: 16px;
-  background: ${(props) => (props.theme.isDark ? '#332654' : props.theme.card.background)};
+  background: ${(props) => props.theme.card.background};
   border-radius: 32px 32px 0 0;
 
   img {
@@ -130,15 +139,6 @@ const ProgressWrapper = styled.div`
       background: linear-gradient(90deg, #00deff 0%, #8f00c1 100%);
     }
   }
-`
-
-const FCard = styled.div`
-  align-self: flex-start;
-  background: ${(props) => (props.theme.isDark ? '#332654' : props.theme.card.background)};
-  border-radius: 32px;
-  box-shadow: 0px 2px 12px -8px rgba(25, 19, 38, 0.1), 0px 1px 1px rgba(25, 19, 38, 0.05);
-  position: relative;
-  min-height: 490px;
 `
 
 const NormalButton = styled(Button)`

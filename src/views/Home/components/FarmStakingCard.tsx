@@ -24,20 +24,13 @@ const CardImage = styled.img`
 
 const Label = styled(Text).attrs({ color: 'primary' })`
   font-size: 14px;
-  color: ${({ theme }) => theme.isDark && '#D4444C'};
 `
 
 const Actions = styled.div`
   margin-top: 24px;
 `
 
-const Title = styled(Heading)`
-  color: ${({ theme }) => !theme.isDark && '#D4444C'};
-`
-
-const PGUnlockButton = styled(UnlockButton)`
-  background: ${({ theme }) => !theme.isDark && '#383466'};
-`;
+const Title = styled(Heading)``
 
 const FarmedStakingCard = () => {
   const [pendingTx, setPendingTx] = useState(false)
@@ -62,7 +55,7 @@ const FarmedStakingCard = () => {
   return (
     <StyledFarmStakingCard>
       <CardBody>
-        <Title size="xl" mb="24px">
+        <Title size="xl" mb="24px" color="primary">
           {TranslateString(542, 'Farms & Staking')}
         </Title>
         <CardImage src="/images/penguin-finance-logo.svg" alt="penguin logo" width={64} height={64} />
@@ -87,7 +80,7 @@ const FarmedStakingCard = () => {
                 : TranslateString(532, `Harvest all (${balancesWithValue.length})`)}
             </Button>
           ) : (
-            <PGUnlockButton fullWidth />
+            <UnlockButton fullWidth />
           )}
         </Actions>
       </CardBody>

@@ -7,12 +7,11 @@ import { useTotalSupply } from 'hooks/useTokenBalance'
 import useI18n from 'hooks/useI18n'
 import { Pool } from 'state/types'
 
-const StyledTotalValueLockedCard = styled(Card)`
+const StyledCard = styled(Card)`
   align-items: center;
   display: flex;
   flex: 1;
-  background: #363266;
-  background: ${({ theme }) => theme.isDark && '#30264F'};
+  background: ${({ theme }) => theme.colors.secondary};
 `
 const CardMidContent = styled(Heading).attrs({ size: 'xl' })`
   line-height: 44px;
@@ -39,7 +38,7 @@ const PercentagePefiStakedNests: React.FC<HarvestProps> = ({ pool }) => {
   if (totalStaked) {
     const percentageStaked = (getBalanceNumber(totalStaked) / getBalanceNumber(totalSupply)) * 100
     return (
-      <StyledTotalValueLockedCard>
+      <StyledCard>
         <CardBody>
           <Title size="md">{TranslateString(762, 'A total of')}</Title>
           <CardMidContent color="primary">
@@ -51,15 +50,15 @@ const PercentagePefiStakedNests: React.FC<HarvestProps> = ({ pool }) => {
           </CardMidContent>
           <Title size="md">{TranslateString(764, 'Staked in Penguin Nests')}</Title>
         </CardBody>
-      </StyledTotalValueLockedCard>
+      </StyledCard>
     )
   }
   return (
-    <StyledTotalValueLockedCard>
+    <StyledCard>
       <CardBody>
         <Title size="md">{TranslateString(762, 'Stake your PEFI now!')}</Title>
       </CardBody>
-    </StyledTotalValueLockedCard>
+    </StyledCard>
   )
 }
 

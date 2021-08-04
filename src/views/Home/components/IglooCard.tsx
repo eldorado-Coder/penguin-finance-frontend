@@ -8,8 +8,7 @@ const StyledFarmCard = styled(Card)`
   margin-right: auto;
   position: relative;
   width: 100%;
-  background: #363266;
-  background: ${({ theme }) => theme.isDark && '#30264F'};
+  background: ${({ theme }) => theme.colors.secondary};
 
   ${({ theme }) => theme.mediaQueries.lg} {
     margin: 0;
