@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
-import { Text, Button, Flex } from 'penguinfinance-uikit2'
+import { Text, Button, Flex, ButtonMenu, ButtonMenuItem } from 'penguinfinance-uikit2'
 import useTheme from 'hooks/useTheme'
 import FlexLayout from 'components/layout/Flex'
 import Page from 'components/layout/Page'
@@ -10,12 +10,11 @@ import SherpaCard from './components/SherpaCard/SherpaCard'
 
 const Launchpad: React.FC = () => {
   const { isDark } = useTheme()
+  const [activeTab, setActiveTab] = useState(0)
 
-  //   const [activeTab, setActiveTab] = useState(0)
-
-  //   const handleSwitchTab = (tab) => {
-  //     setActiveTab(tab)
-  //   }
+  const handleSwitchTab = (tab) => {
+    setActiveTab(tab)
+  }
 
   const onClickLaunchToken = () => {
     window.open(
@@ -37,12 +36,12 @@ const Launchpad: React.FC = () => {
           alt="launchpad banner"
         />
       </IgloosBannerContainer>
-      {/* <Flex justifyContent="center" pb="32px">
+      <Flex justifyContent="center" pb="32px">
         <ButtonMenu activeIndex={activeTab} onItemClick={handleSwitchTab} scale="sm">
           <OptionItem>Next</OptionItem>
           <OptionItem>Past</OptionItem>
         </ButtonMenu>
-      </Flex> */}
+      </Flex>
       <CardLayout>
         <SherpaCard />
         <StakeCard />
@@ -95,9 +94,9 @@ const BannerImage = styled.img`
   width: 100%;
 `
 
-// const OptionItem = styled(ButtonMenuItem)`
-//   min-width: 100px;
-// `
+const OptionItem = styled(ButtonMenuItem)`
+  min-width: 100px;
+`
 
 const CardLayout = styled(FlexLayout)`
   & > * {

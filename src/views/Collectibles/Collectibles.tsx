@@ -5,7 +5,7 @@ import useTheme from 'hooks/useTheme';
 import NftList from './components/NftList'
 
 const PageBgContainer = styled.div`
-  background-image: ${({ theme }) => theme.isDark ? `url('/images/nfts/Background_for_NFT_Nightmode.png')` : `url('/images/nfts/NFTPattern.png')`};
+  background-image: ${({ theme }) => theme.isDark ? `url('/images/nfts/dark-mode-pattern.png')` : `url('/images/nfts/light-mode-pattern.png')`};
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
