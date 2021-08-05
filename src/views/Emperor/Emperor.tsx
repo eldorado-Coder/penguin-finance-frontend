@@ -305,9 +305,9 @@ const Emperor: React.FC = () => {
       />
 
       {/* background video */}
-      <EmperorBgContainer width="100%" height="100%" autoPlay loop muted>
+      {/* <EmperorBgContainer width="100%" height="100%" autoPlay loop muted>
         <source src={emperorEnded ? emperorWinnerVideo : emperorDefaultVideo} />
-      </EmperorBgContainer>
+      </EmperorBgContainer> */}
 
       {!emperorEnded ? <>{renderEmperorStatsPage()}</> : <>{renderEmperorEndPage()}</>}
     </EmperorPage>
