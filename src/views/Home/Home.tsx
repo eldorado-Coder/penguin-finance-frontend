@@ -164,9 +164,8 @@ const SpacingWrapper = styled.div`
 
 const HomeBgContainer = styled.div`
   background-image: url('/images/home/HomePageBackground.png');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
+  background-repeat: repeat;
+  background-size: contain;
   position: absolute;
   top: 0px;
   bottom: 0px;
