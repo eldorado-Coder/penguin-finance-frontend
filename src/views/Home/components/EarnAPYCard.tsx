@@ -20,7 +20,7 @@ const StyledCard = styled(Card)`
 `
 const CardMidContent = styled(Heading).attrs({ size: 'xl' })`
   line-height: 44px;
-  color: #ffffff;
+  color: ${({ theme }) => (theme.isDark ? '#d4444c' : '#ffffff')};
   font-weight: 800;
 `
 
