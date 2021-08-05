@@ -81,7 +81,7 @@ const MultiplierTag = styled(Tag)``
 const APYTag = styled(Tag)`
   margin-right: 6px;
   span {
-    color: #ce022d;
+    color: ${({ theme }) => theme.colors.red};
     margin-right: 4px;
   }
 `
@@ -93,7 +93,7 @@ const HelperTag = styled(Tag)`
   width: 28px;
   border-radius: 50%;
   span {
-    color: #ce022d;
+    color: ${({ theme }) => theme.colors.red};
   }
 `
 
@@ -180,7 +180,7 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
   const blocksUntilStart = Math.max(startBlock - block, 0)
   const blocksRemaining = Math.max(endBlock - block, 0)
   const accountHasStakedBalance = stakedBalance?.toNumber() > 0
-  const needsApproval = !accountHasStakedBalance && !allowance.toNumber() && !isBnbPool
+  const needsApproval = !allowance.toNumber() && !isBnbPool
   const isCardActive = isFinished && accountHasStakedBalance
   const rewardTokenRatio =
     totalStaked && totalSupply ? new BigNumber(totalStaked).div(new BigNumber(totalSupply)).toJSON() : 1
