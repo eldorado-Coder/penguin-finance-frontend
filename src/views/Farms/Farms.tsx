@@ -134,10 +134,9 @@ const FarmPage = styled(Page)`
 
 // bg
 const IgloosBgContainer = styled.div`
-  background-image: url('/images/farms/IglooBackground${({ theme }) => (theme.isDark ? 'Night' : 'Light')}.png');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
+  background-image: url('/images/farms/igloo_background_${({ theme }) => (theme.isDark ? 'dark' : 'Light')}.png');
+  background-repeat: repeat;
+  background-size: contain;
   position: absolute;
   top: -8px;
   bottom: -8px;

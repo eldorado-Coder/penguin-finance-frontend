@@ -310,9 +310,8 @@ const CompounderIglooPage = styled(Page)`
 // bg
 const IgloosBgContainer = styled.div`
   background-image: url('/images/compounder-igloos/CompounderPattern.png');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
+  background-repeat: repeat;
+  background-size: contain;
   position: absolute;
   top: -8px;
   bottom: -8px;
