@@ -80,7 +80,7 @@ const FarmedStakingCard = () => {
                 : TranslateString(532, `Harvest all (${balancesWithValue.length})`)}
             </Button>
           ) : (
-            <UnlockButton fullWidth />
+            <UnlockButton fullWidth isHomeButton />
           )}
         </Actions>
       </CardBody>

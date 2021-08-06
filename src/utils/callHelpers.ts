@@ -83,15 +83,6 @@ export const sousStakeBnb = async (sousChefContract, amount, account) => {
 }
 
 export const unstake = async (masterChefContract, pid, amount, account) => {
-  // if (pid === 0) {
-  //   return masterChefContract.methods
-  //     .leaveStaking(new BigNumber(amount).times(new BigNumber(10).pow(18)).toString())
-  //     .send({ from: account, gas: 200000 })
-  //     .on('transactionHash', (tx) => {
-  //       return tx.transactionHash
-  //     })
-  // }
-
   return masterChefContract.methods
     .withdraw(pid, new BigNumber(amount).times(new BigNumber(10).pow(18)).toString())
     .send({ from: account, gas: 200000 })

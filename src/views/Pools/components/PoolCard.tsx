@@ -47,10 +47,6 @@ const StyledCard = styled(Card)<{ isNestPage?: boolean }>`
   }
 `
 
-const PGUnlockButton = styled(UnlockButton)<{ isHomePage?: boolean }>`
-  background: ${({ theme, isHomePage }) => !theme.isDark && isHomePage && '#383466'};
-`
-
 const StyledCardAccent = styled.div`
   background: linear-gradient(
     45deg,
@@ -317,7 +313,7 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
           </Flex>
         </div>
         <StyledCardActions>
-          {!account && <PGUnlockButton isHomePage={isHomePage} />}
+          {!account && <UnlockButton isHomeButton={isHomePage} />}
           {account &&
             (needsApproval ? (
               <div style={{ flex: 1 }}>
@@ -363,7 +359,7 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
             </Text>
           </TokenSymbol>
         </StyledDetails>
-        <StyledDetails>
+        {/* <StyledDetails>
           <Label style={{ flex: 1 }}>
             <Text color="primary">{`PEFI Staked: `}</Text>
           </Label>
@@ -373,7 +369,7 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
               {stakingTokenName}
             </Text>
           </TokenSymbol>
-        </StyledDetails>
+        </StyledDetails> */}
       </CardContent>
       <CardAction>
         <CardFooter
