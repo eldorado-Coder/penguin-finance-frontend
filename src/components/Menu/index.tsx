@@ -36,18 +36,20 @@ const Menu = (props) => {
   // add badge to "emperor" and "launchpad" menu
   const isEmperorLive = false // event status
   const isLaunchpadLive = false // event status
+  const isCollectiblesNew = true // event status
 
   const links = [...config]
   const emperorIndex = links.findIndex((link) => link.label === 'Emperor')
   const launchpadIndex = links.findIndex((link) => link.label === 'Launchpad')
+  const collectiblesIndex = links.findIndex((link) => link.label === 'Collectibles')
 
   links[emperorIndex] = {
     ...links[emperorIndex],
     badge: isEmperorLive ? 'LIVE' : 'SOON',
   }
-  links[launchpadIndex] = {
-    ...links[launchpadIndex],
-    badge: isLaunchpadLive ? 'LIVE' : 'SOON',
+  links[collectiblesIndex] = {
+    ...links[collectiblesIndex],
+    badge: isCollectiblesNew ? 'NEW' : '',
   }
 
   return (
