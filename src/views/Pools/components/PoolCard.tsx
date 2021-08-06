@@ -363,7 +363,7 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
             </Text>
           </TokenSymbol>
         </StyledDetails>
-        <StyledDetails>
+        {/* <StyledDetails>
           <Label style={{ flex: 1 }}>
             <Text color="primary">{`PEFI Staked: `}</Text>
           </Label>
@@ -373,7 +373,7 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
               {stakingTokenName}
             </Text>
           </TokenSymbol>
-        </StyledDetails>
+        </StyledDetails> */}
       </CardContent>
       <CardAction>
         <CardFooter
