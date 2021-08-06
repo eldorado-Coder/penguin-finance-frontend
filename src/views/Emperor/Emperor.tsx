@@ -22,6 +22,9 @@ const EmperorPage = styled(Page)`
   max-width: 100%; //1120px;
   overflow: hidden;
   padding: 0px;
+  @media (min-width: 768px) {
+    padding: 40px 30px;
+  }
 `
 
 const ChestWrapper = styled.div<{ jackpot: string }>`
@@ -285,7 +288,7 @@ const Emperor: React.FC = () => {
     )
   }
 
-  const emperorEnded = true
+  const emperorEnded = false
   const emperorDefaultVideo = 'https://res.cloudinary.com/dbyunrpzq/video/upload/v1624544908/penguin_emperor_ldeorc.mp4'
   // to change the video of emperor winner page background video, please change this video path
   const emperorWinnerVideo = '/videos/penguin_emperor_winner.mp4'
@@ -305,9 +308,9 @@ const Emperor: React.FC = () => {
       />
 
       {/* background video */}
-      {/* <EmperorBgContainer width="100%" height="100%" autoPlay loop muted>
+      <EmperorBgContainer width="100%" height="100%" autoPlay loop muted>
         <source src={emperorEnded ? emperorWinnerVideo : emperorDefaultVideo} />
-      </EmperorBgContainer> */}
+      </EmperorBgContainer>
 
       {!emperorEnded ? <>{renderEmperorStatsPage()}</> : <>{renderEmperorEndPage()}</>}
     </EmperorPage>
