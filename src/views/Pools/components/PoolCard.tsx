@@ -12,11 +12,13 @@ import useI18n from 'hooks/useI18n'
 import { useSousStake } from 'hooks/useStake'
 import { useSousUnstake } from 'hooks/useUnstake'
 import useBlock from 'hooks/useBlock'
+import useUserSetting from 'hooks/useUserSetting'
 import { getBalanceNumber, getNumberWithCommas } from 'utils/formatBalance'
 import { useNestApr, useNestApy } from 'state/hooks'
 import { PoolCategory } from 'config/constants/types'
 import { APY_TOOLTIP_TEXT } from 'config'
 import { Pool } from 'state/types'
+import { getAccounts } from 'subgraph/utils'
 import DepositModal from './DepositModal'
 import WithdrawModal from './WithdrawModal'
 import CardTitle from './CardTitle'
@@ -43,10 +45,6 @@ const StyledCard = styled(Card)<{ isNestPage?: boolean }>`
     margin-top: ${(props) => props.isNestPage && '60px'};
     margin-bottom: ${(props) => props.isNestPage && '60px'};
   }
-`
-
-const PGUnlockButton = styled(UnlockButton)<{ isHomePage?: boolean }>`
-  background: ${({ theme, isHomePage }) => !theme.isDark && isHomePage && '#383466'};
 `
 
 const StyledCardAccent = styled.div`
@@ -81,7 +79,7 @@ const MultiplierTag = styled(Tag)``
 const APYTag = styled(Tag)`
   margin-right: 6px;
   span {
-    color: #ce022d;
+    color: ${({ theme }) => theme.colors.red};
     margin-right: 4px;
   }
 `
@@ -93,7 +91,7 @@ const HelperTag = styled(Tag)`
   width: 28px;
   border-radius: 50%;
   span {
-    color: #ce022d;
+    color: ${({ theme }) => theme.colors.red};
   }
 `
 
@@ -159,6 +157,10 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
     stakingLimit,
   } = pool
 
+  const [requestedApproval, setRequestedApproval] = useState(false)
+  const [handsOnPenalty, setHandsOnPenalty] = useState(0)
+  const [historicalPefiStakedBalance, setHistoricalPefiStakedBalance] = useState(0)
+
   // Pools using native AVAX behave differently than pools using a token
   const isBnbPool = poolCategory === PoolCategory.BINANCE
   const TranslateString = useI18n()
@@ -169,9 +171,7 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
   const { onStake } = useSousStake(sousId, isBnbPool)
   const { onUnstake } = useSousUnstake(sousId)
   const xPefiContract = useXPefi()
-
-  const [requestedApproval, setRequestedApproval] = useState(false)
-  const [handsOnPenalty, setHandsOnPenalty] = useState(0)
+  const { refreshRate } = useUserSetting()
 
   const allowance = new BigNumber(userData?.allowance || 0)
   const stakingTokenBalance = new BigNumber(userData?.stakingTokenBalance || 0)
@@ -180,7 +180,7 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
   const blocksUntilStart = Math.max(startBlock - block, 0)
   const blocksRemaining = Math.max(endBlock - block, 0)
   const accountHasStakedBalance = stakedBalance?.toNumber() > 0
-  const needsApproval = !accountHasStakedBalance && !allowance.toNumber() && !isBnbPool
+  const needsApproval = !allowance.toNumber() && !isBnbPool
   const isCardActive = isFinished && accountHasStakedBalance
   const rewardTokenRatio =
     totalStaked && totalSupply ? new BigNumber(totalStaked).div(new BigNumber(totalSupply)).toJSON() : 1
@@ -211,9 +211,25 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
     setHandsOnPenalty(penalty)
   }, [xPefiContract])
 
+  const fetchStakedPefiBalance = useCallback(async () => {
+    const accountInfo = await getAccounts(account)
+    if (accountInfo) {
+      setHistoricalPefiStakedBalance(Number(accountInfo.stakePefiAmount))
+    } else {
+      setHistoricalPefiStakedBalance(0)
+    }
+  }, [account])
+
   useEffect(() => {
     fetchEarlyWithdrawalFee()
   }, [fetchEarlyWithdrawalFee])
+
+  useEffect(() => {
+    const refreshInterval = setInterval(() => {
+      fetchStakedPefiBalance()
+    }, refreshRate)
+    return () => clearInterval(refreshInterval)
+  }, [account, refreshRate, fetchStakedPefiBalance])
 
   const getXPefiToPefiRatio = () => {
     return pool.totalStaked && pool.totalSupply
@@ -297,7 +313,7 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
           </Flex>
         </div>
         <StyledCardActions>
-          {!account && <PGUnlockButton isHomePage={isHomePage} />}
+          {!account && <UnlockButton isHomeButton={isHomePage} />}
           {account &&
             (needsApproval ? (
               <div style={{ flex: 1 }}>
@@ -343,6 +359,17 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
             </Text>
           </TokenSymbol>
         </StyledDetails>
+        {/* <StyledDetails>
+          <Label style={{ flex: 1 }}>
+            <Text color="primary">{`PEFI Staked: `}</Text>
+          </Label>
+          <Balance fontSize="14px" isDisabled={isFinished} value={historicalPefiStakedBalance} />
+          <TokenSymbol>
+            <Text color="primary" fontSize="14px">
+              {stakingTokenName}
+            </Text>
+          </TokenSymbol>
+        </StyledDetails> */}
       </CardContent>
       <CardAction>
         <CardFooter

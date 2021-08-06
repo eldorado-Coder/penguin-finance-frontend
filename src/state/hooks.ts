@@ -403,7 +403,7 @@ export const useNestApr = (): number => {
 }
 
 export const useNestApy = () => {
-  const staticFee = 4
+  const staticFee = 0
   return (1 + useNestApr() / DAYS_PER_YEAR) ** DAYS_PER_YEAR - 1 + staticFee
 }
 

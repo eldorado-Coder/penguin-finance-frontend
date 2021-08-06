@@ -7,9 +7,9 @@ import useI18n from 'hooks/useI18n'
 import Page from 'components/layout/Page'
 import FarmStakingCard from 'views/Home/components/FarmStakingCard'
 import PefiStats from 'views/Home/components/PefiStats'
-import TotalPefiStakedNests from 'views/Home/components/TotalPefiStakedNests'
+import IglooCard from 'views/Home/components/IglooCard'
+import EarnAPYCard from 'views/Home/components/EarnAPYCard'
 import PercentagePefiStakedNests from 'views/Home/components/PercentagePefiStakedNests'
-import BurnedPefiCard from 'views/Home/components/BurnedPefiCard'
 import PoolCard from 'views/Pools/components/PoolCard'
 // import { getBalanceNumber } from 'utils/formatBalance'
 // import priceToBnb from 'utils/priceToBnb'
@@ -164,9 +164,8 @@ const SpacingWrapper = styled.div`
 
 const HomeBgContainer = styled.div`
   background-image: url('/images/home/HomePageBackground.png');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
+  background-repeat: repeat;
+  background-size: contain;
   position: absolute;
   top: 0px;
   bottom: 0px;
@@ -231,11 +230,11 @@ const Home: React.FC = () => {
           <Cards>
             <FarmStakingCard />
             <PefiStatsCardWrapper>
-              <BurnedPefiCard />
+              <IglooCard />
+              <SpacingWrapper />
+              <EarnAPYCard />
               <SpacingWrapper />
               <PercentagePefiStakedNests pool={pefiPool} />
-              <SpacingWrapper />
-              <TotalPefiStakedNests pool={pefiPool} />
             </PefiStatsCardWrapper>
             {pefiPool && (
               <PoolCardWrapper>

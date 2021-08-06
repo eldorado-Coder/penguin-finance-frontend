@@ -1,14 +1,14 @@
 import React from 'react'
-import styled from 'styled-components';
+import styled from 'styled-components'
 import Page from 'components/layout/Page'
-import useTheme from 'hooks/useTheme';
+import useTheme from 'hooks/useTheme'
 import NftList from './components/NftList'
 
 const PageBgContainer = styled.div`
-  background-image: ${({ theme }) => theme.isDark ? `url('/images/nfts/Background_for_NFT_Nightmode.png')` : `url('/images/nfts/NFTPattern.png')`};
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
+  background-image: ${({ theme }) =>
+    theme.isDark ? `url('/images/nfts/dark-mode-pattern.png')` : `url('/images/nfts/light-mode-pattern.png')`};
+  background-repeat: repeat;
+  background-size: contain;
   position: absolute;
   top: 0px;
   bottom: 0px;
@@ -20,14 +20,17 @@ const PageBgContainer = styled.div`
 const NFTPage = styled(Page)`
   max-width: 1200px;
   padding: 0 0 24px;
-`;
+`
 
 const Collectibles = () => {
-  const { isDark } = useTheme();
+  const { isDark } = useTheme()
   return (
     <NFTPage>
       <PageBgContainer />
-      <img src={`${process.env.PUBLIC_URL}/images/nfts/${isDark ? 'BannerNightNFTs' : 'NFTBannerAnimated'}.gif`} alt="ntf banner" />
+      <img
+        src={`${process.env.PUBLIC_URL}/images/nfts/${isDark ? 'BannerNightNFTs' : 'NFTBannerAnimated'}.gif`}
+        alt="ntf banner"
+      />
       <NftList />
     </NFTPage>
   )

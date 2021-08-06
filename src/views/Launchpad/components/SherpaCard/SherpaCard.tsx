@@ -56,11 +56,13 @@ const SherpaCard: React.FC = () => {
         <Text fontSize="12px" mb="16px">
           A fully decentralized protocol for private transactions on Avalanche
         </Text>
-        <Flex justifyContent="space-between" mb="4px" alignItems='center'>
+        <Flex justifyContent="space-between" mb="4px" alignItems="center">
           <CardLabel fontSize="12px">Launch Date</CardLabel>
-          <Text fontSize="14px" color="text" fontWeight={600}>July 29th, 2021</Text>
+          <Text fontSize="14px" color="text" fontWeight={600}>
+            July 29th, 2021
+          </Text>
         </Flex>
-        <Flex justifyContent="space-between" mb="24px" alignItems='center'>
+        <Flex justifyContent="space-between" mb="24px" alignItems="center">
           <CardLabel fontSize="12px">For Sale</CardLabel>
           <CardValue fontSize="14px" suffix=" SHERPA" decimals={2} value={totalTokensToDistribute} />
         </Flex>
@@ -96,9 +98,18 @@ const SherpaCard: React.FC = () => {
   )
 }
 
+const FCard = styled.div`
+  align-self: flex-start;
+  background: ${(props) => props.theme.card.background};
+  border-radius: 32px;
+  box-shadow: 0px 2px 12px -8px rgba(25, 19, 38, 0.1), 0px 1px 1px rgba(25, 19, 38, 0.05);
+  position: relative;
+  min-height: 480px;
+`
+
 const CardContent = styled.div`
   padding: 16px;
-  background: ${(props) => (props.theme.isDark ? '#332654' : props.theme.card.background)};
+  background: ${(props) => props.theme.card.background};
   border-radius: 32px 32px 0 0;
 
   img {
@@ -143,15 +154,6 @@ const ClaimsWrapper = styled.div`
   .claim-container {
     position: relative;
   }
-`
-
-const FCard = styled.div`
-  align-self: flex-start;
-  background: ${(props) => (props.theme.isDark ? '#332654' : props.theme.card.background)};
-  border-radius: 32px;
-  box-shadow: 0px 2px 12px -8px rgba(25, 19, 38, 0.1), 0px 1px 1px rgba(25, 19, 38, 0.05);
-  position: relative;
-  min-height: 480px;
 `
 
 const StyledInput = styled(Input)`

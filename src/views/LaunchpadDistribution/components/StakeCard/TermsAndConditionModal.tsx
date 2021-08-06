@@ -1,15 +1,8 @@
-import BigNumber from 'bignumber.js'
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useState } from 'react'
 import { Button, Text, Modal } from 'penguinfinance-uikit2'
 import styled from 'styled-components'
 import ModalActions from 'components/ModalActions'
-import { useXPefi, useTestXPefi } from 'hooks/useContract'
-import { useWeb3React } from '@web3-react/core'
-import useLaunchpadXPefiApprove from 'hooks/useLaunchpadXPefiApprove'
-import { getLaunchpadAddress } from 'utils/addressHelpers'
-import TokenInput from '../../../../components/TokenInput'
 import useI18n from '../../../../hooks/useI18n'
-import { getFullDisplayBalance } from '../../../../utils/formatBalance'
 import { termsAndConditions } from '../../utils'
 
 const StyledModal = styled(Modal)``
@@ -62,7 +55,7 @@ const TermsAndConditionModal: React.FC<TermsAndConditionProps> = ({ onConfirm, o
   return (
     <StyledModal title="Terms and conditions" bodyPadding="0px" onDismiss={onDismiss}>
       <ModalContent onScroll={handleScroll}>
-        {termsAndConditions.map(row => {
+        {termsAndConditions.map((row) => {
           return (
             <TermRow key={row.text}>
               <Text color="text" fontSize={row.fontSize} pl={row.padding}>
