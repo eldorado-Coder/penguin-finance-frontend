@@ -168,7 +168,6 @@ const ButtonToolTipWrapper = styled.div<{ disabled?: boolean }>`
 const CustomizeStyleButtonContainer = styled.div`
   button {
     width: 200px;
-    background: ${(props) => props.theme.colors.secondary};
     border-radius: 30px;
     @media only screen and (min-width: 1200px) and (max-width: 1450px) {
       width: 140px;
@@ -204,6 +203,10 @@ const CustomToolTip = styled(ReactTooltip)`
     border-top-color: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#383466!important')};
     border-bottom-color: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#383466!important')};
   }
+`
+
+const StyledText = styled(Text)`
+  color: ${({ theme }) => (theme.isDark ? theme.colors.primary : theme.colors.secondary)};
 `
 
 const YourScoreBlock: React.FC = () => {
@@ -360,18 +363,18 @@ const YourScoreBlock: React.FC = () => {
         <CardBlockBody account={account}>
           {myStatus === 'not connected' && (
             <WalletContainer>
-              <Text bold color="secondary" fontSize="22px">
+              <StyledText bold fontSize="22px">
                 {TranslateString(1074, 'Check your Rank')}
-              </Text>
-              <Text fontSize="14px">Connect wallet to view</Text>
+              </StyledText>
+              <StyledText fontSize="14px">Connect wallet to view</StyledText>
               <UnlockButton />
             </WalletContainer>
           )}
           {myStatus === 'not registered' && (
             <RegisterContainer>
-              <Text bold color="secondary" fontSize="16px">
+              <StyledText bold fontSize="16px">
                 {TranslateString(1074, 'Start by styling your Penguin. Your crown awaits.')}
-              </Text>
+              </StyledText>
               <RegisterButtonContainer>
                 <Button onClick={onToggleRegister}>{TranslateString(292, 'Register')}</Button>
               </RegisterButtonContainer>
@@ -380,15 +383,15 @@ const YourScoreBlock: React.FC = () => {
 
           {myStatus === 'registered' && (
             <RegisterContainer>
-              <Text bold color="primary" fontSize="22px">
+              <StyledText bold color="primary" fontSize="22px">
                 {TranslateString(1074, myEmperor && badWordsFilter(myEmperor.nickname))}
-              </Text>
-              <Text bold color="secondary" fontSize="18px">
+              </StyledText>
+              <StyledText bold fontSize="18px">
                 {TranslateString(1074, 'You have been Emperor for:')}
-              </Text>
-              <Text bold color="primary" fontSize="18px">
+              </StyledText>
+              <StyledText bold color="primary" fontSize="18px">
                 {`${myEmperor.timeAsEmperor} seconds`}
-              </Text>
+              </StyledText>
               <StealButtonContainer>
                 <ButtonToolTipWrapper
                   disabled={!checkCanStealConfirm()}
@@ -457,15 +460,15 @@ const YourScoreBlock: React.FC = () => {
 
           {myStatus === 'king' && (
             <RegisterContainer>
-              <Text bold color="secondary" fontSize="22px">
+              <StyledText bold fontSize="22px">
                 {TranslateString(1074, myEmperor && badWordsFilter(myEmperor.nickname))}
-              </Text>
-              <Text bold color="secondary" fontSize="18px">
+              </StyledText>
+              <StyledText bold fontSize="18px">
                 {TranslateString(1074, 'You have been Emperor for:')}
-              </Text>
-              <Text bold color="primary" fontSize="22px">
+              </StyledText>
+              <StyledText bold color="primary" fontSize="22px">
                 {`${myEmperor.timeAsEmperor} seconds`}
-              </Text>
+              </StyledText>
             </RegisterContainer>
           )}
         </CardBlockBody>
