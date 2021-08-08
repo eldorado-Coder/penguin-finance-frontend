@@ -289,9 +289,10 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
 
   const rawStakedReceiptBalance = getBalanceNumber(stakedReceiptBalance)
 
-  const displayStakedBalance = (!stakedReceiptBalance || Number(stakedReceiptBalance) === 0)
-    ? '0'
-    : parseFloat(getFullDisplayBalance(stakedReceiptBalance)).toFixed(3)
+  const displayStakedBalance =
+    !stakedReceiptBalance || Number(stakedReceiptBalance) === 0
+      ? '0'
+      : parseFloat(getFullDisplayBalance(stakedReceiptBalance)).toFixed(3)
 
   const pendingXPefiValue = getBalanceNumber(pendingXPefi)
   const { quoteTokenAddresses, quoteTokenSymbol, tokenAddresses } = farm
@@ -501,9 +502,9 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
                 ? `${farm.lpSymbol.split(' ')[0]} lgloo`
                 : `${farm.type} ${farm.lpSymbol.split(' ')[0]}`}
             </Text>
-            <NoFeesTag variant="primary" index={index} outline>
+            {/* <NoFeesTag variant="primary" index={index} outline>
               0% REWARD FEES
-            </NoFeesTag>
+            </NoFeesTag> */}
           </IglooTitleWrapper>
           <Flex justifyContent="flex-start" flexWrap="wrap">
             {!account ? <PGUnlockButton index={index} scale="sm" mt="4px" fullWidth /> : renderActionButtons()}

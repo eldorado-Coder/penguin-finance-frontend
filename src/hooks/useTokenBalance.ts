@@ -8,7 +8,7 @@ import { getPefiAddress } from 'utils/addressHelpers'
 import useWeb3 from 'hooks/useWeb3'
 import useRefresh from './useRefresh'
 
-const useTokenBalance = (tokenAddress: string) => {
+const useTokenBalance = (tokenAddress?: string) => {
   const [balance, setBalance] = useState(new BigNumber(0))
   const { account } = useWeb3React()
   const { fastRefresh } = useRefresh()
@@ -19,9 +19,17 @@ const useTokenBalance = (tokenAddress: string) => {
       const res = await getTokenBalance(web3, tokenAddress, account)
       setBalance(new BigNumber(res))
     }
+    const fetchAvaxBalance = async () => {
+      const res = await web3.eth.getBalance(account)
+      setBalance(new BigNumber(res))
+    }
 
     if (account && web3) {
-      fetchBalance()
+      if (tokenAddress) {
+        fetchBalance()
+      } else {
+        fetchAvaxBalance()
+      }
     }
   }, [account, web3, tokenAddress, fastRefresh])
 

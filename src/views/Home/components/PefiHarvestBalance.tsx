@@ -2,16 +2,15 @@ import React from 'react'
 import { Text } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import BigNumber from 'bignumber.js'
+import styled from 'styled-components'
 import useI18n from 'hooks/useI18n'
 import useAllEarnings from 'hooks/useAllEarnings'
 import { usePricePefiUsdt } from 'state/hooks'
-import styled from 'styled-components'
 import CardValue from './CardValue'
 import CardBusdValue from './CardBusdValue'
 
 const Block = styled.div`
-  margin-bottom: 24px;
-}
+  margin-bottom: 0px;
 `
 
 const PefiHarvestBalance = () => {
@@ -25,7 +24,7 @@ const PefiHarvestBalance = () => {
 
   if (!account) {
     return (
-      <Text color="textDisabled" style={{ lineHeight: '76px' }}>
+      <Text color="textDisabled" style={{ lineHeight: '40px' }}>
         {TranslateString(298, 'Locked')}
       </Text>
     )
@@ -33,7 +32,7 @@ const PefiHarvestBalance = () => {
 
   return (
     <Block>
-      <CardValue value={earningsSum} lineHeight="1.5" />
+      <CardValue value={earningsSum} lineHeight="1.2" />
       <CardBusdValue value={earningsBusd} />
     </Block>
   )
