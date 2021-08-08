@@ -8,11 +8,10 @@ import useTheme from 'hooks/useTheme'
 import useAuth from 'hooks/useAuth'
 import useTokenBalance from 'hooks/useTokenBalance'
 import { usePricePefiUsdt, usePools, useEmperor } from 'state/hooks'
-import { getPefiAddress, getXPefiAddress, getWavaxAddress } from 'utils/addressHelpers'
-import { getBalanceNumber } from 'utils/formatBalance';
+import { getPefiAddress, getXPefiAddress } from 'utils/addressHelpers'
+import { getBalanceNumber } from 'utils/formatBalance'
 import WalletConnectGuideModal from 'components/Modal/WalletConnectGuideModal'
 import SettingModal from 'components/Modal/SettingModal'
-
 import { config, socials } from './config'
 
 const Menu = (props) => {
@@ -24,8 +23,8 @@ const Menu = (props) => {
   const pools = usePools(account)
   const pefiBalance = useTokenBalance(getPefiAddress())
   const xPefiBalance = useTokenBalance(getXPefiAddress())
-  const avaxBalance = useTokenBalance(getWavaxAddress())
-  
+  const avaxBalance = useTokenBalance()
+
   const pefiPool = pools.length > 0 ? pools[0] : null
   const { myEmperor } = useEmperor()
   const myNickname = myEmperor.nickname
