@@ -6,7 +6,10 @@ import { allLanguages } from 'config/localisation/languageCodes'
 import { LanguageContext } from 'contexts/Localisation/languageContext'
 import useTheme from 'hooks/useTheme'
 import useAuth from 'hooks/useAuth'
+import useTokenBalance from 'hooks/useTokenBalance'
 import { usePricePefiUsdt, usePools, useEmperor } from 'state/hooks'
+import { getPefiAddress, getXPefiAddress, getWavaxAddress } from 'utils/addressHelpers'
+import { getBalanceNumber } from 'utils/formatBalance';
 import WalletConnectGuideModal from 'components/Modal/WalletConnectGuideModal'
 import SettingModal from 'components/Modal/SettingModal'
 
@@ -19,6 +22,10 @@ const Menu = (props) => {
   const { isDark, toggleTheme } = useTheme()
   const pefiPriceUsd = usePricePefiUsdt()
   const pools = usePools(account)
+  const pefiBalance = useTokenBalance(getPefiAddress())
+  const xPefiBalance = useTokenBalance(getXPefiAddress())
+  const avaxBalance = useTokenBalance(getWavaxAddress())
+  
   const pefiPool = pools.length > 0 ? pools[0] : null
   const { myEmperor } = useEmperor()
   const myNickname = myEmperor.nickname
@@ -70,6 +77,9 @@ const Menu = (props) => {
         links={links}
         socials={socials}
         onSettingClick={onToggleSettingModal}
+        pefiBalance={getBalanceNumber(pefiBalance).toFixed(3)}
+        xPefiBalance={getBalanceNumber(xPefiBalance).toFixed(3)}
+        avaxBalance={getBalanceNumber(avaxBalance).toFixed(3)}
         // profile={{
         //   username: profile?.username,
         //   image: profile?.nft ? `/images/nfts/${profile.nft?.images.sm}` : undefined,
