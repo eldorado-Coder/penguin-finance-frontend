@@ -16,6 +16,7 @@ const StyledCard = styled(Card)`
   position: relative;
   width: 100%;
   background: ${({ theme }) => theme.colors.secondary};
+  min-height: 141px;
 
   ${({ theme }) => theme.mediaQueries.lg} {
     margin: 0;
