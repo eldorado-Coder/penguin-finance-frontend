@@ -5,6 +5,7 @@ import { Text, BaseLayout, Flex } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import useI18n from 'hooks/useI18n'
 import Page from 'components/layout/Page'
+import NestIglooV2Card from 'views/Home/components/NestIglooV2Card'
 import FarmStakingCard from 'views/Home/components/FarmStakingCard'
 import PefiStats from 'views/Home/components/PefiStats'
 import IglooCard from 'views/Home/components/IglooCard'
@@ -234,7 +235,7 @@ const Home: React.FC = () => {
         <div>
           <Cards>
             <FarmStakingCardWrapper>
-              <FarmStakingCard />
+              <NestIglooV2Card />
               <FarmStakingCard />
             </FarmStakingCardWrapper>
             <PefiStatsCardWrapper>
