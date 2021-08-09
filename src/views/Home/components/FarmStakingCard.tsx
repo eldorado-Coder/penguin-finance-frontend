@@ -22,7 +22,7 @@ const CardImage = styled.img`
   margin-right: 24px;
 `
 
-const Label = styled(Text).attrs({ color: 'primary' })`
+const Label = styled(Text).attrs({ color: 'red' })`
   font-size: 14px;
 `
 
