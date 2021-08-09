@@ -38,7 +38,7 @@ const IglooCard = () => {
     <StyledCard>
       <CardBody>
         <Text size="md">Earn</Text>
-        <CardMidContent>PEFI & PNG</CardMidContent>
+        <CardMidContent>PEFI</CardMidContent>
         <Flex justifyContent="space-between">
           <Text size="md">in Penguin Igloos</Text>
           <StyledNavLink exact activeClassName="active" to="/igloos" id="farm-apy-cta">
