@@ -24,7 +24,7 @@ const PefiHarvestBalance = () => {
 
   if (!account) {
     return (
-      <Text color="textDisabled" style={{ lineHeight: '40px' }}>
+      <Text color="textDisabled" style={{ lineHeight: '32px' }}>
         {TranslateString(298, 'Locked')}
       </Text>
     )
@@ -32,7 +32,7 @@ const PefiHarvestBalance = () => {
 
   return (
     <Block>
-      <CardValue value={earningsSum} lineHeight="1.2" />
+      <CardValue fontSize='32px' value={earningsSum} lineHeight="1.2" />
       <CardBusdValue value={earningsBusd} />
     </Block>
   )
