@@ -38,7 +38,7 @@ const Nfts: Nft[] = [
     },
     sortOrder: 999,
     bunnyId: 3,
-    rarity: 37,
+    rarity: 0,
   },
   {
     name: 'Penguineer',
@@ -51,7 +51,7 @@ const Nfts: Nft[] = [
     },
     sortOrder: 999,
     bunnyId: 4,
-    rarity: 37,
+    rarity: 0,
   },
   {
     name: 'Spacelord',
@@ -64,7 +64,7 @@ const Nfts: Nft[] = [
     },
     sortOrder: 999,
     bunnyId: 5,
-    rarity: 37,
+    rarity: 0,
   },
 ]
 
