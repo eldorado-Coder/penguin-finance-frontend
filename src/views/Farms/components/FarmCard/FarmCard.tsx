@@ -166,7 +166,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, removed, pefiPrice, avaxPrice
           totalValueFormatted={totalValueFormatted}
           lpLabel={lpLabel}
           addLiquidityUrl={addLiquidityUrl}
-          withdrawalFee={farm.withdrawalFee}
+          withdrawalFee={farm.withdrawFee}
         />
       </ExpandingWrapper>
     </FCard>
