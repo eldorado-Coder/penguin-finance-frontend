@@ -77,6 +77,10 @@ export const config: MenuEntry[] = [
         label: 'Medium Articles',
         href: 'https://penguin-finance.medium.com/',
       },
+      {
+        label: 'Roadmap',
+        href: 'https://penguin-finance.medium.com/penguin-finance-2021-roadmap-81d261aa62d0',
+      },
     ],
   },
   {
