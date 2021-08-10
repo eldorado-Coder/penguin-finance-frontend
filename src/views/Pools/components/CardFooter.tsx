@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
 import { getBalanceNumber } from 'utils/formatBalance'
-import { Text } from 'penguinfinance-uikit2'
+import { Text, Flex } from 'penguinfinance-uikit2'
 import useI18n from 'hooks/useI18n'
 import { ChevronDown, ChevronUp } from 'react-feather'
 import Balance from 'components/Balance'
@@ -29,7 +29,7 @@ interface Props {
 const StyledFooter = styled.div<{ isFinished: boolean }>`
   border-top: 1px solid ${({ theme }) => (theme.isDark ? '#524B63' : '#E9EAEB')};
   color: ${({ isFinished, theme }) => theme.colors[isFinished ? 'textDisabled2' : 'primary2']};
-  padding: 24px;
+  padding: 12px 24px;
 `
 
 const StyledDetailsButton = styled.button`
@@ -61,14 +61,16 @@ const Details = styled.div`
 const Row = styled.div`
   align-items: center;
   display: flex;
+  justify-content: center;
 `
 
 const FlexFull = styled.div`
   flex: 1;
 `
-const Label = styled.div`
-  font-size: 14px;
+const Label = styled(Text)`
+  color: ${({ theme }) => theme.isDark ? 'white' : theme.colors.secondary };
 `
+
 const TokenLink = styled.a`
   font-size: 14px;
   text-decoration: none;
@@ -102,9 +104,9 @@ const CardFooter: React.FC<Props> = ({
   return (
     <StyledFooter isFinished={isFinished}>
       <Row>
-        <FlexFull>
+        {/* <FlexFull>
           <Tag />
-        </FlexFull>
+        </FlexFull> */}
         <StyledDetailsButton onClick={handleClick}>
           {isOpen ? TranslateString(1066, 'Hide') : TranslateString(658, 'Details')} <Icon />
         </StyledDetailsButton>
@@ -113,30 +115,31 @@ const CardFooter: React.FC<Props> = ({
         <Details>
           <Row style={{ marginBottom: '4px' }}>
             <FlexFull>
-              <Label>
-                <Text color="primary" fontSize="14px">
-                  {TranslateString(408, 'Total Liquidity')}
-                </Text>
+              <Label color="primary" fontSize="14px" fontWeight={500}>
+                {TranslateString(408, 'Total Liquidity')}
               </Label>
             </FlexFull>
-            <Balance fontSize="14px" isDisabled={isFinished} value={getNestTVL()} />
+            <Flex>
+              <Balance fontSize="14px" fontWeight='400' isDisabled={isFinished} value={getNestTVL()} />
+              <Label color="primary" fontSize="14px" fontWeight={400} ml='4px'>
+                PEFI
+              </Label>
+            </Flex>
           </Row>
           <Row style={{ marginBottom: '4px' }}>
             <FlexFull>
-              <Label>
-                <Text color="primary" fontSize="14px">
-                  {TranslateString(408, 'Total Supply(xPEFI)')}
-                </Text>
+              <Label color="primary" fontSize="14px" fontWeight={500}>
+                {TranslateString(408, 'Total Supply(xPEFI)')}
               </Label>
             </FlexFull>
-            <Balance fontSize="14px" isDisabled={isFinished} value={getBalanceNumber(totalXPefiBalance)} />
+            <Balance fontSize="14px" fontWeight='400' isDisabled={isFinished} value={getBalanceNumber(totalXPefiBalance)} />
           </Row>
           {blocksUntilStart > 0 && (
             <Row>
               <FlexFull>
                 <Label>{TranslateString(410, 'Start')}:</Label>
               </FlexFull>
-              <Balance fontSize="14px" isDisabled={isFinished} value={blocksUntilStart} decimals={0} />
+              <Balance fontSize="14px" fontWeight='400' isDisabled={isFinished} value={blocksUntilStart} decimals={0} />
             </Row>
           )}
           {blocksUntilStart === 0 && blocksRemaining > 0 && (
@@ -144,7 +147,7 @@ const CardFooter: React.FC<Props> = ({
               <FlexFull>
                 <Label>{TranslateString(410, 'End')}:</Label>
               </FlexFull>
-              <Balance fontSize="14px" isDisabled={isFinished} value={blocksRemaining} decimals={0} />
+              <Balance fontSize="14px" fontWeight='400' isDisabled={isFinished} value={blocksRemaining} decimals={0} />
             </Row>
           )}
           <TokenLink href={penguinNestsGuideLink} target="_blank">
