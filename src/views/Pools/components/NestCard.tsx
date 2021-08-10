@@ -16,10 +16,14 @@ import StakePefiForm from './StakePefiForm';
 import UnstakeXPefiForm from './UnstakeXPefiForm';
 
 const StyledCard = styled(Card)<{ isNestPage?: boolean }>`
-  max-width: 480px;
   border-radius: 8px;
+  width: 100%;
   @media (min-width: 640px) {
     margin-bottom: ${(props) => props.isNestPage && '60px'};
+  }
+
+  ${({ theme }) => theme.mediaQueries.sm} {
+    max-width: 480px;
   }
 `
 

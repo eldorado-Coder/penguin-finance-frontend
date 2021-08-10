@@ -14,6 +14,7 @@ import useBlockGenerationTime from 'hooks/useBlockGenerationTime'
 import { useFarms, usePriceAvaxUsdt, usePools, usePriceEthAvax, useNestApy } from 'state/hooks'
 import { PoolCategory } from 'config/constants/types'
 import Page from 'components/layout/Page'
+import CardValue from 'components/CardValue';
 import NestCard from './components/NestCard'
 
 const Farm: React.FC = () => {
@@ -61,6 +62,15 @@ const Farm: React.FC = () => {
 
   const [finishedPools, openPools] = partition(poolsWithApy, (pool) => pool.isFinished)
 
+  const getXPefiToPefiRatio = () => {
+    return openPools[0].totalStaked && openPools[0].totalSupply
+      ? new BigNumber(openPools[0].totalStaked).div(new BigNumber(openPools[0].totalSupply)).toNumber()
+      : 1
+  }
+  
+  const xPefiToPefiRatio = getXPefiToPefiRatio()
+  const stakedBalance = new BigNumber(openPools[0].userData?.stakedBalance || 0);
+
   return (
     <Page>
       <NestBannerContainer>
@@ -74,28 +84,72 @@ const Farm: React.FC = () => {
         <NestDetailsContainer>
           <Text color='primary' mb='12px' fontSize='24px' bold>Maximize yield by staking PEFI for xPEFI</Text>      
           <NestDescription mb='24px'>PEFI is minted & collected from fees witin the Penguin Ecosystem and sent to the Penguin Nest (xPEFI holders). When your PEFI is staked into the Penguin Nest, you receive xPEFI, granting access to exclusive dApps within Penguin Finance. Your xPEFI is continously compounding, when you unstake you will receive all the orginally deposited PEFI and any earned PEFI minus the paper hands penalty (PPL).</NestDescription>
-          <APYCard padding='8px 24px 16px' mb='16px'>
-            <Flex justifyContent='space-between' alignItems='center'>
-              <Text fontSize='20px' color='white' fontWeight={500}>Staking APY</Text>
-              <Text fontSize='36px' color='white'>{getNumberWithCommas(displayedNestApy)}%</Text>
-            </Flex>
-            <Flex justifyContent='space-between' alignItems='center'>
-              <ViewStatsButton scale='sm'>View Stats</ViewStatsButton>
-              <APYLabel>Yesterday&apos;s APY</APYLabel>
-            </Flex>
-          </APYCard>
-          <Route exact path={`${path}`}>
-            <>
-              {orderBy(openPools, ['sortOrder']).map((pool) => (
-                <NestCard isNestPage key={pool.sousId} pool={pool} isMainPool />
-              ))}
-            </>
-          </Route>
-          <Route path={`${path}/history`}>
-            {orderBy(finishedPools, ['sortOrder']).map((pool) => (
-              <NestCard isNestPage key={pool.sousId} pool={pool} isMainPool />
-            ))}
-          </Route>
+          <NestCardsWrapper justifyContent='space-between'>
+            <LeftCardsContainer>
+              <APYCard padding='8px 24px 16px' mb='16px'>
+                <Flex justifyContent='space-between' alignItems='center'>
+                  <Text fontSize='20px' color='white' fontWeight={500}>Staking APY</Text>
+                  <Text fontSize='36px' color='white'>{getNumberWithCommas(displayedNestApy)}%</Text>
+                </Flex>
+                <Flex justifyContent='space-between' alignItems='center'>
+                  <ViewStatsButton scale='sm'>View Stats</ViewStatsButton>
+                  <APYLabel>Yesterday&apos;s APY</APYLabel>
+                </Flex>
+              </APYCard>
+              <Route exact path={`${path}`}>
+                <>
+                  {orderBy(openPools, ['sortOrder']).map((pool) => (
+                    <NestCard isNestPage key={pool.sousId} pool={pool} isMainPool />
+                  ))}
+                </>
+              </Route>
+              <Route path={`${path}/history`}>
+                {orderBy(finishedPools, ['sortOrder']).map((pool) => (
+                  <NestCard isNestPage key={pool.sousId} pool={pool} isMainPool />
+                ))}
+              </Route>
+            </LeftCardsContainer>
+            <BalanceCard padding='16px 24px 32px' mb='16px'>
+              <BalanceLabel>Balance</BalanceLabel>
+              <Flex mt='4px' alignItems='center'>
+                <CardImage src="/images/pools/xPefi.png" alt="xpefi logo" width={64} height={64} />
+                <Flex flexDirection='column'>
+                  <Balance>
+                    <CardValue className='balance' fontSize='24px' value={getBalanceNumber(stakedBalance)} decimals={4} lineHeight="1" />
+                  </Balance>
+                  <BalanceText fontSize='20px' fontWeight={300} lineHeight='1.4'>xPEFI</BalanceText>
+                  <BalanceTextSmall>
+                    <CardValue className='balance' fontSize='12px' value={xPefiToPefiRatio * getBalanceNumber(stakedBalance)} decimals={4} lineHeight="1.2" prefix='~ ' suffix=' PEFI' />
+                  </BalanceTextSmall>
+                </Flex>
+              </Flex>
+              <BalanceLabel mt='24px'>Unstaked</BalanceLabel>
+              <Flex mt='4px' alignItems='center'>
+                <CardImage src="/images/penguin-finance-logo.svg" alt="penguin logo" width={64} height={64} />
+                <Flex flexDirection='column'>
+                  <Balance>
+                    <CardValue className='balance' fontSize='24px' value={getBalanceNumber(stakedBalance)} decimals={4} lineHeight="1" />
+                  </Balance>
+                  <BalanceText fontSize='20px' fontWeight={300} lineHeight='1.4'>PEFI</BalanceText>
+                  <BalanceTextSmall>
+                    <CardValue className='balance' fontSize='12px' value={getBalanceNumber(stakedBalance)} decimals={4} lineHeight="1.2" prefix='~ ' suffix=' xPEFI' />
+                  </BalanceTextSmall>
+                </Flex>
+              </Flex>
+              <BalanceLabel mt='24px' mb='8px'>Your Stats</BalanceLabel>
+              <Flex alignItems='flex-end'>
+                <Balance>
+                  <CardValue className='balance' fontSize='24px' value={getBalanceNumber(stakedBalance)} decimals={4} lineHeight="1.2" />
+                </Balance>
+                <Percentage fontSize='14px' fontWeight={500} ml='16px'>+0.08%</Percentage>
+              </Flex>
+              <BalanceText mb='12px' fontSize='20px' fontWeight={300}>PEFI Earned</BalanceText>
+              <Balance>
+                <CardValue className='balance' fontSize='24px' value={getBalanceNumber(stakedBalance)} decimals={4} lineHeight="1.2" />
+              </Balance>
+              <BalanceText fontSize='20px' fontWeight={300}>PEFI Deposited</BalanceText>
+            </BalanceCard>
+          </NestCardsWrapper>
         </NestDetailsContainer>
       </Flex>
     </Page>
@@ -111,11 +165,52 @@ const StyledCard = styled(Card)`
   border-radius: 8px;
 `
 
+const NestCardsWrapper = styled(Flex)`
+  flex-direction: column;
+
+  ${({ theme }) => theme.mediaQueries.sm} {
+    flex-direction: row;
+  }
+`;
+
+const LeftCardsContainer = styled.div`
+  width: 100%;
+  margin-right: 16px;
+`;
+
 const APYCard = styled(Card)`
   background: ${({ theme }) => theme.isDark ? '#30264F' : theme.colors.secondary};
   border-radius: 8px;
-  max-width: 480px;
+  width: 100%;
+
+  ${({ theme }) => theme.mediaQueries.sm} {
+    max-width: 480px;
+  }
+`;
+
+const BalanceCard = styled(Card)`
+  background: ${({ theme }) => theme.isDark ? '#30264F' : 'white'};
+  border-radius: 8px;
+  width: 100%;
+  margin-top: 16px;
+  height: max-content;
+
+  ${({ theme }) => theme.mediaQueries.sm} {
+    min-width: 240px;
+    width: 240px;
+    margin-top: 0;
+  }
 `
+
+const BalanceLabel = styled(Text)`
+  font-size: 18px;
+  color: ${({ theme }) => theme.isDark ? 'white' : theme.colors.secondary};
+  font-weight: 500;
+
+  ${({ theme }) => theme.mediaQueries.sm} {
+    font-size: 24px;
+  }
+`;
 
 const Title = styled(Text)`
   color: white;
@@ -147,6 +242,35 @@ const ViewStatsButton = styled(Button)`
 const APYLabel = styled(Text)`
   color: #DDD7FF;
   font-weight: 400;
+`;
+
+const CardImage = styled.img`
+  margin-right: 12px;
+  width: 72px;
+  height: 72px;
+`
+
+const Balance = styled.div`
+  .balance {
+    color: ${({ theme }) => theme.isDark ? '#D4444C' : '#EC3E3F'};
+    fontWeight: 500;
+  }
+`;
+
+const BalanceText = styled(Text)`
+  color: ${({ theme }) => theme.isDark ? 'white' : theme.colors.secondary};
+  line-height: 1.2;
+`;
+
+const BalanceTextSmall = styled.div`
+  .balance {
+    color: ${({ theme }) => theme.isDark ? '#BBA6DD' : '#8F88A0'};
+    font-weight: 400;
+  }
+`;
+
+const Percentage = styled(Text)`
+  color: #48EA3F;
 `;
 
 export default Farm
