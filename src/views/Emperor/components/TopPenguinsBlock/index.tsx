@@ -170,6 +170,10 @@ const UnlockButton = styled(Button)`
   }
 `
 
+const StyledText = styled(Text)`
+  color: ${({ theme }) => (theme.isDark ? theme.colors.primary : theme.colors.secondary)};
+`
+
 const TopPenguinsBlock: React.FC = () => {
   const { account } = useWeb3React()
   const { currentEmperor, topEmperors } = useEmperor()
@@ -213,22 +217,14 @@ const TopPenguinsBlock: React.FC = () => {
                 return (
                   <EmperorRow key={topEmperor.id}>
                     <NumberField>
-                      <Text color="secondary" fontSize="12px">
-                        {`#${index + 1}`}
-                      </Text>
+                      <StyledText fontSize="12px">{`#${index + 1}`}</StyledText>
                     </NumberField>
                     <TimeField>
-                      <Text color="secondary" fontSize="12px">
-                        {formatTime(topEmperor.timeAsEmperor)}
-                      </Text>
-                      <Text color="secondary" fontSize="12px">
-                        min
-                      </Text>
+                      <StyledText fontSize="12px">{formatTime(topEmperor.timeAsEmperor)}</StyledText>
+                      <StyledText fontSize="12px">min</StyledText>
                     </TimeField>
                     <AddressField>
-                      <Text color="secondary" fontSize="12px">
-                        {getShortenNickName(badWordsFilter(topEmperor.nickname))}
-                      </Text>
+                      <StyledText fontSize="12px">{getShortenNickName(badWordsFilter(topEmperor.nickname))}</StyledText>
                     </AddressField>
                     <AvatarField color={getPenguinColor(topEmperor)}>
                       <SvgIcon

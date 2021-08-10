@@ -1,10 +1,11 @@
 import React from 'react'
 import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
-import { Text, BaseLayout } from 'penguinfinance-uikit2'
+import { Text, BaseLayout, Flex } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import useI18n from 'hooks/useI18n'
 import Page from 'components/layout/Page'
+import NestIglooV2Card from 'views/Home/components/NestIglooV2Card'
 import FarmStakingCard from 'views/Home/components/FarmStakingCard'
 import PefiStats from 'views/Home/components/PefiStats'
 import IglooCard from 'views/Home/components/IglooCard'
@@ -148,18 +149,23 @@ const Cards = styled(BaseLayout)`
   }
 `
 
+const FarmStakingCardWrapper = styled(Flex)`
+  flex-direction: column;
+  justify-content: space-between;
+`
+
+const PefiStatsCardWrapper = styled.div``
+
+const SpacingWrapper = styled.div`
+  height: 36px;
+`
+
 const PoolCardWrapper = styled.div`
   > div {
     > div {
       background: ${({ theme }) => theme.isDark && '#30264F'};
     }
   }
-`
-
-const PefiStatsCardWrapper = styled.div``
-
-const SpacingWrapper = styled.div`
-  height: 24px;
 `
 
 const HomeBgContainer = styled.div`
@@ -228,7 +234,10 @@ const Home: React.FC = () => {
         <HomeBgContainer />
         <div>
           <Cards>
-            <FarmStakingCard />
+            <FarmStakingCardWrapper>
+              <NestIglooV2Card />
+              <FarmStakingCard />
+            </FarmStakingCardWrapper>
             <PefiStatsCardWrapper>
               <IglooCard />
               <SpacingWrapper />

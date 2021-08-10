@@ -22,6 +22,9 @@ const EmperorPage = styled(Page)`
   max-width: 100%; //1120px;
   overflow: hidden;
   padding: 0px;
+  /* @media (min-width: 768px) {
+    padding: 40px 30px;
+  } */
 `
 
 const ChestWrapper = styled.div<{ jackpot: string }>`

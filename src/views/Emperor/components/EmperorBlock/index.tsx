@@ -162,6 +162,10 @@ const MyPenguinImageWrapper = styled.div<{ penguin: string; color: string }>`
   }
 `
 
+const StyledText = styled(Text)`
+  color: ${({ theme }) => (theme.isDark ? theme.colors.primary : theme.colors.secondary)};
+`
+
 const EmperorBlock: React.FC = () => {
   const TranslateString = useI18n()
   const { account } = useWeb3React()
@@ -228,13 +232,11 @@ const EmperorBlock: React.FC = () => {
                   <SvgIcon src={`${process.env.PUBLIC_URL}/images/emperor/shield.svg`} width="22px" height="22px" />
                 </ShieldContainer>
               )}
-              <Text bold color="secondary" fontSize="22px">
+              <StyledText bold fontSize="22px">
                 {TranslateString(1074, currentEmperorNickname)}
-              </Text>
+              </StyledText>
             </Flex>
-            <Text bold color="secondary" fontSize="14px">{`Current Bid: ${currentEmperorBidAmount.toFixed(
-              2,
-            )} xPEFI`}</Text>
+            <StyledText bold fontSize="14px">{`Current Bid: ${currentEmperorBidAmount.toFixed(2)} xPEFI`}</StyledText>
           </EmperorInfoContainer>
         )}
       </CardBlockContent>

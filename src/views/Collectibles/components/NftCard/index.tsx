@@ -147,9 +147,11 @@ const NftCard: React.FC<NftCardProps> = ({ nft, onSuccess, canClaim = false, tok
         </DetailsButton>
         {isOpen && (
           <InfoBlock flexDirection="column" alignItems="center">
-            <Text as="p" color="textSubtle" mb="8px" mt="4px">
-              {`1 / ${nft.rarity}`}
-            </Text>
+            {nft.rarity > 0 && (
+              <Text as="p" color="textSubtle" mb="8px" mt="4px">
+                {`1 / ${nft.rarity}`}
+              </Text>
+            )}
             <Text as="p" color="textSubtle">
               {description}
             </Text>

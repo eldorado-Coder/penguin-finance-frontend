@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react'
 import styled from 'styled-components'
-import { Heading, Card, CardBody, Button, Text } from 'penguinfinance-uikit2'
+import { Heading, Card, CardBody, Button, Text, Flex } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import useI18n from 'hooks/useI18n'
 import { useAllHarvest } from 'hooks/useHarvest'
@@ -10,27 +10,35 @@ import PefiHarvestBalance from './PefiHarvestBalance'
 import PefiWalletBalance from './PefiWalletBalance'
 
 const StyledFarmStakingCard = styled(Card)`
-  min-height: 376px;
+  height: 230px;
   background: ${({ theme }) => theme.isDark && '#30264F'};
 `
 
 const Block = styled.div`
-  margin-bottom: 16px;
+  width: 40%;
 `
 
 const CardImage = styled.img`
-  margin-bottom: 16px;
+  margin-right: 20px;
 `
 
-const Label = styled(Text).attrs({ color: 'primary' })`
+const Label = styled(Text).attrs({ color: 'red' })`
+  line-height: 1;
   font-size: 14px;
 `
 
 const Actions = styled.div`
-  margin-top: 24px;
+  margin-top: 12px;
 `
 
-const Title = styled(Heading)``
+const Title = styled(Heading)`
+  font-weight: 800;
+  line-height: 1;
+`
+
+const StyledFlex = styled(Flex)`
+  align-items: center;
+`
 
 const FarmedStakingCard = () => {
   const [pendingTx, setPendingTx] = useState(false)
@@ -55,18 +63,20 @@ const FarmedStakingCard = () => {
   return (
     <StyledFarmStakingCard>
       <CardBody>
-        <Title size="xl" mb="24px" color="primary">
+        <Title size="xl" mb="0px" color="primary">
           {TranslateString(542, 'Farms & Staking')}
         </Title>
-        <CardImage src="/images/penguin-finance-logo.svg" alt="penguin logo" width={64} height={64} />
-        <Block>
-          <Label>{TranslateString(544, 'PEFI to Harvest')}:</Label>
-          <PefiHarvestBalance />
-        </Block>
-        <Block>
-          <Label>{TranslateString(546, 'PEFI in Wallet')}:</Label>
-          <PefiWalletBalance />
-        </Block>
+        <StyledFlex mt='12px' mb='20px'>
+          <CardImage src="/images/penguin-finance-logo.svg" alt="penguin logo" width={64} height={64} />
+          <Block>
+            <Label>{TranslateString(544, 'PEFI to Harvest')}:</Label>
+            <PefiHarvestBalance />
+          </Block>
+          <Block>
+            <Label>{TranslateString(546, 'PEFI in Wallet')}:</Label>
+            <PefiWalletBalance />
+          </Block>
+        </StyledFlex>
         <Actions>
           {account ? (
             <Button

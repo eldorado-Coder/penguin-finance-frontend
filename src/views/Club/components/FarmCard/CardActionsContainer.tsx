@@ -16,6 +16,11 @@ import HarvestAction from './HarvestAction'
 const Action = styled.div`
   padding-top: 16px;
 `
+
+const StyledText = styled(Text)`
+  color: ${({ theme }) => theme.isDark && 'rgb(154, 106, 255)'};
+`
+
 export interface FarmWithStakedValue extends Farm {
   apy?: BigNumber
 }
@@ -78,19 +83,19 @@ const CardActions: React.FC<FarmCardActionsProps> = ({ farm, account, addLiquidi
   return (
     <Action>
       <Flex>
-        <Text bold textTransform="uppercase" color="secondary" fontSize="12px" pr="3px">
+        <StyledText bold textTransform="uppercase" color="secondary" fontSize="12px" pr="3px">
           {/* TODO: Is there a way to get a dynamic value here from useFarmFromSymbol? */}
           PEFI
-        </Text>
+        </StyledText>
         <Text bold textTransform="uppercase" color="primary" fontSize="12px">
           {TranslateString(1072, 'Earned')}
         </Text>
       </Flex>
       <HarvestAction earnings={earnings} pid={pid} />
       <Flex>
-        <Text bold textTransform="uppercase" color="secondary" fontSize="12px" pr="3px">
+        <StyledText bold textTransform="uppercase" color="secondary" fontSize="12px" pr="3px">
           {lpName}
-        </Text>
+        </StyledText>
         <Text bold textTransform="uppercase" color="primary" fontSize="12px">
           {TranslateString(1074, 'Staked')}
         </Text>
