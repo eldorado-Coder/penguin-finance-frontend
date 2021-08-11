@@ -1,8 +1,8 @@
 import BigNumber from 'bignumber.js'
-import styled from 'styled-components';
+import styled from 'styled-components'
 import React, { useCallback, useMemo, useState } from 'react'
 import { Button, Flex } from 'penguinfinance-uikit2'
-import UnlockButton from 'components/UnlockButton';
+import UnlockButton from 'components/UnlockButton'
 import TokenInput from './TokenInput'
 import useI18n from '../../../hooks/useI18n'
 import { getFullDisplayBalance } from '../../../utils/formatBalance'
@@ -10,15 +10,24 @@ import { getFullDisplayBalance } from '../../../utils/formatBalance'
 interface DepositModalProps {
   max: BigNumber
   onConfirm: (amount: string) => void
-  tokenName?: string,
-  account?: string,
-  needsApproval: boolean,
-  requested: boolean,
-  stakingTokenName: string,
+  tokenName?: string
+  account?: string
+  needsApproval: boolean
+  requested: boolean
+  stakingTokenName: string
   onApprove: () => void
 }
 
-const StakePefiForm: React.FC<DepositModalProps> = ({ max, onConfirm, tokenName = '', account, needsApproval, requested, stakingTokenName, onApprove }) => {
+const StakePefiForm: React.FC<DepositModalProps> = ({
+  max,
+  onConfirm,
+  tokenName = '',
+  account,
+  needsApproval,
+  requested,
+  stakingTokenName,
+  onApprove,
+}) => {
   const [val, setVal] = useState('')
   const [pendingTx, setPendingTx] = useState(false)
   const TranslateString = useI18n()
@@ -38,9 +47,9 @@ const StakePefiForm: React.FC<DepositModalProps> = ({ max, onConfirm, tokenName 
   }, [fullBalance, setVal])
 
   const renderText = () => {
-    if (pendingTx) return TranslateString(488, 'Pending Confirmation');
-    if (val) return 'Confirm Staking';
-    return 'Enter Amount';
+    if (pendingTx) return TranslateString(488, 'Pending Confirmation')
+    if (val) return 'Confirm Staking'
+    return 'Enter Amount'
   }
 
   const handleConfirm = async () => {
@@ -48,8 +57,10 @@ const StakePefiForm: React.FC<DepositModalProps> = ({ max, onConfirm, tokenName 
     try {
       await onConfirm(val)
       setPendingTx(false)
+      setVal('')
     } catch (error) {
       setPendingTx(false)
+      setVal('')
     }
   }
 
@@ -62,22 +73,18 @@ const StakePefiForm: React.FC<DepositModalProps> = ({ max, onConfirm, tokenName 
         max={fullBalance}
         symbol={tokenName}
       />
-      <Flex mt='8px'>
+      <Flex mt="8px">
         {!account && <StyledUnlockButton />}
         {account &&
           (needsApproval ? (
-          <StyledButton disabled={requested} onClick={onApprove} scale="md">
+            <StyledButton disabled={requested} onClick={onApprove} scale="md">
               {`Approve ${stakingTokenName}`}
             </StyledButton>
           ) : (
-          <StyledButton
-            scale="md"
-            disabled={pendingTx}
-            onClick={handleConfirm}
-          >
-            {renderText()}
-          </StyledButton>
-        ))}
+            <StyledButton scale="md" disabled={pendingTx} onClick={handleConfirm}>
+              {renderText()}
+            </StyledButton>
+          ))}
       </Flex>
     </>
   )
@@ -87,12 +94,12 @@ const StyledButton = styled(Button)`
   width: 100%;
   border-radius: 8px;
   background-color: ${({ theme }) => !theme.isDark && '#372871'};
-`;
+`
 
 const StyledUnlockButton = styled(UnlockButton)`
   width: 100%;
   border-radius: 8px;
   background-color: ${({ theme }) => !theme.isDark && '#372871'};
-`;
+`
 
 export default StakePefiForm
