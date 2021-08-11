@@ -12,6 +12,7 @@ import priceToBnb from 'utils/priceToBnb'
 import useBlock from 'hooks/useBlock'
 import useBlockGenerationTime from 'hooks/useBlockGenerationTime'
 import useUserSetting from 'hooks/useUserSetting'
+import { useXPefi } from 'hooks/useContract'
 import { useFarms, usePriceAvaxUsdt, usePools, usePriceEthAvax, useNestApy } from 'state/hooks'
 import { PoolCategory } from 'config/constants/types'
 import { getAccounts } from 'subgraph/utils'
@@ -21,11 +22,13 @@ import NestCard from './components/NestCard'
 
 const Farm: React.FC = () => {
   const [userHistoricalInfo, setUserHistoricalInfo] = useState({
-    stakePefiAmount: '1',
-    stakeXPefiAmount: '0.180762438432583169',
-    unStakePefiAmount: '5.65164257197031171',
-    unStakeXPefiAmount: '2',
+    stakePefiAmount: '0',
+    stakeXPefiAmount: '0',
+    unStakePefiAmount: '0',
+    unStakeXPefiAmount: '0',
   })
+  const [handsOnPenalty, setHandsOnPenalty] = useState(0)
+
   const { refreshRate } = useUserSetting()
   const { path } = useRouteMatch()
   const { account } = useWeb3React()
@@ -35,6 +38,7 @@ const Farm: React.FC = () => {
   const ethPriceBnb = usePriceEthAvax()
   const block = useBlock()
   const AVAX_BLOCK_TIME = useBlockGenerationTime()
+  const xPefiContract = useXPefi()
   const displayedNestApy = (useNestApy() * 100).toFixed(2)
   const BLOCKS_PER_YEAR = new BigNumber(SECONDS_PER_YEAR).div(new BigNumber(AVAX_BLOCK_TIME))
 
@@ -93,22 +97,16 @@ const Farm: React.FC = () => {
     return () => clearInterval(refreshInterval)
   }, [account, refreshRate, fetchUserHistoricalBalance])
 
+  const fetchEarlyWithdrawalFee = useCallback(async () => {
+    const earlyWithdrawalFee = await xPefiContract.methods.earlyWithdrawalFee().call()
+    const maxEarlyWithdrawalFee = await xPefiContract.methods.MAX_EARLY_WITHDRAW_FEE().call()
+    const penalty = (earlyWithdrawalFee / maxEarlyWithdrawalFee) * 100
+    setHandsOnPenalty(penalty)
+  }, [xPefiContract])
+
   useEffect(() => {
-    setUserHistoricalInfo({
-      stakePefiAmount: '0',
-      stakeXPefiAmount: '0',
-      unStakePefiAmount: '0',
-      unStakeXPefiAmount: '0',
-    })
-    return () => {
-      setUserHistoricalInfo({
-        stakePefiAmount: '0',
-        stakeXPefiAmount: '0',
-        unStakePefiAmount: '0',
-        unStakeXPefiAmount: '0',
-      })
-    }
-  }, [])
+    fetchEarlyWithdrawalFee()
+  }, [fetchEarlyWithdrawalFee])
 
   const getXPefiToPefiRatio = () => {
     return openPools[0].totalStaked && openPools[0].totalSupply
@@ -151,13 +149,13 @@ const Farm: React.FC = () => {
                   <Text fontSize="20px" color="white" fontWeight={500}>
                     Staking APY
                   </Text>
-                  <Text fontSize="36px" color="white">
+                  <Text fontSize="36px" bold color="white">
                     {getNumberWithCommas(displayedNestApy)}%
                   </Text>
                 </Flex>
                 <Flex justifyContent="space-between" alignItems="center">
                   <ViewStatsButton scale="sm">View Stats</ViewStatsButton>
-                  <APYLabel>Yesterday&apos;s APY</APYLabel>
+                  <APYLabel>{`${handsOnPenalty.toFixed(2)}% Paper Hands Penalty`}</APYLabel>
                 </Flex>
               </APYCard>
               <Route exact path={`${path}`}>
