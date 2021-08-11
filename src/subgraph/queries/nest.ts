@@ -10,9 +10,10 @@ export const ACCOUNTS_SEARCH = ({ account }: { account?: string }) => {
         }
       )
       {
-        address
         stakePefiAmount
+        unStakePefiAmount
         stakeXPefiAmount
+        unStakeXPefiAmount
       }
     }`
   return gql(queryString)

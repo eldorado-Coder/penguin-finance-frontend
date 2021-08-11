@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import { Route, useRouteMatch } from 'react-router-dom'
 import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
@@ -7,17 +7,29 @@ import { Card, Flex, Text, Button } from 'penguinfinance-uikit2'
 import { SECONDS_PER_YEAR } from 'config'
 import orderBy from 'lodash/orderBy'
 import partition from 'lodash/partition'
-import useBlock from 'hooks/useBlock'
 import { getBalanceNumber, getNumberWithCommas } from 'utils/formatBalance'
 import priceToBnb from 'utils/priceToBnb'
+import useBlock from 'hooks/useBlock'
 import useBlockGenerationTime from 'hooks/useBlockGenerationTime'
+import useUserSetting from 'hooks/useUserSetting'
+import { useXPefi } from 'hooks/useContract'
 import { useFarms, usePriceAvaxUsdt, usePools, usePriceEthAvax, useNestApy } from 'state/hooks'
 import { PoolCategory } from 'config/constants/types'
+import { getAccounts } from 'subgraph/utils'
 import Page from 'components/layout/Page'
-import CardValue from 'components/CardValue';
+import CardValue from 'components/CardValue'
 import NestCard from './components/NestCard'
 
 const Farm: React.FC = () => {
+  const [userHistoricalInfo, setUserHistoricalInfo] = useState({
+    stakePefiAmount: '0',
+    stakeXPefiAmount: '0',
+    unStakePefiAmount: '0',
+    unStakeXPefiAmount: '0',
+  })
+  const [handsOnPenalty, setHandsOnPenalty] = useState(0)
+
+  const { refreshRate } = useUserSetting()
   const { path } = useRouteMatch()
   const { account } = useWeb3React()
   const farms = useFarms()
@@ -26,6 +38,7 @@ const Farm: React.FC = () => {
   const ethPriceBnb = usePriceEthAvax()
   const block = useBlock()
   const AVAX_BLOCK_TIME = useBlockGenerationTime()
+  const xPefiContract = useXPefi()
   const displayedNestApy = (useNestApy() * 100).toFixed(2)
   const BLOCKS_PER_YEAR = new BigNumber(SECONDS_PER_YEAR).div(new BigNumber(AVAX_BLOCK_TIME))
 
@@ -62,38 +75,87 @@ const Farm: React.FC = () => {
 
   const [finishedPools, openPools] = partition(poolsWithApy, (pool) => pool.isFinished)
 
+  const fetchUserHistoricalBalance = useCallback(async () => {
+    const accountInfo = await getAccounts(account)
+
+    if (accountInfo) {
+      setUserHistoricalInfo(accountInfo)
+    } else {
+      setUserHistoricalInfo({
+        stakePefiAmount: '0',
+        stakeXPefiAmount: '0',
+        unStakePefiAmount: '0',
+        unStakeXPefiAmount: '0',
+      })
+    }
+  }, [account])
+
+  useEffect(() => {
+    const refreshInterval = setInterval(() => {
+      fetchUserHistoricalBalance()
+    }, refreshRate)
+    return () => clearInterval(refreshInterval)
+  }, [account, refreshRate, fetchUserHistoricalBalance])
+
+  const fetchEarlyWithdrawalFee = useCallback(async () => {
+    const earlyWithdrawalFee = await xPefiContract.methods.earlyWithdrawalFee().call()
+    const maxEarlyWithdrawalFee = await xPefiContract.methods.MAX_EARLY_WITHDRAW_FEE().call()
+    const penalty = (earlyWithdrawalFee / maxEarlyWithdrawalFee) * 100
+    setHandsOnPenalty(penalty)
+  }, [xPefiContract])
+
+  useEffect(() => {
+    fetchEarlyWithdrawalFee()
+  }, [fetchEarlyWithdrawalFee])
+
   const getXPefiToPefiRatio = () => {
     return openPools[0].totalStaked && openPools[0].totalSupply
       ? new BigNumber(openPools[0].totalStaked).div(new BigNumber(openPools[0].totalSupply)).toNumber()
       : 1
   }
-  
+
   const xPefiToPefiRatio = getXPefiToPefiRatio()
-  const stakedBalance = new BigNumber(openPools[0].userData?.stakedBalance || 0);
+  const stakedBalance = new BigNumber(openPools[0].userData?.stakedBalance || 0)
+
+  const userTotalPefiEarned =
+    xPefiToPefiRatio * getBalanceNumber(stakedBalance) -
+    Number(userHistoricalInfo.stakePefiAmount) +
+    Number(userHistoricalInfo.unStakePefiAmount)
 
   return (
     <Page>
       <NestBannerContainer>
         <StyledCard>
-          <Flex justifyContent='center' alignItems='center'>
+          <Flex justifyContent="center" alignItems="center">
             <Title bold>THE NEST</Title>
           </Flex>
         </StyledCard>
       </NestBannerContainer>
-      <Flex justifyContent='center'>
+      <Flex justifyContent="center">
         <NestDetailsContainer>
-          <Text color='primary' mb='12px' fontSize='24px' bold>Maximize yield by staking PEFI for xPEFI</Text>      
-          <NestDescription mb='24px'>PEFI is minted & collected from fees witin the Penguin Ecosystem and sent to the Penguin Nest (xPEFI holders). When your PEFI is staked into the Penguin Nest, you receive xPEFI, granting access to exclusive dApps within Penguin Finance. Your xPEFI is continously compounding, when you unstake you will receive all the orginally deposited PEFI and any earned PEFI minus the paper hands penalty (PPL).</NestDescription>
-          <NestCardsWrapper justifyContent='space-between'>
+          <Text color="primary" mb="12px" fontSize="24px" bold>
+            Maximize yield by staking PEFI for xPEFI
+          </Text>
+          <NestDescription mb="24px">
+            PEFI is minted & collected from fees witin the Penguin Ecosystem and sent to the Penguin Nest (xPEFI
+            holders). When your PEFI is staked into the Penguin Nest, you receive xPEFI, granting access to exclusive
+            dApps within Penguin Finance. Your xPEFI is continously compounding, when you unstake you will receive all
+            the orginally deposited PEFI and any earned PEFI minus the paper hands penalty (PPL).
+          </NestDescription>
+          <NestCardsWrapper justifyContent="space-between">
             <LeftCardsContainer>
-              <APYCard padding='8px 24px 16px' mb='16px'>
-                <Flex justifyContent='space-between' alignItems='center'>
-                  <Text fontSize='20px' color='white' fontWeight={500}>Staking APY</Text>
-                  <Text fontSize='36px' color='white'>{getNumberWithCommas(displayedNestApy)}%</Text>
+              <APYCard padding="8px 24px 16px" mb="16px">
+                <Flex justifyContent="space-between" alignItems="center">
+                  <Text fontSize="20px" color="white" fontWeight={500}>
+                    Staking APY
+                  </Text>
+                  <Text fontSize="36px" bold color="white">
+                    {getNumberWithCommas(displayedNestApy)}%
+                  </Text>
                 </Flex>
-                <Flex justifyContent='space-between' alignItems='center'>
-                  <ViewStatsButton scale='sm'>View Stats</ViewStatsButton>
-                  <APYLabel>Yesterday&apos;s APY</APYLabel>
+                <Flex justifyContent="space-between" alignItems="center">
+                  <ViewStatsButton scale="sm">View Stats</ViewStatsButton>
+                  <APYLabel>{`${handsOnPenalty.toFixed(2)}% Paper Hands Penalty`}</APYLabel>
                 </Flex>
               </APYCard>
               <Route exact path={`${path}`}>
@@ -109,45 +171,97 @@ const Farm: React.FC = () => {
                 ))}
               </Route>
             </LeftCardsContainer>
-            <BalanceCard padding='16px 24px 32px' mb='16px'>
+            <BalanceCard padding="16px 24px 32px" mb="16px">
               <BalanceLabel>Balance</BalanceLabel>
-              <Flex mt='4px' alignItems='center'>
+              <Flex mt="4px" alignItems="center">
                 <CardImage src="/images/pools/xPefi.png" alt="xpefi logo" width={64} height={64} />
-                <Flex flexDirection='column'>
+                <Flex flexDirection="column">
                   <Balance>
-                    <CardValue className='balance' fontSize='24px' value={getBalanceNumber(stakedBalance)} decimals={4} lineHeight="1" />
+                    <CardValue
+                      className="balance"
+                      fontSize="24px"
+                      value={getBalanceNumber(stakedBalance)}
+                      decimals={4}
+                      lineHeight="1"
+                    />
                   </Balance>
-                  <BalanceText fontSize='20px' fontWeight={300} lineHeight='1.4'>xPEFI</BalanceText>
+                  <BalanceText fontSize="20px" fontWeight={300} lineHeight="1.4">
+                    xPEFI
+                  </BalanceText>
                   <BalanceTextSmall>
-                    <CardValue className='balance' fontSize='12px' value={xPefiToPefiRatio * getBalanceNumber(stakedBalance)} decimals={4} lineHeight="1.2" prefix='~ ' suffix=' PEFI' />
+                    <CardValue
+                      className="balance"
+                      fontSize="12px"
+                      value={xPefiToPefiRatio * getBalanceNumber(stakedBalance)}
+                      decimals={4}
+                      lineHeight="1.2"
+                      prefix="≈ "
+                      suffix=" PEFI"
+                    />
                   </BalanceTextSmall>
                 </Flex>
               </Flex>
-              <BalanceLabel mt='24px'>Unstaked</BalanceLabel>
-              <Flex mt='4px' alignItems='center'>
+              <BalanceLabel mt="24px">Unstaked</BalanceLabel>
+              <Flex mt="4px" alignItems="center">
                 <CardImage src="/images/penguin-finance-logo.svg" alt="penguin logo" width={64} height={64} />
-                <Flex flexDirection='column'>
+                <Flex flexDirection="column">
                   <Balance>
-                    <CardValue className='balance' fontSize='24px' value={getBalanceNumber(stakedBalance)} decimals={4} lineHeight="1" />
+                    <CardValue
+                      className="balance"
+                      fontSize="24px"
+                      value={account ? Number(userHistoricalInfo.unStakePefiAmount) : 0}
+                      decimals={4}
+                      lineHeight="1"
+                    />
                   </Balance>
-                  <BalanceText fontSize='20px' fontWeight={300} lineHeight='1.4'>PEFI</BalanceText>
+                  <BalanceText fontSize="20px" fontWeight={300} lineHeight="1.4">
+                    PEFI
+                  </BalanceText>
                   <BalanceTextSmall>
-                    <CardValue className='balance' fontSize='12px' value={getBalanceNumber(stakedBalance)} decimals={4} lineHeight="1.2" prefix='~ ' suffix=' xPEFI' />
+                    <CardValue
+                      className="balance"
+                      fontSize="12px"
+                      value={account ? Number(userHistoricalInfo.unStakeXPefiAmount) : 0}
+                      decimals={4}
+                      lineHeight="1.2"
+                      prefix="≈ "
+                      suffix=" xPEFI"
+                    />
                   </BalanceTextSmall>
                 </Flex>
               </Flex>
-              <BalanceLabel mt='24px' mb='8px'>Your Stats</BalanceLabel>
-              <Flex alignItems='flex-end'>
+              <BalanceLabel mt="24px" mb="8px">
+                Your Stats
+              </BalanceLabel>
+              <Flex alignItems="flex-end">
                 <Balance>
-                  <CardValue className='balance' fontSize='24px' value={getBalanceNumber(stakedBalance)} decimals={4} lineHeight="1.2" />
+                  <CardValue
+                    className="balance"
+                    fontSize="24px"
+                    value={account ? userTotalPefiEarned : 0}
+                    decimals={4}
+                    lineHeight="1.2"
+                  />
                 </Balance>
-                <Percentage fontSize='14px' fontWeight={500} ml='16px'>+0.08%</Percentage>
+                <Percentage fontSize="14px" fontWeight={500} ml="16px">
+                  +0.08%
+                </Percentage>
               </Flex>
-              <BalanceText mb='12px' fontSize='20px' fontWeight={300}>PEFI Earned</BalanceText>
+              <BalanceText mb="12px" fontSize="20px" fontWeight={300}>
+                PEFI Earned
+              </BalanceText>
               <Balance>
-                <CardValue className='balance' fontSize='24px' value={getBalanceNumber(stakedBalance)} decimals={4} lineHeight="1.2" />
+                <CardValue
+                  className="balance"
+                  fontSize="24px"
+                  value={account ? Number(userHistoricalInfo.stakePefiAmount) : 0}
+                  decimals={4}
+                  lineHeight="1.2"
+                />
               </Balance>
-              <BalanceText fontSize='20px' fontWeight={300}>PEFI Deposited</BalanceText>
+              <BalanceText fontSize="20px" fontWeight={300}>
+                PEFI Deposited
+              </BalanceText>
             </BalanceCard>
           </NestCardsWrapper>
         </NestDetailsContainer>
@@ -161,7 +275,7 @@ const NestBannerContainer = styled.div`
 `
 
 const StyledCard = styled(Card)`
-  background: ${({ theme }) => theme.isDark ? '#30264F' : theme.colors.secondary};
+  background: ${({ theme }) => (theme.isDark ? '#30264F' : theme.colors.secondary)};
   border-radius: 8px;
 `
 
@@ -171,25 +285,25 @@ const NestCardsWrapper = styled(Flex)`
   ${({ theme }) => theme.mediaQueries.sm} {
     flex-direction: row;
   }
-`;
+`
 
 const LeftCardsContainer = styled.div`
   width: 100%;
   margin-right: 16px;
-`;
+`
 
 const APYCard = styled(Card)`
-  background: ${({ theme }) => theme.isDark ? '#30264F' : theme.colors.secondary};
+  background: ${({ theme }) => (theme.isDark ? '#30264F' : theme.colors.secondary)};
   border-radius: 8px;
   width: 100%;
 
   ${({ theme }) => theme.mediaQueries.sm} {
     max-width: 480px;
   }
-`;
+`
 
 const BalanceCard = styled(Card)`
-  background: ${({ theme }) => theme.isDark ? '#30264F' : 'white'};
+  background: ${({ theme }) => (theme.isDark ? '#30264F' : 'white')};
   border-radius: 8px;
   width: 100%;
   margin-top: 16px;
@@ -204,45 +318,45 @@ const BalanceCard = styled(Card)`
 
 const BalanceLabel = styled(Text)`
   font-size: 18px;
-  color: ${({ theme }) => theme.isDark ? 'white' : theme.colors.secondary};
+  color: ${({ theme }) => (theme.isDark ? 'white' : theme.colors.secondary)};
   font-weight: 500;
 
   ${({ theme }) => theme.mediaQueries.sm} {
     font-size: 24px;
   }
-`;
+`
 
 const Title = styled(Text)`
   color: white;
   font-weight: 800;
   font-size: 64px;
-  
+
   ${({ theme }) => theme.mediaQueries.sm} {
     font-size: 84px;
   }
-`;
+`
 
 const NestDetailsContainer = styled.div`
   max-width: 720px;
   width: 100%;
-`;
+`
 
 const NestDescription = styled(Text)`
   max-width: 480px;
-  color: ${({ theme }) => theme.isDark ? '#DDD7ff' : theme.colors.secondary};
-`;
+  color: ${({ theme }) => (theme.isDark ? '#DDD7ff' : theme.colors.secondary)};
+`
 
 const ViewStatsButton = styled(Button)`
   background: white;
   border-radius: 4px;
   font-weight: 400;
   color: ${({ theme }) => theme.colors.secondary};
-`;
+`
 
 const APYLabel = styled(Text)`
-  color: #DDD7FF;
+  color: #ddd7ff;
   font-weight: 400;
-`;
+`
 
 const CardImage = styled.img`
   margin-right: 12px;
@@ -252,25 +366,25 @@ const CardImage = styled.img`
 
 const Balance = styled.div`
   .balance {
-    color: ${({ theme }) => theme.isDark ? '#D4444C' : '#EC3E3F'};
-    fontWeight: 500;
+    color: ${({ theme }) => theme.colors.red};
+    font-weight: 500;
   }
-`;
+`
 
 const BalanceText = styled(Text)`
-  color: ${({ theme }) => theme.isDark ? 'white' : theme.colors.secondary};
+  color: ${({ theme }) => (theme.isDark ? 'white' : theme.colors.secondary)};
   line-height: 1.2;
-`;
+`
 
 const BalanceTextSmall = styled.div`
   .balance {
-    color: ${({ theme }) => theme.isDark ? '#BBA6DD' : '#8F88A0'};
+    color: ${({ theme }) => (theme.isDark ? '#BBA6DD' : '#8F88A0')};
     font-weight: 400;
   }
-`;
+`
 
 const Percentage = styled(Text)`
-  color: #48EA3F;
-`;
+  color: #48ea3f;
+`
 
 export default Farm
