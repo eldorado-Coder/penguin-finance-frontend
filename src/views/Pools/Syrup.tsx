@@ -71,7 +71,7 @@ const Farm: React.FC = () => {
 
   const [finishedPools, openPools] = partition(poolsWithApy, (pool) => pool.isFinished)
 
-  const fetchStakedPefiBalance = useCallback(async () => {
+  const fetchUserHistoricalBalance = useCallback(async () => {
     const accountInfo = await getAccounts(account)
 
     if (accountInfo) {
@@ -88,10 +88,27 @@ const Farm: React.FC = () => {
 
   useEffect(() => {
     const refreshInterval = setInterval(() => {
-      fetchStakedPefiBalance()
+      fetchUserHistoricalBalance()
     }, refreshRate)
     return () => clearInterval(refreshInterval)
-  }, [account, refreshRate, fetchStakedPefiBalance])
+  }, [account, refreshRate, fetchUserHistoricalBalance])
+
+  useEffect(() => {
+    setUserHistoricalInfo({
+      stakePefiAmount: '0',
+      stakeXPefiAmount: '0',
+      unStakePefiAmount: '0',
+      unStakeXPefiAmount: '0',
+    })
+    return () => {
+      setUserHistoricalInfo({
+        stakePefiAmount: '0',
+        stakeXPefiAmount: '0',
+        unStakePefiAmount: '0',
+        unStakeXPefiAmount: '0',
+      })
+    }
+  }, [])
 
   const getXPefiToPefiRatio = () => {
     return openPools[0].totalStaked && openPools[0].totalSupply
@@ -194,7 +211,7 @@ const Farm: React.FC = () => {
                     <CardValue
                       className="balance"
                       fontSize="24px"
-                      value={Number(userHistoricalInfo.unStakePefiAmount)}
+                      value={account ? Number(userHistoricalInfo.unStakePefiAmount) : 0}
                       decimals={4}
                       lineHeight="1"
                     />
@@ -206,7 +223,7 @@ const Farm: React.FC = () => {
                     <CardValue
                       className="balance"
                       fontSize="12px"
-                      value={Number(userHistoricalInfo.unStakeXPefiAmount)}
+                      value={account ? Number(userHistoricalInfo.unStakeXPefiAmount) : 0}
                       decimals={4}
                       lineHeight="1.2"
                       prefix="~ "
@@ -223,7 +240,7 @@ const Farm: React.FC = () => {
                   <CardValue
                     className="balance"
                     fontSize="24px"
-                    value={userTotalPefiEarned}
+                    value={account ? userTotalPefiEarned : 0}
                     decimals={4}
                     lineHeight="1.2"
                   />
@@ -239,7 +256,7 @@ const Farm: React.FC = () => {
                 <CardValue
                   className="balance"
                   fontSize="24px"
-                  value={Number(userHistoricalInfo.stakePefiAmount)}
+                  value={account ? Number(userHistoricalInfo.stakePefiAmount) : 0}
                   decimals={4}
                   lineHeight="1.2"
                 />
