@@ -23,8 +23,8 @@ const TokenInput: React.FC<TokenInputProps> = ({
   return (
     <StyledTokenInput>
       <Input
-        className='input'
-        inputClassName='tokenInput'
+        className="input"
+        inputClassName="tokenInput"
         endAdornment={
           <StyledTokenAdornmentWrapper>
             {/* <StyledTokenSymbol>{symbol}</StyledTokenSymbol> */}
@@ -42,7 +42,7 @@ const TokenInput: React.FC<TokenInputProps> = ({
       />
       {maxBalanceShow && (
         <StyledMaxText>
-          {TranslateString(526, `${symbol} Available:`)} {max.toLocaleString()}
+          {TranslateString(526, `${symbol} Available:`)} {Number(max).toFixed(3)}
         </StyledMaxText>
       )}
     </StyledTokenInput>
@@ -53,21 +53,21 @@ const StyledTokenInput = styled.div`
   .input {
     height: 56px;
     border-radius: 8px;
-    background: ${({ theme }) => theme.isDark ? '#604E84' : '#ECE8F2'};
+    background: ${({ theme }) => (theme.isDark ? '#604E84' : '#ECE8F2')};
 
     .tokenInput {
-      color: ${({ theme }) => theme.isDark ? 'white' : '#372871'};
+      color: ${({ theme }) => (theme.isDark ? 'white' : '#372871')};
 
-      ::placeholder { 
-        color: ${({ theme }) => theme.isDark ? 'white' : '#372871'};
+      ::placeholder {
+        color: ${({ theme }) => (theme.isDark ? 'white' : '#372871')};
       }
-      
+
       :-ms-input-placeholder {
-        color: ${({ theme }) => theme.isDark ? 'white' : '#372871'};
+        color: ${({ theme }) => (theme.isDark ? 'white' : '#372871')};
       }
-      
+
       ::-ms-input-placeholder {
-        color: ${({ theme }) => theme.isDark ? 'white' : '#372871'};
+        color: ${({ theme }) => (theme.isDark ? 'white' : '#372871')};
       }
     }
   }
@@ -84,7 +84,7 @@ const StyledTokenAdornmentWrapper = styled.div`
 
 const StyledMaxText = styled.div`
   align-items: center;
-  color: #604E84;
+  color: #604e84;
   display: flex;
   font-weight: 300;
   font-size: 14px;
@@ -93,12 +93,12 @@ const StyledMaxText = styled.div`
 `
 
 const StyledTokenSymbol = styled.span`
-  color: ${({ theme }) => theme.isDark ? 'white' : '#372871'};
+  color: ${({ theme }) => (theme.isDark ? 'white' : '#372871')};
   font-weight: 700;
 `
 
 const StyledButton = styled(Button)`
   height: 36px;
-`;
+`
 
 export default TokenInput
