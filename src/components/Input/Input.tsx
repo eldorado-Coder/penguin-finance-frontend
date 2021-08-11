@@ -15,7 +15,11 @@ const Input: React.FC<InputProps> = ({ endAdornment, onChange, placeholder, star
   return (
     <StyledInputWrapper className={className}>
       {!!startAdornment && startAdornment}
-      <StyledInput className={inputClassName} placeholder={placeholder} value={value} onChange={onChange} />
+      <StyledInput 
+        className={inputClassName} 
+        placeholder={placeholder} 
+        value={value} 
+        onChange={onChange} />
       {!!endAdornment && endAdornment}
     </StyledInputWrapper>
   )

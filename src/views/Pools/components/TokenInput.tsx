@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Button } from 'penguinfinance-uikit2'
+import { Button, Flex } from 'penguinfinance-uikit2'
 import useI18n from 'hooks/useI18n'
+import roundDown from 'utils/roundDown';
 import Input, { InputProps } from '../../../components/Input'
 
 interface TokenInputProps extends InputProps {
@@ -25,29 +26,43 @@ const TokenInput: React.FC<TokenInputProps> = ({
       <Input
         className="input"
         inputClassName="tokenInput"
-        endAdornment={
-          <StyledTokenAdornmentWrapper>
-            {/* <StyledTokenSymbol>{symbol}</StyledTokenSymbol> */}
-            <StyledSpacer />
-            <div>
-              <StyledButton scale="sm" onClick={onSelectMax}>
-                {TranslateString(452, 'Max')}
-              </StyledButton>
-            </div>
-          </StyledTokenAdornmentWrapper>
-        }
         onChange={onChange}
-        placeholder={`0 ${symbol}`}
+        placeholder=''
         value={value}
       />
+      <Wrapper>
+        <TokenValueWrapper justifyContent='space-between' alignItems='center'>
+          <TokenValue>{`${value || 0} ${symbol}`}</TokenValue>
+          <StyledButton scale="sm" onClick={onSelectMax}>
+            {TranslateString(452, 'Max')}
+          </StyledButton>
+        </TokenValueWrapper>
+      </Wrapper>
       {maxBalanceShow && (
         <StyledMaxText>
-          {TranslateString(526, `${symbol} Available:`)} {Number(max).toFixed(3)}
+          {TranslateString(526, `${symbol} Available:`)} {roundDown(max, 2)}
         </StyledMaxText>
       )}
     </StyledTokenInput>
   )
 }
+
+const Wrapper = styled.div`
+  width: 100%;
+  height: 0;
+  position: relative;
+  bottom: 3.5rem;
+`;
+
+const TokenValueWrapper = styled(Flex)`
+  height: 3.5rem;
+  padding: 0 16px;
+`;
+
+const TokenValue = styled.div`
+  font-size: 18px;
+  color: ${({ theme }) => (theme.isDark ? 'white' : '#372871')};
+`;
 
 const StyledTokenInput = styled.div`
   .input {
@@ -56,7 +71,10 @@ const StyledTokenInput = styled.div`
     background: ${({ theme }) => (theme.isDark ? '#604E84' : '#ECE8F2')};
 
     .tokenInput {
-      color: ${({ theme }) => (theme.isDark ? 'white' : '#372871')};
+      caret-color: ${({ theme }) => (theme.isDark ? 'white' : '#372871')};
+      color: transparent;
+      z-index: 1;
+      margin-right: 80px;
 
       ::placeholder {
         color: ${({ theme }) => (theme.isDark ? 'white' : '#372871')};
@@ -94,11 +112,12 @@ const StyledMaxText = styled.div`
 
 const StyledTokenSymbol = styled.span`
   color: ${({ theme }) => (theme.isDark ? 'white' : '#372871')};
-  font-weight: 700;
+  font-weight: 400;
 `
 
 const StyledButton = styled(Button)`
   height: 36px;
+  color: ${({ theme }) => theme.isDark && '#30264f'};
 `
 
 export default TokenInput
