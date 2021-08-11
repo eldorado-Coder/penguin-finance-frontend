@@ -197,7 +197,7 @@ const Farm: React.FC = () => {
                       value={xPefiToPefiRatio * getBalanceNumber(stakedBalance)}
                       decimals={4}
                       lineHeight="1.2"
-                      prefix="~ "
+                      prefix="≈ "
                       suffix=" PEFI"
                     />
                   </BalanceTextSmall>
@@ -226,7 +226,7 @@ const Farm: React.FC = () => {
                       value={account ? Number(userHistoricalInfo.unStakeXPefiAmount) : 0}
                       decimals={4}
                       lineHeight="1.2"
-                      prefix="~ "
+                      prefix="≈ "
                       suffix=" xPEFI"
                     />
                   </BalanceTextSmall>
