@@ -87,7 +87,7 @@ const UnstakeXPefiForm: React.FC<DepositModalProps> = ({
         {account &&
           (needsApproval ? (
             <StyledButton disabled={requested} onClick={onApprove} scale="md">
-              {`Approve ${stakingTokenName}`}
+              {`Approve x${stakingTokenName}`}
             </StyledButton>
           ) : (
             <StyledButton tokenBalance={val} scale="md" disabled={pendingTx} onClick={handleConfirm}>
