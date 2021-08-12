@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import React, { useCallback, useMemo, useState } from 'react'
 import { Button, Flex } from 'penguinfinance-uikit2'
 import UnlockButton from 'components/UnlockButton'
+import roundDown from 'utils/roundDown';
+import escapeRegExp from 'utils/escapeRegExp';
 import TokenInput from './TokenInput'
 import useI18n from '../../../hooks/useI18n'
 import { getFullDisplayBalance } from '../../../utils/formatBalance'
@@ -17,6 +19,8 @@ interface DepositModalProps {
   stakingTokenName: string
   onApprove: () => void
 }
+
+const inputRegex = RegExp(`^\\d*(?:\\\\[.])?\\d*$`) 
 
 const StakePefiForm: React.FC<DepositModalProps> = ({
   max,
@@ -37,13 +41,18 @@ const StakePefiForm: React.FC<DepositModalProps> = ({
 
   const handleChange = useCallback(
     (e: React.FormEvent<HTMLInputElement>) => {
-      setVal(e.currentTarget.value)
+      const nextInput = e.currentTarget.value.replace(/,/g, '.')
+      if (nextInput.length < 25) {
+        if (nextInput === '' || inputRegex.test(escapeRegExp(nextInput))) {
+          setVal(nextInput)
+        }
+      }
     },
     [setVal],
   )
 
   const handleSelectMax = useCallback(() => {
-    setVal(fullBalance)
+    setVal(roundDown(fullBalance, 2))
   }, [fullBalance, setVal])
 
   const renderText = () => {
@@ -81,7 +90,7 @@ const StakePefiForm: React.FC<DepositModalProps> = ({
               {`Approve ${stakingTokenName}`}
             </StyledButton>
           ) : (
-            <StyledButton scale="md" disabled={pendingTx} onClick={handleConfirm}>
+            <StyledButton tokenBalance={val} scale="md" disabled={pendingTx} onClick={handleConfirm}>
               {renderText()}
             </StyledButton>
           ))}
@@ -90,10 +99,14 @@ const StakePefiForm: React.FC<DepositModalProps> = ({
   )
 }
 
-const StyledButton = styled(Button)`
+const StyledButton = styled(Button)<{ tokenBalance?: string }>`
   width: 100%;
   border-radius: 8px;
+  color: ${({ theme }) => theme.isDark && '#30264f'};
   background-color: ${({ theme }) => !theme.isDark && '#372871'};
+  background-color: ${({ theme, tokenBalance }) => (tokenBalance && !theme.isDark) && '#Ec3E3F'};
+  background-color: ${({ theme, tokenBalance }) => (tokenBalance && theme.isDark) && '#D4444C'};
+  color: ${({ tokenBalance }) => tokenBalance && 'white'};
 `
 
 const StyledUnlockButton = styled(UnlockButton)`

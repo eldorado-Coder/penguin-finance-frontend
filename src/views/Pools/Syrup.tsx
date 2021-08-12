@@ -181,7 +181,7 @@ const Farm: React.FC = () => {
                       className="balance"
                       fontSize="24px"
                       value={getBalanceNumber(stakedBalance)}
-                      decimals={4}
+                      decimals={2}
                       lineHeight="1"
                     />
                   </Balance>
@@ -193,7 +193,7 @@ const Farm: React.FC = () => {
                       className="balance"
                       fontSize="12px"
                       value={xPefiToPefiRatio * getBalanceNumber(stakedBalance)}
-                      decimals={4}
+                      decimals={2}
                       lineHeight="1.2"
                       prefix="≈ "
                       suffix=" PEFI"
@@ -210,7 +210,7 @@ const Farm: React.FC = () => {
                       className="balance"
                       fontSize="24px"
                       value={account ? Number(userHistoricalInfo.unStakePefiAmount) : 0}
-                      decimals={4}
+                      decimals={2}
                       lineHeight="1"
                     />
                   </Balance>
@@ -222,7 +222,7 @@ const Farm: React.FC = () => {
                       className="balance"
                       fontSize="12px"
                       value={account ? Number(userHistoricalInfo.unStakeXPefiAmount) : 0}
-                      decimals={4}
+                      decimals={2}
                       lineHeight="1.2"
                       prefix="≈ "
                       suffix=" xPEFI"
@@ -239,7 +239,7 @@ const Farm: React.FC = () => {
                     className="balance"
                     fontSize="24px"
                     value={account ? userTotalPefiEarned : 0}
-                    decimals={4}
+                    decimals={2}
                     lineHeight="1.2"
                   />
                 </Balance>
@@ -255,7 +255,7 @@ const Farm: React.FC = () => {
                   className="balance"
                   fontSize="24px"
                   value={account ? Number(userHistoricalInfo.stakePefiAmount) : 0}
-                  decimals={4}
+                  decimals={2}
                   lineHeight="1.2"
                 />
               </Balance>
