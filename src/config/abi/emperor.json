@@ -35,6 +35,11 @@
             },
             {
                 "type": "uint256",
+                "name": "_startDate",
+                "internalType": "uint256"
+            },
+            {
+                "type": "uint256",
                 "name": "_competitionDuration",
                 "internalType": "uint256"
             },
@@ -175,6 +180,32 @@
             {
                 "type": "uint256",
                 "name": "_newFinalDateInSeconds",
+                "internalType": "uint256"
+            }
+        ]
+    },
+    {
+        "type": "function",
+        "stateMutability": "nonpayable",
+        "outputs": [],
+        "name": "changeJackpotSplit",
+        "inputs": [
+            {
+                "type": "uint256[5]",
+                "name": "_newJackpotSplit",
+                "internalType": "uint256[5]"
+            }
+        ]
+    },
+    {
+        "type": "function",
+        "stateMutability": "nonpayable",
+        "outputs": [],
+        "name": "changeStartDate",
+        "inputs": [
+            {
+                "type": "uint256",
+                "name": "_newStartDateInSeconds",
                 "internalType": "uint256"
             }
         ]
@@ -381,6 +412,52 @@
     },
     {
         "type": "function",
+        "stateMutability": "nonpayable",
+        "outputs": [],
+        "name": "modifyBidParameters",
+        "inputs": [
+            {
+                "type": "uint256",
+                "name": "_newOpeningBid",
+                "internalType": "uint256"
+            },
+            {
+                "type": "uint256",
+                "name": "_newMinBidIncrease",
+                "internalType": "uint256"
+            },
+            {
+                "type": "uint256",
+                "name": "_newMaxBidIncrease",
+                "internalType": "uint256"
+            }
+        ]
+    },
+    {
+        "type": "function",
+        "stateMutability": "nonpayable",
+        "outputs": [],
+        "name": "modifyPoisonParameter",
+        "inputs": [
+            {
+                "type": "uint256",
+                "name": "_newPoisonFee",
+                "internalType": "uint256"
+            },
+            {
+                "type": "uint256",
+                "name": "_newPoisonDuration",
+                "internalType": "uint256"
+            },
+            {
+                "type": "uint256",
+                "name": "_newPoisonCooldown",
+                "internalType": "uint256"
+            }
+        ]
+    },
+    {
+        "type": "function",
         "stateMutability": "view",
         "outputs": [
             {
@@ -518,6 +595,19 @@
             }
         ],
         "name": "poisonFee",
+        "inputs": []
+    },
+    {
+        "type": "function",
+        "stateMutability": "view",
+        "outputs": [
+            {
+                "type": "uint256",
+                "name": "",
+                "internalType": "uint256"
+            }
+        ],
+        "name": "startDate",
         "inputs": []
     },
     {
