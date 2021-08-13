@@ -9,7 +9,7 @@ export interface ExpandableSectionProps {
   totalValueFormatted?: string
   lpLabel?: string
   addLiquidityUrl?: string
-  withdrawalFee?: string
+  withdrawalFee?: number
   feeLabel?: string
 }
 
