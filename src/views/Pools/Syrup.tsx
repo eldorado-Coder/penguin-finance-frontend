@@ -122,6 +122,10 @@ const Farm: React.FC = () => {
     Number(userHistoricalInfo.stakePefiAmount) +
     Number(userHistoricalInfo.unStakePefiAmount)
 
+  const handleLearnMore = () => {
+    window.open('https://docs.penguinfinance.io/summary/penguin-nests-staking-and-fee-collection', '_blank');
+  }
+
   return (
     <Page>
       <NestBannerContainer>
@@ -154,7 +158,7 @@ const Farm: React.FC = () => {
                   </Text>
                 </Flex>
                 <Flex justifyContent="space-between" alignItems="center">
-                  <ViewStatsButton scale="sm">View Stats</ViewStatsButton>
+                  <ViewStatsButton scale="sm" onClick={handleLearnMore}>Learn More</ViewStatsButton>
                   <APYLabel>{`${handsOnPenalty.toFixed(2)}% Paper Hands Penalty`}</APYLabel>
                 </Flex>
               </APYCard>
@@ -243,24 +247,9 @@ const Farm: React.FC = () => {
                     lineHeight="1.2"
                   />
                 </Balance>
-                <Percentage fontSize="14px" fontWeight={500} ml="16px">
-                  +0.08%
-                </Percentage>
               </Flex>
-              <BalanceText mb="12px" fontSize="20px" fontWeight={300}>
-                PEFI Earned
-              </BalanceText>
-              <Balance>
-                <CardValue
-                  className="balance"
-                  fontSize="24px"
-                  value={account ? Number(userHistoricalInfo.stakePefiAmount) : 0}
-                  decimals={2}
-                  lineHeight="1.2"
-                />
-              </Balance>
-              <BalanceText fontSize="20px" fontWeight={300}>
-                PEFI Deposited
+              <BalanceText mb="8px" fontSize="20px" fontWeight={300}>
+                Days Since First Deposit
               </BalanceText>
             </BalanceCard>
           </NestCardsWrapper>
@@ -298,7 +287,7 @@ const APYCard = styled(Card)`
   width: 100%;
 
   ${({ theme }) => theme.mediaQueries.sm} {
-    max-width: 480px;
+    max-width: 460px;
   }
 `
 
@@ -310,7 +299,7 @@ const BalanceCard = styled(Card)`
   height: max-content;
 
   ${({ theme }) => theme.mediaQueries.sm} {
-    min-width: 240px;
+    min-width: 260px;
     width: 240px;
     margin-top: 0;
   }
@@ -381,10 +370,6 @@ const BalanceTextSmall = styled.div`
     color: ${({ theme }) => (theme.isDark ? '#BBA6DD' : '#8F88A0')};
     font-weight: 400;
   }
-`
-
-const Percentage = styled(Text)`
-  color: #48ea3f;
 `
 
 export default Farm

@@ -23,7 +23,7 @@ const StyledCard = styled(Card)<{ isNestPage?: boolean }>`
   }
 
   ${({ theme }) => theme.mediaQueries.sm} {
-    max-width: 480px;
+    max-width: 460px;
   }
 `
 
