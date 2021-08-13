@@ -4,8 +4,8 @@ import masterchefABI from 'config/abi/masterchef.json'
 import multicall from 'utils/multicall'
 import { getAddress, getMasterChefAddress } from 'utils/addressHelpers'
 
-import getFarmMasterChefAbi from 'utils/getFarmMasterChefAbi';
-import getFarmMasterChefAddress from 'utils/getFarmMasterChefAddress';
+import getFarmMasterChefAbi from 'utils/getFarmMasterChefAbi'
+import getFarmMasterChefAddress from 'utils/getFarmMasterChefAddress'
 import farmsConfig from 'config/constants/farms'
 
 export const fetchMasterChefGlobalData = async () => {
@@ -17,7 +17,7 @@ export const fetchMasterChefGlobalData = async () => {
   ])
 
   return { pefiPerBlock: new BigNumber(pefiPerBlock).div(new BigNumber(10).pow(18)).toNumber() }
-};
+}
 
 export const fetchFarms = async () => {
   const data = await Promise.all(
@@ -59,7 +59,7 @@ export const fetchFarms = async () => {
           name: 'decimals',
         },
       ]
-      
+
       const [
         tokenBalanceLP,
         quoteTokenBalanceLP,
@@ -67,7 +67,7 @@ export const fetchFarms = async () => {
         lpTotalSupply,
         tokenDecimals,
         quoteTokenDecimals,
-      ] = await multicall(erc20, calls);
+      ] = await multicall(erc20, calls)
 
       // Ratio in % a LP tokens that are in staking, vs the total number in circulation
       const lpTokenRatio = new BigNumber(lpTokenBalanceMC).div(new BigNumber(lpTotalSupply))
@@ -97,6 +97,7 @@ export const fetchFarms = async () => {
       ])
 
       const allocPoint = new BigNumber(info.allocPoint._hex)
+      const withdrawFee = 100 * (info.withdrawFeeBP / 10000)
       const poolWeight = allocPoint.div(new BigNumber(totalAllocPoint))
 
       return {
@@ -107,6 +108,7 @@ export const fetchFarms = async () => {
         tokenPriceVsQuote: quoteTokenAmount.div(tokenAmount).toJSON(),
         poolWeight: poolWeight.toJSON(),
         multiplier: `${allocPoint.div(100).toString()}X`,
+        withdrawFee,
       }
     }),
   )
