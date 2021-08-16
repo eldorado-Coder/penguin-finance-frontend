@@ -10,6 +10,7 @@ import partition from 'lodash/partition'
 import { getBalanceNumber, getNumberWithCommas } from 'utils/formatBalance'
 import priceToBnb from 'utils/priceToBnb'
 import useBlock from 'hooks/useBlock'
+import useTheme from 'hooks/useTheme'
 import useBlockGenerationTime from 'hooks/useBlockGenerationTime'
 import useUserSetting from 'hooks/useUserSetting'
 import { useXPefi } from 'hooks/useContract'
@@ -139,15 +140,20 @@ const Farm: React.FC = () => {
   }
 
   const currentDateTime = new Date().getTime() / 1000
+  const { isDark } = useTheme()
 
   return (
     <NestPage>
       <NestBannerContainer>
-        <StyledCard>
+        {/* <StyledCard>
           <Flex justifyContent="center" alignItems="center">
             <Title bold>THE NEST</Title>
           </Flex>
-        </StyledCard>
+        </StyledCard> */}
+        <BannerImage
+          src={`${process.env.PUBLIC_URL}/images/pools/${isDark ? 'nests-dark.gif' : 'nests-light.gif'}`}
+          alt="nest banner"
+        />
       </NestBannerContainer>
       <Flex justifyContent="center">
         <NestDetailsContainer>
@@ -280,11 +286,17 @@ const NestPage = styled(Page)`
 `
 
 const NestBannerContainer = styled.div`
-  margin-bottom: 32px;
+  /* margin-bottom: 32px; */
+  margin-bottom: 24px;
 
   @media (min-width: 640px) {
     margin-bottom: 64px;
   }
+`
+
+const BannerImage = styled.img`
+  z-index: -1;
+  width: 100%;
 `
 
 const StyledCard = styled(Card)`
