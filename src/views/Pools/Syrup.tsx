@@ -10,6 +10,7 @@ import partition from 'lodash/partition'
 import { getBalanceNumber, getNumberWithCommas } from 'utils/formatBalance'
 import priceToBnb from 'utils/priceToBnb'
 import useBlock from 'hooks/useBlock'
+import useTheme from 'hooks/useTheme'
 import useBlockGenerationTime from 'hooks/useBlockGenerationTime'
 import useUserSetting from 'hooks/useUserSetting'
 import { useXPefi } from 'hooks/useContract'
@@ -27,7 +28,7 @@ const Farm: React.FC = () => {
     unStakePefiAmount: '0',
     unStakeXPefiAmount: '0',
   })
-  const [userFirstStakeTime, setUserFirstStakeTime] = useState(0);
+  const [userFirstStakeTime, setUserFirstStakeTime] = useState(0)
   const [handsOnPenalty, setHandsOnPenalty] = useState(0)
 
   const { refreshRate } = useUserSetting()
@@ -95,16 +96,16 @@ const Farm: React.FC = () => {
     const firstStakeTime = await getFirstStakeTime(account)
 
     if (firstStakeTime) {
-      setUserFirstStakeTime(firstStakeTime);
+      setUserFirstStakeTime(firstStakeTime)
     } else {
-      setUserFirstStakeTime(0);
+      setUserFirstStakeTime(0)
     }
   }, [account])
 
   useEffect(() => {
     const refreshInterval = setInterval(() => {
       fetchUserHistoricalBalance()
-      fetchUserFirstStakeTime();
+      fetchUserFirstStakeTime()
     }, refreshRate)
     return () => clearInterval(refreshInterval)
   }, [account, refreshRate, fetchUserHistoricalBalance, fetchUserFirstStakeTime])
@@ -135,19 +136,24 @@ const Farm: React.FC = () => {
     Number(userHistoricalInfo.unStakePefiAmount)
 
   const handleLearnMore = () => {
-    window.open('https://docs.penguinfinance.io/summary/penguin-nests-staking-and-fee-collection', '_blank');
+    window.open('https://docs.penguinfinance.io/summary/penguin-nests-staking-and-fee-collection', '_blank')
   }
 
-  const currentDateTime = new Date().getTime() / 1000;
+  const currentDateTime = new Date().getTime() / 1000
+  const { isDark } = useTheme()
 
   return (
-    <Page>
+    <NestPage>
       <NestBannerContainer>
-        <StyledCard>
+        {/* <StyledCard>
           <Flex justifyContent="center" alignItems="center">
             <Title bold>THE NEST</Title>
           </Flex>
-        </StyledCard>
+        </StyledCard> */}
+        <BannerImage
+          src={`${process.env.PUBLIC_URL}/images/pools/${isDark ? 'nests-dark.gif' : 'nests-light.gif'}`}
+          alt="nest banner"
+        />
       </NestBannerContainer>
       <Flex justifyContent="center">
         <NestDetailsContainer>
@@ -172,7 +178,9 @@ const Farm: React.FC = () => {
                   </Text>
                 </Flex>
                 <Flex justifyContent="space-between" alignItems="center">
-                  <ViewStatsButton scale="sm" onClick={handleLearnMore}>Learn More</ViewStatsButton>
+                  <ViewStatsButton scale="sm" onClick={handleLearnMore}>
+                    Learn More
+                  </ViewStatsButton>
                   <APYLabel>{`${handsOnPenalty.toFixed(2)}% Paper Hands Penalty`}</APYLabel>
                 </Flex>
               </APYCard>
@@ -256,7 +264,7 @@ const Farm: React.FC = () => {
                   <CardValue
                     className="balance"
                     fontSize="24px"
-                    value={(account && userFirstStakeTime) ? (currentDateTime - userFirstStakeTime) / 86400 : 0}
+                    value={account && userFirstStakeTime ? (currentDateTime - userFirstStakeTime) / 86400 : 0}
                     decimals={0}
                     lineHeight="1.2"
                   />
@@ -269,12 +277,26 @@ const Farm: React.FC = () => {
           </NestCardsWrapper>
         </NestDetailsContainer>
       </Flex>
-    </Page>
+    </NestPage>
   )
 }
 
+const NestPage = styled(Page)`
+  max-width: 1200px;
+`
+
 const NestBannerContainer = styled.div`
-  margin-bottom: 32px;
+  /* margin-bottom: 32px; */
+  margin-bottom: 24px;
+
+  @media (min-width: 640px) {
+    margin-bottom: 64px;
+  }
+`
+
+const BannerImage = styled.img`
+  z-index: -1;
+  width: 100%;
 `
 
 const StyledCard = styled(Card)`

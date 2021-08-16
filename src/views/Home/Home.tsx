@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { Text, BaseLayout, Flex } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import useI18n from 'hooks/useI18n'
+import useTheme from 'hooks/useTheme'
 import Page from 'components/layout/Page'
 import NestIglooV2Card from 'views/Home/components/NestIglooV2Card'
 import FarmStakingCard from 'views/Home/components/FarmStakingCard'
@@ -218,18 +219,27 @@ const Home: React.FC = () => {
     }
   })
   const pefiPool = poolsWithApy.length > 0 ? poolsWithApy[0] : null
+  const { isDark } = useTheme()
 
   return (
     <>
       <Page>
-        <Hero>
+        {/* <Hero>
           <HeroBgImageContainer>
-            <HeroBgImage src={`${process.env.PUBLIC_URL}/images/home/HomeBanner1.png`} alt="astronaut" />
+            <HeroBgImage src={`${process.env.PUBLIC_URL}/images/home/new_banner_light.gif`} alt="astronaut" />
             <HeroLeftImage src={`${process.env.PUBLIC_URL}/images/home/PenguinAstronaut.gif`} alt="astronaut" />
             <HeroRightImage src={`${process.env.PUBLIC_URL}/images/home/Astronaut2.gif`} alt="astronaut" />
           </HeroBgImageContainer>
           <Header color="primary">{TranslateString(576, 'Penguin Finance')}</Header>
           <Text>{TranslateString(578, 'The #1 project on Avalanche')}</Text>
+        </Hero> */}
+        <Hero>
+          <HeroBgImageContainer>
+            <HeroBgImage
+              src={`${process.env.PUBLIC_URL}/images/home/${isDark ? 'new_banner_dark.gif' : 'new_banner_light.gif'}`}
+              alt="astronaut"
+            />
+          </HeroBgImageContainer>
         </Hero>
         <HomeBgContainer />
         <div>

@@ -282,7 +282,7 @@ const Emperor: React.FC = () => {
     return (
       <>
         <EmperorEndBgContainer>
-          <BlitzImage src="/images/emperor/blitz_end.png" alt="blitz-img" />
+          <BlitzImage src="/images/emperor/blitz_end2.png" alt="blitz-img" />
         </EmperorEndBgContainer>
       </>
     )
