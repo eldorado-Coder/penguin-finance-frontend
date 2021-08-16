@@ -15,7 +15,7 @@ import useUserSetting from 'hooks/useUserSetting'
 import { useXPefi } from 'hooks/useContract'
 import { useFarms, usePriceAvaxUsdt, usePools, usePriceEthAvax, useNestApy } from 'state/hooks'
 import { PoolCategory } from 'config/constants/types'
-import { getAccounts } from 'subgraph/utils'
+import { getAccounts, getFirstStakeTime } from 'subgraph/utils'
 import Page from 'components/layout/Page'
 import CardValue from 'components/CardValue'
 import NestCard from './components/NestCard'
@@ -27,6 +27,7 @@ const Farm: React.FC = () => {
     unStakePefiAmount: '0',
     unStakeXPefiAmount: '0',
   })
+  const [userFirstStakeTime, setUserFirstStakeTime] = useState(0)
   const [handsOnPenalty, setHandsOnPenalty] = useState(0)
 
   const { refreshRate } = useUserSetting()
@@ -90,12 +91,23 @@ const Farm: React.FC = () => {
     }
   }, [account])
 
+  const fetchUserFirstStakeTime = useCallback(async () => {
+    const firstStakeTime = await getFirstStakeTime(account)
+
+    if (firstStakeTime) {
+      setUserFirstStakeTime(firstStakeTime)
+    } else {
+      setUserFirstStakeTime(0)
+    }
+  }, [account])
+
   useEffect(() => {
     const refreshInterval = setInterval(() => {
       fetchUserHistoricalBalance()
+      fetchUserFirstStakeTime()
     }, refreshRate)
     return () => clearInterval(refreshInterval)
-  }, [account, refreshRate, fetchUserHistoricalBalance])
+  }, [account, refreshRate, fetchUserHistoricalBalance, fetchUserFirstStakeTime])
 
   const fetchEarlyWithdrawalFee = useCallback(async () => {
     const earlyWithdrawalFee = await xPefiContract.methods.earlyWithdrawalFee().call()
@@ -123,11 +135,13 @@ const Farm: React.FC = () => {
     Number(userHistoricalInfo.unStakePefiAmount)
 
   const handleLearnMore = () => {
-    window.open('https://docs.penguinfinance.io/summary/penguin-nests-staking-and-fee-collection', '_blank');
+    window.open('https://docs.penguinfinance.io/summary/penguin-nests-staking-and-fee-collection', '_blank')
   }
 
+  const currentDateTime = new Date().getTime() / 1000
+
   return (
-    <Page>
+    <NestPage>
       <NestBannerContainer>
         <StyledCard>
           <Flex justifyContent="center" alignItems="center">
@@ -158,7 +172,9 @@ const Farm: React.FC = () => {
                   </Text>
                 </Flex>
                 <Flex justifyContent="space-between" alignItems="center">
-                  <ViewStatsButton scale="sm" onClick={handleLearnMore}>Learn More</ViewStatsButton>
+                  <ViewStatsButton scale="sm" onClick={handleLearnMore}>
+                    Learn More
+                  </ViewStatsButton>
                   <APYLabel>{`${handsOnPenalty.toFixed(2)}% Paper Hands Penalty`}</APYLabel>
                 </Flex>
               </APYCard>
@@ -242,8 +258,8 @@ const Farm: React.FC = () => {
                   <CardValue
                     className="balance"
                     fontSize="24px"
-                    value={account ? userTotalPefiEarned : 0}
-                    decimals={2}
+                    value={account && userFirstStakeTime ? (currentDateTime - userFirstStakeTime) / 86400 : 0}
+                    decimals={0}
                     lineHeight="1.2"
                   />
                 </Balance>
@@ -255,12 +271,20 @@ const Farm: React.FC = () => {
           </NestCardsWrapper>
         </NestDetailsContainer>
       </Flex>
-    </Page>
+    </NestPage>
   )
 }
 
+const NestPage = styled(Page)`
+  max-width: 1200px;
+`
+
 const NestBannerContainer = styled.div`
   margin-bottom: 32px;
+
+  @media (min-width: 640px) {
+    margin-bottom: 64px;
+  }
 `
 
 const StyledCard = styled(Card)`
