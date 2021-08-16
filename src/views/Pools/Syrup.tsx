@@ -63,7 +63,7 @@ const Farm: React.FC = () => {
   const [finishedPools, openPools] = partition(poolsWithApy, (pool) => pool.isFinished)
 
   return (
-    <Page>
+    <NestPage>
       <NestBgContainer />
       <NestBannerContainer>
         <BannerImage
@@ -85,9 +85,13 @@ const Farm: React.FC = () => {
           ))}
         </Route>
       </FlexLayout>
-    </Page>
+    </NestPage>
   )
 }
+
+const NestPage = styled(Page)`
+  max-width: 1200px;
+`
 
 const NestBgContainer = styled.div`
   background-image: ${({ theme }) =>
