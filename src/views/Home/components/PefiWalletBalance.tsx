@@ -31,7 +31,7 @@ const PefiWalletBalance = () => {
 
   return (
     <Block>
-      <CardValue fontSize='32px' value={getBalanceNumber(pefiBalance)} decimals={4} lineHeight="1.2" />
+      <CardValue fontSize="32px" value={getBalanceNumber(pefiBalance)} decimals={2} lineHeight="1.2" />
       <CardBusdValue value={usdtBalance} />
     </Block>
   )

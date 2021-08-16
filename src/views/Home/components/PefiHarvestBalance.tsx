@@ -32,7 +32,7 @@ const PefiHarvestBalance = () => {
 
   return (
     <Block>
-      <CardValue fontSize='32px' value={earningsSum} lineHeight="1.2" />
+      <CardValue fontSize="32px" value={earningsSum} lineHeight="1.2" decimals={2} />
       <CardBusdValue value={earningsBusd} />
     </Block>
   )
