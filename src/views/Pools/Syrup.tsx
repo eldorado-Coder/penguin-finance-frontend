@@ -154,7 +154,7 @@ const Farm: React.FC = () => {
           </Flex>
         </StyledCard> */}
         <BannerImage
-          src={`${process.env.PUBLIC_URL}/images/pools/${isDark ? 'nests-dark.gif' : 'nests-light.gif'}`}
+          src={`${process.env.PUBLIC_URL}/images/pools/${isDark ? 'nest_banner_dark.svg' : 'nest_banner_light.svg'}`}
           alt="nest banner"
         />
       </NestBannerContainer>
