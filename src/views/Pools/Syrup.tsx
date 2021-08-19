@@ -144,6 +144,9 @@ const Farm: React.FC = () => {
 
   return (
     <NestPage>
+      <BgWrapper>
+        <IgloosBgContainer />
+      </BgWrapper>
       <NestBannerContainer>
         {/* <StyledCard>
           <Flex justifyContent="center" alignItems="center">
@@ -151,7 +154,7 @@ const Farm: React.FC = () => {
           </Flex>
         </StyledCard> */}
         <BannerImage
-          src={`${process.env.PUBLIC_URL}/images/pools/${isDark ? 'nests-dark.gif' : 'nests-light.gif'}`}
+          src={`${process.env.PUBLIC_URL}/images/pools/${isDark ? 'nest_banner_dark.svg' : 'nest_banner_light.svg'}`}
           alt="nest banner"
         />
       </NestBannerContainer>
@@ -283,6 +286,28 @@ const Farm: React.FC = () => {
 
 const NestPage = styled(Page)`
   max-width: 1200px;
+`
+
+// bg
+const BgWrapper = styled.div`
+  background: ${({ theme }) => (theme.isDark ? '#1A1028' : '#F9F8F9')};
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  right: 0px;
+  left: 0px;
+  z-index: -1;
+`
+const IgloosBgContainer = styled.div`
+  background-image: url('/images/pools/nest_new_bg.png');
+  background-repeat: repeat;
+  background-size: contain;
+  position: absolute;
+  top: -8px;
+  bottom: -8px;
+  right: 0px;
+  left: 0px;
+  z-index: -1;
 `
 
 const NestBannerContainer = styled.div`

@@ -308,6 +308,15 @@ const CompounderIglooPage = styled(Page)`
 `
 
 // bg
+const BgWrapper = styled.div`
+  background: ${({ theme }) => (theme.isDark ? '#1A1028' : '#F9F8F9')};
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  right: 0px;
+  left: 0px;
+  z-index: -1;
+`
 const IgloosBgContainer = styled.div`
   background-image: url('/images/compounder-igloos/CompounderPattern.png');
   background-repeat: repeat;
@@ -315,16 +324,6 @@ const IgloosBgContainer = styled.div`
   position: absolute;
   top: -8px;
   bottom: -8px;
-  right: 0px;
-  left: 0px;
-  z-index: -1;
-`
-
-const BgWrapper = styled.div`
-  background: ${({ theme }) => (theme.isDark ? '#1A1028' : '#F9F8F9')};
-  position: absolute;
-  top: 0px;
-  bottom: 0px;
   right: 0px;
   left: 0px;
   z-index: -1;
