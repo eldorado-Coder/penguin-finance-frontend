@@ -17,6 +17,11 @@ export const config: MenuEntry[] = [
     href: '/igloos',
   },
   {
+    label: 'Igloos V2',
+    icon: 'IglooIcon',
+    href: '/igloos-v2',
+  },
+  {
     label: 'Compounder',
     icon: 'CompounderIcon',
     href: '/compounder',

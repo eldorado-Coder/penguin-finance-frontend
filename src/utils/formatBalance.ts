@@ -12,3 +12,7 @@ export const getFullDisplayBalance = (balance: BigNumber, decimals = 18) => {
 export const getNumberWithCommas = (x) => {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 }
+
+export const getBalanceAmount = (amount: BigNumber, decimals = 18) => {
+  return new BigNumber(amount).dividedBy(new BigNumber(10).pow(decimals))
+}
