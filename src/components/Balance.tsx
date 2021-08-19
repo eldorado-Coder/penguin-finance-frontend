@@ -13,7 +13,8 @@ interface TextProps {
 interface BalanceProps extends TextProps {
   value?: number
   decimals?: number
-  unit?: string
+  unit?: string,
+  prefix?: string
 }
 
 const StyledText = styled(Text)<TextProps>`
@@ -23,7 +24,7 @@ const StyledText = styled(Text)<TextProps>`
   align-items: center;
 `
 
-const Balance: React.FC<BalanceProps> = ({ value, fontSize, color, decimals, isDisabled, unit, fontWeight }) => {
+const Balance: React.FC<BalanceProps> = ({ value, fontSize, color, decimals, isDisabled, unit, fontWeight, prefix }) => {
   const previousValue = useRef(0)
 
   useEffect(() => {
@@ -32,6 +33,7 @@ const Balance: React.FC<BalanceProps> = ({ value, fontSize, color, decimals, isD
 
   return (
     <StyledText bold color={color} fontSize={fontSize} isDisabled={isDisabled} fontWeight={fontWeight}>
+      {prefix}
       {value === 0 ? (
         <>
           <span>0.00</span>
