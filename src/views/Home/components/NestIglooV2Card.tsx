@@ -4,6 +4,7 @@ import { Card } from 'penguinfinance-uikit2'
 
 const StyledNestIglooCard = styled(Card)`
   height: 230px;
+  margin-bottom: 24px;
   background: ${({ theme }) => theme.isDark && '#30264F'};
 `
 
