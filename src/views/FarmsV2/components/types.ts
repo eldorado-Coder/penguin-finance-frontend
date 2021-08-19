@@ -1,5 +1,4 @@
 import BigNumber from 'bignumber.js'
-
 import { Farm as FarmTypes } from 'state/types'
 
 export type ColumnsDefTypes = {

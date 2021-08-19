@@ -8,7 +8,6 @@ import { fetchFarmUserDataAsync } from 'state/farms'
 import useToast from 'hooks/useToast'
 import { useHarvest } from 'hooks/useHarvest'
 import { Farm as FarmTypes } from 'state/types'
-
 import { ActionContainer, ActionTitles, ActionContent } from './styles'
 
 interface FarmWithStakedValue extends FarmTypes {
@@ -18,15 +17,11 @@ interface FarmWithStakedValue extends FarmTypes {
 const HarvestAction: React.FunctionComponent<FarmWithStakedValue> = ({ pid, userData }) => {
   const { toastSuccess, toastError } = useToast()
   const earningsBigNumber = userData ? new BigNumber(userData.earnings) : new BigNumber(0)
-  // const cakePrice = usePricePefiUsdt()
   let earnings = new BigNumber(0)
-  // let earningsBusd = 0
   let displayBalance = earnings.toLocaleString()
 
-  // If user didn't connect wallet default balance will be 0
   if (!earningsBigNumber.isZero()) {
     earnings = getBalanceAmount(earningsBigNumber)
-    // earningsBusd = earnings.multipliedBy(cakePrice).toNumber()
     displayBalance = earnings.toFixed(3, BigNumber.ROUND_DOWN)
   }
 
@@ -48,9 +43,6 @@ const HarvestAction: React.FunctionComponent<FarmWithStakedValue> = ({ pid, user
       <ActionContent>
         <div>
           <Heading>{displayBalance}</Heading>
-          {/* {earningsBusd > 0 && (
-            <Balance fontSize="12px" color="textSubtle" decimals={2} value={earningsBusd} prefix="$" />
-          )} */}
         </div>
         <Button
           disabled={earnings.eq(0) || pendingTx || !userData}
