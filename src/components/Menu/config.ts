@@ -76,7 +76,7 @@ export const config: MenuEntry[] = [
       },
       {
         label: 'Docs',
-        href: 'https://www.penguinfinance.io/b',
+        href: 'https://docs.penguinfinance.io/',
       },
       {
         label: 'Medium Articles',

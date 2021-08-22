@@ -2,16 +2,30 @@ import contracts from './contracts'
 import { LPConfig, QuoteToken } from './types'
 
 const lps: LPConfig[] = [
+  // {
+  //   lpSymbol: 'USDT-AVAX LP',
+  //   lpAddresses: {
+  //     43113: '',
+  //     43114: '0x9ee0a4e21bd333a6bb2ab298194320b8daa26516',
+  //   },
+  //   tokenSymbol: 'USDT',
+  //   tokenAddresses: {
+  //     43113: '',
+  //     43114: '0xde3A24028580884448a5397872046a019649b084',
+  //   },
+  //   quoteTokenSymbol: QuoteToken.AVAX,
+  //   quoteTokenAddresses: contracts.wavax,
+  // },
   {
     lpSymbol: 'USDT-AVAX LP',
     lpAddresses: {
       43113: '',
-      43114: '0x9ee0a4e21bd333a6bb2ab298194320b8daa26516',
+      43114: '0xe28984e1EE8D431346D32BeC9Ec800Efb643eef4',
     },
     tokenSymbol: 'USDT',
     tokenAddresses: {
       43113: '',
-      43114: '0xde3A24028580884448a5397872046a019649b084',
+      43114: '0xc7198437980c041c805A1EDcbA50c1Ce5db95118',
     },
     quoteTokenSymbol: QuoteToken.AVAX,
     quoteTokenAddresses: contracts.wavax,

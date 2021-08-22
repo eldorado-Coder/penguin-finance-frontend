@@ -20,7 +20,7 @@ const useUsdtPrice = () => {
   }
 
   useEffect(() => {
-    fetchPrice()
+    // fetchPrice()
   }, [])
 
   return { price }
