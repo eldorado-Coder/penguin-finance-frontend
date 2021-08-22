@@ -4,7 +4,7 @@ import { COINGECKO_API_ENDPOINT } from '../config'
 import { appendParams } from '../utils/axios'
 
 const useAvaxPrice = () => {
-  const [price, setPrice] = useState(1)
+  const [price, setPrice] = useState(40)
 
   const fetchPrice = async () => {
     const url = appendParams(`${COINGECKO_API_ENDPOINT}/v3/simple/price`, { ids: 'wrapped-avax', vs_currencies: 'usd' })
@@ -17,6 +17,16 @@ const useAvaxPrice = () => {
       .catch((err) => {
         console.log('error--->', err)
       })
+    // const url = 'https://avascan.info/api/v2/price'
+    // Axios.get(url)
+    //   .then((res) => {
+    //     if (res.status === 200) {
+    //       setPrice(res.data.usd.price)
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     console.log('error--->', err)
+    //   })
   }
 
   useEffect(() => {
