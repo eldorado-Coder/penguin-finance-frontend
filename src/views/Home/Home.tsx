@@ -56,6 +56,7 @@ const Hero = styled.div`
 
 const HeroBgImageContainer = styled.div`
   position: absolute;
+  width: 100%;
 `
 
 const HeroBgImage = styled.img`
@@ -236,7 +237,7 @@ const Home: React.FC = () => {
         <Hero>
           <HeroBgImageContainer>
             <HeroBgImage
-              src={`${process.env.PUBLIC_URL}/images/home/${isDark ? 'new_banner_dark.gif' : 'new_banner_light.gif'}`}
+              src={`${process.env.PUBLIC_URL}/images/home/${isDark ? 'new_banner_dark.svg' : 'new_banner_light.svg'}`}
               alt="astronaut"
             />
           </HeroBgImageContainer>
