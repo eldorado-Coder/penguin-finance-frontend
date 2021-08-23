@@ -3,8 +3,8 @@ import styled from 'styled-components'
 import React, { useCallback, useMemo, useState } from 'react'
 import { Button, Flex } from 'penguinfinance-uikit2'
 import UnlockButton from 'components/UnlockButton'
-import roundDown from 'utils/roundDown';
-import escapeRegExp from 'utils/escapeRegExp';
+import roundDown from 'utils/roundDown'
+import escapeRegExp from 'utils/escapeRegExp'
 import TokenInput from './TokenInput'
 import useI18n from '../../../hooks/useI18n'
 import { getFullDisplayBalance } from '../../../utils/formatBalance'
@@ -20,7 +20,7 @@ interface DepositModalProps {
   onApprove: () => void
 }
 
-const inputRegex = RegExp(`^\\d*(?:\\\\[.])?\\d*$`) 
+const inputRegex = RegExp(`^\\d*(?:\\\\[.])?\\d*$`)
 
 const StakePefiForm: React.FC<DepositModalProps> = ({
   max,
@@ -52,7 +52,8 @@ const StakePefiForm: React.FC<DepositModalProps> = ({
   )
 
   const handleSelectMax = useCallback(() => {
-    setVal(roundDown(fullBalance, 2))
+    // setVal(roundDown(fullBalance, 2))
+    setVal(fullBalance)
   }, [fullBalance, setVal])
 
   const renderText = () => {
@@ -73,6 +74,8 @@ const StakePefiForm: React.FC<DepositModalProps> = ({
     }
   }
 
+  const canStake = !pendingTx && Number(val) > 0 && Number(fullBalance) >= Number(val)
+
   return (
     <>
       <TokenInput
@@ -90,7 +93,7 @@ const StakePefiForm: React.FC<DepositModalProps> = ({
               {`Approve ${stakingTokenName}`}
             </StyledButton>
           ) : (
-            <StyledButton tokenBalance={val} scale="md" disabled={pendingTx} onClick={handleConfirm}>
+            <StyledButton tokenBalance={val} scale="md" disabled={!canStake} onClick={handleConfirm}>
               {renderText()}
             </StyledButton>
           ))}
@@ -104,8 +107,8 @@ const StyledButton = styled(Button)<{ tokenBalance?: string }>`
   border-radius: 8px;
   color: ${({ theme }) => theme.isDark && '#30264f'};
   background-color: ${({ theme }) => !theme.isDark && '#372871'};
-  background-color: ${({ theme, tokenBalance }) => (tokenBalance && !theme.isDark) && '#Ec3E3F'};
-  background-color: ${({ theme, tokenBalance }) => (tokenBalance && theme.isDark) && '#D4444C'};
+  background-color: ${({ theme, tokenBalance }) => tokenBalance && !theme.isDark && '#Ec3E3F'};
+  background-color: ${({ theme, tokenBalance }) => tokenBalance && theme.isDark && '#D4444C'};
   color: ${({ tokenBalance }) => tokenBalance && 'white'};
 `
 
