@@ -27,6 +27,11 @@ export const config: MenuEntry[] = [
     href: '/compounder',
   },
   {
+    label: 'Info',
+    icon: 'IfoIcon',
+    href: '/info',
+  },
+  {
     label: 'Nests',
     icon: 'NestIcon',
     href: '/nests',
