@@ -28,7 +28,7 @@ const NotFound = lazy(() => import('./views/NotFound'))
 
 // const Nests = lazy(() => import('./views/Nests'))
 // const Lottery = lazy(() => import('./views/Lottery'))
-// const Ifos = lazy(() => import('./views/Ifos'))
+const Info = lazy(() => import('./views/Info'))
 const Collectibles = lazy(() => import('./views/Collectibles'))
 const CompounderIgloos = lazy(() => import('./views/CompounderIgloos'))
 // const Teams = lazy(() => import('./views/Teams'))
@@ -69,6 +69,9 @@ const App: React.FC = () => {
             </Route>
             <Route path="/arena">
               <Arena />
+            </Route>
+            <Route path="/info">
+              <Info />
             </Route>
             {/* <Route path="/launchpad">
               <Launchpad />
