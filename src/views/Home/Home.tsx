@@ -237,7 +237,9 @@ const Home: React.FC = () => {
         <Hero>
           <HeroBgImageContainer>
             <HeroBgImage
-              src={`${process.env.PUBLIC_URL}/images/home/${isDark ? 'new_banner_dark.svg' : 'new_banner_light.svg'}`}
+              src={`${process.env.PUBLIC_URL}/images/home/${
+                isDark ? 'new_banner_light1.svg' : 'new_banner_light1.svg'
+              }`}
               alt="astronaut"
             />
           </HeroBgImageContainer>
