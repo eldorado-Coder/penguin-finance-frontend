@@ -3,8 +3,9 @@ import styled from 'styled-components'
 import React, { useCallback, useMemo, useState } from 'react'
 import { Button, Flex } from 'penguinfinance-uikit2'
 import UnlockButton from 'components/UnlockButton'
-import roundDown from 'utils/roundDown';
-import escapeRegExp from 'utils/escapeRegExp';
+import roundDown from 'utils/roundDown'
+import escapeRegExp from 'utils/escapeRegExp'
+import { PANGOLIN_PEFI_LINK } from 'config'
 import TokenInput from './TokenInput'
 import useI18n from '../../../hooks/useI18n'
 import { getFullDisplayBalance } from '../../../utils/formatBalance'
@@ -20,7 +21,7 @@ interface DepositModalProps {
   onApprove: () => void
 }
 
-const inputRegex = RegExp(`^\\d*(?:\\\\[.])?\\d*$`) 
+const inputRegex = RegExp(`^\\d*(?:\\\\[.])?\\d*$`)
 
 const StakePefiForm: React.FC<DepositModalProps> = ({
   max,
@@ -52,16 +53,18 @@ const StakePefiForm: React.FC<DepositModalProps> = ({
   )
 
   const handleSelectMax = useCallback(() => {
-    setVal(roundDown(fullBalance, 2))
+    // setVal(roundDown(fullBalance, 2))
+    setVal(fullBalance)
   }, [fullBalance, setVal])
 
   const renderText = () => {
+    if (Number(val) > Number(fullBalance) || Number(fullBalance) === 0) return 'Get more PEFI'
     if (pendingTx) return TranslateString(488, 'Pending Confirmation')
     if (val) return 'Confirm Staking'
     return 'Enter Amount'
   }
 
-  const handleConfirm = async () => {
+  const handleStake = async () => {
     setPendingTx(true)
     try {
       await onConfirm(val)
@@ -72,6 +75,12 @@ const StakePefiForm: React.FC<DepositModalProps> = ({
       setVal('')
     }
   }
+
+  const handleGetPefi = () => {
+    window.open(PANGOLIN_PEFI_LINK, '_blank')
+  }
+
+  const canStake = !pendingTx && Number(val) > 0
 
   return (
     <>
@@ -90,9 +99,17 @@ const StakePefiForm: React.FC<DepositModalProps> = ({
               {`Approve ${stakingTokenName}`}
             </StyledButton>
           ) : (
-            <StyledButton tokenBalance={val} scale="md" disabled={pendingTx} onClick={handleConfirm}>
-              {renderText()}
-            </StyledButton>
+            <>
+              {Number(fullBalance) > Number(val) && Number(fullBalance) > 0 ? (
+                <StyledButton tokenBalance={val} scale="md" disabled={!canStake} onClick={handleStake}>
+                  {renderText()}
+                </StyledButton>
+              ) : (
+                <StyledButton tokenBalance={val} scale="md" disabled={pendingTx} onClick={handleGetPefi}>
+                  {renderText()}
+                </StyledButton>
+              )}
+            </>
           ))}
       </Flex>
     </>
@@ -104,8 +121,8 @@ const StyledButton = styled(Button)<{ tokenBalance?: string }>`
   border-radius: 8px;
   color: ${({ theme }) => theme.isDark && '#30264f'};
   background-color: ${({ theme }) => !theme.isDark && '#372871'};
-  background-color: ${({ theme, tokenBalance }) => (tokenBalance && !theme.isDark) && '#Ec3E3F'};
-  background-color: ${({ theme, tokenBalance }) => (tokenBalance && theme.isDark) && '#D4444C'};
+  background-color: ${({ theme, tokenBalance }) => tokenBalance && !theme.isDark && '#Ec3E3F'};
+  background-color: ${({ theme, tokenBalance }) => tokenBalance && theme.isDark && '#D4444C'};
   color: ${({ tokenBalance }) => tokenBalance && 'white'};
 `
 
