@@ -57,6 +57,7 @@ const UnstakeXPefiForm: React.FC<DepositModalProps> = ({
   }, [fullBalance, setVal])
 
   const renderText = () => {
+    if (Number(val) >= Number(fullBalance)) return 'Not Enough Funds'
     if (pendingTx) return TranslateString(488, 'Pending Confirmation')
     if (val) return 'Confirm Withdrawal'
     return 'Enter Amount'

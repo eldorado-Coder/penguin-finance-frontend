@@ -5,6 +5,7 @@ import { Button, Flex } from 'penguinfinance-uikit2'
 import UnlockButton from 'components/UnlockButton'
 import roundDown from 'utils/roundDown'
 import escapeRegExp from 'utils/escapeRegExp'
+import { PANGOLIN_PEFI_LINK } from 'config'
 import TokenInput from './TokenInput'
 import useI18n from '../../../hooks/useI18n'
 import { getFullDisplayBalance } from '../../../utils/formatBalance'
@@ -57,12 +58,13 @@ const StakePefiForm: React.FC<DepositModalProps> = ({
   }, [fullBalance, setVal])
 
   const renderText = () => {
+    if (Number(val) > Number(fullBalance) || Number(fullBalance) === 0) return 'Get more PEFI'
     if (pendingTx) return TranslateString(488, 'Pending Confirmation')
     if (val) return 'Confirm Staking'
     return 'Enter Amount'
   }
 
-  const handleConfirm = async () => {
+  const handleStake = async () => {
     setPendingTx(true)
     try {
       await onConfirm(val)
@@ -74,7 +76,11 @@ const StakePefiForm: React.FC<DepositModalProps> = ({
     }
   }
 
-  const canStake = !pendingTx && Number(val) > 0 && Number(fullBalance) >= Number(val)
+  const handleGetPefi = () => {
+    window.open(PANGOLIN_PEFI_LINK, '_blank')
+  }
+
+  const canStake = !pendingTx && Number(val) > 0
 
   return (
     <>
@@ -93,9 +99,17 @@ const StakePefiForm: React.FC<DepositModalProps> = ({
               {`Approve ${stakingTokenName}`}
             </StyledButton>
           ) : (
-            <StyledButton tokenBalance={val} scale="md" disabled={!canStake} onClick={handleConfirm}>
-              {renderText()}
-            </StyledButton>
+            <>
+              {Number(fullBalance) > Number(val) && Number(fullBalance) > 0 ? (
+                <StyledButton tokenBalance={val} scale="md" disabled={!canStake} onClick={handleStake}>
+                  {renderText()}
+                </StyledButton>
+              ) : (
+                <StyledButton tokenBalance={val} scale="md" disabled={pendingTx} onClick={handleGetPefi}>
+                  {renderText()}
+                </StyledButton>
+              )}
+            </>
           ))}
       </Flex>
     </>
