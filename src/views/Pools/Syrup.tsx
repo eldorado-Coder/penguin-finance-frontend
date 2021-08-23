@@ -230,7 +230,7 @@ const Farm: React.FC = () => {
                   </BalanceTextSmall>
                 </Flex>
               </Flex>
-              <BalanceLabel mt="24px">Unstaked</BalanceLabel>
+              {/* <BalanceLabel mt="24px">Unstaked</BalanceLabel>
               <Flex mt="4px" alignItems="center">
                 <CardImage src="/images/penguin-finance-logo.svg" alt="penguin logo" width={64} height={64} />
                 <Flex flexDirection="column">
@@ -258,7 +258,7 @@ const Farm: React.FC = () => {
                     />
                   </BalanceTextSmall>
                 </Flex>
-              </Flex>
+              </Flex> */}
               <BalanceLabel mt="24px" mb="8px">
                 Your Stats
               </BalanceLabel>
