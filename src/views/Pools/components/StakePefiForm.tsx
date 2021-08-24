@@ -100,7 +100,7 @@ const StakePefiForm: React.FC<DepositModalProps> = ({
             </StyledButton>
           ) : (
             <>
-              {Number(fullBalance) > Number(val) && Number(fullBalance) > 0 ? (
+              {Number(fullBalance) >= Number(val) && Number(fullBalance) > 0 ? (
                 <StyledButton tokenBalance={val} scale="md" disabled={!canStake} onClick={handleStake}>
                   {renderText()}
                 </StyledButton>

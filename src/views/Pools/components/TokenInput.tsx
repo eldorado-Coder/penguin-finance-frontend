@@ -34,8 +34,8 @@ const TokenInput: React.FC<TokenInputProps> = ({
       </Wrapper>
       {maxBalanceShow && (
         <StyledMaxText>
-          {/* {TranslateString(526, `${symbol} Available:`)} {roundDown(max, 2)} */}
-          {TranslateString(526, `${symbol} Available:`)} {Number(max).toFixed(2)}
+          {TranslateString(526, `${symbol} Available:`)} {roundDown(max, 2)}
+          {/* {TranslateString(526, `${symbol} Available:`)} {Number(max).toFixed(2)} */}
         </StyledMaxText>
       )}
     </StyledTokenInput>

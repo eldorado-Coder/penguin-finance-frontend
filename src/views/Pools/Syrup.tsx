@@ -19,6 +19,7 @@ import { useFarms, usePriceAvaxUsdt, usePools, usePriceEthAvax, useNestApy } fro
 import { PoolCategory } from 'config/constants/types'
 import { getAccounts, getFirstStakeTime } from 'subgraph/utils'
 import { getPefiAddress } from 'utils/addressHelpers'
+import roundDown from 'utils/roundDown'
 import Page from 'components/layout/Page'
 import CardValue from 'components/CardValue'
 import NestCard from './components/NestCard'
@@ -212,7 +213,7 @@ const Farm: React.FC = () => {
                     <CardValue
                       className="balance"
                       fontSize="24px"
-                      value={getBalanceNumber(stakedBalance)}
+                      value={roundDown(getBalanceNumber(stakedBalance), 2)}
                       decimals={2}
                       lineHeight="1"
                     />
@@ -224,7 +225,7 @@ const Farm: React.FC = () => {
                     <CardValue
                       className="balance"
                       fontSize="12px"
-                      value={xPefiToPefiRatio * getBalanceNumber(stakedBalance)}
+                      value={roundDown(xPefiToPefiRatio * getBalanceNumber(stakedBalance), 2)}
                       decimals={2}
                       lineHeight="1.2"
                       prefix="≈ "
@@ -241,7 +242,7 @@ const Farm: React.FC = () => {
                     <CardValue
                       className="balance"
                       fontSize="24px"
-                      value={account ? getBalanceNumber(pefiBalance) : 0}
+                      value={account ? roundDown(getBalanceNumber(pefiBalance), 2) : 0}
                       decimals={2}
                       lineHeight="1"
                     />
@@ -253,7 +254,7 @@ const Farm: React.FC = () => {
                     <CardValue
                       className="balance"
                       fontSize="12px"
-                      value={account ? getBalanceNumber(pefiBalance) / xPefiToPefiRatio : 0}
+                      value={account ? roundDown(getBalanceNumber(pefiBalance) / xPefiToPefiRatio, 2) : 0}
                       decimals={2}
                       lineHeight="1.2"
                       prefix="≈ "
