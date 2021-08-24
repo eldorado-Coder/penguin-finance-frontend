@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Button, Flex } from 'penguinfinance-uikit2'
 import useI18n from 'hooks/useI18n'
-import roundDown from 'utils/roundDown';
+import roundDown from 'utils/roundDown'
 import Input, { InputProps } from '../../../components/Input'
 
 interface TokenInputProps extends InputProps {
@@ -23,15 +23,9 @@ const TokenInput: React.FC<TokenInputProps> = ({
   const TranslateString = useI18n()
   return (
     <StyledTokenInput>
-      <Input
-        className="input"
-        inputClassName="tokenInput"
-        onChange={onChange}
-        placeholder=''
-        value={value}
-      />
+      <Input className="input" inputClassName="tokenInput" onChange={onChange} placeholder="" value={value} />
       <Wrapper>
-        <TokenValueWrapper justifyContent='space-between' alignItems='center'>
+        <TokenValueWrapper justifyContent="space-between" alignItems="center">
           <TokenValue>{`${value || 0} ${symbol}`}</TokenValue>
           <StyledButton scale="sm" onClick={onSelectMax}>
             {TranslateString(452, 'Max')}
@@ -40,7 +34,8 @@ const TokenInput: React.FC<TokenInputProps> = ({
       </Wrapper>
       {maxBalanceShow && (
         <StyledMaxText>
-          {TranslateString(526, `${symbol} Available:`)} {roundDown(max, 2)}
+          {/* {TranslateString(526, `${symbol} Available:`)} {roundDown(max, 2)} */}
+          {TranslateString(526, `${symbol} Available:`)} {Number(max).toFixed(2)}
         </StyledMaxText>
       )}
     </StyledTokenInput>
@@ -52,17 +47,17 @@ const Wrapper = styled.div`
   height: 0;
   position: relative;
   bottom: 3.5rem;
-`;
+`
 
 const TokenValueWrapper = styled(Flex)`
   height: 3.5rem;
   padding: 0 16px;
-`;
+`
 
 const TokenValue = styled.div`
   font-size: 18px;
   color: ${({ theme }) => (theme.isDark ? 'white' : '#372871')};
-`;
+`
 
 const StyledTokenInput = styled.div`
   .input {
