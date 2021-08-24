@@ -85,7 +85,7 @@ const StakePefiForm: React.FC<DepositModalProps> = ({
   return (
     <>
       <TokenInput
-        value={val}
+        value={roundDown(val, 2)}
         onSelectMax={handleSelectMax}
         onChange={handleChange}
         max={fullBalance}
