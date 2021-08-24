@@ -31,6 +31,7 @@ const NotFound = lazy(() => import('./views/NotFound'))
 const Info = lazy(() => import('./views/Info'))
 const Collectibles = lazy(() => import('./views/Collectibles'))
 const CompounderIgloos = lazy(() => import('./views/CompounderIgloos'))
+const IPefi = lazy(() => import('./views/IPefi'))
 // const Teams = lazy(() => import('./views/Teams'))
 // const Team = lazy(() => import('./views/Teams/Team'))
 // const Profile = lazy(() => import('./views/Profile'))
@@ -66,6 +67,9 @@ const App: React.FC = () => {
             </Route>
             <Route path="/nests">
               <Pools />
+            </Route>
+            <Route path="/ipefi">
+              <IPefi />
             </Route>
             <Route path="/arena">
               <Arena />
