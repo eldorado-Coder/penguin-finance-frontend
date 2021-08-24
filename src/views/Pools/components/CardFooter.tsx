@@ -68,7 +68,7 @@ const FlexFull = styled.div`
   flex: 1;
 `
 const Label = styled(Text)`
-  color: ${({ theme }) => theme.isDark ? 'white' : theme.colors.secondary };
+  color: ${({ theme }) => (theme.isDark ? 'white' : theme.colors.secondary)};
 `
 
 const TokenLink = styled.a`
@@ -120,10 +120,7 @@ const CardFooter: React.FC<Props> = ({
               </Label>
             </FlexFull>
             <Flex>
-              <Balance fontSize="14px" fontWeight='400' isDisabled={isFinished} value={getNestTVL()} />
-              <Label color="primary" fontSize="14px" fontWeight={400} ml='4px'>
-                PEFI
-              </Label>
+              <Balance fontSize="14px" fontWeight="400" prefix="$" isDisabled={isFinished} value={getNestTVL()} />
             </Flex>
           </Row>
           <Row style={{ marginBottom: '4px' }}>
@@ -132,14 +129,19 @@ const CardFooter: React.FC<Props> = ({
                 {TranslateString(408, 'Total Supply(xPEFI)')}
               </Label>
             </FlexFull>
-            <Balance fontSize="14px" fontWeight='400' isDisabled={isFinished} value={getBalanceNumber(totalXPefiBalance)} />
+            <Balance
+              fontSize="14px"
+              fontWeight="400"
+              isDisabled={isFinished}
+              value={getBalanceNumber(totalXPefiBalance)}
+            />
           </Row>
           {blocksUntilStart > 0 && (
             <Row>
               <FlexFull>
                 <Label>{TranslateString(410, 'Start')}:</Label>
               </FlexFull>
-              <Balance fontSize="14px" fontWeight='400' isDisabled={isFinished} value={blocksUntilStart} decimals={0} />
+              <Balance fontSize="14px" fontWeight="400" isDisabled={isFinished} value={blocksUntilStart} decimals={0} />
             </Row>
           )}
           {blocksUntilStart === 0 && blocksRemaining > 0 && (
@@ -147,11 +149,11 @@ const CardFooter: React.FC<Props> = ({
               <FlexFull>
                 <Label>{TranslateString(410, 'End')}:</Label>
               </FlexFull>
-              <Balance fontSize="14px" fontWeight='400' isDisabled={isFinished} value={blocksRemaining} decimals={0} />
+              <Balance fontSize="14px" fontWeight="400" isDisabled={isFinished} value={blocksRemaining} decimals={0} />
             </Row>
           )}
           <TokenLink href={penguinNestsGuideLink} target="_blank">
-            <Text color="primary" fontSize="14px">
+            <Text color="red" fontSize="14px">
               {TranslateString(412, 'Learn more about xPEFI')}
             </Text>
           </TokenLink>
