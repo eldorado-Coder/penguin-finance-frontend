@@ -63,8 +63,8 @@ const IPefi: React.FC = () => {
   const stakedBalance = new BigNumber(openPools[0].userData?.stakedBalance || 0)
 
   const handleMigrate = () => {
-    return null;
-  };
+    return null
+  }
 
   const { isDark } = useTheme()
 
@@ -80,19 +80,21 @@ const IPefi: React.FC = () => {
         />
       </NestBannerContainer>
       <Flex justifyContent="center">
-        <NestDetailsContainer flexDirection='column' alignItems='center'>
-          <Text color="primary" mb="12px" fontSize="24px" bold textAlign='center'>
+        <NestDetailsContainer flexDirection="column" alignItems="center">
+          <Text color="primary" mb="12px" fontSize="24px" bold textAlign="center">
             Migrate your xPEFI and get iPEFI
           </Text>
-          <Description mb="24px" textAlign='center'>
-            The Nest V2 contract is here! Migrate from the old staking token (xPEFI) to receive the newer, improved iPEFI. After migration, your PEFI equivalent should be the same pre-migration. We&apos;ll keep the Paper Hands Penalty on the new contract the same as the old one for a week.
+          <Description mb="24px" textAlign="center">
+            The Nest V2 contract is here! Migrate from the old staking token (xPEFI) to receive the newer, improved
+            iPEFI. After migration, your PEFI equivalent should be the same pre-migration. We&apos;ll keep the Paper
+            Hands Penalty on the new contract the same as the old one for a week.
           </Description>
           <CardWrapper justifyContent="space-between">
             <MigrateCard padding="8px 24px 16px" mb="32px">
-              <Flex justifyContent="center" alignItems="center" mb='24px'>
-                <Flex flexDirection='column' alignItems='center'>
+              <Flex justifyContent="center" alignItems="center" mb="24px">
+                <Flex flexDirection="column" alignItems="center">
                   <CardImage src="/images/pools/xPefi.png" alt="xpefi logo" width={80} height={80} />
-                  <Flex alignItems='center'>
+                  <Flex alignItems="center">
                     <Balance>
                       <CardValue
                         className="balance"
@@ -102,7 +104,7 @@ const IPefi: React.FC = () => {
                         lineHeight="1"
                       />
                     </Balance>
-                    <PefiLabel color='secondary' fontSize="20px" fontWeight={500}>
+                    <PefiLabel color="secondary" fontSize="20px" fontWeight={500}>
                       xPEFI
                     </PefiLabel>
                   </Flex>
@@ -110,9 +112,9 @@ const IPefi: React.FC = () => {
                 <MigrateIconWrapper>
                   <SvgIcon src={`${process.env.PUBLIC_URL}/images/home/arrow-right.svg`} width="32px" height="32px" />
                 </MigrateIconWrapper>
-                <Flex flexDirection='column' alignItems='center'>
+                <Flex flexDirection="column" alignItems="center">
                   <CardImage src="/images/pools/xPefi.png" alt="xpefi logo" width={80} height={80} />
-                  <Flex alignItems='center'>
+                  <Flex alignItems="center">
                     <Balance>
                       <CardValue
                         className="balance"
@@ -122,22 +124,22 @@ const IPefi: React.FC = () => {
                         lineHeight="1"
                       />
                     </Balance>
-                    <PefiLabel color='secondary' fontSize="20px" fontWeight={500}>
+                    <PefiLabel color="secondary" fontSize="20px" fontWeight={500}>
                       iPEFI
                     </PefiLabel>
                   </Flex>
                 </Flex>
               </Flex>
-              {account ? 
+              {account ? (
                 <StyledButton scale="md" onClick={handleMigrate}>
                   Migrate
                 </StyledButton>
-                : 
+              ) : (
                 <StyledUnlockButton />
-              }
+              )}
             </MigrateCard>
           </CardWrapper>
-          <Alert textAlign='center'>
+          <Alert textAlign="center">
             The old nest has stopped receiving rewards, so migrating ASAP is highly recommended.
           </Alert>
         </NestDetailsContainer>
@@ -202,7 +204,7 @@ const CardWrapper = styled(Flex)`
 `
 
 const MigrateCard = styled(Card)`
-  background: ${({ theme }) => (theme.isDark && '#30264F')};
+  background: ${({ theme }) => theme.isDark && '#30264F'};
   border-radius: 8px;
   width: 100%;
 
@@ -223,7 +225,7 @@ const Description = styled(Text)`
 
 const Alert = styled(Text)`
   color: ${({ theme }) => theme.colors.red};
-`;
+`
 
 const CardImage = styled.img`
   margin-right: 12px;
@@ -233,7 +235,7 @@ const CardImage = styled.img`
 
 const PefiLabel = styled(Text)`
   color: ${({ theme }) => (theme.isDark ? 'white' : theme.colors.secondary)};
-`;
+`
 
 const MigrateIconWrapper = styled.div`
   margin: 0 32px;
@@ -257,7 +259,7 @@ const StyledUnlockButton = styled(UnlockButton)`
   width: 100%;
   border-radius: 8px;
   color: ${({ theme }) => theme.isDark && '#30264f'};
-  background-color: ${({ theme }) => !theme.isDark ? '#372871' : 'white'};
+  background-color: ${({ theme }) => (!theme.isDark ? '#372871' : 'white')};
 `
 
 export default IPefi
