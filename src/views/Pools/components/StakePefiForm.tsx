@@ -85,7 +85,7 @@ const StakePefiForm: React.FC<DepositModalProps> = ({
   return (
     <>
       <TokenInput
-        value={val}
+        value={roundDown(val, 2)}
         onSelectMax={handleSelectMax}
         onChange={handleChange}
         max={fullBalance}
@@ -100,7 +100,7 @@ const StakePefiForm: React.FC<DepositModalProps> = ({
             </StyledButton>
           ) : (
             <>
-              {Number(fullBalance) > Number(val) && Number(fullBalance) > 0 ? (
+              {Number(fullBalance) >= Number(val) && Number(fullBalance) > 0 ? (
                 <StyledButton tokenBalance={val} scale="md" disabled={!canStake} onClick={handleStake}>
                   {renderText()}
                 </StyledButton>

@@ -57,7 +57,7 @@ const UnstakeXPefiForm: React.FC<DepositModalProps> = ({
   }, [fullBalance, setVal])
 
   const renderText = () => {
-    if (Number(val) >= Number(fullBalance)) return 'Not Enough Funds'
+    if (Number(val) > Number(fullBalance)) return 'Not Enough Funds'
     if (pendingTx) return TranslateString(488, 'Pending Confirmation')
     if (val) return 'Confirm Withdrawal'
     return 'Enter Amount'
@@ -80,7 +80,7 @@ const UnstakeXPefiForm: React.FC<DepositModalProps> = ({
   return (
     <>
       <TokenInput
-        value={val}
+        value={roundDown(val, 2)}
         onSelectMax={handleSelectMax}
         onChange={handleChange}
         max={fullBalance}

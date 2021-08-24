@@ -16,21 +16,21 @@ export const config: MenuEntry[] = [
     icon: 'IglooIcon',
     href: '/igloos',
   },
-  {
-    label: 'Igloos V2',
-    icon: 'IglooIcon',
-    href: '/igloos-v2',
-  },
+  // {
+  //   label: 'Igloos V2',
+  //   icon: 'IglooIcon',
+  //   href: '/igloos-v2',
+  // },
   {
     label: 'Compounder',
     icon: 'CompounderIcon',
     href: '/compounder',
   },
-  {
-    label: 'Info',
-    icon: 'IfoIcon',
-    href: '/info',
-  },
+  // {
+  //   label: 'Info',
+  //   icon: 'IfoIcon',
+  //   href: '/info',
+  // },
   {
     label: 'Nests',
     icon: 'NestIcon',

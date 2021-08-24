@@ -11,12 +11,15 @@ import { getBalanceNumber, getNumberWithCommas } from 'utils/formatBalance'
 import priceToBnb from 'utils/priceToBnb'
 import useBlock from 'hooks/useBlock'
 import useTheme from 'hooks/useTheme'
+import useTokenBalance from 'hooks/useTokenBalance'
 import useBlockGenerationTime from 'hooks/useBlockGenerationTime'
 import useUserSetting from 'hooks/useUserSetting'
 import { useXPefi } from 'hooks/useContract'
 import { useFarms, usePriceAvaxUsdt, usePools, usePriceEthAvax, useNestApy } from 'state/hooks'
 import { PoolCategory } from 'config/constants/types'
 import { getAccounts, getFirstStakeTime } from 'subgraph/utils'
+import { getPefiAddress } from 'utils/addressHelpers'
+import roundDown from 'utils/roundDown'
 import Page from 'components/layout/Page'
 import CardValue from 'components/CardValue'
 import NestCard from './components/NestCard'
@@ -129,6 +132,7 @@ const Farm: React.FC = () => {
 
   const xPefiToPefiRatio = getXPefiToPefiRatio()
   const stakedBalance = new BigNumber(openPools[0].userData?.stakedBalance || 0)
+  const pefiBalance = useTokenBalance(getPefiAddress())
 
   const userTotalPefiEarned =
     xPefiToPefiRatio * getBalanceNumber(stakedBalance) -
@@ -209,7 +213,7 @@ const Farm: React.FC = () => {
                     <CardValue
                       className="balance"
                       fontSize="24px"
-                      value={getBalanceNumber(stakedBalance)}
+                      value={roundDown(getBalanceNumber(stakedBalance), 2)}
                       decimals={2}
                       lineHeight="1"
                     />
@@ -221,7 +225,7 @@ const Farm: React.FC = () => {
                     <CardValue
                       className="balance"
                       fontSize="12px"
-                      value={xPefiToPefiRatio * getBalanceNumber(stakedBalance)}
+                      value={roundDown(xPefiToPefiRatio * getBalanceNumber(stakedBalance), 2)}
                       decimals={2}
                       lineHeight="1.2"
                       prefix="≈ "
@@ -230,7 +234,7 @@ const Farm: React.FC = () => {
                   </BalanceTextSmall>
                 </Flex>
               </Flex>
-              {/* <BalanceLabel mt="24px">Unstaked</BalanceLabel>
+              <BalanceLabel mt="24px">Unstaked</BalanceLabel>
               <Flex mt="4px" alignItems="center">
                 <CardImage src="/images/penguin-finance-logo.svg" alt="penguin logo" width={64} height={64} />
                 <Flex flexDirection="column">
@@ -238,7 +242,7 @@ const Farm: React.FC = () => {
                     <CardValue
                       className="balance"
                       fontSize="24px"
-                      value={account ? Number(userHistoricalInfo.unStakePefiAmount) : 0}
+                      value={account ? roundDown(getBalanceNumber(pefiBalance), 2) : 0}
                       decimals={2}
                       lineHeight="1"
                     />
@@ -250,7 +254,7 @@ const Farm: React.FC = () => {
                     <CardValue
                       className="balance"
                       fontSize="12px"
-                      value={account ? Number(userHistoricalInfo.unStakeXPefiAmount) : 0}
+                      value={account ? roundDown(getBalanceNumber(pefiBalance) / xPefiToPefiRatio, 2) : 0}
                       decimals={2}
                       lineHeight="1.2"
                       prefix="≈ "
@@ -258,7 +262,7 @@ const Farm: React.FC = () => {
                     />
                   </BalanceTextSmall>
                 </Flex>
-              </Flex> */}
+              </Flex>
               <BalanceLabel mt="24px" mb="8px">
                 Your Stats
               </BalanceLabel>
