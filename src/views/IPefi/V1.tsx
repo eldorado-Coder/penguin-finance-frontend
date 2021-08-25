@@ -64,9 +64,19 @@ const NestV1: React.FC = () => {
   const xPefiBalance = new BigNumber(openPools[0].userData?.stakedBalance || 0)
   const iPefiBalance = new BigNumber(nestMigrator.expectedIPefi || 0)
 
+  console.log('111--->', nestMigrator)
+
   return (
     <Flex justifyContent="center">
       <NestDetailsContainer flexDirection="column" alignItems="center">
+        <Text color="primary" mb="12px" fontSize="24px" bold textAlign="center">
+          Migrate your xPEFI and get iPEFI
+        </Text>
+        <NestDescription mb="24px" textAlign="center">
+          The Nest V2 contract is here! Migrate from the old staking token (xPEFI) to receive the newer, improved iPEFI.
+          After migration, your PEFI equivalent should be the same pre-migration. We&apos;ll keep the Paper Hands
+          Penalty on the new contract the same as the old one for a week.
+        </NestDescription>
         <CardWrapper justifyContent="space-between">
           <MigrateCard padding="8px 24px 16px" mb="32px">
             <Flex justifyContent="center" alignItems="center" mb="24px">

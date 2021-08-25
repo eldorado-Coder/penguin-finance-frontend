@@ -234,4 +234,12 @@ export interface State {
 
   // nest
   v2Pools: PoolsState
+  nestMigrator: NestMigratorState
+}
+
+// v2
+export interface NestMigratorState {
+  expectedIPefi: number
+  pefiAllowance: number
+  xPefiAllowance: number
 }

@@ -117,15 +117,6 @@ const NestV2: React.FC = () => {
   return (
     <Flex justifyContent="center">
       <NestDetailsContainer>
-        <Text color="primary" mb="12px" fontSize="24px" bold>
-          Maximize yield by staking PEFI for iPEFI
-        </Text>
-        <NestDescription mb="24px">
-          PEFI is minted & collected from fees within the Penguin Ecosystem and sent to the Penguin Nest (iPEFI
-          holders). When your PEFI is staked into the Penguin Nest, you receive iPEFI, granting access to exclusive
-          dApps within Penguin Finance. Your iPEFI is continuously compounding, when you unstake you will receive all
-          the originally deposited PEFI and any earned PEFI minus the paper hands penalty (PPL).
-        </NestDescription>
         <NestCardsWrapper justifyContent="space-between">
           <LeftCardsContainer>
             <APYCard padding="8px 24px 16px" mb="16px">

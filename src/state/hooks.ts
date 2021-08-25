@@ -27,9 +27,12 @@ import {
   push as pushToast,
   remove as removeToast,
   clear as clearToast,
+  // v2
   // nest
   fetchV2PoolsPublicDataAsync,
   fetchV2PoolsUserDataAsync,
+  // nest migrator
+  fetchNestMigratorUserDataAsync,
 } from './actions'
 import {
   State,
@@ -44,6 +47,8 @@ import {
   DonationsState,
   LaunchpadState,
   BoosterRocketState,
+  // v2
+  NestMigratorState,
 } from './types'
 import { fetchProfile } from './profile'
 import { fetchTeam, fetchTeams } from './teams'
@@ -451,4 +456,18 @@ export const useCompoundApy = ({ normalApy, type }: { normalApy: string; type: s
   }
 
   return normalApy
+}
+
+// v2
+// Pools
+export const useNestMigrator = (account): NestMigratorState => {
+  const { fastRefresh } = useRefresh()
+  const dispatch = useDispatch()
+  useEffect(() => {
+    if (account) {
+      dispatch(fetchNestMigratorUserDataAsync(account))
+    }
+  }, [account, dispatch, fastRefresh])
+
+  return useSelector((state: State) => state.nestMigrator)
 }

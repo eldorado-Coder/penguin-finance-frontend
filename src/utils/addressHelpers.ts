@@ -99,3 +99,8 @@ export const getBoosterRocketPefiAddress = () => {
 export const getBoosterRocketSherpaAddress = () => {
   return getAddress(addresses.boosterRocketSherpa)
 }
+
+// v2
+export const getNestMigratorAddress = () => {
+  return getAddress(addresses.nestMigrator)
+}

@@ -28,3 +28,5 @@ export { fetchEmperor } from './emperor'
 export { fetchDonations } from './donations'
 export { fetchLaunchpadUserDataAsync, updateLaunchpadTierHurdles } from './launchpad'
 export { fetchBoosterRocketUserDataAsync } from './boosterRocket'
+// v2
+export { fetchNestMigratorUserDataAsync } from './nestMigrator'
