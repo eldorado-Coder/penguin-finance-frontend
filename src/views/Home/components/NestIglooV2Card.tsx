@@ -12,8 +12,7 @@ const StyledNestIglooCardBg = styled.div`
   height: 100%;
   background-size: cover;
   background-position: center center;
-  background-image: ${({ theme }) =>
-    theme.isDark ? 'url(/images/home/nest_igloo_dark.png)' : 'url(/images/home/nest_igloo_light.png)'};
+  background-image: url(/images/home/ipefi-introducing.png);
 `
 
 const NestIglooV2Card = () => {
