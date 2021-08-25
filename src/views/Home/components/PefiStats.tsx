@@ -157,43 +157,43 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
           <Text color="primary" fontSize="14px">
             {TranslateString(536, 'Circulating PEFI Supply:')}
           </Text>
-          {totalSupply && <CardValue fontSize="14px" suffix=" PEFI" value={getBalanceNumber(totalSupply)} />}
+          {totalSupply && <CardValue fontSize="14px" suffix=" PEFI" value={getBalanceNumber(totalSupply) - getBalanceNumber(burnedBalance)} updateInterval={5000} />}
         </Row>
         <Row>
           <Text color="primary" fontSize="14px">
             {TranslateString(538, 'Total PEFI Burned:')}
           </Text>
-          {burnedBalance && <CardValue fontSize="14px" value={getBalanceNumber(burnedBalance)} />}
+          {burnedBalance && <CardValue fontSize="14px" value={getBalanceNumber(burnedBalance)} updateInterval={5000} />}
         </Row>
         <Row>
           <Text color="primary" fontSize="14px">
             {TranslateString(538, 'Total Value Locked:')}
           </Text>
-          {tvl && <CardValue fontSize="14px" prefix="$" decimals={2} value={tvl || 0} />}
+          {tvl && <CardValue fontSize="14px" prefix="$" decimals={2} value={tvl || 0} updateInterval={5000} />}
         </Row>
         <Row>
           <Text color="primary" fontSize="14px">
             {TranslateString(538, 'PEFI Marketcap:')}
           </Text>
-          {pefiMarketcap && <CardValue fontSize="14px" prefix="$" value={pefiMarketcap} />}
+          {pefiMarketcap && <CardValue fontSize="14px" prefix="$" value={pefiMarketcap} updateInterval={5000} />}
         </Row>
         <Row>
           <Text color="primary" fontSize="14px">
             {TranslateString(540, 'XPEFI to PEFI ratio:')}
           </Text>
-          <CardValue fontSize="14px" decimals={3} value={xPefiToPefiRatio} />
+          <CardValue fontSize="14px" decimals={3} value={xPefiToPefiRatio} updateInterval={5000} />
         </Row>
         <Row>
           <Text color="primary" fontSize="14px">
             {TranslateString(540, 'PEFI Emission Rate:')}
           </Text>
-          <CardValue fontSize="14px" decimals={2} suffix=" PEFI/block" value={pefiPerBlock.toNumber()} />
+          <CardValue fontSize="14px" decimals={2} suffix=" PEFI/block" value={pefiPerBlock.toNumber()} updateInterval={5000} />
         </Row>
         <Row>
           <Text color="primary" fontSize="14px">
             {TranslateString(540, 'Paper Hands Penalty:')}
           </Text>
-          <CardValue fontSize="14px" decimals={2} suffix=" %" value={Number(handsOnPenalty)} />
+          <CardValue fontSize="14px" decimals={2} suffix=" %" value={Number(handsOnPenalty)} updateInterval={5000} />
         </Row>
         <Row>
           <Text color="primary" fontSize="14px">
