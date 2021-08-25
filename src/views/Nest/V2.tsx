@@ -14,7 +14,7 @@ import useTokenBalance from 'hooks/useTokenBalance'
 import useBlockGenerationTime from 'hooks/useBlockGenerationTime'
 import useUserSetting from 'hooks/useUserSetting'
 import { useXPefi } from 'hooks/useContract'
-import { useFarms, usePriceAvaxUsdt, usePools, usePriceEthAvax, useNestApy } from 'state/hooks'
+import { useFarms, usePriceAvaxUsdt, usePools, useV2Pools, usePriceEthAvax, useNestApy } from 'state/hooks'
 import { PoolCategory } from 'config/constants/types'
 import { getFirstStakeTime } from 'subgraph/utils'
 import { getPefiAddress } from 'utils/addressHelpers'
@@ -117,15 +117,6 @@ const NestV2: React.FC = () => {
   return (
     <Flex justifyContent="center">
       <NestDetailsContainer>
-        <Text color="primary" mb="12px" fontSize="24px" bold>
-          Maximize yield by staking PEFI for xPEFI
-        </Text>
-        <NestDescription mb="24px">
-          PEFI is minted & collected from fees within the Penguin Ecosystem and sent to the Penguin Nest (xPEFI
-          holders). When your PEFI is staked into the Penguin Nest, you receive xPEFI, granting access to exclusive
-          dApps within Penguin Finance. Your xPEFI is continuously compounding, when you unstake you will receive all
-          the originally deposited PEFI and any earned PEFI minus the paper hands penalty (PPL).
-        </NestDescription>
         <NestCardsWrapper justifyContent="space-between">
           <LeftCardsContainer>
             <APYCard padding="8px 24px 16px" mb="16px">
@@ -160,7 +151,7 @@ const NestV2: React.FC = () => {
           <BalanceCard padding="16px 24px 32px" mb="16px">
             <BalanceLabel>Balance</BalanceLabel>
             <Flex mt="4px" alignItems="center">
-              <CardImage src="/images/pools/xPefi.png" alt="xpefi logo" width={64} height={64} />
+              <CardImage src="/images/pools/xPefi.png" alt="ipefi logo" width={64} height={64} />
               <Flex flexDirection="column">
                 <Balance>
                   <CardValue
@@ -172,7 +163,7 @@ const NestV2: React.FC = () => {
                   />
                 </Balance>
                 <BalanceText fontSize="20px" fontWeight={300} lineHeight="1.4">
-                  xPEFI
+                  iPEFI
                 </BalanceText>
                 <BalanceTextSmall>
                   <CardValue
@@ -211,7 +202,7 @@ const NestV2: React.FC = () => {
                     decimals={2}
                     lineHeight="1.2"
                     prefix="≈ "
-                    suffix=" xPEFI"
+                    suffix=" iPEFI"
                   />
                 </BalanceTextSmall>
               </Flex>

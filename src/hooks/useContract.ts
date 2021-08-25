@@ -23,6 +23,10 @@ import {
   // booster rocket
   getBoosterRocketAddress,
   getBoosterRocketPefiAddress,
+
+  // v2
+  getNestMigratorAddress,
+  getV2NestAddress,
 } from 'utils/addressHelpers'
 import getFarmMasterChefAddress from 'utils/getFarmMasterChefAddress'
 import getFarmMasterChefAbi from 'utils/getFarmMasterChefAbi'
@@ -50,6 +54,9 @@ import xPefi from 'config/abi/xPefi.json'
 import launchpad from 'config/abi/launchpad.json'
 import boosterRocket from 'config/abi/boosterRocket.json'
 import boosterRocketPefi from 'config/abi/launchpad/pefi.json'
+// v2
+import nestMigratorAbi from 'config/abi/nest_migrate.json'
+import v2NestAbi from 'config/abi/v2_nest.json'
 
 const useContract = (abi: AbiItem, address: string, contractOptions?: ContractOptions) => {
   const web3 = useWeb3()
@@ -183,6 +190,17 @@ export const useBoosterRocket = () => {
 export const useBoosterRocketPayToken = () => {
   const abi = (boosterRocketPefi as unknown) as AbiItem
   return useContract(abi, getBoosterRocketPefiAddress())
+}
+
+// v2
+export const useNestMigrateContract = () => {
+  const abi = (nestMigratorAbi as unknown) as AbiItem
+  return useContract(abi, getNestMigratorAddress())
+}
+
+export const useV2NestContract = () => {
+  const abi = (v2NestAbi as unknown) as AbiItem
+  return useContract(abi, getV2NestAddress())
 }
 
 export default useContract

@@ -132,9 +132,9 @@ const NestCard: React.FC<HarvestProps> = ({ pool, isNestPage }) => {
         </TabWrapper>
         <Flex mt="12px" mb="8px" justifyContent="space-between" alignItems="center">
           <StakeLabel color="primary" fontWeight="500">
-            {activeTab === 0 ? 'Stake PEFI' : 'Unstake xPEFI'}
+            {activeTab === 0 ? 'Stake PEFI' : 'Unstake iPEFI'}
           </StakeLabel>
-          <XPefiRatioTag>1 xPEFI = {Number(xPefiToPefiRatio.toFixed(3))} PEFI</XPefiRatioTag>
+          <XPefiRatioTag>1 iPEFI = {Number(xPefiToPefiRatio.toFixed(3))} PEFI</XPefiRatioTag>
         </Flex>
         {activeTab === 0 ? (
           <StakeForm
@@ -153,7 +153,7 @@ const NestCard: React.FC<HarvestProps> = ({ pool, isNestPage }) => {
           <UnstakeForm
             max={stakedBalance}
             onConfirm={onUnstake}
-            tokenName={`x${stakingTokenName}`}
+            tokenName={`i${stakingTokenName}`}
             account={account}
             needsApproval={needsApproval}
             requested={isFinished || requestedApproval}

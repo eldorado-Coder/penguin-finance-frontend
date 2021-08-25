@@ -26,6 +26,9 @@ export const getPangolinAddress = () => {
 export const getXPefiAddress = () => {
   return getAddress(addresses.xPefi)
 }
+export const getIPefiAddress = () => {
+  return getAddress(addresses.iPefi)
+}
 export const getTestXPefiAddress = () => {
   return getAddress(addresses.testXPefi)
 }
@@ -95,4 +98,13 @@ export const getBoosterRocketPefiAddress = () => {
 
 export const getBoosterRocketSherpaAddress = () => {
   return getAddress(addresses.boosterRocketSherpa)
+}
+
+// v2
+export const getNestMigratorAddress = () => {
+  return getAddress(addresses.nestMigrator)
+}
+
+export const getV2NestAddress = () => {
+  return getAddress(addresses.iPefi)
 }

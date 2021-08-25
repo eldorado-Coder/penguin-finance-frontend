@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
-import poolsConfig from 'config/constants/pools'
+import v2poolsConfig from 'config/constants/v2pools'
 import { fetchPoolsTotalStaking } from './fetchPools'
 import {
   fetchPoolsAllowance,
@@ -10,7 +10,7 @@ import {
 } from './fetchPoolsUser'
 import { PoolsState, Pool } from '../types'
 
-const initialState: PoolsState = { data: [...poolsConfig] }
+const initialState: PoolsState = { data: [...v2poolsConfig] }
 
 export const V2PoolsSlice = createSlice({
   name: 'V2Pools',
@@ -45,7 +45,7 @@ export const { setPoolsPublicData, setPoolsUserData, updatePoolsUserData } = V2P
 export const fetchPoolsPublicDataAsync = () => async (dispatch) => {
   // const blockLimits = await fetchPoolsBlockLimits()
   const totalStakings = await fetchPoolsTotalStaking()
-  const liveData = poolsConfig.map((pool) => {
+  const liveData = v2poolsConfig.map((pool) => {
     // const blockLimit = blockLimits.find((entry) => entry.sousId === pool.sousId)
     const totalStaking = totalStakings.find((entry) => entry.sousId === pool.sousId)
     return {
@@ -63,7 +63,7 @@ export const fetchPoolsUserDataAsync = (account) => async (dispatch) => {
   const stakedBalances = await fetchUserStakeBalances(account)
   // const pendingRewards = await fetchUserPendingRewards(account)
 
-  const userData = poolsConfig.map((pool) => ({
+  const userData = v2poolsConfig.map((pool) => ({
     sousId: pool.sousId,
     allowance: allowances[pool.sousId],
     stakingTokenBalance: stakingTokenBalances[pool.sousId],

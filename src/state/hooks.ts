@@ -27,6 +27,12 @@ import {
   push as pushToast,
   remove as removeToast,
   clear as clearToast,
+  // v2
+  // nest
+  fetchV2PoolsPublicDataAsync,
+  fetchV2PoolsUserDataAsync,
+  // nest migrator
+  fetchNestMigratorUserDataAsync,
 } from './actions'
 import {
   State,
@@ -41,6 +47,8 @@ import {
   DonationsState,
   LaunchpadState,
   BoosterRocketState,
+  // v2
+  NestMigratorState,
 } from './types'
 import { fetchProfile } from './profile'
 import { fetchTeam, fetchTeams } from './teams'
@@ -60,6 +68,7 @@ export const useFetchPublicData = () => {
     dispatch(fetchLpsPublicDataAsync())
     // POOL REMOVAL
     dispatch(fetchPoolsPublicDataAsync())
+    dispatch(fetchV2PoolsPublicDataAsync())
   }, [dispatch, slowRefresh])
 }
 
@@ -159,6 +168,19 @@ export const usePools = (account): Pool[] => {
   }, [account, dispatch, fastRefresh])
 
   const pools = useSelector((state: State) => state.pools.data)
+  return pools
+}
+
+export const useV2Pools = (account): Pool[] => {
+  const { fastRefresh } = useRefresh()
+  const dispatch = useDispatch()
+  useEffect(() => {
+    if (account) {
+      dispatch(fetchV2PoolsUserDataAsync(account))
+    }
+  }, [account, dispatch, fastRefresh])
+
+  const pools = useSelector((state: State) => state.v2Pools.data)
   return pools
 }
 
@@ -434,4 +456,18 @@ export const useCompoundApy = ({ normalApy, type }: { normalApy: string; type: s
   }
 
   return normalApy
+}
+
+// v2
+// Pools
+export const useNestMigrator = (account): NestMigratorState => {
+  const { fastRefresh } = useRefresh()
+  const dispatch = useDispatch()
+  useEffect(() => {
+    if (account) {
+      dispatch(fetchNestMigratorUserDataAsync(account))
+    }
+  }, [account, dispatch, fastRefresh])
+
+  return useSelector((state: State) => state.nestMigrator)
 }

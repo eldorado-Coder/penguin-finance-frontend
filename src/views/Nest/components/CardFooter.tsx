@@ -126,7 +126,7 @@ const CardFooter: React.FC<Props> = ({
           <Row style={{ marginBottom: '4px' }}>
             <FlexFull>
               <Label color="primary" fontSize="14px" fontWeight={500}>
-                {TranslateString(408, 'Total Supply(xPEFI)')}
+                {TranslateString(408, 'Total Supply(iPEFI)')}
               </Label>
             </FlexFull>
             <Balance
@@ -154,7 +154,7 @@ const CardFooter: React.FC<Props> = ({
           )}
           <TokenLink href={penguinNestsGuideLink} target="_blank">
             <Text color="red" fontSize="14px">
-              {TranslateString(412, 'Learn more about xPEFI')}
+              {TranslateString(412, 'Learn more about iPEFI')}
             </Text>
           </TokenLink>
         </Details>

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React from 'react'
 import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
 import { useWeb3React } from '@web3-react/core'
@@ -9,8 +9,6 @@ import { getBalanceNumber } from 'utils/formatBalance'
 import priceToBnb from 'utils/priceToBnb'
 import useBlock from 'hooks/useBlock'
 import useBlockGenerationTime from 'hooks/useBlockGenerationTime'
-import { useNestMigrateApprove } from 'hooks/useApprove'
-import { useNestMigrate } from 'hooks/useMigrate'
 import { useFarms, usePriceAvaxUsdt, usePools, usePriceEthAvax, useNestMigrator } from 'state/hooks'
 import { PoolCategory } from 'config/constants/types'
 import UnlockButton from 'components/UnlockButton'
@@ -19,7 +17,6 @@ import CardValue from 'components/CardValue'
 import roundDown from 'utils/roundDown'
 
 const NestV1: React.FC = () => {
-  const [pending, setPending] = useState(false)
   const { account } = useWeb3React()
   const farms = useFarms()
   const pools = usePools(account)
@@ -28,8 +25,6 @@ const NestV1: React.FC = () => {
   const ethPriceBnb = usePriceEthAvax()
   const block = useBlock()
   const AVAX_BLOCK_TIME = useBlockGenerationTime()
-  const { onNestMigrateApprove } = useNestMigrateApprove()
-  const { onNestMigrate } = useNestMigrate()
   const BLOCKS_PER_YEAR = new BigNumber(SECONDS_PER_YEAR).div(new BigNumber(AVAX_BLOCK_TIME))
 
   const poolsWithApy = pools.map((pool) => {
@@ -61,52 +56,25 @@ const NestV1: React.FC = () => {
   })
 
   const [, openPools] = partition(poolsWithApy, (pool) => pool.isFinished)
-  const xPefiBalance = new BigNumber(openPools[0].userData?.stakedBalance || 0)
-  const expectedIPefiBalance = new BigNumber(nestMigrator.expectedIPefi || 0)
-  const xPefiAllowance = new BigNumber(nestMigrator.xPefiAllowance || 0)
 
-  const handleXPefiApprove = useCallback(async () => {
-    try {
-      setPending(true)
-      await onNestMigrateApprove()
-      setPending(false)
-    } catch (e) {
-      // user rejected tx or didn't go thru
-
-      console.error(e)
-      setPending(false)
-    }
-  }, [onNestMigrateApprove, setPending])
-
-  const handleMigrate = useCallback(async () => {
-    try {
-      setPending(true)
-      await onNestMigrate()
-      setPending(false)
-    } catch (e) {
-      console.error('migration error:', e)
-      setPending(false)
-    }
-  }, [onNestMigrate, setPending])
-
-  const renderActionButton = () => {
-    if (!xPefiAllowance.toNumber()) {
-      return (
-        <StyledButton scale="md" disabled={pending} onClick={handleXPefiApprove}>
-          Approve xPEFI
-        </StyledButton>
-      )
-    }
-    return (
-      <StyledButton scale="md" disabled={pending || getBalanceNumber(xPefiBalance) === 0} onClick={handleMigrate}>
-        Migrate
-      </StyledButton>
-    )
+  const handleMigrate = () => {
+    return null
   }
+
+  const xPefiBalance = new BigNumber(openPools[0].userData?.stakedBalance || 0)
+  const iPefiBalance = new BigNumber(nestMigrator.expectedIPefi || 0)
 
   return (
     <Flex justifyContent="center">
       <NestDetailsContainer flexDirection="column" alignItems="center">
+        <Text color="primary" mb="12px" fontSize="24px" bold textAlign="center">
+          Migrate your xPEFI and get iPEFI
+        </Text>
+        <NestDescription mb="24px" textAlign="center">
+          The Nest V2 contract is here! Migrate from the old staking token (xPEFI) to receive the newer, improved iPEFI.
+          After migration, your PEFI equivalent should be the same pre-migration. We&apos;ll keep the Paper Hands
+          Penalty on the new contract the same as the old one for a week.
+        </NestDescription>
         <CardWrapper justifyContent="space-between">
           <MigrateCard padding="8px 24px 16px" mb="32px">
             <Flex justifyContent="center" alignItems="center" mb="24px">
@@ -117,6 +85,7 @@ const NestV1: React.FC = () => {
                     <CardValue
                       className="balance"
                       fontSize="20px"
+                      // value={getBalanceNumber(stakedBalance)}
                       value={roundDown(getBalanceNumber(xPefiBalance), 2)}
                       decimals={2}
                       lineHeight="1"
@@ -137,7 +106,8 @@ const NestV1: React.FC = () => {
                     <CardValue
                       className="balance"
                       fontSize="20px"
-                      value={roundDown(getBalanceNumber(expectedIPefiBalance), 2)}
+                      // value={getBalanceNumber(stakedBalance)}
+                      value={roundDown(getBalanceNumber(iPefiBalance), 2)}
                       decimals={2}
                       lineHeight="1"
                     />
@@ -148,7 +118,13 @@ const NestV1: React.FC = () => {
                 </Flex>
               </Flex>
             </Flex>
-            {account ? <> {renderActionButton()} </> : <StyledUnlockButton />}
+            {account ? (
+              <StyledButton scale="md" onClick={handleMigrate}>
+                Migrate
+              </StyledButton>
+            ) : (
+              <StyledUnlockButton />
+            )}
           </MigrateCard>
         </CardWrapper>
         <Alert textAlign="center">
@@ -188,6 +164,11 @@ const MigrateCard = styled(Card)`
 const NestDetailsContainer = styled(Flex)`
   max-width: 480px;
   width: 100%;
+`
+
+const NestDescription = styled(Text)`
+  max-width: 480px;
+  color: ${({ theme }) => (theme.isDark ? '#DDD7ff' : theme.colors.secondary)};
 `
 
 const Alert = styled(Text)`
