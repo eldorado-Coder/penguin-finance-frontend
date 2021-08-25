@@ -157,7 +157,7 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
           <Text color="primary" fontSize="14px">
             {TranslateString(536, 'Circulating PEFI Supply:')}
           </Text>
-          {totalSupply && <CardValue fontSize="14px" suffix=" PEFI" value={getBalanceNumber(totalSupply)} />}
+          {totalSupply && <CardValue fontSize="14px" suffix=" PEFI" value={getBalanceNumber(totalSupply) - getBalanceNumber(burnedBalance)} />}
         </Row>
         <Row>
           <Text color="primary" fontSize="14px">
