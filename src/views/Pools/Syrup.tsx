@@ -168,7 +168,7 @@ const Farm: React.FC = () => {
             Maximize yield by staking PEFI for xPEFI
           </Text>
           <NestDescription mb="24px">
-            PEFI is minted & collected from fees witin the Penguin Ecosystem and sent to the Penguin Nest (xPEFI
+            PEFI is minted & collected from fees within the Penguin Ecosystem and sent to the Penguin Nest (xPEFI
             holders). When your PEFI is staked into the Penguin Nest, you receive xPEFI, granting access to exclusive
             dApps within Penguin Finance. Your xPEFI is continously compounding, when you unstake you will receive all
             the orginally deposited PEFI and any earned PEFI minus the paper hands penalty (PPL).
