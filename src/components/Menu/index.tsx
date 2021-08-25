@@ -8,7 +8,7 @@ import useTheme from 'hooks/useTheme'
 import useAuth from 'hooks/useAuth'
 import useTokenBalance from 'hooks/useTokenBalance'
 import { usePricePefiUsdt, usePools, useEmperor } from 'state/hooks'
-import { getPefiAddress, getXPefiAddress } from 'utils/addressHelpers'
+import { getPefiAddress, getXPefiAddress, getIPefiAddress } from 'utils/addressHelpers'
 import { getBalanceNumber } from 'utils/formatBalance'
 import WalletConnectGuideModal from 'components/Modal/WalletConnectGuideModal'
 import SettingModal from 'components/Modal/SettingModal'
@@ -23,6 +23,7 @@ const Menu = (props) => {
   const pools = usePools(account)
   const pefiBalance = useTokenBalance(getPefiAddress())
   const xPefiBalance = useTokenBalance(getXPefiAddress())
+  const iPefiBalance = useTokenBalance(getIPefiAddress())
   const avaxBalance = useTokenBalance()
 
   const pefiPool = pools.length > 0 ? pools[0] : null
@@ -73,11 +74,13 @@ const Menu = (props) => {
         setLang={setSelectedLanguage}
         penguinPriceUsd={pefiPriceUsd.toNumber()}
         pefiRatio={Number(xPefiToPefiRatio)}
+        iPefiRatio={Number(xPefiToPefiRatio)}
         links={links}
         socials={socials}
         onSettingClick={onToggleSettingModal}
         pefiBalance={getBalanceNumber(pefiBalance).toFixed(3)}
         xPefiBalance={getBalanceNumber(xPefiBalance).toFixed(3)}
+        iPefiBalance={getBalanceNumber(iPefiBalance).toFixed(3)}
         avaxBalance={getBalanceNumber(avaxBalance).toFixed(3)}
         // profile={{
         //   username: profile?.username,
