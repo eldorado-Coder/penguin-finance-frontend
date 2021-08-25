@@ -1,5 +1,6 @@
 import { AbiItem } from 'web3-utils'
-import poolsConfig from 'config/constants/pools'
+import BigNumber from 'bignumber.js'
+import v2PoolsConfig from 'config/constants/v2pools'
 import masterChefABI from 'config/abi/masterchef.json'
 import sousChefABI from 'config/abi/sousChef.json'
 import erc20ABI from 'config/abi/erc20.json'
@@ -7,25 +8,24 @@ import { QuoteToken } from 'config/constants/types'
 import multicall from 'utils/multicall'
 import { getAddress, getMasterChefAddress } from 'utils/addressHelpers'
 import { getWeb3 } from 'utils/web3'
-import BigNumber from 'bignumber.js'
 
 // Pool 0, Cake / Cake is a different kind of contract (master chef)
 // AVAX pools use the native AVAX token (wrapping ? unwrapping is done at the contract level)
-const nonBnbPools = poolsConfig.filter((p) => p.stakingTokenName !== QuoteToken.AVAX)
-const bnbPools = poolsConfig.filter((p) => p.stakingTokenName === QuoteToken.AVAX)
-const nonMasterPools = poolsConfig.filter((p) => p.sousId !== 0)
+const nonAvaxPools = v2PoolsConfig.filter((p) => p.stakingTokenName !== QuoteToken.AVAX)
+const AvaxPools = v2PoolsConfig.filter((p) => p.stakingTokenName === QuoteToken.AVAX)
+const nonMasterPools = v2PoolsConfig.filter((p) => p.sousId !== 0)
 const web3 = getWeb3()
 const masterChefContract = new web3.eth.Contract((masterChefABI as unknown) as AbiItem, getMasterChefAddress())
 
 export const fetchPoolsAllowance = async (account) => {
-  const calls = nonBnbPools.map((p) => ({
+  const calls = nonAvaxPools.map((p) => ({
     address: p.stakingTokenAddress,
     name: 'allowance',
     params: [account, getAddress(p.contractAddress)],
   }))
 
   const allowances = await multicall(erc20ABI, calls)
-  return nonBnbPools.reduce(
+  return nonAvaxPools.reduce(
     (acc, pool, index) => ({ ...acc, [pool.sousId]: new BigNumber(allowances[index]).toJSON() }),
     {},
   )
@@ -33,20 +33,20 @@ export const fetchPoolsAllowance = async (account) => {
 
 export const fetchUserBalances = async (account) => {
   // Non AVAX pools
-  const calls = nonBnbPools.map((p) => ({
+  const calls = nonAvaxPools.map((p) => ({
     address: p.stakingTokenAddress,
     name: 'balanceOf',
     params: [account],
   }))
   const tokenBalancesRaw = await multicall(erc20ABI, calls)
-  const tokenBalances = nonBnbPools.reduce(
+  const tokenBalances = nonAvaxPools.reduce(
     (acc, pool, index) => ({ ...acc, [pool.sousId]: new BigNumber(tokenBalancesRaw[index]).toJSON() }),
     {},
   )
 
   // AVAX pools
   const bnbBalance = await web3.eth.getBalance(account)
-  const bnbBalances = bnbPools.reduce(
+  const bnbBalances = AvaxPools.reduce(
     (acc, pool) => ({ ...acc, [pool.sousId]: new BigNumber(bnbBalance).toJSON() }),
     {},
   )

@@ -14,6 +14,14 @@ export {
   updateUserPendingReward,
   updateUserStakedBalance,
 } from './pools'
+export {
+  fetchPoolsPublicDataAsync as fetchV2PoolsPublicDataAsync,
+  fetchPoolsUserDataAsync as fetchV2PoolsUserDataAsync,
+  updateUserAllowance as updateV2PoolUserAllowance,
+  updateUserBalance as updateV2PoolUserBalance,
+  updateUserPendingReward as updateV2PoolUserPendingReward,
+  updateUserStakedBalance as updateV2PoolUserStakedBalance,
+} from './v2pools'
 export { profileFetchStart, profileFetchSucceeded, profileFetchFailed } from './profile'
 export { fetchStart, teamFetchSucceeded, fetchFailed, teamsFetchSucceeded } from './teams'
 export { fetchEmperor } from './emperor'

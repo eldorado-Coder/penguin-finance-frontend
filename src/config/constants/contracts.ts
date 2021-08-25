@@ -154,6 +154,6 @@ export default {
   },
   migrateNewXPefi: {
     43113: '',
-    43114: '0x7134ce139ea8ed650273ee505958ca4e0c4b592f',
+    43114: '0x635c62d984547f3d982eDfF37c24b0475Ac60916',
   },
 }

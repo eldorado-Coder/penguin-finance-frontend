@@ -1,14 +1,14 @@
-import poolsConfig from 'config/constants/pools'
+import BigNumber from 'bignumber.js'
+import v2PoolsConfig from 'config/constants/v2pools'
 import sousChefABI from 'config/abi/sousChef.json'
 import penguinABI from 'config/abi/penguin.json'
 import wbnbABI from 'config/abi/weth.json'
 import { QuoteToken } from 'config/constants/types'
 import multicall from 'utils/multicall'
 import { getAddress, getWavaxAddress } from 'utils/addressHelpers'
-import BigNumber from 'bignumber.js'
 
 export const fetchPoolsBlockLimits = async () => {
-  const poolsWithEnd = poolsConfig.filter((p) => p.sousId !== 0)
+  const poolsWithEnd = v2PoolsConfig.filter((p) => p.sousId !== 0)
   const callsStartBlock = poolsWithEnd.map((poolConfig) => {
     return {
       address: getAddress(poolConfig.contractAddress),
@@ -37,9 +37,9 @@ export const fetchPoolsBlockLimits = async () => {
 }
 
 export const fetchPoolsTotalStaking = async () => {
-  const nonBnbPools = poolsConfig.filter((p) => p.stakingTokenName !== QuoteToken.AVAX)
+  const nonAvaxPools = v2PoolsConfig.filter((p) => p.stakingTokenName !== QuoteToken.AVAX)
 
-  const callsNonBnbPools = nonBnbPools.map((poolConfig) => {
+  const callsNonAvaxPools = nonAvaxPools.map((poolConfig) => {
     return {
       address: poolConfig.stakingTokenAddress,
       name: 'balanceOf',
@@ -47,21 +47,21 @@ export const fetchPoolsTotalStaking = async () => {
     }
   })
 
-  const callsNonBnbPoolsTotalSupplies = nonBnbPools.map((poolConfig) => {
+  const callsNonAvaxPoolsTotalSupplies = nonAvaxPools.map((poolConfig) => {
     return {
       address: getAddress(poolConfig.contractAddress),
       name: 'totalSupply',
     }
   })
 
-  const nonBnbPoolsTotalStaked = await multicall(penguinABI, callsNonBnbPools)
-  const nonBnbPoolsTotalSupply = await multicall(penguinABI, callsNonBnbPoolsTotalSupplies)
+  const nonAvaxPoolsTotalStaked = await multicall(penguinABI, callsNonAvaxPools)
+  const nonAvaxPoolsTotalSupply = await multicall(penguinABI, callsNonAvaxPoolsTotalSupplies)
 
   return [
-    ...nonBnbPools.map((p, index) => ({
+    ...nonAvaxPools.map((p, index) => ({
       sousId: p.sousId,
-      totalStaked: new BigNumber(nonBnbPoolsTotalStaked[index]).toJSON(),
-      totalSupply: new BigNumber(nonBnbPoolsTotalSupply[index]).toJSON(),
+      totalStaked: new BigNumber(nonAvaxPoolsTotalStaked[index]).toJSON(),
+      totalSupply: new BigNumber(nonAvaxPoolsTotalSupply[index]).toJSON(),
     })),
   ]
 }

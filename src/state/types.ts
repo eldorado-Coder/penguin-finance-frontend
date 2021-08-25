@@ -231,4 +231,7 @@ export interface State {
   donations: DonationsState
   launchpad: LaunchpadState
   boosterRocket: BoosterRocketState
+
+  // nest
+  v2Pools: PoolsState
 }
