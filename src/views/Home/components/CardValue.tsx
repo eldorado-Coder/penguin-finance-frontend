@@ -11,6 +11,7 @@ export interface CardValueProps {
   suffix?: string
   bold?: boolean
   color?: string
+  updateInterval?: number
 }
 
 const CardValue: React.FC<CardValueProps> = ({
@@ -22,8 +23,9 @@ const CardValue: React.FC<CardValueProps> = ({
   suffix = '',
   bold = true,
   color = 'text',
+  updateInterval
 }) => {
-  const { countUp, update } = useCountUp({
+  const { countUp, update, start } = useCountUp({
     start: 0,
     end: value,
     duration: 1,
@@ -38,6 +40,16 @@ const CardValue: React.FC<CardValueProps> = ({
   useEffect(() => {
     updateValue.current(value)
   }, [value, updateValue])
+
+  useEffect(() => {
+    let interval;
+    if (updateInterval) {
+      interval = setInterval(async () => {
+        start();
+      }, updateInterval)
+    }
+    return () => interval && clearInterval(interval)
+  }, [updateInterval, start]);
 
   return (
     <Text bold={bold} fontSize={fontSize} style={{ lineHeight }} color={color}>
