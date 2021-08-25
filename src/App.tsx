@@ -75,7 +75,7 @@ const App: React.FC = () => {
             <Route path="/nest">
               <Nest />
             </Route>
-            <Route path="/nest-new">
+            <Route path="/nest-v2">
               <Nest />
             </Route>
             <Route path="/arena">
