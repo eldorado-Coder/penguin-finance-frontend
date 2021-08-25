@@ -16,6 +16,7 @@ import Page from 'components/layout/Page'
 import UnlockButton from 'components/UnlockButton'
 import SvgIcon from 'components/SvgIcon'
 import CardValue from 'components/CardValue'
+import roundDown from 'utils/roundDown'
 
 const IPefi: React.FC = () => {
   const { account } = useWeb3React()
@@ -99,7 +100,8 @@ const IPefi: React.FC = () => {
                       <CardValue
                         className="balance"
                         fontSize="20px"
-                        value={getBalanceNumber(stakedBalance)}
+                        // value={getBalanceNumber(stakedBalance)}
+                        value={roundDown(getBalanceNumber(stakedBalance), 2)}
                         decimals={2}
                         lineHeight="1"
                       />
@@ -119,7 +121,8 @@ const IPefi: React.FC = () => {
                       <CardValue
                         className="balance"
                         fontSize="20px"
-                        value={getBalanceNumber(stakedBalance)}
+                        // value={getBalanceNumber(stakedBalance)}
+                        value={roundDown(getBalanceNumber(stakedBalance), 2)}
                         decimals={2}
                         lineHeight="1"
                       />
