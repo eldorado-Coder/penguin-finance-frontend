@@ -111,7 +111,7 @@ const NestV1: React.FC = () => {
           <MigrateCard padding="8px 24px 16px" mb="32px">
             <Flex justifyContent="center" alignItems="center" mb="24px">
               <Flex flexDirection="column" alignItems="center">
-                <CardImage src="/images/pools/xPefi.png" alt="xpefi logo" width={80} height={80} />
+                <CardImage src="/images/pools/iPefi.svg" alt="xpefi logo" width={80} height={80} />
                 <Flex alignItems="center">
                   <Balance>
                     <CardValue

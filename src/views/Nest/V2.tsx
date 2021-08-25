@@ -151,7 +151,7 @@ const NestV2: React.FC = () => {
           <BalanceCard padding="16px 24px 32px" mb="16px">
             <BalanceLabel>Balance</BalanceLabel>
             <Flex mt="4px" alignItems="center">
-              <CardImage src="/images/pools/xPefi.png" alt="ipefi logo" width={64} height={64} />
+              <CardImage src="/images/pools/iPefi.svg" alt="ipefi logo" width={64} height={64} />
               <Flex flexDirection="column">
                 <Balance>
                   <CardValue

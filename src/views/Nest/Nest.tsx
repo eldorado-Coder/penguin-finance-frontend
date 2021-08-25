@@ -57,13 +57,12 @@ const Nest: React.FC = () => {
       </BgWrapper>
       <NestBannerContainer>
         <BannerImage
-          src={`${process.env.PUBLIC_URL}/images/pools/${isDark ? 'nest_banner_dark.svg' : 'nest_banner_light.svg'}`}
+          src={`${process.env.PUBLIC_URL}/images/pools/${isDark ? 'nest_banner_dark1.svg' : 'nest_banner_light1.svg'}`}
           alt="nest banner"
         />
       </NestBannerContainer>
       {activeTab === 0 && renderV2Description()}
       {activeTab === 1 && renderV1Description()}
-
       <Flex justifyContent="center" pb="32px">
         <TabWrapper>
           <ButtonMenu activeIndex={activeTab} onItemClick={handleSwitchTab} scale="sm">
