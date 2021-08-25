@@ -22,6 +22,7 @@ export {
   updateUserPendingReward as updateV2PoolUserPendingReward,
   updateUserStakedBalance as updateV2PoolUserStakedBalance,
 } from './v2pools'
+export { updateNestMigratorAllowance } from './nestMigrator'
 export { profileFetchStart, profileFetchSucceeded, profileFetchFailed } from './profile'
 export { fetchStart, teamFetchSucceeded, fetchFailed, teamsFetchSucceeded } from './teams'
 export { fetchEmperor } from './emperor'

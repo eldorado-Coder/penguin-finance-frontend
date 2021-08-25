@@ -67,7 +67,6 @@ const IPefi: React.FC = () => {
   const xPefiBalance = new BigNumber(openPools[0].userData?.stakedBalance || 0)
   const iPefiBalance = new BigNumber(nestMigrator.expectedIPefi || 0)
 
-  console.log('111--->', nestMigrator)
   return (
     <NestPage>
       <BgWrapper>

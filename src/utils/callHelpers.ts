@@ -296,3 +296,13 @@ export const donatePefi = async (donationContract, amount, account) => {
       return tx.transactionHash
     })
 }
+
+// v2
+export const migrateNest = async (nestMigrateContract, account) => {
+  return nestMigrateContract.methods
+    .migrateXPEFI()
+    .send({ from: account, gas: 800000 })
+    .on('transactionHash', (tx) => {
+      return tx.transactionHash
+    })
+}

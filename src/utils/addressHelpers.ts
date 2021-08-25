@@ -104,3 +104,7 @@ export const getBoosterRocketSherpaAddress = () => {
 export const getNestMigratorAddress = () => {
   return getAddress(addresses.nestMigrator)
 }
+
+export const getV2NestAddress = () => {
+  return getAddress(addresses.iPefi)
+}

@@ -34,12 +34,11 @@ export const NestMigratorSlice = createSlice({
 export const { setUserData, setPefiAllowance, setXPefiAllowance, setExpectedIPefi } = NestMigratorSlice.actions
 
 export const fetchNestMigratorUserDataAsync = (account: string) => async (dispatch) => {
-  const { xPefiAllowance, pefiAllowance } = await fetchNestMigratorAllowance(account)
+  const { xPefiAllowance } = await fetchNestMigratorAllowance(account)
   const { expectedIPefi } = await fetchUserInfo(account)
 
   dispatch(
     setUserData({
-      pefiAllowance,
       xPefiAllowance,
       expectedIPefi,
     }),
@@ -47,8 +46,7 @@ export const fetchNestMigratorUserDataAsync = (account: string) => async (dispat
 }
 
 export const updateNestMigratorAllowance = (account: string) => async (dispatch) => {
-  const { xPefiAllowance, pefiAllowance } = await fetchNestMigratorAllowance(account)
-  dispatch(setPefiAllowance(pefiAllowance))
+  const { xPefiAllowance } = await fetchNestMigratorAllowance(account)
   dispatch(setXPefiAllowance(xPefiAllowance))
 }
 

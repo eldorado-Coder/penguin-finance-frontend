@@ -147,15 +147,7 @@ export default {
     43114: '0xa5e59761ebd4436fa4d20e1a27cba29fb2471fc6',
   },
 
-  // migrate
-  migrateOldXPefi: {
-    43113: '',
-    43114: '0xd79a36056c271b988c5f1953e664e61416a9820f',
-  },
-  migrateNewXPefi: {
-    43113: '',
-    43114: '0x635c62d984547f3d982eDfF37c24b0475Ac60916',
-  },
+  // v2
   iPefi: {
     43113: '',
     43114: '0x635c62d984547f3d982eDfF37c24b0475Ac60916',

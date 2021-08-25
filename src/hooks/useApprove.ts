@@ -3,10 +3,10 @@ import { useWeb3React } from '@web3-react/core'
 import { Contract } from 'web3-eth-contract'
 import { ethers } from 'ethers'
 import { useDispatch } from 'react-redux'
-import { updateUserAllowance, fetchFarmUserDataAsync } from 'state/actions'
+import { updateUserAllowance, fetchFarmUserDataAsync, updateNestMigratorAllowance } from 'state/actions'
 import { approve } from 'utils/callHelpers'
-import { useMasterchef, usePenguin, useSousChef, useLottery, useStrategyContract } from './useContract'
-
+import { getNestMigratorAddress, getV2NestAddress } from 'utils/addressHelpers'
+import { useMasterchef, usePenguin, useSousChef, useLottery, useStrategyContract, useXPefi } from './useContract'
 // Approve a Farm
 export const useApprove = (lpContract: Contract, type?: string) => {
   const dispatch = useDispatch()
@@ -97,4 +97,46 @@ export const useIfoApprove = (tokenContract: Contract, spenderAddress: string) =
   }, [account, spenderAddress, tokenContract])
 
   return onApprove
+}
+
+// v2
+// Approve nestMigrator contract
+export const useNestMigrateApprove = () => {
+  const dispatch = useDispatch()
+  const { account } = useWeb3React()
+  const xPefiContract = useXPefi()
+
+  const handleApprove = useCallback(async () => {
+    try {
+      const tx = await xPefiContract.methods
+        .approve(getNestMigratorAddress(), ethers.constants.MaxUint256)
+        .send({ from: account })
+      dispatch(updateNestMigratorAllowance(account))
+      return tx
+    } catch (e) {
+      return false
+    }
+  }, [account, xPefiContract, dispatch])
+
+  return { onNestMigrateApprove: handleApprove }
+}
+
+export const useV2NestApprove = () => {
+  const dispatch = useDispatch()
+  const { account } = useWeb3React()
+  const pefiContract = usePenguin()
+
+  const handleApprove = useCallback(async () => {
+    try {
+      const tx = await pefiContract.methods
+        .approve(getV2NestAddress(), ethers.constants.MaxUint256)
+        .send({ from: account })
+      dispatch(updateNestMigratorAllowance(account))
+      return tx
+    } catch (e) {
+      return false
+    }
+  }, [account, pefiContract, dispatch])
+
+  return { onV2NestApprove: handleApprove }
 }
