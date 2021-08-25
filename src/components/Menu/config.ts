@@ -16,11 +16,21 @@ export const config: MenuEntry[] = [
     icon: 'IglooIcon',
     href: '/igloos',
   },
+  // {
+  //   label: 'Igloos V2',
+  //   icon: 'IglooIcon',
+  //   href: '/igloos-v2',
+  // },
   {
     label: 'Compounder',
     icon: 'CompounderIcon',
     href: '/compounder',
   },
+  // {
+  //   label: 'Info',
+  //   icon: 'IfoIcon',
+  //   href: '/info',
+  // },
   {
     label: 'Nests',
     icon: 'NestIcon',
@@ -76,6 +86,10 @@ export const config: MenuEntry[] = [
       {
         label: 'Medium Articles',
         href: 'https://penguin-finance.medium.com/',
+      },
+      {
+        label: 'Roadmap',
+        href: 'https://penguin-finance.medium.com/penguin-finance-2021-roadmap-81d261aa62d0',
       },
     ],
   },

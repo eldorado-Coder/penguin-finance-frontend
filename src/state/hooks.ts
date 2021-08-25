@@ -214,6 +214,7 @@ export const useBoosterRocket = (account): BoosterRocketState => {
 
 // Prices
 export const usePriceAvaxUsdt = (): BigNumber => {
+  // TODO: avax price is not correct
   const { price: usdtPrice } = useUsdtPrice()
   const lpSymbol = 'USDT-AVAX LP' // USDT-AVAX LP
   const lp = useLPFromSymbol(lpSymbol)

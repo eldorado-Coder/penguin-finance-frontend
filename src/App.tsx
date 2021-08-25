@@ -17,6 +17,7 @@ import history from './routerHistory'
 // Only pool is included in the main bundle because of it's the most visited page'
 const Home = lazy(() => import('./views/Home'))
 const Farms = lazy(() => import('./views/Farms'))
+const FarmsV2 = lazy(() => import('./views/FarmsV2'))
 const Arena = lazy(() => import('./views/Arena'))
 const Launchpad = lazy(() => import('./views/Launchpad'))
 const LaunchpadDistribution = lazy(() => import('./views/LaunchpadDistribution'))
@@ -27,9 +28,10 @@ const NotFound = lazy(() => import('./views/NotFound'))
 
 // const Nests = lazy(() => import('./views/Nests'))
 // const Lottery = lazy(() => import('./views/Lottery'))
-// const Ifos = lazy(() => import('./views/Ifos'))
+const Info = lazy(() => import('./views/Info'))
 const Collectibles = lazy(() => import('./views/Collectibles'))
 const CompounderIgloos = lazy(() => import('./views/CompounderIgloos'))
+const IPefi = lazy(() => import('./views/IPefi'))
 // const Teams = lazy(() => import('./views/Teams'))
 // const Team = lazy(() => import('./views/Teams/Team'))
 // const Profile = lazy(() => import('./views/Profile'))
@@ -60,11 +62,20 @@ const App: React.FC = () => {
             <Route path="/igloos">
               <Farms />
             </Route>
+            <Route path="/igloos-v2">
+              <FarmsV2 />
+            </Route>
             <Route path="/nests">
               <Pools />
             </Route>
+            <Route path="/ipefi">
+              <IPefi />
+            </Route>
             <Route path="/arena">
               <Arena />
+            </Route>
+            <Route path="/info">
+              <Info />
             </Route>
             {/* <Route path="/launchpad">
               <Launchpad />

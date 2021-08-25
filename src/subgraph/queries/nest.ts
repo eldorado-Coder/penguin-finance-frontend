@@ -10,29 +10,29 @@ export const ACCOUNTS_SEARCH = ({ account }: { account?: string }) => {
         }
       )
       {
-        address
         stakePefiAmount
+        unStakePefiAmount
         stakeXPefiAmount
+        unStakeXPefiAmount
       }
     }`
   return gql(queryString)
 }
 
-export const NEST_TRANSACTIONS_SEARCH = ({ account }: { account?: string }) => {
+export const STAKE_TRANSACTIONS_SEARCH = ({ account }: { account?: string }) => {
   const queryString = `
     query transactions {
       transactions(
         first: 1000,
+        orderBy: time,
+        orderDirection: asc
         where: {
-          ${account ? `account: "${account}"` : ``}
+          ${account ? `account: "${account}"` : ``},
+          transactionType: Stake
         }
       )
       {
-        address
-        transactionType
-        from
-        to
-        amount
+        time
       }
     }`
   return gql(queryString)

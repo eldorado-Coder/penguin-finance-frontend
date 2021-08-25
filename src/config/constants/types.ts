@@ -154,3 +154,11 @@ export type Campaign = {
   description?: TranslatableText
   badge?: string
 }
+
+export interface Token {
+  symbol: string
+  address?: Address
+  decimals?: number
+  projectLink?: string
+}
+
