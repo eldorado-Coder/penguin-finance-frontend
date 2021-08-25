@@ -12,8 +12,8 @@ import { PoolCategory } from 'config/constants/types'
 import { Pool } from 'state/types'
 import Card from './Card'
 import CardFooter from './CardFooter'
-import StakePefiForm from './StakePefiForm';
-import UnstakeXPefiForm from './UnstakeXPefiForm';
+import StakePefiForm from './StakePefiForm'
+import UnstakeXPefiForm from './UnstakeXPefiForm'
 
 const StyledCard = styled(Card)<{ isNestPage?: boolean }>`
   border-radius: 8px;
@@ -29,8 +29,8 @@ const StyledCard = styled(Card)<{ isNestPage?: boolean }>`
 
 const XPefiRatioTag = styled(Tag)`
   border: 1px solid ${({ theme }) => theme.colors.secondary};
-  background-color: ${({ theme }) => theme.isDark ? '#baa7f1' : '#ece6ff'};
-  color: ${({ theme }) => theme.isDark ? 'white' : theme.colors.secondary};
+  background-color: ${({ theme }) => (theme.isDark ? '#baa7f1' : '#ece6ff')};
+  color: ${({ theme }) => (theme.isDark ? 'white' : theme.colors.secondary)};
   padding: 2px 12px;
 `
 
@@ -95,7 +95,7 @@ const NestCard: React.FC<HarvestProps> = ({ pool, isNestPage }) => {
   const needsApproval = !allowance.toNumber() && !isBnbPool
   const isCardActive = isFinished && accountHasStakedBalance
   const convertedLimit = new BigNumber(stakingLimit).multipliedBy(new BigNumber(10).pow(tokenDecimals))
-  
+
   const handleSwitchTab = (tab) => {
     setActiveTab(tab)
   }
@@ -130,13 +130,17 @@ const NestCard: React.FC<HarvestProps> = ({ pool, isNestPage }) => {
             <OptionItem active={activeTab === 1}>Unstake</OptionItem>
           </ButtonMenu>
         </TabWrapper>
-        <Flex mt='12px' mb='8px' justifyContent='space-between' alignItems='center'>
-          <StakeLabel color='primary' fontWeight='500'>{activeTab === 0 ? 'Stake PEFI' : 'Unstake xPEFI'}</StakeLabel>
+        <Flex mt="12px" mb="8px" justifyContent="space-between" alignItems="center">
+          <StakeLabel color="primary" fontWeight="500">
+            {activeTab === 0 ? 'Stake PEFI' : 'Unstake xPEFI'}
+          </StakeLabel>
           <XPefiRatioTag>1 xPEFI = {Number(xPefiToPefiRatio.toFixed(3))} PEFI</XPefiRatioTag>
         </Flex>
-        {activeTab === 0 ? 
+        {activeTab === 0 ? (
           <StakePefiForm
-            max={stakingLimit && stakingTokenBalance.isGreaterThan(convertedLimit) ? convertedLimit : stakingTokenBalance}
+            max={
+              stakingLimit && stakingTokenBalance.isGreaterThan(convertedLimit) ? convertedLimit : stakingTokenBalance
+            }
             onConfirm={onStake}
             tokenName={stakingLimit ? `${stakingTokenName} (${stakingLimit} max)` : stakingTokenName}
             account={account}
@@ -145,16 +149,18 @@ const NestCard: React.FC<HarvestProps> = ({ pool, isNestPage }) => {
             onApprove={handleApprove}
             stakingTokenName={stakingTokenName}
           />
-          :
+        ) : (
           <UnstakeXPefiForm
-            max={stakedBalance} onConfirm={onUnstake} tokenName={`x${stakingTokenName}`}
+            max={stakedBalance}
+            onConfirm={onUnstake}
+            tokenName={`x${stakingTokenName}`}
             account={account}
             needsApproval={needsApproval}
             requested={isFinished || requestedApproval}
             onApprove={handleApprove}
             stakingTokenName={stakingTokenName}
           />
-        }
+        )}
       </CardContent>
       <CardAction>
         <CardFooter
@@ -190,8 +196,8 @@ const OptionItem = styled(ButtonMenuItem)<{ active: boolean }>`
   font-weight: 500;
 
   background-color: ${({ active, theme }) => active && (theme.isDark ? 'white' : '#ec3e3f')};
-  color: ${({ active }) => active ? 'white' : '#A79FBC'};
-  color: ${({ active, theme }) => (theme.isDark && !active) && '#BBA6DD'};
+  color: ${({ active }) => (active ? 'white' : '#A79FBC')};
+  color: ${({ active, theme }) => theme.isDark && !active && '#BBA6DD'};
   color: ${({ theme, active }) => theme.isDark && active && theme.colors.secondary};
 `
 
@@ -201,6 +207,6 @@ const StakeLabel = styled(Text)`
   ${({ theme }) => theme.mediaQueries.sm} {
     font-size: 24px;
   }
-`;
+`
 
 export default NestCard
