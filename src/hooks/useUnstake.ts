@@ -34,7 +34,7 @@ export const useSousUnstake = (sousId) => {
   const masterChefContract = useMasterchef()
   const sousChefContract = useSousChef(sousId)
   const isOldSyrup = false
-  const gasPrice = 300000;
+  const gasPrice = 300000
 
   const handleUnstake = useCallback(
     async (amount: string) => {
@@ -61,7 +61,7 @@ export const useSousUnstake = (sousId) => {
 export const useLaunchpadUnstake = () => {
   const dispatch = useDispatch()
   const { account } = useWeb3React()
-  const launchpadContract = useLaunchPad();
+  const launchpadContract = useLaunchPad()
 
   const handleUnstake = useCallback(
     async (amount: string) => {

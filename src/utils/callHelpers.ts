@@ -76,7 +76,11 @@ export const sousStake = async (sousChefContract, amount, account, gasPrice?: nu
 export const sousStakeBnb = async (sousChefContract, amount, account, gasPrice?: number) => {
   return sousChefContract.methods
     .deposit()
-    .send({ from: account, gas: gasPrice || 200000, value: new BigNumber(amount).times(new BigNumber(10).pow(18)).toString() })
+    .send({
+      from: account,
+      gas: gasPrice || 200000,
+      value: new BigNumber(amount).times(new BigNumber(10).pow(18)).toString(),
+    })
     .on('transactionHash', (tx) => {
       return tx.transactionHash
     })

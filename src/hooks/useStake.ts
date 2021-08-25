@@ -33,7 +33,7 @@ export const useSousStake = (sousId, isUsingBnb = false) => {
   const { account } = useWeb3React()
   const masterChefContract = useMasterchef()
   const sousChefContract = useSousChef(sousId)
-  const gasPrice = 300000;
+  const gasPrice = 300000
 
   const handleStake = useCallback(
     async (amount: string) => {
@@ -57,7 +57,7 @@ export const useSousStake = (sousId, isUsingBnb = false) => {
 export const useLaunchpadStake = () => {
   const dispatch = useDispatch()
   const { account } = useWeb3React()
-  const launchpadContract = useLaunchPad();
+  const launchpadContract = useLaunchPad()
 
   const handleStake = useCallback(
     async (amount: string) => {
