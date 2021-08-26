@@ -67,7 +67,6 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
   const linkPriceUsd = usePriceLinkUsdt()
   const lydPriceUsd = usePriceLydUsdt()
   const [handsOnPenalty, setHandsOnPenalty] = useState(0)
-  const totalStakedBalance = pool.totalStaked
 
   const fetchEarlyWithdrawalFee = useCallback(async () => {
     const earlyWithdrawalFee = await xPefiContract.methods.earlyWithdrawalFee().call()
@@ -154,13 +153,14 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
   const tvl = getIgloosTVL() + getCompounderFarmsTVL() + getNestTVL()
   const xPefiToPefiRatio = getXPefiToPefiRatio()
   const pefiMarketcap = getPefiMarketcap()
+  const totalStakedBalance = pool.totalStaked
   const burnedBalanceRatio = (100 * getBalanceNumber(burnedBalance)) / getBalanceNumber(totalSupply)
   const totalStakedBalanceRatio = (100 * getBalanceNumber(totalStakedBalance)) / getBalanceNumber(totalSupply)
 
   return (
     <StyledPefiStats>
       <CardBody>
-        <StyledHeading size="xl" mb="24px" color="red">
+        <StyledHeading size="xl" mb="24px" color="primary">
           {TranslateString(534, 'PEFI Stats')}
         </StyledHeading>
         <Row>
@@ -217,7 +217,7 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
             <CardValue
               color="textSubtle"
               fontSize="14px"
-              suffix={` PEFI (${roundDown(burnedBalanceRatio, 2)}%)`}
+              suffix={` PEFI (${burnedBalanceRatio.toFixed(0)}%)`}
               bold={false}
               value={getBalanceNumber(burnedBalance)}
               updateInterval={30000}
@@ -232,7 +232,7 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
             <CardValue
               color="textSubtle"
               fontSize="14px"
-              suffix={` PEFI (${roundDown(totalStakedBalanceRatio, 2)}%)`}
+              suffix={` PEFI (${totalStakedBalanceRatio.toFixed(0)}%)`}
               bold={false}
               value={getBalanceNumber(totalStakedBalance)}
               updateInterval={30000}
