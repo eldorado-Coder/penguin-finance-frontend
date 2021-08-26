@@ -66,8 +66,8 @@ const Nest: React.FC = () => {
       <Flex justifyContent="center" pb="32px">
         <TabWrapper>
           <ButtonMenu activeIndex={activeTab} onItemClick={handleSwitchTab} scale="sm">
-            <OptionItem active={activeTab === 0}>{activeTab === 0 ? 'New(iPefi)' : 'New'}</OptionItem>
-            <OptionItem active={activeTab === 1}>{activeTab === 1 ? 'Old(xPefi)' : 'Old'}</OptionItem>
+            <OptionItem active={activeTab === 0}>{activeTab === 0 ? 'New (iPEFI) ' : 'New'}</OptionItem>
+            <OptionItem active={activeTab === 1}>{activeTab === 1 ? 'Old (xPEFI) ' : 'Old'}</OptionItem>
           </ButtonMenu>
         </TabWrapper>
       </Flex>
@@ -139,9 +139,10 @@ const TabWrapper = styled.div`
   }
 `
 const OptionItem = styled(ButtonMenuItem)<{ active: boolean }>`
-  min-width: 100px;
+  min-width: 70px;
   background-color: ${({ active, theme }) => active && theme.colors.red};
   color: ${({ active }) => (active ? 'white' : '#b2b2ce')};
+  margin: 0px !important;
 `
 
 export default Nest
