@@ -62,7 +62,8 @@ const Igloos: React.FC = () => {
     }
   }, [account, dispatch, fastRefresh])
 
-  const activeFarms = farmsLP.filter((farm) => farm.multiplier !== '0X')
+  // const activeFarms = farmsLP.filter((farm) => farm.multiplier !== '0X')
+  const activeFarms = farmsLP
   const inactiveFarms = farmsLP.filter((farm) => farm.multiplier === '0X')
 
   // /!\ This function will be removed soon
