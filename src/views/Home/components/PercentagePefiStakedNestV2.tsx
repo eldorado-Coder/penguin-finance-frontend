@@ -42,34 +42,34 @@ const StyledNavLink = styled(NavLink)`
 `
 
 interface PoolWithApy extends Pool {
-  apy: BigNumber
+  apy?: BigNumber
 }
 
 interface HarvestProps {
   pool: PoolWithApy
 }
 
-const PercentagePefiStakedNests: React.FC<HarvestProps> = ({ pool }) => {
+const PercentagePefiStakedNestV2: React.FC<HarvestProps> = ({ pool }) => {
+  const TranslateString = useI18n()
   const totalSupply = useTotalSupply()
-
   const { totalStaked } = pool
 
-  const TranslateString = useI18n()
   if (totalStaked) {
-    const percentageStaked = (getBalanceNumber(totalStaked) / getBalanceNumber(totalSupply)) * 100
+    const stakedPercentage = (getBalanceNumber(totalStaked) / getBalanceNumber(totalSupply)) * 100
+
     return (
       <StyledCard>
         <CardBody>
           <Title size="md">{TranslateString(762, 'A total of')}</Title>
           <CardMidContent color="primary">
-            {parseInt(percentageStaked.toString()) ? (
-              `${parseInt(percentageStaked.toString())}% ${TranslateString(736, 'of PEFI')}`
+            {stakedPercentage > 0 ? (
+              `${stakedPercentage.toFixed(4)}% ${TranslateString(736, 'of PEFI')}`
             ) : (
               <Skeleton animation="pulse" variant="rect" height="44px" />
             )}
           </CardMidContent>
           <Flex justifyContent="space-between">
-            <Title size="md">{TranslateString(764, 'Staked in Penguin Nests')}</Title>
+            <Title size="md">{TranslateString(764, 'Staked in iPEFI Nest')}</Title>
             <StyledNavLink exact activeClassName="active" to="/nests" id="farm-apy-cta">
               <SvgIcon src={`${process.env.PUBLIC_URL}/images/home/arrow-right.svg`} width="25px" height="25px" />
             </StyledNavLink>
@@ -87,4 +87,4 @@ const PercentagePefiStakedNests: React.FC<HarvestProps> = ({ pool }) => {
   )
 }
 
-export default PercentagePefiStakedNests
+export default PercentagePefiStakedNestV2
