@@ -202,7 +202,7 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
               color="textSubtle"
               fontSize="14px"
               prefix="$"
-              decimals={2}
+              decimals={0}
               bold={false}
               value={tvl || 0}
               updateInterval={30000}
