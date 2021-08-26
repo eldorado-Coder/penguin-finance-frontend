@@ -162,7 +162,7 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
               fontSize="14px"
               suffix=" PEFI"
               value={getBalanceNumber(totalSupply) - getBalanceNumber(burnedBalance)}
-              updateInterval={5000}
+              updateInterval={30000}
             />
           )}
         </Row>
@@ -170,25 +170,27 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
           <Text color="primary" fontSize="14px">
             {TranslateString(538, 'Total PEFI Burned:')}
           </Text>
-          {burnedBalance && <CardValue fontSize="14px" value={getBalanceNumber(burnedBalance)} updateInterval={5000} />}
+          {burnedBalance && (
+            <CardValue fontSize="14px" value={getBalanceNumber(burnedBalance)} updateInterval={30000} />
+          )}
         </Row>
         <Row>
           <Text color="primary" fontSize="14px">
             {TranslateString(538, 'Total Value Locked:')}
           </Text>
-          {tvl && <CardValue fontSize="14px" prefix="$" decimals={2} value={tvl || 0} updateInterval={5000} />}
+          {tvl && <CardValue fontSize="14px" prefix="$" decimals={2} value={tvl || 0} updateInterval={30000} />}
         </Row>
         <Row>
           <Text color="primary" fontSize="14px">
             {TranslateString(538, 'PEFI Marketcap:')}
           </Text>
-          {pefiMarketcap && <CardValue fontSize="14px" prefix="$" value={pefiMarketcap} updateInterval={5000} />}
+          {pefiMarketcap && <CardValue fontSize="14px" prefix="$" value={pefiMarketcap} updateInterval={30000} />}
         </Row>
         <Row>
           <Text color="primary" fontSize="14px">
             {TranslateString(540, 'XPEFI to PEFI ratio:')}
           </Text>
-          <CardValue fontSize="14px" decimals={3} value={xPefiToPefiRatio} updateInterval={5000} />
+          <CardValue fontSize="14px" decimals={3} value={xPefiToPefiRatio} updateInterval={30000} />
         </Row>
         <Row>
           <Text color="primary" fontSize="14px">
@@ -199,14 +201,14 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
             decimals={2}
             suffix=" PEFI/block"
             value={pefiPerBlock.toNumber()}
-            updateInterval={5000}
+            updateInterval={30000}
           />
         </Row>
         <Row>
           <Text color="primary" fontSize="14px">
             {TranslateString(540, 'Paper Hands Penalty:')}
           </Text>
-          <CardValue fontSize="14px" decimals={2} suffix=" %" value={Number(handsOnPenalty)} updateInterval={5000} />
+          <CardValue fontSize="14px" decimals={2} suffix=" %" value={Number(handsOnPenalty)} updateInterval={30000} />
         </Row>
         <Row>
           <Text color="primary" fontSize="14px">
