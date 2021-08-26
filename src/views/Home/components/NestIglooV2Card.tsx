@@ -13,12 +13,18 @@ const StyledNestIglooCardBg = styled.div`
   background-size: cover;
   background-position: center center;
   background-image: url('/images/home/ipefi-introducing.png');
+  cursor: pointer;
 `
 
 const NestIglooV2Card = () => {
+  const onClickNestIglooV2Card = () => {
+    const iglooV2Url = 'https://penguin-finance.medium.com/introducing-ipefi-the-nest-evolution-d002f8548276'
+    window.open(iglooV2Url, '_blank')
+  }
+
   return (
     <StyledNestIglooCard>
-      <StyledNestIglooCardBg />
+      <StyledNestIglooCardBg onClick={onClickNestIglooV2Card} />
     </StyledNestIglooCard>
   )
 }
