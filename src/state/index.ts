@@ -13,6 +13,9 @@ import globalReducer from './global'
 import donationsReducer from './donations'
 import launchpadReducer from './launchpad'
 import boosterRocketReducer from './boosterRocket'
+// v2
+import v2PoolsReducer from './v2pools'
+import nestMigratorReducer from './nestMigrator'
 
 const store = configureStore({
   devTools: process.env.NODE_ENV !== 'production',
@@ -30,6 +33,9 @@ const store = configureStore({
     donations: donationsReducer,
     launchpad: launchpadReducer,
     boosterRocket: boosterRocketReducer,
+    // v2
+    v2Pools: v2PoolsReducer,
+    nestMigrator: nestMigratorReducer,
   },
 })
 

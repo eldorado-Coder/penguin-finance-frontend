@@ -231,4 +231,15 @@ export interface State {
   donations: DonationsState
   launchpad: LaunchpadState
   boosterRocket: BoosterRocketState
+
+  // nest
+  v2Pools: PoolsState
+  nestMigrator: NestMigratorState
+}
+
+// v2
+export interface NestMigratorState {
+  expectedIPefi: number
+  pefiAllowance: number
+  xPefiAllowance: number
 }

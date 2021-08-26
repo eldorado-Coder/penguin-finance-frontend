@@ -1,29 +1,32 @@
 import React from 'react'
-import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
+import BigNumber from 'bignumber.js'
 import { useWeb3React } from '@web3-react/core'
 import { Card, Flex, Text, Button } from 'penguinfinance-uikit2'
-import { SECONDS_PER_YEAR } from 'config'
 import partition from 'lodash/partition'
+import Page from 'components/layout/Page'
+import { SECONDS_PER_YEAR } from 'config'
 import { getBalanceNumber } from 'utils/formatBalance'
 import priceToBnb from 'utils/priceToBnb'
 import useBlock from 'hooks/useBlock'
 import useTheme from 'hooks/useTheme'
 import useBlockGenerationTime from 'hooks/useBlockGenerationTime'
-import { useFarms, usePriceAvaxUsdt, usePools, usePriceEthAvax } from 'state/hooks'
+import { useFarms, usePriceAvaxUsdt, usePools, usePriceEthAvax, useNestMigrator } from 'state/hooks'
 import { PoolCategory } from 'config/constants/types'
-import Page from 'components/layout/Page'
 import UnlockButton from 'components/UnlockButton'
 import SvgIcon from 'components/SvgIcon'
 import CardValue from 'components/CardValue'
+import roundDown from 'utils/roundDown'
 
 const IPefi: React.FC = () => {
   const { account } = useWeb3React()
   const farms = useFarms()
   const pools = usePools(account)
+  const nestMigrator = useNestMigrator(account)
   const avaxPriceUSD = usePriceAvaxUsdt()
   const ethPriceBnb = usePriceEthAvax()
   const block = useBlock()
+  const { isDark } = useTheme()
   const AVAX_BLOCK_TIME = useBlockGenerationTime()
   const BLOCKS_PER_YEAR = new BigNumber(SECONDS_PER_YEAR).div(new BigNumber(AVAX_BLOCK_TIME))
 
@@ -32,11 +35,8 @@ const IPefi: React.FC = () => {
     const rewardTokenFarm = farms.find((f) => f.tokenSymbol === pool.tokenName)
     const stakingTokenFarm = farms.find((s) => s.tokenSymbol === pool.stakingTokenName)
 
-    // tmp mulitplier to support ETH farms
-    // Will be removed after the price api
     const tempMultiplier = stakingTokenFarm?.quoteTokenSymbol === 'ETH' ? ethPriceBnb : 1
 
-    // /!\ Assume that the farm quote price is AVAX
     const stakingTokenPriceInAVAX = isBnbPool
       ? new BigNumber(1)
       : new BigNumber(stakingTokenFarm?.tokenPriceVsQuote).times(tempMultiplier)
@@ -60,13 +60,12 @@ const IPefi: React.FC = () => {
 
   const [, openPools] = partition(poolsWithApy, (pool) => pool.isFinished)
 
-  const stakedBalance = new BigNumber(openPools[0].userData?.stakedBalance || 0)
-
   const handleMigrate = () => {
     return null
   }
 
-  const { isDark } = useTheme()
+  const xPefiBalance = new BigNumber(openPools[0].userData?.stakedBalance || 0)
+  const iPefiBalance = new BigNumber(nestMigrator.expectedIPefi || 0)
 
   return (
     <NestPage>
@@ -75,20 +74,20 @@ const IPefi: React.FC = () => {
       </BgWrapper>
       <NestBannerContainer>
         <BannerImage
-          src={`${process.env.PUBLIC_URL}/images/pools/${isDark ? 'nest_banner_dark.svg' : 'nest_banner_light.svg'}`}
+          src={`${process.env.PUBLIC_URL}/images/pools/${isDark ? 'nest_banner_dark2.svg' : 'nest_banner_light2.svg'}`}
           alt="nest banner"
-        />
+        />{' '}
       </NestBannerContainer>
       <Flex justifyContent="center">
         <NestDetailsContainer flexDirection="column" alignItems="center">
           <Text color="primary" mb="12px" fontSize="24px" bold textAlign="center">
             Migrate your xPEFI and get iPEFI
           </Text>
-          <Description mb="24px" textAlign="center">
+          <NestDescription mb="24px" textAlign="center">
             The Nest V2 contract is here! Migrate from the old staking token (xPEFI) to receive the newer, improved
             iPEFI. After migration, your PEFI equivalent should be the same pre-migration. We&apos;ll keep the Paper
             Hands Penalty on the new contract the same as the old one for a week.
-          </Description>
+          </NestDescription>
           <CardWrapper justifyContent="space-between">
             <MigrateCard padding="8px 24px 16px" mb="32px">
               <Flex justifyContent="center" alignItems="center" mb="24px">
@@ -99,7 +98,8 @@ const IPefi: React.FC = () => {
                       <CardValue
                         className="balance"
                         fontSize="20px"
-                        value={getBalanceNumber(stakedBalance)}
+                        // value={getBalanceNumber(stakedBalance)}
+                        value={roundDown(getBalanceNumber(xPefiBalance), 2)}
                         decimals={2}
                         lineHeight="1"
                       />
@@ -119,7 +119,8 @@ const IPefi: React.FC = () => {
                       <CardValue
                         className="balance"
                         fontSize="20px"
-                        value={getBalanceNumber(stakedBalance)}
+                        // value={getBalanceNumber(stakedBalance)}
+                        value={roundDown(getBalanceNumber(iPefiBalance), 2)}
                         decimals={2}
                         lineHeight="1"
                       />
@@ -152,13 +153,6 @@ const NestPage = styled(Page)`
   max-width: 1200px;
 `
 
-const StyledButton = styled(Button)<{ tokenBalance?: string }>`
-  width: 100%;
-  border-radius: 8px;
-  color: ${({ theme }) => theme.isDark && '#30264f'};
-  background-color: ${({ theme }) => !theme.isDark && '#372871'};
-`
-
 // bg
 const BgWrapper = styled.div`
   background: ${({ theme }) => (theme.isDark ? '#1A1028' : '#F9F8F9')};
@@ -183,7 +177,6 @@ const IgloosBgContainer = styled.div`
 
 const NestBannerContainer = styled.div`
   margin-bottom: 24px;
-
   @media (min-width: 640px) {
     margin-bottom: 64px;
   }
@@ -192,6 +185,17 @@ const NestBannerContainer = styled.div`
 const BannerImage = styled.img`
   z-index: -1;
   width: 100%;
+`
+
+const NestDescription = styled(Text)`
+  max-width: 480px;
+  color: ${({ theme }) => (theme.isDark ? '#DDD7ff' : theme.colors.secondary)};
+`
+const StyledButton = styled(Button)<{ tokenBalance?: string }>`
+  width: 100%;
+  border-radius: 8px;
+  color: ${({ theme }) => theme.isDark && '#30264f'};
+  background-color: ${({ theme }) => !theme.isDark && '#372871'};
 `
 
 const CardWrapper = styled(Flex)`
@@ -216,11 +220,6 @@ const MigrateCard = styled(Card)`
 const NestDetailsContainer = styled(Flex)`
   max-width: 480px;
   width: 100%;
-`
-
-const Description = styled(Text)`
-  max-width: 480px;
-  color: ${({ theme }) => (theme.isDark ? '#DDD7ff' : theme.colors.secondary)};
 `
 
 const Alert = styled(Text)`
