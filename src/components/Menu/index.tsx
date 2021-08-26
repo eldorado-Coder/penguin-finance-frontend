@@ -81,13 +81,13 @@ const Menu = (props) => {
         setLang={setSelectedLanguage}
         penguinPriceUsd={pefiPriceUsd.toNumber()}
         pefiRatio={Number(xPefiToPefiRatio)}
-        iPefiRatio={Number(iPefiToPefiRatio)}
+        // iPefiRatio={Number(iPefiToPefiRatio)}
         links={links}
         socials={socials}
         onSettingClick={onToggleSettingModal}
         pefiBalance={getBalanceNumber(pefiBalance).toFixed(3)}
         xPefiBalance={getBalanceNumber(xPefiBalance).toFixed(3)}
-        iPefiBalance={getBalanceNumber(iPefiBalance).toFixed(3)}
+        // iPefiBalance={getBalanceNumber(iPefiBalance).toFixed(3)}
         avaxBalance={getBalanceNumber(avaxBalance).toFixed(3)}
         // profile={{
         //   username: profile?.username,
