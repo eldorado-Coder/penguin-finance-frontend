@@ -152,15 +152,7 @@ const Farm: React.FC = () => {
         <IgloosBgContainer />
       </BgWrapper>
       <NestBannerContainer>
-        {/* <StyledCard>
-          <Flex justifyContent="center" alignItems="center">
-            <Title bold>THE NEST</Title>
-          </Flex>
-        </StyledCard> */}
-        <BannerImage
-          src={`${process.env.PUBLIC_URL}/images/pools/${isDark ? 'nest_banner_dark.svg' : 'nest_banner_light.svg'}`}
-          alt="nest banner"
-        />
+        <BannerImage src={`${process.env.PUBLIC_URL}/images/pools/nest_banner.svg`} alt="nest banner" />
       </NestBannerContainer>
       <Flex justifyContent="center">
         <NestDetailsContainer>
