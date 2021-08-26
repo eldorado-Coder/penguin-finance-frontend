@@ -142,7 +142,7 @@ const Igloos: React.FC = () => {
         } else {
           totalValue = farm.lpTotalInQuoteToken
         }
-        return { ...farm, apy, totalValue }
+        return { ...farm, apy: farm.type === 'Pangolin' ? new BigNumber(0) : apy, totalValue }
       })
 
       farmsToDisplayWithAPY = farmsToDisplayWithAPY.sort((farm1, farm2) => {
