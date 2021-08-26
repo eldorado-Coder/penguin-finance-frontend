@@ -157,7 +157,14 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
           <Text color="primary" fontSize="14px">
             {TranslateString(536, 'Circulating PEFI Supply:')}
           </Text>
-          {totalSupply && <CardValue fontSize="14px" suffix=" PEFI" value={getBalanceNumber(totalSupply) - getBalanceNumber(burnedBalance)} updateInterval={5000} />}
+          {totalSupply && (
+            <CardValue
+              fontSize="14px"
+              suffix=" PEFI"
+              value={getBalanceNumber(totalSupply) - getBalanceNumber(burnedBalance)}
+              updateInterval={5000}
+            />
+          )}
         </Row>
         <Row>
           <Text color="primary" fontSize="14px">
@@ -187,7 +194,13 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
           <Text color="primary" fontSize="14px">
             {TranslateString(540, 'PEFI Emission Rate:')}
           </Text>
-          <CardValue fontSize="14px" decimals={2} suffix=" PEFI/block" value={pefiPerBlock.toNumber()} updateInterval={5000} />
+          <CardValue
+            fontSize="14px"
+            decimals={2}
+            suffix=" PEFI/block"
+            value={pefiPerBlock.toNumber()}
+            updateInterval={5000}
+          />
         </Row>
         <Row>
           <Text color="primary" fontSize="14px">
