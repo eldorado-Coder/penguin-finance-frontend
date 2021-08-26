@@ -29,6 +29,10 @@ const StyledPefiStats = styled(Card)`
   background: ${({ theme }) => theme.isDark && '#30264F'};
 `
 
+const StyledHeading = styled(Heading)`
+  font-weight: 800;
+`
+
 const Row = styled.div`
   align-items: center;
   display: flex;
@@ -150,71 +154,116 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
   return (
     <StyledPefiStats>
       <CardBody>
-        <Heading size="xl" mb="24px">
+        <StyledHeading size="xl" mb="24px" color="red">
           {TranslateString(534, 'PEFI Stats')}
-        </Heading>
+        </StyledHeading>
         <Row>
-          <Text color="primary" fontSize="14px">
+          <Text bold color="textSubtle" fontSize="14px">
+            {TranslateString(538, 'PEFI Marketcap Capitalization:')}
+          </Text>
+          {pefiMarketcap && (
+            <CardValue
+              color="textSubtle"
+              fontSize="14px"
+              prefix="$"
+              bold={false}
+              value={pefiMarketcap}
+              updateInterval={30000}
+            />
+          )}
+        </Row>
+        <Row>
+          <Text bold color="textSubtle" fontSize="14px">
             {TranslateString(536, 'Circulating PEFI Supply:')}
           </Text>
           {totalSupply && (
             <CardValue
+              color="textSubtle"
               fontSize="14px"
               suffix=" PEFI"
+              bold={false}
               value={getBalanceNumber(totalSupply) - getBalanceNumber(burnedBalance)}
               updateInterval={30000}
             />
           )}
         </Row>
         <Row>
-          <Text color="primary" fontSize="14px">
-            {TranslateString(538, 'Total PEFI Burned:')}
+          <Text bold color="textSubtle" fontSize="14px">
+            {TranslateString(538, 'Total Value Locked:')}
           </Text>
-          {burnedBalance && (
-            <CardValue fontSize="14px" value={getBalanceNumber(burnedBalance)} updateInterval={30000} />
+          {tvl && (
+            <CardValue
+              color="textSubtle"
+              fontSize="14px"
+              prefix="$"
+              decimals={2}
+              bold={false}
+              value={tvl || 0}
+              updateInterval={30000}
+            />
           )}
         </Row>
         <Row>
-          <Text color="primary" fontSize="14px">
-            {TranslateString(538, 'Total Value Locked:')}
+          <Text bold color="textSubtle" fontSize="14px">
+            {TranslateString(538, 'Total PEFI Burned:')}
           </Text>
-          {tvl && <CardValue fontSize="14px" prefix="$" decimals={2} value={tvl || 0} updateInterval={30000} />}
+          {burnedBalance && (
+            <CardValue
+              color="textSubtle"
+              fontSize="14px"
+              suffix=" PEFI"
+              bold={false}
+              value={getBalanceNumber(burnedBalance)}
+              updateInterval={30000}
+            />
+          )}
         </Row>
         <Row>
-          <Text color="primary" fontSize="14px">
-            {TranslateString(538, 'PEFI Marketcap:')}
+          <Text bold color="textSubtle" fontSize="14px">
+            {TranslateString(538, 'Total PEFI Staked(xPEFI):')}
           </Text>
-          {pefiMarketcap && <CardValue fontSize="14px" prefix="$" value={pefiMarketcap} updateInterval={30000} />}
+          {burnedBalance && (
+            <CardValue
+              color="textSubtle"
+              fontSize="14px"
+              suffix=" PEFI"
+              bold={false}
+              value={getBalanceNumber(burnedBalance)}
+              updateInterval={30000}
+            />
+          )}
         </Row>
-        <Row>
+        {/* <Row>
           <Text color="primary" fontSize="14px">
             {TranslateString(540, 'XPEFI to PEFI ratio:')}
           </Text>
-          <CardValue fontSize="14px" decimals={3} value={xPefiToPefiRatio} updateInterval={30000} />
-        </Row>
+          <CardValue color="textSubtle" fontSize="14px" decimals={3} value={xPefiToPefiRatio} updateInterval={30000} />
+        </Row> */}
         <Row>
-          <Text color="primary" fontSize="14px">
+          <Text bold color="textSubtle" fontSize="14px">
             {TranslateString(540, 'PEFI Emission Rate:')}
           </Text>
           <CardValue
+            color="textSubtle"
             fontSize="14px"
             decimals={2}
             suffix=" PEFI/block"
+            bold={false}
             value={pefiPerBlock.toNumber()}
             updateInterval={30000}
           />
         </Row>
-        <Row>
-          <Text color="primary" fontSize="14px">
+        {/* <Row>
+          <Text bold color="textSubtle" fontSize="14px">
             {TranslateString(540, 'Paper Hands Penalty:')}
           </Text>
-          <CardValue fontSize="14px" decimals={2} suffix=" %" value={Number(handsOnPenalty)} updateInterval={30000} />
-        </Row>
+          <CardValue color="textSubtle" fontSize="14px" decimals={2} suffix=" %" value={Number(handsOnPenalty)} updateInterval={30000} />
+        </Row> */}
         <Row>
-          <Text color="primary" fontSize="14px">
+          <Text bold color="textSubtle" fontSize="14px">
             {TranslateString(538, 'Max PEFI Supply:')}
           </Text>
-          <CardValue fontSize="14px" bold value={PEFI_MAX_SUPPLY} />
+          <CardValue color="textSubtle" fontSize="14px" suffix=" PEFI" bold={false} value={PEFI_MAX_SUPPLY} />
         </Row>
       </CardBody>
     </StyledPefiStats>
