@@ -56,7 +56,10 @@ const Nest: React.FC = () => {
         <IgloosBgContainer />
       </BgWrapper>
       <NestBannerContainer>
-        <BannerImage src={`${process.env.PUBLIC_URL}/images/pools/nest_banner.svg`} alt="nest banner" />
+        <BannerImage
+          src={`${process.env.PUBLIC_URL}/images/pools/${isDark ? 'nest_banner_dark2.svg' : 'nest_banner_light2.svg'}`}
+          alt="nest banner"
+        />
       </NestBannerContainer>
       {activeTab === 0 && renderV2Description()}
       {activeTab === 1 && renderV1Description()}
