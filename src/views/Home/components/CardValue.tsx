@@ -23,9 +23,9 @@ const CardValue: React.FC<CardValueProps> = ({
   suffix = '',
   bold = true,
   color = 'text',
-  updateInterval
+  updateInterval,
 }) => {
-  const { countUp, update, start } = useCountUp({
+  const { countUp, update, start, reset } = useCountUp({
     start: 0,
     end: value,
     duration: 1,
@@ -42,14 +42,17 @@ const CardValue: React.FC<CardValueProps> = ({
   }, [value, updateValue])
 
   useEffect(() => {
-    let interval;
+    let interval
     if (updateInterval) {
       interval = setInterval(async () => {
-        start();
+        reset()
+        start()
+        update(value)
       }, updateInterval)
     }
     return () => interval && clearInterval(interval)
-  }, [updateInterval, start]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [updateInterval, start, reset, update])
 
   return (
     <Text bold={bold} fontSize={fontSize} style={{ lineHeight }} color={color}>

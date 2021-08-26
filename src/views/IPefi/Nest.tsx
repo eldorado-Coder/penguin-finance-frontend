@@ -74,9 +74,9 @@ const IPefi: React.FC = () => {
       </BgWrapper>
       <NestBannerContainer>
         <BannerImage
-          src={`${process.env.PUBLIC_URL}/images/pools/${isDark ? 'nest_banner_dark.svg' : 'nest_banner_light.svg'}`}
+          src={`${process.env.PUBLIC_URL}/images/pools/${isDark ? 'nest_banner_dark2.svg' : 'nest_banner_light2.svg'}`}
           alt="nest banner"
-        />
+        />{' '}
       </NestBannerContainer>
       <Flex justifyContent="center">
         <NestDetailsContainer flexDirection="column" alignItems="center">
