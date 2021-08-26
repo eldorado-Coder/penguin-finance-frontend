@@ -235,7 +235,7 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
               suffix={` PEFI (${totalStakedBalanceRatio.toFixed(0)}%)`}
               bold={false}
               value={getBalanceNumber(totalStakedBalance)}
-              updateInterval={5000}
+              updateInterval={30000}
             />
           )}
         </Row>
