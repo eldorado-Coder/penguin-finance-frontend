@@ -57,13 +57,19 @@ const Menu = (props) => {
   const launchpadIndex = links.findIndex((link) => link.label === 'Launchpad')
   const collectiblesIndex = links.findIndex((link) => link.label === 'Collectibles')
 
-  links[emperorIndex] = {
-    ...links[emperorIndex],
-    badge: isEmperorLive ? 'LIVE' : 'SOON',
-  }
-  links[collectiblesIndex] = {
-    ...links[collectiblesIndex],
-    badge: isCollectiblesNew ? 'NEW' : '',
+  // links[emperorIndex] = {
+  //   ...links[emperorIndex],
+  //   badge: isEmperorLive ? 'LIVE' : 'SOON',
+  // }
+  // links[collectiblesIndex] = {
+  //   ...links[collectiblesIndex],
+  //   badge: isCollectiblesNew ? 'NEW' : '',
+  // }
+  links[launchpadIndex] = {
+    ...links[launchpadIndex],
+    badge: 'SOON',
+    // badgeLightColor: '#37DB94',
+    // badgeDarkColor: '#37DB94',
   }
 
   return (
