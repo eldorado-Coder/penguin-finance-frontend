@@ -62,7 +62,8 @@ const Igloos: React.FC = () => {
     }
   }, [account, dispatch, fastRefresh])
 
-  const activeFarms = farmsLP.filter((farm) => farm.multiplier !== '0X')
+  // const activeFarms = farmsLP.filter((farm) => farm.multiplier !== '0X')
+  const activeFarms = farmsLP
   const inactiveFarms = farmsLP.filter((farm) => farm.multiplier === '0X')
 
   // /!\ This function will be removed soon
@@ -141,7 +142,7 @@ const Igloos: React.FC = () => {
         } else {
           totalValue = farm.lpTotalInQuoteToken
         }
-        return { ...farm, apy, totalValue }
+        return { ...farm, apy: farm.type === 'Pangolin' ? new BigNumber(0) : apy, totalValue }
       })
 
       farmsToDisplayWithAPY = farmsToDisplayWithAPY.sort((farm1, farm2) => {
