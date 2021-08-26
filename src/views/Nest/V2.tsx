@@ -207,7 +207,7 @@ const NestV2: React.FC = () => {
                 </BalanceTextSmall>
               </Flex>
             </Flex>
-            <BalanceLabel mt="24px" mb="8px">
+            {/* <BalanceLabel mt="24px" mb="8px">
               Your Stats
             </BalanceLabel>
             <Flex alignItems="flex-end">
@@ -223,7 +223,7 @@ const NestV2: React.FC = () => {
             </Flex>
             <BalanceText mb="8px" fontSize="20px" fontWeight={300}>
               Days Since First Deposit
-            </BalanceText>
+            </BalanceText> */}
           </BalanceCard>
         </NestCardsWrapper>
       </NestDetailsContainer>
