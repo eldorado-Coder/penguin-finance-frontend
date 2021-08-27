@@ -18,10 +18,7 @@ import UnstakeForm from './forms/UnstakeForm'
 const StyledCard = styled(Card)<{ isNestPage?: boolean }>`
   border-radius: 8px;
   width: 100%;
-  @media (min-width: 640px) {
-    margin-bottom: ${(props) => props.isNestPage && '60px'};
-  }
-
+  
   ${({ theme }) => theme.mediaQueries.sm} {
     max-width: 460px;
   }
@@ -56,7 +53,7 @@ interface HarvestProps {
   isHomePage?: boolean
 }
 
-const NestCard: React.FC<HarvestProps> = ({ pool, isNestPage }) => {
+const NestCard: React.FC<HarvestProps> = ({ pool }) => {
   const {
     sousId,
     stakingTokenName,
@@ -122,7 +119,7 @@ const NestCard: React.FC<HarvestProps> = ({ pool, isNestPage }) => {
   const xPefiToPefiRatio = getXPefiToPefiRatio()
 
   return (
-    <StyledCard isNestPage={isNestPage} isActive={isCardActive} isFinished={isFinished && sousId !== 0}>
+    <StyledCard isActive={isCardActive} isFinished={isFinished && sousId !== 0}>
       <CardContent>
         <TabWrapper>
           <ButtonMenu variant="subtle" activeIndex={activeTab} onItemClick={handleSwitchTab}>

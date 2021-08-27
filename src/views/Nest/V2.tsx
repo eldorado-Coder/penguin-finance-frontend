@@ -138,13 +138,13 @@ const NestV2: React.FC = () => {
             <Route exact path={`${path}`}>
               <>
                 {orderBy(openPools, ['sortOrder']).map((pool) => (
-                  <NestCard isNestPage key={pool.sousId} pool={pool} isMainPool />
+                  <NestCard key={pool.sousId} pool={pool} isMainPool />
                 ))}
               </>
             </Route>
             <Route path={`${path}/history`}>
               {orderBy(finishedPools, ['sortOrder']).map((pool) => (
-                <NestCard isNestPage key={pool.sousId} pool={pool} isMainPool />
+                <NestCard key={pool.sousId} pool={pool} isMainPool />
               ))}
             </Route>
           </LeftCardsContainer>
