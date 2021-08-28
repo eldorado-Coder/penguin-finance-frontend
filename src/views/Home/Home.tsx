@@ -13,7 +13,7 @@ import IglooCard from 'views/Home/components/IglooCard'
 import EarnAPYCard from 'views/Home/components/EarnAPYCard'
 import PercentagePefiStakedNestV1 from 'views/Home/components/PercentagePefiStakedNestV1'
 import PercentagePefiStakedNestV2 from 'views/Home/components/PercentagePefiStakedNestV2'
-import PoolCard from 'views/Pools/components/PoolCard'
+import V2PoolCard from 'views/Pools/components/V2PoolCard'
 import { usePools, useV2Pools } from 'state/hooks'
 
 const Hero = styled.div`
@@ -115,7 +115,6 @@ const HomeBgContainer = styled.div`
 
 const Home: React.FC = () => {
   const { account } = useWeb3React()
-  const pools = usePools(account)
   const v2Pools = useV2Pools(account)
   // const AVAX_BLOCK_TIME = useBlockGenerationTime()
   // const BLOCKS_PER_YEAR = new BigNumber(SECONDS_PER_YEAR).div(new BigNumber(AVAX_BLOCK_TIME))
@@ -124,7 +123,7 @@ const Home: React.FC = () => {
   // const avaxPriceUSD = usePriceAvaxUsdt()
   // const ethPriceBnb = usePriceEthAvax()
 
-  const poolsWithApy = pools.map((pool) => {
+  const v2PoolsWithApy = v2Pools.map((pool) => {
     // const rewardTokenFarm = farms.find((f) => f.tokenSymbol === pool.tokenName)
     // const stakingTokenFarm = farms.find((s) => s.tokenSymbol === pool.stakingTokenName)
 
@@ -150,8 +149,7 @@ const Home: React.FC = () => {
       apy: new BigNumber(0),
     }
   })
-  const xPefiPool = poolsWithApy.length > 0 ? poolsWithApy[0] : null
-  const iPefiPool = v2Pools[0]
+  const iPefiPool = v2PoolsWithApy.length > 0 ? v2PoolsWithApy[0] : null
   const { isDark } = useTheme()
 
   return (
@@ -180,12 +178,12 @@ const Home: React.FC = () => {
               {/* <PercentagePefiStakedNestV1 pool={xPefiPool} /> */}
               <PercentagePefiStakedNestV2 pool={iPefiPool} />
             </PefiStatsCardWrapper>
-            {xPefiPool && (
+            {iPefiPool && (
               <PoolCardWrapper>
-                <PoolCard pool={xPefiPool} isMainPool={false} isHomePage />
+                <V2PoolCard pool={iPefiPool} isMainPool={false} isHomePage />
               </PoolCardWrapper>
             )}
-            <PefiStats pool={xPefiPool} />
+            <PefiStats pool={iPefiPool} />
             <SpacingWrapper />
           </Cards>
         </div>
