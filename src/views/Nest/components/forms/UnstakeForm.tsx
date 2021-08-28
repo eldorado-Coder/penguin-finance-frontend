@@ -14,7 +14,6 @@ interface UnStakeFormProps {
   onConfirm: (amount: string) => void
   tokenName?: string
   account?: string
-  needsApproval: boolean
   requested: boolean
   stakingTokenName: string
   onApprove: () => void
@@ -27,7 +26,6 @@ const UnstakeForm: React.FC<UnStakeFormProps> = ({
   onConfirm,
   tokenName = '',
   account,
-  needsApproval,
   requested,
   stakingTokenName,
   onApprove,
@@ -88,16 +86,11 @@ const UnstakeForm: React.FC<UnStakeFormProps> = ({
       />
       <Flex mt="8px">
         {!account && <StyledUnlockButton />}
-        {account &&
-          (needsApproval ? (
-            <StyledButton disabled={requested} onClick={onApprove} scale="md">
-              {`Approve x${stakingTokenName}`}
-            </StyledButton>
-          ) : (
-            <StyledButton tokenBalance={val} scale="md" disabled={!canUnStake} onClick={handleConfirm}>
-              {renderText()}
-            </StyledButton>
-          ))}
+        {account && (
+          <StyledButton tokenBalance={val} scale="md" disabled={!canUnStake} onClick={handleConfirm}>
+            {renderText()}
+          </StyledButton>
+        )}
       </Flex>
     </>
   )
