@@ -10,7 +10,7 @@ const pools: PoolConfig[] = [
       256: '0xd3af5fe61dbaf8f73149bfcfa9fb653ff096029a',
       128: '0x73feaa1eE314F8c655E354234017bE2193C9E24E',
       43113: '0xF21dD579489520C6E4C8aD273f41D343Fa9d5b2F',
-      43114: '0x635c62d984547f3d982eDfF37c24b0475Ac60916',
+      43114: '0xE9476e16FE488B90ada9Ab5C7c2ADa81014Ba9Ee',
     },
     poolCategory: PoolCategory.CORE,
     projectLink: 'https://penguinfinance.org/',
