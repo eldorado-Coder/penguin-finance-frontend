@@ -152,7 +152,6 @@ const NestCard: React.FC<HarvestProps> = ({ pool }) => {
             onConfirm={onUnstake}
             tokenName={`i${stakingTokenName}`}
             account={account}
-            needsApproval={needsApproval}
             requested={isFinished || requestedApproval}
             onApprove={handleApprove}
             stakingTokenName={stakingTokenName}
