@@ -142,7 +142,6 @@ const Igloos: React.FC = () => {
         } else {
           totalValue = farm.lpTotalInQuoteToken
         }
-
         return {
           ...farm,
           apy: farm.type === 'Pangolin' && farm.lpSymbol !== 'AVAX-PNG LP' ? new BigNumber(0) : apy,
