@@ -9,7 +9,7 @@ import SvgIcon from 'components/SvgIcon'
 import { useV2NestContract } from 'hooks/useContract'
 import useI18n from 'hooks/useI18n'
 import { getBalanceNumber, getNumberWithCommas } from 'utils/formatBalance'
-import { useV2NestApy } from 'state/hooks'
+import { useV2NestApy, useV2NestAprPerDay } from 'state/hooks'
 import { Pool } from 'state/types'
 import Card from './Card'
 
@@ -64,7 +64,7 @@ interface HarvestProps {
 }
 
 const V2PoolCard: React.FC<HarvestProps> = ({ pool }) => {
-  const [handsOnPenalty, setHandsOnPenalty] = useState(0)
+  const [handsOnPenalty, setHandsOnPenalty] = useState(1.13)
   const TranslateString = useI18n()
   const { account } = useWeb3React()
   const iPefiContract = useV2NestContract()
@@ -74,6 +74,7 @@ const V2PoolCard: React.FC<HarvestProps> = ({ pool }) => {
   const accountHasStakedBalance = stakedBalance?.toNumber() > 0
   const isCardActive = isFinished && accountHasStakedBalance
   const displayedNestApy = (useV2NestApy() * 100).toFixed(2)
+  const displayedNestDailyApr = useV2NestAprPerDay().toFixed(2)
 
   const fetchHandsOnPenalty = useCallback(async () => {
     const perHandsPenalty = await iPefiContract.methods.paperHandsPenalty().call()
@@ -81,7 +82,7 @@ const V2PoolCard: React.FC<HarvestProps> = ({ pool }) => {
   }, [iPefiContract])
 
   useEffect(() => {
-    fetchHandsOnPenalty()
+    // fetchHandsOnPenalty()
   }, [fetchHandsOnPenalty])
 
   const getIPefiToPefiRatio = () => {
@@ -92,12 +93,13 @@ const V2PoolCard: React.FC<HarvestProps> = ({ pool }) => {
 
   const iPefiToPefiRatio = getIPefiToPefiRatio()
 
-  const handleMovetoNest = () => {
-    history.push('/nests')
-  }
-
   const handleMovetoNestV2 = () => {
     history.push('/nest-v2')
+  }
+
+  const handleMigrationGuide = () => {
+    const nestMigrationUrl = 'https://penguin-finance.medium.com/introducing-ipefi-the-nest-evolution-d002f8548276'
+    window.open(nestMigrationUrl, '_blank')
   }
 
   return (
@@ -128,9 +130,9 @@ const V2PoolCard: React.FC<HarvestProps> = ({ pool }) => {
                 </Text>
               </Block>
               <Block>
-                <Label>{TranslateString(546, 'Current APY')}:</Label>
+                <Label>{TranslateString(546, 'Daily APR')}:</Label>
                 <Text color="textSubtle" bold fontSize="24px">
-                  {`${getNumberWithCommas(displayedNestApy)}% APY`}
+                  {`${getNumberWithCommas(displayedNestDailyApr)}%`}
                 </Text>
               </Block>
             </Flex>
@@ -142,7 +144,7 @@ const V2PoolCard: React.FC<HarvestProps> = ({ pool }) => {
                 </Text>
               </Block>
               <Block>
-                <Label>{TranslateString(546, 'iPEFI:PEFI Ratio')}:</Label>
+                <Label>{TranslateString(546, 'iPEFI/PEFI Ratio')}:</Label>
                 <Text color="textSubtle" bold fontSize="24px">
                   {`${Number(iPefiToPefiRatio.toFixed(2))} PEFI`}
                 </Text>
@@ -152,13 +154,13 @@ const V2PoolCard: React.FC<HarvestProps> = ({ pool }) => {
         </Flex>
         {account ? (
           <Flex justifyContent="space-between">
-            <StyledButton onClick={handleMovetoNest}>
+            <StyledButton onClick={handleMovetoNestV2}>
               Go to the Nest
               <StyledNavLink exact activeClassName="active" to="/nests" id="farm-apy-cta">
                 <SvgIcon src={`${process.env.PUBLIC_URL}/images/home/arrow-right.svg`} width="25px" height="25px" />
               </StyledNavLink>
             </StyledButton>
-            <StyledButton onClick={handleMovetoNestV2}>Migration Guide</StyledButton>
+            <StyledButton onClick={handleMigrationGuide}>Migration Guide</StyledButton>
           </Flex>
         ) : (
           <UnlockButton fullWidth isHomeButton />

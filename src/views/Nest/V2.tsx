@@ -14,7 +14,7 @@ import useTokenBalance from 'hooks/useTokenBalance'
 import useBlockGenerationTime from 'hooks/useBlockGenerationTime'
 import useUserSetting from 'hooks/useUserSetting'
 import { useV2NestContract } from 'hooks/useContract'
-import { useFarms, usePriceAvaxUsdt, useV2Pools, usePriceEthAvax, useV2NestApy } from 'state/hooks'
+import { useFarms, usePriceAvaxUsdt, useV2Pools, usePriceEthAvax, useV2NestApy, useV2NestAprPerDay } from 'state/hooks'
 import { PoolCategory } from 'config/constants/types'
 import { getFirstStakeTime } from 'subgraph/utils'
 import { getPefiAddress } from 'utils/addressHelpers'
@@ -24,7 +24,7 @@ import NestCard from './components/NestCard'
 
 const NestV2: React.FC = () => {
   const [userFirstStakeTime, setUserFirstStakeTime] = useState(0)
-  const [handsOnPenalty, setHandsOnPenalty] = useState(0)
+  const [handsOnPenalty, setHandsOnPenalty] = useState(1.13)
   const { refreshRate } = useUserSetting()
   const { path } = useRouteMatch()
   const { account } = useWeb3React()
@@ -37,6 +37,7 @@ const NestV2: React.FC = () => {
   const AVAX_BLOCK_TIME = useBlockGenerationTime()
   const iPefiContract = useV2NestContract()
   const displayedNestApy = (useV2NestApy() * 100).toFixed(2)
+  const displayedNestDailyApr = useV2NestAprPerDay().toFixed(2)
   const BLOCKS_PER_YEAR = new BigNumber(SECONDS_PER_YEAR).div(new BigNumber(AVAX_BLOCK_TIME))
 
   const poolsWithApy = pools.map((pool) => {
@@ -103,7 +104,7 @@ const NestV2: React.FC = () => {
   }
 
   useEffect(() => {
-    fetchHandsOnPenalty()
+    // fetchHandsOnPenalty()
   }, [fetchHandsOnPenalty])
 
   const xPefiToPefiRatio = getXPefiToPefiRatio()
@@ -118,10 +119,11 @@ const NestV2: React.FC = () => {
             <APYCard padding="8px 24px 16px" mb="16px">
               <Flex justifyContent="space-between" alignItems="center">
                 <Text fontSize="20px" color="white" fontWeight={500}>
-                  Staking APY
+                  {/* Staking APY */}
+                  Daily APR
                 </Text>
                 <Text fontSize="36px" bold color="white">
-                  {getNumberWithCommas(displayedNestApy)}%
+                  {getNumberWithCommas(displayedNestDailyApr)}%
                 </Text>
               </Flex>
               <Flex justifyContent="space-between" alignItems="center">
