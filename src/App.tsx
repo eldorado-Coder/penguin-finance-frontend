@@ -68,7 +68,7 @@ const App: React.FC = () => {
               <FarmsV2 />
             </Route>
             <Route path="/nests">
-              <Pools />
+              <Nest />
             </Route>
             <Route path="/ipefi">
               <IPefi />
