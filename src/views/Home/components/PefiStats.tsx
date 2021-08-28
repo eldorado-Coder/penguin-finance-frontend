@@ -242,7 +242,7 @@ const PefiStats: React.FC<HarvestProps> = ({ v1Pool, v2Pool }) => {
             />
           )}
         </Row>
-        <Row>
+        {/* <Row>
           <Text bold color={isDark ? 'red' : 'textSubtle'} fontSize="14px">
             {TranslateString(538, 'Total PEFI Staked (iPEFI):')}
           </Text>
@@ -257,7 +257,7 @@ const PefiStats: React.FC<HarvestProps> = ({ v1Pool, v2Pool }) => {
               updateInterval={30000}
             />
           )}
-        </Row>
+        </Row> */}
         {/* <Row>
           <Text color="primary" fontSize="14px">
             {TranslateString(540, 'XPEFI to PEFI ratio:')}
