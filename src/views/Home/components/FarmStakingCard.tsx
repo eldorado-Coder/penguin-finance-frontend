@@ -66,7 +66,7 @@ const FarmedStakingCard = () => {
         <Title size="xl" mb="0px" color="primary">
           {TranslateString(542, 'Farms & Staking')}
         </Title>
-        <StyledFlex mt='12px' mb='20px'>
+        <StyledFlex mt="12px" mb="20px">
           <CardImage src="/images/penguin-finance-logo.svg" alt="penguin logo" width={64} height={64} />
           <Block>
             <Label>{TranslateString(544, 'PEFI to Harvest')}:</Label>

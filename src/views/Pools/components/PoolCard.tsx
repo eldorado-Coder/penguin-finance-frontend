@@ -7,7 +7,7 @@ import { Button, IconButton, useModal, AddIcon, Image, Text, Flex, Tag, Heading,
 import { useWeb3React } from '@web3-react/core'
 import UnlockButton from 'components/UnlockButton'
 import Balance from 'components/Balance'
-import SvgIcon from 'components/SvgIcon';
+import SvgIcon from 'components/SvgIcon'
 import { useERC20, useXPefi } from 'hooks/useContract'
 import { useSousApprove } from 'hooks/useApprove'
 import useI18n from 'hooks/useI18n'
@@ -189,7 +189,7 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
   const { onUnstake } = useSousUnstake(sousId)
   const xPefiContract = useXPefi()
   const { refreshRate } = useUserSetting()
-  const history = useHistory();
+  const history = useHistory()
 
   const allowance = new BigNumber(userData?.allowance || 0)
   const stakingTokenBalance = new BigNumber(userData?.stakingTokenBalance || 0)
@@ -271,17 +271,17 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
   const xPefiToPefiRatio = getXPefiToPefiRatio()
 
   const handleMovetoNest = () => {
-    history.push('/nests');
-  };
+    history.push('/nests')
+  }
 
   const handleMovetoNestV2 = () => {
-    history.push('/nest-v2');
-  };
+    history.push('/nest-v2')
+  }
 
   return (
     <StyledCard isActive={isCardActive} isFinished={isFinished && sousId !== 0}>
       <CardContent>
-        <Flex justifyContent='space-between' mb="24px" alignItems='center'>
+        <Flex justifyContent="space-between" mb="24px" alignItems="center">
           <StyledHeading size="xl" color="primary">
             {`x${tokenName}`} {TranslateString(348, 'Nest')}
           </StyledHeading>
@@ -295,10 +295,10 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
             </a>
           </HelperTag>
         </Flex>
-        <Flex mt='12px' mb='32px'>
+        <Flex mt="12px" mb="32px">
           <CardImage src="/images/pools/xPefi.png" alt="penguin logo" width={64} height={64} />
           <Content>
-            <Flex mb='24px'>
+            <Flex mb="24px">
               <Block>
                 <Label>{TranslateString(544, 'xPEFI in Wallet')}:</Label>
                 <Text color="textSubtle" bold fontSize="24px">
@@ -328,20 +328,19 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
             </Flex>
           </Content>
         </Flex>
-        {account ? 
-          <Flex justifyContent='space-between'>
+        {account ? (
+          <Flex justifyContent="space-between">
             <StyledButton onClick={handleMovetoNest}>
               Go to the Nest
               <StyledNavLink exact activeClassName="active" to="/nests" id="farm-apy-cta">
                 <SvgIcon src={`${process.env.PUBLIC_URL}/images/home/arrow-right.svg`} width="25px" height="25px" />
               </StyledNavLink>
             </StyledButton>
-            <StyledButton onClick={handleMovetoNestV2}>
-              Migration Guide
-            </StyledButton>
+            <StyledButton onClick={handleMovetoNestV2}>Migration Guide</StyledButton>
           </Flex>
-          : <UnlockButton fullWidth isHomeButton />
-        }
+        ) : (
+          <UnlockButton fullWidth isHomeButton />
+        )}
       </CardContent>
     </StyledCard>
   )
@@ -389,7 +388,7 @@ const TokenSymbol = styled.div`
 
 const Content = styled.div`
   width: 100%;
-`;
+`
 
 const StyledNavLink = styled(NavLink)`
   margin-left: 16px;
@@ -405,6 +404,6 @@ const StyledButton = styled(Button)`
   color: white;
   width: 48%;
   white-space: nowrap;
-`;
+`
 
 export default PoolCard

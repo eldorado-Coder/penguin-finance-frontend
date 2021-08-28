@@ -23,6 +23,7 @@ import { Pool } from 'state/types'
 import { QuoteToken } from 'config/constants/types'
 import { PEFI_MAX_SUPPLY } from 'config'
 import roundDown from 'utils/roundDown'
+import useTheme from 'hooks/useTheme'
 import CardValue from './CardValue'
 
 const StyledPefiStats = styled(Card)`
@@ -67,6 +68,7 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
   const linkPriceUsd = usePriceLinkUsdt()
   const lydPriceUsd = usePriceLydUsdt()
   const [handsOnPenalty, setHandsOnPenalty] = useState(0)
+  const { isDark } = useTheme()
 
   const fetchEarlyWithdrawalFee = useCallback(async () => {
     const earlyWithdrawalFee = await xPefiContract.methods.earlyWithdrawalFee().call()
@@ -164,7 +166,7 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
           {TranslateString(534, 'PEFI Stats')}
         </StyledHeading>
         <Row>
-          <Text bold color="textSubtle" fontSize="14px">
+          <Text bold color={isDark ? 'red' : 'textSubtle'} fontSize="14px">
             {TranslateString(538, 'PEFI Marketcap Capitalization:')}
           </Text>
           {pefiMarketcap && (
@@ -179,7 +181,7 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
           )}
         </Row>
         <Row>
-          <Text bold color="textSubtle" fontSize="14px">
+          <Text bold color={isDark ? 'red' : 'textSubtle'} fontSize="14px">
             {TranslateString(536, 'Circulating PEFI Supply:')}
           </Text>
           {totalSupply && (
@@ -194,7 +196,7 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
           )}
         </Row>
         <Row>
-          <Text bold color="textSubtle" fontSize="14px">
+          <Text bold color={isDark ? 'red' : 'textSubtle'} fontSize="14px">
             {TranslateString(538, 'Total Value Locked:')}
           </Text>
           {tvl && (
@@ -210,7 +212,7 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
           )}
         </Row>
         <Row>
-          <Text bold color="textSubtle" fontSize="14px">
+          <Text bold color={isDark ? 'red' : 'textSubtle'} fontSize="14px">
             {TranslateString(538, 'Total PEFI Burned:')}
           </Text>
           {burnedBalance && (
@@ -226,7 +228,7 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
           )}
         </Row>
         <Row>
-          <Text bold color="textSubtle" fontSize="14px">
+          <Text bold color={isDark ? 'red' : 'textSubtle'} fontSize="14px">
             {TranslateString(538, 'Total PEFI Staked (xPEFI):')}
           </Text>
           {burnedBalance && (
@@ -248,7 +250,7 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
           <CardValue color="textSubtle" fontSize="14px" decimals={3} value={xPefiToPefiRatio} updateInterval={30000} />
         </Row> */}
         <Row>
-          <Text bold color="textSubtle" fontSize="14px">
+          <Text bold color={isDark ? 'red' : 'textSubtle'} fontSize="14px">
             {TranslateString(540, 'PEFI Emission Rate:')}
           </Text>
           <CardValue
@@ -262,13 +264,13 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
           />
         </Row>
         {/* <Row>
-          <Text bold color="textSubtle" fontSize="14px">
+          <Text bold color={isDark ? 'red' : 'textSubtle'} fontSize="14px">
             {TranslateString(540, 'Paper Hands Penalty:')}
           </Text>
           <CardValue color="textSubtle" fontSize="14px" decimals={2} suffix=" %" value={Number(handsOnPenalty)} updateInterval={30000} />
         </Row> */}
         <Row>
-          <Text bold color="textSubtle" fontSize="14px">
+          <Text bold color={isDark ? 'red' : 'textSubtle'} fontSize="14px">
             {TranslateString(538, 'Max PEFI Supply:')}
           </Text>
           <CardValue color="textSubtle" fontSize="14px" suffix=" PEFI" bold={false} value={PEFI_MAX_SUPPLY} />
