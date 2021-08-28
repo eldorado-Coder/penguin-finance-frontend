@@ -18,22 +18,20 @@ const Nest: React.FC = () => {
   const renderNestHeader = () => {
     return (
       <Flex justifyContent="center">
-        {activeTab === 0 ? 
+        {activeTab === 0 ? (
           <V2NestDetailsContainer>
             <Text color="primary" fontSize="32px" bold>
               Earn more PEFI
             </Text>
-            <Description mb='16px'>
-              Stake your PEFI for iPEFI and maximize your yield. No Impermanent Loss.
-            </Description>
+            <Description mb="16px">Stake your PEFI for iPEFI and maximize your yield. No Impermanent Loss.</Description>
           </V2NestDetailsContainer>
-          : 
+        ) : (
           <V1NestDetailsContainer>
             <Text color="primary" mb="24px" fontSize="32px" bold textAlign="center">
               Migrate your xPEFI and get iPEFI
             </Text>
           </V1NestDetailsContainer>
-        }
+        )}
       </Flex>
     )
   }
@@ -41,21 +39,24 @@ const Nest: React.FC = () => {
   const renderNestDescription = () => {
     return (
       <Flex justifyContent="center">
-        {activeTab === 0 ?
+        {activeTab === 0 ? (
           <V2NestDetailsContainer>
-            <NestDescription mb="24px" mt='24px'>
-              When your PEFI is staked into the Penguin Nest, you receive iPEFI. PEFI is minted & collected from fees within the Penguin Ecosystem and distributed among iPEFI holders. Your iPEFI is continuously compounding; when you unstake you will receive all the originally deposited PEFI and any earned PEFI minus the Paper Hands Penalty.
+            <NestDescription mb="24px" mt="24px">
+              When your PEFI is staked into the Penguin Nest, you receive iPEFI. PEFI is minted & collected from fees
+              within the Penguin Ecosystem and distributed among iPEFI holders. Your iPEFI is continuously compounding;
+              when you unstake you will receive all the originally deposited PEFI and any earned PEFI minus the Paper
+              Hands Penalty.
             </NestDescription>
           </V2NestDetailsContainer>
-          : 
+        ) : (
           <V1NestDetailsContainer>
-            <NestDescription mb="24px" mt='24px' textAlign="center">
+            <NestDescription mb="24px" mt="24px" textAlign="center">
               The Nest V2 contract is here! Migrate from the old staking token (xPEFI) to receive the newer, improved
-              iPEFI. After migration, your PEFI equivalent will remain unchanged, your xPEFI will simply be upgraded to iPEFI. We&apos;ll keep the Paper
-              Hands Penalty on the new contract the same as the old one for a week.
+              iPEFI. After migration, your PEFI equivalent will remain unchanged, your xPEFI will simply be upgraded to
+              iPEFI. We&apos;ll keep the Paper Hands Penalty on the new contract the same as the old one for a week.
             </NestDescription>
           </V1NestDetailsContainer>
-        }
+        )}
       </Flex>
     )
   }

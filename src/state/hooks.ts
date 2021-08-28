@@ -10,7 +10,7 @@ import useUsdtPrice from 'hooks/useUsdtPrice'
 import useAvaxPrice from 'hooks/useAvaxPrice'
 import useUserSetting from 'hooks/useUserSetting'
 import useInterval from 'hooks/useInterval'
-import { DAYS_PER_YEAR, CURRENT_NEST_DAILY_REWARDS } from 'config'
+import { DAYS_PER_YEAR, CURRENT_NEST_DAILY_REWARDS, CURRENT_V2_NEST_DAILY_REWARDS } from 'config'
 import { getBalanceNumber } from 'utils/formatBalance'
 import {
   fetchMasterChefPefiPerBlock,
@@ -421,7 +421,7 @@ export const useDonations = () => {
   return donationsState
 }
 
-// APY/APR
+// v1 nest APY/APR
 export const useNestAprPerDay = (): number => {
   const nestPool = usePoolFromPid(1)
   const totalStakedInNest = nestPool.totalStaked
@@ -470,4 +470,21 @@ export const useNestMigrator = (account): NestMigratorState => {
   }, [account, dispatch, fastRefresh])
 
   return useSelector((state: State) => state.nestMigrator)
+}
+
+// v1 nest APY/APR
+export const useV2NestAprPerDay = (): number => {
+  const v2NestPool = useV2Pools(null)[0]
+
+  const totalStakedInNest = v2NestPool.totalStaked
+  return (CURRENT_V2_NEST_DAILY_REWARDS / getBalanceNumber(totalStakedInNest)) * 100
+}
+
+export const useV2NestApr = (): number => {
+  return (DAYS_PER_YEAR * useV2NestAprPerDay()) / 100
+}
+
+export const useV2NestApy = () => {
+  const staticFee = 0
+  return (1 + useV2NestApr() / DAYS_PER_YEAR) ** DAYS_PER_YEAR - 1 + staticFee
 }

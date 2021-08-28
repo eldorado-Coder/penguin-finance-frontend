@@ -7,8 +7,8 @@ import { Button, IconButton, useModal, AddIcon, Image, Text, Flex, Tag, Heading,
 import { useWeb3React } from '@web3-react/core'
 import UnlockButton from 'components/UnlockButton'
 import Balance from 'components/Balance'
-import SvgIcon from 'components/SvgIcon';
-import { useERC20, useXPefi } from 'hooks/useContract'
+import SvgIcon from 'components/SvgIcon'
+import { useERC20, useXPefi, useV2NestContract } from 'hooks/useContract'
 import { useSousApprove } from 'hooks/useApprove'
 import useI18n from 'hooks/useI18n'
 import { useSousStake } from 'hooks/useStake'
@@ -187,9 +187,9 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
   const { onApprove } = useSousApprove(stakingTokenContract, sousId)
   const { onStake } = useSousStake(sousId, isBnbPool)
   const { onUnstake } = useSousUnstake(sousId)
-  const xPefiContract = useXPefi()
+  const iPefiContract = useV2NestContract()
   const { refreshRate } = useUserSetting()
-  const history = useHistory();
+  const history = useHistory()
 
   const allowance = new BigNumber(userData?.allowance || 0)
   const stakingTokenBalance = new BigNumber(userData?.stakingTokenBalance || 0)
@@ -223,11 +223,13 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
   )
 
   const fetchEarlyWithdrawalFee = useCallback(async () => {
-    const earlyWithdrawalFee = await xPefiContract.methods.earlyWithdrawalFee().call()
-    const maxEarlyWithdrawalFee = await xPefiContract.methods.MAX_EARLY_WITHDRAW_FEE().call()
-    const penalty = (earlyWithdrawalFee / maxEarlyWithdrawalFee) * 100
-    setHandsOnPenalty(penalty)
-  }, [xPefiContract])
+    // const earlyWithdrawalFee = await xPefiContract.methods.earlyWithdrawalFee().call()
+    // const maxEarlyWithdrawalFee = await xPefiContract.methods.MAX_EARLY_WITHDRAW_FEE().call()
+    // const penalty = (earlyWithdrawalFee / maxEarlyWithdrawalFee) * 100
+
+    const perHandsPenalty = await iPefiContract.methods.paperHandsPenalty().call()
+    setHandsOnPenalty(perHandsPenalty)
+  }, [iPefiContract])
 
   const fetchStakedPefiBalance = useCallback(async () => {
     const accountInfo = await getAccounts(account)
@@ -249,7 +251,7 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
     return () => clearInterval(refreshInterval)
   }, [account, refreshRate, fetchStakedPefiBalance])
 
-  const getXPefiToPefiRatio = () => {
+  const getIPefiToPefiRatio = () => {
     return pool.totalStaked && pool.totalSupply
       ? new BigNumber(pool.totalStaked).div(new BigNumber(pool.totalSupply)).toNumber()
       : 1
@@ -268,22 +270,22 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
     }
   }, [onApprove, setRequestedApproval])
 
-  const xPefiToPefiRatio = getXPefiToPefiRatio()
+  const iPefiToPefiRatio = getIPefiToPefiRatio()
 
   const handleMovetoNest = () => {
-    history.push('/nests');
-  };
+    history.push('/nests')
+  }
 
   const handleMovetoNestV2 = () => {
-    history.push('/nest-v2');
-  };
+    history.push('/nest-v2')
+  }
 
   return (
     <StyledCard isActive={isCardActive} isFinished={isFinished && sousId !== 0}>
       <CardContent>
-        <Flex justifyContent='space-between' mb="24px" alignItems='center'>
+        <Flex justifyContent="space-between" mb="24px" alignItems="center">
           <StyledHeading size="xl" color="primary">
-            {`x${tokenName}`} {TranslateString(348, 'Nest')}
+            {`i${tokenName}`} {TranslateString(348, 'Nest')}
           </StyledHeading>
           <HelperTag variant="primary" outline>
             <a
@@ -295,14 +297,14 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
             </a>
           </HelperTag>
         </Flex>
-        <Flex mt='12px' mb='32px'>
-          <CardImage src="/images/pools/xPefi.png" alt="penguin logo" width={64} height={64} />
+        <Flex mt="12px" mb="32px">
+          <CardImage src="/images/pools/iPefi.svg" alt="iPefi logo" width={64} height={64} />
           <Content>
-            <Flex mb='24px'>
+            <Flex mb="24px">
               <Block>
-                <Label>{TranslateString(544, 'xPEFI in Wallet')}:</Label>
+                <Label>{TranslateString(544, 'iPEFI in Wallet')}:</Label>
                 <Text color="textSubtle" bold fontSize="24px">
-                  {`${getBalanceNumber(stakedBalance).toFixed(2)} xPEFI`}
+                  {`${getBalanceNumber(stakedBalance).toFixed(2)} iPEFI`}
                 </Text>
               </Block>
               <Block>
@@ -320,28 +322,27 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
                 </Text>
               </Block>
               <Block>
-                <Label>{TranslateString(546, 'xPEFI:PEFI Ratio')}:</Label>
+                <Label>{TranslateString(546, 'iPEFI:PEFI Ratio')}:</Label>
                 <Text color="textSubtle" bold fontSize="24px">
-                  {`${Number(xPefiToPefiRatio.toFixed(2))} PEFI`}
+                  {`${Number(iPefiToPefiRatio.toFixed(2))} PEFI`}
                 </Text>
               </Block>
             </Flex>
           </Content>
         </Flex>
-        {account ? 
-          <Flex justifyContent='space-between'>
+        {account ? (
+          <Flex justifyContent="space-between">
             <StyledButton onClick={handleMovetoNest}>
               Go to the Nest
               <StyledNavLink exact activeClassName="active" to="/nests" id="farm-apy-cta">
                 <SvgIcon src={`${process.env.PUBLIC_URL}/images/home/arrow-right.svg`} width="25px" height="25px" />
               </StyledNavLink>
             </StyledButton>
-            <StyledButton onClick={handleMovetoNestV2}>
-              Migration Guide
-            </StyledButton>
+            <StyledButton onClick={handleMovetoNestV2}>Migration Guide</StyledButton>
           </Flex>
-          : <UnlockButton fullWidth isHomeButton />
-        }
+        ) : (
+          <UnlockButton fullWidth isHomeButton />
+        )}
       </CardContent>
     </StyledCard>
   )
@@ -389,7 +390,7 @@ const TokenSymbol = styled.div`
 
 const Content = styled.div`
   width: 100%;
-`;
+`
 
 const StyledNavLink = styled(NavLink)`
   margin-left: 16px;
@@ -405,6 +406,6 @@ const StyledButton = styled(Button)`
   color: white;
   width: 48%;
   white-space: nowrap;
-`;
+`
 
 export default PoolCard
