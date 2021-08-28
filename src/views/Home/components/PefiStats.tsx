@@ -229,7 +229,7 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
         </Row>
         <Row>
           <Text bold color={isDark ? 'red' : 'textSubtle'} fontSize="14px">
-            {TranslateString(538, 'Total PEFI Staked (xPEFI):')}
+            {TranslateString(538, 'Total PEFI Staked (iPEFI):')}
           </Text>
           {burnedBalance && (
             <CardValue
