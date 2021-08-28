@@ -2,10 +2,12 @@ import BigNumber from 'bignumber.js'
 import React, { useCallback, useState, useEffect } from 'react'
 import ReactTooltip from 'react-tooltip'
 import styled, { keyframes } from 'styled-components'
-import { Button, IconButton, useModal, AddIcon, Image, Text, Flex, Tag } from 'penguinfinance-uikit2'
+import { NavLink, useHistory } from 'react-router-dom'
+import { Button, IconButton, useModal, AddIcon, Image, Text, Flex, Tag, Heading, InfoIcon } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import UnlockButton from 'components/UnlockButton'
 import Balance from 'components/Balance'
+import SvgIcon from 'components/SvgIcon';
 import { useERC20, useXPefi } from 'hooks/useContract'
 import { useSousApprove } from 'hooks/useApprove'
 import useI18n from 'hooks/useI18n'
@@ -40,11 +42,16 @@ const RainbowLight = keyframes`
 
 const StyledCard = styled(Card)<{ isNestPage?: boolean }>`
   min-width: 350px;
+  border-radius: 32px;
   @media (min-width: 640px) {
     transform: ${(props) => props.isNestPage && 'scale(1.3)'};
     margin-top: ${(props) => props.isNestPage && '60px'};
     margin-bottom: ${(props) => props.isNestPage && '60px'};
   }
+`
+
+const StyledHeading = styled(Heading)`
+  font-weight: 800;
 `
 
 const StyledCardAccent = styled.div`
@@ -119,12 +126,22 @@ const CustomToolTip = styled(ReactTooltip)`
 const CardContent = styled.div`
   padding: 24px;
   background: ${(props) => props.theme.card.background};
-  border-radius: 32px 32px 0 0;
+  border-radius: 32px;
 `
 
 const CardAction = styled.div`
   background: ${(props) => props.theme.card.background};
   border-radius: 0 0 32px 32px;
+`
+
+const Block = styled.div`
+  width: 50%;
+`
+
+const CardImage = styled.img`
+  margin-right: 20px;
+  width: 64px;
+  height: 64px;
 `
 
 interface PoolWithApy extends Pool {
@@ -172,6 +189,7 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
   const { onUnstake } = useSousUnstake(sousId)
   const xPefiContract = useXPefi()
   const { refreshRate } = useUserSetting()
+  const history = useHistory();
 
   const allowance = new BigNumber(userData?.allowance || 0)
   const stakingTokenBalance = new BigNumber(userData?.stakingTokenBalance || 0)
@@ -252,34 +270,21 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
 
   const xPefiToPefiRatio = getXPefiToPefiRatio()
 
+  const handleMovetoNest = () => {
+    history.push('/nests');
+  };
+
+  const handleMovetoNestV2 = () => {
+    history.push('/nest-v2');
+  };
+
   return (
-    <StyledCard isNestPage={isNestPage} isActive={isCardActive} isFinished={isFinished && sousId !== 0}>
-      {isMainPool && <StyledCardAccent />}
-      {isFinished && sousId !== 0 && <PoolFinishedSash />}
+    <StyledCard isActive={isCardActive} isFinished={isFinished && sousId !== 0}>
       <CardContent>
-        <CardTitle isFinished={isFinished && sousId !== 0}>
-          {`x${tokenName}`} {TranslateString(348, 'Nest')}
-        </CardTitle>
-        <Flex justifyContent="flex-end">
-          {/* <APYTag variant="primary" outline>
-            <a href="/">
-              <span>{getNumberWithCommas(displayedNestApr)}%</span> APR
-            </a>
-          </APYTag> */}
-          <APYTag variant="primary" outline>
-            <APYToolTipWrapper data-for="custom-class" data-tip={APY_TOOLTIP_TEXT}>
-              <span>{getNumberWithCommas(displayedNestApy)}%</span> APY
-            </APYToolTipWrapper>
-            <CustomToolTip
-              id="custom-class"
-              wrapper="div"
-              delayHide={300}
-              effect="solid"
-              multiline
-              place="bottom"
-              html
-            />
-          </APYTag>
+        <Flex justifyContent='space-between' mb="24px" alignItems='center'>
+          <StyledHeading size="xl" color="primary">
+            {`x${tokenName}`} {TranslateString(348, 'Nest')}
+          </StyledHeading>
           <HelperTag variant="primary" outline>
             <a
               href="https://penguin-finance.gitbook.io/penguin-finance/summary/penguin-nests-staking-and-fee-collection"
@@ -289,99 +294,55 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
               <span>?</span>
             </a>
           </HelperTag>
-          <MultiplierTag variant="primary">160X</MultiplierTag>
         </Flex>
-        <div style={{ marginBottom: '8px', display: 'flex', alignItems: 'center' }}>
-          <Flex minWidth="100%" alignItems="center">
-            <Image src="/images/pools/xPefi.png" width={64} height={64} alt={tokenName} />
-            <Flex flexDirection="column" width="100%">
-              <Flex ml="8px" justifyContent="space-between">
-                <Text color="textSubtle" bold fontSize="14px">
-                  xPEFI to PEFI:
+        <Flex mt='12px' mb='32px'>
+          <CardImage src="/images/pools/xPefi.png" alt="penguin logo" width={64} height={64} />
+          <Content>
+            <Flex mb='24px'>
+              <Block>
+                <Label>{TranslateString(544, 'xPEFI in Wallet')}:</Label>
+                <Text color="textSubtle" bold fontSize="24px">
+                  {`${getBalanceNumber(stakedBalance).toFixed(2)} xPEFI`}
                 </Text>
-                <Text color="textSubtle" bold fontSize="14px">
-                  {Number(xPefiToPefiRatio.toFixed(3))}
+              </Block>
+              <Block>
+                <Label>{TranslateString(546, 'Current APY')}:</Label>
+                <Text color="textSubtle" bold fontSize="24px">
+                  {`${getNumberWithCommas(displayedNestApy)}% APY`}
                 </Text>
-              </Flex>
-              <Flex ml="8px" justifyContent="space-between">
-                <Text color="textSubtle" bold fontSize="14px">
-                  Paper Hands Penalty:
-                </Text>
-                <Text color="textSubtle" bold fontSize="14px">{`${Number(handsOnPenalty).toFixed(2)}%`}</Text>
-              </Flex>
+              </Block>
             </Flex>
+            <Flex>
+              <Block>
+                <Label>{TranslateString(544, 'Paper Hands Penalty')}:</Label>
+                <Text color="textSubtle" bold fontSize="24px">
+                  {`${Number(handsOnPenalty).toFixed(2)}% PPL`}
+                </Text>
+              </Block>
+              <Block>
+                <Label>{TranslateString(546, 'xPEFI:PEFI Ratio')}:</Label>
+                <Text color="textSubtle" bold fontSize="24px">
+                  {`${Number(xPefiToPefiRatio.toFixed(2))} PEFI`}
+                </Text>
+              </Block>
+            </Flex>
+          </Content>
+        </Flex>
+        {account ? 
+          <Flex justifyContent='space-between'>
+            <StyledButton onClick={handleMovetoNest}>
+              Go to the Nest
+              <StyledNavLink exact activeClassName="active" to="/nests" id="farm-apy-cta">
+                <SvgIcon src={`${process.env.PUBLIC_URL}/images/home/arrow-right.svg`} width="25px" height="25px" />
+              </StyledNavLink>
+            </StyledButton>
+            <StyledButton onClick={handleMovetoNestV2}>
+              Migration Guide
+            </StyledButton>
           </Flex>
-        </div>
-        <StyledCardActions>
-          {!account && <UnlockButton isHomeButton={isHomePage} />}
-          {account &&
-            (needsApproval ? (
-              <div style={{ flex: 1 }}>
-                <Button disabled={isFinished || requestedApproval} onClick={handleApprove} scale="md">
-                  {`Approve ${stakingTokenName}`}
-                </Button>
-              </div>
-            ) : (
-              <>
-                <Button disabled={stakedBalance.eq(new BigNumber(0))} onClick={onPresentPenaltyConfirm}>
-                  {`Unstake x${stakingTokenName}`}
-                </Button>
-                <StyledActionSpacer />
-                <IconButton disabled={isFinished && sousId !== 0} onClick={onPresentDeposit}>
-                  <AddIcon color="background" />
-                </IconButton>
-              </>
-            ))}
-        </StyledCardActions>
-        <StyledDetails>
-          <Label style={{ flex: 1 }}>
-            <Text color="primary">{TranslateString(384, 'Your Stake:')}</Text>
-          </Label>
-          <Balance fontSize="14px" isDisabled={isFinished} value={getBalanceNumber(stakedBalance)} />
-          <TokenSymbol>
-            <Text color="primary" fontSize="14px">
-              {`x${stakingTokenName}`}
-            </Text>
-          </TokenSymbol>
-        </StyledDetails>
-        <StyledDetails>
-          <Label style={{ flex: 1 }}>
-            <Text color="primary">{TranslateString(384, 'PEFI equivalent:')}</Text>
-          </Label>
-          <Balance
-            fontSize="14px"
-            isDisabled={isFinished}
-            value={new BigNumber(getBalanceNumber(stakedBalance)).times(new BigNumber(rewardTokenRatio)).toNumber()}
-          />
-          <TokenSymbol>
-            <Text color="primary" fontSize="14px">
-              {stakingTokenName}
-            </Text>
-          </TokenSymbol>
-        </StyledDetails>
-        {/* <StyledDetails>
-          <Label style={{ flex: 1 }}>
-            <Text color="primary">{`PEFI Staked: `}</Text>
-          </Label>
-          <Balance fontSize="14px" isDisabled={isFinished} value={historicalPefiStakedBalance} />
-          <TokenSymbol>
-            <Text color="primary" fontSize="14px">
-              {stakingTokenName}
-            </Text>
-          </TokenSymbol>
-        </StyledDetails> */}
+          : <UnlockButton fullWidth isHomeButton />
+        }
       </CardContent>
-      <CardAction>
-        <CardFooter
-          penguinNestsGuideLink={penguinNestsGuideLink}
-          totalPefiStaked={totalStaked}
-          totalXPefiBalance={totalSupply}
-          blocksRemaining={blocksRemaining}
-          isFinished={isFinished}
-          blocksUntilStart={blocksUntilStart}
-          poolCategory={poolCategory}
-        />
-      </CardAction>
     </StyledCard>
   )
 }
@@ -415,8 +376,9 @@ const StyledDetails = styled.div`
   font-size: 14px;
 `
 
-const Label = styled.div`
-  margin-left: 80px;
+const Label = styled(Text).attrs({ color: 'red' })`
+  line-height: 1;
+  font-size: 14px;
 `
 
 const TokenSymbol = styled.div`
@@ -424,5 +386,25 @@ const TokenSymbol = styled.div`
   align-items: center;
   margin-left: 5px;
 `
+
+const Content = styled.div`
+  width: 100%;
+`;
+
+const StyledNavLink = styled(NavLink)`
+  margin-left: 16px;
+  svg {
+    path {
+      fill: white;
+    }
+  }
+`
+
+const StyledButton = styled(Button)`
+  background-color: ${({ theme }) => theme.colors.red};
+  color: white;
+  width: 48%;
+  white-space: nowrap;
+`;
 
 export default PoolCard
