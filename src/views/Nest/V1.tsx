@@ -17,6 +17,7 @@ import UnlockButton from 'components/UnlockButton'
 import SvgIcon from 'components/SvgIcon'
 import CardValue from 'components/CardValue'
 import roundDown from 'utils/roundDown'
+import { getIPefiAddress } from 'utils/addressHelpers'
 
 const NestV1: React.FC = () => {
   const [pending, setPending] = useState(false)
@@ -89,6 +90,32 @@ const NestV1: React.FC = () => {
     }
   }, [onNestMigrate, setPending])
 
+  const addMetamask = async (tokenAddress: string, tokenSymbol: string, tokenDecimals: number) => {
+    const provider = (window as any).ethereum
+    if (provider) {
+      try {
+        await provider.request({
+          method: 'wallet_watchAsset',
+          params: {
+            type: 'ERC20',
+            options: {
+              address: tokenAddress,
+              symbol: tokenSymbol,
+              decimals: tokenDecimals,
+              image: '',
+            },
+          },
+        })
+      } catch (error) {
+        console.log('Error => addMetamask')
+      }
+    }
+  }
+
+  const handleAddIPefiToken = async () => {
+    await addMetamask(getIPefiAddress(), 'iPEFI', 18)
+  }
+
   const renderActionButton = () => {
     if (!xPefiAllowance.toNumber()) {
       return (
@@ -111,7 +138,7 @@ const NestV1: React.FC = () => {
           <MigrateCard padding="8px 24px 16px" mb="32px">
             <Flex justifyContent="center" alignItems="center" mb="24px">
               <Flex flexDirection="column" alignItems="center">
-                <CardImage src="/images/pools/iPefi.svg" alt="xpefi logo" width={80} height={80} />
+                <CardImage src="/images/pools/xPefi.png" alt="xpefi logo" width={80} height={80} />
                 <Flex alignItems="center">
                   <Balance>
                     <CardValue
@@ -131,7 +158,7 @@ const NestV1: React.FC = () => {
                 <SvgIcon src={`${process.env.PUBLIC_URL}/images/home/arrow-right.svg`} width="32px" height="32px" />
               </MigrateIconWrapper>
               <Flex flexDirection="column" alignItems="center">
-                <CardImage src="/images/pools/xPefi.png" alt="xpefi logo" width={80} height={80} />
+                <CardImage src="/images/pools/iPefi.svg" alt="ipefi logo" width={80} height={80} />
                 <Flex alignItems="center">
                   <Balance>
                     <CardValue
@@ -149,6 +176,9 @@ const NestV1: React.FC = () => {
               </Flex>
             </Flex>
             {account ? <> {renderActionButton()} </> : <StyledUnlockButton />}
+            <StyledButton scale="md" onClick={handleAddIPefiToken}>
+              Add iPEFI to Metamask
+            </StyledButton>
           </MigrateCard>
         </CardWrapper>
         <Alert textAlign="center">
@@ -164,6 +194,7 @@ const StyledButton = styled(Button)<{ tokenBalance?: string }>`
   border-radius: 8px;
   color: ${({ theme }) => theme.isDark && '#30264f'};
   background-color: ${({ theme }) => !theme.isDark && '#372871'};
+  margin-top: 16px;
 `
 
 const CardWrapper = styled(Flex)`
