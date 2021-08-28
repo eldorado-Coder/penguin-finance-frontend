@@ -14,7 +14,7 @@ import useTokenBalance from 'hooks/useTokenBalance'
 import useBlockGenerationTime from 'hooks/useBlockGenerationTime'
 import useUserSetting from 'hooks/useUserSetting'
 import { useXPefi } from 'hooks/useContract'
-import { useFarms, usePriceAvaxUsdt, usePools, useV2Pools, usePriceEthAvax, useNestApy } from 'state/hooks'
+import { useFarms, usePriceAvaxUsdt, usePools, usePriceEthAvax, useNestApy } from 'state/hooks'
 import { PoolCategory } from 'config/constants/types'
 import { getFirstStakeTime } from 'subgraph/utils'
 import { getPefiAddress } from 'utils/addressHelpers'
@@ -111,9 +111,7 @@ const NestV2: React.FC = () => {
   const xPefiToPefiRatio = getXPefiToPefiRatio()
   const stakedBalance = new BigNumber(openPools[0].userData?.stakedBalance || 0)
   const pefiBalance = useTokenBalance(getPefiAddress())
-
-  const currentDateTime = new Date().getTime() / 1000
-
+  
   return (
     <Flex justifyContent="center">
       <NestDetailsContainer>
@@ -207,23 +205,6 @@ const NestV2: React.FC = () => {
                 </BalanceTextSmall>
               </Flex>
             </Flex>
-            {/* <BalanceLabel mt="24px" mb="8px">
-              Your Stats
-            </BalanceLabel>
-            <Flex alignItems="flex-end">
-              <Balance>
-                <CardValue
-                  className="balance"
-                  fontSize="24px"
-                  value={account && userFirstStakeTime ? (currentDateTime - userFirstStakeTime) / 86400 : 0}
-                  decimals={0}
-                  lineHeight="1.2"
-                />
-              </Balance>
-            </Flex>
-            <BalanceText mb="8px" fontSize="20px" fontWeight={300}>
-              Days Since First Deposit
-            </BalanceText> */}
           </BalanceCard>
         </NestCardsWrapper>
       </NestDetailsContainer>
@@ -281,11 +262,6 @@ const BalanceLabel = styled(Text)`
 const NestDetailsContainer = styled.div`
   max-width: 720px;
   width: 100%;
-`
-
-const NestDescription = styled(Text)`
-  max-width: 480px;
-  color: ${({ theme }) => (theme.isDark ? '#DDD7ff' : theme.colors.secondary)};
 `
 
 const ViewStatsButton = styled(Button)`

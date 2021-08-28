@@ -20,13 +20,16 @@ const Nest: React.FC = () => {
       <Flex justifyContent="center">
         {activeTab === 0 ? 
           <V2NestDetailsContainer>
-            <Text color="primary" mb="24px" fontSize="24px" bold>
-              Maximize yield by staking PEFI for iPEFI
+            <Text color="primary" fontSize="32px" bold>
+              Earn more PEFI
             </Text>
+            <Description mb='16px'>
+              Stake your PEFI for iPEFI and maximize your yield. No Impermanent Loss.
+            </Description>
           </V2NestDetailsContainer>
           : 
           <V1NestDetailsContainer>
-            <Text color="primary" mb="24px" fontSize="24px" bold textAlign="center">
+            <Text color="primary" mb="24px" fontSize="32px" bold textAlign="center">
               Migrate your xPEFI and get iPEFI
             </Text>
           </V1NestDetailsContainer>
@@ -41,10 +44,7 @@ const Nest: React.FC = () => {
         {activeTab === 0 ?
           <V2NestDetailsContainer>
             <NestDescription mb="24px" mt='24px'>
-              PEFI is minted & collected from fees within the Penguin Ecosystem and sent to the Penguin Nest (iPEFI
-              holders). When your PEFI is staked into the Penguin Nest, you receive iPEFI, granting access to exclusive
-              dApps within Penguin Finance. Your iPEFI is continuously compounding, when you unstake you will receive all
-              the originally deposited PEFI and any earned PEFI minus the paper hands penalty (PPL).
+              When your PEFI is staked into the Penguin Nest, you receive iPEFI. PEFI is minted & collected from fees within the Penguin Ecosystem and distributed among iPEFI holders. Your iPEFI is continuously compounding; when you unstake you will receive all the originally deposited PEFI and any earned PEFI minus the Paper Hands Penalty.
             </NestDescription>
           </V2NestDetailsContainer>
           : 
@@ -114,10 +114,7 @@ const IgloosBgContainer = styled.div`
 `
 
 const NestBannerContainer = styled.div`
-  margin-bottom: 24px;
-  @media (min-width: 640px) {
-    margin-bottom: 64px;
-  }
+  margin-bottom: 8px;
 `
 
 const BannerImage = styled.img`
@@ -153,6 +150,10 @@ const OptionItem = styled(ButtonMenuItem)<{ active: boolean }>`
   background-color: ${({ active, theme }) => active && theme.colors.red};
   color: ${({ active }) => (active ? 'white' : '#b2b2ce')};
   margin: 0px !important;
+`
+
+const Description = styled(Text)`
+  color: ${({ theme }) => (theme.isDark ? '#DDD7ff' : theme.colors.secondary)};
 `
 
 export default Nest
