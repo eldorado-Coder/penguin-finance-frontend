@@ -9,7 +9,7 @@ import SvgIcon from 'components/SvgIcon'
 import { useV2NestContract } from 'hooks/useContract'
 import useI18n from 'hooks/useI18n'
 import { getBalanceNumber, getNumberWithCommas } from 'utils/formatBalance'
-import { useNestApy } from 'state/hooks'
+import { useV2NestApy } from 'state/hooks'
 import { Pool } from 'state/types'
 import Card from './Card'
 
@@ -73,16 +73,16 @@ const V2PoolCard: React.FC<HarvestProps> = ({ pool }) => {
   const stakedBalance = new BigNumber(userData?.stakedBalance || 0)
   const accountHasStakedBalance = stakedBalance?.toNumber() > 0
   const isCardActive = isFinished && accountHasStakedBalance
-  const displayedNestApy = (useNestApy() * 100).toFixed(2)
+  const displayedNestApy = (useV2NestApy() * 100).toFixed(2)
 
-  const fetchEarlyWithdrawalFee = useCallback(async () => {
+  const fetchHandsOnPenalty = useCallback(async () => {
     const perHandsPenalty = await iPefiContract.methods.paperHandsPenalty().call()
     setHandsOnPenalty(perHandsPenalty)
   }, [iPefiContract])
 
   useEffect(() => {
-    fetchEarlyWithdrawalFee()
-  }, [fetchEarlyWithdrawalFee])
+    fetchHandsOnPenalty()
+  }, [fetchHandsOnPenalty])
 
   const getIPefiToPefiRatio = () => {
     return pool.totalStaked && pool.totalSupply

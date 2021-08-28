@@ -13,8 +13,8 @@ import useBlock from 'hooks/useBlock'
 import useTokenBalance from 'hooks/useTokenBalance'
 import useBlockGenerationTime from 'hooks/useBlockGenerationTime'
 import useUserSetting from 'hooks/useUserSetting'
-import { useXPefi } from 'hooks/useContract'
-import { useFarms, usePriceAvaxUsdt, usePools, useV2Pools, usePriceEthAvax, useNestApy } from 'state/hooks'
+import { useV2NestContract } from 'hooks/useContract'
+import { useFarms, usePriceAvaxUsdt, useV2Pools, usePriceEthAvax, useV2NestApy } from 'state/hooks'
 import { PoolCategory } from 'config/constants/types'
 import { getFirstStakeTime } from 'subgraph/utils'
 import { getPefiAddress } from 'utils/addressHelpers'
@@ -31,13 +31,12 @@ const NestV2: React.FC = () => {
   const farms = useFarms()
   // const pools = usePools(account)
   const pools = useV2Pools(account)
-
   const avaxPriceUSD = usePriceAvaxUsdt()
   const ethPriceBnb = usePriceEthAvax()
   const block = useBlock()
   const AVAX_BLOCK_TIME = useBlockGenerationTime()
-  const xPefiContract = useXPefi()
-  const displayedNestApy = (useNestApy() * 100).toFixed(2)
+  const iPefiContract = useV2NestContract()
+  const displayedNestApy = (useV2NestApy() * 100).toFixed(2)
   const BLOCKS_PER_YEAR = new BigNumber(SECONDS_PER_YEAR).div(new BigNumber(AVAX_BLOCK_TIME))
 
   const poolsWithApy = pools.map((pool) => {
@@ -45,8 +44,7 @@ const NestV2: React.FC = () => {
     const rewardTokenFarm = farms.find((f) => f.tokenSymbol === pool.tokenName)
     const stakingTokenFarm = farms.find((s) => s.tokenSymbol === pool.stakingTokenName)
 
-    // tmp mulitplier to support ETH farms
-    // Will be removed after the price api
+    // TODO: tmp mulitplier to support ETH farms. Will be removed after the price api
     const tempMultiplier = stakingTokenFarm?.quoteTokenSymbol === 'ETH' ? ethPriceBnb : 1
 
     const stakingTokenPriceInAVAX = isBnbPool
@@ -89,12 +87,10 @@ const NestV2: React.FC = () => {
     return () => clearInterval(refreshInterval)
   }, [account, refreshRate, fetchUserFirstStakeTime])
 
-  const fetchEarlyWithdrawalFee = useCallback(async () => {
-    const earlyWithdrawalFee = await xPefiContract.methods.earlyWithdrawalFee().call()
-    const maxEarlyWithdrawalFee = await xPefiContract.methods.MAX_EARLY_WITHDRAW_FEE().call()
-    const penalty = (earlyWithdrawalFee / maxEarlyWithdrawalFee) * 100
-    setHandsOnPenalty(penalty)
-  }, [xPefiContract])
+  const fetchHandsOnPenalty = useCallback(async () => {
+    const perHandsPenalty = await iPefiContract.methods.paperHandsPenalty().call()
+    setHandsOnPenalty(perHandsPenalty)
+  }, [iPefiContract])
 
   const getXPefiToPefiRatio = () => {
     return openPools[0].totalStaked && openPools[0].totalSupply
@@ -107,8 +103,8 @@ const NestV2: React.FC = () => {
   }
 
   useEffect(() => {
-    fetchEarlyWithdrawalFee()
-  }, [fetchEarlyWithdrawalFee])
+    fetchHandsOnPenalty()
+  }, [fetchHandsOnPenalty])
 
   const xPefiToPefiRatio = getXPefiToPefiRatio()
   const stakedBalance = new BigNumber(openPools[0].userData?.stakedBalance || 0)
@@ -132,7 +128,7 @@ const NestV2: React.FC = () => {
                 <ViewStatsButton scale="sm" onClick={handleLearnMore}>
                   Learn More
                 </ViewStatsButton>
-                <APYLabel>{`${handsOnPenalty.toFixed(2)}% Paper Hands Penalty`}</APYLabel>
+                <APYLabel>{`${Number(handsOnPenalty).toFixed(2)}% Paper Hands Penalty`}</APYLabel>
               </Flex>
             </APYCard>
             <Route exact path={`${path}`}>
