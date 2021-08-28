@@ -7,9 +7,13 @@ import {
   updateUserBalance,
   fetchPoolsPublicDataAsync,
   fetchLaunchpadUserDataAsync,
+  // v2
+  updateV2PoolUserStakedBalance,
+  updateV2PoolUserBalance,
+  fetchV2PoolsPublicDataAsync,
 } from 'state/actions'
 import { unstake, sousUnstake, sousEmegencyUnstake, launchpadUnstake } from 'utils/callHelpers'
-import { useLaunchPad, useMasterchef, useSousChef } from './useContract'
+import { useLaunchPad, useMasterchef, useSousChef, useV2SousChef } from './useContract'
 
 const useUnstake = (pid: number, type?: string) => {
   const dispatch = useDispatch()
@@ -76,3 +80,34 @@ export const useLaunchpadUnstake = () => {
 }
 
 export default useUnstake
+
+// v2
+export const useV2SousUnstake = (sousId) => {
+  const dispatch = useDispatch()
+  const { account } = useWeb3React()
+  const masterChefContract = useMasterchef()
+  const sousChefContract = useV2SousChef(sousId)
+  const isOldSyrup = false
+  const gasPrice = 300000
+
+  const handleUnstake = useCallback(
+    async (amount: string) => {
+      if (sousId === 0) {
+        const txHash = await unstake(masterChefContract, 0, amount, account, gasPrice)
+        console.info(txHash)
+      } else if (isOldSyrup) {
+        const txHash = await sousEmegencyUnstake(sousChefContract, amount, account)
+        console.info(txHash)
+      } else {
+        const txHash = await sousUnstake(sousChefContract, amount, account, gasPrice)
+        console.info(txHash)
+      }
+      dispatch(updateV2PoolUserStakedBalance(sousId, account))
+      dispatch(updateV2PoolUserBalance(sousId, account))
+      dispatch(fetchV2PoolsPublicDataAsync())
+    },
+    [account, dispatch, isOldSyrup, masterChefContract, sousChefContract, sousId],
+  )
+
+  return { onUnstake: handleUnstake }
+}
