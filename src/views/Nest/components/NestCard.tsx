@@ -4,9 +4,9 @@ import styled from 'styled-components'
 import { Text, Flex, Tag, ButtonMenu, ButtonMenuItem } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import { useERC20 } from 'hooks/useContract'
-import { useSousApprove } from 'hooks/useApprove'
-import { useSousStake } from 'hooks/useStake'
-import { useSousUnstake } from 'hooks/useUnstake'
+import { useV2SousApprove } from 'hooks/useApprove'
+import { useV2SousStake } from 'hooks/useStake'
+import { useV2SousUnstake } from 'hooks/useUnstake'
 import useBlock from 'hooks/useBlock'
 import { PoolCategory } from 'config/constants/types'
 import { Pool } from 'state/types'
@@ -18,9 +18,6 @@ import UnstakeForm from './forms/UnstakeForm'
 const StyledCard = styled(Card)<{ isNestPage?: boolean }>`
   border-radius: 8px;
   width: 100%;
-  @media (min-width: 640px) {
-    margin-bottom: ${(props) => props.isNestPage && '60px'};
-  }
 
   ${({ theme }) => theme.mediaQueries.sm} {
     max-width: 460px;
@@ -56,7 +53,7 @@ interface HarvestProps {
   isHomePage?: boolean
 }
 
-const NestCard: React.FC<HarvestProps> = ({ pool, isNestPage }) => {
+const NestCard: React.FC<HarvestProps> = ({ pool }) => {
   const {
     sousId,
     stakingTokenName,
@@ -81,9 +78,9 @@ const NestCard: React.FC<HarvestProps> = ({ pool, isNestPage }) => {
   const stakingTokenContract = useERC20(stakingTokenAddress)
   const { account } = useWeb3React()
   const block = useBlock()
-  const { onApprove } = useSousApprove(stakingTokenContract, sousId)
-  const { onStake } = useSousStake(sousId, isBnbPool)
-  const { onUnstake } = useSousUnstake(sousId)
+  const { onApprove } = useV2SousApprove(stakingTokenContract, sousId)
+  const { onStake } = useV2SousStake(sousId, isBnbPool)
+  const { onUnstake } = useV2SousUnstake(sousId)
 
   const allowance = new BigNumber(userData?.allowance || 0)
   const stakingTokenBalance = new BigNumber(userData?.stakingTokenBalance || 0)
@@ -100,7 +97,7 @@ const NestCard: React.FC<HarvestProps> = ({ pool, isNestPage }) => {
     setActiveTab(tab)
   }
 
-  const getXPefiToPefiRatio = () => {
+  const getIPefiToPefiRatio = () => {
     return pool.totalStaked && pool.totalSupply
       ? new BigNumber(pool.totalStaked).div(new BigNumber(pool.totalSupply)).toNumber()
       : 1
@@ -119,10 +116,10 @@ const NestCard: React.FC<HarvestProps> = ({ pool, isNestPage }) => {
     }
   }, [onApprove, setRequestedApproval])
 
-  const xPefiToPefiRatio = getXPefiToPefiRatio()
+  const iPefiToPefiRatio = getIPefiToPefiRatio()
 
   return (
-    <StyledCard isNestPage={isNestPage} isActive={isCardActive} isFinished={isFinished && sousId !== 0}>
+    <StyledCard isActive={isCardActive} isFinished={isFinished && sousId !== 0}>
       <CardContent>
         <TabWrapper>
           <ButtonMenu variant="subtle" activeIndex={activeTab} onItemClick={handleSwitchTab}>
@@ -134,7 +131,7 @@ const NestCard: React.FC<HarvestProps> = ({ pool, isNestPage }) => {
           <StakeLabel color="primary" fontWeight="500">
             {activeTab === 0 ? 'Stake PEFI' : 'Unstake iPEFI'}
           </StakeLabel>
-          <XPefiRatioTag>1 iPEFI = {Number(xPefiToPefiRatio.toFixed(3))} PEFI</XPefiRatioTag>
+          <XPefiRatioTag>1 iPEFI = {Number(iPefiToPefiRatio.toFixed(3))} PEFI</XPefiRatioTag>
         </Flex>
         {activeTab === 0 ? (
           <StakeForm
@@ -155,7 +152,6 @@ const NestCard: React.FC<HarvestProps> = ({ pool, isNestPage }) => {
             onConfirm={onUnstake}
             tokenName={`i${stakingTokenName}`}
             account={account}
-            needsApproval={needsApproval}
             requested={isFinished || requestedApproval}
             onApprove={handleApprove}
             stakingTokenName={stakingTokenName}

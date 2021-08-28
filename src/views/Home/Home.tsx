@@ -11,17 +11,10 @@ import FarmStakingCard from 'views/Home/components/FarmStakingCard'
 import PefiStats from 'views/Home/components/PefiStats'
 import IglooCard from 'views/Home/components/IglooCard'
 import EarnAPYCard from 'views/Home/components/EarnAPYCard'
-import PercentagePefiStakedNests from 'views/Home/components/PercentagePefiStakedNests'
-import PoolCard from 'views/Pools/components/PoolCard'
-// import { getBalanceNumber } from 'utils/formatBalance'
-// import priceToBnb from 'utils/priceToBnb'
-// import { SECONDS_PER_YEAR } from 'config'
-import {
-  // useFarms,
-  // usePriceAvaxUsdt,
-  usePools,
-  // usePriceEthAvax
-} from 'state/hooks'
+import PercentagePefiStakedNestV1 from 'views/Home/components/PercentagePefiStakedNestV1'
+import PercentagePefiStakedNestV2 from 'views/Home/components/PercentagePefiStakedNestV2'
+import V2PoolCard from 'views/Pools/components/V2PoolCard'
+import { usePools, useV2Pools } from 'state/hooks'
 
 const Hero = styled.div`
   position: relative;
@@ -64,68 +57,6 @@ const HeroBgImage = styled.img`
   object-fit: cover;
   min-height: 140px;
   border-radius: 20px;
-`
-
-const HeroLeftImage = styled.img`
-  position: absolute;
-  left: 0;
-  top: 94px;
-  z-index: 1;
-  transform: scaleX(-1);
-  height: 96px;
-
-  @media (min-width: 640px) {
-    left: 20px;
-    top: 16px;
-    height: 120px;
-  }
-  @media (min-width: 768px) {
-    left: 20px;
-    top: 0;
-    height: 170px;
-  }
-  @media (min-width: 1200px) {
-    left: 60px;
-    height: 190px;
-  }
-`
-
-const HeroRightImage = styled.img`
-  position: absolute;
-  z-index: 1;
-  height: 90px;
-  top: 96px;
-  right: 0;
-
-  @media (min-width: 640px) {
-    height: 120px;
-    top: 16px;
-    right: 0;
-  }
-  @media (min-width: 768px) {
-    height: 160px;
-    top: 0;
-    right: 0;
-  }
-  @media (min-width: 1200px) {
-    height: 180px;
-    top: 0;
-    right: 0;
-  }
-`
-
-const Header = styled(Text)`
-  @font-face {
-    font-family: 'GothamBold Font';
-    src: url(${process.env.PUBLIC_URL}/fonts/GothamBold.ttf) format('truetype');
-  }
-
-  font-family: 'GothamBold Font';
-  font-size: 32px;
-  margin-top: -16px;
-  ${({ theme }) => theme.mediaQueries.md} {
-    font-size: 44px;
-  }
 `
 
 const Cards = styled(BaseLayout)`
@@ -183,9 +114,9 @@ const HomeBgContainer = styled.div`
 `
 
 const Home: React.FC = () => {
-  const TranslateString = useI18n()
   const { account } = useWeb3React()
-  const pools = usePools(account)
+  const v1Pools = usePools(account)
+  const v2Pools = useV2Pools(account)
   // const AVAX_BLOCK_TIME = useBlockGenerationTime()
   // const BLOCKS_PER_YEAR = new BigNumber(SECONDS_PER_YEAR).div(new BigNumber(AVAX_BLOCK_TIME))
 
@@ -193,47 +124,26 @@ const Home: React.FC = () => {
   // const avaxPriceUSD = usePriceAvaxUsdt()
   // const ethPriceBnb = usePriceEthAvax()
 
-  const poolsWithApy = pools.map((pool) => {
-    // const rewardTokenFarm = farms.find((f) => f.tokenSymbol === pool.tokenName)
-    // const stakingTokenFarm = farms.find((s) => s.tokenSymbol === pool.stakingTokenName)
-
-    // tmp mulitplier to support ETH farms
-    // Will be removed after the price api
-    // const tempMultiplier = stakingTokenFarm?.quoteTokenSymbol === 'ETH' ? ethPriceBnb : 1
-
-    // /!\ Assume that the farm quote price is AVAX
-    // const stakingTokenPriceInAVAX = new BigNumber(stakingTokenFarm?.tokenPriceVsQuote).times(tempMultiplier)
-    // const rewardTokenPriceInAVAX = priceToBnb(
-    //   pool.tokenName,
-    //   rewardTokenFarm?.tokenPriceVsQuote,
-    //   rewardTokenFarm?.quoteTokenSymbol,
-    //   avaxPriceUSD,
-    // )
-
-    // const totalRewardPricePerYear = rewardTokenPriceInAVAX.times(pool.tokenPerBlock).times(BLOCKS_PER_YEAR)
-    // const totalStakingTokenInPool = stakingTokenPriceInAVAX.times(getBalanceNumber(pool.totalStaked))
-    // const apy = totalRewardPricePerYear.div(totalStakingTokenInPool).times(100)
-
+  const v1PoolsWithApy = v1Pools.map((pool) => {
     return {
       ...pool,
       apy: new BigNumber(0),
     }
   })
-  const pefiPool = poolsWithApy.length > 0 ? poolsWithApy[0] : null
+
+  const v2PoolsWithApy = v2Pools.map((pool) => {
+    return {
+      ...pool,
+      apy: new BigNumber(0),
+    }
+  })
+  const xPefiPool = v1PoolsWithApy.length > 0 ? v1PoolsWithApy[0] : null
+  const iPefiPool = v2PoolsWithApy.length > 0 ? v2PoolsWithApy[0] : null
   const { isDark } = useTheme()
 
   return (
     <>
       <Page>
-        {/* <Hero>
-          <HeroBgImageContainer>
-            <HeroBgImage src={`${process.env.PUBLIC_URL}/images/home/new_banner_light.gif`} alt="astronaut" />
-            <HeroLeftImage src={`${process.env.PUBLIC_URL}/images/home/PenguinAstronaut.gif`} alt="astronaut" />
-            <HeroRightImage src={`${process.env.PUBLIC_URL}/images/home/Astronaut2.gif`} alt="astronaut" />
-          </HeroBgImageContainer>
-          <Header color="primary">{TranslateString(576, 'Penguin Finance')}</Header>
-          <Text>{TranslateString(578, 'The #1 project on Avalanche')}</Text>
-        </Hero> */}
         <Hero>
           <HeroBgImageContainer>
             <HeroBgImage
@@ -254,14 +164,15 @@ const Home: React.FC = () => {
               <SpacingWrapper />
               <EarnAPYCard />
               <SpacingWrapper />
-              <PercentagePefiStakedNests pool={pefiPool} />
+              {/* <PercentagePefiStakedNestV1 pool={xPefiPool} /> */}
+              <PercentagePefiStakedNestV2 pool={iPefiPool} />
             </PefiStatsCardWrapper>
-            {pefiPool && (
+            {iPefiPool && (
               <PoolCardWrapper>
-                <PoolCard pool={pefiPool} isMainPool={false} isHomePage />
+                <V2PoolCard pool={iPefiPool} isMainPool={false} isHomePage />
               </PoolCardWrapper>
             )}
-            <PefiStats pool={pefiPool} />
+            <PefiStats v1Pool={xPefiPool} v2Pool={iPefiPool} />
             <SpacingWrapper />
           </Cards>
         </div>

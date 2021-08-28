@@ -7,7 +7,7 @@ import NestV1 from './V1'
 import NestV2 from './V2'
 
 const Nest: React.FC = () => {
-  const [activeTab, setActiveTab] = useState(0) // 0: v2, 1: v1
+  const [activeTab, setActiveTab] = useState(1) // 0: v2, 1: v1
 
   const handleSwitchTab = (tab) => {
     setActiveTab(tab)
@@ -15,37 +15,48 @@ const Nest: React.FC = () => {
 
   const { isDark } = useTheme()
 
-  const renderV1Description = () => {
+  const renderNestHeader = () => {
     return (
       <Flex justifyContent="center">
-        <V1NestDetailsContainer>
-          <Text color="primary" mb="12px" fontSize="24px" bold textAlign="center">
-            Migrate your xPEFI and get iPEFI
-          </Text>
-          <NestDescription mb="24px" textAlign="center">
-            The Nest V2 contract is here! Migrate from the old staking token (xPEFI) to receive the newer, improved
-            iPEFI. After migration, your PEFI equivalent should be the same pre-migration. We&apos;ll keep the Paper
-            Hands Penalty on the new contract the same as the old one for a week.
-          </NestDescription>
-        </V1NestDetailsContainer>
+        {activeTab === 0 ? (
+          <V2NestDetailsContainer>
+            <Text color="primary" fontSize="32px" bold>
+              Earn more PEFI
+            </Text>
+            <Description mb="16px">Stake your PEFI for iPEFI and maximize your yield. No Impermanent Loss.</Description>
+          </V2NestDetailsContainer>
+        ) : (
+          <V1NestDetailsContainer>
+            <Text color="primary" mb="24px" fontSize="32px" bold textAlign="center">
+              Migrate your xPEFI and get iPEFI
+            </Text>
+          </V1NestDetailsContainer>
+        )}
       </Flex>
     )
   }
 
-  const renderV2Description = () => {
+  const renderNestDescription = () => {
     return (
       <Flex justifyContent="center">
-        <V2NestDetailsContainer>
-          <Text color="primary" mb="12px" fontSize="24px" bold>
-            Maximize yield by staking PEFI for iPEFI
-          </Text>
-          <NestDescription mb="24px">
-            PEFI is minted & collected from fees within the Penguin Ecosystem and sent to the Penguin Nest (iPEFI
-            holders). When your PEFI is staked into the Penguin Nest, you receive iPEFI, granting access to exclusive
-            dApps within Penguin Finance. Your iPEFI is continuously compounding, when you unstake you will receive all
-            the originally deposited PEFI and any earned PEFI minus the paper hands penalty (PPL).
-          </NestDescription>
-        </V2NestDetailsContainer>
+        {activeTab === 0 ? (
+          <V2NestDetailsContainer>
+            <NestDescription mb="24px" mt="24px">
+              When your PEFI is staked into the Penguin Nest, you receive iPEFI. PEFI is minted & collected from fees
+              within the Penguin Ecosystem and distributed among iPEFI holders. Your iPEFI is continuously compounding;
+              when you unstake you will receive all the originally deposited PEFI and any earned PEFI minus the Paper
+              Hands Penalty.
+            </NestDescription>
+          </V2NestDetailsContainer>
+        ) : (
+          <V1NestDetailsContainer>
+            <NestDescription mb="24px" mt="24px" textAlign="center">
+              The Nest V2 contract is here! Migrate from the old staking token (xPEFI) to receive the newer, improved
+              iPEFI. After migration, your PEFI equivalent will remain unchanged, your xPEFI will simply be upgraded to
+              iPEFI. We&apos;ll institute the new Paper Hands Penalty for iPEFI 48 hours after release.
+            </NestDescription>
+          </V1NestDetailsContainer>
+        )}
       </Flex>
     )
   }
@@ -61,18 +72,18 @@ const Nest: React.FC = () => {
           alt="nest banner"
         />
       </NestBannerContainer>
-      {activeTab === 0 && renderV2Description()}
-      {activeTab === 1 && renderV1Description()}
+      {renderNestHeader()}
       <Flex justifyContent="center" pb="32px">
         <TabWrapper>
           <ButtonMenu activeIndex={activeTab} onItemClick={handleSwitchTab} scale="sm">
-            <OptionItem active={activeTab === 0}>{activeTab === 0 ? 'New(iPefi)' : 'New'}</OptionItem>
-            <OptionItem active={activeTab === 1}>{activeTab === 1 ? 'Old(xPefi)' : 'Old'}</OptionItem>
+            <OptionItem active={activeTab === 0}>{activeTab === 0 ? 'New (iPEFI) ' : 'New'}</OptionItem>
+            <OptionItem active={activeTab === 1}>{activeTab === 1 ? 'Old (xPEFI) ' : 'Old'}</OptionItem>
           </ButtonMenu>
         </TabWrapper>
       </Flex>
       {activeTab === 0 && <NestV2 />}
       {activeTab === 1 && <NestV1 />}
+      {renderNestDescription()}
     </NestPage>
   )
 }
@@ -104,10 +115,7 @@ const IgloosBgContainer = styled.div`
 `
 
 const NestBannerContainer = styled.div`
-  margin-bottom: 24px;
-  @media (min-width: 640px) {
-    margin-bottom: 64px;
-  }
+  margin-bottom: 8px;
 `
 
 const BannerImage = styled.img`
@@ -139,9 +147,14 @@ const TabWrapper = styled.div`
   }
 `
 const OptionItem = styled(ButtonMenuItem)<{ active: boolean }>`
-  min-width: 100px;
+  min-width: 70px;
   background-color: ${({ active, theme }) => active && theme.colors.red};
   color: ${({ active }) => (active ? 'white' : '#b2b2ce')};
+  margin: 0px !important;
+`
+
+const Description = styled(Text)`
+  color: ${({ theme }) => (theme.isDark ? '#DDD7ff' : theme.colors.secondary)};
 `
 
 export default Nest

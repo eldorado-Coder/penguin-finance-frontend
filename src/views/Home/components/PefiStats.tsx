@@ -23,6 +23,7 @@ import { Pool } from 'state/types'
 import { QuoteToken } from 'config/constants/types'
 import { PEFI_MAX_SUPPLY } from 'config'
 import roundDown from 'utils/roundDown'
+import useTheme from 'hooks/useTheme'
 import CardValue from './CardValue'
 
 const StyledPefiStats = styled(Card)`
@@ -48,10 +49,11 @@ interface PoolWithApy extends Pool {
 }
 
 interface HarvestProps {
-  pool: PoolWithApy
+  v1Pool: PoolWithApy
+  v2Pool: PoolWithApy
 }
 
-const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
+const PefiStats: React.FC<HarvestProps> = ({ v1Pool, v2Pool }) => {
   const TranslateString = useI18n()
   const totalSupply = useTotalSupply()
   const pools = usePools(null)
@@ -67,6 +69,7 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
   const linkPriceUsd = usePriceLinkUsdt()
   const lydPriceUsd = usePriceLydUsdt()
   const [handsOnPenalty, setHandsOnPenalty] = useState(0)
+  const { isDark } = useTheme()
 
   const fetchEarlyWithdrawalFee = useCallback(async () => {
     const earlyWithdrawalFee = await xPefiContract.methods.earlyWithdrawalFee().call()
@@ -80,8 +83,14 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
   }, [fetchEarlyWithdrawalFee])
 
   const getXPefiToPefiRatio = () => {
-    return pool.totalStaked && pool.totalSupply
-      ? new BigNumber(pool.totalStaked).div(new BigNumber(pool.totalSupply)).toNumber()
+    return v1Pool.totalStaked && v1Pool.totalSupply
+      ? new BigNumber(v1Pool.totalStaked).div(new BigNumber(v1Pool.totalSupply)).toNumber()
+      : 1
+  }
+
+  const getIPefiToPefiRatio = () => {
+    return v2Pool.totalStaked && v2Pool.totalSupply
+      ? new BigNumber(v2Pool.totalStaked).div(new BigNumber(v2Pool.totalSupply)).toNumber()
       : 1
   }
 
@@ -138,9 +147,15 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
     return compounderFarmsTVL
   }
 
-  // calculate TVL in pefi nest
-  const getNestTVL = () => {
-    if (pool.totalSupply) return getXPefiToPefiRatio() * pefiPrice.toNumber() * getBalanceNumber(pool.totalSupply)
+  // calculate TVL in v1 pefi nest
+  const getV1NestTVL = () => {
+    if (v1Pool.totalSupply) return getXPefiToPefiRatio() * pefiPrice.toNumber() * getBalanceNumber(v1Pool.totalSupply)
+    return 0
+  }
+
+  // calculate TVL in v2 pefi nest
+  const getV2NestTVL = () => {
+    if (v2Pool.totalSupply) return getIPefiToPefiRatio() * pefiPrice.toNumber() * getBalanceNumber(v2Pool.totalSupply)
     return 0
   }
 
@@ -150,10 +165,12 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
     return 0
   }
 
-  const tvl = getIgloosTVL() + getCompounderFarmsTVL() + getNestTVL()
+  const tvl = getIgloosTVL() + getCompounderFarmsTVL() + getV1NestTVL() + getV2NestTVL()
   const xPefiToPefiRatio = getXPefiToPefiRatio()
   const pefiMarketcap = getPefiMarketcap()
-  const totalStakedBalance = pool.totalStaked
+  const totalStakedBalanceInV1 = new BigNumber(v1Pool.totalStaked) || new BigNumber(0)
+  const totalStakedBalanceInV2 = new BigNumber(v2Pool.totalStaked) || new BigNumber(0)
+  const totalStakedBalance = totalStakedBalanceInV1.plus(totalStakedBalanceInV2)
   const burnedBalanceRatio = (100 * getBalanceNumber(burnedBalance)) / getBalanceNumber(totalSupply)
   const totalStakedBalanceRatio = (100 * getBalanceNumber(totalStakedBalance)) / getBalanceNumber(totalSupply)
 
@@ -164,8 +181,8 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
           {TranslateString(534, 'PEFI Stats')}
         </StyledHeading>
         <Row>
-          <Text bold color="textSubtle" fontSize="14px">
-            {TranslateString(538, 'PEFI Marketcap:')}
+          <Text bold color={isDark ? 'red' : 'textSubtle'} fontSize="14px">
+            {TranslateString(538, 'PEFI Marketcap Capitalization:')}
           </Text>
           {pefiMarketcap && (
             <CardValue
@@ -179,7 +196,7 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
           )}
         </Row>
         <Row>
-          <Text bold color="textSubtle" fontSize="14px">
+          <Text bold color={isDark ? 'red' : 'textSubtle'} fontSize="14px">
             {TranslateString(536, 'Circulating PEFI Supply:')}
           </Text>
           {totalSupply && (
@@ -194,7 +211,7 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
           )}
         </Row>
         <Row>
-          <Text bold color="textSubtle" fontSize="14px">
+          <Text bold color={isDark ? 'red' : 'textSubtle'} fontSize="14px">
             {TranslateString(538, 'Total Value Locked:')}
           </Text>
           {tvl && (
@@ -202,7 +219,7 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
               color="textSubtle"
               fontSize="14px"
               prefix="$"
-              decimals={2}
+              decimals={0}
               bold={false}
               value={tvl || 0}
               updateInterval={30000}
@@ -210,7 +227,7 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
           )}
         </Row>
         <Row>
-          <Text bold color="textSubtle" fontSize="14px">
+          <Text bold color={isDark ? 'red' : 'textSubtle'} fontSize="14px">
             {TranslateString(538, 'Total PEFI Burned:')}
           </Text>
           {burnedBalance && (
@@ -220,13 +237,14 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
               suffix={` PEFI (${burnedBalanceRatio.toFixed(0)}%)`}
               bold={false}
               value={getBalanceNumber(burnedBalance)}
+              decimals={0}
               updateInterval={30000}
             />
           )}
         </Row>
-        <Row>
-          <Text bold color="textSubtle" fontSize="14px">
-            {TranslateString(538, 'Total PEFI Staked (xPEFI):')}
+        {/* <Row>
+          <Text bold color={isDark ? 'red' : 'textSubtle'} fontSize="14px">
+            {TranslateString(538, 'Total PEFI Staked (iPEFI):')}
           </Text>
           {burnedBalance && (
             <CardValue
@@ -234,11 +252,12 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
               fontSize="14px"
               suffix={` PEFI (${totalStakedBalanceRatio.toFixed(0)}%)`}
               bold={false}
+              decimals={0}
               value={getBalanceNumber(totalStakedBalance)}
               updateInterval={30000}
             />
           )}
-        </Row>
+        </Row> */}
         {/* <Row>
           <Text color="primary" fontSize="14px">
             {TranslateString(540, 'XPEFI to PEFI ratio:')}
@@ -246,7 +265,7 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
           <CardValue color="textSubtle" fontSize="14px" decimals={3} value={xPefiToPefiRatio} updateInterval={30000} />
         </Row> */}
         <Row>
-          <Text bold color="textSubtle" fontSize="14px">
+          <Text bold color={isDark ? 'red' : 'textSubtle'} fontSize="14px">
             {TranslateString(540, 'PEFI Emission Rate:')}
           </Text>
           <CardValue
@@ -260,13 +279,13 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
           />
         </Row>
         {/* <Row>
-          <Text bold color="textSubtle" fontSize="14px">
+          <Text bold color={isDark ? 'red' : 'textSubtle'} fontSize="14px">
             {TranslateString(540, 'Paper Hands Penalty:')}
           </Text>
           <CardValue color="textSubtle" fontSize="14px" decimals={2} suffix=" %" value={Number(handsOnPenalty)} updateInterval={30000} />
         </Row> */}
         <Row>
-          <Text bold color="textSubtle" fontSize="14px">
+          <Text bold color={isDark ? 'red' : 'textSubtle'} fontSize="14px">
             {TranslateString(538, 'Max PEFI Supply:')}
           </Text>
           <CardValue color="textSubtle" fontSize="14px" suffix=" PEFI" bold={false} value={PEFI_MAX_SUPPLY} />

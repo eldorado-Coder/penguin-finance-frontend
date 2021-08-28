@@ -13,8 +13,8 @@ import useBlock from 'hooks/useBlock'
 import useTokenBalance from 'hooks/useTokenBalance'
 import useBlockGenerationTime from 'hooks/useBlockGenerationTime'
 import useUserSetting from 'hooks/useUserSetting'
-import { useXPefi } from 'hooks/useContract'
-import { useFarms, usePriceAvaxUsdt, usePools, useV2Pools, usePriceEthAvax, useNestApy } from 'state/hooks'
+import { useV2NestContract } from 'hooks/useContract'
+import { useFarms, usePriceAvaxUsdt, useV2Pools, usePriceEthAvax, useV2NestApy, useV2NestAprPerDay } from 'state/hooks'
 import { PoolCategory } from 'config/constants/types'
 import { getFirstStakeTime } from 'subgraph/utils'
 import { getPefiAddress } from 'utils/addressHelpers'
@@ -24,18 +24,20 @@ import NestCard from './components/NestCard'
 
 const NestV2: React.FC = () => {
   const [userFirstStakeTime, setUserFirstStakeTime] = useState(0)
-  const [handsOnPenalty, setHandsOnPenalty] = useState(0)
+  const [handsOnPenalty, setHandsOnPenalty] = useState(1.13)
   const { refreshRate } = useUserSetting()
   const { path } = useRouteMatch()
   const { account } = useWeb3React()
   const farms = useFarms()
-  const pools = usePools(account)
+  // const pools = usePools(account)
+  const pools = useV2Pools(account)
   const avaxPriceUSD = usePriceAvaxUsdt()
   const ethPriceBnb = usePriceEthAvax()
   const block = useBlock()
   const AVAX_BLOCK_TIME = useBlockGenerationTime()
-  const xPefiContract = useXPefi()
-  const displayedNestApy = (useNestApy() * 100).toFixed(2)
+  const iPefiContract = useV2NestContract()
+  const displayedNestApy = (useV2NestApy() * 100).toFixed(2)
+  const displayedNestDailyApr = useV2NestAprPerDay().toFixed(2)
   const BLOCKS_PER_YEAR = new BigNumber(SECONDS_PER_YEAR).div(new BigNumber(AVAX_BLOCK_TIME))
 
   const poolsWithApy = pools.map((pool) => {
@@ -43,8 +45,7 @@ const NestV2: React.FC = () => {
     const rewardTokenFarm = farms.find((f) => f.tokenSymbol === pool.tokenName)
     const stakingTokenFarm = farms.find((s) => s.tokenSymbol === pool.stakingTokenName)
 
-    // tmp mulitplier to support ETH farms
-    // Will be removed after the price api
+    // TODO: tmp mulitplier to support ETH farms. Will be removed after the price api
     const tempMultiplier = stakingTokenFarm?.quoteTokenSymbol === 'ETH' ? ethPriceBnb : 1
 
     const stakingTokenPriceInAVAX = isBnbPool
@@ -87,12 +88,10 @@ const NestV2: React.FC = () => {
     return () => clearInterval(refreshInterval)
   }, [account, refreshRate, fetchUserFirstStakeTime])
 
-  const fetchEarlyWithdrawalFee = useCallback(async () => {
-    const earlyWithdrawalFee = await xPefiContract.methods.earlyWithdrawalFee().call()
-    const maxEarlyWithdrawalFee = await xPefiContract.methods.MAX_EARLY_WITHDRAW_FEE().call()
-    const penalty = (earlyWithdrawalFee / maxEarlyWithdrawalFee) * 100
-    setHandsOnPenalty(penalty)
-  }, [xPefiContract])
+  const fetchHandsOnPenalty = useCallback(async () => {
+    const perHandsPenalty = await iPefiContract.methods.paperHandsPenalty().call()
+    setHandsOnPenalty(perHandsPenalty)
+  }, [iPefiContract])
 
   const getXPefiToPefiRatio = () => {
     return openPools[0].totalStaked && openPools[0].totalSupply
@@ -105,14 +104,12 @@ const NestV2: React.FC = () => {
   }
 
   useEffect(() => {
-    fetchEarlyWithdrawalFee()
-  }, [fetchEarlyWithdrawalFee])
+    // fetchHandsOnPenalty()
+  }, [fetchHandsOnPenalty])
 
   const xPefiToPefiRatio = getXPefiToPefiRatio()
   const stakedBalance = new BigNumber(openPools[0].userData?.stakedBalance || 0)
   const pefiBalance = useTokenBalance(getPefiAddress())
-
-  const currentDateTime = new Date().getTime() / 1000
 
   return (
     <Flex justifyContent="center">
@@ -122,29 +119,30 @@ const NestV2: React.FC = () => {
             <APYCard padding="8px 24px 16px" mb="16px">
               <Flex justifyContent="space-between" alignItems="center">
                 <Text fontSize="20px" color="white" fontWeight={500}>
-                  Staking APY
+                  {/* Staking APY */}
+                  Daily APR
                 </Text>
                 <Text fontSize="36px" bold color="white">
-                  {getNumberWithCommas(displayedNestApy)}%
+                  {getNumberWithCommas(displayedNestDailyApr)}%
                 </Text>
               </Flex>
               <Flex justifyContent="space-between" alignItems="center">
                 <ViewStatsButton scale="sm" onClick={handleLearnMore}>
                   Learn More
                 </ViewStatsButton>
-                <APYLabel>{`${handsOnPenalty.toFixed(2)}% Paper Hands Penalty`}</APYLabel>
+                <APYLabel>{`${Number(handsOnPenalty).toFixed(2)}% Paper Hands Penalty`}</APYLabel>
               </Flex>
             </APYCard>
             <Route exact path={`${path}`}>
               <>
                 {orderBy(openPools, ['sortOrder']).map((pool) => (
-                  <NestCard isNestPage key={pool.sousId} pool={pool} isMainPool />
+                  <NestCard key={pool.sousId} pool={pool} isMainPool />
                 ))}
               </>
             </Route>
             <Route path={`${path}/history`}>
               {orderBy(finishedPools, ['sortOrder']).map((pool) => (
-                <NestCard isNestPage key={pool.sousId} pool={pool} isMainPool />
+                <NestCard key={pool.sousId} pool={pool} isMainPool />
               ))}
             </Route>
           </LeftCardsContainer>
@@ -207,23 +205,6 @@ const NestV2: React.FC = () => {
                 </BalanceTextSmall>
               </Flex>
             </Flex>
-            <BalanceLabel mt="24px" mb="8px">
-              Your Stats
-            </BalanceLabel>
-            <Flex alignItems="flex-end">
-              <Balance>
-                <CardValue
-                  className="balance"
-                  fontSize="24px"
-                  value={account && userFirstStakeTime ? (currentDateTime - userFirstStakeTime) / 86400 : 0}
-                  decimals={0}
-                  lineHeight="1.2"
-                />
-              </Balance>
-            </Flex>
-            <BalanceText mb="8px" fontSize="20px" fontWeight={300}>
-              Days Since First Deposit
-            </BalanceText>
           </BalanceCard>
         </NestCardsWrapper>
       </NestDetailsContainer>
@@ -281,11 +262,6 @@ const BalanceLabel = styled(Text)`
 const NestDetailsContainer = styled.div`
   max-width: 720px;
   width: 100%;
-`
-
-const NestDescription = styled(Text)`
-  max-width: 480px;
-  color: ${({ theme }) => (theme.isDark ? '#DDD7ff' : theme.colors.secondary)};
 `
 
 const ViewStatsButton = styled(Button)`
