@@ -53,7 +53,7 @@ const Nest: React.FC = () => {
             <NestDescription mb="24px" mt="24px" textAlign="center">
               The Nest V2 contract is here! Migrate from the old staking token (xPEFI) to receive the newer, improved
               iPEFI. After migration, your PEFI equivalent will remain unchanged, your xPEFI will simply be upgraded to
-              iPEFI. We&apos;ll keep the Paper Hands Penalty on the new contract the same as the old one for a week.
+              iPEFI. We&apos;ll institute the new Paper Hands Penalty for iPEFI 48 hours after release.
             </NestDescription>
           </V1NestDetailsContainer>
         )}
