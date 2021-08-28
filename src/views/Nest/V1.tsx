@@ -72,8 +72,6 @@ const NestV1: React.FC = () => {
       await onNestMigrateApprove()
       setPending(false)
     } catch (e) {
-      // user rejected tx or didn't go thru
-
       console.error(e)
       setPending(false)
     }
