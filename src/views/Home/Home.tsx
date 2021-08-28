@@ -115,6 +115,7 @@ const HomeBgContainer = styled.div`
 
 const Home: React.FC = () => {
   const { account } = useWeb3React()
+  const v1Pools = usePools(account)
   const v2Pools = useV2Pools(account)
   // const AVAX_BLOCK_TIME = useBlockGenerationTime()
   // const BLOCKS_PER_YEAR = new BigNumber(SECONDS_PER_YEAR).div(new BigNumber(AVAX_BLOCK_TIME))
@@ -123,32 +124,20 @@ const Home: React.FC = () => {
   // const avaxPriceUSD = usePriceAvaxUsdt()
   // const ethPriceBnb = usePriceEthAvax()
 
-  const v2PoolsWithApy = v2Pools.map((pool) => {
-    // const rewardTokenFarm = farms.find((f) => f.tokenSymbol === pool.tokenName)
-    // const stakingTokenFarm = farms.find((s) => s.tokenSymbol === pool.stakingTokenName)
-
-    // tmp mulitplier to support ETH farms
-    // Will be removed after the price api
-    // const tempMultiplier = stakingTokenFarm?.quoteTokenSymbol === 'ETH' ? ethPriceBnb : 1
-
-    // /!\ Assume that the farm quote price is AVAX
-    // const stakingTokenPriceInAVAX = new BigNumber(stakingTokenFarm?.tokenPriceVsQuote).times(tempMultiplier)
-    // const rewardTokenPriceInAVAX = priceToBnb(
-    //   pool.tokenName,
-    //   rewardTokenFarm?.tokenPriceVsQuote,
-    //   rewardTokenFarm?.quoteTokenSymbol,
-    //   avaxPriceUSD,
-    // )
-
-    // const totalRewardPricePerYear = rewardTokenPriceInAVAX.times(pool.tokenPerBlock).times(BLOCKS_PER_YEAR)
-    // const totalStakingTokenInPool = stakingTokenPriceInAVAX.times(getBalanceNumber(pool.totalStaked))
-    // const apy = totalRewardPricePerYear.div(totalStakingTokenInPool).times(100)
-
+  const v1PoolsWithApy = v1Pools.map((pool) => {
     return {
       ...pool,
       apy: new BigNumber(0),
     }
   })
+
+  const v2PoolsWithApy = v2Pools.map((pool) => {
+    return {
+      ...pool,
+      apy: new BigNumber(0),
+    }
+  })
+  const xPefiPool = v1PoolsWithApy.length > 0 ? v1PoolsWithApy[0] : null
   const iPefiPool = v2PoolsWithApy.length > 0 ? v2PoolsWithApy[0] : null
   const { isDark } = useTheme()
 
@@ -183,7 +172,7 @@ const Home: React.FC = () => {
                 <V2PoolCard pool={iPefiPool} isMainPool={false} isHomePage />
               </PoolCardWrapper>
             )}
-            <PefiStats pool={iPefiPool} />
+            <PefiStats v1Pool={xPefiPool} v2Pool={iPefiPool} />
             <SpacingWrapper />
           </Cards>
         </div>
