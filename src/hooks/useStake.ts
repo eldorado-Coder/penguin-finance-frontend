@@ -7,9 +7,13 @@ import {
   updateUserBalance,
   fetchPoolsPublicDataAsync,
   fetchLaunchpadUserDataAsync,
+  // v2
+  updateV2PoolUserStakedBalance,
+  updateV2PoolUserBalance,
+  fetchV2PoolsPublicDataAsync,
 } from 'state/actions'
 import { stake, sousStake, sousStakeBnb, launchpadStake } from 'utils/callHelpers'
-import { useLaunchPad, useMasterchef, useSousChef } from './useContract'
+import { useLaunchPad, useMasterchef, useSousChef, useV2SousChef } from './useContract'
 
 const useStake = (pid: number, type?: string) => {
   const dispatch = useDispatch()
@@ -72,3 +76,32 @@ export const useLaunchpadStake = () => {
 }
 
 export default useStake
+
+// v2
+
+export const useV2SousStake = (sousId, isUsingBnb = false) => {
+  const dispatch = useDispatch()
+  const { account } = useWeb3React()
+  const masterChefContract = useMasterchef()
+  // const sousChefContract = useSousChef(sousId)
+  const sousChefContract = useV2SousChef(sousId)
+  const gasPrice = 300000
+
+  const handleStake = useCallback(
+    async (amount: string) => {
+      if (sousId === 0) {
+        await stake(masterChefContract, 0, amount, account, gasPrice)
+      } else if (isUsingBnb) {
+        await sousStakeBnb(sousChefContract, amount, account, gasPrice)
+      } else {
+        await sousStake(sousChefContract, amount, account, gasPrice)
+      }
+      dispatch(updateV2PoolUserStakedBalance(sousId, account))
+      dispatch(updateV2PoolUserBalance(sousId, account))
+      dispatch(fetchV2PoolsPublicDataAsync())
+    },
+    [account, dispatch, isUsingBnb, masterChefContract, sousChefContract, sousId],
+  )
+
+  return { onStake: handleStake }
+}

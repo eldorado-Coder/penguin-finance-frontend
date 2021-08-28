@@ -14,7 +14,7 @@ import useTokenBalance from 'hooks/useTokenBalance'
 import useBlockGenerationTime from 'hooks/useBlockGenerationTime'
 import useUserSetting from 'hooks/useUserSetting'
 import { useXPefi } from 'hooks/useContract'
-import { useFarms, usePriceAvaxUsdt, usePools, usePriceEthAvax, useNestApy } from 'state/hooks'
+import { useFarms, usePriceAvaxUsdt, usePools, useV2Pools, usePriceEthAvax, useNestApy } from 'state/hooks'
 import { PoolCategory } from 'config/constants/types'
 import { getFirstStakeTime } from 'subgraph/utils'
 import { getPefiAddress } from 'utils/addressHelpers'
@@ -29,7 +29,9 @@ const NestV2: React.FC = () => {
   const { path } = useRouteMatch()
   const { account } = useWeb3React()
   const farms = useFarms()
-  const pools = usePools(account)
+  // const pools = usePools(account)
+  const pools = useV2Pools(account)
+
   const avaxPriceUSD = usePriceAvaxUsdt()
   const ethPriceBnb = usePriceEthAvax()
   const block = useBlock()
@@ -111,7 +113,7 @@ const NestV2: React.FC = () => {
   const xPefiToPefiRatio = getXPefiToPefiRatio()
   const stakedBalance = new BigNumber(openPools[0].userData?.stakedBalance || 0)
   const pefiBalance = useTokenBalance(getPefiAddress())
-  
+
   return (
     <Flex justifyContent="center">
       <NestDetailsContainer>

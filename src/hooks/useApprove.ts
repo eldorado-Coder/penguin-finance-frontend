@@ -3,10 +3,23 @@ import { useWeb3React } from '@web3-react/core'
 import { Contract } from 'web3-eth-contract'
 import { ethers } from 'ethers'
 import { useDispatch } from 'react-redux'
-import { updateUserAllowance, fetchFarmUserDataAsync, updateNestMigratorAllowance } from 'state/actions'
+import {
+  updateUserAllowance,
+  updateV2PoolUserAllowance,
+  fetchFarmUserDataAsync,
+  updateNestMigratorAllowance,
+} from 'state/actions'
 import { approve } from 'utils/callHelpers'
 import { getNestMigratorAddress, getV2NestAddress } from 'utils/addressHelpers'
-import { useMasterchef, usePenguin, useSousChef, useLottery, useStrategyContract, useXPefi } from './useContract'
+import {
+  useMasterchef,
+  usePenguin,
+  useSousChef,
+  useV2SousChef,
+  useLottery,
+  useStrategyContract,
+  useXPefi,
+} from './useContract'
 // Approve a Farm
 export const useApprove = (lpContract: Contract, type?: string) => {
   const dispatch = useDispatch()
@@ -121,22 +134,20 @@ export const useNestMigrateApprove = () => {
   return { onNestMigrateApprove: handleApprove }
 }
 
-export const useV2NestApprove = () => {
+export const useV2SousApprove = (lpContract: Contract, sousId) => {
   const dispatch = useDispatch()
   const { account } = useWeb3React()
-  const pefiContract = usePenguin()
+  const sousChefContract = useV2SousChef(sousId)
 
   const handleApprove = useCallback(async () => {
     try {
-      const tx = await pefiContract.methods
-        .approve(getV2NestAddress(), ethers.constants.MaxUint256)
-        .send({ from: account })
-      dispatch(updateNestMigratorAllowance(account))
+      const tx = await approve(lpContract, sousChefContract, account)
+      dispatch(updateV2PoolUserAllowance(sousId, account))
       return tx
     } catch (e) {
       return false
     }
-  }, [account, pefiContract, dispatch])
+  }, [account, dispatch, lpContract, sousChefContract, sousId])
 
-  return { onV2NestApprove: handleApprove }
+  return { onApprove: handleApprove }
 }

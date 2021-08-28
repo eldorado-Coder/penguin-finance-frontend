@@ -32,7 +32,7 @@ import getFarmMasterChefAddress from 'utils/getFarmMasterChefAddress'
 import getFarmMasterChefAbi from 'utils/getFarmMasterChefAbi'
 import getStrategyAddress from 'utils/getStrategyAddress'
 import getStrategyAbi from 'utils/getStrategyAbi'
-import { poolsConfig } from 'config/constants'
+import { poolsConfig, v2PoolsConfig } from 'config/constants'
 import { PoolCategory } from 'config/constants/types'
 import ifo from 'config/abi/ifo.json'
 import erc20 from 'config/abi/erc20.json'
@@ -201,6 +201,13 @@ export const useNestMigrateContract = () => {
 export const useV2NestContract = () => {
   const abi = (v2NestAbi as unknown) as AbiItem
   return useContract(abi, getV2NestAddress())
+}
+
+export const useV2SousChef = (id) => {
+  const config = v2PoolsConfig.find((pool) => pool.sousId === id)
+  const rawAbi = config.poolCategory === PoolCategory.BINANCE ? sousChefBnb : sousChef
+  const abi = (rawAbi as unknown) as AbiItem
+  return useContract(abi, getAddress(config.contractAddress))
 }
 
 export default useContract

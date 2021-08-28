@@ -20,7 +20,7 @@ const getXPefiToPefiRatio = (pool) => {
     : 1
 }
 
-const getiPefiToPefiRatio = (pool) => {
+const getIPefiToPefiRatio = (pool) => {
   return pool.totalStaked && pool.totalSupply
     ? new BigNumber(pool.totalStaked).div(new BigNumber(pool.totalSupply)).toJSON()
     : 1
@@ -45,7 +45,7 @@ const Menu = (props) => {
   const v1Nest = pools.length > 0 ? pools[0] : null
   const v2Nest = v2Pools.length > 0 ? v2Pools[0] : null
   const xPefiToPefiRatio = getXPefiToPefiRatio(v1Nest)
-  const iPefiToPefiRatio = getiPefiToPefiRatio(v2Nest)
+  const iPefiToPefiRatio = getIPefiToPefiRatio(v2Nest)
 
   // add badge to "emperor" and "launchpad" menu
   const isEmperorLive = false // event status
