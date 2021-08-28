@@ -159,15 +159,12 @@ const Farm: React.FC = () => {
       </NestBannerContainer>
       <Flex justifyContent="center">
         <NestDetailsContainer>
-          <Text color="primary" mb="12px" fontSize="24px" bold>
-            Maximize yield by staking PEFI for xPEFI
+          <Text color="primary" fontSize="32px" bold>
+            Earn more PEFI
           </Text>
-          <NestDescription mb="24px">
-            PEFI is minted & collected from fees within the Penguin Ecosystem and sent to the Penguin Nest (xPEFI
-            holders). When your PEFI is staked into the Penguin Nest, you receive xPEFI, granting access to exclusive
-            dApps within Penguin Finance. Your xPEFI is continously compounding, when you unstake you will receive all
-            the orginally deposited PEFI and any earned PEFI minus the paper hands penalty (PPL).
-          </NestDescription>
+          <Description mb='16px'>
+            Stake your PEFI for xPEFI and maximize your yield. No Impermanent Loss.
+          </Description>
           <NestCardsWrapper justifyContent="space-between">
             <LeftCardsContainer>
               <APYCard padding="8px 24px 16px" mb="16px">
@@ -189,13 +186,13 @@ const Farm: React.FC = () => {
               <Route exact path={`${path}`}>
                 <>
                   {orderBy(openPools, ['sortOrder']).map((pool) => (
-                    <NestCard isNestPage key={pool.sousId} pool={pool} isMainPool />
+                    <NestCard key={pool.sousId} pool={pool} isMainPool />
                   ))}
                 </>
               </Route>
               <Route path={`${path}/history`}>
                 {orderBy(finishedPools, ['sortOrder']).map((pool) => (
-                  <NestCard isNestPage key={pool.sousId} pool={pool} isMainPool />
+                  <NestCard key={pool.sousId} pool={pool} isMainPool />
                 ))}
               </Route>
             </LeftCardsContainer>
@@ -277,6 +274,9 @@ const Farm: React.FC = () => {
               </BalanceText>
             </BalanceCard>
           </NestCardsWrapper>
+          <NestDescription mb="24px" mt='24px'>
+            When your PEFI is staked into the Penguin Nest, you receive xPEFI. PEFI is minted & collected from fees within the Penguin Ecosystem and distributed among xPEFI holders. Your xPEFI is continuously compounding; when you unstake you will receive all the originally deposited PEFI and any earned PEFI minus the Paper Hands Penalty.
+          </NestDescription>
         </NestDetailsContainer>
       </Flex>
     </NestPage>
@@ -310,12 +310,7 @@ const IgloosBgContainer = styled.div`
 `
 
 const NestBannerContainer = styled.div`
-  /* margin-bottom: 32px; */
-  margin-bottom: 24px;
-
-  @media (min-width: 640px) {
-    margin-bottom: 64px;
-  }
+  margin-bottom: 8px;
 `
 
 const BannerImage = styled.img`
@@ -392,6 +387,10 @@ const NestDetailsContainer = styled.div`
 
 const NestDescription = styled(Text)`
   max-width: 480px;
+  color: ${({ theme }) => (theme.isDark ? '#DDD7ff' : theme.colors.secondary)};
+`
+
+const Description = styled(Text)`
   color: ${({ theme }) => (theme.isDark ? '#DDD7ff' : theme.colors.secondary)};
 `
 

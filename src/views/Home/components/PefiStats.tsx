@@ -165,7 +165,7 @@ const PefiStats: React.FC<HarvestProps> = ({ pool }) => {
         </StyledHeading>
         <Row>
           <Text bold color="textSubtle" fontSize="14px">
-            {TranslateString(538, 'PEFI Marketcap Capitalization:')}
+            {TranslateString(538, 'PEFI Marketcap:')}
           </Text>
           {pefiMarketcap && (
             <CardValue
