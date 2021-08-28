@@ -3,10 +3,11 @@ import styled from 'styled-components'
 import Page from 'components/layout/Page'
 
 const Launchpad: React.FC = () => {
+  const boofiLaunchpadUrl = 'https://res.cloudinary.com/dbyunrpzq/video/upload/v1630028768/BooFiLaunchpad_nwkbrj.mp4'
   return (
     <Page>
       <LaunchpadBgContainer width="100%" height="100%" autoPlay loop controls>
-        <source src="/videos/boofi_launchpad.mp4" />
+        <source src={boofiLaunchpadUrl} />
       </LaunchpadBgContainer>
     </Page>
   )

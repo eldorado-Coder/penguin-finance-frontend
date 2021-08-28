@@ -14,8 +14,7 @@ const pools: PoolConfig[] = [
     },
     poolCategory: PoolCategory.CORE,
     projectLink: 'https://penguinfinance.org/',
-    penguinNestsGuideLink:
-      'https://penguin-finance.gitbook.io/penguin-finance/summary/penguin-nests-staking-and-fee-collection',
+    penguinNestsGuideLink: 'https://penguin-finance.medium.com/introducing-ipefi-the-nest-evolution-d002f8548276',
     harvest: true,
     tokenPerBlock: '7',
     sortOrder: 1,

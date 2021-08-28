@@ -140,7 +140,7 @@ const V2PoolCard: React.FC<HarvestProps> = ({ pool }) => {
               <Block>
                 <Label>{TranslateString(544, 'Paper Hands Penalty')}:</Label>
                 <Text color="textSubtle" bold fontSize="24px">
-                  {`${Number(handsOnPenalty).toFixed(2)}% PPL`}
+                  {`${Number(handsOnPenalty).toFixed(2)}% PHP`}
                 </Text>
               </Block>
               <Block>
