@@ -3,7 +3,7 @@ import { Route, useRouteMatch } from 'react-router-dom'
 import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
 import { useWeb3React } from '@web3-react/core'
-import { Card, Flex, Text, Button } from 'penguinfinance-uikit2'
+import { Card, Flex, Text, Button, useMatchBreakpoints } from 'penguinfinance-uikit2'
 import { SECONDS_PER_YEAR } from 'config'
 import orderBy from 'lodash/orderBy'
 import partition from 'lodash/partition'
@@ -36,6 +36,8 @@ const NestV2: React.FC = () => {
   const block = useBlock()
   const AVAX_BLOCK_TIME = useBlockGenerationTime()
   const iPefiContract = useV2NestContract()
+  const { isXl } = useMatchBreakpoints()
+  const isMobile = !isXl
   const displayedNestApy = (useV2NestApy() * 100).toFixed(2)
   const displayedNestDailyApr = useV2NestAprPerDay().toFixed(2)
   const BLOCKS_PER_YEAR = new BigNumber(SECONDS_PER_YEAR).div(new BigNumber(AVAX_BLOCK_TIME))
@@ -146,63 +148,69 @@ const NestV2: React.FC = () => {
             </Route>
           </LeftCardsContainer>
           <BalanceCard padding="16px 24px 32px" mb="16px">
-            <BalanceLabel>Balance</BalanceLabel>
-            <Flex mt="4px" alignItems="center">
-              <CardImage src="/images/pools/iPefi.svg" alt="ipefi logo" width={64} height={64} />
-              <Flex flexDirection="column">
-                <Balance>
-                  <CardValue
-                    className="balance"
-                    fontSize="24px"
-                    value={roundDown(getBalanceNumber(stakedBalance), 2)}
-                    decimals={2}
-                    lineHeight="1"
-                  />
-                </Balance>
-                <BalanceText fontSize="20px" fontWeight={300} lineHeight="1.4">
-                  iPEFI
-                </BalanceText>
-                <BalanceTextSmall>
-                  <CardValue
-                    className="balance"
-                    fontSize="12px"
-                    value={roundDown(xPefiToPefiRatio * getBalanceNumber(stakedBalance), 2)}
-                    decimals={2}
-                    lineHeight="1.2"
-                    prefix="≈ "
-                    suffix=" PEFI"
-                  />
-                </BalanceTextSmall>
-              </Flex>
-            </Flex>
-            <BalanceLabel mt="24px">Unstaked</BalanceLabel>
-            <Flex mt="4px" alignItems="center">
-              <CardImage src="/images/penguin-finance-logo.svg" alt="penguin logo" width={64} height={64} />
-              <Flex flexDirection="column">
-                <Balance>
-                  <CardValue
-                    className="balance"
-                    fontSize="24px"
-                    value={account ? roundDown(getBalanceNumber(pefiBalance), 2) : 0}
-                    decimals={2}
-                    lineHeight="1"
-                  />
-                </Balance>
-                <BalanceText fontSize="20px" fontWeight={300} lineHeight="1.4">
-                  PEFI
-                </BalanceText>
-                <BalanceTextSmall>
-                  <CardValue
-                    className="balance"
-                    fontSize="12px"
-                    value={account ? roundDown(getBalanceNumber(pefiBalance) / xPefiToPefiRatio, 2) : 0}
-                    decimals={2}
-                    lineHeight="1.2"
-                    prefix="≈ "
-                    suffix=" iPEFI"
-                  />
-                </BalanceTextSmall>
-              </Flex>
+            <Flex flexDirection={isMobile ? 'row' : 'column'} justifyContent='space-between'>
+              <div>
+                <BalanceLabel>Balance</BalanceLabel>
+                <Flex mt="4px" alignItems="center">
+                  <CardImage isMobile={isMobile} src="/images/pools/iPefi.svg" alt="ipefi logo" width={64} height={64} />
+                  <Flex flexDirection="column">
+                    <Balance>
+                      <CardValue
+                        className="balance"
+                        fontSize={isMobile ? '22px' : "24px"}
+                        value={roundDown(getBalanceNumber(stakedBalance), 2)}
+                        decimals={2}
+                        lineHeight="1"
+                      />
+                    </Balance>
+                    <BalanceText fontSize={isMobile ? '18px' : "20px"} fontWeight={300} lineHeight="1.4">
+                      iPEFI
+                    </BalanceText>
+                    <BalanceTextSmall>
+                      <CardValue
+                        className="balance"
+                        fontSize="12px"
+                        value={roundDown(xPefiToPefiRatio * getBalanceNumber(stakedBalance), 2)}
+                        decimals={2}
+                        lineHeight="1.2"
+                        prefix="≈ "
+                        suffix=" PEFI"
+                      />
+                    </BalanceTextSmall>
+                  </Flex>
+                </Flex>
+              </div>
+              <div>
+                <BalanceLabel mt={!isMobile && "24px"}>Unstaked</BalanceLabel>
+                <Flex mt="4px" alignItems="center">
+                  <CardImage isMobile={isMobile} src="/images/penguin-finance-logo.svg" alt="penguin logo" width={64} height={64} />
+                  <Flex flexDirection="column">
+                    <Balance>
+                      <CardValue
+                        className="balance"
+                        fontSize={isMobile ? '22px' : "24px"}
+                        value={account ? roundDown(getBalanceNumber(pefiBalance), 2) : 0}
+                        decimals={2}
+                        lineHeight="1"
+                      />
+                    </Balance>
+                    <BalanceText fontSize={isMobile ? '18px' : "20px"} fontWeight={300} lineHeight="1.4">
+                      PEFI
+                    </BalanceText>
+                    <BalanceTextSmall>
+                      <CardValue
+                        className="balance"
+                        fontSize="12px"
+                        value={account ? roundDown(getBalanceNumber(pefiBalance) / xPefiToPefiRatio, 2) : 0}
+                        decimals={2}
+                        lineHeight="1.2"
+                        prefix="≈ "
+                        suffix=" iPEFI"
+                      />
+                    </BalanceTextSmall>
+                  </Flex>
+                </Flex>
+              </div>
             </Flex>
           </BalanceCard>
         </NestCardsWrapper>
@@ -267,6 +275,8 @@ const ViewStatsButton = styled(Button)`
   background: white;
   border-radius: 4px;
   font-weight: 400;
+  margin-right: 16px;
+  white-space: nowrap;
   color: ${({ theme }) => theme.colors.secondary};
 `
 
@@ -275,10 +285,10 @@ const APYLabel = styled(Text)`
   font-weight: 400;
 `
 
-const CardImage = styled.img`
-  margin-right: 12px;
-  width: 72px;
-  height: 72px;
+const CardImage = styled.img<{ isMobile ?: boolean }>`
+  margin-right: ${({ isMobile }) => isMobile ? '8px' : '12px'};
+  width: ${({ isMobile }) => isMobile ? '56px' : '72px'};
+  height: ${({ isMobile }) => isMobile ? '56px' : '72px'};
 `
 
 const Balance = styled.div`
