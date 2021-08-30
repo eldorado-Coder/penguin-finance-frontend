@@ -5,9 +5,10 @@ import { getBalanceNumber } from 'utils/formatBalance'
 import { Card, CardBody, Heading, Flex, Skeleton } from 'penguinfinance-uikit2'
 import { NavLink } from 'react-router-dom'
 import SvgIcon from 'components/SvgIcon'
-import { useTotalSupply } from 'hooks/useTokenBalance'
+import { useTotalSupply, useBurnedBalance } from 'hooks/useTokenBalance'
 import useI18n from 'hooks/useI18n'
 import { Pool } from 'state/types'
+import { getPefiAddress } from 'utils/addressHelpers'
 
 const StyledCard = styled(Card)`
   margin-left: auto;
@@ -52,10 +53,12 @@ interface HarvestProps {
 const PercentagePefiStakedNestV2: React.FC<HarvestProps> = ({ pool }) => {
   const TranslateString = useI18n()
   const totalSupply = useTotalSupply()
+  const burnedBalance = useBurnedBalance(getPefiAddress())
+  const circulatingSupply = getBalanceNumber(totalSupply) - getBalanceNumber(burnedBalance)
   const { totalStaked } = pool
 
   if (totalStaked) {
-    const stakedPercentage = (getBalanceNumber(totalStaked) / getBalanceNumber(totalSupply)) * 100
+    const stakedPercentage = (getBalanceNumber(totalStaked) / circulatingSupply) * 100
 
     return (
       <StyledCard>
@@ -63,7 +66,7 @@ const PercentagePefiStakedNestV2: React.FC<HarvestProps> = ({ pool }) => {
           <Title size="md">{TranslateString(762, 'A total of')}</Title>
           <CardMidContent color="primary">
             {stakedPercentage > 0 ? (
-              `${stakedPercentage.toFixed(4)}% ${TranslateString(736, 'of PEFI')}`
+              `${stakedPercentage.toFixed(2)}% ${TranslateString(736, 'of PEFI')}`
             ) : (
               <Skeleton animation="pulse" variant="rect" height="44px" />
             )}
