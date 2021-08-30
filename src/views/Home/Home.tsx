@@ -1,7 +1,7 @@
 import React from 'react'
 import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
-import { Text, BaseLayout, Flex } from 'penguinfinance-uikit2'
+import { Text, BaseLayout, Flex, useMatchBreakpoints } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import useI18n from 'hooks/useI18n'
 import useTheme from 'hooks/useTheme'
@@ -16,7 +16,7 @@ import PercentagePefiStakedNestV2 from 'views/Home/components/PercentagePefiStak
 import V2PoolCard from 'views/Pools/components/V2PoolCard'
 import { usePools, useV2Pools } from 'state/hooks'
 
-const Hero = styled.div`
+const Hero = styled.div<{ isMobile?: boolean}>`
   position: relative;
   align-items: center;
   background-repeat: no-repeat;
@@ -25,9 +25,9 @@ const Hero = styled.div`
   justify-content: center;
   flex-direction: column;
   margin: auto;
-  margin-bottom: 32px;
+  margin-bottom: ${({ isMobile }) => !isMobile ? '32px' : '16px'};
   text-align: center;
-  height: 165px;
+  height: ${({ isMobile }) => !isMobile ? '165px' : '70px'};
 
   h1 {
     color: white;
@@ -52,10 +52,10 @@ const HeroBgImageContainer = styled.div`
   width: 100%;
 `
 
-const HeroBgImage = styled.img`
+const HeroBgImage = styled.img<{ isMobile?: boolean }>`
   z-index: -1;
-  object-fit: cover;
-  min-height: 140px;
+  object-fit: ${({ isMobile }) => !isMobile && 'cover'};
+  min-height: ${({ isMobile }) => !isMobile && '140px'};
   border-radius: 20px;
 `
 
@@ -117,6 +117,8 @@ const Home: React.FC = () => {
   const { account } = useWeb3React()
   const v1Pools = usePools(account)
   const v2Pools = useV2Pools(account)
+  const { isXl } = useMatchBreakpoints()
+  const isMobile = !isXl
   // const AVAX_BLOCK_TIME = useBlockGenerationTime()
   // const BLOCKS_PER_YEAR = new BigNumber(SECONDS_PER_YEAR).div(new BigNumber(AVAX_BLOCK_TIME))
 
@@ -144,9 +146,10 @@ const Home: React.FC = () => {
   return (
     <>
       <Page>
-        <Hero>
+        <Hero isMobile={isMobile}>
           <HeroBgImageContainer>
             <HeroBgImage
+              isMobile={isMobile}
               src={`${process.env.PUBLIC_URL}/images/home/${isDark ? 'new_banner_dark.svg' : 'new_banner_light.svg'}`}
               alt="astronaut"
             />

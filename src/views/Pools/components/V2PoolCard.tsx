@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js'
 import React, { useCallback, useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { NavLink, useHistory } from 'react-router-dom'
-import { Button, Text, Flex, Tag, Heading } from 'penguinfinance-uikit2'
+import { Button, Text, Flex, Tag, Heading, useMatchBreakpoints } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import UnlockButton from 'components/UnlockButton'
 import SvgIcon from 'components/SvgIcon'
@@ -64,7 +64,7 @@ interface HarvestProps {
 }
 
 const V2PoolCard: React.FC<HarvestProps> = ({ pool }) => {
-  const [handsOnPenalty, setHandsOnPenalty] = useState(1.13)
+  const [handsOnPenalty, setHandsOnPenalty] = useState(6)
   const TranslateString = useI18n()
   const { account } = useWeb3React()
   const iPefiContract = useV2NestContract()
@@ -75,6 +75,8 @@ const V2PoolCard: React.FC<HarvestProps> = ({ pool }) => {
   const isCardActive = isFinished && accountHasStakedBalance
   const displayedNestApy = (useV2NestApy() * 100).toFixed(2)
   const displayedNestDailyApr = useV2NestAprPerDay().toFixed(2)
+  const { isXl } = useMatchBreakpoints()
+  const isMobile = !isXl
 
   const fetchHandsOnPenalty = useCallback(async () => {
     const perHandsPenalty = await iPefiContract.methods.paperHandsPenalty().call()
@@ -102,6 +104,10 @@ const V2PoolCard: React.FC<HarvestProps> = ({ pool }) => {
     window.open(nestMigrationUrl, '_blank')
   }
 
+  const handleViewNestsGitbook = () => {
+    window.open("https://penguin-finance.gitbook.io/penguin-finance/summary/penguin-nests-staking-and-fee-collection", '_blank')
+  }
+
   return (
     <StyledCard isActive={isCardActive} isFinished={isFinished && sousId !== 0}>
       <CardContent>
@@ -109,15 +115,9 @@ const V2PoolCard: React.FC<HarvestProps> = ({ pool }) => {
           <StyledHeading size="xl" color="primary">
             {`i${tokenName}`} {TranslateString(348, 'Nest')}
           </StyledHeading>
-          <HelperTag variant="primary" outline>
-            <a
-              href="https://penguin-finance.gitbook.io/penguin-finance/summary/penguin-nests-staking-and-fee-collection"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <span>?</span>
-            </a>
-          </HelperTag>
+          <InfoIconWrapper onClick={handleViewNestsGitbook}>
+            <SvgIcon src={`${process.env.PUBLIC_URL}/images/home/info.svg`} width="25px" height="25px" />
+          </InfoIconWrapper>
         </Flex>
         <Flex mt="12px" mb="32px">
           <CardImage src="/images/pools/iPefi.svg" alt="iPefi logo" width={64} height={64} />
@@ -126,17 +126,17 @@ const V2PoolCard: React.FC<HarvestProps> = ({ pool }) => {
               <Block>
                 <Label>{TranslateString(544, 'iPEFI in Wallet')}:</Label>
                 <Text color="textSubtle" bold fontSize="24px">
-                  {`${getBalanceNumber(stakedBalance).toFixed(2)} iPEFI`}
+                  {`${getBalanceNumber(stakedBalance).toFixed(2)} ${isMobile ? '' : 'iPEFI'}`}
                 </Text>
               </Block>
               <Block>
-                <Label>{TranslateString(546, 'Daily APR')}:</Label>
+                <Label>{TranslateString(546, 'Current APY')}:</Label>
                 <Text color="textSubtle" bold fontSize="24px">
-                  {`${getNumberWithCommas(displayedNestDailyApr)}%`}
+                  {`${getNumberWithCommas(displayedNestApy)}%`}
                 </Text>
               </Block>
             </Flex>
-            <Flex>
+            <Flex ml={isMobile && '-84px'}>
               <Block>
                 <Label>{TranslateString(544, 'Paper Hands Penalty')}:</Label>
                 <Text color="textSubtle" bold fontSize="24px">
@@ -187,6 +187,15 @@ const StyledNavLink = styled(NavLink)`
     }
   }
 `
+
+const InfoIconWrapper = styled.div`
+  svg {
+    cursor: pointer;
+    path {
+      fill: ${({ theme }) => theme.isDark ? 'white' : theme.colors.secondary};
+    }
+  }
+`;
 
 const StyledButton = styled(Button)`
   background-color: ${({ theme }) => theme.colors.red};
