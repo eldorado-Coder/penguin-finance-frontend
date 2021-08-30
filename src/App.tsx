@@ -88,9 +88,9 @@ const App: React.FC = () => {
             <Route path="/launchpad">
               <LaunchpadWithVideo />
             </Route>
-            {/* <Route path="/launchpad">
+            <Route path="/sherpa-launchpad">
               <LaunchpadDistribution />
-            </Route> */}
+            </Route>
             <Route path="/club">
               <Club />
             </Route>
