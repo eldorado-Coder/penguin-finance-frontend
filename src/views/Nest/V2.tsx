@@ -24,7 +24,7 @@ import NestCard from './components/NestCard'
 
 const NestV2: React.FC = () => {
   const [userFirstStakeTime, setUserFirstStakeTime] = useState(0)
-  const [handsOnPenalty, setHandsOnPenalty] = useState(1.13)
+  const [handsOnPenalty, setHandsOnPenalty] = useState(6)
   const { refreshRate } = useUserSetting()
   const { path } = useRouteMatch()
   const { account } = useWeb3React()
