@@ -24,7 +24,7 @@ import NestCard from './components/NestCard'
 
 const NestV2: React.FC = () => {
   const [userFirstStakeTime, setUserFirstStakeTime] = useState(0)
-  const [handsOnPenalty, setHandsOnPenalty] = useState(1.13)
+  const [handsOnPenalty, setHandsOnPenalty] = useState(6)
   const { refreshRate } = useUserSetting()
   const { path } = useRouteMatch()
   const { account } = useWeb3React()
@@ -119,11 +119,10 @@ const NestV2: React.FC = () => {
             <APYCard padding="8px 24px 16px" mb="16px">
               <Flex justifyContent="space-between" alignItems="center">
                 <Text fontSize="20px" color="white" fontWeight={500}>
-                  {/* Staking APY */}
-                  Daily APR
+                  Staking APY
                 </Text>
                 <Text fontSize="36px" bold color="white">
-                  {getNumberWithCommas(displayedNestDailyApr)}%
+                  {getNumberWithCommas(displayedNestApy)}%
                 </Text>
               </Flex>
               <Flex justifyContent="space-between" alignItems="center">

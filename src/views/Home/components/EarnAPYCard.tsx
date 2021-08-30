@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Heading, Card, CardBody, Flex, Skeleton } from 'penguinfinance-uikit2'
 import { NavLink } from 'react-router-dom'
 import SvgIcon from 'components/SvgIcon'
-import { useNestApy, useV2NestAprPerDay } from 'state/hooks'
+import { useV2NestApy, useV2NestAprPerDay } from 'state/hooks'
 import { getNumberWithCommas } from 'utils/formatBalance'
 
 const StyledCard = styled(Card)`
@@ -37,7 +37,7 @@ const StyledNavLink = styled(NavLink)`
 `
 
 const EarnAPYCard = () => {
-  const displayedNestApy = (useNestApy() * 100).toFixed(2)
+  const displayedNestApy = (useV2NestApy() * 100).toFixed(2)
   const displayedNestDailyApr = useV2NestAprPerDay().toFixed(2)
 
   return (
@@ -46,7 +46,7 @@ const EarnAPYCard = () => {
         <Text size="md">Enjoy a comfy</Text>
         <CardMidContent color="primary">
           {displayedNestDailyApr ? (
-            `${getNumberWithCommas(displayedNestDailyApr)}% DAILY APR`
+            `${getNumberWithCommas(displayedNestApy)}% APY`
           ) : (
             <Skeleton animation="pulse" variant="rect" height="44px" />
           )}

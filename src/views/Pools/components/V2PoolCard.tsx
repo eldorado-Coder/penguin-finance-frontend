@@ -64,7 +64,7 @@ interface HarvestProps {
 }
 
 const V2PoolCard: React.FC<HarvestProps> = ({ pool }) => {
-  const [handsOnPenalty, setHandsOnPenalty] = useState(1.13)
+  const [handsOnPenalty, setHandsOnPenalty] = useState(6)
   const TranslateString = useI18n()
   const { account } = useWeb3React()
   const iPefiContract = useV2NestContract()
@@ -130,9 +130,9 @@ const V2PoolCard: React.FC<HarvestProps> = ({ pool }) => {
                 </Text>
               </Block>
               <Block>
-                <Label>{TranslateString(546, 'Daily APR')}:</Label>
+                <Label>{TranslateString(546, 'Current APY')}:</Label>
                 <Text color="textSubtle" bold fontSize="24px">
-                  {`${getNumberWithCommas(displayedNestDailyApr)}%`}
+                  {`${getNumberWithCommas(displayedNestApy)}%`}
                 </Text>
               </Block>
             </Flex>
