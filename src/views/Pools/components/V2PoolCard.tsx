@@ -100,7 +100,8 @@ const V2PoolCard: React.FC<HarvestProps> = ({ pool }) => {
   }
 
   const handleMigrationGuide = () => {
-    const nestMigrationUrl = 'https://penguin-finance.medium.com/introducing-ipefi-the-nest-evolution-d002f8548276'
+    const nestMigrationUrl =
+      'https://docs.penguinfinance.io/summary/penguin-nests-staking-and-fee-collection/ipefi-migration-guide'
     window.open(nestMigrationUrl, '_blank')
   }
 
