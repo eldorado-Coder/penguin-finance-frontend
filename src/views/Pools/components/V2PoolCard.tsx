@@ -13,8 +13,8 @@ import { useV2NestApy, useV2NestAprPerDay } from 'state/hooks'
 import { Pool } from 'state/types'
 import Card from './Card'
 
-const StyledCard = styled(Card)<{ isNestPage?: boolean }>`
-  min-width: 350px;
+const StyledCard = styled(Card)<{ isNestPage?: boolean, isMobile?: boolean }>`
+  min-width: ${({ isMobile }) => isMobile ? '100%' : '350px'};
   border-radius: 32px;
   @media (min-width: 640px) {
     transform: ${(props) => props.isNestPage && 'scale(1.3)'};
@@ -113,7 +113,7 @@ const V2PoolCard: React.FC<HarvestProps> = ({ pool }) => {
   }
 
   return (
-    <StyledCard isActive={isCardActive} isFinished={isFinished && sousId !== 0}>
+    <StyledCard isMobile={isMobile} isActive={isCardActive} isFinished={isFinished && sousId !== 0}>
       <CardContent>
         <Flex justifyContent="space-between" mb="24px" alignItems="center">
           <StyledHeading size="xl" color="primary">
