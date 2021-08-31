@@ -24,6 +24,8 @@ export const connectorsByName: { [connectorName in ConnectorNames]: any } = {
   [ConnectorNames.Injected]: injected,
   [ConnectorNames.WalletConnect]: walletconnect,
   [ConnectorNames.BSC]: bscConnector,
+  // TODO: should change coinbase connector
+  [ConnectorNames.Coinbase]: bscConnector,
 }
 
 export const getLibrary = (provider): Web3 => {
