@@ -105,7 +105,10 @@ const V2PoolCard: React.FC<HarvestProps> = ({ pool }) => {
   }
 
   const handleViewNestsGitbook = () => {
-    window.open("https://penguin-finance.gitbook.io/penguin-finance/summary/penguin-nests-staking-and-fee-collection", '_blank')
+    window.open(
+      'https://penguin-finance.gitbook.io/penguin-finance/summary/penguin-nests-staking-and-fee-collection',
+      '_blank',
+    )
   }
 
   return (
@@ -192,10 +195,10 @@ const InfoIconWrapper = styled.div`
   svg {
     cursor: pointer;
     path {
-      fill: ${({ theme }) => theme.isDark ? 'white' : theme.colors.secondary};
+      fill: ${({ theme }) => (theme.isDark ? 'white' : theme.colors.secondary)};
     }
   }
-`;
+`
 
 const StyledButton = styled(Button)`
   background-color: ${({ theme }) => theme.colors.red};
