@@ -1,5 +1,6 @@
 import { InjectedConnector } from '@web3-react/injected-connector'
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
+import { WalletLinkConnector } from '@web3-react/walletlink-connector'
 import { BscConnector } from '@binance-chain/bsc-connector'
 import { ConnectorNames } from 'penguinfinance-uikit2'
 import Web3 from 'web3'
@@ -18,14 +19,31 @@ const walletconnect = new WalletConnectConnector({
   pollingInterval: POLLING_INTERVAL,
 })
 
+const AVALANCHE_MAINNET_PARAMS = {
+  chainId: '0xa86a',
+  chainName: 'Avalanche Mainnet C-Chain',
+  nativeCurrency: {
+      name: 'Avalanche',
+      symbol: 'AVAX',
+      decimals: 18
+  },
+  rpcUrls: ['https://api.avax.network/ext/bc/C/rpc'],
+  blockExplorerUrls: ['https://cchain.explorer.avax.network/']
+}
+
+const walletlink = new WalletLinkConnector({
+  url: AVALANCHE_MAINNET_PARAMS.rpcUrls[0],
+  appName: 'Penguin Finance',
+  appLogoUrl: '/images/penguin-logo.png'
+})
+
 const bscConnector = new BscConnector({ supportedChainIds: [chainId] })
 
 export const connectorsByName: { [connectorName in ConnectorNames]: any } = {
   [ConnectorNames.Injected]: injected,
   [ConnectorNames.WalletConnect]: walletconnect,
   [ConnectorNames.BSC]: bscConnector,
-  // TODO: should change coinbase connector
-  [ConnectorNames.Coinbase]: bscConnector,
+  [ConnectorNames.Coinbase]: walletlink,
 }
 
 export const getLibrary = (provider): Web3 => {
