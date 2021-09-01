@@ -65,7 +65,7 @@ const Farm: React.FunctionComponent<FarmCardProps> = ({ farm }) => {
     <Container>
       <Image src={`/images/farms/${farmImage}.svg`} alt={farm.tokenSymbol} width={isMobile ? 24 : 64} height={isMobile ? 24 : 64} />
       <FarmLabelWrapper>
-        <FarmLabel bold>{farm.lpSymbol}</FarmLabel>
+        <FarmLabel bold>{farm.lpSymbol.replace(' LP', '')}</FarmLabel>
         {handleRenderFarming()}
       </FarmLabelWrapper>
     </Container>
