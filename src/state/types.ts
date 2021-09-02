@@ -29,6 +29,7 @@ export interface Farm extends FarmConfig {
     pendingXPefi: BigNumber
   }
   pendingTokens?: any[]
+  totalLp?: BigNumber
 }
 
 export interface Lp extends LPConfig {
