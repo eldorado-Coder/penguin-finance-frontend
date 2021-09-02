@@ -1,9 +1,11 @@
 import React from 'react'
+import BigNumber from 'bignumber.js'
 import styled, { keyframes, css } from 'styled-components'
 import { Card, Text, Button, Flex } from 'penguinfinance-uikit2'
-import { ASSET_CONTENT_URL, WEEKS_PER_YEAR } from 'config'
+import { WEEKS_PER_YEAR } from 'config'
 import useAssets from 'hooks/useAssets'
 import { getBalanceNumber } from 'utils/formatBalance'
+import { getTokenLogoFromSymbol } from 'utils/token'
 import Balance from 'components/Balance'
 import { FarmCardProps } from '../../types'
 import StakePanel from './StakePanel'
@@ -72,10 +74,14 @@ const EarningsContainer = styled.div`
 `
 
 const Divider = styled.div`
-  background-color: ${({ theme }) => theme.colors.secondary};
+  background-color: ${({ theme }) => theme.colors.textSubtle};
   height: 2px;
   margin: 16px auto 8px;
   width: 100%;
+`
+
+const StyledBalance = styled(Balance)`
+  margin: auto !important;
 `
 
 const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, expanded }) => {
@@ -90,6 +96,9 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, expanded })
   const pefiPerYear = getBalanceNumber(farm.pefiPerYear)
   const pefiPerWeek = pefiPerYear / WEEKS_PER_YEAR
   const pefiPerMonth = pefiPerWeek * 4
+
+  const lpSymbol = farm.lpSymbol.replaceAll(' LP', '')
+  const lpLogo = getTokenLogoFromSymbol(lpSymbol)
 
   return (
     <Container expanded={expanded}>
@@ -111,9 +120,13 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, expanded })
                 return (
                   <Flex flexDirection="column">
                     <RewardImage src={getTokenLogo(pendingToken)} alt="penguin" size={50} />
-                    <Text fontSize="14px" color="textSubtle" textAlign="center">
-                      {`${Number(amount).toFixed(2)} ${getTokenSymbol(pendingToken)}`}
-                    </Text>
+                    <StyledBalance
+                      fontSize="14px"
+                      color="textSubtle"
+                      fontWeight="400"
+                      suffix={` ${getTokenSymbol(pendingToken)}`}
+                      value={getBalanceNumber(new BigNumber(amount))}
+                    />
                   </Flex>
                 )
               })}
@@ -159,7 +172,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, expanded })
               />
             )}
           </EarningsContainer>
-          <RewardImage src="/images/farms/pefi-dai.svg" alt="pefi-earning" size={56} />
+          <RewardImage src={lpLogo} alt="pefi-earning" size={56} />
         </Flex>
         <Divider />
         <Flex>
@@ -183,7 +196,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, expanded })
               value={Number(pefiPerMonth)}
             />
           </EarningsContainer>
-          <RewardImage src="/images/farms/pefi-dai.svg" alt="igloo-stats" size={56} />
+          <RewardImage src={lpLogo} alt="igloo-stats" size={56} />
         </Flex>
       </ActionCard>
       <ActionCard padding="10px 16px" mb="16px">

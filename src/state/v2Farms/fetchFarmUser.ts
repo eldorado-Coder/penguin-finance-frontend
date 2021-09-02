@@ -126,7 +126,7 @@ export const fetchFarmUserData = async (account: string) => {
   const _results = await Promise.all(results)
 
   const stakedBalances = _results.map((result) => {
-    return new BigNumber(result[0]).toJSON()
+    return new BigNumber(result[0][0]._hex).toJSON()
   })
   const parsedEarnings = _results.map((result) => {
     return new BigNumber(result[1]).toJSON()
