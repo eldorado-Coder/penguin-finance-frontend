@@ -35,7 +35,7 @@ const Farms: React.FC = () => {
     }
   }, [account, dispatch, fastRefresh])
 
-  const activeFarms = v2FarmsLP.filter((farm) => farm.type === 'Penguin' && farm.multiplier !== '0X')
+  const activeFarms = v2FarmsLP.filter((farm) => farm.type === 'Pangolin' && farm.multiplier !== '0X')
 
   const farmsList = useCallback(
     (farmsToDisplay, removed: boolean) => {

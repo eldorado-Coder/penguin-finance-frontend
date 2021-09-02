@@ -106,6 +106,11 @@ export const fetchFarmUserData = async (account: string) => {
         name: 'pendingTokens',
         params: [v2FarmsConfig[i].pid, account],
       },
+      {
+        address: getV2FarmMasterChefAddress(v2FarmsConfig[i].type),
+        name: 'ipefiDistributionBipsByUser',
+        params: [account],
+      },
     ]
 
     const v2MasterChefABI = getV2FarmMasterChefAbi(v2FarmsConfig[i].type)
@@ -124,6 +129,14 @@ export const fetchFarmUserData = async (account: string) => {
   const pendingTokens = _results.map((result) => {
     return result[2]
   })
+  const ipefiDistributionBipsByUser = _results.map((result) => {
+    return new BigNumber(result[3]).toJSON()
+  })
 
-  return { userFarmEarnings: parsedEarnings, userFarmShares: userShares, userPendingTokens: pendingTokens }
+  return {
+    userFarmEarnings: parsedEarnings,
+    userFarmShares: userShares,
+    userPendingTokens: pendingTokens,
+    userIpefiDistributionBips: ipefiDistributionBipsByUser,
+  }
 }

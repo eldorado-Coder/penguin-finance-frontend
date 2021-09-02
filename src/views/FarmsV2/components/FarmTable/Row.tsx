@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import BigNumber from 'bignumber.js'
 import { useMatchBreakpoints } from 'penguinfinance-uikit2'
-import { useFarmUser } from 'state/hooks'
+import { useV2FarmUser } from 'state/hooks'
 import useDelayedUnmount from 'hooks/useDelayedUnmount'
 import useAssets from 'hooks/useAssets'
 import { WEEKS_PER_YEAR } from 'config'
@@ -66,7 +66,7 @@ const PendingTokenLogo = styled.img`
 
 const Row: React.FunctionComponent<FarmCardProps> = (props) => {
   const { farm } = props
-  const { stakedBalance, earnings } = useFarmUser(farm.pid, farm.type)
+  const { stakedBalance, earnings } = useV2FarmUser(farm.pid, farm.type)
   const hasStakedAmount = !!stakedBalance.toNumber()
   const [actionPanelExpanded, setActionPanelExpanded] = useState(hasStakedAmount)
   const farmAPY =
