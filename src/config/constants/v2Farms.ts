@@ -22,7 +22,7 @@ const v2Farms: V2FarmConfig[] = [
     quoteTokenAddresses: contracts.wavax,
     withdrawalFee: '2.56',
     hardApy: '896.65%',
-    type: 'Penguin',
+    type: 'Pangolin',
     name: 'pendingPEFI',
   },
   {
@@ -45,7 +45,7 @@ const v2Farms: V2FarmConfig[] = [
     quoteTokenAddresses: contracts.wavax,
     withdrawalFee: '2.56',
     hardApy: '896.65%',
-    type: 'Penguin',
+    type: 'Pangolin',
     name: 'pendingPEFI',
   },
 ]
