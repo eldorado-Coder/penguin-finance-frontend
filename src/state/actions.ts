@@ -14,14 +14,6 @@ export {
   updateUserPendingReward,
   updateUserStakedBalance,
 } from './pools'
-export {
-  fetchPoolsPublicDataAsync as fetchV2PoolsPublicDataAsync,
-  fetchPoolsUserDataAsync as fetchV2PoolsUserDataAsync,
-  updateUserAllowance as updateV2PoolUserAllowance,
-  updateUserBalance as updateV2PoolUserBalance,
-  updateUserPendingReward as updateV2PoolUserPendingReward,
-  updateUserStakedBalance as updateV2PoolUserStakedBalance,
-} from './v2pools'
 export { updateNestMigratorAllowance } from './nestMigrator'
 export { profileFetchStart, profileFetchSucceeded, profileFetchFailed } from './profile'
 export { fetchStart, teamFetchSucceeded, fetchFailed, teamsFetchSucceeded } from './teams'
@@ -31,3 +23,18 @@ export { fetchLaunchpadUserDataAsync, updateLaunchpadTierHurdles } from './launc
 export { fetchBoosterRocketUserDataAsync } from './boosterRocket'
 // v2
 export { fetchNestMigratorUserDataAsync } from './nestMigrator'
+// v2 nest
+export {
+  fetchPoolsPublicDataAsync as fetchV2PoolsPublicDataAsync,
+  fetchPoolsUserDataAsync as fetchV2PoolsUserDataAsync,
+  updateUserAllowance as updateV2PoolUserAllowance,
+  updateUserBalance as updateV2PoolUserBalance,
+  updateUserPendingReward as updateV2PoolUserPendingReward,
+  updateUserStakedBalance as updateV2PoolUserStakedBalance,
+} from './v2pools'
+// v2 igloos
+export {
+  fetchMasterChefPefiPerBlock as fetchV2MasterChefPefiPerBlock,
+  fetchFarmsPublicDataAsync as fetchV2FarmsPublicDataAsync,
+  fetchFarmUserDataAsync as fetchV2FarmUserDataAsync,
+} from './v2Farms'

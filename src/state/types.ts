@@ -28,6 +28,7 @@ export interface Farm extends FarmConfig {
     earnings: BigNumber
     pendingXPefi: BigNumber
   }
+  pendingTokens?: any[]
 }
 
 export interface Lp extends LPConfig {
@@ -233,8 +234,9 @@ export interface State {
   boosterRocket: BoosterRocketState
 
   // nest
-  v2Pools: PoolsState
   nestMigrator: NestMigratorState
+  v2Pools: PoolsState
+  v2Farms: FarmsState
 }
 
 // v2

@@ -1,12 +1,12 @@
 import React, { useRef } from 'react'
 import styled from 'styled-components'
 import { Button, ChevronUpIcon } from 'penguinfinance-uikit2'
-import { FarmCardProps } from '../types';
+import { FarmCardProps } from '../types'
 import Row from './Row'
 
 export interface ITableProps {
   data: FarmCardProps[]
-  sortColumn?: string,
+  sortColumn?: string
 }
 
 const Container = styled.div`
