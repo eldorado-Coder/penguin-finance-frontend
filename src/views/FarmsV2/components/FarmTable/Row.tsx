@@ -3,9 +3,10 @@ import styled from 'styled-components'
 import BigNumber from 'bignumber.js'
 import { useMatchBreakpoints } from 'penguinfinance-uikit2'
 import { useFarmUser } from 'state/hooks'
-import useDelayedUnmount from 'hooks/useDelayedUnmount';
+import useDelayedUnmount from 'hooks/useDelayedUnmount'
+import useAssets from 'hooks/useAssets'
 import { WEEKS_PER_YEAR } from 'config'
-import Farm from './Farm'; 
+import Farm from './Farm'
 import Earned from './Earned'
 import Details from './Details'
 import CellLayout from './CellLayout'
@@ -26,7 +27,7 @@ const CellInner = styled.div`
 
 const StyledTr = styled.tr`
   cursor: pointer;
-  border-bottom: 3px solid ${({ theme }) => theme.isDark ? theme.colors.background : 'rgb(231, 227, 235)'};
+  border-bottom: 3px solid ${({ theme }) => (theme.isDark ? theme.colors.background : 'rgb(231, 227, 235)')};
 `
 
 const EarnedMobileCell = styled.td`
@@ -48,8 +49,20 @@ const Amount = styled.span`
   align-items: center;
 `
 
+const TokensWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`
+
+const PendingTokenLogo = styled.img`
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin: 2px 2px;
+`
+
 const Row: React.FunctionComponent<FarmCardProps> = (props) => {
-  const { farm } = props;
+  const { farm } = props
   const { stakedBalance, earnings } = useFarmUser(farm.pid, farm.type)
   const hasStakedAmount = !!stakedBalance.toNumber()
   const [actionPanelExpanded, setActionPanelExpanded] = useState(hasStakedAmount)
@@ -57,6 +70,13 @@ const Row: React.FunctionComponent<FarmCardProps> = (props) => {
     farm.apy && farm.apy.times(new BigNumber(WEEKS_PER_YEAR)).times(new BigNumber(100)).toNumber().toFixed(2)
   const shouldRenderChild = useDelayedUnmount(actionPanelExpanded, 300)
   const { isXl, isXs } = useMatchBreakpoints()
+  const { getTokenLogo } = useAssets()
+  const { pendingTokens } = farm
+  const pendingTokensWithLogo =
+    pendingTokens &&
+    pendingTokens.map((pendingTokenAddress) => {
+      return { address: pendingTokenAddress, logo: getTokenLogo(pendingTokenAddress) }
+    })
 
   const toggleActionPanel = () => {
     setActionPanelExpanded(!actionPanelExpanded)
@@ -74,7 +94,7 @@ const Row: React.FunctionComponent<FarmCardProps> = (props) => {
     if (!isXs) {
       return (
         <StyledTr onClick={toggleActionPanel}>
-          {columnNames.map(key => {
+          {columnNames.map((key) => {
             switch (key) {
               case 'farm':
                 return (
@@ -90,12 +110,11 @@ const Row: React.FunctionComponent<FarmCardProps> = (props) => {
                 return (
                   <td key={key}>
                     <CellInner>
-                      <CellLayout label='Earned'>
-                       <Earned earnings={earnings} pid={farm.pid} userDataReady />
+                      <CellLayout label="Earned">
+                        <Earned earnings={earnings} pid={farm.pid} userDataReady />
                       </CellLayout>
                     </CellInner>
                   </td>
-                  
                 )
               case 'details':
                 return (
@@ -111,18 +130,23 @@ const Row: React.FunctionComponent<FarmCardProps> = (props) => {
                 return (
                   <td key={key}>
                     <CellInner>
-                      <CellLayout label='APR'>
+                      <CellLayout label="APR">
                         <Amount>{`${farmAPY || '--'}%`}</Amount>
                       </CellLayout>
                     </CellInner>
                   </td>
                 )
-              case 'multiplier':
+              case 'rewards':
                 return (
                   <td key={key}>
                     <CellInner>
-                      <CellLayout label='Multiplier'>
-                        <Amount>{farm.multiplier}</Amount>
+                      <CellLayout label="Rewards">
+                        <TokensWrapper>
+                          {pendingTokensWithLogo &&
+                            pendingTokensWithLogo.map((row) => {
+                              return <div>{row.logo && <PendingTokenLogo src={row.logo} alt="logo" />}</div>
+                            })}
+                        </TokensWrapper>
                       </CellLayout>
                     </CellInner>
                   </td>
@@ -131,7 +155,7 @@ const Row: React.FunctionComponent<FarmCardProps> = (props) => {
                 return (
                   <td key={key}>
                     <CellInner>
-                      <CellLayout label='Liquidity'>
+                      <CellLayout label="Liquidity">
                         <Amount>$498,136</Amount>
                       </CellLayout>
                     </CellInner>
@@ -161,12 +185,12 @@ const Row: React.FunctionComponent<FarmCardProps> = (props) => {
           </tr>
           <tr>
             <EarnedMobileCell>
-              <CellLayout label='Earned'>
+              <CellLayout label="Earned">
                 <Earned earnings={earnings} pid={farm.pid} userDataReady />
               </CellLayout>
             </EarnedMobileCell>
             <AprMobileCell>
-              <CellLayout label='APR'>
+              <CellLayout label="APR">
                 <Amount>{`${farmAPY || '--'}%`}</Amount>
               </CellLayout>
             </AprMobileCell>

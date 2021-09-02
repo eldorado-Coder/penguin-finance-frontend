@@ -76,6 +76,31 @@ export interface FarmConfig {
   swapAddresses?: Address
 }
 
+export interface V2FarmConfig {
+  pid?: number
+  lpSymbol: string
+  lpAddresses: Address
+  strategyAddresses: Address
+  tokenSymbol: string
+  tokenAddresses: Address
+  quoteTokenSymbol: QuoteToken
+  quoteTokenAddresses: Address
+  multiplier?: string
+  isCommunity?: boolean
+  dual?: {
+    rewardPerBlock: number
+    earnLabel: string
+    endBlock: number
+  }
+  withdrawalFee?: string
+  hardApy?: string
+  type?: string
+  name?: string
+  strategyAddress?: string
+  stakingAddress?: string
+  swapAddresses?: Address
+}
+
 export interface LPConfig {
   lpSymbol: string
   lpAddresses: Address
@@ -161,4 +186,3 @@ export interface Token {
   decimals?: number
   projectLink?: string
 }
-

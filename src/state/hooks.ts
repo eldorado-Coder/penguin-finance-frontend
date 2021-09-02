@@ -27,12 +27,18 @@ import {
   push as pushToast,
   remove as removeToast,
   clear as clearToast,
-  // v2
+
+  /*
+   * v2
+   */
+  // nest migrator
+  fetchNestMigratorUserDataAsync,
   // nest
   fetchV2PoolsPublicDataAsync,
   fetchV2PoolsUserDataAsync,
-  // nest migrator
-  fetchNestMigratorUserDataAsync,
+  // pools
+  fetchV2MasterChefPefiPerBlock,
+  fetchV2FarmsPublicDataAsync,
 } from './actions'
 import {
   State,
@@ -68,7 +74,10 @@ export const useFetchPublicData = () => {
     dispatch(fetchLpsPublicDataAsync())
     // POOL REMOVAL
     dispatch(fetchPoolsPublicDataAsync())
+    // v2
     dispatch(fetchV2PoolsPublicDataAsync())
+    dispatch(fetchV2MasterChefPefiPerBlock())
+    dispatch(fetchV2FarmsPublicDataAsync())
   }, [dispatch, slowRefresh])
 }
 
@@ -168,19 +177,6 @@ export const usePools = (account): Pool[] => {
   }, [account, dispatch, fastRefresh])
 
   const pools = useSelector((state: State) => state.pools.data)
-  return pools
-}
-
-export const useV2Pools = (account): Pool[] => {
-  const { fastRefresh } = useRefresh()
-  const dispatch = useDispatch()
-  useEffect(() => {
-    if (account) {
-      dispatch(fetchV2PoolsUserDataAsync(account))
-    }
-  }, [account, dispatch, fastRefresh])
-
-  const pools = useSelector((state: State) => state.v2Pools.data)
   return pools
 }
 
@@ -458,21 +454,10 @@ export const useCompoundApy = ({ normalApy, type }: { normalApy: string; type: s
   return normalApy
 }
 
-// v2
-// Pools
-export const useNestMigrator = (account): NestMigratorState => {
-  const { fastRefresh } = useRefresh()
-  const dispatch = useDispatch()
-  useEffect(() => {
-    if (account) {
-      dispatch(fetchNestMigratorUserDataAsync(account))
-    }
-  }, [account, dispatch, fastRefresh])
-
-  return useSelector((state: State) => state.nestMigrator)
-}
-
-// v1 nest APY/APR
+/*
+ * v2
+ */
+// v2 nest APY/APR
 export const useV2NestAprPerDay = (): number => {
   const v2NestPool = useV2Pools(null)[0]
 
@@ -487,4 +472,37 @@ export const useV2NestApr = (): number => {
 export const useV2NestApy = () => {
   const staticFee = 0
   return (1 + useV2NestApr() / DAYS_PER_YEAR) ** DAYS_PER_YEAR - 1 + staticFee
+}
+
+// v2 nest migrator
+export const useNestMigrator = (account): NestMigratorState => {
+  const { fastRefresh } = useRefresh()
+  const dispatch = useDispatch()
+  useEffect(() => {
+    if (account) {
+      dispatch(fetchNestMigratorUserDataAsync(account))
+    }
+  }, [account, dispatch, fastRefresh])
+
+  return useSelector((state: State) => state.nestMigrator)
+}
+
+// v2 nest
+export const useV2Pools = (account): Pool[] => {
+  const { fastRefresh } = useRefresh()
+  const dispatch = useDispatch()
+  useEffect(() => {
+    if (account) {
+      dispatch(fetchV2PoolsUserDataAsync(account))
+    }
+  }, [account, dispatch, fastRefresh])
+
+  const pools = useSelector((state: State) => state.v2Pools.data)
+  return pools
+}
+
+// v2 igloos
+export const useV2Farms = (): Farm[] => {
+  const farms = useSelector((state: State) => state.v2Farms.data)
+  return farms
 }

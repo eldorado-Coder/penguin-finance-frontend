@@ -108,3 +108,8 @@ export const getNestMigratorAddress = () => {
 export const getV2NestAddress = () => {
   return getAddress(addresses.iPefi)
 }
+
+// v2 igloos
+export const getV2MasterChefAddress = () => {
+  return getAddress(addresses.v2MasterChef)
+}
