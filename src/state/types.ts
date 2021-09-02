@@ -27,6 +27,7 @@ export interface Farm extends FarmConfig {
     stakedReceiptBalance?: BigNumber
     earnings: BigNumber
     pendingXPefi: BigNumber
+    userPendingTokens?: any[]
   }
   pendingTokens?: any[]
   totalLp?: BigNumber
