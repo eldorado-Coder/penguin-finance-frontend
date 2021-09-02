@@ -161,7 +161,7 @@ const PefiStats: React.FC<HarvestProps> = ({ v1Pool, v2Pool }) => {
 
   // get pefi marketcap
   const getPefiMarketcap = () => {
-    if (totalSupply) return pefiPrice.toNumber() * getBalanceNumber(totalSupply)
+    if (totalSupply) return pefiPrice.toNumber() * (getBalanceNumber(totalSupply) - getBalanceNumber(burnedBalance))
     return 0
   }
 
