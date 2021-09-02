@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom'
 import { BigNumber } from 'bignumber.js'
 import UnlockButton from 'components/UnlockButton'
 import { useWeb3React } from '@web3-react/core'
-import { useFarmUser } from 'state/hooks'
+import { useV2FarmUser } from 'state/hooks'
 import { fetchFarmUserDataAsync } from 'state/farms'
 import { useERC20 } from 'hooks/useContract'
 import { BASE_ADD_LIQUIDITY_URL } from 'config'
@@ -36,11 +36,11 @@ const Staked: React.FunctionComponent<FarmWithStakedValue> = ({
   quoteTokenAddresses,
   quoteTokenSymbol,
   tokenAddresses,
-  type
+  type,
 }) => {
   const { account } = useWeb3React()
   const [requestedApproval, setRequestedApproval] = useState(false)
-  const { allowance, tokenBalance, stakedBalance } = useFarmUser(pid, type);
+  const { allowance, tokenBalance, stakedBalance } = useV2FarmUser(pid, type)
   const { onStake } = useStake(pid)
   const { onUnstake } = useUnstake(pid)
   const location = useLocation()
@@ -50,7 +50,7 @@ const Staked: React.FunctionComponent<FarmWithStakedValue> = ({
   const lpAddress = getAddress(lpAddresses)
   const liquidityUrlPathParts = getLiquidityUrlPathParts({ quoteTokenAddresses, quoteTokenSymbol, tokenAddresses })
   const addLiquidityUrl = `${BASE_ADD_LIQUIDITY_URL}/${liquidityUrlPathParts}`
-  
+
   const handleStake = async (amount: string) => {
     await onStake(amount)
     dispatch(fetchFarmUserDataAsync({ account, pids: [pid] }))
@@ -166,7 +166,7 @@ const Staked: React.FunctionComponent<FarmWithStakedValue> = ({
       </ActionContainer>
     )
   }
-  
+
   return (
     <ActionContainer>
       <ActionTitles>
