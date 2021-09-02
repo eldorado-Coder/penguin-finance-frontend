@@ -7,7 +7,7 @@ import NestV1 from './V1'
 import NestV2 from './V2'
 
 const Nest: React.FC = () => {
-  const [activeTab, setActiveTab] = useState(1) // 0: v2, 1: v1
+  const [activeTab, setActiveTab] = useState(0) // 0: v2, 1: v1
 
   const handleSwitchTab = (tab) => {
     setActiveTab(tab)
