@@ -127,7 +127,10 @@ export const fetchFarmUserData = async (account: string) => {
     return new BigNumber(result[1]).toJSON()
   })
   const pendingTokens = _results.map((result) => {
-    return result[2]
+    const _pendingTokens = result[2]
+    return _pendingTokens[0].map((row, index) => {
+      return { address: row, amount: new BigNumber(_pendingTokens[1][index]._hex).toJSON() }
+    })
   })
   const ipefiDistributionBipsByUser = _results.map((result) => {
     return new BigNumber(result[3]).toJSON()
