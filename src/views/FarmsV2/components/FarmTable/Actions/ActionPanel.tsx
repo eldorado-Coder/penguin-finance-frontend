@@ -85,7 +85,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, expanded })
   const userShares = userData ? getBalanceNumber(userData.userShares) : 0
   const totalShares = getBalanceNumber(farm.totalShares)
   const totalLp = getBalanceNumber(farm.totalLp)
-  const userSharePercentage = (100 * userShares) / totalShares
+  const userSharePercentage = totalShares > 0 ? (100 * userShares) / totalShares : 0
 
   const pefiPerYear = getBalanceNumber(farm.pefiPerYear)
   const pefiPerWeek = pefiPerYear / WEEKS_PER_YEAR
@@ -148,14 +148,16 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, expanded })
               suffix=" LP"
               value={Number(totalLp)}
             />
-            <Balance
-              fontSize="14px"
-              color="textSubtle"
-              fontWeight="400"
-              prefix="Share of Igloo: "
-              suffix=" %"
-              value={Number(userSharePercentage)}
-            />
+            {userSharePercentage > 3 && (
+              <Balance
+                fontSize="14px"
+                color="textSubtle"
+                fontWeight="400"
+                prefix="Share of Igloo: "
+                suffix=" %"
+                value={Number(userSharePercentage)}
+              />
+            )}
           </EarningsContainer>
           <RewardImage src="/images/farms/pefi-dai.svg" alt="pefi-earning" size={56} />
         </Flex>
