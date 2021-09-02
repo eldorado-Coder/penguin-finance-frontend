@@ -14,8 +14,8 @@ import { FarmWithStakedValue } from './components/types'
 
 const Farms: React.FC = () => {
   const { path } = useRouteMatch()
-  const v2FarmsLP = useV2Farms()
   const { account } = useWeb3React()
+  const v2FarmsLP = useV2Farms()
 
   const dispatch = useDispatch()
   const { fastRefresh } = useRefresh()

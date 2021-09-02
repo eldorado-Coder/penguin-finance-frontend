@@ -93,6 +93,11 @@ export const fetchFarmUserData = async (account: string) => {
     const call = [
       {
         address: getV2FarmMasterChefAddress(v2FarmsConfig[i].type),
+        name: 'userInfo',
+        params: [v2FarmsConfig[i].pid, account],
+      },
+      {
+        address: getV2FarmMasterChefAddress(v2FarmsConfig[i].type),
         name: 'pendingPEFI',
         params: [v2FarmsConfig[i].pid, account],
       },
@@ -120,23 +125,27 @@ export const fetchFarmUserData = async (account: string) => {
 
   const _results = await Promise.all(results)
 
-  const parsedEarnings = _results.map((result) => {
+  const stakedBalances = _results.map((result) => {
     return new BigNumber(result[0]).toJSON()
   })
-  const userShares = _results.map((result) => {
+  const parsedEarnings = _results.map((result) => {
     return new BigNumber(result[1]).toJSON()
   })
+  const userShares = _results.map((result) => {
+    return new BigNumber(result[2]).toJSON()
+  })
   const pendingTokens = _results.map((result) => {
-    const _pendingTokens = result[2]
+    const _pendingTokens = result[3]
     return _pendingTokens[0].map((row, index) => {
       return { address: row, amount: new BigNumber(_pendingTokens[1][index]._hex).toJSON() }
     })
   })
   const ipefiDistributionBipsByUser = _results.map((result) => {
-    return new BigNumber(result[3]).toJSON()
+    return new BigNumber(result[4]).toJSON()
   })
 
   return {
+    userStakedBalances: stakedBalances,
     userFarmEarnings: parsedEarnings,
     userFarmShares: userShares,
     userPendingTokens: pendingTokens,
