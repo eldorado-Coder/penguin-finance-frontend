@@ -28,6 +28,7 @@ export interface Farm extends FarmConfig {
     earnings: BigNumber
     pendingXPefi: BigNumber
     userPendingTokens?: any[]
+    userShares: BigNumber
   }
   pendingTokens?: any[]
   totalLp?: BigNumber

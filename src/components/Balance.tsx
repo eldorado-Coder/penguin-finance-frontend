@@ -15,6 +15,7 @@ interface BalanceProps extends TextProps {
   decimals?: number
   unit?: string
   prefix?: string
+  suffix?: string
 }
 
 const StyledText = styled(Text)<TextProps>`
@@ -34,6 +35,7 @@ const Balance: React.FC<BalanceProps> = ({
   unit,
   fontWeight,
   prefix,
+  suffix,
 }) => {
   const previousValue = useRef(0)
 
@@ -55,6 +57,7 @@ const Balance: React.FC<BalanceProps> = ({
           {unit && <span>{` ${unit}`}</span>}
         </>
       )}
+      {suffix}
     </StyledText>
   )
 }

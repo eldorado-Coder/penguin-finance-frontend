@@ -82,6 +82,10 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, expanded })
   const { getTokenLogo, getTokenSymbol } = useAssets()
   const { pendingTokens, userData } = farm
   const userPendingTokens = userData ? userData.userPendingTokens : []
+  const userShares = userData ? getBalanceNumber(userData.userShares) : 0
+  const totalShares = getBalanceNumber(farm.totalShares)
+  const totalLp = getBalanceNumber(farm.totalLp)
+  const userSharePercentage = (100 * userShares) / totalShares
 
   const pefiPerYear = getBalanceNumber(farm.pefiPerYear)
   const pefiPerWeek = pefiPerYear / WEEKS_PER_YEAR
@@ -136,12 +140,22 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, expanded })
             <Text fontSize="20px" color="textSubtle" bold lineHeight={1} mb="8px">
               Your PEFI Earnings
             </Text>
-            <Text color="textSubtle" fontSize="14px">
-              Balance: 500 LP
-            </Text>
-            <Text color="textSubtle" fontSize="14px">
-              Share of Igloo: 15 %
-            </Text>
+            <Balance
+              fontSize="14px"
+              color="textSubtle"
+              fontWeight="400"
+              prefix="Balance: "
+              suffix=" LP"
+              value={Number(totalLp)}
+            />
+            <Balance
+              fontSize="14px"
+              color="textSubtle"
+              fontWeight="400"
+              prefix="Share of Igloo: "
+              suffix=" %"
+              value={Number(userSharePercentage)}
+            />
           </EarningsContainer>
           <RewardImage src="/images/farms/pefi-dai.svg" alt="pefi-earning" size={56} />
         </Flex>
