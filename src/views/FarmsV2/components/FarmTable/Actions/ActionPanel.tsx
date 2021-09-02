@@ -73,7 +73,7 @@ const EarningsContainer = styled.div`
 `
 
 const Divider = styled.div`
-  background-color: ${({ theme }) => theme.colors.secondary};
+  background-color: ${({ theme }) => theme.colors.textSubtle};
   height: 2px;
   margin: 16px auto 8px;
   width: 100%;
