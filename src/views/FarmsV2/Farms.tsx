@@ -1,30 +1,21 @@
 import React, { useEffect, useCallback } from 'react'
 import { Route, useRouteMatch } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import BigNumber from 'bignumber.js'
+// import BigNumber from 'bignumber.js'
 import { useWeb3React } from '@web3-react/core'
 import styled from 'styled-components'
-import { SECONDS_PER_WEEK, WEEKS_PER_YEAR, PEFI_POOL_PID } from 'config'
+// import { SECONDS_PER_WEEK, WEEKS_PER_YEAR, PEFI_POOL_PID } from 'config'
 import Page from 'components/layout/Page'
-import { usePefiPerBlock, useFarms, useV2Farms, usePriceAvaxUsdt, usePricePefiUsdt, usePriceEthUsdt } from 'state/hooks'
+import { usePefiPerBlock, useV2Farms } from 'state/hooks'
 import useRefresh from 'hooks/useRefresh'
-import useBlockGenerationTime from 'hooks/useBlockGenerationTime'
 import { fetchV2FarmUserDataAsync } from 'state/actions'
-import { QuoteToken } from 'config/constants/types'
-// import tokenList from 'https://github.com/pangolindex/tokenlists/blob/main/defi.tokenlist.json'
 import FarmTable from './components/FarmTable/FarmTable'
 import { FarmWithStakedValue } from './components/types'
 
 const Farms: React.FC = () => {
   const { path } = useRouteMatch()
-  const pefiPerBlock = usePefiPerBlock()
   const v2FarmsLP = useV2Farms()
-  // const v2FarmsLP = useFarms()
-  const pefiPrice = usePricePefiUsdt()
-  const avaxPrice = usePriceAvaxUsdt()
   const { account } = useWeb3React()
-  const ethPriceUsd = usePriceEthUsdt()
-  const AVAX_BLOCK_TIME = useBlockGenerationTime()
 
   const dispatch = useDispatch()
   const { fastRefresh } = useRefresh()
@@ -37,58 +28,20 @@ const Farms: React.FC = () => {
 
   const activeFarms = v2FarmsLP.filter((farm) => farm.type === 'Pangolin' && farm.multiplier !== '0X')
 
-  const farmsList = useCallback(
-    (farmsToDisplay, removed: boolean) => {
-      const pefiPriceVsAVAX = new BigNumber(
-        v2FarmsLP.find((farm) => farm.pid === PEFI_POOL_PID)?.tokenPriceVsQuote || 0,
-      )
-      const farmsToDisplayWithAPY: FarmWithStakedValue[] = farmsToDisplay.map((farm) => {
-        if (!farm.tokenAmount || !farm.lpTotalInQuoteToken || !farm.lpTotalInQuoteToken) {
-          return farm
-        }
-        // const pefiRewardPerSec = pefiPerBlock.times(farm.poolWeight)
-        const pefiRewardPerSec = new BigNumber(1)
-        const rewardPerWeek = pefiRewardPerSec.times(SECONDS_PER_WEEK)
+  const farmsList = useCallback((farmsToDisplay, removed: boolean) => {
+    const farmsToDisplayWithAPY: FarmWithStakedValue[] = farmsToDisplay.map((farm) => {
+      return { ...farm, apy: 0 }
+    })
 
-        // pefiPriceInQuote * rewardPerWeek / lpTotalInQuoteToken
-        let apy = pefiPriceVsAVAX.times(rewardPerWeek).div(farm.lpTotalInQuoteToken)
-
-        if (farm.quoteTokenSymbol === QuoteToken.USDT || farm.quoteTokenSymbol === QuoteToken.UST) {
-          apy = pefiPriceVsAVAX.times(rewardPerWeek).div(farm.lpTotalInQuoteToken).times(avaxPrice)
-        } else if (farm.quoteTokenSymbol === QuoteToken.ETH) {
-          apy = pefiPrice.div(ethPriceUsd).times(rewardPerWeek).div(farm.lpTotalInQuoteToken)
-        } else if (farm.quoteTokenSymbol === QuoteToken.PEFI) {
-          apy = rewardPerWeek.div(farm.lpTotalInQuoteToken)
-        } else if (farm.dual) {
-          const pefiApy =
-            farm && pefiPriceVsAVAX.times(pefiRewardPerSec).times(SECONDS_PER_WEEK).div(farm.lpTotalInQuoteToken)
-          const dualApy =
-            farm.tokenPriceVsQuote &&
-            new BigNumber(farm.tokenPriceVsQuote)
-              .times(farm.dual.rewardPerBlock)
-              .times(SECONDS_PER_WEEK)
-              .div(farm.lpTotalInQuoteToken)
-
-          apy = pefiApy && dualApy && pefiApy.plus(dualApy)
-        }
-
-        return { ...farm, apy }
-      })
-
-      return (
-        <FarmTable
-          data={farmsToDisplayWithAPY.map((farm) => ({
-            farm,
-            removed,
-            avaxPrice,
-            pefiPrice,
-            ethPrice: ethPriceUsd,
-          }))}
-        />
-      )
-    },
-    [v2FarmsLP, avaxPrice, ethPriceUsd, pefiPrice],
-  )
+    return (
+      <FarmTable
+        data={farmsToDisplayWithAPY.map((farm) => ({
+          farm,
+          removed,
+        }))}
+      />
+    )
+  }, [])
 
   return (
     <FarmPage>
