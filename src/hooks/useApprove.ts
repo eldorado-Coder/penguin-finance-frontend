@@ -8,6 +8,8 @@ import {
   updateV2PoolUserAllowance,
   fetchFarmUserDataAsync,
   updateNestMigratorAllowance,
+  // v2
+  fetchV2FarmUserDataAsync,
 } from 'state/actions'
 import { approve } from 'utils/callHelpers'
 import { getNestMigratorAddress, getV2NestAddress } from 'utils/addressHelpers'
@@ -19,6 +21,8 @@ import {
   useLottery,
   useStrategyContract,
   useXPefi,
+  // v2
+  useV2MasterChef,
 } from './useContract'
 // Approve a Farm
 export const useApprove = (lpContract: Contract, type?: string) => {
@@ -148,6 +152,25 @@ export const useV2SousApprove = (lpContract: Contract, sousId) => {
       return false
     }
   }, [account, dispatch, lpContract, sousChefContract, sousId])
+
+  return { onApprove: handleApprove }
+}
+
+// v2 igloo
+export const useV2FarmApprove = (lpContract: Contract, type?: string) => {
+  const dispatch = useDispatch()
+  const { account } = useWeb3React()
+  const v2MasterChefContract = useV2MasterChef(type)
+
+  const handleApprove = useCallback(async () => {
+    try {
+      const tx = await approve(lpContract, v2MasterChefContract, account)
+      dispatch(fetchV2FarmUserDataAsync(account))
+      return tx
+    } catch (e) {
+      return false
+    }
+  }, [account, dispatch, lpContract, v2MasterChefContract])
 
   return { onApprove: handleApprove }
 }

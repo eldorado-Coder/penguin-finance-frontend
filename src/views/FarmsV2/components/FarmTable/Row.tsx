@@ -2,10 +2,13 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import BigNumber from 'bignumber.js'
 import { useMatchBreakpoints } from 'penguinfinance-uikit2'
-import { useFarmUser } from 'state/hooks'
+import { useV2FarmUser } from 'state/hooks'
 import useDelayedUnmount from 'hooks/useDelayedUnmount'
 import useAssets from 'hooks/useAssets'
 import { WEEKS_PER_YEAR } from 'config'
+import { getBalanceNumber } from 'utils/formatBalance'
+import Balance from 'components/Balance'
+
 import Farm from './Farm'
 import Earned from './Earned'
 import Details from './Details'
@@ -63,7 +66,7 @@ const PendingTokenLogo = styled.img`
 
 const Row: React.FunctionComponent<FarmCardProps> = (props) => {
   const { farm } = props
-  const { stakedBalance, earnings } = useFarmUser(farm.pid, farm.type)
+  const { stakedBalance, earnings } = useV2FarmUser(farm.pid, farm.type)
   const hasStakedAmount = !!stakedBalance.toNumber()
   const [actionPanelExpanded, setActionPanelExpanded] = useState(hasStakedAmount)
   const farmAPY =
@@ -71,12 +74,17 @@ const Row: React.FunctionComponent<FarmCardProps> = (props) => {
   const shouldRenderChild = useDelayedUnmount(actionPanelExpanded, 300)
   const { isXl, isXs } = useMatchBreakpoints()
   const { getTokenLogo } = useAssets()
+
   const { pendingTokens } = farm
   const pendingTokensWithLogo =
     pendingTokens &&
     pendingTokens.map((pendingTokenAddress) => {
       return { address: pendingTokenAddress, logo: getTokenLogo(pendingTokenAddress) }
     })
+
+  // TODO: temp price
+  const lpPrice = 10000
+  const liquidity = farm.totalLp ? getBalanceNumber(farm.totalLp) * lpPrice : '-'
 
   const toggleActionPanel = () => {
     setActionPanelExpanded(!actionPanelExpanded)
@@ -156,7 +164,7 @@ const Row: React.FunctionComponent<FarmCardProps> = (props) => {
                   <td key={key}>
                     <CellInner>
                       <CellLayout label="Liquidity">
-                        <Amount>$498,136</Amount>
+                        <Balance fontSize="14px" fontWeight="400" prefix="$" value={Number(liquidity)} />
                       </CellLayout>
                     </CellInner>
                   </td>

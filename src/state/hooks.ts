@@ -506,3 +506,19 @@ export const useV2Farms = (): Farm[] => {
   const farms = useSelector((state: State) => state.v2Farms.data)
   return farms
 }
+
+export const useV2FarmFromPid = (pid, type): Farm => {
+  const farm = useSelector((state: State) => state.v2Farms.data.find((f) => f.pid === pid && f.type === type))
+  return farm
+}
+
+export const useV2FarmUser = (pid, type) => {
+  const farm = useV2FarmFromPid(pid, type)
+
+  return {
+    allowance: farm.userData ? new BigNumber(farm.userData.allowance) : new BigNumber(0),
+    tokenBalance: farm.userData ? new BigNumber(farm.userData.tokenBalance) : new BigNumber(0),
+    stakedBalance: farm.userData ? new BigNumber(farm.userData.stakedBalance) : new BigNumber(0),
+    earnings: farm.userData ? new BigNumber(farm.userData.earnings) : new BigNumber(0),
+  }
+}

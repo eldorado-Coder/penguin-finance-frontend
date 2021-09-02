@@ -5,18 +5,16 @@ import { useLocation } from 'react-router-dom'
 import { BigNumber } from 'bignumber.js'
 import UnlockButton from 'components/UnlockButton'
 import { useWeb3React } from '@web3-react/core'
-import { useFarmUser } from 'state/hooks'
-import { fetchFarmUserDataAsync } from 'state/farms'
+import { useV2FarmUser } from 'state/hooks'
 import { useERC20 } from 'hooks/useContract'
 import { BASE_ADD_LIQUIDITY_URL } from 'config'
-import { useAppDispatch } from 'state'
 import { getAddress } from 'utils/addressHelpers'
 import getLiquidityUrlPathParts from 'utils/getLiquidityUrlPathParts'
 import { getBalanceAmount, getFullDisplayBalance } from 'utils/formatBalance'
 import { Farm as FarmTypes } from 'state/types'
-import useStake from 'hooks/useStake'
-import useUnstake from 'hooks/useUnstake'
-import { useApprove } from 'hooks/useApprove'
+import { useV2Stake } from 'hooks/useStake'
+import { useV2Unstake } from 'hooks/useUnstake'
+import { useV2FarmApprove } from 'hooks/useApprove'
 import DepositModal from '../../DepositModal'
 import WithdrawModal from '../../WithdrawModal'
 import { ActionContainer, ActionTitles, ActionContent } from './styles'
@@ -36,30 +34,46 @@ const Staked: React.FunctionComponent<FarmWithStakedValue> = ({
   quoteTokenAddresses,
   quoteTokenSymbol,
   tokenAddresses,
-  type
+  type,
 }) => {
   const { account } = useWeb3React()
   const [requestedApproval, setRequestedApproval] = useState(false)
-  const { allowance, tokenBalance, stakedBalance } = useFarmUser(pid, type);
-  const { onStake } = useStake(pid)
-  const { onUnstake } = useUnstake(pid)
+  const { allowance, tokenBalance, stakedBalance } = useV2FarmUser(pid, type)
+  const lpAddress = getAddress(lpAddresses)
+  const lpContract = useERC20(lpAddress)
+  const { onApprove } = useV2FarmApprove(lpContract)
+  const { onStake } = useV2Stake(pid)
+  const { onUnstake } = useV2Unstake(pid)
   const location = useLocation()
 
   const isApproved = account && allowance && allowance.isGreaterThan(0)
-
-  const lpAddress = getAddress(lpAddresses)
   const liquidityUrlPathParts = getLiquidityUrlPathParts({ quoteTokenAddresses, quoteTokenSymbol, tokenAddresses })
   const addLiquidityUrl = `${BASE_ADD_LIQUIDITY_URL}/${liquidityUrlPathParts}`
-  
+
+  const handleApprove = useCallback(async () => {
+    try {
+      setRequestedApproval(true)
+      await onApprove()
+      setRequestedApproval(false)
+    } catch (e) {
+      console.error(e)
+    }
+  }, [onApprove])
+
   const handleStake = async (amount: string) => {
     await onStake(amount)
-    dispatch(fetchFarmUserDataAsync({ account, pids: [pid] }))
   }
 
   const handleUnstake = async (amount: string) => {
     await onUnstake(amount)
-    dispatch(fetchFarmUserDataAsync({ account, pids: [pid] }))
   }
+
+  const [onPresentDeposit] = useModal(
+    <DepositModal max={tokenBalance} onConfirm={handleStake} tokenName={lpSymbol} addLiquidityUrl={addLiquidityUrl} />,
+  )
+  const [onPresentWithdraw] = useModal(
+    <WithdrawModal max={stakedBalance} onConfirm={handleUnstake} tokenName={lpSymbol} />,
+  )
 
   const displayBalance = useCallback(() => {
     const stakedBalanceBigNumber = getBalanceAmount(stakedBalance)
@@ -71,29 +85,6 @@ const Staked: React.FunctionComponent<FarmWithStakedValue> = ({
     }
     return stakedBalanceBigNumber.toFixed(3, BigNumber.ROUND_DOWN)
   }, [stakedBalance])
-
-  const [onPresentDeposit] = useModal(
-    <DepositModal max={tokenBalance} onConfirm={handleStake} tokenName={lpSymbol} addLiquidityUrl={addLiquidityUrl} />,
-  )
-  const [onPresentWithdraw] = useModal(
-    <WithdrawModal max={stakedBalance} onConfirm={handleUnstake} tokenName={lpSymbol} />,
-  )
-
-  const lpContract = useERC20(lpAddress)
-  const dispatch = useAppDispatch()
-  const { onApprove } = useApprove(lpContract)
-
-  const handleApprove = useCallback(async () => {
-    try {
-      setRequestedApproval(true)
-      await onApprove()
-      dispatch(fetchFarmUserDataAsync({ account, pids: [pid] }))
-
-      setRequestedApproval(false)
-    } catch (e) {
-      console.error(e)
-    }
-  }, [onApprove, dispatch, account, pid])
 
   if (!account) {
     return (
@@ -166,7 +157,7 @@ const Staked: React.FunctionComponent<FarmWithStakedValue> = ({
       </ActionContainer>
     )
   }
-  
+
   return (
     <ActionContainer>
       <ActionTitles>

@@ -84,22 +84,40 @@ export const fetchFarms = async () => {
         .div(new BigNumber(10).pow(quoteTokenDecimals))
         .times(lpTokenRatio)
 
-      const [info, totalAllocPoint, pendingTokens] = await multicall(getV2FarmMasterChefAbi(farmConfig.type), [
-        {
-          address: getV2FarmMasterChefAddress(farmConfig.type),
-          name: 'poolInfo',
-          params: [farmConfig.pid],
-        },
-        {
-          address: getV2FarmMasterChefAddress(farmConfig.type),
-          name: 'totalAllocPoint',
-        },
-        {
-          address: getV2FarmMasterChefAddress(farmConfig.type),
-          name: 'pendingTokens',
-          params: [farmConfig.pid, NON_ADDRESS],
-        },
-      ])
+      const [info, totalAllocPoint, pendingTokens, totalLP, totalShares, pefiPerYear] = await multicall(
+        getV2FarmMasterChefAbi(farmConfig.type),
+        [
+          {
+            address: getV2FarmMasterChefAddress(farmConfig.type),
+            name: 'poolInfo',
+            params: [farmConfig.pid],
+          },
+          {
+            address: getV2FarmMasterChefAddress(farmConfig.type),
+            name: 'totalAllocPoint',
+          },
+          {
+            address: getV2FarmMasterChefAddress(farmConfig.type),
+            name: 'pendingTokens',
+            params: [farmConfig.pid, NON_ADDRESS],
+          },
+          {
+            address: getV2FarmMasterChefAddress(farmConfig.type),
+            name: 'totalLP',
+            params: [farmConfig.pid],
+          },
+          {
+            address: getV2FarmMasterChefAddress(farmConfig.type),
+            name: 'totalShares',
+            params: [farmConfig.pid],
+          },
+          {
+            address: getV2FarmMasterChefAddress(farmConfig.type),
+            name: 'pefiPerYearToIgloo',
+            params: [farmConfig.pid],
+          },
+        ],
+      )
 
       const allocPoint = new BigNumber(info.allocPoint._hex)
       const withdrawFee = 100 * (info.withdrawFeeBP / 10000)
@@ -115,6 +133,9 @@ export const fetchFarms = async () => {
         multiplier: `${allocPoint.div(100).toString()}X`,
         withdrawFee,
         pendingTokens: pendingTokens[0],
+        totalLp: new BigNumber(totalLP).toJSON(),
+        totalShares: new BigNumber(totalShares).toJSON(),
+        pefiPerYear: new BigNumber(pefiPerYear).toJSON(),
       }
     }),
   )
