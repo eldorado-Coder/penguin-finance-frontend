@@ -9,7 +9,7 @@ import Page from 'components/layout/Page'
 import { usePefiPerBlock, useFarms, useV2Farms, usePriceAvaxUsdt, usePricePefiUsdt, usePriceEthUsdt } from 'state/hooks'
 import useRefresh from 'hooks/useRefresh'
 import useBlockGenerationTime from 'hooks/useBlockGenerationTime'
-import { fetchFarmUserDataAsync } from 'state/actions'
+import { fetchV2FarmUserDataAsync } from 'state/actions'
 import { QuoteToken } from 'config/constants/types'
 // import tokenList from 'https://github.com/pangolindex/tokenlists/blob/main/defi.tokenlist.json'
 import FarmTable from './components/FarmTable/FarmTable'
@@ -31,7 +31,7 @@ const Farms: React.FC = () => {
 
   useEffect(() => {
     if (account) {
-      dispatch(fetchFarmUserDataAsync(account))
+      dispatch(fetchV2FarmUserDataAsync(account))
     }
   }, [account, dispatch, fastRefresh])
 

@@ -30,6 +30,8 @@ export interface Farm extends FarmConfig {
   }
   pendingTokens?: any[]
   totalLp?: BigNumber
+  totalShares?: BigNumber
+  pefiPerYear?: BigNumber
 }
 
 export interface Lp extends LPConfig {
