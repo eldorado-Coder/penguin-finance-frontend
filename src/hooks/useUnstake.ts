@@ -11,9 +11,24 @@ import {
   updateV2PoolUserStakedBalance,
   updateV2PoolUserBalance,
   fetchV2PoolsPublicDataAsync,
+  fetchV2FarmUserDataAsync,
 } from 'state/actions'
-import { unstake, sousUnstake, sousEmegencyUnstake, launchpadUnstake } from 'utils/callHelpers'
-import { useLaunchPad, useMasterchef, useSousChef, useV2SousChef } from './useContract'
+import {
+  unstake,
+  sousUnstake,
+  sousEmegencyUnstake,
+  launchpadUnstake,
+  // v2
+  v2FarmUnstake,
+} from 'utils/callHelpers'
+import {
+  useLaunchPad,
+  useMasterchef,
+  useSousChef,
+  // v2
+  useV2SousChef,
+  useV2MasterChef,
+} from './useContract'
 
 const useUnstake = (pid: number, type?: string) => {
   const dispatch = useDispatch()
@@ -79,8 +94,6 @@ export const useLaunchpadUnstake = () => {
   return { onUnstake: handleUnstake }
 }
 
-export default useUnstake
-
 // v2
 export const useV2SousUnstake = (sousId) => {
   const dispatch = useDispatch()
@@ -111,3 +124,22 @@ export const useV2SousUnstake = (sousId) => {
 
   return { onUnstake: handleUnstake }
 }
+
+export const useV2Unstake = (pid: number, type?: string) => {
+  const dispatch = useDispatch()
+  const { account } = useWeb3React()
+  const v2MasterChefContract = useV2MasterChef(type)
+
+  const handleUnstake = useCallback(
+    async (amount: string, to?: string) => {
+      const txHash = await v2FarmUnstake(v2MasterChefContract, pid, amount, to, account)
+      dispatch(fetchV2FarmUserDataAsync(account))
+      console.info(txHash)
+    },
+    [account, dispatch, v2MasterChefContract, pid],
+  )
+
+  return { onUnstake: handleUnstake }
+}
+
+export default useUnstake
