@@ -6,25 +6,35 @@ import { Text } from 'penguinfinance-uikit2'
 interface TextProps {
   isDisabled?: boolean
   fontSize?: string
-  color?: string,
+  color?: string
   fontWeight?: string
 }
 
 interface BalanceProps extends TextProps {
   value?: number
   decimals?: number
-  unit?: string,
+  unit?: string
   prefix?: string
 }
 
 const StyledText = styled(Text)<TextProps>`
-  color: ${({ theme }) => theme.isDark ? 'white' : theme.colors.secondary };
+  color: ${({ theme }) => (theme.isDark ? 'white' : theme.colors.secondary)};
   color: ${({ isDisabled, color, theme }) => (isDisabled ? theme.colors.textDisabled : color)};
   display: flex;
   align-items: center;
+  white-space: break-spaces;
 `
 
-const Balance: React.FC<BalanceProps> = ({ value, fontSize, color, decimals, isDisabled, unit, fontWeight, prefix }) => {
+const Balance: React.FC<BalanceProps> = ({
+  value,
+  fontSize,
+  color,
+  decimals,
+  isDisabled,
+  unit,
+  fontWeight,
+  prefix,
+}) => {
   const previousValue = useRef(0)
 
   useEffect(() => {
