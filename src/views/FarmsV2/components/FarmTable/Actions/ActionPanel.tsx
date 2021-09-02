@@ -1,4 +1,5 @@
 import React from 'react'
+import BigNumber from 'bignumber.js'
 import styled, { keyframes, css } from 'styled-components'
 import { Card, Text, Button, Flex } from 'penguinfinance-uikit2'
 import { WEEKS_PER_YEAR } from 'config'
@@ -79,6 +80,10 @@ const Divider = styled.div`
   width: 100%;
 `
 
+const StyledBalance = styled(Balance)`
+  margin: auto !important;
+`
+
 const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, expanded }) => {
   const { getTokenLogo, getTokenSymbol } = useAssets()
   const { pendingTokens, userData } = farm
@@ -115,9 +120,13 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, expanded })
                 return (
                   <Flex flexDirection="column">
                     <RewardImage src={getTokenLogo(pendingToken)} alt="penguin" size={50} />
-                    <Text fontSize="14px" color="textSubtle" textAlign="center">
-                      {`${Number(amount).toFixed(2)} ${getTokenSymbol(pendingToken)}`}
-                    </Text>
+                    <StyledBalance
+                      fontSize="14px"
+                      color="textSubtle"
+                      fontWeight="400"
+                      suffix={` ${getTokenSymbol(pendingToken)}`}
+                      value={getBalanceNumber(new BigNumber(amount))}
+                    />
                   </Flex>
                 )
               })}
