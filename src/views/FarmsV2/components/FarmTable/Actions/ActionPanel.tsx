@@ -159,7 +159,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, expanded })
               />
             )}
           </EarningsContainer>
-          <RewardImage src="/images/farms/pefi-dai.svg" alt="pefi-earning" size={56} />
+          <RewardImage src="/images/farms/pefi-avax.svg" alt="pefi-earning" size={56} />
         </Flex>
         <Divider />
         <Flex>
@@ -183,7 +183,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, expanded })
               value={Number(pefiPerMonth)}
             />
           </EarningsContainer>
-          <RewardImage src="/images/farms/pefi-dai.svg" alt="igloo-stats" size={56} />
+          <RewardImage src="/images/farms/pefi-avax.svg" alt="igloo-stats" size={56} />
         </Flex>
       </ActionCard>
       <ActionCard padding="10px 16px" mb="16px">
