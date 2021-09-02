@@ -1,9 +1,8 @@
 import React, { useState, useCallback } from 'react'
 import styled from 'styled-components'
-import { Button, useModal, IconButton, AddIcon, MinusIcon, Text, Heading } from 'penguinfinance-uikit2'
+import { Flex, ButtonMenuItem, ButtonMenu, useModal, Text } from 'penguinfinance-uikit2'
 import { useLocation } from 'react-router-dom'
 import { BigNumber } from 'bignumber.js'
-import UnlockButton from 'components/UnlockButton'
 import { useWeb3React } from '@web3-react/core'
 import { useV2FarmUser } from 'state/hooks'
 import { useERC20 } from 'hooks/useContract'
@@ -17,11 +16,8 @@ import { useV2Unstake } from 'hooks/useUnstake'
 import { useV2FarmApprove } from 'hooks/useApprove'
 import DepositModal from '../../DepositModal'
 import WithdrawModal from '../../WithdrawModal'
-import { ActionContainer, ActionTitles, ActionContent } from './styles'
-
-const IconButtonWrapper = styled.div`
-  display: flex;
-`
+import StakeLPForm from './StakeLPForm';
+import UnstakeLPForm from './UnstakeLPForm'
 
 interface FarmWithStakedValue extends FarmTypes {
   apy?: BigNumber
@@ -34,7 +30,7 @@ const Staked: React.FunctionComponent<FarmWithStakedValue> = ({
   quoteTokenAddresses,
   quoteTokenSymbol,
   tokenAddresses,
-  type,
+  type
 }) => {
   const { account } = useWeb3React()
   const [requestedApproval, setRequestedApproval] = useState(false)
@@ -45,6 +41,11 @@ const Staked: React.FunctionComponent<FarmWithStakedValue> = ({
   const { onStake } = useV2Stake(pid)
   const { onUnstake } = useV2Unstake(pid)
   const location = useLocation()
+  const [activeTab, setActiveTab] = useState(0)
+
+  const handleSwitchTab = (tab) => {
+    setActiveTab(tab)
+  }
 
   const isApproved = account && allowance && allowance.isGreaterThan(0)
   const liquidityUrlPathParts = getLiquidityUrlPathParts({ quoteTokenAddresses, quoteTokenSymbol, tokenAddresses })
@@ -86,92 +87,61 @@ const Staked: React.FunctionComponent<FarmWithStakedValue> = ({
     return stakedBalanceBigNumber.toFixed(3, BigNumber.ROUND_DOWN)
   }, [stakedBalance])
 
-  if (!account) {
-    return (
-      <ActionContainer>
-        <ActionTitles>
-          <Text bold textTransform="uppercase" color="textSubtle" fontSize="12px">
-            Start Farming
-          </Text>
-        </ActionTitles>
-        <ActionContent>
-          <UnlockButton width="100%" />
-        </ActionContent>
-      </ActionContainer>
-    )
-  }
-
-  if (isApproved) {
-    if (stakedBalance.gt(0)) {
-      return (
-        <ActionContainer>
-          <ActionTitles>
-            <Text bold textTransform="uppercase" color="textSubtle" fontSize="12px" pr="4px">
-              {lpSymbol}
-            </Text>
-            <Text bold textTransform="uppercase" color="textSubtle" fontSize="12px">
-              Staked
-            </Text>
-          </ActionTitles>
-          <ActionContent>
-            <div>
-              <Heading>{displayBalance()}</Heading>
-            </div>
-            <IconButtonWrapper>
-              <IconButton variant="secondary" onClick={onPresentWithdraw} mr="6px">
-                <MinusIcon color="primary" width="14px" />
-              </IconButton>
-              <IconButton
-                variant="secondary"
-                onClick={onPresentDeposit}
-                disabled={['history', 'archived'].some((item) => location.pathname.includes(item))}
-              >
-                <AddIcon color="primary" width="14px" />
-              </IconButton>
-            </IconButtonWrapper>
-          </ActionContent>
-        </ActionContainer>
-      )
-    }
-
-    return (
-      <ActionContainer>
-        <ActionTitles>
-          <Text bold textTransform="uppercase" color="textSubtle" fontSize="12px" pr="4px">
-            {'Stake'.toUpperCase()}
-          </Text>
-          <Text bold textTransform="uppercase" color="textSubtle" fontSize="12px">
-            {lpSymbol}
-          </Text>
-        </ActionTitles>
-        <ActionContent>
-          <Button
-            width="100%"
-            onClick={onPresentDeposit}
-            variant="secondary"
-            disabled={['history', 'archived'].some((item) => location.pathname.includes(item))}
-          >
-            Stake LP
-          </Button>
-        </ActionContent>
-      </ActionContainer>
-    )
-  }
-
   return (
-    <ActionContainer>
-      <ActionTitles>
-        <Text bold textTransform="uppercase" color="textSubtle" fontSize="12px">
-          Approve Farm
-        </Text>
-      </ActionTitles>
-      <ActionContent>
-        <Button width="100%" disabled={requestedApproval} onClick={handleApprove} variant="secondary">
-          Approve
-        </Button>
-      </ActionContent>
-    </ActionContainer>
+    <Flex flexDirection='column' alignItems='center'>
+      <Flex justifyContent="center" pb="8px">
+        <TabWrapper>
+          <ButtonMenu activeIndex={activeTab} onItemClick={handleSwitchTab} scale="sm">
+            <OptionItem active={activeTab === 0}>Stake</OptionItem>
+            <OptionItem active={activeTab === 1}>Unstake</OptionItem>
+          </ButtonMenu>
+        </TabWrapper>
+      </Flex>
+      <Text fontSize='14px' mb='8px'>Deposit fee: 0% | Withdrawal fee: 0%</Text>
+      {activeTab === 0 ? (
+        <StakeLPForm
+          max={tokenBalance}
+          onConfirm={onStake}
+          tokenName={lpSymbol}
+          account={account}
+          needsApproval={!isApproved}
+          requested={requestedApproval}
+          onApprove={handleApprove}
+          stakingTokenName={lpSymbol}
+        />
+      ) : (
+        <UnstakeLPForm
+          max={stakedBalance}
+          onConfirm={onUnstake}
+          tokenName={lpSymbol}
+          account={account}
+          needsApproval={isApproved}
+          requested={requestedApproval}
+          onApprove={handleApprove}
+          stakingTokenName={lpSymbol}
+        />
+      )}
+    </Flex>
   )
 }
+
+// slider
+const TabWrapper = styled.div`
+  div {
+    height: 28px;
+    border: 2px solid ${({ theme }) => (theme.isDark ? '#221b38' : '#b2b2ce')};
+    background-color: ${({ theme }) => (theme.isDark ? '#332654' : '#e8e4ef')};
+    border-radius: 18px;
+  }
+`
+const OptionItem = styled(ButtonMenuItem)<{ active: boolean }>`
+  min-width: 40px;
+  background-color: ${({ active, theme }) => active && theme.colors.red};
+  color: ${({ active }) => (active ? 'white' : '#b2b2ce')};
+  margin: 0px !important;
+  height: 24px;
+  font-weight: 400;
+  font-size: 14px;
+`
 
 export default Staked

@@ -24,7 +24,7 @@ const Earned: React.FunctionComponent<EarnedPropsWithLoading> = ({ earnings, use
   const displayBalance = rawEarningsBalance.toLocaleString()
 
   if (userDataReady) {
-    return <Amount earned={rawEarningsBalance}>{displayBalance}</Amount>
+    return <Amount earned={rawEarningsBalance}>{`${displayBalance} PEFI`}</Amount>
   }
   return (
     <Amount earned={0}>
