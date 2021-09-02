@@ -124,22 +124,22 @@ const Row: React.FunctionComponent<FarmCardProps> = (props) => {
                     </CellInner>
                   </td>
                 )
-              case 'details':
-                return (
-                  <td key={key}>
-                    <CellInner>
-                      <CellLayout>
-                        <Details actionPanelToggled={actionPanelExpanded} />
-                      </CellLayout>
-                    </CellInner>
-                  </td>
-                )
               case 'apr':
                 return (
                   <td key={key}>
                     <CellInner>
                       <CellLayout label="APR">
                         <Amount>{`${farmAPY || '--'}%`}</Amount>
+                      </CellLayout>
+                    </CellInner>
+                  </td>
+                )
+              case 'liquidity':
+                return (
+                  <td key={key}>
+                    <CellInner>
+                      <CellLayout label="Liquidity">
+                        <Balance fontSize="14px" fontWeight="400" prefix="$" value={Number(liquidity)} />
                       </CellLayout>
                     </CellInner>
                   </td>
@@ -159,12 +159,12 @@ const Row: React.FunctionComponent<FarmCardProps> = (props) => {
                     </CellInner>
                   </td>
                 )
-              case 'liquidity':
+              case 'details':
                 return (
                   <td key={key}>
                     <CellInner>
-                      <CellLayout label="Liquidity">
-                        <Balance fontSize="14px" fontWeight="400" prefix="$" value={Number(liquidity)} />
+                      <CellLayout>
+                        <Details actionPanelToggled={actionPanelExpanded} />
                       </CellLayout>
                     </CellInner>
                   </td>

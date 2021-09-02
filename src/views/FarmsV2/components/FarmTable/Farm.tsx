@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Text, Image, Tag, Flex, useMatchBreakpoints } from 'penguinfinance-uikit2'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { useFarmUser } from 'state/hooks'
-import { FarmCardProps } from '../types';
+import { FarmCardProps } from '../types'
 
 const Container = styled.div`
   padding-left: 16px;
@@ -21,11 +21,11 @@ const Container = styled.div`
 const FarmLabel = styled(Text)`
   color: ${({ theme }) => theme.colors.textSubtle};
   white-space: nowrap;
-`;
+`
 
 const FarmLabelWrapper = styled.div`
   margin-left: 16px;
-`;
+`
 
 const StyledTag = styled(Tag)`
   background: transparent;
@@ -37,15 +37,19 @@ const StyledTag = styled(Tag)`
     color: ${({ theme }) => theme.colors.red};
     font-weight: 500;
   }
-`;
+`
 
 const MultiplierTag = styled(Tag)`
   height: 20px;
   margin-right: 4px;
 `
+const LpTag = styled(Tag)`
+  height: 20px;
+  margin-right: 4px;
+`
 
 const Farm: React.FunctionComponent<FarmCardProps> = ({ farm }) => {
-  const { stakedBalance } = useFarmUser(farm.pid, 'Penguin');
+  const { stakedBalance } = useFarmUser(farm.pid, 'Penguin')
   const rawStakedBalance = getBalanceNumber(stakedBalance)
   const farmImage = farm.lpSymbol.split(' ')[0].toLocaleLowerCase()
   const { isXl } = useMatchBreakpoints()
@@ -54,7 +58,7 @@ const Farm: React.FunctionComponent<FarmCardProps> = ({ farm }) => {
   const handleRenderFarming = (): JSX.Element => {
     if (rawStakedBalance) {
       return (
-        <StyledTag variant='textSubtle'>
+        <StyledTag variant="textSubtle">
           <FarmLabel fontSize="12px" bold textTransform="uppercase">
             Farming
           </FarmLabel>
@@ -67,13 +71,19 @@ const Farm: React.FunctionComponent<FarmCardProps> = ({ farm }) => {
 
   return (
     <Container>
-      <Image src={`/images/farms/${farmImage}.svg`} alt={farm.tokenSymbol} width={isMobile ? 24 : 64} height={isMobile ? 24 : 64} />
+      <Image
+        src={`/images/farms/${farmImage}.svg`}
+        alt={farm.tokenSymbol}
+        width={isMobile ? 24 : 64}
+        height={isMobile ? 24 : 64}
+      />
       <FarmLabelWrapper>
         <Flex>
           <FarmLabel bold>{farm.lpSymbol.replace(' LP', '')}</FarmLabel>
         </Flex>
-        <Flex mt='4px'>
-          <MultiplierTag variant="primary" >{farm.multiplier}</MultiplierTag>
+        <Flex mt="4px">
+          <MultiplierTag variant="primary">{farm.multiplier}</MultiplierTag>
+          <LpTag variant="primary">{farm.type}</LpTag>
           {handleRenderFarming()}
         </Flex>
       </FarmLabelWrapper>
