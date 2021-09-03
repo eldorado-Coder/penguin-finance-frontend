@@ -103,7 +103,6 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, expanded })
 
   const pefiPerYear = getBalanceNumber(farm.pefiPerYear)
   const pefiPerWeek = pefiPerYear / WEEKS_PER_YEAR
-  const pefiPerMonth = pefiPerWeek * 4
 
   const lpSymbol = farm.lpSymbol.replaceAll(' LP', '')
   const lpLogo = getTokenLogoFromSymbol(lpSymbol)
@@ -146,20 +145,27 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, expanded })
             <Text fontSize="20px" color="textSubtle" bold lineHeight={1} mb="8px">
               Igloo Stats
             </Text>
-            <Balance fontSize="14px" color="textSubtle" fontWeight="400" prefix="TVL: $" value={Number(pefiPerWeek)} />
             <Balance
               fontSize="14px"
               color="textSubtle"
               fontWeight="400"
-              prefix="PEFI/week: "
+              prefix="APR: "
+              suffix="%"
               value={Number(pefiPerWeek)}
             />
             <Balance
               fontSize="14px"
               color="textSubtle"
               fontWeight="400"
-              prefix="PEFI/month: "
-              value={Number(pefiPerMonth)}
+              prefix="Liquidity: $"
+              value={Number(totalLp)}
+            />
+            <Balance
+              fontSize="14px"
+              color="textSubtle"
+              fontWeight="400"
+              prefix="PEFI Per Week: "
+              value={Number(pefiPerWeek)}
             />
           </EarningsContainer>
           <RewardImage src={lpLogo} alt="igloo-stats" size={56} />
