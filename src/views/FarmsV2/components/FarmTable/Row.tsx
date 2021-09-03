@@ -87,6 +87,7 @@ const Row: React.FunctionComponent<FarmCardProps> = (props) => {
       return { address: pendingTokenAddress, logo: getTokenLogo(pendingTokenAddress) }
     })
   const liquidity = farm.totalLp ? getBalanceNumber(farm.totalLp) * lpPrice : '-'
+  const stakedBalanceInUsd = stakedBalance ? getBalanceNumber(stakedBalance) * lpPrice : '-'
 
   const toggleActionPanel = () => {
     setActionPanelExpanded(!actionPanelExpanded)
@@ -129,12 +130,13 @@ const Row: React.FunctionComponent<FarmCardProps> = (props) => {
                     </CellInner>
                   </td>
                 )
-              case 'earned':
+              case 'staked':
                 return (
                   <td key={key}>
                     <CellInner>
-                      <CellLayout label="Earned">
-                        <Earned earnings={earnings} pid={farm.pid} userDataReady />
+                      <CellLayout label="Your Stake">
+                        {/* <Earned earnings={stakedBalanceInUsd} pid={farm.pid} userDataReady /> */}
+                        <Balance fontSize="14px" fontWeight="400" prefix="$" value={Number(stakedBalanceInUsd)} />
                       </CellLayout>
                     </CellInner>
                   </td>
