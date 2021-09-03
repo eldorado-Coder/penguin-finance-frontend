@@ -46,13 +46,13 @@ const Container = styled.div<{ expanded }>`
   display: flex;
   width: 100%;
   flex-direction: column;
-  padding: 16px 16px 0;
+  padding: 16px 0 0;
   overflow: auto;
 
   ${({ theme }) => theme.mediaQueries.xl} {
     flex-direction: row;
     justify-content: space-between;
-    padding: 16px 16px 0;
+    padding: 16px 0 0;
   }
 `
 
@@ -157,10 +157,10 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
 
   return (
     <Container expanded={expanded}>
-      <ActionCard padding="10px 16px" mr={!isMobile && '8px'} mb="16px">
+      <ActionCard padding="16px 16px 10px" mr={!isMobile && '8px'} mb="16px" minWidth={300}>
         <StakePanel {...farm} />
       </ActionCard>
-      <ActionCard padding="10px 16px" mr={!isMobile && '8px'} mb="16px" minWidth={300}>
+      <ActionCard padding="16px 16px 10px" mr={!isMobile && '8px'} mb="16px" minWidth={300}>
         <Flex>
           <EarningsContainer>
             <Text fontSize="20px" color="textSubtle" bold lineHeight={1} mb="8px">
@@ -221,8 +221,8 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
       </ActionCard>
       <Flex flexDirection="column" mb="16px">
         <ActionCard padding="10px 16px">
-          <Flex>
-            <Flex alignItems="center" justifyContent="space-around" mr="40px">
+          <Flex justifyContent='space-between'>
+            <Flex alignItems="center" justifyContent="space-around" mr="16px">
               {pendingTokens.map((pendingToken) => {
                 const rewardTokenInfo = userPendingTokens.find((row) => row.address === pendingToken)
                 const amount = rewardTokenInfo ? Number(rewardTokenInfo.amount) : 0

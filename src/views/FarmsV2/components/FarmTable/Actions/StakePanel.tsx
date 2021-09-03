@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react'
 import styled from 'styled-components'
-import { Flex, ButtonMenuItem, ButtonMenu, Text } from 'penguinfinance-uikit2'
+import { Flex, ButtonMenuItem, ButtonMenu } from 'penguinfinance-uikit2'
 import { BigNumber } from 'bignumber.js'
 import { useWeb3React } from '@web3-react/core'
 import { useV2FarmUser } from 'state/hooks'
@@ -10,8 +10,8 @@ import { Farm as FarmTypes } from 'state/types'
 import { useV2Stake } from 'hooks/useStake'
 import { useV2Unstake } from 'hooks/useUnstake'
 import { useV2FarmApprove } from 'hooks/useApprove'
-import StakeLPForm from './StakeLPForm'
 import UnstakeLPForm from './UnstakeLPForm'
+import StakeLPForm from './StakeLPForm'
 
 interface FarmWithStakedValue extends FarmTypes {
   apy?: BigNumber
@@ -85,8 +85,9 @@ const Staked: React.FunctionComponent<FarmWithStakedValue> = ({ pid, lpSymbol, l
 const TabWrapper = styled.div`
   div {
     height: 28px;
-    border: 2px solid ${({ theme }) => (theme.isDark ? '#221b38' : '#b2b2ce')};
-    background-color: ${({ theme }) => (theme.isDark ? '#332654' : '#e8e4ef')};
+    border: 2px solid ${({ theme }) => (theme.isDark ? '#bba6dd' : '#b2b2ce')};
+    background-color: ${({ theme }) => (theme.isDark ? '#604e84' : '#e8e4ef')};
+    color: ${({ theme }) => (theme.isDark ? '#bba6dd' : '#b2b2ce')};
     border-radius: 18px;
   }
 `

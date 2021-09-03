@@ -58,7 +58,7 @@ const StakeLPForm: React.FC<DepositModalProps> = ({
   }, [fullBalance, setVal])
 
   const renderText = () => {
-    if (Number(val) > Number(fullBalance) || Number(fullBalance) === 0) return `Get more ${stakingTokenName}`
+    if (Number(val) > Number(fullBalance) || Number(fullBalance) === 0) return `Get ${tokenName}`
     if (pendingTx) return TranslateString(488, 'Pending Confirmation')
     if (val) return 'Confirm Staking'
     return 'Enter Amount'
@@ -85,15 +85,15 @@ const StakeLPForm: React.FC<DepositModalProps> = ({
   return (
     <>
       <InputContainer>
-        <Text color="textDisabled" fontSize="14px">
+        <LPTokenBalance fontSize="14px">
           {`LP Token Balance: ${Number(fullBalance).toFixed(2)}`}
-        </Text>
+        </LPTokenBalance>
         <TokenInput
           value={roundDown(val, 2)}
           onSelectMax={handleSelectMax}
           onChange={handleChange}
           max={fullBalance}
-          symbol={tokenName}
+          symbol={tokenName.replace(' LP', '')}
         />
       </InputContainer>
       <ActionContainer>
@@ -132,17 +132,23 @@ const ActionContainer = styled.div`
 `
 
 const StyledButton = styled(Button)<{ tokenBalance?: string }>`
-  border-radius: 16px;
+  border-radius: 10px;
+  height: 40px;
+  font-weight: 400;  
+  width: 100%;
+  background-color: ${({ theme }) => theme.isDark ? theme.colors.red : '#372871'};
+  color: white;
+`
+
+const StyledUnlockButton = styled(UnlockButton)`
+  border-radius: 10px;
   height: 40px;
   font-weight: 400;
   width: 100%;
 `
 
-const StyledUnlockButton = styled(UnlockButton)`
-  border-radius: 16px;
-  height: 40px;
-  font-weight: 400;
-  width: 100%;
-`
+const LPTokenBalance = styled(Text)`
+  color: ${({ theme }) => theme.isDark ? '#bba6dd' : '#b2b2ce'};
+`;
 
 export default StakeLPForm
