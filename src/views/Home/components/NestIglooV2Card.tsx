@@ -12,7 +12,7 @@ const StyledNestIglooCardBg = styled.div`
   height: 100%;
   background-size: cover;
   background-position: center center;
-  background-image: url('/images/home/ipefi-introducing.png');
+  background-image: url('/images/home/igloos-v2.png');
   cursor: pointer;
 `
 
@@ -20,7 +20,7 @@ const NestIglooV2Card = () => {
   const { isXl } = useMatchBreakpoints()
   const isMobile = !isXl
   const onClickNestIglooV2Card = () => {
-    const iglooV2Url = 'https://penguin-finance.medium.com/introducing-ipefi-the-nest-evolution-d002f8548276'
+    const iglooV2Url = 'https://penguin-finance.medium.com/introducing-igloos-v2-next-gen-yield-farming-on-avalanche-2f9e9449e8fe'
     window.open(iglooV2Url, '_blank')
   }
 
