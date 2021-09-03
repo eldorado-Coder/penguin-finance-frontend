@@ -16,7 +16,7 @@ import PercentagePefiStakedNestV2 from 'views/Home/components/PercentagePefiStak
 import V2PoolCard from 'views/Pools/components/V2PoolCard'
 import { usePools, useV2Pools } from 'state/hooks'
 
-const Hero = styled.div<{ isMobile?: boolean}>`
+const Hero = styled.div<{ isMobile?: boolean }>`
   position: relative;
   align-items: center;
   background-repeat: no-repeat;
@@ -25,9 +25,9 @@ const Hero = styled.div<{ isMobile?: boolean}>`
   justify-content: center;
   flex-direction: column;
   margin: auto;
-  margin-bottom: ${({ isMobile }) => !isMobile ? '32px' : '16px'};
+  margin-bottom: ${({ isMobile }) => (!isMobile ? '32px' : '16px')};
   text-align: center;
-  height: ${({ isMobile }) => !isMobile ? '165px' : '70px'};
+  height: ${({ isMobile }) => (!isMobile ? '165px' : '70px')};
 
   h1 {
     color: white;
