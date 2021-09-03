@@ -86,4 +86,5 @@ export interface FarmCardProps {
   ethPrice?: BigNumber
   account?: string
   expanded?: boolean
+  lpPrice?: number
 }

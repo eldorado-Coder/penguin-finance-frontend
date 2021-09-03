@@ -5,9 +5,11 @@ import { useMatchBreakpoints } from 'penguinfinance-uikit2'
 import { useV2FarmUser } from 'state/hooks'
 import useDelayedUnmount from 'hooks/useDelayedUnmount'
 import useAssets from 'hooks/useAssets'
+import { usePangolinLpPrice } from 'hooks/usePrice'
 import { WEEKS_PER_YEAR } from 'config'
 import { getBalanceNumber } from 'utils/formatBalance'
 import Balance from 'components/Balance'
+import { getAddress } from 'utils/addressHelpers'
 
 import Farm from './Farm'
 import Earned from './Earned'
@@ -66,6 +68,9 @@ const PendingTokenLogo = styled.img`
 
 const Row: React.FunctionComponent<FarmCardProps> = (props) => {
   const { farm } = props
+  const [lpPrice, setLpPrice] = useState(1)
+  const lpAddress = getAddress(farm.lpAddresses)
+  const { onFetchLpPrice } = usePangolinLpPrice()
   const { stakedBalance, earnings } = useV2FarmUser(farm.pid, farm.type)
   const hasStakedAmount = !!stakedBalance.toNumber()
   const [actionPanelExpanded, setActionPanelExpanded] = useState(hasStakedAmount)
@@ -81,18 +86,28 @@ const Row: React.FunctionComponent<FarmCardProps> = (props) => {
     pendingTokens.map((pendingTokenAddress) => {
       return { address: pendingTokenAddress, logo: getTokenLogo(pendingTokenAddress) }
     })
-
-  // TODO: temp price
-  const lpPrice = 10000
   const liquidity = farm.totalLp ? getBalanceNumber(farm.totalLp) * lpPrice : '-'
 
   const toggleActionPanel = () => {
     setActionPanelExpanded(!actionPanelExpanded)
   }
 
+  const onSetLpPrice = async () => {
+    const _lpPrice = await onFetchLpPrice(lpAddress)
+    setLpPrice(_lpPrice)
+  }
+
   useEffect(() => {
     setActionPanelExpanded(hasStakedAmount)
   }, [hasStakedAmount])
+
+  useEffect(() => {
+    onSetLpPrice()
+    setInterval(() => {
+      onSetLpPrice()
+    }, 20000)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const isMobile = !isXl
   const tableSchema = isMobile ? MobileColumnSchema : DesktopColumnSchema
@@ -221,7 +236,7 @@ const Row: React.FunctionComponent<FarmCardProps> = (props) => {
       {shouldRenderChild && (
         <tr>
           <td colSpan={6}>
-            <ActionPanel {...props} expanded={actionPanelExpanded} />
+            <ActionPanel {...props} lpPrice={lpPrice} expanded={actionPanelExpanded} />
           </td>
         </tr>
       )}

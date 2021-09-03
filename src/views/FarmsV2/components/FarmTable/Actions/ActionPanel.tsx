@@ -119,7 +119,7 @@ const BalanceWrapper = styled.div`
   }
 `
 
-const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, expanded }) => {
+const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, expanded }) => {
   const [pendingTx, setPendingTx] = useState(false)
   const { getTokenLogo, getTokenSymbol } = useAssets()
   const { onHarvest } = useV2Harvest(farm.pid)
@@ -135,6 +135,8 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, expanded })
 
   const totalShares = getBalanceNumber(farm.totalShares)
   const totalLp = getBalanceNumber(farm.totalLp)
+  const liquidity = totalLp ? totalLp * lpPrice : '-'
+
   const userSharePercentage = totalShares > 0 ? (100 * userShares) / totalShares : 0
   const theme = useTheme()
   const pefiPerYear = getBalanceNumber(farm.pefiPerYear)
@@ -204,7 +206,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, expanded })
               color="textSubtle"
               fontWeight="400"
               prefix="Liquidity: $"
-              value={Number(totalLp)}
+              value={Number(liquidity)}
             />
             <Balance
               fontSize="14px"
