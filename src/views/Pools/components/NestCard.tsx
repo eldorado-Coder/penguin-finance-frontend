@@ -45,18 +45,14 @@ const CardAction = styled.div`
   border-radius: 0 0 32px 32px;
 `
 
-interface PoolWithApy extends Pool {
-  apy: BigNumber
-}
-
-interface HarvestProps {
-  pool: PoolWithApy
+interface Props {
+  pool: Pool
   isMainPool: boolean
   isNestPage?: boolean
   isHomePage?: boolean
 }
 
-const NestCard: React.FC<HarvestProps> = ({ pool, isNestPage }) => {
+const NestCard: React.FC<Props> = ({ pool, isNestPage }) => {
   const {
     sousId,
     stakingTokenName,

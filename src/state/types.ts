@@ -52,6 +52,8 @@ export interface Pool extends PoolConfig {
   totalSupply?: BigNumber
   startBlock?: number
   endBlock?: number
+  dailyApr?: number
+  apy?: BigNumber
   userData?: {
     allowance: BigNumber
     stakingTokenBalance: BigNumber

@@ -469,9 +469,9 @@ export const useV2NestApr = (): number => {
   return (DAYS_PER_YEAR * useV2NestAprPerDay()) / 100
 }
 
-export const useV2NestApy = () => {
+export const useV2NestApy = (dailyApr = 0) => {
   const staticFee = 0
-  return (1 + useV2NestApr() / DAYS_PER_YEAR) ** DAYS_PER_YEAR - 1 + staticFee
+  return (1 + dailyApr) ** DAYS_PER_YEAR - 1 + staticFee
 }
 
 // v2 nest migrator
