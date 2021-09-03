@@ -324,3 +324,21 @@ export const v2FarmUnstake = async (masterChefContract, pid, amount, to, account
       return tx.transactionHash
     })
 }
+
+export const v2FarmHarvest = async (masterChefContract, pid, to, account, gasPrice?: number) => {
+  return masterChefContract.methods
+    .harvest(pid, to || account)
+    .send({ from: account, gas: gasPrice || 800000 })
+    .on('transactionHash', (tx) => {
+      return tx.transactionHash
+    })
+}
+
+export const v2FarmSetAutoNestAllocation = async (masterChefContract, amount, account, gasPrice?: number) => {
+  return masterChefContract.methods
+    .setIpefiDistributionBips(amount)
+    .send({ from: account, gas: gasPrice || 300000 })
+    .on('transactionHash', (tx) => {
+      return tx.transactionHash
+    })
+}

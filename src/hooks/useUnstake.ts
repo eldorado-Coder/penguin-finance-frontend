@@ -20,6 +20,7 @@ import {
   launchpadUnstake,
   // v2
   v2FarmUnstake,
+  v2FarmHarvest,
 } from 'utils/callHelpers'
 import {
   useLaunchPad,
@@ -140,6 +141,24 @@ export const useV2Unstake = (pid: number, type?: string) => {
   )
 
   return { onUnstake: handleUnstake }
+}
+
+export const useV2Harvest = (pid: number, type?: string) => {
+  const dispatch = useDispatch()
+  const { account } = useWeb3React()
+  const v2MasterChefContract = useV2MasterChef(type)
+
+  const handleHarvest = useCallback(
+    async (to?: string) => {
+      if (!account) return
+      const txHash = await v2FarmHarvest(v2MasterChefContract, pid, to, account)
+      dispatch(fetchV2FarmUserDataAsync(account))
+      console.info(txHash)
+    },
+    [account, dispatch, v2MasterChefContract, pid],
+  )
+
+  return { onHarvest: handleHarvest }
 }
 
 export default useUnstake

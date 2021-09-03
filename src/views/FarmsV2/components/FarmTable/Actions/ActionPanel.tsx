@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import BigNumber from 'bignumber.js'
 import styled, { keyframes, css } from 'styled-components'
+import { useWeb3React } from '@web3-react/core'
 import { Card, Text, Button, Flex, useMatchBreakpoints } from 'penguinfinance-uikit2'
 import { WEEKS_PER_YEAR } from 'config'
 import useAssets from 'hooks/useAssets'
+import { useV2Harvest } from 'hooks/useV2Farm'
 import useTheme from 'hooks/useTheme'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { getTokenLogoFromSymbol } from 'utils/token'
@@ -95,7 +97,7 @@ const Divider = styled.div`
 
 const Label = styled(Text)`
   white-space: nowrap;
-`;
+`
 
 const StyledBalance = styled(Balance)`
   margin: auto !important;
@@ -104,9 +106,9 @@ const StyledBalance = styled(Balance)`
 
 const UsdBalanceWrapper = styled.div`
   div {
-    color: ${({ theme }) => theme.isDark ? '#b2b2ce' : theme.colors.textDisabled};
+    color: ${({ theme }) => (theme.isDark ? '#b2b2ce' : theme.colors.textDisabled)};
   }
-`;
+`
 
 const BalanceWrapper = styled.div`
   div {
@@ -115,26 +117,41 @@ const BalanceWrapper = styled.div`
       margin-right: 2px;
     }
   }
-`;
+`
 
 const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, expanded }) => {
+  const [pendingTx, setPendingTx] = useState(false)
   const { getTokenLogo, getTokenSymbol } = useAssets()
-  const [allocation, setAllocation] = useState(50)
+  const { onHarvest } = useV2Harvest(farm.pid)
+  const { account } = useWeb3React()
+
   const { isXl, isLg } = useMatchBreakpoints()
   const isMobile = !isXl
-  const { pendingTokens, userData } = farm
+  const { pendingTokens, userData, maxBips: maxAutoNestAllocation } = farm
   const userPendingTokens = userData ? userData.userPendingTokens : []
   const userShares = userData ? getBalanceNumber(userData.userShares) : 0
+  const userStakedBalance = userData ? getBalanceNumber(userData.stakedBalance) : 0
+  const uesrAutoNestingAllocation = userData ? userData.userIpefiDistributionBips : 0
+
   const totalShares = getBalanceNumber(farm.totalShares)
   const totalLp = getBalanceNumber(farm.totalLp)
   const userSharePercentage = totalShares > 0 ? (100 * userShares) / totalShares : 0
-  const theme = useTheme();
+  const theme = useTheme()
   const pefiPerYear = getBalanceNumber(farm.pefiPerYear)
   const pefiPerWeek = pefiPerYear / WEEKS_PER_YEAR
-  const pefiPerMonth = pefiPerWeek * 4
 
   const lpSymbol = farm.lpSymbol.replaceAll(' LP', '')
   const lpLogo = getTokenLogoFromSymbol(lpSymbol)
+
+  const onClickHarvest = async () => {
+    setPendingTx(true)
+    try {
+      await onHarvest()
+      setPendingTx(false)
+    } catch (error) {
+      setPendingTx(false)
+    }
+  }
 
   return (
     <Container expanded={expanded}>
@@ -145,23 +162,23 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, expanded })
         <Flex>
           <EarningsContainer>
             <Text fontSize="20px" color="textSubtle" bold lineHeight={1} mb="8px">
-              Your PEFI Earnings
+              Your Stake
             </Text>
             <Balance
               fontSize="14px"
               color="textSubtle"
               fontWeight="400"
-              prefix="Balance: "
-              suffix=" LP"
-              value={Number(totalLp)}
+              prefix=""
+              suffix={` ${lpSymbol}`}
+              value={Number(userStakedBalance)}
             />
             {userSharePercentage > 3 && (
               <Balance
                 fontSize="14px"
                 color="textSubtle"
                 fontWeight="400"
-                prefix="Share of Igloo: "
-                suffix=" %"
+                prefix=" "
+                suffix="% of the igloo"
                 value={Number(userSharePercentage)}
               />
             )}
@@ -174,20 +191,27 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, expanded })
             <Text fontSize="20px" color="textSubtle" bold lineHeight={1} mb="8px">
               Igloo Stats
             </Text>
-            <Balance fontSize="14px" color="textSubtle" fontWeight="400" prefix="TVL: $" value={Number(pefiPerWeek)} />
             <Balance
               fontSize="14px"
               color="textSubtle"
               fontWeight="400"
-              prefix="PEFI/week: "
+              prefix="APR: "
+              suffix="%"
               value={Number(pefiPerWeek)}
             />
             <Balance
               fontSize="14px"
               color="textSubtle"
               fontWeight="400"
-              prefix="PEFI/month: "
-              value={Number(pefiPerMonth)}
+              prefix="Liquidity: $"
+              value={Number(totalLp)}
+            />
+            <Balance
+              fontSize="14px"
+              color="textSubtle"
+              fontWeight="400"
+              prefix="PEFI Per Week: "
+              value={Number(pefiPerWeek)}
             />
           </EarningsContainer>
           <RewardImage src={lpLogo} alt="igloo-stats" size={56} />
@@ -201,7 +225,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, expanded })
                 const rewardTokenInfo = userPendingTokens.find((row) => row.address === pendingToken)
                 const amount = rewardTokenInfo ? Number(rewardTokenInfo.amount) : 0
                 return (
-                  <Flex flexDirection="column" alignItems='center' mr='8px' ml='8px'>
+                  <Flex flexDirection="column" alignItems="center" mr="8px" ml="8px">
                     <RewardImage src={getTokenLogo(pendingToken)} alt="penguin" size={50} />
                     <BalanceWrapper>
                       <StyledBalance
@@ -216,7 +240,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, expanded })
                       <Balance
                         fontSize="10px"
                         fontWeight="400"
-                        prefix='$'
+                        prefix="$"
                         value={getBalanceNumber(new BigNumber(amount))}
                       />
                     </UsdBalanceWrapper>
@@ -224,20 +248,23 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, expanded })
                 )
               })}
             </Flex>
-            <Flex flexDirection="column" justifyContent="space-between" pb='4px'>
-              <Label fontSize="20px" color="textSubtle" bold mt='4px'>
+            <Flex flexDirection="column" justifyContent="space-between" pb="4px">
+              <Label fontSize="20px" color="textSubtle" bold mt="4px">
                 Pending Rewards
               </Label>
-              <StyledButton 
+              <StyledButton
                 color="primary"
-                endIcon={<img src='/images/farms/harvest-coin.svg' alt='harvest' width={16} />}>
-                Harvest
+                endIcon={<img src="/images/farms/harvest-coin.svg" alt="harvest" width={16} />}
+                disabled={!account || pendingTx}
+                onClick={onClickHarvest}
+              >
+                {pendingTx ? 'Pending...' : 'Harvest'}
               </StyledButton>
             </Flex>
           </Flex>
         </ActionCard>
         <ActionCard padding="10px 16px" mt="8px">
-          <AutoNesting currentAllocation={allocation} onUpdateAllocation={setAllocation} />
+          <AutoNesting currentAllocation={uesrAutoNestingAllocation} maxAllocation={maxAutoNestAllocation} />
         </ActionCard>
       </Flex>
     </Container>

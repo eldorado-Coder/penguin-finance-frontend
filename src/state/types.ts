@@ -29,11 +29,13 @@ export interface Farm extends FarmConfig {
     pendingXPefi: BigNumber
     userPendingTokens?: any[]
     userShares: BigNumber
+    userIpefiDistributionBips?: BigNumber
   }
   pendingTokens?: any[]
   totalLp?: BigNumber
   totalShares?: BigNumber
   pefiPerYear?: BigNumber
+  maxBips?: number
 }
 
 export interface Lp extends LPConfig {
