@@ -6,6 +6,7 @@ import { Card, Text, Button, Flex, useMatchBreakpoints } from 'penguinfinance-ui
 import { WEEKS_PER_YEAR } from 'config'
 import useAssets from 'hooks/useAssets'
 import { useV2Harvest } from 'hooks/useUnstake'
+import useTheme from 'hooks/useTheme'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { getTokenLogoFromSymbol } from 'utils/token'
 import Balance from 'components/Balance'
@@ -70,9 +71,17 @@ const RewardImage = styled.img<{ size: number; ml?: number }>`
 `
 
 const StyledButton = styled(Button)`
-  font-weight: 400;
-  height: 28px;
+  font-weight: 500;
   font-size: 14px;
+  border-radius: 10px;
+  height: 38px;
+  margin-top: 8px;
+  background-color: ${({ theme }) => theme.colors.red};
+  color: white;
+
+  img {
+    margin-left: 8px;
+  }
 `
 
 const EarningsContainer = styled.div`
@@ -86,8 +95,28 @@ const Divider = styled.div`
   width: 100%;
 `
 
+const Label = styled(Text)`
+  white-space: nowrap;
+`
+
 const StyledBalance = styled(Balance)`
   margin: auto !important;
+  white-space: nowrap;
+`
+
+const UsdBalanceWrapper = styled.div`
+  div {
+    color: ${({ theme }) => (theme.isDark ? '#b2b2ce' : theme.colors.textDisabled)};
+  }
+`
+
+const BalanceWrapper = styled.div`
+  div {
+    white-space: nowrap;
+    span {
+      margin-right: 2px;
+    }
+  }
 `
 
 const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, expanded }) => {
@@ -107,7 +136,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, expanded })
   const totalShares = getBalanceNumber(farm.totalShares)
   const totalLp = getBalanceNumber(farm.totalLp)
   const userSharePercentage = totalShares > 0 ? (100 * userShares) / totalShares : 0
-
+  const theme = useTheme()
   const pefiPerYear = getBalanceNumber(farm.pefiPerYear)
   const pefiPerWeek = pefiPerYear / WEEKS_PER_YEAR
 
@@ -191,31 +220,46 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, expanded })
       <Flex flexDirection="column" mb="16px">
         <ActionCard padding="10px 16px">
           <Flex>
-            <Flex flexDirection="column" justifyContent="space-between">
-              <Text fontSize="20px" color="textSubtle" bold>
-                Your Rewards
-              </Text>
-              <StyledButton color="primary" scale="sm" disabled={!account || pendingTx} onClick={onClickHarvest}>
-                {pendingTx ? 'Pending...' : 'Harvest'}
-              </StyledButton>
-            </Flex>
-            <Flex alignItems="center" justifyContent="space-around" ml="40px">
+            <Flex alignItems="center" justifyContent="space-around" mr="40px">
               {pendingTokens.map((pendingToken) => {
                 const rewardTokenInfo = userPendingTokens.find((row) => row.address === pendingToken)
                 const amount = rewardTokenInfo ? Number(rewardTokenInfo.amount) : 0
                 return (
-                  <Flex flexDirection="column">
+                  <Flex flexDirection="column" alignItems="center" mr="8px" ml="8px">
                     <RewardImage src={getTokenLogo(pendingToken)} alt="penguin" size={50} />
-                    <StyledBalance
-                      fontSize="14px"
-                      color="textSubtle"
-                      fontWeight="400"
-                      suffix={` ${getTokenSymbol(pendingToken)}`}
-                      value={getBalanceNumber(new BigNumber(amount))}
-                    />
+                    <BalanceWrapper>
+                      <StyledBalance
+                        fontSize="14px"
+                        color="textSubtle"
+                        fontWeight="400"
+                        suffix={` ${getTokenSymbol(pendingToken)}`}
+                        value={getBalanceNumber(new BigNumber(amount))}
+                      />
+                    </BalanceWrapper>
+                    <UsdBalanceWrapper>
+                      <Balance
+                        fontSize="10px"
+                        fontWeight="400"
+                        prefix="$"
+                        value={getBalanceNumber(new BigNumber(amount))}
+                      />
+                    </UsdBalanceWrapper>
                   </Flex>
                 )
               })}
+            </Flex>
+            <Flex flexDirection="column" justifyContent="space-between" pb="4px">
+              <Label fontSize="20px" color="textSubtle" bold mt="4px">
+                Pending Rewards
+              </Label>
+              <StyledButton
+                color="primary"
+                endIcon={<img src="/images/farms/harvest-coin.svg" alt="harvest" width={16} />}
+                disabled={!account || pendingTx}
+                onClick={onClickHarvest}
+              >
+                {pendingTx ? 'Pending...' : 'Harvest'}
+              </StyledButton>
             </Flex>
           </Flex>
         </ActionCard>
