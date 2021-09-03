@@ -45,7 +45,7 @@ const Details: React.FC<DetailsProps> = ({ actionPanelToggled }) => {
       <Flex alignItems="center">
         {!isMobile ? (
           <StyledButton scale="sm" color="primary" endIcon={<ArrowDownIcon toggled={actionPanelToggled} />}>
-            Details
+            View Farm
           </StyledButton>
         ) : (
           <ArrowIcon toggled={actionPanelToggled} />
