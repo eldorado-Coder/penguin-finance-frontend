@@ -5,7 +5,7 @@ import Slider from 'components/Slider'
 
 const StyledButton = styled(Button)`
   font-weight: 600;
-  height: 28px;
+  height: 24px;
   font-size: 14px;
   border-radius: 10px;
   background: ${({ theme }) => theme.colors.red};
