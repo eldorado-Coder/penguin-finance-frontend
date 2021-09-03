@@ -14,7 +14,7 @@ import EarnAPYCard from 'views/Home/components/EarnAPYCard'
 import PercentagePefiStakedNestV1 from 'views/Home/components/PercentagePefiStakedNestV1'
 import PercentagePefiStakedNestV2 from 'views/Home/components/PercentagePefiStakedNestV2'
 import V2PoolCard from 'views/Pools/components/V2PoolCard'
-import { usePools, useV2Pools } from 'state/hooks'
+import { usePools, useV2Pools, useV2NestApy } from 'state/hooks'
 
 const Hero = styled.div<{ isMobile?: boolean }>`
   position: relative;
@@ -136,7 +136,6 @@ const Home: React.FC = () => {
   const v2PoolsWithApy = v2Pools.map((pool) => {
     return {
       ...pool,
-      apy: new BigNumber(0),
     }
   })
   const xPefiPool = v1PoolsWithApy.length > 0 ? v1PoolsWithApy[0] : null
@@ -165,7 +164,7 @@ const Home: React.FC = () => {
             <PefiStatsCardWrapper>
               <IglooCard />
               <SpacingWrapper />
-              <EarnAPYCard />
+              <EarnAPYCard apy={iPefiPool.apy} />
               <SpacingWrapper />
               {/* <PercentagePefiStakedNestV1 pool={xPefiPool} /> */}
               <PercentagePefiStakedNestV2 pool={iPefiPool} />

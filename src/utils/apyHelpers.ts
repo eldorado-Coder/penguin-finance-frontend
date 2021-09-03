@@ -52,3 +52,9 @@ export const getCompoundApy = ({ normalApy, type }: { normalApy: string; type: s
 
   return normalApy
 }
+
+// v2
+export const getV2NestApy = (dailyApr = 0) => {
+  const staticFee = 0
+  return (1 + dailyApr) ** DAYS_PER_YEAR - 1 + staticFee
+}

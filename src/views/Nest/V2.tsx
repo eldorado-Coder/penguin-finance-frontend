@@ -4,18 +4,13 @@ import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
 import { useWeb3React } from '@web3-react/core'
 import { Card, Flex, Text, Button, useMatchBreakpoints } from 'penguinfinance-uikit2'
-import { SECONDS_PER_YEAR } from 'config'
 import orderBy from 'lodash/orderBy'
 import partition from 'lodash/partition'
 import { getBalanceNumber, getNumberWithCommas } from 'utils/formatBalance'
-import priceToBnb from 'utils/priceToBnb'
-import useBlock from 'hooks/useBlock'
 import useTokenBalance from 'hooks/useTokenBalance'
-import useBlockGenerationTime from 'hooks/useBlockGenerationTime'
 import useUserSetting from 'hooks/useUserSetting'
 import { useV2NestContract } from 'hooks/useContract'
-import { useFarms, usePriceAvaxUsdt, useV2Pools, usePriceEthAvax, useV2NestApy, useV2NestAprPerDay } from 'state/hooks'
-import { PoolCategory } from 'config/constants/types'
+import { useV2Pools } from 'state/hooks'
 import { getFirstStakeTime } from 'subgraph/utils'
 import { getPefiAddress } from 'utils/addressHelpers'
 import roundDown from 'utils/roundDown'
@@ -28,18 +23,10 @@ const NestV2: React.FC = () => {
   const { refreshRate } = useUserSetting()
   const { path } = useRouteMatch()
   const { account } = useWeb3React()
-  const farms = useFarms()
   const pools = useV2Pools(account)
-  const avaxPriceUSD = usePriceAvaxUsdt()
-  const ethPriceBnb = usePriceEthAvax()
-  const block = useBlock()
-  const AVAX_BLOCK_TIME = useBlockGenerationTime()
   const iPefiContract = useV2NestContract()
   const { isXl } = useMatchBreakpoints()
   const isMobile = !isXl
-  const displayedNestApy = (useV2NestApy() * 100).toFixed(2)
-  const displayedNestDailyApr = useV2NestAprPerDay().toFixed(2)
-  const BLOCKS_PER_YEAR = new BigNumber(SECONDS_PER_YEAR).div(new BigNumber(AVAX_BLOCK_TIME))
 
   const [finishedPools, openPools] = partition(pools, (pool) => pool.isFinished)
 
@@ -82,6 +69,7 @@ const NestV2: React.FC = () => {
   const xPefiToPefiRatio = getXPefiToPefiRatio()
   const stakedBalance = new BigNumber(openPools[0].userData?.stakedBalance || 0)
   const pefiBalance = useTokenBalance(getPefiAddress())
+  const displayedNestApy = (openPools[0].apy.toNumber() * 100).toFixed(2)
 
   return (
     <Flex justifyContent="center">

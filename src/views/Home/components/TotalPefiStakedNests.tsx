@@ -24,7 +24,7 @@ const Title = styled(Heading)`
 `
 
 interface PoolWithApy extends Pool {
-  apy: BigNumber
+  apy?: BigNumber
 }
 
 interface HarvestProps {

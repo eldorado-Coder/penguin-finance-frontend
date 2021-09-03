@@ -1,8 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
-import BigNumber from 'bignumber.js'
 import v2poolsConfig from 'config/constants/v2pools'
-import { useV2NestApy } from 'state/hooks'
 import { fetchPoolsTotalStaking, fetchPoolsDailyAprs } from './fetchPools'
 import {
   fetchPoolsAllowance,
@@ -55,7 +53,6 @@ export const fetchPoolsPublicDataAsync = () => async (dispatch) => {
     return {
       ...totalStaking,
       dailyApr: dailyAprItem.dailyApr,
-      apy: new BigNumber(useV2NestApy(dailyAprItem.dailyApr)).toJSON(),
     }
   })
 
