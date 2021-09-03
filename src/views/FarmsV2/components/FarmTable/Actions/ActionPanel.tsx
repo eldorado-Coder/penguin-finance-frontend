@@ -103,6 +103,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, expanded })
   const userPendingTokens = userData ? userData.userPendingTokens : []
   const userShares = userData ? getBalanceNumber(userData.userShares) : 0
   const userStakedBalance = userData ? getBalanceNumber(userData.stakedBalance) : 0
+  const uesrAutoNestingAllocation = userData ? userData.userIpefiDistributionBips : 0
   const totalShares = getBalanceNumber(farm.totalShares)
   const totalLp = getBalanceNumber(farm.totalLp)
   const userSharePercentage = totalShares > 0 ? (100 * userShares) / totalShares : 0
@@ -219,7 +220,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, expanded })
           </Flex>
         </ActionCard>
         <ActionCard padding="10px 16px" mt="8px">
-          <AutoNesting currentAllocation={allocation} onUpdateAllocation={setAllocation} />
+          <AutoNesting currentAllocation={uesrAutoNestingAllocation} />
         </ActionCard>
       </Flex>
     </Container>

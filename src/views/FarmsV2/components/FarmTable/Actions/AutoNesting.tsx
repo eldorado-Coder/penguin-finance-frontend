@@ -22,7 +22,7 @@ const AllocationText = styled(Text)`
   color: ${({ theme }) => (theme.isDark ? '#b2b2ce' : theme.colors.textSubtle)};
 `
 
-const AutoNesting = ({ currentAllocation, onUpdateAllocation }) => {
+const AutoNesting = ({ currentAllocation }) => {
   const [allocation, setAllocation] = useState(currentAllocation)
   const [touched, setTouched] = useState(false)
 
@@ -34,7 +34,7 @@ const AutoNesting = ({ currentAllocation, onUpdateAllocation }) => {
   }
 
   const handleUpdateAllocation = () => {
-    onUpdateAllocation(allocation)
+    // onUpdateAllocation(allocation)
     setTouched(false)
   }
 
