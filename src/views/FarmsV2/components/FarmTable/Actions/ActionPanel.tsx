@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import BigNumber from 'bignumber.js'
 import styled, { keyframes, css } from 'styled-components'
+import { useWeb3React } from '@web3-react/core'
 import { Card, Text, Button, Flex, useMatchBreakpoints } from 'penguinfinance-uikit2'
 import { WEEKS_PER_YEAR } from 'config'
 import useAssets from 'hooks/useAssets'
+import { useV2Harvest } from 'hooks/useUnstake'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { getTokenLogoFromSymbol } from 'utils/token'
 import Balance from 'components/Balance'
@@ -89,8 +91,12 @@ const StyledBalance = styled(Balance)`
 `
 
 const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, expanded }) => {
-  const { getTokenLogo, getTokenSymbol } = useAssets()
   const [allocation, setAllocation] = useState(50)
+  const [pendingTx, setPendingTx] = useState(false)
+  const { getTokenLogo, getTokenSymbol } = useAssets()
+  const { onHarvest } = useV2Harvest(farm.pid)
+  const { account } = useWeb3React()
+
   const { isXl, isLg } = useMatchBreakpoints()
   const isMobile = !isXl
   const { pendingTokens, userData } = farm
@@ -106,6 +112,16 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, expanded })
 
   const lpSymbol = farm.lpSymbol.replaceAll(' LP', '')
   const lpLogo = getTokenLogoFromSymbol(lpSymbol)
+
+  const onClickHarvest = async () => {
+    setPendingTx(true)
+    try {
+      await onHarvest()
+      setPendingTx(false)
+    } catch (error) {
+      setPendingTx(false)
+    }
+  }
 
   return (
     <Container expanded={expanded}>
@@ -178,8 +194,8 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, expanded })
               <Text fontSize="20px" color="textSubtle" bold>
                 Your Rewards
               </Text>
-              <StyledButton color="primary" scale="sm">
-                Harvest
+              <StyledButton color="primary" scale="sm" disabled={!account || pendingTx} onClick={onClickHarvest}>
+                {pendingTx ? 'Pending...' : 'Harvest'}
               </StyledButton>
             </Flex>
             <Flex alignItems="center" justifyContent="space-around" ml="40px">
