@@ -35,6 +35,7 @@ export interface Farm extends FarmConfig {
   totalLp?: BigNumber
   totalShares?: BigNumber
   pefiPerYear?: BigNumber
+  maxBips?: number
 }
 
 export interface Lp extends LPConfig {

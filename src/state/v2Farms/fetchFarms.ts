@@ -136,6 +136,7 @@ export const fetchFarms = async () => {
         totalLp: new BigNumber(totalLP).toJSON(),
         totalShares: new BigNumber(totalShares).toJSON(),
         pefiPerYear: new BigNumber(pefiPerYear).toJSON(),
+        maxBips: 10000,
       }
     }),
   )

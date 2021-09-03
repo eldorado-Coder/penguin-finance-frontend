@@ -5,7 +5,7 @@ import { useWeb3React } from '@web3-react/core'
 import { Card, Text, Button, Flex, useMatchBreakpoints } from 'penguinfinance-uikit2'
 import { WEEKS_PER_YEAR } from 'config'
 import useAssets from 'hooks/useAssets'
-import { useV2Harvest } from 'hooks/useUnstake'
+import { useV2Harvest } from 'hooks/useV2Farm'
 import useTheme from 'hooks/useTheme'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { getTokenLogoFromSymbol } from 'utils/token'
@@ -120,7 +120,6 @@ const BalanceWrapper = styled.div`
 `
 
 const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, expanded }) => {
-  const [allocation, setAllocation] = useState(50)
   const [pendingTx, setPendingTx] = useState(false)
   const { getTokenLogo, getTokenSymbol } = useAssets()
   const { onHarvest } = useV2Harvest(farm.pid)
@@ -128,11 +127,12 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, expanded })
 
   const { isXl, isLg } = useMatchBreakpoints()
   const isMobile = !isXl
-  const { pendingTokens, userData } = farm
+  const { pendingTokens, userData, maxBips: maxAutoNestAllocation } = farm
   const userPendingTokens = userData ? userData.userPendingTokens : []
   const userShares = userData ? getBalanceNumber(userData.userShares) : 0
   const userStakedBalance = userData ? getBalanceNumber(userData.stakedBalance) : 0
   const uesrAutoNestingAllocation = userData ? userData.userIpefiDistributionBips : 0
+
   const totalShares = getBalanceNumber(farm.totalShares)
   const totalLp = getBalanceNumber(farm.totalLp)
   const userSharePercentage = totalShares > 0 ? (100 * userShares) / totalShares : 0
@@ -264,7 +264,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, expanded })
           </Flex>
         </ActionCard>
         <ActionCard padding="10px 16px" mt="8px">
-          <AutoNesting currentAllocation={uesrAutoNestingAllocation} />
+          <AutoNesting currentAllocation={uesrAutoNestingAllocation} maxAllocation={maxAutoNestAllocation} />
         </ActionCard>
       </Flex>
     </Container>

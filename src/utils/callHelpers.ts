@@ -333,3 +333,12 @@ export const v2FarmHarvest = async (masterChefContract, pid, to, account, gasPri
       return tx.transactionHash
     })
 }
+
+export const v2FarmSetAutoNestAllocation = async (masterChefContract, amount, account, gasPrice?: number) => {
+  return masterChefContract.methods
+    .setIpefiDistributionBips(amount)
+    .send({ from: account, gas: gasPrice || 300000 })
+    .on('transactionHash', (tx) => {
+      return tx.transactionHash
+    })
+}
