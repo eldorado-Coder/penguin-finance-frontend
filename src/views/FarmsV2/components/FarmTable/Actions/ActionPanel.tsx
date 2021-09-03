@@ -96,6 +96,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, expanded })
   const { pendingTokens, userData } = farm
   const userPendingTokens = userData ? userData.userPendingTokens : []
   const userShares = userData ? getBalanceNumber(userData.userShares) : 0
+  const userStakedBalance = userData ? getBalanceNumber(userData.stakedBalance) : 0
   const totalShares = getBalanceNumber(farm.totalShares)
   const totalLp = getBalanceNumber(farm.totalLp)
   const userSharePercentage = totalShares > 0 ? (100 * userShares) / totalShares : 0
@@ -116,23 +117,23 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, expanded })
         <Flex>
           <EarningsContainer>
             <Text fontSize="20px" color="textSubtle" bold lineHeight={1} mb="8px">
-              Your PEFI Earnings
+              Your Stake
             </Text>
             <Balance
               fontSize="14px"
               color="textSubtle"
               fontWeight="400"
-              prefix="Balance: "
-              suffix=" LP"
-              value={Number(totalLp)}
+              prefix=""
+              suffix={` ${lpSymbol}`}
+              value={Number(userStakedBalance)}
             />
             {userSharePercentage > 3 && (
               <Balance
                 fontSize="14px"
                 color="textSubtle"
                 fontWeight="400"
-                prefix="Share of Igloo: "
-                suffix=" %"
+                prefix=" "
+                suffix="% of the igloo"
                 value={Number(userSharePercentage)}
               />
             )}
