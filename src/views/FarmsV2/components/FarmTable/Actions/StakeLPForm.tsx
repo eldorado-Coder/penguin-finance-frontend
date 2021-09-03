@@ -85,7 +85,9 @@ const StakeLPForm: React.FC<DepositModalProps> = ({
   return (
     <>
       <div>
-        <Text color='textDisabled' fontSize='14px'>LP Token Amount</Text>
+        <Text color="textDisabled" fontSize="14px">
+          LP Token Amount
+        </Text>
         <TokenInput
           value={roundDown(val, 2)}
           onSelectMax={handleSelectMax}
@@ -104,11 +106,11 @@ const StakeLPForm: React.FC<DepositModalProps> = ({
           ) : (
             <>
               {Number(fullBalance) >= Number(val) && Number(fullBalance) > 0 ? (
-                <StyledButton color='red' tokenBalance={val} scale="md" disabled={!canStake} onClick={handleStake}>
+                <StyledButton color="red" tokenBalance={val} scale="md" disabled={!canStake} onClick={handleStake}>
                   {renderText()}
                 </StyledButton>
               ) : (
-                <StyledButton color='red' tokenBalance={val} scale="md" disabled={pendingTx} onClick={handleGetPefi}>
+                <StyledButton color="red" tokenBalance={val} scale="md" disabled={pendingTx} onClick={handleGetPefi}>
                   {renderText()}
                 </StyledButton>
               )}

@@ -22,12 +22,7 @@ interface DepositModalProps {
 
 const inputRegex = RegExp(`^\\d*(?:\\\\[.])?\\d*$`)
 
-const UnstakeLPForm: React.FC<DepositModalProps> = ({
-  max,
-  onConfirm,
-  tokenName = '',
-  account
-}) => {
+const UnstakeLPForm: React.FC<DepositModalProps> = ({ max, onConfirm, tokenName = '', account }) => {
   const [val, setVal] = useState('')
   const [pendingTx, setPendingTx] = useState(false)
   const TranslateString = useI18n()
@@ -76,7 +71,9 @@ const UnstakeLPForm: React.FC<DepositModalProps> = ({
   return (
     <>
       <div>
-        <Text color='textDisabled' fontSize='14px'>LP Token Amount</Text>
+        <Text color="textDisabled" fontSize="14px">
+          LP Token Amount
+        </Text>
         <TokenInput
           value={roundDown(val, 2)}
           onSelectMax={handleSelectMax}
@@ -87,11 +84,11 @@ const UnstakeLPForm: React.FC<DepositModalProps> = ({
       </div>
       <Flex mt="16px">
         {!account && <StyledUnlockButton />}
-        {account &&
-          <StyledButton color='red' tokenBalance={val} scale="md" disabled={!canUnStake} onClick={handleConfirm}>
+        {account && (
+          <StyledButton color="red" tokenBalance={val} scale="md" disabled={!canUnStake} onClick={handleConfirm}>
             {renderText()}
           </StyledButton>
-        }
+        )}
       </Flex>
     </>
   )

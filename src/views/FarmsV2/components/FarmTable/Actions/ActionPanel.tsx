@@ -9,7 +9,7 @@ import { getTokenLogoFromSymbol } from 'utils/token'
 import Balance from 'components/Balance'
 import { FarmCardProps } from '../../types'
 import StakePanel from './StakePanel'
-import AutoNesting from './AutoNesting';
+import AutoNesting from './AutoNesting'
 
 const expandAnimation = keyframes`
   from {
@@ -53,11 +53,11 @@ const Container = styled.div<{ expanded }>`
   }
 `
 
-const ActionCard = styled(Card)<{ minWidth?: number}>`
+const ActionCard = styled(Card)<{ minWidth?: number }>`
   border-radius: 16px;
   overflow: unset;
   min-width: ${({ minWidth }) => minWidth && `${minWidth}px`};
-`;
+`
 
 const RewardImage = styled.img<{ size: number; ml?: number }>`
   height: ${({ size }) => size}px;
@@ -90,9 +90,9 @@ const StyledBalance = styled(Balance)`
 
 const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, expanded }) => {
   const { getTokenLogo, getTokenSymbol } = useAssets()
-  const [allocation, setAllocation] = useState(50);
+  const [allocation, setAllocation] = useState(50)
   const { isXl, isLg } = useMatchBreakpoints()
-  const isMobile = !isXl;
+  const isMobile = !isXl
   const { pendingTokens, userData } = farm
   const userPendingTokens = userData ? userData.userPendingTokens : []
   const userShares = userData ? getBalanceNumber(userData.userShares) : 0
@@ -109,10 +109,10 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, expanded })
 
   return (
     <Container expanded={expanded}>
-      <ActionCard padding='10px 16px' mr={!isMobile && '8px'} mb='16px'>
+      <ActionCard padding="10px 16px" mr={!isMobile && '8px'} mb="16px">
         <StakePanel {...farm} />
       </ActionCard>
-      <ActionCard padding='10px 16px' mr={!isMobile && '8px'} mb='16px' minWidth={300}>
+      <ActionCard padding="10px 16px" mr={!isMobile && '8px'} mb="16px" minWidth={300}>
         <Flex>
           <EarningsContainer>
             <Text fontSize="20px" color="textSubtle" bold lineHeight={1} mb="8px">
@@ -201,6 +201,6 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, expanded })
       </Flex>
     </Container>
   )
-};
+}
 
 export default ActionPanel

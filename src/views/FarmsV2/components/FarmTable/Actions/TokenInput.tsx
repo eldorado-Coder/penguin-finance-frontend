@@ -11,11 +11,7 @@ interface TokenInputProps extends InputProps {
   onSelectMax?: () => void
 }
 
-const TokenInput: React.FC<TokenInputProps> = ({
-  value,
-  onChange,
-  onSelectMax,
-}) => {
+const TokenInput: React.FC<TokenInputProps> = ({ value, onChange, onSelectMax }) => {
   const TranslateString = useI18n()
   return (
     <StyledTokenInput>
