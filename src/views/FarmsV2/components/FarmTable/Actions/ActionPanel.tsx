@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import BigNumber from 'bignumber.js'
 import styled, { keyframes, css } from 'styled-components'
-import { Card, Text, Button, Flex } from 'penguinfinance-uikit2'
+import { Card, Text, Button, Flex, useMatchBreakpoints } from 'penguinfinance-uikit2'
 import { WEEKS_PER_YEAR } from 'config'
 import useAssets from 'hooks/useAssets'
 import { getBalanceNumber } from 'utils/formatBalance'
@@ -90,6 +90,9 @@ const StyledBalance = styled(Balance)`
 
 const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, expanded }) => {
   const { getTokenLogo, getTokenSymbol } = useAssets()
+  const [allocation, setAllocation] = useState(50);
+  const { isXl, isLg } = useMatchBreakpoints()
+  const isMobile = !isXl;
   const { pendingTokens, userData } = farm
   const userPendingTokens = userData ? userData.userPendingTokens : []
   const userShares = userData ? getBalanceNumber(userData.userShares) : 0
@@ -106,42 +109,10 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, expanded })
 
   return (
     <Container expanded={expanded}>
-      <Flex flexDirection="column" mr="8px" mb="16px">
-        <ActionCard padding="10px 16px">
-          <Flex>
-            <Flex flexDirection="column" justifyContent="space-between">
-              <Text fontSize="20px" color="textSubtle" bold>
-                Your Rewards
-              </Text>
-              <StyledButton color="primary" scale="sm">
-                Harvest
-              </StyledButton>
-            </Flex>
-            <Flex alignItems="center" justifyContent="space-around" ml="40px">
-              {pendingTokens.map((pendingToken) => {
-                const rewardTokenInfo = userPendingTokens.find((row) => row.address === pendingToken)
-                const amount = rewardTokenInfo ? Number(rewardTokenInfo.amount) : 0
-                return (
-                  <Flex flexDirection="column">
-                    <RewardImage src={getTokenLogo(pendingToken)} alt="penguin" size={50} />
-                    <StyledBalance
-                      fontSize="14px"
-                      color="textSubtle"
-                      fontWeight="400"
-                      suffix={` ${getTokenSymbol(pendingToken)}`}
-                      value={getBalanceNumber(new BigNumber(amount))}
-                    />
-                  </Flex>
-                )
-              })}
-            </Flex>
-          </Flex>
-        </ActionCard>
-        <ActionCard padding="10px 16px" mt="8px">
-          <AutoNesting />
-        </ActionCard>
-      </Flex>
-      <ActionCard padding="10px 16px" mr="8px" mb="16px">
+      <ActionCard padding='10px 16px' mr={!isMobile && '8px'} mb='16px'>
+        <StakePanel {...farm} />
+      </ActionCard>
+      <ActionCard padding='10px 16px' mr={!isMobile && '8px'} mb='16px' minWidth={300}>
         <Flex>
           <EarningsContainer>
             <Text fontSize="20px" color="textSubtle" bold lineHeight={1} mb="8px">
@@ -193,9 +164,41 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, expanded })
           <RewardImage src={lpLogo} alt="igloo-stats" size={56} />
         </Flex>
       </ActionCard>
-      <ActionCard padding="10px 16px" mb="16px">
-        <StakePanel {...farm} />
-      </ActionCard>
+      <Flex flexDirection="column" mb="16px">
+        <ActionCard padding="10px 16px">
+          <Flex>
+            <Flex flexDirection="column" justifyContent="space-between">
+              <Text fontSize="20px" color="textSubtle" bold>
+                Your Rewards
+              </Text>
+              <StyledButton color="primary" scale="sm">
+                Harvest
+              </StyledButton>
+            </Flex>
+            <Flex alignItems="center" justifyContent="space-around" ml="40px">
+              {pendingTokens.map((pendingToken) => {
+                const rewardTokenInfo = userPendingTokens.find((row) => row.address === pendingToken)
+                const amount = rewardTokenInfo ? Number(rewardTokenInfo.amount) : 0
+                return (
+                  <Flex flexDirection="column">
+                    <RewardImage src={getTokenLogo(pendingToken)} alt="penguin" size={50} />
+                    <StyledBalance
+                      fontSize="14px"
+                      color="textSubtle"
+                      fontWeight="400"
+                      suffix={` ${getTokenSymbol(pendingToken)}`}
+                      value={getBalanceNumber(new BigNumber(amount))}
+                    />
+                  </Flex>
+                )
+              })}
+            </Flex>
+          </Flex>
+        </ActionCard>
+        <ActionCard padding="10px 16px" mt="8px">
+          <AutoNesting currentAllocation={allocation} onUpdateAllocation={setAllocation} />
+        </ActionCard>
+      </Flex>
     </Container>
   )
 };
