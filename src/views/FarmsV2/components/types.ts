@@ -44,9 +44,9 @@ export const DesktopColumnSchema: ColumnsDefTypes[] = [
   },
   {
     id: 2,
-    name: 'earned',
+    name: 'staked',
     sortable: true,
-    label: 'Earned',
+    label: 'Your Stake',
   },
   {
     id: 3,
@@ -86,4 +86,5 @@ export interface FarmCardProps {
   ethPrice?: BigNumber
   account?: string
   expanded?: boolean
+  lpPrice?: number
 }
