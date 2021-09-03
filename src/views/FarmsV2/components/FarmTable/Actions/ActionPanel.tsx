@@ -9,19 +9,20 @@ import { getTokenLogoFromSymbol } from 'utils/token'
 import Balance from 'components/Balance'
 import { FarmCardProps } from '../../types'
 import StakePanel from './StakePanel'
+import AutoNesting from './AutoNesting';
 
 const expandAnimation = keyframes`
   from {
     max-height: 0px;
   }
   to {
-    max-height: 500px;
+    max-height: 1000px;
   }
 `
 
 const collapseAnimation = keyframes`
   from {
-    max-height: 500px;
+    max-height: 1000px;
   }
   to {
     max-height: 0px;
@@ -41,19 +42,22 @@ const Container = styled.div<{ expanded }>`
   background: ${({ theme }) => (theme.isDark ? '#121021' : theme.colors.background)};
   display: flex;
   width: 100%;
-  flex-direction: column-reverse;
+  flex-direction: column;
   padding: 16px 16px 0;
+  overflow: auto;
 
-  ${({ theme }) => theme.mediaQueries.lg} {
+  ${({ theme }) => theme.mediaQueries.xl} {
     flex-direction: row;
     justify-content: space-between;
     padding: 16px 16px 0;
   }
 `
 
-const ActionCard = styled(Card)`
+const ActionCard = styled(Card)<{ minWidth?: number}>`
   border-radius: 16px;
-`
+  overflow: unset;
+  min-width: ${({ minWidth }) => minWidth && `${minWidth}px`};
+`;
 
 const RewardImage = styled.img<{ size: number; ml?: number }>`
   height: ${({ size }) => size}px;
@@ -134,17 +138,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, expanded })
           </Flex>
         </ActionCard>
         <ActionCard padding="10px 16px" mt="8px">
-          <Flex alignItems="center" justifyContent="space-between">
-            <Text fontSize="20px" color="textSubtle" bold>
-              iPEFI Auto-Nesting
-            </Text>
-            <Text fontSize="12px" color="textDisabled">
-              Current Allocation: 50%
-            </Text>
-            <StyledButton color="primary" scale="sm">
-              Modify
-            </StyledButton>
-          </Flex>
+          <AutoNesting />
         </ActionCard>
       </Flex>
       <ActionCard padding="10px 16px" mr="8px" mb="16px">
@@ -204,6 +198,6 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, expanded })
       </ActionCard>
     </Container>
   )
-}
+};
 
 export default ActionPanel
