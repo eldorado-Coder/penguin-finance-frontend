@@ -9,7 +9,6 @@ import SvgIcon from 'components/SvgIcon'
 import { useV2NestContract } from 'hooks/useContract'
 import useI18n from 'hooks/useI18n'
 import { getBalanceNumber, getNumberWithCommas } from 'utils/formatBalance'
-import { useV2NestApy, useV2NestAprPerDay } from 'state/hooks'
 import { Pool } from 'state/types'
 import Card from './Card'
 
@@ -69,8 +68,8 @@ const V2PoolCard: React.FC<Props> = ({ pool }) => {
   const stakedBalance = new BigNumber(userData?.stakedBalance || 0)
   const accountHasStakedBalance = stakedBalance?.toNumber() > 0
   const isCardActive = isFinished && accountHasStakedBalance
-  const displayedNestApy = (useV2NestApy() * 100).toFixed(2)
-  const displayedNestDailyApr = useV2NestAprPerDay().toFixed(2)
+  const displayedNestApy = (pool.apy.toNumber() * 100).toFixed(2)
+
   const { isXl } = useMatchBreakpoints()
   const isMobile = !isXl
 

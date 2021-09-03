@@ -45,7 +45,7 @@ const Row = styled.div`
 `
 
 interface PoolWithApy extends Pool {
-  apy: BigNumber
+  apy?: BigNumber
 }
 
 interface HarvestProps {

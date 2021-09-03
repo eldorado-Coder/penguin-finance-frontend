@@ -12,6 +12,8 @@ import useUserSetting from 'hooks/useUserSetting'
 import useInterval from 'hooks/useInterval'
 import { DAYS_PER_YEAR, CURRENT_NEST_DAILY_REWARDS, CURRENT_V2_NEST_DAILY_REWARDS } from 'config'
 import { getBalanceNumber } from 'utils/formatBalance'
+import { getV2NestApy } from 'utils/apyHelpers'
+
 import {
   fetchMasterChefPefiPerBlock,
   fetchFarmsPublicDataAsync,
@@ -498,7 +500,12 @@ export const useV2Pools = (account): Pool[] => {
   }, [account, dispatch, fastRefresh])
 
   const pools = useSelector((state: State) => state.v2Pools.data)
-  return pools
+  return pools.map((pool) => {
+    return {
+      ...pool,
+      apy: new BigNumber(getV2NestApy(pool.dailyApr)),
+    }
+  })
 }
 
 // v2 igloos
