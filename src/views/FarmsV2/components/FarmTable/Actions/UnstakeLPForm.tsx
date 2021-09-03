@@ -70,9 +70,9 @@ const UnstakeLPForm: React.FC<DepositModalProps> = ({ max, onConfirm, tokenName 
 
   return (
     <>
-      <div>
+      <InputContainer>
         <Text color="textDisabled" fontSize="14px">
-          LP Token Amount
+          {`LP Staked Balance: ${Number(fullBalance).toFixed(2)}`}
         </Text>
         <TokenInput
           value={roundDown(val, 2)}
@@ -81,29 +81,41 @@ const UnstakeLPForm: React.FC<DepositModalProps> = ({ max, onConfirm, tokenName 
           max={fullBalance}
           symbol={tokenName}
         />
-      </div>
-      <Flex mt="16px">
+      </InputContainer>
+      <ActionContainer>
         {!account && <StyledUnlockButton />}
         {account && (
           <StyledButton color="red" tokenBalance={val} scale="md" disabled={!canUnStake} onClick={handleConfirm}>
             {renderText()}
           </StyledButton>
         )}
-      </Flex>
+      </ActionContainer>
     </>
   )
 }
+
+const InputContainer = styled.div`
+  width: 100%;
+  margin-top: 16px;
+`
+
+const ActionContainer = styled.div`
+  width: 100%;
+  margin-top: 32px;
+`
 
 const StyledButton = styled(Button)<{ tokenBalance?: string }>`
   border-radius: 16px;
   height: 40px;
   font-weight: 400;
+  width: 100%;
 `
 
 const StyledUnlockButton = styled(UnlockButton)`
   border-radius: 16px;
   height: 40px;
   font-weight: 400;
+  width: 100%;
 `
 
 export default UnstakeLPForm

@@ -54,9 +54,6 @@ const Staked: React.FunctionComponent<FarmWithStakedValue> = ({ pid, lpSymbol, l
           </ButtonMenu>
         </TabWrapper>
       </Flex>
-      <Text fontSize="14px" mb="8px">
-        Deposit fee: 0% | Withdrawal fee: 0%
-      </Text>
       {activeTab === 0 ? (
         <StakeLPForm
           max={tokenBalance}
