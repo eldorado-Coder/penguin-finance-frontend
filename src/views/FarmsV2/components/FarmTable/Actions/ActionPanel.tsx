@@ -10,9 +10,18 @@ import useTheme from 'hooks/useTheme'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { getTokenLogoFromSymbol } from 'utils/token'
 import Balance from 'components/Balance'
+import tokens from 'config/constants/tokens'
+import { getAddress } from 'utils/addressHelpers'
+import { usePricePefiUsdt, usePricePngUsdt, useV2Pools } from 'state/hooks'
 import { FarmCardProps } from '../../types'
 import StakePanel from './StakePanel'
 import AutoNesting from './AutoNesting'
+
+const getIPefiToPefiRatio = (pool) => {
+  return pool.totalStaked && pool.totalSupply
+    ? new BigNumber(pool.totalStaked).div(new BigNumber(pool.totalSupply)).toJSON()
+    : 1
+}
 
 const expandAnimation = keyframes`
   from {
@@ -60,7 +69,7 @@ const ActionCard = styled(Card)<{ minWidth?: number }>`
   border-radius: 16px;
   overflow: unset;
   min-width: ${({ minWidth }) => minWidth && `${minWidth}px`};
-  
+
   filter: ${({ theme }) => theme.card.dropShadow};
 `
 
@@ -122,13 +131,19 @@ const BalanceWrapper = styled.div`
 
 const Title = styled(Text)`
   color: ${({ theme }) => theme.colors.red};
-`;
+`
 
 const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, expanded }) => {
   const [pendingTx, setPendingTx] = useState(false)
   const { getTokenLogo, getTokenSymbol } = useAssets()
   const { onHarvest } = useV2Harvest(farm.pid)
   const { account } = useWeb3React()
+  const v2Pools = useV2Pools(account)
+  const v2Nest = v2Pools.length > 0 ? v2Pools[0] : null
+  const pefiPriceUsd = usePricePefiUsdt().toNumber()
+  const pngPriceUsd = usePricePngUsdt().toNumber()
+  const iPefiToPefiRatio = Number(getIPefiToPefiRatio(v2Nest))
+  const iPefiPriceUsd = iPefiToPefiRatio * pefiPriceUsd
 
   const { isXl, isLg } = useMatchBreakpoints()
   const isMobile = !isXl
@@ -158,6 +173,14 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
     } catch (error) {
       setPendingTx(false)
     }
+  }
+
+  const getTokenPrice = (address) => {
+    const rewardToken = tokens.find((row) => getAddress(row.address) === address)
+    if (rewardToken && rewardToken.symbol === 'PEFI') return pefiPriceUsd
+    if (rewardToken && rewardToken.symbol === 'iPEFI') return iPefiPriceUsd
+    if (rewardToken && rewardToken.symbol === 'PNG') return pngPriceUsd
+    return 1
   }
 
   return (
@@ -231,6 +254,8 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
               {pendingTokens.map((pendingToken) => {
                 const rewardTokenInfo = userPendingTokens.find((row) => row.address === pendingToken)
                 const amount = rewardTokenInfo ? Number(rewardTokenInfo.amount) : 0
+                const amountInUsd = getTokenPrice(pendingToken) * amount
+
                 return (
                   <Flex flexDirection="column" alignItems="center" mr="8px" ml="8px">
                     <RewardImage src={getTokenLogo(pendingToken)} alt="penguin" size={50} />
@@ -248,7 +273,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
                         fontSize="10px"
                         fontWeight="400"
                         prefix="$"
-                        value={getBalanceNumber(new BigNumber(amount))}
+                        value={getBalanceNumber(new BigNumber(amountInUsd))}
                       />
                     </UsdBalanceWrapper>
                   </Flex>
