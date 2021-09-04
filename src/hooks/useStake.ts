@@ -11,9 +11,17 @@ import {
   updateV2PoolUserStakedBalance,
   updateV2PoolUserBalance,
   fetchV2PoolsPublicDataAsync,
+  fetchV2FarmUserDataAsync,
 } from 'state/actions'
-import { stake, sousStake, sousStakeBnb, launchpadStake } from 'utils/callHelpers'
-import { useLaunchPad, useMasterchef, useSousChef, useV2SousChef } from './useContract'
+import {
+  stake,
+  sousStake,
+  sousStakeBnb,
+  launchpadStake,
+  // v2
+  v2FarmStake,
+} from 'utils/callHelpers'
+import { useLaunchPad, useMasterchef, useSousChef, useV2SousChef, useV2MasterChef } from './useContract'
 
 const useStake = (pid: number, type?: string) => {
   const dispatch = useDispatch()
@@ -75,10 +83,7 @@ export const useLaunchpadStake = () => {
   return { onStake: handleStake }
 }
 
-export default useStake
-
 // v2
-
 export const useV2SousStake = (sousId, isUsingBnb = false) => {
   const dispatch = useDispatch()
   const { account } = useWeb3React()
@@ -105,3 +110,23 @@ export const useV2SousStake = (sousId, isUsingBnb = false) => {
 
   return { onStake: handleStake }
 }
+
+// v2 igloos
+export const useV2Stake = (pid: number, type?: string) => {
+  const dispatch = useDispatch()
+  const { account } = useWeb3React()
+  const v2MasterChefContract = useV2MasterChef(type)
+
+  const handleStake = useCallback(
+    async (amount: string, to?: string) => {
+      const txHash = await v2FarmStake(v2MasterChefContract, pid, amount, to, account)
+      dispatch(fetchV2FarmUserDataAsync(account))
+      console.info(txHash)
+    },
+    [account, dispatch, v2MasterChefContract, pid],
+  )
+
+  return { onStake: handleStake }
+}
+
+export default useStake

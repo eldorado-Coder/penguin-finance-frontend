@@ -4,18 +4,13 @@ import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
 import { useWeb3React } from '@web3-react/core'
 import { Card, Flex, Text, Button, useMatchBreakpoints } from 'penguinfinance-uikit2'
-import { SECONDS_PER_YEAR } from 'config'
 import orderBy from 'lodash/orderBy'
 import partition from 'lodash/partition'
 import { getBalanceNumber, getNumberWithCommas } from 'utils/formatBalance'
-import priceToBnb from 'utils/priceToBnb'
-import useBlock from 'hooks/useBlock'
 import useTokenBalance from 'hooks/useTokenBalance'
-import useBlockGenerationTime from 'hooks/useBlockGenerationTime'
 import useUserSetting from 'hooks/useUserSetting'
 import { useV2NestContract } from 'hooks/useContract'
-import { useFarms, usePriceAvaxUsdt, useV2Pools, usePriceEthAvax, useV2NestApy, useV2NestAprPerDay } from 'state/hooks'
-import { PoolCategory } from 'config/constants/types'
+import { useV2Pools } from 'state/hooks'
 import { getFirstStakeTime } from 'subgraph/utils'
 import { getPefiAddress } from 'utils/addressHelpers'
 import roundDown from 'utils/roundDown'
@@ -28,50 +23,12 @@ const NestV2: React.FC = () => {
   const { refreshRate } = useUserSetting()
   const { path } = useRouteMatch()
   const { account } = useWeb3React()
-  const farms = useFarms()
-  // const pools = usePools(account)
   const pools = useV2Pools(account)
-  const avaxPriceUSD = usePriceAvaxUsdt()
-  const ethPriceBnb = usePriceEthAvax()
-  const block = useBlock()
-  const AVAX_BLOCK_TIME = useBlockGenerationTime()
   const iPefiContract = useV2NestContract()
   const { isXl } = useMatchBreakpoints()
   const isMobile = !isXl
-  const displayedNestApy = (useV2NestApy() * 100).toFixed(2)
-  const displayedNestDailyApr = useV2NestAprPerDay().toFixed(2)
-  const BLOCKS_PER_YEAR = new BigNumber(SECONDS_PER_YEAR).div(new BigNumber(AVAX_BLOCK_TIME))
 
-  const poolsWithApy = pools.map((pool) => {
-    const isBnbPool = pool.poolCategory === PoolCategory.BINANCE
-    const rewardTokenFarm = farms.find((f) => f.tokenSymbol === pool.tokenName)
-    const stakingTokenFarm = farms.find((s) => s.tokenSymbol === pool.stakingTokenName)
-
-    // TODO: tmp mulitplier to support ETH farms. Will be removed after the price api
-    const tempMultiplier = stakingTokenFarm?.quoteTokenSymbol === 'ETH' ? ethPriceBnb : 1
-
-    const stakingTokenPriceInAVAX = isBnbPool
-      ? new BigNumber(1)
-      : new BigNumber(stakingTokenFarm?.tokenPriceVsQuote).times(tempMultiplier)
-    const rewardTokenPriceInAVAX = priceToBnb(
-      pool.tokenName,
-      rewardTokenFarm?.tokenPriceVsQuote,
-      rewardTokenFarm?.quoteTokenSymbol,
-      avaxPriceUSD,
-    )
-
-    const totalRewardPricePerYear = rewardTokenPriceInAVAX.times(pool.tokenPerBlock).times(BLOCKS_PER_YEAR)
-    const totalStakingTokenInPool = stakingTokenPriceInAVAX.times(getBalanceNumber(pool.totalStaked))
-    const apy = totalRewardPricePerYear.div(totalStakingTokenInPool).times(100)
-
-    return {
-      ...pool,
-      isFinished: pool.sousId === 0 ? false : pool.isFinished || block > pool.endBlock,
-      apy,
-    }
-  })
-
-  const [finishedPools, openPools] = partition(poolsWithApy, (pool) => pool.isFinished)
+  const [finishedPools, openPools] = partition(pools, (pool) => pool.isFinished)
 
   const fetchUserFirstStakeTime = useCallback(async () => {
     const firstStakeTime = await getFirstStakeTime(account)
@@ -112,6 +69,7 @@ const NestV2: React.FC = () => {
   const xPefiToPefiRatio = getXPefiToPefiRatio()
   const stakedBalance = new BigNumber(openPools[0].userData?.stakedBalance || 0)
   const pefiBalance = useTokenBalance(getPefiAddress())
+  const displayedNestApy = (openPools[0].apy.toNumber() * 100).toFixed(2)
 
   return (
     <Flex justifyContent="center">
@@ -148,22 +106,28 @@ const NestV2: React.FC = () => {
             </Route>
           </LeftCardsContainer>
           <BalanceCard padding="16px 24px 32px" mb="16px">
-            <Flex flexDirection={isMobile ? 'row' : 'column'} justifyContent='space-between'>
+            <Flex flexDirection={isMobile ? 'row' : 'column'} justifyContent="space-between">
               <div>
                 <BalanceLabel>Balance</BalanceLabel>
                 <Flex mt="4px" alignItems="center">
-                  <CardImage isMobile={isMobile} src="/images/pools/iPefi.svg" alt="ipefi logo" width={64} height={64} />
+                  <CardImage
+                    isMobile={isMobile}
+                    src="/images/pools/iPefi.svg"
+                    alt="ipefi logo"
+                    width={64}
+                    height={64}
+                  />
                   <Flex flexDirection="column">
                     <Balance>
                       <CardValue
                         className="balance"
-                        fontSize={isMobile ? '22px' : "24px"}
+                        fontSize={isMobile ? '22px' : '24px'}
                         value={roundDown(getBalanceNumber(stakedBalance), 2)}
                         decimals={2}
                         lineHeight="1"
                       />
                     </Balance>
-                    <BalanceText fontSize={isMobile ? '18px' : "20px"} fontWeight={300} lineHeight="1.4">
+                    <BalanceText fontSize={isMobile ? '18px' : '20px'} fontWeight={300} lineHeight="1.4">
                       iPEFI
                     </BalanceText>
                     <BalanceTextSmall>
@@ -181,20 +145,26 @@ const NestV2: React.FC = () => {
                 </Flex>
               </div>
               <div>
-                <BalanceLabel mt={!isMobile && "24px"}>Unstaked</BalanceLabel>
+                <BalanceLabel mt={!isMobile && '24px'}>Unstaked</BalanceLabel>
                 <Flex mt="4px" alignItems="center">
-                  <CardImage isMobile={isMobile} src="/images/penguin-finance-logo.svg" alt="penguin logo" width={64} height={64} />
+                  <CardImage
+                    isMobile={isMobile}
+                    src="/images/penguin-finance-logo.svg"
+                    alt="penguin logo"
+                    width={64}
+                    height={64}
+                  />
                   <Flex flexDirection="column">
                     <Balance>
                       <CardValue
                         className="balance"
-                        fontSize={isMobile ? '22px' : "24px"}
+                        fontSize={isMobile ? '22px' : '24px'}
                         value={account ? roundDown(getBalanceNumber(pefiBalance), 2) : 0}
                         decimals={2}
                         lineHeight="1"
                       />
                     </Balance>
-                    <BalanceText fontSize={isMobile ? '18px' : "20px"} fontWeight={300} lineHeight="1.4">
+                    <BalanceText fontSize={isMobile ? '18px' : '20px'} fontWeight={300} lineHeight="1.4">
                       PEFI
                     </BalanceText>
                     <BalanceTextSmall>
@@ -285,10 +255,10 @@ const APYLabel = styled(Text)`
   font-weight: 400;
 `
 
-const CardImage = styled.img<{ isMobile ?: boolean }>`
-  margin-right: ${({ isMobile }) => isMobile ? '8px' : '12px'};
-  width: ${({ isMobile }) => isMobile ? '56px' : '72px'};
-  height: ${({ isMobile }) => isMobile ? '56px' : '72px'};
+const CardImage = styled.img<{ isMobile?: boolean }>`
+  margin-right: ${({ isMobile }) => (isMobile ? '8px' : '12px')};
+  width: ${({ isMobile }) => (isMobile ? '56px' : '72px')};
+  height: ${({ isMobile }) => (isMobile ? '56px' : '72px')};
 `
 
 const Balance = styled.div`

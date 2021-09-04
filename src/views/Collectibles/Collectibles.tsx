@@ -28,7 +28,7 @@ const Collectibles = () => {
     <NFTPage>
       <PageBgContainer />
       <img
-        src={`${process.env.PUBLIC_URL}/images/nfts/${isDark ? 'BannerNightNFTs' : 'NFTBannerAnimated'}.gif`}
+        src={`${process.env.PUBLIC_URL}/images/nfts/${isDark ? 'nft-banner-dark' : 'nft-banner-light'}.svg`}
         alt="ntf banner"
       />
       <NftList />

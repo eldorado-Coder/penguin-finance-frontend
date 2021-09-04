@@ -44,9 +44,9 @@ export const DesktopColumnSchema: ColumnsDefTypes[] = [
   },
   {
     id: 2,
-    name: 'earned',
+    name: 'staked',
     sortable: true,
-    label: 'Earned',
+    label: 'Your Stake',
   },
   {
     id: 3,
@@ -62,9 +62,9 @@ export const DesktopColumnSchema: ColumnsDefTypes[] = [
   },
   {
     id: 5,
-    name: 'multiplier',
+    name: 'rewards',
     sortable: true,
-    label: 'Multiplier',
+    label: 'Rewards',
   },
   {
     id: 6,
@@ -73,7 +73,6 @@ export const DesktopColumnSchema: ColumnsDefTypes[] = [
     label: '',
   },
 ]
-
 
 export interface FarmWithStakedValue extends FarmTypes {
   apy?: BigNumber
@@ -85,6 +84,7 @@ export interface FarmCardProps {
   pefiPrice?: BigNumber
   avaxPrice?: BigNumber
   ethPrice?: BigNumber
-  account?: string,
+  account?: string
   expanded?: boolean
+  lpPrice?: number
 }

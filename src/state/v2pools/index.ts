@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
 import v2poolsConfig from 'config/constants/v2pools'
-import { fetchPoolsTotalStaking } from './fetchPools'
+import { fetchPoolsTotalStaking, fetchPoolsDailyAprs } from './fetchPools'
 import {
   fetchPoolsAllowance,
   fetchUserBalances,
@@ -45,12 +45,14 @@ export const { setPoolsPublicData, setPoolsUserData, updatePoolsUserData } = V2P
 export const fetchPoolsPublicDataAsync = () => async (dispatch) => {
   // const blockLimits = await fetchPoolsBlockLimits()
   const totalStakings = await fetchPoolsTotalStaking()
+  const dailyAprs = await fetchPoolsDailyAprs()
   const liveData = v2poolsConfig.map((pool) => {
-    // const blockLimit = blockLimits.find((entry) => entry.sousId === pool.sousId)
     const totalStaking = totalStakings.find((entry) => entry.sousId === pool.sousId)
+    const dailyAprItem = dailyAprs.find((entry) => entry.sousId === pool.sousId)
+
     return {
-      // ...blockLimit,
       ...totalStaking,
+      dailyApr: dailyAprItem.dailyApr,
     }
   })
 

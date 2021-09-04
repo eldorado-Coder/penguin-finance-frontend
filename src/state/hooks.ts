@@ -12,6 +12,8 @@ import useUserSetting from 'hooks/useUserSetting'
 import useInterval from 'hooks/useInterval'
 import { DAYS_PER_YEAR, CURRENT_NEST_DAILY_REWARDS, CURRENT_V2_NEST_DAILY_REWARDS } from 'config'
 import { getBalanceNumber } from 'utils/formatBalance'
+import { getV2NestApy } from 'utils/apyHelpers'
+
 import {
   fetchMasterChefPefiPerBlock,
   fetchFarmsPublicDataAsync,
@@ -27,12 +29,18 @@ import {
   push as pushToast,
   remove as removeToast,
   clear as clearToast,
-  // v2
+
+  /*
+   * v2
+   */
+  // nest migrator
+  fetchNestMigratorUserDataAsync,
   // nest
   fetchV2PoolsPublicDataAsync,
   fetchV2PoolsUserDataAsync,
-  // nest migrator
-  fetchNestMigratorUserDataAsync,
+  // pools
+  fetchV2MasterChefPefiPerBlock,
+  fetchV2FarmsPublicDataAsync,
 } from './actions'
 import {
   State,
@@ -68,7 +76,10 @@ export const useFetchPublicData = () => {
     dispatch(fetchLpsPublicDataAsync())
     // POOL REMOVAL
     dispatch(fetchPoolsPublicDataAsync())
+    // v2
     dispatch(fetchV2PoolsPublicDataAsync())
+    dispatch(fetchV2MasterChefPefiPerBlock())
+    dispatch(fetchV2FarmsPublicDataAsync())
   }, [dispatch, slowRefresh])
 }
 
@@ -168,19 +179,6 @@ export const usePools = (account): Pool[] => {
   }, [account, dispatch, fastRefresh])
 
   const pools = useSelector((state: State) => state.pools.data)
-  return pools
-}
-
-export const useV2Pools = (account): Pool[] => {
-  const { fastRefresh } = useRefresh()
-  const dispatch = useDispatch()
-  useEffect(() => {
-    if (account) {
-      dispatch(fetchV2PoolsUserDataAsync(account))
-    }
-  }, [account, dispatch, fastRefresh])
-
-  const pools = useSelector((state: State) => state.v2Pools.data)
   return pools
 }
 
@@ -458,8 +456,27 @@ export const useCompoundApy = ({ normalApy, type }: { normalApy: string; type: s
   return normalApy
 }
 
-// v2
-// Pools
+/*
+ * v2
+ */
+// v2 nest APY/APR
+export const useV2NestAprPerDay = (): number => {
+  const v2NestPool = useV2Pools(null)[0]
+
+  const totalStakedInNest = v2NestPool.totalStaked
+  return (CURRENT_V2_NEST_DAILY_REWARDS / getBalanceNumber(totalStakedInNest)) * 100
+}
+
+export const useV2NestApr = (): number => {
+  return (DAYS_PER_YEAR * useV2NestAprPerDay()) / 100
+}
+
+export const useV2NestApy = (dailyApr = 0) => {
+  const staticFee = 0
+  return (1 + dailyApr) ** DAYS_PER_YEAR - 1 + staticFee
+}
+
+// v2 nest migrator
 export const useNestMigrator = (account): NestMigratorState => {
   const { fastRefresh } = useRefresh()
   const dispatch = useDispatch()
@@ -472,19 +489,43 @@ export const useNestMigrator = (account): NestMigratorState => {
   return useSelector((state: State) => state.nestMigrator)
 }
 
-// v1 nest APY/APR
-export const useV2NestAprPerDay = (): number => {
-  const v2NestPool = useV2Pools(null)[0]
+// v2 nest
+export const useV2Pools = (account): Pool[] => {
+  const { fastRefresh } = useRefresh()
+  const dispatch = useDispatch()
+  useEffect(() => {
+    if (account) {
+      dispatch(fetchV2PoolsUserDataAsync(account))
+    }
+  }, [account, dispatch, fastRefresh])
 
-  const totalStakedInNest = v2NestPool.totalStaked
-  return (CURRENT_V2_NEST_DAILY_REWARDS / getBalanceNumber(totalStakedInNest)) * 100
+  const pools = useSelector((state: State) => state.v2Pools.data)
+  return pools.map((pool) => {
+    return {
+      ...pool,
+      apy: new BigNumber(getV2NestApy(pool.dailyApr)),
+    }
+  })
 }
 
-export const useV2NestApr = (): number => {
-  return (DAYS_PER_YEAR * useV2NestAprPerDay()) / 100
+// v2 igloos
+export const useV2Farms = (): Farm[] => {
+  const farms = useSelector((state: State) => state.v2Farms.data)
+  return farms
 }
 
-export const useV2NestApy = () => {
-  const staticFee = 0
-  return (1 + useV2NestApr() / DAYS_PER_YEAR) ** DAYS_PER_YEAR - 1 + staticFee
+export const useV2FarmFromPid = (pid, type): Farm => {
+  const farm = useSelector((state: State) => state.v2Farms.data.find((f) => f.pid === pid && f.type === type))
+  return farm
+}
+
+export const useV2FarmUser = (pid, type) => {
+  const farm = useV2FarmFromPid(pid, type)
+
+  return {
+    allowance: farm.userData ? new BigNumber(farm.userData.allowance) : new BigNumber(0),
+    tokenBalance: farm.userData ? new BigNumber(farm.userData.tokenBalance) : new BigNumber(0),
+    stakedBalance: farm.userData ? new BigNumber(farm.userData.stakedBalance) : new BigNumber(0),
+    earnings: farm.userData ? new BigNumber(farm.userData.earnings) : new BigNumber(0),
+  }
 }

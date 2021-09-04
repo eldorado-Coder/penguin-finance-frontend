@@ -3,6 +3,7 @@ export const AVAX_BLOCK_TIME = 8.2
 export const DAYS_PER_YEAR = 365
 export const WEEKS_PER_YEAR = 52
 export const SECONDS_PER_YEAR = 60 * 60 * 24 * 365
+export const SECONDS_PER_WEEK = 60 * 60 * 24 * 7
 export const PEFI_POOL_PID = 0
 export const BASE_EXCHANGE_URL = 'https://app.pangolin.exchange'
 export const BASE_LYDIA_EXCHANGE_URL = 'https://exchange.lydia.finance/'
@@ -26,6 +27,8 @@ export const SNOWBALL_TOOLTIP_TEXT =
 
 export const COINGECKO_API_ENDPOINT = 'https://api.coingecko.com/api'
 export const ASSET_CONTENT_URL = 'https://raw.githubusercontent.com/Penguin-Finance/assets/master'
+export const ASSET_CONTENT_PANGOLIN_URL =
+  'https://raw.githubusercontent.com/pangolindex/tokenlists/main/defi.tokenlist.json'
 
 // address
 export const NON_ADDRESS = '0x0000000000000000000000000000000000000000'

@@ -9,12 +9,11 @@ import SvgIcon from 'components/SvgIcon'
 import { useV2NestContract } from 'hooks/useContract'
 import useI18n from 'hooks/useI18n'
 import { getBalanceNumber, getNumberWithCommas } from 'utils/formatBalance'
-import { useV2NestApy, useV2NestAprPerDay } from 'state/hooks'
 import { Pool } from 'state/types'
 import Card from './Card'
 
-const StyledCard = styled(Card)<{ isNestPage?: boolean }>`
-  min-width: 350px;
+const StyledCard = styled(Card)<{ isNestPage?: boolean; isMobile?: boolean }>`
+  min-width: ${({ isMobile }) => (isMobile ? '100%' : '350px')};
   border-radius: 32px;
   @media (min-width: 640px) {
     transform: ${(props) => props.isNestPage && 'scale(1.3)'};
@@ -52,18 +51,14 @@ const CardImage = styled.img`
   height: 64px;
 `
 
-interface PoolWithApy extends Pool {
-  apy: BigNumber
-}
-
-interface HarvestProps {
-  pool: PoolWithApy
+interface Props {
+  pool: Pool
   isMainPool: boolean
   isNestPage?: boolean
   isHomePage?: boolean
 }
 
-const V2PoolCard: React.FC<HarvestProps> = ({ pool }) => {
+const V2PoolCard: React.FC<Props> = ({ pool }) => {
   const [handsOnPenalty, setHandsOnPenalty] = useState(6)
   const TranslateString = useI18n()
   const { account } = useWeb3React()
@@ -73,8 +68,8 @@ const V2PoolCard: React.FC<HarvestProps> = ({ pool }) => {
   const stakedBalance = new BigNumber(userData?.stakedBalance || 0)
   const accountHasStakedBalance = stakedBalance?.toNumber() > 0
   const isCardActive = isFinished && accountHasStakedBalance
-  const displayedNestApy = (useV2NestApy() * 100).toFixed(2)
-  const displayedNestDailyApr = useV2NestAprPerDay().toFixed(2)
+  const displayedNestApy = (pool.apy.toNumber() * 100).toFixed(2)
+
   const { isXl } = useMatchBreakpoints()
   const isMobile = !isXl
 
@@ -100,16 +95,20 @@ const V2PoolCard: React.FC<HarvestProps> = ({ pool }) => {
   }
 
   const handleMigrationGuide = () => {
-    const nestMigrationUrl = 'https://penguin-finance.medium.com/introducing-ipefi-the-nest-evolution-d002f8548276'
+    const nestMigrationUrl =
+      'https://docs.penguinfinance.io/summary/penguin-nests-staking-and-fee-collection/ipefi-migration-guide'
     window.open(nestMigrationUrl, '_blank')
   }
 
   const handleViewNestsGitbook = () => {
-    window.open("https://penguin-finance.gitbook.io/penguin-finance/summary/penguin-nests-staking-and-fee-collection", '_blank')
+    window.open(
+      'https://penguin-finance.gitbook.io/penguin-finance/summary/penguin-nests-staking-and-fee-collection',
+      '_blank',
+    )
   }
 
   return (
-    <StyledCard isActive={isCardActive} isFinished={isFinished && sousId !== 0}>
+    <StyledCard isMobile={isMobile} isActive={isCardActive} isFinished={isFinished && sousId !== 0}>
       <CardContent>
         <Flex justifyContent="space-between" mb="24px" alignItems="center">
           <StyledHeading size="xl" color="primary">
@@ -192,10 +191,10 @@ const InfoIconWrapper = styled.div`
   svg {
     cursor: pointer;
     path {
-      fill: ${({ theme }) => theme.isDark ? 'white' : theme.colors.secondary};
+      fill: ${({ theme }) => (theme.isDark ? 'white' : theme.colors.secondary)};
     }
   }
-`;
+`
 
 const StyledButton = styled(Button)`
   background-color: ${({ theme }) => theme.colors.red};

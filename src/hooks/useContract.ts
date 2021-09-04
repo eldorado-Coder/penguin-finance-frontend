@@ -27,6 +27,7 @@ import {
   // v2
   getNestMigratorAddress,
   getV2NestAddress,
+  getV2MasterChefAddress,
 } from 'utils/addressHelpers'
 import getFarmMasterChefAddress from 'utils/getFarmMasterChefAddress'
 import getFarmMasterChefAbi from 'utils/getFarmMasterChefAbi'
@@ -57,6 +58,9 @@ import boosterRocketPefi from 'config/abi/launchpad/pefi.json'
 // v2
 import nestMigratorAbi from 'config/abi/nest_migrate.json'
 import v2NestAbi from 'config/abi/v2_nest.json'
+import v2MasterChef from 'config/abi/v2Masterchef.json'
+import getV2FarmMasterChefAddress from 'utils/getV2FarmMasterChefAddress'
+import getV2FarmMasterChefAbi from 'utils/getV2FarmMasterChefAbi'
 
 const useContract = (abi: AbiItem, address: string, contractOptions?: ContractOptions) => {
   const web3 = useWeb3()
@@ -208,6 +212,16 @@ export const useV2SousChef = (id) => {
   const rawAbi = config.poolCategory === PoolCategory.BINANCE ? sousChefBnb : sousChef
   const abi = (rawAbi as unknown) as AbiItem
   return useContract(abi, getAddress(config.contractAddress))
+}
+
+export const useV2MasterChef = (type?: string) => {
+  let abi = (v2MasterChef as unknown) as AbiItem
+  let v2MasterChefAddress = getV2MasterChefAddress()
+  if (type) {
+    abi = (getV2FarmMasterChefAbi(type) as unknown) as AbiItem
+    v2MasterChefAddress = getV2FarmMasterChefAddress(type)
+  }
+  return useContract(abi, v2MasterChefAddress)
 }
 
 export default useContract

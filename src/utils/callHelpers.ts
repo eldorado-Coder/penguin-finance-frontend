@@ -306,3 +306,39 @@ export const migrateNest = async (nestMigrateContract, account) => {
       return tx.transactionHash
     })
 }
+
+export const v2FarmStake = async (masterChefContract, pid, amount, to, account, gasPrice?: number) => {
+  return masterChefContract.methods
+    .deposit(pid, new BigNumber(amount).times(new BigNumber(10).pow(18)).toString(), to || account)
+    .send({ from: account, gas: gasPrice || 800000 })
+    .on('transactionHash', (tx) => {
+      return tx.transactionHash
+    })
+}
+
+export const v2FarmUnstake = async (masterChefContract, pid, amount, to, account, gasPrice?: number) => {
+  return masterChefContract.methods
+    .withdrawAndHarvest(pid, new BigNumber(amount).times(new BigNumber(10).pow(18)).toString(), to || account)
+    .send({ from: account, gas: gasPrice || 800000 })
+    .on('transactionHash', (tx) => {
+      return tx.transactionHash
+    })
+}
+
+export const v2FarmHarvest = async (masterChefContract, pid, to, account, gasPrice?: number) => {
+  return masterChefContract.methods
+    .harvest(pid, to || account)
+    .send({ from: account, gas: gasPrice || 800000 })
+    .on('transactionHash', (tx) => {
+      return tx.transactionHash
+    })
+}
+
+export const v2FarmSetAutoNestAllocation = async (masterChefContract, amount, account, gasPrice?: number) => {
+  return masterChefContract.methods
+    .setIpefiDistributionBips(amount)
+    .send({ from: account, gas: gasPrice || 300000 })
+    .on('transactionHash', (tx) => {
+      return tx.transactionHash
+    })
+}

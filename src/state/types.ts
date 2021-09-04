@@ -27,7 +27,15 @@ export interface Farm extends FarmConfig {
     stakedReceiptBalance?: BigNumber
     earnings: BigNumber
     pendingXPefi: BigNumber
+    userPendingTokens?: any[]
+    userShares: BigNumber
+    userIpefiDistributionBips?: BigNumber
   }
+  pendingTokens?: any[]
+  totalLp?: BigNumber
+  totalShares?: BigNumber
+  pefiPerYear?: BigNumber
+  maxBips?: number
 }
 
 export interface Lp extends LPConfig {
@@ -46,6 +54,8 @@ export interface Pool extends PoolConfig {
   totalSupply?: BigNumber
   startBlock?: number
   endBlock?: number
+  dailyApr?: number
+  apy?: BigNumber
   userData?: {
     allowance: BigNumber
     stakingTokenBalance: BigNumber
@@ -233,8 +243,9 @@ export interface State {
   boosterRocket: BoosterRocketState
 
   // nest
-  v2Pools: PoolsState
   nestMigrator: NestMigratorState
+  v2Pools: PoolsState
+  v2Farms: FarmsState
 }
 
 // v2
