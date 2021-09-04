@@ -151,6 +151,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
   const userPendingTokens = userData ? userData.userPendingTokens : []
   const userShares = userData ? getBalanceNumber(userData.userShares) : 0
   const userStakedBalance = userData ? getBalanceNumber(userData.stakedBalance) : 0
+  const userStakedBalanceInUsd = userData ? userStakedBalance * lpPrice : 0
   const uesrAutoNestingAllocation = userData ? userData.userIpefiDistributionBips : 0
 
   const totalShares = getBalanceNumber(farm.totalShares)
@@ -202,6 +203,9 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
               suffix={` ${lpSymbol}`}
               value={Number(userStakedBalance)}
             />
+            <UsdBalanceWrapper>
+              <Balance fontSize="10px" fontWeight="400" prefix="$" value={Number(userStakedBalanceInUsd)} />
+            </UsdBalanceWrapper>
             {userSharePercentage > 3 && (
               <Balance
                 fontSize="14px"
@@ -247,7 +251,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
           <RewardImage src={lpLogo} alt="igloo-stats" size={56} />
         </Flex>
       </ActionCard>
-      <Flex flexDirection="column" mb="8px">
+      <Flex flexDirection="column" justifyContent="space-between" mb="8px">
         <ActionCard padding="10px 16px">
           <Flex>
             <Flex alignItems="center" justifyContent="space-around" mr="40px">
