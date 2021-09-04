@@ -58,11 +58,13 @@ const StyledTokenInput = styled.div`
 `
 
 const StyledButton = styled(Button)`
-  height: 28px;
+  height: 24px;
   font-size: 14px;
   font-weight: 400;
   background-color: ${({ theme }) => theme.colors.red};
   color: white;
+  border-radius: 8px;
+  padding: 0 12px;
 `
 
 export default TokenInput

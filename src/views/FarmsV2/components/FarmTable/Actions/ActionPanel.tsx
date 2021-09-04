@@ -46,13 +46,13 @@ const Container = styled.div<{ expanded }>`
   display: flex;
   width: 100%;
   flex-direction: column;
-  padding: 16px 0 0;
+  padding: 8px 8px 0;
   overflow: auto;
 
   ${({ theme }) => theme.mediaQueries.xl} {
     flex-direction: row;
     justify-content: space-between;
-    padding: 16px 0 0;
+    padding: 8px 8px 0;
   }
 `
 
@@ -60,6 +60,8 @@ const ActionCard = styled(Card)<{ minWidth?: number }>`
   border-radius: 16px;
   overflow: unset;
   min-width: ${({ minWidth }) => minWidth && `${minWidth}px`};
+  
+  filter: ${({ theme }) => theme.card.dropShadow};
 `
 
 const RewardImage = styled.img<{ size: number; ml?: number }>`
@@ -89,9 +91,8 @@ const EarningsContainer = styled.div`
 `
 
 const Divider = styled.div`
-  background-color: ${({ theme }) => theme.colors.textSubtle};
-  height: 2px;
-  margin: 16px auto 8px;
+  background-color: ${({ theme }) => theme.colors.background};
+  height: 3px;
   width: 100%;
 `
 
@@ -118,6 +119,10 @@ const BalanceWrapper = styled.div`
     }
   }
 `
+
+const Title = styled(Text)`
+  color: ${({ theme }) => theme.colors.red};
+`;
 
 const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, expanded }) => {
   const [pendingTx, setPendingTx] = useState(false)
@@ -157,15 +162,15 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
 
   return (
     <Container expanded={expanded}>
-      <ActionCard padding="16px 16px 10px" mr={!isMobile && '8px'} mb="16px" minWidth={300}>
+      <ActionCard padding="20px" mr={!isMobile && '8px'} mb="8px">
         <StakePanel {...farm} />
       </ActionCard>
-      <ActionCard padding="16px 16px 10px" mr={!isMobile && '8px'} mb="16px" minWidth={300}>
-        <Flex>
+      <ActionCard mr={!isMobile && '8px'} mb="8px" minWidth={300}>
+        <Flex padding="16px 16px">
           <EarningsContainer>
-            <Text fontSize="20px" color="textSubtle" bold lineHeight={1} mb="8px">
+            <Title fontSize="20px" bold lineHeight={1} mb="8px">
               Your Stake
-            </Text>
+            </Title>
             <Balance
               fontSize="14px"
               color="textSubtle"
@@ -188,11 +193,11 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
           <RewardImage src={lpLogo} alt="pefi-earning" size={56} />
         </Flex>
         <Divider />
-        <Flex>
+        <Flex padding="16px 16px">
           <EarningsContainer>
-            <Text fontSize="20px" color="textSubtle" bold lineHeight={1} mb="8px">
+            <Title fontSize="20px" bold lineHeight={1} mb="8px">
               Igloo Stats
-            </Text>
+            </Title>
             <Balance
               fontSize="14px"
               color="textSubtle"
@@ -219,10 +224,10 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
           <RewardImage src={lpLogo} alt="igloo-stats" size={56} />
         </Flex>
       </ActionCard>
-      <Flex flexDirection="column" mb="16px">
+      <Flex flexDirection="column" mb="8px">
         <ActionCard padding="10px 16px">
-          <Flex justifyContent='space-between'>
-            <Flex alignItems="center" justifyContent="space-around" mr="16px">
+          <Flex>
+            <Flex alignItems="center" justifyContent="space-around" mr="40px">
               {pendingTokens.map((pendingToken) => {
                 const rewardTokenInfo = userPendingTokens.find((row) => row.address === pendingToken)
                 const amount = rewardTokenInfo ? Number(rewardTokenInfo.amount) : 0
