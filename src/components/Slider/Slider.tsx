@@ -60,11 +60,11 @@ const Track = (props, state) => {
 }
 
 const marks = [0, 25, 50, 75, 100]
-const Slider = ({ value, onChange }) => {
+const Slider = ({ value, isDisabled, onChange }) => {
   return (
     <>
       <SliderWrapper>
-        <StyledSlider value={value} renderTrack={Track} renderThumb={Thumb} onChange={onChange} />
+        <StyledSlider value={value} disabled={isDisabled} renderTrack={Track} renderThumb={Thumb} onChange={onChange} />
       </SliderWrapper>
       <Flex justifyContent="space-between" mt="12px">
         {marks.map((mark) => (

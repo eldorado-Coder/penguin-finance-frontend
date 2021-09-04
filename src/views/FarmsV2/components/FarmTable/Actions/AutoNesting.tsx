@@ -69,7 +69,7 @@ const AutoNesting = ({ currentAllocation, maxAllocation }) => {
           Modify
         </StyledButton>
       </Flex>
-      <Slider value={sliderValue} onChange={handleSetAllocation} />
+      <Slider value={sliderValue} isDisabled={!account} onChange={handleSetAllocation} />
     </>
   )
 }
