@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import Sound from 'react-sound'
 import { useWeb3React } from '@web3-react/core'
-import { Text } from 'penguinfinance-uikit2'
+import { Text, useMatchBreakpoints } from 'penguinfinance-uikit2'
 import { useDispatch } from 'react-redux'
 import { fetchEmperor } from 'state/emperor'
 import { useEmperor } from 'state/hooks'
@@ -205,6 +205,8 @@ const Emperor: React.FC = () => {
   const [showJackpot, setShowJackpot] = useState(false)
   const jackpotRef = useRef(jackpot)
   const { isMusic } = useUserSetting()
+  const { isSm } = useMatchBreakpoints()
+
   jackpotRef.current = jackpot
 
   const dispatch = useDispatch()
@@ -282,7 +284,10 @@ const Emperor: React.FC = () => {
     return (
       <>
         <EmperorEndBgContainer>
-          <BlitzImage src="/images/emperor/blitz_end2.png" alt="blitz-img" />
+          <BlitzImage
+            src={isSm ? '/images/emperor/blitz_end2_mobile.png' : '/images/emperor/blitz_end2.png'}
+            alt="blitz-img"
+          />
         </EmperorEndBgContainer>
       </>
     )
