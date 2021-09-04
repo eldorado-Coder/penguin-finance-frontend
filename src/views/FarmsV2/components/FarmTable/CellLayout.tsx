@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 const Label = styled.div`
-  font-size: 12px;
+  font-size: 14px;
   color: ${({ theme }) => (theme.isDark ? '#8F88A0' : '#8F88A0')};
   text-align: left;
 `

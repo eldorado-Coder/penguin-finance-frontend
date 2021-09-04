@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
 import React, { useCallback, useMemo, useState } from 'react'
-import { Button, Flex, Text } from 'penguinfinance-uikit2'
+import { Button, Text } from 'penguinfinance-uikit2'
 import UnlockButton from 'components/UnlockButton'
 import roundDown from 'utils/roundDown'
 import escapeRegExp from 'utils/escapeRegExp'
@@ -71,9 +71,9 @@ const UnstakeLPForm: React.FC<DepositModalProps> = ({ max, onConfirm, tokenName 
   return (
     <>
       <InputContainer>
-        <Text color="textDisabled" fontSize="14px">
+        <LPTokenBalance fontSize="14px">
           {`LP Staked Balance: ${Number(fullBalance).toFixed(2)}`}
-        </Text>
+        </LPTokenBalance>
         <TokenInput
           value={roundDown(val, 2)}
           onSelectMax={handleSelectMax}
@@ -105,17 +105,23 @@ const ActionContainer = styled.div`
 `
 
 const StyledButton = styled(Button)<{ tokenBalance?: string }>`
-  border-radius: 16px;
+  border-radius: 10px;
+  height: 40px;
+  font-weight: 400;
+  width: 100%;
+  background-color: ${({ theme }) => theme.isDark ? theme.colors.red : '#372871'};
+  color: white;
+`
+
+const StyledUnlockButton = styled(UnlockButton)`
+  border-radius: 10px;
   height: 40px;
   font-weight: 400;
   width: 100%;
 `
 
-const StyledUnlockButton = styled(UnlockButton)`
-  border-radius: 16px;
-  height: 40px;
-  font-weight: 400;
-  width: 100%;
-`
+const LPTokenBalance = styled(Text)`
+  color: ${({ theme }) => theme.isDark ? '#bba6dd' : '#b2b2ce'};
+`;
 
 export default UnstakeLPForm

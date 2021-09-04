@@ -26,7 +26,7 @@ const CellInner = styled.div`
   padding-right: 8px;
 
   ${({ theme }) => theme.mediaQueries.xl} {
-    padding-right: 32px;
+    padding-right: 60px;
   }
 `
 
@@ -60,8 +60,8 @@ const TokensWrapper = styled.div`
 `
 
 const PendingTokenLogo = styled.img`
-  width: 30px;
-  height: 30px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   margin: 2px 2px;
 `
@@ -136,7 +136,7 @@ const Row: React.FunctionComponent<FarmCardProps> = (props) => {
                     <CellInner>
                       <CellLayout label="Your Stake">
                         {/* <Earned earnings={stakedBalanceInUsd} pid={farm.pid} userDataReady /> */}
-                        <Balance fontSize="14px" fontWeight="400" prefix="$" value={Number(stakedBalanceInUsd)} />
+                        <Balance fontSize="16px" fontWeight="400" prefix="$" value={Number(stakedBalanceInUsd)} />
                       </CellLayout>
                     </CellInner>
                   </td>
@@ -156,7 +156,7 @@ const Row: React.FunctionComponent<FarmCardProps> = (props) => {
                   <td key={key}>
                     <CellInner>
                       <CellLayout label="Liquidity">
-                        <Balance fontSize="14px" fontWeight="400" prefix="$" value={Number(liquidity)} />
+                        <Balance fontSize="16px" fontWeight="400" prefix="$" value={Number(liquidity)} />
                       </CellLayout>
                     </CellInner>
                   </td>

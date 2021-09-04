@@ -25,7 +25,7 @@ const ArrowIcon = styled(ChevronDownIcon)<{ toggled: boolean }>`
 
 const ArrowDownIcon = styled(ChevronDownIcon)<{ toggled: boolean }>`
   transform: ${({ toggled }) => (toggled ? 'rotate(180deg)' : 'rotate(0)')};
-  fill: ${({ theme }) => (theme.isDark ? '#30264f' : 'white')};
+  fill: white;
 `
 
 const StyledButton = styled(Button)`
@@ -33,7 +33,8 @@ const StyledButton = styled(Button)`
   font-size: 14px;
   padding: 0 24px;
   border-radius: 10px;
-  color: ${({ theme }) => (theme.isDark ? '#30264f' : 'white')};
+  color: white;
+  background-color: ${({ theme }) => theme.colors.red};
 `
 
 const Details: React.FC<DetailsProps> = ({ actionPanelToggled }) => {

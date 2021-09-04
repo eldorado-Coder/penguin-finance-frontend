@@ -42,10 +42,20 @@ const StyledTag = styled(Tag)`
 const MultiplierTag = styled(Tag)`
   height: 20px;
   margin-right: 4px;
+  font-size: 12px;
+  border-radius: 8px;
+  background-color: ${({ theme }) => theme.colors.red};
+  border-color: ${({ theme }) => theme.colors.red};
+  color: white;
 `
 const LpTag = styled(Tag)`
   height: 20px;
   margin-right: 4px;
+  background-color: ${({ theme }) => theme.isDark ? '#f97316' : theme.colors.red};
+  border-color: ${({ theme }) => theme.isDark ? '#f97316' : theme.colors.red};
+  color: white;
+  font-size: 12px;
+  border-radius: 8px;
 `
 
 const Farm: React.FunctionComponent<FarmCardProps> = ({ farm }) => {
@@ -83,7 +93,7 @@ const Farm: React.FunctionComponent<FarmCardProps> = ({ farm }) => {
         </Flex>
         <Flex mt="4px">
           <MultiplierTag variant="primary">{farm.multiplier}</MultiplierTag>
-          <LpTag variant="primary">{farm.type}</LpTag>
+          <LpTag>{farm.type}</LpTag>
           {handleRenderFarming()}
         </Flex>
       </FarmLabelWrapper>
