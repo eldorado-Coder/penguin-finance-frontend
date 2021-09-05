@@ -97,7 +97,7 @@ const StakeLPForm: React.FC<DepositModalProps> = ({
     <>
       <InputContainer>
         <LPTokenBalance fontSize="14px">
-          {`LP Token Balance: ${Number(fullBalance).toFixed(2)}`}
+          {`LP Token Balance: ${roundDown(val, 2)}`}
         </LPTokenBalance>
         <TokenInput
           value={roundDown(val, 2)}
