@@ -71,7 +71,7 @@ const UnstakeLPForm: React.FC<DepositModalProps> = ({ max, onConfirm, tokenName 
   return (
     <>
       <InputContainer>
-        <LPTokenBalance fontSize="14px">{`LP Staked Balance: ${Number(fullBalance).toFixed(2)}`}</LPTokenBalance>
+        <LPTokenBalance fontSize="14px">{`LP Staked Balance: ${roundDown(val, 2)}`}</LPTokenBalance>
         <TokenInput
           value={roundDown(val, 2)}
           onSelectMax={handleSelectMax}
