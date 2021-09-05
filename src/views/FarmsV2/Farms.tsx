@@ -18,7 +18,7 @@ const Farms: React.FC = () => {
   const { path } = useRouteMatch()
   const { account } = useWeb3React()
   const v2FarmsLP = useV2Farms()
-  const [sortType, setSortType] = useState('farm-tvl')
+  const [sortType, setSortType] = useState('liquidity')
   const [showStakedOnly, setShowStakedOnly] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -102,8 +102,11 @@ const Farms: React.FC = () => {
               <Select
                 value={sortType}
                 options={[
-                  { label: 'Farm TVL', value: 'farm-tvl' },
-                  { label: 'APY', value: 'apy' },
+                  { label: 'Liquidity', value: 'liquidity' },
+                  { label: 'Hot', value: 'hot' },
+                  { label: 'APR', value: 'apr' },
+                  { label: 'Multiplier', value: 'multiplier' },
+                  { label: 'Earned', value: 'earned' }
                 ]}
                 onChange={setSortType}
               />
