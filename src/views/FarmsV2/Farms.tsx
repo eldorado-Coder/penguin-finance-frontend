@@ -9,6 +9,7 @@ import styled from 'styled-components'
 import Page from 'components/layout/Page'
 import { useV2Farms } from 'state/hooks'
 import useRefresh from 'hooks/useRefresh'
+import { getBalanceNumber } from 'utils/formatBalance';
 import { fetchV2FarmUserDataAsync } from 'state/actions'
 import Select from 'components/Select/Select'
 import FarmTable from './components/FarmTable/FarmTable'
@@ -34,11 +35,15 @@ const Farms: React.FC = () => {
   const activeFarms = v2FarmsLP.filter((farm) => farm.type === 'Pangolin' && farm.multiplier !== '0X')
 
   const filteredFarms = useMemo(() => {
+    let farms = [...activeFarms];
     if (searchTerm) {
-      return activeFarms.filter(farm => farm.lpSymbol.toLowerCase().includes(searchTerm.toLowerCase()));
+      farms = farms.filter(farm => farm.lpSymbol.toLowerCase().includes(searchTerm.toLowerCase()));
     }
-    return activeFarms
-  }, [searchTerm, activeFarms]);
+    if (account && showStakedOnly) {
+      farms = farms.filter(farm => farm.userData && getBalanceNumber(farm.userData.stakedBalance) > 0);
+    }
+    return farms
+  }, [searchTerm, activeFarms, showStakedOnly, account]);
 
   const farmsList = useCallback((farmsToDisplay, removed: boolean) => {
     const farmsToDisplayWithAPY: FarmWithStakedValue[] = farmsToDisplay.map((farm) => {
