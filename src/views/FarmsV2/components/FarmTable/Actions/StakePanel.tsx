@@ -17,7 +17,8 @@ interface FarmWithStakedValue extends FarmTypes {
   apy?: BigNumber
 }
 
-const Staked: React.FunctionComponent<FarmWithStakedValue> = ({ pid, lpSymbol, lpAddresses, type }) => {
+const Staked: React.FunctionComponent<FarmWithStakedValue> = farm => {
+  const { pid, lpSymbol, lpAddresses, type } = farm;
   const [activeTab, setActiveTab] = useState(0)
   const [requestedApproval, setRequestedApproval] = useState(false)
   const { account } = useWeb3React()
@@ -63,6 +64,7 @@ const Staked: React.FunctionComponent<FarmWithStakedValue> = ({ pid, lpSymbol, l
           needsApproval={!isApproved}
           requested={requestedApproval}
           onApprove={handleApprove}
+          farm={farm}
           stakingTokenName={lpSymbol.replaceAll(' LP', '')}
         />
       ) : (
@@ -84,8 +86,9 @@ const Staked: React.FunctionComponent<FarmWithStakedValue> = ({ pid, lpSymbol, l
 // slider
 const TabWrapper = styled.div`
   div {
-    height: 28px;
+    height: 32px;
     border: 2px solid ${({ theme }) => (theme.isDark ? '#bba6dd' : '#b2b2ce')};
+    border: ${({ theme }) => theme.isDark && 'none'};
     background-color: ${({ theme }) => (theme.isDark ? '#604e84' : '#e8e4ef')};
     color: ${({ theme }) => (theme.isDark ? '#bba6dd' : '#b2b2ce')};
     border-radius: 18px;
@@ -96,7 +99,7 @@ const OptionItem = styled(ButtonMenuItem)<{ active: boolean }>`
   background-color: ${({ active, theme }) => active && theme.colors.red};
   color: ${({ active }) => (active ? 'white' : '#b2b2ce')};
   margin: 0px !important;
-  height: 24px;
+  height: ${({ theme }) => theme.isDark ? '32px' : '28px'};
   font-weight: 400;
   font-size: 14px;
 `

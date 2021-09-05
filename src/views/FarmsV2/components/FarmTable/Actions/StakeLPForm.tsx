@@ -5,10 +5,16 @@ import { Button, Flex, Text } from 'penguinfinance-uikit2'
 import UnlockButton from 'components/UnlockButton'
 import roundDown from 'utils/roundDown'
 import escapeRegExp from 'utils/escapeRegExp'
-import { PANGOLIN_PEFI_LINK } from 'config'
+import { BASE_ADD_LIQUIDITY_URL } from 'config'
 import useI18n from 'hooks/useI18n'
+import getLiquidityUrlPathParts from 'utils/getLiquidityUrlPathParts';
 import { getFullDisplayBalance } from 'utils/formatBalance'
+import { Farm as FarmTypes } from 'state/types'
 import TokenInput from './TokenInput'
+
+interface FarmWithStakedValue extends FarmTypes {
+  apy?: BigNumber
+}
 
 interface DepositModalProps {
   max: BigNumber
@@ -18,6 +24,7 @@ interface DepositModalProps {
   needsApproval: boolean
   requested: boolean
   stakingTokenName: string
+  farm: FarmWithStakedValue,
   onApprove: () => void
 }
 
@@ -31,6 +38,7 @@ const StakeLPForm: React.FC<DepositModalProps> = ({
   needsApproval,
   requested,
   stakingTokenName,
+  farm,
   onApprove,
 }) => {
   const [val, setVal] = useState('')
@@ -77,7 +85,10 @@ const StakeLPForm: React.FC<DepositModalProps> = ({
   }
 
   const handleGetPefi = () => {
-    window.open(PANGOLIN_PEFI_LINK, '_blank')
+    const { quoteTokenAddresses, quoteTokenSymbol, tokenAddresses } = farm
+    const liquidityUrlPathParts = getLiquidityUrlPathParts({ quoteTokenAddresses, quoteTokenSymbol, tokenAddresses })
+    const addLiquidityUrl = `${BASE_ADD_LIQUIDITY_URL}/${liquidityUrlPathParts}`
+    window.open(addLiquidityUrl, '_blank')
   }
 
   const canStake = !pendingTx && Number(val) > 0

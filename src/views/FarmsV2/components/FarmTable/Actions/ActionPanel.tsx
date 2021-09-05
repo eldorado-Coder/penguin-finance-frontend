@@ -55,13 +55,13 @@ const Container = styled.div<{ expanded }>`
   display: flex;
   width: 100%;
   flex-direction: column;
-  padding: 8px 8px 0;
+  padding: 8px 0 0;
   overflow: auto;
 
   ${({ theme }) => theme.mediaQueries.xl} {
     flex-direction: row;
     // justify-content: space-between;
-    padding: 8px 8px 0;
+    padding: 8px 0 0;
   }
 `
 
@@ -217,7 +217,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
         <StakePanel {...farm} />
       </ActionCard>
       <ActionCard className='earnings-panel' mr={!isMobile && '8px'} mb="8px" minWidth={300}>
-        <Flex padding="16px 16px">
+        <Flex padding="16px 16px 12px">
           <EarningsContainer>
             <Title fontSize="20px" bold lineHeight={1} mb="8px">
               Your Stake
@@ -247,7 +247,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
           <RewardImage src={lpLogo} alt="pefi-earning" size={56} />
         </Flex>
         <Divider />
-        <Flex padding="16px 16px">
+        <Flex padding="12px 16px">
           <EarningsContainer>
             <Title fontSize="20px" bold lineHeight={1} mb="8px">
               Igloo Stats
@@ -288,14 +288,13 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
                 const amountInUsd = getTokenPrice(pendingToken) * amount
 
                 return (
-                  <Flex flexDirection="column" alignItems="center" mr="8px" ml="8px">
+                  <Flex flexDirection="column" alignItems="center" mr="4px" ml="4px">
                     <RewardImage src={getTokenLogo(pendingToken)} alt="penguin" size={50} />
                     <BalanceWrapper>
                       <StyledBalance
                         fontSize="14px"
                         color="textSubtle"
                         fontWeight="400"
-                        suffix={` ${getTokenSymbol(pendingToken)}`}
                         value={getBalanceNumber(new BigNumber(amount))}
                       />
                     </BalanceWrapper>
@@ -326,7 +325,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
             </Flex>
           </PendingRewardsContent>
         </PendingRewardsCard>
-        <ActionCard padding="10px 16px" mt="8px">
+        <ActionCard padding="12px 16px" mt="8px">
           <AutoNesting currentAllocation={uesrAutoNestingAllocation} maxAllocation={maxAutoNestAllocation} />
         </ActionCard>
       </Flex>
