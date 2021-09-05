@@ -112,7 +112,7 @@ const StakeLPForm: React.FC<DepositModalProps> = ({
         {account &&
           (needsApproval ? (
             <StyledButton disabled={requested} onClick={onApprove} scale="md">
-              {`Approve ${stakingTokenName}`}
+              Enable Farm
             </StyledButton>
           ) : (
             <>

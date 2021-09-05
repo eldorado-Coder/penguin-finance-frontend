@@ -58,6 +58,11 @@ const LpTag = styled(Tag)`
   border-radius: 8px;
 `
 
+const StyledImage = styled(Image)<{ isMobile?: boolean }>`
+  width: 64px;
+  height: 64px;
+`;
+
 const Farm: React.FunctionComponent<FarmCardProps> = ({ farm }) => {
   const { stakedBalance } = useFarmUser(farm.pid, 'Penguin')
   const rawStakedBalance = getBalanceNumber(stakedBalance)
@@ -81,11 +86,11 @@ const Farm: React.FunctionComponent<FarmCardProps> = ({ farm }) => {
 
   return (
     <Container>
-      <Image
+      <StyledImage
         src={`/images/farms/${farmImage}.svg`}
         alt={farm.tokenSymbol}
-        width={isMobile ? 24 : 64}
-        height={isMobile ? 24 : 64}
+        width={64}
+        height={64}
       />
       <FarmLabelWrapper>
         <Flex>

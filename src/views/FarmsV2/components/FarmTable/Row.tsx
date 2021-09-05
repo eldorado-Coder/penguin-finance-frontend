@@ -18,15 +18,29 @@ import CellLayout from './CellLayout'
 import ActionPanel from './Actions/ActionPanel'
 import { DesktopColumnSchema, MobileColumnSchema, FarmCardProps } from '../types'
 
-const CellInner = styled.div`
+const CellInner = styled.div<{ justifyContent?: string, minWidth?: number }>`
   padding: 12px 0px;
   display: flex;
   width: 100%;
   align-items: center;
   padding-right: 8px;
+  justify-content: ${({ justifyContent }) => justifyContent};
+  min-width: unset;
+
+  @media (min-width: 1136px) {
+    min-width: ${({ minWidth }) => `${minWidth}px`};
+  }
 
   ${({ theme }) => theme.mediaQueries.xl} {
-    padding-right: 60px;
+    padding-right: 16px;
+  }
+
+  ${({ theme }) => theme.mediaQueries.xl} {
+    padding-right: 16px;
+  }
+
+  ${({ theme }) => theme.mediaQueries.xl} {
+    padding-right: 16px;
   }
 `
 
@@ -133,7 +147,7 @@ const Row: React.FunctionComponent<FarmCardProps> = (props) => {
               case 'staked':
                 return (
                   <td key={key}>
-                    <CellInner>
+                    <CellInner minWidth={110}>
                       <CellLayout label="Your Stake">
                         {/* <Earned earnings={stakedBalanceInUsd} pid={farm.pid} userDataReady /> */}
                         <Balance fontSize="16px" fontWeight="400" prefix="$" value={Number(stakedBalanceInUsd)} />
@@ -144,7 +158,7 @@ const Row: React.FunctionComponent<FarmCardProps> = (props) => {
               case 'apr':
                 return (
                   <td key={key}>
-                    <CellInner>
+                    <CellInner minWidth={110}>
                       <CellLayout label="APR">
                         <Amount>{`${farmAPY || '--'}%`}</Amount>
                       </CellLayout>
@@ -154,7 +168,7 @@ const Row: React.FunctionComponent<FarmCardProps> = (props) => {
               case 'liquidity':
                 return (
                   <td key={key}>
-                    <CellInner>
+                    <CellInner minWidth={110}>
                       <CellLayout label="Liquidity">
                         <Balance fontSize="16px" fontWeight="400" prefix="$" value={Number(liquidity)} />
                       </CellLayout>
@@ -164,7 +178,7 @@ const Row: React.FunctionComponent<FarmCardProps> = (props) => {
               case 'rewards':
                 return (
                   <td key={key}>
-                    <CellInner>
+                    <CellInner minWidth={110}>
                       <CellLayout label="Rewards">
                         <TokensWrapper>
                           {pendingTokensWithLogo &&
@@ -179,7 +193,7 @@ const Row: React.FunctionComponent<FarmCardProps> = (props) => {
               case 'details':
                 return (
                   <td key={key}>
-                    <CellInner>
+                    <CellInner justifyContent='center'>
                       <CellLayout>
                         <Details actionPanelToggled={actionPanelExpanded} />
                       </CellLayout>

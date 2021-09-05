@@ -55,12 +55,12 @@ const Container = styled.div<{ expanded }>`
   display: flex;
   width: 100%;
   flex-direction: column;
+  justify-content: space-between;
   padding: 8px 0 0;
   overflow: auto;
 
   ${({ theme }) => theme.mediaQueries.xl} {
     flex-direction: row;
-    // justify-content: space-between;
     padding: 8px 0 0;
   }
 `
@@ -73,11 +73,28 @@ const ActionCard = styled(Card)<{ minWidth?: number }>`
   filter: ${({ theme }) => theme.card.dropShadow};
 `
 
-const PendingRewardsCard = styled(ActionCard)`
-  @media (min-width: 1400px) {
-    min-width: 480px;
+const EarningsCard = styled(ActionCard)`
+  min-width: unset;
+
+  img {
+    display: none;
   }
-`
+
+  @media (min-width: 1400px) {
+    min-width: 300px;
+
+    img {
+      display: block;
+    }
+  }
+`;
+
+const PendingRewardsCard = styled(ActionCard)`
+  @media (min-width: 1280px) {
+    min-width: 460px;
+  }
+`;
+
 const PendingRewardsContent = styled(Flex)`
   flex-wrap: wrap;
 
@@ -216,7 +233,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
       <ActionCard className="stake-panel" padding="20px" mr={!isMobile && '8px'} mb="8px" minWidth={300}>
         <StakePanel {...farm} />
       </ActionCard>
-      <ActionCard className="earnings-panel" mr={!isMobile && '8px'} mb="8px" minWidth={300}>
+      <EarningsCard className='earnings-panel' mr={!isMobile && '8px'} mb="8px">
         <Flex padding="16px 16px 12px">
           <EarningsContainer>
             <Title fontSize="20px" bold lineHeight={1} mb="8px">
@@ -277,8 +294,8 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
           </EarningsContainer>
           <RewardImage src={lpLogo} alt="igloo-stats" size={56} />
         </Flex>
-      </ActionCard>
-      <Flex className="pending-panel" flexDirection="column" mb="8px">
+      </EarningsCard>
+      <Flex className='pending-panel' flexDirection="column" mb="8px">
         <PendingRewardsCard padding="10px 16px">
           <PendingRewardsContent>
             <Flex alignItems="center" justifyContent="space-around" mr="16px">
