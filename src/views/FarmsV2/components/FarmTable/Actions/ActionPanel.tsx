@@ -77,7 +77,7 @@ const PendingRewardsCard = styled(ActionCard)`
   @media (min-width: 1400px) {
     min-width: 480px;
   }
-`;
+`
 const PendingRewardsContent = styled(Flex)`
   flex-wrap: wrap;
 
@@ -98,7 +98,7 @@ const PendingRewardsContent = styled(Flex)`
     width: unset;
     justify-content: space-between;
   }
-`;
+`
 
 const RewardImage = styled.img<{ size: number; ml?: number }>`
   height: ${({ size }) => size}px;
@@ -179,7 +179,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
   const userShares = userData ? getBalanceNumber(userData.userShares) : 0
   const userStakedBalance = userData ? getBalanceNumber(userData.stakedBalance) : 0
   const userStakedBalanceInUsd = userData ? userStakedBalance * lpPrice : 0
-  const uesrAutoNestingAllocation = userData ? userData.userIpefiDistributionBips : 0
+  const userAutoNestingAllocation = userData ? userData.userIpefiDistributionBips : 0
 
   const totalShares = getBalanceNumber(farm.totalShares)
   const totalLp = getBalanceNumber(farm.totalLp)
@@ -213,10 +213,10 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
 
   return (
     <Container expanded={expanded}>
-      <ActionCard className='stake-panel' padding="20px" mr={!isMobile && '8px'} mb="8px" minWidth={300}>
+      <ActionCard className="stake-panel" padding="20px" mr={!isMobile && '8px'} mb="8px" minWidth={300}>
         <StakePanel {...farm} />
       </ActionCard>
-      <ActionCard className='earnings-panel' mr={!isMobile && '8px'} mb="8px" minWidth={300}>
+      <ActionCard className="earnings-panel" mr={!isMobile && '8px'} mb="8px" minWidth={300}>
         <Flex padding="16px 16px 12px">
           <EarningsContainer>
             <Title fontSize="20px" bold lineHeight={1} mb="8px">
@@ -278,7 +278,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
           <RewardImage src={lpLogo} alt="igloo-stats" size={56} />
         </Flex>
       </ActionCard>
-      <Flex className='pending-panel' flexDirection="column" mb="8px">
+      <Flex className="pending-panel" flexDirection="column" mb="8px">
         <PendingRewardsCard padding="10px 16px">
           <PendingRewardsContent>
             <Flex alignItems="center" justifyContent="space-around" mr="16px">
@@ -326,7 +326,10 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
           </PendingRewardsContent>
         </PendingRewardsCard>
         <ActionCard padding="12px 16px" mt="8px">
-          <AutoNesting currentAllocation={uesrAutoNestingAllocation} maxAllocation={maxAutoNestAllocation} />
+          <AutoNesting
+            currentAllocation={account ? userAutoNestingAllocation : (maxAutoNestAllocation * 50) / 100}
+            maxAllocation={maxAutoNestAllocation}
+          />
         </ActionCard>
       </Flex>
     </Container>
