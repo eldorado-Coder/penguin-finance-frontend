@@ -63,6 +63,14 @@ const Farms: React.FC = () => {
     setSearchTerm(event.target.value);
   };
 
+  const TOKENS = [
+    { src: '/images/tokens/PEFI.png', name: 'pefi' },
+    { src: '/images/farms-v2/sushi.svg', name: 'sushi' },
+    { src: '/images/farms-v2/joe.png', name: 'joe' },
+    { src: '/images/farms-v2/png.svg', name: 'png' },
+    { src: '/images/farms-v2/snob.png', name: 'snob' }
+  ];
+
   return (
     <FarmPage>
       <BgWrapper>
@@ -71,12 +79,23 @@ const Farms: React.FC = () => {
       <IgloosBannerContainer>
         <BannerImage src={`${process.env.PUBLIC_URL}/images/farms/IglooHeader.gif`} alt="igloos banner" />
       </IgloosBannerContainer>
-      <Flex justifyContent='space-between' alignItems='center' flexWrap='wrap'>
-        <Flex mt='8px' alignItems='center'>
-          <Toggle scale='sm' checked={showStakedOnly} onChange={handleChangeStakedOnly} />
-          <Text ml='8px' color='textSubtle'>Staked Only</Text>
-        </Flex>
-        <Flex mt='8px'>
+      <FilterWrapper justifyContent='space-between' alignItems='center' flexWrap='wrap'>
+        <LeftFilters alignItems='center' justifyContent='space-between' flexWrap='wrap'>
+          <Flex mt='16px' alignItems='center'>
+            <ToggleWrapper checked={showStakedOnly}>
+              <Toggle checked={showStakedOnly} onChange={handleChangeStakedOnly} />
+            </ToggleWrapper>
+            <FilterText ml='8px' color='textSubtle'>Staked Only</FilterText>
+          </Flex>
+          <Flex ml='16px' mt='16px'>
+            {TOKENS.map(token => {
+              return (
+                <TokenImage key={token.name} src={token.src} alt={token.name} width='32' />
+              )
+            })}
+          </Flex>
+        </LeftFilters>
+        <Flex mt='16px'>
           <Flex flexDirection='column'>
             <Text fontSize='12px' textTransform="uppercase" color='textSubtle'>Sort by</Text>
             <SelectWrapper>
@@ -99,7 +118,7 @@ const Farms: React.FC = () => {
             />
           </Flex>
         </Flex>
-      </Flex>
+      </FilterWrapper>
       {filteredFarms.length > 0 && 
         <IgloosContentContainer>
           <Route exact path={`${path}`}>
@@ -161,6 +180,53 @@ const SelectWrapper = styled.div`
 
 const StyledInput = styled(Input)`
   color: ${({ theme }) => theme.colors.textSubtle};
+`;
+
+const TokenImage = styled.img`
+  width: 32px;
+  height: 32px;
+  margin-left: 8px;
+  margin-right: 8px;
+  cursor: pointer;
+`
+
+const FilterText = styled(Text)`
+  white-space: nowrap;
+`;
+
+const FilterWrapper = styled(Flex)`
+  flex-direction: column;
+  align-items: center;
+  margin-top: -16px;
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    flex-direction: row;
+    padding: 8px 8px 0;
+  }
+`
+
+const LeftFilters = styled(Flex)`
+  flex-direction: column;
+  align-items: center;
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    flex-direction: row;
+  }
+`;
+
+const ToggleWrapper = styled.div<{ checked?: boolean}>`
+  div {
+    height: 32px;
+    width: 56px;
+    background: ${({ checked, theme }) => (theme.isDark && !checked) && '#bba6dd'};
+
+    div {
+      height: 24px;
+      width: 24px;
+      left: ${({ checked }) => checked && 'calc(100% - 28px) !important'};
+      background: white;
+    }
+  }
 `;
 
 export default Farms
