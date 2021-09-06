@@ -87,13 +87,13 @@ const EarningsCard = styled(ActionCard)`
       display: block;
     }
   }
-`;
+`
 
 const PendingRewardsCard = styled(ActionCard)`
   @media (min-width: 1280px) {
     min-width: 460px;
   }
-`;
+`
 
 const PendingRewardsContent = styled(Flex)`
   flex-wrap: wrap;
@@ -233,7 +233,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
       <ActionCard className="stake-panel" padding="20px" mr={!isMobile && '8px'} mb="8px" minWidth={300}>
         <StakePanel {...farm} />
       </ActionCard>
-      <EarningsCard className='earnings-panel' mr={!isMobile && '8px'} mb="8px">
+      <EarningsCard className="earnings-panel" mr={!isMobile && '8px'} mb="8px">
         <Flex padding="16px 16px 12px">
           <EarningsContainer>
             <Title fontSize="20px" bold lineHeight={1} mb="8px">
@@ -256,7 +256,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
                 color="textSubtle"
                 fontWeight="400"
                 prefix=" "
-                suffix="% of the igloo"
+                suffix="% of the Igloo"
                 value={Number(userSharePercentage)}
               />
             )}
@@ -295,7 +295,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
           <RewardImage src={lpLogo} alt="igloo-stats" size={56} />
         </Flex>
       </EarningsCard>
-      <Flex className='pending-panel' flexDirection="column" mb="8px">
+      <Flex className="pending-panel" flexDirection="column" mb="8px">
         <PendingRewardsCard padding="10px 16px">
           <PendingRewardsContent>
             <Flex alignItems="center" justifyContent="space-around" mr="16px">
