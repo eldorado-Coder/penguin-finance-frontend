@@ -33,6 +33,12 @@ export const fetchFarms = async () => {
           name: 'balanceOf',
           params: [lpAddress],
         },
+        // Balance of quote token on LP contract
+        {
+          address: getAddress(farmConfig.quoteTokenAddresses),
+          name: 'balanceOf',
+          params: [lpAddress],
+        },
         // Balance of LP tokens in the master chef contract
         {
           address: lpAddress,
@@ -49,11 +55,36 @@ export const fetchFarms = async () => {
           address: getAddress(farmConfig.tokenAddresses),
           name: 'decimals',
         },
+        // Quote token decimals
+        {
+          address: getAddress(farmConfig.quoteTokenAddresses),
+          name: 'decimals',
+        },
       ]
 
-      const [tokenBalanceLP, lpTokenBalanceMC, lpTotalSupply, tokenDecimals] = await multicall(erc20, calls)
+      const [
+        tokenBalanceLP,
+        quoteTokenBalanceLP,
+        lpTokenBalanceMC,
+        lpTotalSupply,
+        tokenDecimals,
+        quoteTokenDecimals,
+      ] = await multicall(erc20, calls)
+
+      // Ratio in % a LP tokens that are in staking, vs the total number in circulation
       const lpTokenRatio = new BigNumber(lpTokenBalanceMC).div(new BigNumber(lpTotalSupply))
+
+      // Total value in staking in quote token value
+      // const lpTotalInQuoteToken = new BigNumber(quoteTokenBalanceLP)
+      //   .div(new BigNumber(10).pow(18))
+      //   .times(new BigNumber(2))
+      //   .times(lpTokenRatio)
+
+      // Amount of token in the LP that are considered staking (i.e amount of token * lp ratio)
       const tokenAmount = new BigNumber(tokenBalanceLP).div(new BigNumber(10).pow(tokenDecimals)).times(lpTokenRatio)
+      // const quoteTokenAmount = new BigNumber(quoteTokenBalanceLP)
+      //   .div(new BigNumber(10).pow(quoteTokenDecimals))
+      //   .times(lpTokenRatio)
 
       try {
         const [info, totalAllocPoint, pendingTokens, totalLP, totalShares, pefiPerYear] = await multicall(
@@ -104,6 +135,9 @@ export const fetchFarms = async () => {
         return {
           ...farmConfig,
           tokenAmount: tokenAmount.toJSON(),
+          // quoteTokenAmount: quoteTokenAmount.toJSON(),
+          // lpTotalInQuoteToken: lpTotalInQuoteToken.toJSON(),
+          // tokenPriceVsQuote: quoteTokenAmount.div(tokenAmount).toJSON(),
           poolWeight: poolWeight.toJSON(),
           multiplier: allocPoint.div(100).toNumber(),
           withdrawFee,
@@ -119,9 +153,13 @@ export const fetchFarms = async () => {
         return {
           ...farmConfig,
           tokenAmount: new BigNumber(0),
+          // quoteTokenAmount: new BigNumber(0),
+          // lpTotalInQuoteToken: new BigNumber(0),
+          // tokenPriceVsQuote: new BigNumber(0),
           poolWeight: new BigNumber(0),
           multiplier: 1,
           withdrawFee: 0,
+          // pendingTokens: pendingTokens[0],
           pendingTokens: [],
           totalLp: new BigNumber(0),
           totalLiquidityInUsd: 0,

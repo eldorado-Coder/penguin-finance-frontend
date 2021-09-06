@@ -48,6 +48,29 @@ const v2Farms: V2FarmConfig[] = [
     type: 'Pangolin',
     name: 'pendingPEFI',
   },
+  // {
+  //   pid: 2,
+  //   lpSymbol: 'PEFI-PNG LP',
+  //   lpAddresses: {
+  //     43113: '',
+  //     43114: '0x1bb5541eccda68a352649954d4c8ece6ad68338d',
+  //   },
+  //   strategyAddresses: {
+  //     43113: '',
+  //     43114: '0x253dc3a6f712a0735c77dc1732d1db6eadb43e5b',
+  //   },
+  //   tokenSymbol: 'PEFI',
+  //   tokenAddresses: {
+  //     43113: '',
+  //     43114: '0xe896CDeaAC9615145c0cA09C8Cd5C25bced6384c',
+  //   },
+  //   quoteTokenSymbol: QuoteToken.PNG,
+  //   quoteTokenAddresses: contracts.png,
+  //   withdrawalFee: '2.56',
+  //   hardApy: '896.65%',
+  //   type: 'Pangolin',
+  //   name: 'pendingPEFI',
+  // },
 ]
 
 export default v2Farms
