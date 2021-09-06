@@ -15,16 +15,25 @@ import Select from 'components/Select/Select'
 import FarmTable from './components/FarmTable/FarmTable'
 import { FarmWithStakedValue } from './components/types'
 
+const PROJECT_LIST = [
+  { src: '/images/tokens/PEFI.png', name: 'Penguin' },
+  { src: '/images/farms-v2/sushi.svg', name: 'Sushi' },
+  { src: '/images/farms-v2/joe.png', name: 'Joe' },
+  { src: '/images/farms-v2/png.svg', name: 'Pangolin' },
+  { src: '/images/farms-v2/snob.png', name: 'Snowball' },
+]
+
 const Farms: React.FC = () => {
-  const { path } = useRouteMatch()
-  const { account } = useWeb3React()
-  const v2FarmsLP = useV2Farms()
   const [sortType, setSortType] = useState('liquidity')
   const [showStakedOnly, setShowStakedOnly] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
+  const [activeProjects, setActiveProjects] = useState(PROJECT_LIST.map((row) => row.name))
 
   const dispatch = useDispatch()
   const { fastRefresh } = useRefresh()
+  const { path } = useRouteMatch()
+  const { account } = useWeb3React()
+  const v2FarmsLP = useV2Farms()
 
   useEffect(() => {
     if (account) {
@@ -42,8 +51,9 @@ const Farms: React.FC = () => {
     if (account && showStakedOnly) {
       farms = farms.filter((farm) => farm.userData && getBalanceNumber(farm.userData.stakedBalance) > 0)
     }
+    farms = farms.filter((farm) => farm.type && activeProjects.includes(farm.type))
     return farms
-  }, [searchTerm, activeFarms, showStakedOnly, account])
+  }, [searchTerm, activeFarms, showStakedOnly, account, activeProjects])
 
   const farmsList = useCallback((farmsToDisplay, removed: boolean) => {
     const farmsToDisplayWithAPY: FarmWithStakedValue[] = farmsToDisplay.map((farm) => {
@@ -68,13 +78,14 @@ const Farms: React.FC = () => {
     setSearchTerm(event.target.value)
   }
 
-  const TOKENS = [
-    { src: '/images/tokens/PEFI.png', name: 'pefi' },
-    { src: '/images/farms-v2/sushi.svg', name: 'sushi' },
-    { src: '/images/farms-v2/joe.png', name: 'joe' },
-    { src: '/images/farms-v2/png.svg', name: 'png' },
-    { src: '/images/farms-v2/snob.png', name: 'snob' },
-  ]
+  const handleChangeActiveProject = (project) => {
+    const isExisted = activeProjects.find((row) => row === project)
+    if (isExisted) {
+      setActiveProjects(activeProjects.filter((row) => row !== project))
+    } else {
+      setActiveProjects([...activeProjects, project])
+    }
+  }
 
   return (
     <FarmPage>
@@ -95,8 +106,18 @@ const Farms: React.FC = () => {
             </FilterText>
           </Flex>
           <Flex ml="16px" mt="16px">
-            {TOKENS.map((token) => {
-              return <TokenImage key={token.name} src={token.src} alt={token.name} width="32" />
+            {PROJECT_LIST.map((project) => {
+              const isActiveProject = activeProjects.find((row) => row === project.name)
+              return (
+                <ProjectLogo
+                  key={project.name}
+                  src={project.src}
+                  alt={project.name}
+                  isActive={!!isActiveProject}
+                  width="32"
+                  onClick={() => handleChangeActiveProject(project.name)}
+                />
+              )
             })}
           </Flex>
         </LeftFilters>
@@ -194,12 +215,13 @@ const StyledInput = styled(Input)`
   }
 `
 
-const TokenImage = styled.img`
+const ProjectLogo = styled.img<{ isActive?: boolean }>`
   width: 32px;
   height: 32px;
   margin-left: 8px;
   margin-right: 8px;
   cursor: pointer;
+  opacity: ${({ isActive }) => (isActive ? 1 : 0.3)};
 `
 
 const FilterText = styled(Text)`
