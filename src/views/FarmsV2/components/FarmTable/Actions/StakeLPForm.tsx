@@ -7,7 +7,7 @@ import roundDown from 'utils/roundDown'
 import escapeRegExp from 'utils/escapeRegExp'
 import { BASE_ADD_LIQUIDITY_URL } from 'config'
 import useI18n from 'hooks/useI18n'
-import getLiquidityUrlPathParts from 'utils/getLiquidityUrlPathParts';
+import getLiquidityUrlPathParts from 'utils/getLiquidityUrlPathParts'
 import { getFullDisplayBalance } from 'utils/formatBalance'
 import { Farm as FarmTypes } from 'state/types'
 import TokenInput from './TokenInput'
@@ -24,7 +24,7 @@ interface DepositModalProps {
   needsApproval: boolean
   requested: boolean
   stakingTokenName: string
-  farm: FarmWithStakedValue,
+  farm: FarmWithStakedValue
   onApprove: () => void
 }
 
@@ -96,9 +96,7 @@ const StakeLPForm: React.FC<DepositModalProps> = ({
   return (
     <>
       <InputContainer>
-        <LPTokenBalance fontSize="14px">
-          {`LP Token Balance: ${roundDown(val, 2)}`}
-        </LPTokenBalance>
+        <LPTokenBalance fontSize="14px">{`LP Token Balance: ${roundDown(fullBalance, 2)}`}</LPTokenBalance>
         <TokenInput
           value={roundDown(val, 2)}
           onSelectMax={handleSelectMax}
@@ -145,9 +143,9 @@ const ActionContainer = styled.div`
 const StyledButton = styled(Button)<{ tokenBalance?: string }>`
   border-radius: 10px;
   height: 40px;
-  font-weight: 400;  
+  font-weight: 400;
   width: 100%;
-  background-color: ${({ theme }) => theme.isDark ? theme.colors.red : '#372871'};
+  background-color: ${({ theme }) => (theme.isDark ? theme.colors.red : '#372871')};
   color: white;
 `
 
@@ -159,7 +157,7 @@ const StyledUnlockButton = styled(UnlockButton)`
 `
 
 const LPTokenBalance = styled(Text)`
-  color: ${({ theme }) => theme.isDark ? '#bba6dd' : '#b2b2ce'};
-`;
+  color: ${({ theme }) => (theme.isDark ? '#bba6dd' : '#b2b2ce')};
+`
 
 export default StakeLPForm
