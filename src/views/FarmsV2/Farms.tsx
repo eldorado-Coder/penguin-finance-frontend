@@ -1,30 +1,38 @@
 import React, { useEffect, useCallback, useState, useMemo } from 'react'
 import { Route, useRouteMatch } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { Flex, Text, Toggle, Input } from 'penguinfinance-uikit2';
-// import BigNumber from 'bignumber.js'
+import { Flex, Text, Toggle, Input } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import styled from 'styled-components'
-// import { SECONDS_PER_WEEK, WEEKS_PER_YEAR, PEFI_POOL_PID } from 'config'
 import Page from 'components/layout/Page'
 import { useV2Farms } from 'state/hooks'
 import useRefresh from 'hooks/useRefresh'
-import { getBalanceNumber } from 'utils/formatBalance';
+import { getBalanceNumber } from 'utils/formatBalance'
 import { fetchV2FarmUserDataAsync } from 'state/actions'
+
 import Select from 'components/Select/Select'
 import FarmTable from './components/FarmTable/FarmTable'
 import { FarmWithStakedValue } from './components/types'
 
+const PROJECT_LIST = [
+  { src: '/images/tokens/PEFI.png', name: 'Penguin' },
+  { src: '/images/farms-v2/sushi.svg', name: 'Sushi' },
+  { src: '/images/farms-v2/joe.png', name: 'Joe' },
+  { src: '/images/farms-v2/png.svg', name: 'Pangolin' },
+  { src: '/images/farms-v2/snob.png', name: 'Snowball' },
+]
+
 const Farms: React.FC = () => {
-  const { path } = useRouteMatch()
-  const { account } = useWeb3React()
-  const v2FarmsLP = useV2Farms()
   const [sortType, setSortType] = useState('liquidity')
-  const [showStakedOnly, setShowStakedOnly] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [showStakedOnly, setShowStakedOnly] = useState(false)
+  const [searchTerm, setSearchTerm] = useState('')
+  const [activeProjects, setActiveProjects] = useState(PROJECT_LIST.map((row) => row.name))
 
   const dispatch = useDispatch()
   const { fastRefresh } = useRefresh()
+  const { path } = useRouteMatch()
+  const { account } = useWeb3React()
+  const v2FarmsLP = useV2Farms()
 
   useEffect(() => {
     if (account) {
@@ -35,15 +43,33 @@ const Farms: React.FC = () => {
   const activeFarms = v2FarmsLP.filter((farm) => farm.type === 'Pangolin' && farm.multiplier !== '0X')
 
   const filteredFarms = useMemo(() => {
-    let farms = [...activeFarms];
+    let farms = [...activeFarms]
+    // filter
     if (searchTerm) {
-      farms = farms.filter(farm => farm.lpSymbol.toLowerCase().includes(searchTerm.toLowerCase()));
+      farms = farms.filter((farm) => farm.lpSymbol.toLowerCase().includes(searchTerm.toLowerCase()))
     }
     if (account && showStakedOnly) {
-      farms = farms.filter(farm => farm.userData && getBalanceNumber(farm.userData.stakedBalance) > 0);
+      farms = farms.filter((farm) => farm.userData && getBalanceNumber(farm.userData.stakedBalance) > 0)
     }
+    farms = farms.filter((farm) => farm.type && activeProjects.includes(farm.type))
+
+    // sort
+    if (sortType === 'liquidity') {
+      farms = farms.sort((a, b) => b.totalLiquidityInUsd - a.totalLiquidityInUsd)
+    }
+    if (sortType === 'multiplier') {
+      farms = farms.sort((a, b) => Number(b.multiplier) - Number(a.multiplier))
+    }
+    if (sortType === 'earned') {
+      farms = farms.sort(
+        (a, b) =>
+          Number(b.lpPrice) * getBalanceNumber(b.userData?.stakedBalance) -
+          Number(a.lpPrice) * getBalanceNumber(a.userData?.stakedBalance),
+      )
+    }
+
     return farms
-  }, [searchTerm, activeFarms, showStakedOnly, account]);
+  }, [searchTerm, activeFarms, showStakedOnly, account, activeProjects, sortType])
 
   const farmsList = useCallback((farmsToDisplay, removed: boolean) => {
     const farmsToDisplayWithAPY: FarmWithStakedValue[] = farmsToDisplay.map((farm) => {
@@ -60,21 +86,22 @@ const Farms: React.FC = () => {
     )
   }, [])
 
-  const handleChangeStakedOnly = event => {
-    setShowStakedOnly(event.target.checked);
-  };
+  const handleChangeStakedOnly = (event) => {
+    setShowStakedOnly(event.target.checked)
+  }
 
-  const handleChangeSearchTerm = event => {
-    setSearchTerm(event.target.value);
-  };
+  const handleChangeSearchTerm = (event) => {
+    setSearchTerm(event.target.value)
+  }
 
-  const TOKENS = [
-    { src: '/images/tokens/PEFI.png', name: 'pefi' },
-    { src: '/images/farms-v2/sushi.svg', name: 'sushi' },
-    { src: '/images/farms-v2/joe.png', name: 'joe' },
-    { src: '/images/farms-v2/png.svg', name: 'png' },
-    { src: '/images/farms-v2/snob.png', name: 'snob' }
-  ];
+  const handleChangeActiveProject = (project) => {
+    const isExisted = activeProjects.find((row) => row === project)
+    if (isExisted) {
+      setActiveProjects(activeProjects.filter((row) => row !== project))
+    } else {
+      setActiveProjects([...activeProjects, project])
+    }
+  }
 
   return (
     <FarmPage>
@@ -84,25 +111,37 @@ const Farms: React.FC = () => {
       <IgloosBannerContainer>
         <BannerImage src={`${process.env.PUBLIC_URL}/images/farms/IglooHeader.gif`} alt="igloos banner" />
       </IgloosBannerContainer>
-      <FilterWrapper justifyContent='space-between' alignItems='center' flexWrap='wrap'>
-        <LeftFilters alignItems='center' justifyContent='space-between' flexWrap='wrap'>
-          <Flex mt='16px' alignItems='center'>
+      <FilterWrapper justifyContent="space-between" alignItems="center" flexWrap="wrap">
+        <LeftFilters alignItems="center" justifyContent="space-between" flexWrap="wrap">
+          <Flex mt="16px" alignItems="center">
             <ToggleWrapper checked={showStakedOnly}>
               <Toggle checked={showStakedOnly} onChange={handleChangeStakedOnly} />
             </ToggleWrapper>
-            <FilterText ml='8px' color='textSubtle'>Staked Only</FilterText>
+            <FilterText ml="8px" color="textSubtle">
+              Staked Only
+            </FilterText>
           </Flex>
-          <Flex ml='16px' mt='16px'>
-            {TOKENS.map(token => {
+          <Flex ml="16px" mt="16px">
+            {PROJECT_LIST.map((project) => {
+              const isActiveProject = activeProjects.find((row) => row === project.name)
               return (
-                <TokenImage key={token.name} src={token.src} alt={token.name} width='32' />
+                <ProjectLogo
+                  key={project.name}
+                  src={project.src}
+                  alt={project.name}
+                  isActive={!!isActiveProject}
+                  width="32"
+                  onClick={() => handleChangeActiveProject(project.name)}
+                />
               )
             })}
           </Flex>
         </LeftFilters>
-        <Flex mt='16px'>
-          <Flex flexDirection='column'>
-            <Text fontSize='12px' textTransform="uppercase" color='textSubtle'>Sort by</Text>
+        <Flex mt="16px">
+          <Flex flexDirection="column">
+            <Text fontSize="12px" textTransform="uppercase" color="textSubtle">
+              Sort by
+            </Text>
             <SelectWrapper>
               <Select
                 value={sortType}
@@ -111,29 +150,27 @@ const Farms: React.FC = () => {
                   { label: 'Hot', value: 'hot' },
                   { label: 'APR', value: 'apr' },
                   { label: 'Multiplier', value: 'multiplier' },
-                  { label: 'Earned', value: 'earned' }
+                  { label: 'Earned', value: 'earned' },
                 ]}
                 onChange={setSortType}
               />
             </SelectWrapper>
           </Flex>
-          <Flex flexDirection='column' ml='16px'>
-            <Text fontSize='12px' textTransform="uppercase" color='textSubtle'>Search</Text>
-            <StyledInput
-              placeholder='Search Farms...'
-              value={searchTerm}
-              onChange={handleChangeSearchTerm}
-            />
+          <Flex flexDirection="column" ml="16px">
+            <Text fontSize="12px" textTransform="uppercase" color="textSubtle">
+              Search
+            </Text>
+            <StyledInput placeholder="Search Farms..." value={searchTerm} onChange={handleChangeSearchTerm} />
           </Flex>
         </Flex>
       </FilterWrapper>
-      {filteredFarms.length > 0 && 
+      {filteredFarms.length > 0 && (
         <IgloosContentContainer>
           <Route exact path={`${path}`}>
             {farmsList(filteredFarms, false)}
           </Route>
         </IgloosContentContainer>
-      }
+      )}
     </FarmPage>
   )
 }
@@ -184,23 +221,28 @@ const SelectWrapper = styled.div`
   div {
     color: ${({ theme }) => theme.colors.textSubtle};
   }
-`;
+`
 
 const StyledInput = styled(Input)`
   color: ${({ theme }) => theme.colors.textSubtle};
-`;
+  &:focus {
+    box-shadow: none !important;
+    border: ${({ theme }) => (theme.isDark ? '1px solid #66578d' : '1px solid #d7caec')};
+  }
+`
 
-const TokenImage = styled.img`
+const ProjectLogo = styled.img<{ isActive?: boolean }>`
   width: 32px;
   height: 32px;
   margin-left: 8px;
   margin-right: 8px;
   cursor: pointer;
+  opacity: ${({ isActive }) => (isActive ? 1 : 0.3)};
 `
 
 const FilterText = styled(Text)`
   white-space: nowrap;
-`;
+`
 
 const FilterWrapper = styled(Flex)`
   flex-direction: column;
@@ -220,13 +262,13 @@ const LeftFilters = styled(Flex)`
   ${({ theme }) => theme.mediaQueries.md} {
     flex-direction: row;
   }
-`;
+`
 
-const ToggleWrapper = styled.div<{ checked?: boolean}>`
+const ToggleWrapper = styled.div<{ checked?: boolean }>`
   div {
     height: 32px;
     width: 56px;
-    background: ${({ checked, theme }) => (theme.isDark && !checked) && '#bba6dd'};
+    background: ${({ checked, theme }) => theme.isDark && !checked && '#bba6dd'};
 
     div {
       height: 24px;
@@ -235,6 +277,6 @@ const ToggleWrapper = styled.div<{ checked?: boolean}>`
       background: white;
     }
   }
-`;
+`
 
 export default Farms

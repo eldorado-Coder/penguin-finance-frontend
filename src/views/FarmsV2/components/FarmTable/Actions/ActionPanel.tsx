@@ -87,13 +87,13 @@ const EarningsCard = styled(ActionCard)`
       display: block;
     }
   }
-`;
+`
 
 const PendingRewardsCard = styled(ActionCard)`
   @media (min-width: 1280px) {
     min-width: 460px;
   }
-`;
+`
 
 const PendingRewardsContent = styled(Flex)`
   flex-wrap: wrap;
@@ -233,7 +233,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
       <ActionCard className="stake-panel" padding="20px" mr={!isMobile && '8px'} mb="8px" minWidth={300}>
         <StakePanel {...farm} />
       </ActionCard>
-      <EarningsCard className='earnings-panel' mr={!isMobile && '8px'} mb="8px">
+      <EarningsCard className="earnings-panel" mr={!isMobile && '8px'} mb="8px">
         <Flex padding="16px 16px 12px">
           <EarningsContainer>
             <Title fontSize="20px" bold lineHeight={1} mb="8px">
@@ -256,7 +256,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
                 color="textSubtle"
                 fontWeight="400"
                 prefix=" "
-                suffix="% of the igloo"
+                suffix="% of the Igloo"
                 value={Number(userSharePercentage)}
               />
             )}
@@ -295,37 +295,38 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
           <RewardImage src={lpLogo} alt="igloo-stats" size={56} />
         </Flex>
       </EarningsCard>
-      <Flex className='pending-panel' flexDirection="column" mb="8px">
+      <Flex className="pending-panel" flexDirection="column" mb="8px">
         <PendingRewardsCard padding="10px 16px">
           <PendingRewardsContent>
             <Flex alignItems="center" justifyContent="space-around" mr="16px">
-              {pendingTokens.map((pendingToken) => {
-                const rewardTokenInfo = userPendingTokens.find((row) => row.address === pendingToken)
-                const amount = rewardTokenInfo ? Number(rewardTokenInfo.amount) : 0
-                const amountInUsd = getTokenPrice(pendingToken) * amount
+              {pendingTokens &&
+                pendingTokens.map((pendingToken) => {
+                  const rewardTokenInfo = userPendingTokens.find((row) => row.address === pendingToken)
+                  const amount = rewardTokenInfo ? Number(rewardTokenInfo.amount) : 0
+                  const amountInUsd = getTokenPrice(pendingToken) * amount
 
-                return (
-                  <Flex flexDirection="column" alignItems="center" mr="4px" ml="4px">
-                    <RewardImage src={getTokenLogo(pendingToken)} alt="penguin" size={50} />
-                    <BalanceWrapper>
-                      <StyledBalance
-                        fontSize="14px"
-                        color="textSubtle"
-                        fontWeight="400"
-                        value={getBalanceNumber(new BigNumber(amount))}
-                      />
-                    </BalanceWrapper>
-                    <UsdBalanceWrapper>
-                      <Balance
-                        fontSize="10px"
-                        fontWeight="400"
-                        prefix="$"
-                        value={getBalanceNumber(new BigNumber(amountInUsd))}
-                      />
-                    </UsdBalanceWrapper>
-                  </Flex>
-                )
-              })}
+                  return (
+                    <Flex flexDirection="column" alignItems="center" mr="4px" ml="4px">
+                      <RewardImage src={getTokenLogo(pendingToken)} alt="penguin" size={50} />
+                      <BalanceWrapper>
+                        <StyledBalance
+                          fontSize="14px"
+                          color="textSubtle"
+                          fontWeight="400"
+                          value={getBalanceNumber(new BigNumber(amount))}
+                        />
+                      </BalanceWrapper>
+                      <UsdBalanceWrapper>
+                        <Balance
+                          fontSize="10px"
+                          fontWeight="400"
+                          prefix="$"
+                          value={getBalanceNumber(new BigNumber(amountInUsd))}
+                        />
+                      </UsdBalanceWrapper>
+                    </Flex>
+                  )
+                })}
             </Flex>
             <Flex flexDirection="column" justifyContent="space-between" pb="4px">
               <Label fontSize="20px" color="textSubtle" bold mt="4px">

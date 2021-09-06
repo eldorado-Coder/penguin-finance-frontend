@@ -51,8 +51,8 @@ const MultiplierTag = styled(Tag)`
 const LpTag = styled(Tag)`
   height: 20px;
   margin-right: 4px;
-  background-color: ${({ theme }) => theme.isDark ? '#f97316' : theme.colors.red};
-  border-color: ${({ theme }) => theme.isDark ? '#f97316' : theme.colors.red};
+  background-color: ${({ theme }) => (theme.isDark ? '#f97316' : '#FF4100')};
+  border-color: ${({ theme }) => (theme.isDark ? '#f97316' : '#FF4100')};
   color: white;
   font-size: 12px;
   border-radius: 8px;
@@ -61,7 +61,7 @@ const LpTag = styled(Tag)`
 const StyledImage = styled(Image)<{ isMobile?: boolean }>`
   width: 64px;
   height: 64px;
-`;
+`
 
 const Farm: React.FunctionComponent<FarmCardProps> = ({ farm }) => {
   const { stakedBalance } = useFarmUser(farm.pid, 'Penguin')
@@ -86,18 +86,13 @@ const Farm: React.FunctionComponent<FarmCardProps> = ({ farm }) => {
 
   return (
     <Container>
-      <StyledImage
-        src={`/images/farms/${farmImage}.svg`}
-        alt={farm.tokenSymbol}
-        width={64}
-        height={64}
-      />
+      <StyledImage src={`/images/farms/${farmImage}.svg`} alt={farm.tokenSymbol} width={64} height={64} />
       <FarmLabelWrapper>
         <Flex>
           <FarmLabel bold>{farm.lpSymbol.replace(' LP', '')}</FarmLabel>
         </Flex>
         <Flex mt="4px">
-          <MultiplierTag variant="primary">{farm.multiplier}</MultiplierTag>
+          <MultiplierTag variant="primary">{`${farm.multiplier || 1}X`}</MultiplierTag>
           <LpTag>{farm.type}</LpTag>
           {handleRenderFarming()}
         </Flex>
