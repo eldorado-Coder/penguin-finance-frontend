@@ -6,6 +6,8 @@ import v2FarmsConfig from 'config/constants/v2Farms'
 import { getAddress, getV2MasterChefAddress } from 'utils/addressHelpers'
 import getV2FarmMasterChefAbi from 'utils/getV2FarmMasterChefAbi'
 import getV2FarmMasterChefAddress from 'utils/getV2FarmMasterChefAddress'
+import { getPangolinLpPrice } from 'utils/price'
+import { getBalanceNumber } from 'utils/formatBalance'
 import { NON_ADDRESS } from 'config'
 
 export const fetchMasterChefGlobalData = async () => {
@@ -122,6 +124,12 @@ export const fetchFarms = async () => {
       const allocPoint = new BigNumber(info.allocPoint._hex)
       const withdrawFee = 100 * (info.withdrawFeeBP / 10000)
       const poolWeight = allocPoint.div(new BigNumber(totalAllocPoint))
+      let lpPrice = 1
+      let totalLiquidityInUsd = getBalanceNumber(new BigNumber(totalLP))
+      if (farmConfig.type === 'Pangolin') {
+        lpPrice = await getPangolinLpPrice(lpAddress)
+        totalLiquidityInUsd = lpPrice * getBalanceNumber(new BigNumber(totalLP))
+      }
 
       return {
         ...farmConfig,
@@ -130,13 +138,15 @@ export const fetchFarms = async () => {
         lpTotalInQuoteToken: lpTotalInQuoteToken.toJSON(),
         tokenPriceVsQuote: quoteTokenAmount.div(tokenAmount).toJSON(),
         poolWeight: poolWeight.toJSON(),
-        multiplier: `${allocPoint.div(100).toString()}X`,
+        multiplier: allocPoint.div(100).toNumber(),
         withdrawFee,
         pendingTokens: pendingTokens[0],
         totalLp: new BigNumber(totalLP).toJSON(),
+        totalLiquidityInUsd,
         totalShares: new BigNumber(totalShares).toJSON(),
         pefiPerYear: new BigNumber(pefiPerYear).toJSON(),
         maxBips: 10000,
+        lpPrice,
       }
     }),
   )

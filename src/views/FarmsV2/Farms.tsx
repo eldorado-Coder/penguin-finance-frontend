@@ -11,6 +11,7 @@ import { useV2Farms } from 'state/hooks'
 import useRefresh from 'hooks/useRefresh'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { fetchV2FarmUserDataAsync } from 'state/actions'
+
 import Select from 'components/Select/Select'
 import FarmTable from './components/FarmTable/FarmTable'
 import { FarmWithStakedValue } from './components/types'
@@ -45,6 +46,7 @@ const Farms: React.FC = () => {
 
   const filteredFarms = useMemo(() => {
     let farms = [...activeFarms]
+    // filter
     if (searchTerm) {
       farms = farms.filter((farm) => farm.lpSymbol.toLowerCase().includes(searchTerm.toLowerCase()))
     }
@@ -52,8 +54,16 @@ const Farms: React.FC = () => {
       farms = farms.filter((farm) => farm.userData && getBalanceNumber(farm.userData.stakedBalance) > 0)
     }
     farms = farms.filter((farm) => farm.type && activeProjects.includes(farm.type))
+
+    // sort
+    if (sortType === 'liquidity') {
+      farms = farms.sort((a, b) => b.totalLiquidityInUsd - a.totalLiquidityInUsd)
+    }
+    if (sortType === 'multiplier') {
+      farms = farms.sort((a, b) => Number(b.multiplier) - Number(a.multiplier))
+    }
     return farms
-  }, [searchTerm, activeFarms, showStakedOnly, account, activeProjects])
+  }, [searchTerm, activeFarms, showStakedOnly, account, activeProjects, sortType])
 
   const farmsList = useCallback((farmsToDisplay, removed: boolean) => {
     const farmsToDisplayWithAPY: FarmWithStakedValue[] = farmsToDisplay.map((farm) => {
