@@ -71,6 +71,7 @@ const Amount = styled.span`
 const TokensWrapper = styled.div`
   display: flex;
   align-items: center;
+  margin-top: 4px;
 `
 
 const PendingTokenLogo = styled.img`
@@ -168,7 +169,7 @@ const Row: React.FunctionComponent<FarmCardProps> = (props) => {
               case 'liquidity':
                 return (
                   <td key={key}>
-                    <CellInner minWidth={110}>
+                    <CellInner minWidth={100}>
                       <CellLayout label="Liquidity">
                         <Balance fontSize="16px" fontWeight="400" prefix="$" value={Number(liquidity)} />
                       </CellLayout>
@@ -178,8 +179,8 @@ const Row: React.FunctionComponent<FarmCardProps> = (props) => {
               case 'rewards':
                 return (
                   <td key={key}>
-                    <CellInner minWidth={110}>
-                      <CellLayout label="Rewards">
+                    <CellInner minWidth={120} justifyContent='center'>
+                      <CellLayout label="Rewards" alignItems='center'>
                         <TokensWrapper>
                           {pendingTokensWithLogo &&
                             pendingTokensWithLogo.map((row) => {
