@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback, useState, useMemo } from 'react'
 import { Route, useRouteMatch } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { Flex, Text, Toggle, Input } from 'penguinfinance-uikit2';
+import { Flex, Text, Toggle, Input } from 'penguinfinance-uikit2'
 // import BigNumber from 'bignumber.js'
 import { useWeb3React } from '@web3-react/core'
 import styled from 'styled-components'
@@ -9,7 +9,7 @@ import styled from 'styled-components'
 import Page from 'components/layout/Page'
 import { useV2Farms } from 'state/hooks'
 import useRefresh from 'hooks/useRefresh'
-import { getBalanceNumber } from 'utils/formatBalance';
+import { getBalanceNumber } from 'utils/formatBalance'
 import { fetchV2FarmUserDataAsync } from 'state/actions'
 import Select from 'components/Select/Select'
 import FarmTable from './components/FarmTable/FarmTable'
@@ -20,8 +20,8 @@ const Farms: React.FC = () => {
   const { account } = useWeb3React()
   const v2FarmsLP = useV2Farms()
   const [sortType, setSortType] = useState('liquidity')
-  const [showStakedOnly, setShowStakedOnly] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [showStakedOnly, setShowStakedOnly] = useState(false)
+  const [searchTerm, setSearchTerm] = useState('')
 
   const dispatch = useDispatch()
   const { fastRefresh } = useRefresh()
@@ -35,15 +35,15 @@ const Farms: React.FC = () => {
   const activeFarms = v2FarmsLP.filter((farm) => farm.type === 'Pangolin' && farm.multiplier !== '0X')
 
   const filteredFarms = useMemo(() => {
-    let farms = [...activeFarms];
+    let farms = [...activeFarms]
     if (searchTerm) {
-      farms = farms.filter(farm => farm.lpSymbol.toLowerCase().includes(searchTerm.toLowerCase()));
+      farms = farms.filter((farm) => farm.lpSymbol.toLowerCase().includes(searchTerm.toLowerCase()))
     }
     if (account && showStakedOnly) {
-      farms = farms.filter(farm => farm.userData && getBalanceNumber(farm.userData.stakedBalance) > 0);
+      farms = farms.filter((farm) => farm.userData && getBalanceNumber(farm.userData.stakedBalance) > 0)
     }
     return farms
-  }, [searchTerm, activeFarms, showStakedOnly, account]);
+  }, [searchTerm, activeFarms, showStakedOnly, account])
 
   const farmsList = useCallback((farmsToDisplay, removed: boolean) => {
     const farmsToDisplayWithAPY: FarmWithStakedValue[] = farmsToDisplay.map((farm) => {
@@ -60,21 +60,21 @@ const Farms: React.FC = () => {
     )
   }, [])
 
-  const handleChangeStakedOnly = event => {
-    setShowStakedOnly(event.target.checked);
-  };
+  const handleChangeStakedOnly = (event) => {
+    setShowStakedOnly(event.target.checked)
+  }
 
-  const handleChangeSearchTerm = event => {
-    setSearchTerm(event.target.value);
-  };
+  const handleChangeSearchTerm = (event) => {
+    setSearchTerm(event.target.value)
+  }
 
   const TOKENS = [
     { src: '/images/tokens/PEFI.png', name: 'pefi' },
     { src: '/images/farms-v2/sushi.svg', name: 'sushi' },
     { src: '/images/farms-v2/joe.png', name: 'joe' },
     { src: '/images/farms-v2/png.svg', name: 'png' },
-    { src: '/images/farms-v2/snob.png', name: 'snob' }
-  ];
+    { src: '/images/farms-v2/snob.png', name: 'snob' },
+  ]
 
   return (
     <FarmPage>
@@ -84,25 +84,27 @@ const Farms: React.FC = () => {
       <IgloosBannerContainer>
         <BannerImage src={`${process.env.PUBLIC_URL}/images/farms/IglooHeader.gif`} alt="igloos banner" />
       </IgloosBannerContainer>
-      <FilterWrapper justifyContent='space-between' alignItems='center' flexWrap='wrap'>
-        <LeftFilters alignItems='center' justifyContent='space-between' flexWrap='wrap'>
-          <Flex mt='16px' alignItems='center'>
+      <FilterWrapper justifyContent="space-between" alignItems="center" flexWrap="wrap">
+        <LeftFilters alignItems="center" justifyContent="space-between" flexWrap="wrap">
+          <Flex mt="16px" alignItems="center">
             <ToggleWrapper checked={showStakedOnly}>
               <Toggle checked={showStakedOnly} onChange={handleChangeStakedOnly} />
             </ToggleWrapper>
-            <FilterText ml='8px' color='textSubtle'>Staked Only</FilterText>
+            <FilterText ml="8px" color="textSubtle">
+              Staked Only
+            </FilterText>
           </Flex>
-          <Flex ml='16px' mt='16px'>
-            {TOKENS.map(token => {
-              return (
-                <TokenImage key={token.name} src={token.src} alt={token.name} width='32' />
-              )
+          <Flex ml="16px" mt="16px">
+            {TOKENS.map((token) => {
+              return <TokenImage key={token.name} src={token.src} alt={token.name} width="32" />
             })}
           </Flex>
         </LeftFilters>
-        <Flex mt='16px'>
-          <Flex flexDirection='column'>
-            <Text fontSize='12px' textTransform="uppercase" color='textSubtle'>Sort by</Text>
+        <Flex mt="16px">
+          <Flex flexDirection="column">
+            <Text fontSize="12px" textTransform="uppercase" color="textSubtle">
+              Sort by
+            </Text>
             <SelectWrapper>
               <Select
                 value={sortType}
@@ -111,29 +113,27 @@ const Farms: React.FC = () => {
                   { label: 'Hot', value: 'hot' },
                   { label: 'APR', value: 'apr' },
                   { label: 'Multiplier', value: 'multiplier' },
-                  { label: 'Earned', value: 'earned' }
+                  { label: 'Earned', value: 'earned' },
                 ]}
                 onChange={setSortType}
               />
             </SelectWrapper>
           </Flex>
-          <Flex flexDirection='column' ml='16px'>
-            <Text fontSize='12px' textTransform="uppercase" color='textSubtle'>Search</Text>
-            <StyledInput
-              placeholder='Search Farms...'
-              value={searchTerm}
-              onChange={handleChangeSearchTerm}
-            />
+          <Flex flexDirection="column" ml="16px">
+            <Text fontSize="12px" textTransform="uppercase" color="textSubtle">
+              Search
+            </Text>
+            <StyledInput placeholder="Search Farms..." value={searchTerm} onChange={handleChangeSearchTerm} />
           </Flex>
         </Flex>
       </FilterWrapper>
-      {filteredFarms.length > 0 && 
+      {filteredFarms.length > 0 && (
         <IgloosContentContainer>
           <Route exact path={`${path}`}>
             {farmsList(filteredFarms, false)}
           </Route>
         </IgloosContentContainer>
-      }
+      )}
     </FarmPage>
   )
 }
@@ -184,11 +184,15 @@ const SelectWrapper = styled.div`
   div {
     color: ${({ theme }) => theme.colors.textSubtle};
   }
-`;
+`
 
 const StyledInput = styled(Input)`
   color: ${({ theme }) => theme.colors.textSubtle};
-`;
+  &:focus {
+    box-shadow: none !important;
+    border: ${({ theme }) => (theme.isDark ? '1px solid #66578d' : '1px solid #d7caec')};
+  }
+`
 
 const TokenImage = styled.img`
   width: 32px;
@@ -200,7 +204,7 @@ const TokenImage = styled.img`
 
 const FilterText = styled(Text)`
   white-space: nowrap;
-`;
+`
 
 const FilterWrapper = styled(Flex)`
   flex-direction: column;
@@ -220,13 +224,13 @@ const LeftFilters = styled(Flex)`
   ${({ theme }) => theme.mediaQueries.md} {
     flex-direction: row;
   }
-`;
+`
 
-const ToggleWrapper = styled.div<{ checked?: boolean}>`
+const ToggleWrapper = styled.div<{ checked?: boolean }>`
   div {
     height: 32px;
     width: 56px;
-    background: ${({ checked, theme }) => (theme.isDark && !checked) && '#bba6dd'};
+    background: ${({ checked, theme }) => theme.isDark && !checked && '#bba6dd'};
 
     div {
       height: 24px;
@@ -235,6 +239,6 @@ const ToggleWrapper = styled.div<{ checked?: boolean}>`
       background: white;
     }
   }
-`;
+`
 
 export default Farms
