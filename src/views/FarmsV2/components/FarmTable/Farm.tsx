@@ -92,7 +92,7 @@ const Farm: React.FunctionComponent<FarmCardProps> = ({ farm }) => {
           <FarmLabel bold>{farm.lpSymbol.replace(' LP', '')}</FarmLabel>
         </Flex>
         <Flex mt="4px">
-          <MultiplierTag variant="primary">{`${farm.multiplier}X`}</MultiplierTag>
+          <MultiplierTag variant="primary">{`${farm.multiplier || 1}X`}</MultiplierTag>
           <LpTag>{farm.type}</LpTag>
           {handleRenderFarming()}
         </Flex>
