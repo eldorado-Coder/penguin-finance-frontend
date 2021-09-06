@@ -2,10 +2,8 @@ import React, { useEffect, useCallback, useState, useMemo } from 'react'
 import { Route, useRouteMatch } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { Flex, Text, Toggle, Input } from 'penguinfinance-uikit2'
-// import BigNumber from 'bignumber.js'
 import { useWeb3React } from '@web3-react/core'
 import styled from 'styled-components'
-// import { SECONDS_PER_WEEK, WEEKS_PER_YEAR, PEFI_POOL_PID } from 'config'
 import Page from 'components/layout/Page'
 import { useV2Farms } from 'state/hooks'
 import useRefresh from 'hooks/useRefresh'
@@ -62,6 +60,14 @@ const Farms: React.FC = () => {
     if (sortType === 'multiplier') {
       farms = farms.sort((a, b) => Number(b.multiplier) - Number(a.multiplier))
     }
+    if (sortType === 'earned') {
+      farms = farms.sort(
+        (a, b) =>
+          Number(b.lpPrice) * getBalanceNumber(b.userData?.stakedBalance) -
+          Number(a.lpPrice) * getBalanceNumber(a.userData?.stakedBalance),
+      )
+    }
+
     return farms
   }, [searchTerm, activeFarms, showStakedOnly, account, activeProjects, sortType])
 

@@ -11,6 +11,7 @@ import {
   updateV2PoolUserStakedBalance,
   updateV2PoolUserBalance,
   fetchV2PoolsPublicDataAsync,
+  fetchV2FarmsPublicDataAsync,
   fetchV2FarmUserDataAsync,
 } from 'state/actions'
 import {
@@ -134,6 +135,7 @@ export const useV2Unstake = (pid: number, type?: string) => {
   const handleUnstake = useCallback(
     async (amount: string, to?: string) => {
       const txHash = await v2FarmUnstake(v2MasterChefContract, pid, amount, to, account)
+      dispatch(fetchV2FarmsPublicDataAsync())
       dispatch(fetchV2FarmUserDataAsync(account))
       console.info(txHash)
     },
