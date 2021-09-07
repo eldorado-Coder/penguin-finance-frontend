@@ -268,6 +268,8 @@ const ToggleWrapper = styled.div<{ checked?: boolean }>`
     height: 32px;
     width: 56px;
     background: ${({ checked, theme }) => theme.isDark && !checked && '#bba6dd'};
+    background: ${({ checked, theme }) => theme.isDark && checked && '#d4444c'};
+    background: ${({ checked, theme }) => !theme.isDark && checked && '#ec3e3f'};
 
     div {
       height: 24px;
