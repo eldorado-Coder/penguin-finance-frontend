@@ -112,6 +112,12 @@ const RewardImage = styled.img<{ size: number; ml?: number }>`
   margin-left: ${({ ml }) => ml && `${ml}px`};
   border-radius: 50%;
 `
+const CoinImage = styled.img<{ size: number; ml?: number }>`
+  height: ${({ size }) => size}px;
+  width: ${({ size }) => size}px;
+  margin: 0px 12px;
+  margin-left: ${({ ml }) => ml && `${ml}px`};
+`
 
 const StyledButton = styled(Button)`
   font-weight: 500;
@@ -165,6 +171,25 @@ const Title = styled(Text)`
   color: ${({ theme }) => theme.colors.red};
 `
 
+const COIN_LIST = [
+  { src: '/images/farms-v2/coins/coin1.png', min: 0 },
+  { src: '/images/farms-v2/coins/coin2.png', min: 500 },
+  { src: '/images/farms-v2/coins/coin3.png', min: 1000 },
+  { src: '/images/farms-v2/coins/coin4.png', min: 5000 },
+  { src: '/images/farms-v2/coins/coin5.png', min: 10000 },
+]
+
+const getCoinImage = (amount) => {
+  let coinImg
+  COIN_LIST.reverse().map((row) => {
+    if (amount > row.min) {
+      coinImg = row.src
+    }
+    return row
+  })
+  return coinImg
+}
+
 const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, expanded }) => {
   const [pendingTx, setPendingTx] = useState(false)
   const { getTokenLogo, getTokenSymbol } = useAssets()
@@ -197,6 +222,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
 
   const lpSymbol = farm.lpSymbol.replaceAll(' LP', '')
   const lpLogo = getTokenLogoFromSymbol(lpSymbol)
+  const coinImg = getCoinImage(Number(userStakedBalanceInUsd))
 
   const onClickHarvest = async () => {
     setPendingTx(true)
@@ -249,7 +275,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
               />
             )}
           </EarningsContainer>
-          <RewardImage src={lpLogo} alt="pefi-earning" size={56} />
+          {coinImg && <CoinImage src={coinImg} alt="pefi-earning" size={56} />}
         </Flex>
         <Divider />
         <Flex padding="12px 16px">
