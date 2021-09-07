@@ -1,4 +1,5 @@
-import { NEST_APR_PER_DAY, DAYS_PER_YEAR } from 'config'
+import Axios from 'axios'
+import { NEST_APR_PER_DAY, DAYS_PER_YEAR, PANGOLIN_REWARD_POOL_API } from 'config'
 
 const roundToTwoDp = (number) => Math.round(number * 100) / 100
 
@@ -55,6 +56,22 @@ export const getCompoundApy = ({ normalApy, type }: { normalApy: string; type: s
 
 // v2
 export const getV2NestApy = (dailyApr = 0) => {
+  const staticFee = 0
+  return (1 + dailyApr) ** DAYS_PER_YEAR - 1 + staticFee
+}
+
+export const getPangolinRewardPoolApr = async (address) => {
+  if (!address) return { apr: 0, dailyApr: 0 }
+  const aprUrl = `${PANGOLIN_REWARD_POOL_API}/apr/${address}`
+  const res = await Axios.get(aprUrl)
+  if (res.status === 200) {
+    const apr = res.data.combinedApr / 100
+    return { apr, dailyApr: apr / 365 }
+  }
+  return { apr: 0, dailyApr: 0 }
+}
+
+export const getApy = (dailyApr = 0) => {
   const staticFee = 0
   return (1 + dailyApr) ** DAYS_PER_YEAR - 1 + staticFee
 }

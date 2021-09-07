@@ -5,7 +5,6 @@ import Card from 'components/Card'
 import { RowBetween } from 'components/Row'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
-import useTheme from 'hooks/useTheme'
 
 dayjs.extend(utc)
 
@@ -72,7 +71,6 @@ const Chart = ({
   minHeight = DEFAULT_HEIGHT,
   ...rest
 }: LineChartProps) => {
-  const theme = useTheme()
   const parsedValue = value
 
   return (

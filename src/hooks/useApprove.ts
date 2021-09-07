@@ -12,7 +12,7 @@ import {
   fetchV2FarmUserDataAsync,
 } from 'state/actions'
 import { approve } from 'utils/callHelpers'
-import { getNestMigratorAddress, getV2NestAddress } from 'utils/addressHelpers'
+import { getNestMigratorAddress } from 'utils/addressHelpers'
 import {
   useMasterchef,
   usePenguin,

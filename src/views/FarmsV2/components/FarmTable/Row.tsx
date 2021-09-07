@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useMatchBreakpoints } from 'penguinfinance-uikit2'
 import { useV2FarmUser } from 'state/hooks'
@@ -100,6 +100,9 @@ const TableBody = styled.tbody`
 
 const TableWrapper = styled.div<{ shouldRenderChild?: boolean }>`
   padding: 0 8px;
+  ${({ theme }) => theme.mediaQueries.xs} {
+    padding: 0px;
+  }
   margin-bottom: ${({ shouldRenderChild }) => shouldRenderChild && '8px'};
 `
 
@@ -110,9 +113,9 @@ interface RowProps extends FarmCardProps {
 const Row: React.FunctionComponent<RowProps> = (props) => {
   const { farm, index } = props
   const { stakedBalance, earnings } = useV2FarmUser(farm.pid, farm.type)
-  const hasStakedAmount = !!stakedBalance.toNumber()
   const [actionPanelExpanded, setActionPanelExpanded] = useState(false)
-  const farmAPY = farm.apy ? farm.apy.toFixed(2) : '--'
+  // const farmApy = farm.apy ? (100 * Number(farm.apy)).toFixed(2) : '--'
+  const farmApy = farm.apr ? (100 * Number(farm.apr)).toFixed(2) : ''
 
   const shouldRenderChild = useDelayedUnmount(actionPanelExpanded, 300)
   const { isXl, isXs } = useMatchBreakpoints()
@@ -130,10 +133,6 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
   const toggleActionPanel = () => {
     setActionPanelExpanded(!actionPanelExpanded)
   }
-
-  useEffect(() => {
-    setActionPanelExpanded(hasStakedAmount)
-  }, [hasStakedAmount])
 
   const isMobile = !isXl
   const tableSchema = isMobile ? MobileColumnSchema : DesktopColumnSchema
@@ -171,7 +170,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
                   <td key={key}>
                     <CellInner minWidth={110}>
                       <CellLayout label="APR">
-                        <Amount>{`${farmAPY || '--'}%`}</Amount>
+                        <Balance fontSize="16px" fontWeight="400" prefix="$" value={Number(farmApy)} />
                       </CellLayout>
                     </CellInner>
                   </td>
@@ -241,7 +240,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
             </EarnedMobileCell>
             <AprMobileCell>
               <CellLayout label="APR">
-                <Amount>{`${farmAPY || '--'}%`}</Amount>
+                <Amount>{`${farmApy || '--'}%`}</Amount>
               </CellLayout>
             </AprMobileCell>
           </tr>

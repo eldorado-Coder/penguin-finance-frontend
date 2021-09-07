@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react'
 import { Route, useRouteMatch } from 'react-router-dom'
 import FarmTable from './components/FarmTable/FarmTable'
-import { FarmWithStakedValue } from './components/types'
 
 interface FarmProps {
   farms: any[]

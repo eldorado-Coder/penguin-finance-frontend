@@ -18,6 +18,10 @@ const v2Farms: V2FarmConfig[] = [
       43113: '',
       43114: '0xe896CDeaAC9615145c0cA09C8Cd5C25bced6384c',
     },
+    pangolinRewardPoolAddresses: {
+      43113: '',
+      43114: '0xd7EDBb1005ec65721a3976Dba996AdC6e02dc9bA',
+    },
     quoteTokenSymbol: QuoteToken.AVAX,
     quoteTokenAddresses: contracts.wavax,
     withdrawalFee: '2.56',
@@ -40,6 +44,10 @@ const v2Farms: V2FarmConfig[] = [
     tokenAddresses: {
       43113: '',
       43114: '0xe896CDeaAC9615145c0cA09C8Cd5C25bced6384c',
+    },
+    pangolinRewardPoolAddresses: {
+      43113: '',
+      43114: '0xd7EDBb1005ec65721a3976Dba996AdC6e02dc9bA',
     },
     quoteTokenSymbol: QuoteToken.AVAX,
     quoteTokenAddresses: contracts.wavax,

@@ -21,15 +21,7 @@ interface UnStakeFormProps {
 
 const inputRegex = RegExp(`^\\d*(?:\\\\[.])?\\d*$`)
 
-const UnstakeForm: React.FC<UnStakeFormProps> = ({
-  max,
-  onConfirm,
-  tokenName = '',
-  account,
-  requested,
-  stakingTokenName,
-  onApprove,
-}) => {
+const UnstakeForm: React.FC<UnStakeFormProps> = ({ max, onConfirm, tokenName = '', account }) => {
   const [val, setVal] = useState('')
   const [pendingTx, setPendingTx] = useState(false)
   const TranslateString = useI18n()
