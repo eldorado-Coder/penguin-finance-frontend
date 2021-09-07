@@ -221,7 +221,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
       <ActionCard className="stake-panel" padding="20px" mr={!isMobile && '16px'} mb="16px" minWidth={300}>
         <StakePanel {...farm} />
       </ActionCard>
-      <EarningsCard className='earnings-panel' mr={!isMobile && '16px'} mb="16px">
+      <EarningsCard className="earnings-panel" mr={!isMobile && '16px'} mb="16px">
         <Flex padding="16px 16px 12px">
           <EarningsContainer>
             <Title fontSize="20px" bold lineHeight={1} mb="16px">
@@ -283,7 +283,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
           <RewardImage src={lpLogo} alt="igloo-stats" size={56} />
         </Flex>
       </EarningsCard>
-      <Flex className='pending-panel' flexDirection="column" mb="16px">
+      <Flex className="pending-panel" flexDirection="column" mb="16px">
         <PendingRewardsCard padding="10px 16px">
           <PendingRewardsContent>
             <Flex alignItems="center" justifyContent="space-around" mr="16px">
@@ -294,7 +294,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
                   const amountInUsd = getTokenPrice(pendingToken) * amount
 
                   return (
-                    <Flex flexDirection="column" alignItems="center" mr="4px" ml="4px">
+                    <Flex flexDirection="column" alignItems="center" mr="4px" ml="4px" key={pendingToken}>
                       <RewardImage src={getTokenLogo(pendingToken)} alt="penguin" size={50} />
                       <BalanceWrapper>
                         <StyledBalance
