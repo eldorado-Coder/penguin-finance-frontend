@@ -73,12 +73,15 @@ const ActionCard = styled(Card)<{ minWidth?: number }>`
 
 const EarningsCard = styled(ActionCard)`
   min-width: 240px;
+  margin-right: 0;
 
   img {
     display: block;
   }
 
   ${({ theme }) => theme.mediaQueries.xl} {
+    margin-right: 16px;
+
     img {
       display: none;
     }
@@ -92,6 +95,13 @@ const EarningsCard = styled(ActionCard)`
     }
   }
 `
+
+const StakeCard = styled(ActionCard)`
+  margin-right: 0;
+  ${({ theme }) => theme.mediaQueries.xl} {
+    margin-right: 16px;
+  }
+`;
 
 const PendingRewardsCard = styled(ActionCard)`
   @media (min-width: 1350px) {
@@ -245,10 +255,10 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
 
   return (
     <Container expanded={expanded}>
-      <ActionCard className="stake-panel" padding="20px" mr={!isMobile && '16px'} mb="16px" minWidth={300}>
+      <StakeCard padding="20px" mb="16px" minWidth={300}>
         <StakePanel {...farm} />
-      </ActionCard>
-      <EarningsCard className="earnings-panel" mr={!isMobile && '16px'} mb="16px">
+      </StakeCard>
+      <EarningsCard mb="16px">
         <Flex padding="16px 16px 12px">
           <EarningsContainer>
             <Title fontSize="20px" bold lineHeight={1} mb="16px">
