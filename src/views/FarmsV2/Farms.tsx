@@ -126,7 +126,6 @@ const Farms: React.FC = () => {
                   src={project.src}
                   alt={project.name}
                   isActive={!!isActiveProject}
-                  width="32"
                   onClick={() => handleChangeActiveProject(project.name)}
                 />
               )
@@ -249,8 +248,8 @@ const StyledInput = styled(Input)`
 `
 
 const ProjectLogo = styled.img<{ isActive?: boolean }>`
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   margin-left: 8px;
   margin-right: 8px;
   cursor: pointer;
