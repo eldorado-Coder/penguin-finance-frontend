@@ -218,7 +218,8 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
   const pefiPerYear = getBalanceNumber(farm.pefiPerYear)
   const pefiPerWeek = pefiPerYear / WEEKS_PER_YEAR
 
-  const farmApy = farm.apy ? farm.apy.toFixed(2) : '--'
+  // const farmApy = farm.apy ? farm.apy.toFixed(2) : '--'
+  const farmApy = farm.apr ? (100 * Number(farm.apr)).toFixed(2) : '--'
 
   const lpSymbol = farm.lpSymbol.replaceAll(' LP', '')
   const lpLogo = getTokenLogoFromSymbol(lpSymbol)
