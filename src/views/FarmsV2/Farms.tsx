@@ -218,24 +218,24 @@ const IgloosContentContainer = styled.div`
 
 const SelectWrapper = styled.div`
   div {
-    color: #372871;
+    color: ${({ theme }) => theme.isDark && '#372871'};
     > div:first-child {
       > div {
-        background: #bba6dd;
+        background: ${({ theme }) => theme.isDark && '#bba6dd'};
       }
     }
     > div:last-child {
-      background: #bba6dd;
+      background: ${({ theme }) => theme.isDark && '#bba6dd'};
     }
   }
 `
 
 const StyledInput = styled(Input)`
-  color: #372871;
-  background: #bba6dd;
   border: 1px solid transparent;
+  color: ${({ theme }) => theme.isDark && '#372871'};
+  background: ${({ theme }) => theme.isDark && '#bba6dd'};
   ::placeholder {
-    color: #927fbc;
+    color: ${({ theme }) => theme.isDark && '#927fbc'};
   }
 
   &:focus {
