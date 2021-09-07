@@ -100,6 +100,9 @@ const TableBody = styled.tbody`
 
 const TableWrapper = styled.div<{ shouldRenderChild?: boolean }>`
   padding: 0 8px;
+  ${({ theme }) => theme.mediaQueries.xs} {
+    padding: 0px;
+  }
   margin-bottom: ${({ shouldRenderChild }) => shouldRenderChild && '8px'};
 `
 

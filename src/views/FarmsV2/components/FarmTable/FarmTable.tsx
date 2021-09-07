@@ -29,6 +29,9 @@ const TableContainer = styled.div`
 
 const ScrollWrapper = styled.div`
   padding: 0 8px;
+  ${({ theme }) => theme.mediaQueries.xs} {
+    padding: 0px;
+  }
 `
 
 const ScrollButtonContainer = styled.div`
