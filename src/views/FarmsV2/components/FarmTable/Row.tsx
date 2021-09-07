@@ -121,7 +121,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
   const [actionPanelExpanded, setActionPanelExpanded] = useState(false)
   const farmAPY =
     farm.apy && farm.apy.times(new BigNumber(WEEKS_PER_YEAR)).times(new BigNumber(100)).toNumber().toFixed(2)
-  const shouldRenderChild = useDelayedUnmount(actionPanelExpanded, 0)
+  const shouldRenderChild = useDelayedUnmount(actionPanelExpanded, 300)
   const { isXl, isXs } = useMatchBreakpoints()
   const { getTokenLogo } = useAssets()
 
