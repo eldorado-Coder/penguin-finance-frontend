@@ -12,6 +12,7 @@ const StyledButton = styled(Button)`
   border-radius: 10px;
   background: ${({ theme }) => theme.colors.red};
   color: white;
+  padding: 0 14px;
 `
 
 const Label = styled(Text)`
