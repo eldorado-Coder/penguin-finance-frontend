@@ -132,10 +132,6 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
     setActionPanelExpanded(!actionPanelExpanded)
   }
 
-  useEffect(() => {
-    setActionPanelExpanded(hasStakedAmount)
-  }, [hasStakedAmount])
-
   const isMobile = !isXl
   const tableSchema = isMobile ? MobileColumnSchema : DesktopColumnSchema
   const columnNames = tableSchema.map((column) => column.name)
