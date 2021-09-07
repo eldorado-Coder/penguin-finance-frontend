@@ -15,11 +15,9 @@ import FarmTable from './components/FarmTable/FarmTable'
 import { FarmWithStakedValue } from './components/types'
 
 const PROJECT_LIST = [
-  { src: '/images/tokens/PEFI.png', name: 'Penguin' },
-  { src: '/images/farms-v2/sushi.svg', name: 'Sushi' },
-  { src: '/images/farms-v2/joe.png', name: 'Joe' },
-  { src: '/images/farms-v2/png.svg', name: 'Pangolin' },
-  { src: '/images/farms-v2/snob.png', name: 'Snowball' },
+  { src: '/images/farms-v2/penguin.svg', name: 'Penguin' },
+  { src: '/images/farms-v2/joe.svg', name: 'Joe' },
+  { src: '/images/farms-v2/pangolin.svg', name: 'Pangolin' },
 ]
 
 const Farms: React.FC = () => {
@@ -40,7 +38,7 @@ const Farms: React.FC = () => {
     }
   }, [account, dispatch, fastRefresh])
 
-  const activeFarms = v2FarmsLP.filter((farm) => farm.type === 'Pangolin' && farm.multiplier !== '0X')
+  const activeFarms = v2FarmsLP.filter((farm) => Number(farm.multiplier) > 0)
 
   const filteredFarms = useMemo(() => {
     let farms = [...activeFarms]
@@ -121,7 +119,9 @@ const Farms: React.FC = () => {
               Staked Only
             </FilterText>
           </Flex>
-          <Flex ml="16px" mt="16px">
+        </LeftFilters>
+        <Flex mt="16px">
+          <Flex ml="16px" mt="16px" mr="16px">
             {PROJECT_LIST.map((project) => {
               const isActiveProject = activeProjects.find((row) => row === project.name)
               return (
@@ -136,8 +136,7 @@ const Farms: React.FC = () => {
               )
             })}
           </Flex>
-        </LeftFilters>
-        <Flex mt="16px">
+
           <Flex flexDirection="column">
             <Text fontSize="12px" textTransform="uppercase" color="textSubtle">
               Sort by
@@ -269,6 +268,8 @@ const ToggleWrapper = styled.div<{ checked?: boolean }>`
     height: 32px;
     width: 56px;
     background: ${({ checked, theme }) => theme.isDark && !checked && '#bba6dd'};
+    background: ${({ checked, theme }) => theme.isDark && checked && '#d4444c'};
+    background: ${({ checked, theme }) => !theme.isDark && checked && '#ec3e3f'};
 
     div {
       height: 24px;

@@ -44,13 +44,14 @@ const Details: React.FC<DetailsProps> = ({ actionPanelToggled }) => {
   return (
     <Container>
       <Flex alignItems="center">
-        {!isMobile ? (
+        {/* {!isMobile ? (
           <StyledButton scale="sm" color="primary" endIcon={<ArrowDownIcon toggled={actionPanelToggled} />}>
             View Farm
           </StyledButton>
         ) : (
           <ArrowIcon toggled={actionPanelToggled} />
-        )}
+        )} */}
+        <ArrowIcon toggled={actionPanelToggled} />
       </Flex>
     </Container>
   )
