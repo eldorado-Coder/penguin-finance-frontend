@@ -6,7 +6,6 @@ import { Card, Text, Button, Flex, useMatchBreakpoints } from 'penguinfinance-ui
 import { WEEKS_PER_YEAR } from 'config'
 import useAssets from 'hooks/useAssets'
 import { useV2Harvest } from 'hooks/useV2Farm'
-import useTheme from 'hooks/useTheme'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { getTokenLogoFromSymbol } from 'utils/token'
 import Balance from 'components/Balance'
@@ -216,9 +215,10 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
   const liquidity = totalLp ? totalLp * lpPrice : '-'
 
   const userSharePercentage = totalShares > 0 ? (100 * userShares) / totalShares : 0
-  const theme = useTheme()
   const pefiPerYear = getBalanceNumber(farm.pefiPerYear)
   const pefiPerWeek = pefiPerYear / WEEKS_PER_YEAR
+
+  const farmApy = farm.apy ? farm.apy.toFixed(2) : '--'
 
   const lpSymbol = farm.lpSymbol.replaceAll(' LP', '')
   const lpLogo = getTokenLogoFromSymbol(lpSymbol)
@@ -289,7 +289,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
               fontWeight="400"
               prefix="APR: "
               suffix="%"
-              value={Number(pefiPerWeek)}
+              value={Number(farmApy)}
             />
             <Balance
               fontSize="14px"

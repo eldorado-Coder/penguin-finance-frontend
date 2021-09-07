@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import BigNumber from 'bignumber.js'
 import { useMatchBreakpoints } from 'penguinfinance-uikit2'
 import { useV2FarmUser } from 'state/hooks'
 import useDelayedUnmount from 'hooks/useDelayedUnmount'
 import useAssets from 'hooks/useAssets'
-import { usePangolinLpPrice } from 'hooks/usePrice'
-import { WEEKS_PER_YEAR } from 'config'
 import { getBalanceNumber } from 'utils/formatBalance'
 import Balance from 'components/Balance'
-import { getAddress } from 'utils/addressHelpers'
 
 import Farm from './Farm'
 import Earned from './Earned'
@@ -113,14 +109,11 @@ interface RowProps extends FarmCardProps {
 
 const Row: React.FunctionComponent<RowProps> = (props) => {
   const { farm, index } = props
-  const [lpPrice, setLpPrice] = useState(1)
-  const lpAddress = getAddress(farm.lpAddresses)
-  const { onFetchLpPrice } = usePangolinLpPrice()
   const { stakedBalance, earnings } = useV2FarmUser(farm.pid, farm.type)
   const hasStakedAmount = !!stakedBalance.toNumber()
   const [actionPanelExpanded, setActionPanelExpanded] = useState(false)
-  const farmAPY =
-    farm.apy && farm.apy.times(new BigNumber(WEEKS_PER_YEAR)).times(new BigNumber(100)).toNumber().toFixed(2)
+  const farmAPY = farm.apy ? farm.apy.toFixed(2) : '--'
+
   const shouldRenderChild = useDelayedUnmount(actionPanelExpanded, 300)
   const { isXl, isXs } = useMatchBreakpoints()
   const { getTokenLogo } = useAssets()
@@ -131,29 +124,16 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
     pendingTokens.map((pendingTokenAddress) => {
       return { address: pendingTokenAddress, logo: getTokenLogo(pendingTokenAddress) }
     })
-  const liquidity = farm.totalLp ? getBalanceNumber(farm.totalLp) * lpPrice : '-'
-  const stakedBalanceInUsd = stakedBalance ? getBalanceNumber(stakedBalance) * lpPrice : '-'
+  const liquidity = farm.totalLp ? getBalanceNumber(farm.totalLp) * farm.lpPrice : '-'
+  const stakedBalanceInUsd = stakedBalance ? getBalanceNumber(stakedBalance) * farm.lpPrice : '-'
 
   const toggleActionPanel = () => {
     setActionPanelExpanded(!actionPanelExpanded)
   }
 
-  const onSetLpPrice = async () => {
-    const _lpPrice = await onFetchLpPrice(lpAddress)
-    setLpPrice(_lpPrice)
-  }
-
   useEffect(() => {
     setActionPanelExpanded(hasStakedAmount)
   }, [hasStakedAmount])
-
-  useEffect(() => {
-    onSetLpPrice()
-    setInterval(() => {
-      onSetLpPrice()
-    }, 20000)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   const isMobile = !isXl
   const tableSchema = isMobile ? MobileColumnSchema : DesktopColumnSchema
@@ -284,7 +264,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
           <TableBody>{handleRenderRow()}</TableBody>
         </StyledTable>
       </TableWrapper>
-      {shouldRenderChild && <ActionPanel {...props} lpPrice={lpPrice} expanded={actionPanelExpanded} />}
+      {shouldRenderChild && <ActionPanel {...props} lpPrice={farm.lpPrice} expanded={actionPanelExpanded} />}
     </>
   )
 }

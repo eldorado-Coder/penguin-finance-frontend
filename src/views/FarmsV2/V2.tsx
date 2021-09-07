@@ -11,13 +11,9 @@ const V2Farms: React.FC<FarmProps> = ({ farms }) => {
   const { path } = useRouteMatch()
 
   const farmsList = useCallback((farmsToDisplay, removed: boolean) => {
-    const farmsToDisplayWithAPY: FarmWithStakedValue[] = farmsToDisplay.map((farm) => {
-      return { ...farm, apy: 0 }
-    })
-
     return (
       <FarmTable
-        data={farmsToDisplayWithAPY.map((farm) => ({
+        data={farmsToDisplay.map((farm) => ({
           farm,
           removed,
         }))}

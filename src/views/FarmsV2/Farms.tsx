@@ -5,10 +5,12 @@ import { useWeb3React } from '@web3-react/core'
 import styled from 'styled-components'
 import Page from 'components/layout/Page'
 import Select from 'components/Select/Select'
-import { useV2Farms } from 'state/hooks'
+import { useV2Farms, usePricePefiUsdt, usePricePngUsdt } from 'state/hooks'
 import { fetchV2FarmUserDataAsync } from 'state/actions'
 import useRefresh from 'hooks/useRefresh'
 import { getBalanceNumber } from 'utils/formatBalance'
+import { DAYS_PER_YEAR } from 'config'
+
 import V1Farms from './V1'
 import V2Farms from './V2'
 
@@ -30,6 +32,7 @@ const Farms: React.FC = () => {
   const { account } = useWeb3React()
   const v2FarmsLP = useV2Farms()
   const { isSm } = useMatchBreakpoints()
+  const pefiPriceUsd = usePricePefiUsdt().toNumber()
 
   useEffect(() => {
     if (account) {
@@ -38,9 +41,21 @@ const Farms: React.FC = () => {
   }, [account, dispatch, fastRefresh])
 
   const activeFarms = v2FarmsLP.filter((farm) => Number(farm.multiplier) > 0)
+  const activeFarmsWithApy = activeFarms.map((farm) => {
+    const pefiPerYear = getBalanceNumber(farm.pefiPerYear)
+    const pefiPerDay = pefiPerYear / DAYS_PER_YEAR
+    const pefiRewardPerDayInUsd = pefiPriceUsd * pefiPerDay
+
+    const totalLp = getBalanceNumber(farm.totalLp)
+    const liquidityInUsd = totalLp ? totalLp * farm.lpPrice : 0
+
+    const pefiDailyApr = pefiRewardPerDayInUsd / liquidityInUsd
+
+    return { ...farm, apy: pefiDailyApr }
+  })
 
   const filteredFarms = useMemo(() => {
-    let farms = [...activeFarms]
+    let farms = [...activeFarmsWithApy]
     // filter
     if (searchTerm) {
       farms = farms.filter((farm) => farm.lpSymbol.toLowerCase().includes(searchTerm.toLowerCase()))
@@ -64,9 +79,12 @@ const Farms: React.FC = () => {
           Number(a.lpPrice) * getBalanceNumber(a.userData?.stakedBalance),
       )
     }
+    if (sortType === 'apr') {
+      farms = farms.sort((a, b) => b.apy - a.apy)
+    }
 
     return farms
-  }, [searchTerm, activeFarms, showStakedOnly, account, activeProjects, sortType])
+  }, [searchTerm, activeFarmsWithApy, showStakedOnly, account, activeProjects, sortType])
 
   const handleSwitchTab = (tab) => {
     setActiveTab(tab)
