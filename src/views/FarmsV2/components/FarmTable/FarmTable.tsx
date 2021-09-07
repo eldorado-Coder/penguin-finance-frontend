@@ -23,31 +23,13 @@ const TableWrapper = styled.div`
   }
 `
 
-const StyledTable = styled.table`
-  border-collapse: collapse;
-  font-size: 14px;
-  border-radius: 4px;
-  margin-left: auto;
-  margin-right: auto;
-  width: 100%;
-`
-
-const TableBody = styled.tbody`
-  & tr {
-    td {
-      font-size: 16px;
-      vertical-align: middle;
-    }
-  }
-`
-
 const TableContainer = styled.div`
   position: relative;
 `
 
 const ScrollWrapper = styled.div`
   padding: 0 8px;
-`;
+`
 
 const ScrollButtonContainer = styled.div`
   display: flex;
@@ -58,7 +40,6 @@ const ScrollButtonContainer = styled.div`
   box-shadow: 0px 1px 4px rgb(0 0 0 / 16%);
   border-radius: 0 0 16px 16px;
   background: ${({ theme }) => theme.card.background};
-  
 `
 
 const FarmTable: React.FC<ITableProps> = (props) => {
@@ -76,9 +57,7 @@ const FarmTable: React.FC<ITableProps> = (props) => {
       <TableContainer>
         <TableWrapper ref={tableWrapperEl}>
           {data.map((row, index) => {
-            return (
-              <Row {...row} index={index} key={`table-row-${row.farm.type}-${row.farm.pid}`} />  
-            )
+            return <Row {...row} index={index} key={`table-row-${row.farm.type}-${row.farm.pid}`} />
           })}
         </TableWrapper>
         <ScrollWrapper>
