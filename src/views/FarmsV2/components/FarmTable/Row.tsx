@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useMatchBreakpoints } from 'penguinfinance-uikit2'
 import { useV2FarmUser } from 'state/hooks'
@@ -110,7 +110,6 @@ interface RowProps extends FarmCardProps {
 const Row: React.FunctionComponent<RowProps> = (props) => {
   const { farm, index } = props
   const { stakedBalance, earnings } = useV2FarmUser(farm.pid, farm.type)
-  const hasStakedAmount = !!stakedBalance.toNumber()
   const [actionPanelExpanded, setActionPanelExpanded] = useState(false)
   // const farmAPY = farm.apy ? (100 * Number(farm.apy)).toFixed(2) : '--'
   const farmAPY = farm.apr ? (100 * Number(farm.apr)).toFixed(2) : '--'
