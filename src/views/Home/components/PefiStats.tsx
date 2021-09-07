@@ -17,12 +17,10 @@ import {
   usePriceLinkUsdt,
   usePriceLydUsdt,
   useCompounderFarms,
-  usePools,
 } from 'state/hooks'
 import { Pool } from 'state/types'
 import { QuoteToken } from 'config/constants/types'
 import { PEFI_MAX_SUPPLY } from 'config'
-import roundDown from 'utils/roundDown'
 import useTheme from 'hooks/useTheme'
 import CardValue from './CardValue'
 
@@ -56,7 +54,6 @@ interface HarvestProps {
 const PefiStats: React.FC<HarvestProps> = ({ v1Pool, v2Pool }) => {
   const TranslateString = useI18n()
   const totalSupply = useTotalSupply()
-  const pools = usePools(null)
   const burnedBalance = useBurnedBalance(getPefiAddress())
   const xPefiContract = useXPefi()
   const pefiPerBlock = usePefiPerBlock()

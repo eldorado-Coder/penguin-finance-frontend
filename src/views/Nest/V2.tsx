@@ -8,19 +8,15 @@ import orderBy from 'lodash/orderBy'
 import partition from 'lodash/partition'
 import { getBalanceNumber, getNumberWithCommas } from 'utils/formatBalance'
 import useTokenBalance from 'hooks/useTokenBalance'
-import useUserSetting from 'hooks/useUserSetting'
 import { useV2NestContract } from 'hooks/useContract'
 import { useV2Pools } from 'state/hooks'
-import { getFirstStakeTime } from 'subgraph/utils'
 import { getPefiAddress } from 'utils/addressHelpers'
 import roundDown from 'utils/roundDown'
 import CardValue from 'components/CardValue'
 import NestCard from './components/NestCard'
 
 const NestV2: React.FC = () => {
-  const [userFirstStakeTime, setUserFirstStakeTime] = useState(0)
   const [handsOnPenalty, setHandsOnPenalty] = useState(6)
-  const { refreshRate } = useUserSetting()
   const { path } = useRouteMatch()
   const { account } = useWeb3React()
   const pools = useV2Pools(account)
@@ -29,23 +25,6 @@ const NestV2: React.FC = () => {
   const isMobile = !isXl
 
   const [finishedPools, openPools] = partition(pools, (pool) => pool.isFinished)
-
-  const fetchUserFirstStakeTime = useCallback(async () => {
-    const firstStakeTime = await getFirstStakeTime(account)
-
-    if (firstStakeTime) {
-      setUserFirstStakeTime(firstStakeTime)
-    } else {
-      setUserFirstStakeTime(0)
-    }
-  }, [account])
-
-  useEffect(() => {
-    const refreshInterval = setInterval(() => {
-      fetchUserFirstStakeTime()
-    }, refreshRate)
-    return () => clearInterval(refreshInterval)
-  }, [account, refreshRate, fetchUserFirstStakeTime])
 
   const fetchHandsOnPenalty = useCallback(async () => {
     const perHandsPenalty = await iPefiContract.methods.paperHandsPenalty().call()

@@ -86,15 +86,6 @@ const StyledTokenInput = styled.div`
   }
 `
 
-const StyledSpacer = styled.div`
-  width: ${(props) => props.theme.spacing[3]}px;
-`
-
-const StyledTokenAdornmentWrapper = styled.div`
-  align-items: center;
-  display: flex;
-`
-
 const StyledMaxText = styled.div`
   align-items: center;
   color: #604e84;
@@ -103,11 +94,6 @@ const StyledMaxText = styled.div`
   font-size: 14px;
   height: 32px;
   justify-content: flex-end;
-`
-
-const StyledTokenSymbol = styled.span`
-  color: ${({ theme }) => (theme.isDark ? 'white' : '#372871')};
-  font-weight: 400;
 `
 
 const StyledButton = styled(Button)`

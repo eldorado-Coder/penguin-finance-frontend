@@ -1,7 +1,6 @@
 import React, { useState, useCallback } from 'react'
 import styled from 'styled-components'
 import { Flex, ButtonMenuItem, ButtonMenu } from 'penguinfinance-uikit2'
-import { BigNumber } from 'bignumber.js'
 import { useWeb3React } from '@web3-react/core'
 import { useV2FarmUser } from 'state/hooks'
 import { useERC20 } from 'hooks/useContract'

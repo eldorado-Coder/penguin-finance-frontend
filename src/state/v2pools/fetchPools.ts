@@ -2,10 +2,9 @@ import BigNumber from 'bignumber.js'
 import v2PoolsConfig from 'config/constants/v2pools'
 import v2NestABI from 'config/abi/v2_nest.json'
 import penguinABI from 'config/abi/penguin.json'
-import wbnbABI from 'config/abi/weth.json'
 import { QuoteToken } from 'config/constants/types'
 import multicall from 'utils/multicall'
-import { getAddress, getWavaxAddress } from 'utils/addressHelpers'
+import { getAddress } from 'utils/addressHelpers'
 import { getBalanceNumber } from 'utils/formatBalance'
 
 export const fetchPoolsBlockLimits = async () => {

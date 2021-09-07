@@ -1,9 +1,8 @@
 import React from 'react'
 import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
-import { Text, BaseLayout, Flex, useMatchBreakpoints } from 'penguinfinance-uikit2'
+import { BaseLayout, Flex, useMatchBreakpoints } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
-import useI18n from 'hooks/useI18n'
 import useTheme from 'hooks/useTheme'
 import Page from 'components/layout/Page'
 import NestIglooV2Card from 'views/Home/components/NestIglooV2Card'
@@ -11,10 +10,9 @@ import FarmStakingCard from 'views/Home/components/FarmStakingCard'
 import PefiStats from 'views/Home/components/PefiStats'
 import IglooCard from 'views/Home/components/IglooCard'
 import EarnAPYCard from 'views/Home/components/EarnAPYCard'
-import PercentagePefiStakedNestV1 from 'views/Home/components/PercentagePefiStakedNestV1'
 import PercentagePefiStakedNestV2 from 'views/Home/components/PercentagePefiStakedNestV2'
 import V2PoolCard from 'views/Pools/components/V2PoolCard'
-import { usePools, useV2Pools, useV2NestApy } from 'state/hooks'
+import { usePools, useV2Pools } from 'state/hooks'
 
 const Hero = styled.div<{ isMobile?: boolean }>`
   position: relative;
@@ -119,12 +117,6 @@ const Home: React.FC = () => {
   const v2Pools = useV2Pools(account)
   const { isXl } = useMatchBreakpoints()
   const isMobile = !isXl
-  // const AVAX_BLOCK_TIME = useBlockGenerationTime()
-  // const BLOCKS_PER_YEAR = new BigNumber(SECONDS_PER_YEAR).div(new BigNumber(AVAX_BLOCK_TIME))
-
-  // const farms = useFarms()
-  // const avaxPriceUSD = usePriceAvaxUsdt()
-  // const ethPriceBnb = usePriceEthAvax()
 
   const v1PoolsWithApy = v1Pools.map((pool) => {
     return {
@@ -166,7 +158,6 @@ const Home: React.FC = () => {
               <SpacingWrapper />
               <EarnAPYCard apy={iPefiPool.apy} />
               <SpacingWrapper />
-              {/* <PercentagePefiStakedNestV1 pool={xPefiPool} /> */}
               <PercentagePefiStakedNestV2 pool={iPefiPool} />
             </PefiStatsCardWrapper>
             {iPefiPool && (

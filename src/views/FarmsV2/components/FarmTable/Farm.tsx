@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Text, Image, Tag, Flex, useMatchBreakpoints } from 'penguinfinance-uikit2'
+import { Text, Image, Tag, Flex } from 'penguinfinance-uikit2'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { useFarmUser } from 'state/hooks'
 import { FarmCardProps } from '../types'
@@ -71,8 +71,6 @@ const Farm: React.FunctionComponent<FarmCardProps> = ({ farm }) => {
   const { stakedBalance } = useFarmUser(farm.pid, 'Penguin')
   const rawStakedBalance = getBalanceNumber(stakedBalance)
   const farmImage = farm.lpSymbol.split(' ')[0].toLocaleLowerCase()
-  const { isXl } = useMatchBreakpoints()
-  const isMobile = !isXl
 
   const handleRenderFarming = (): JSX.Element => {
     if (rawStakedBalance) {

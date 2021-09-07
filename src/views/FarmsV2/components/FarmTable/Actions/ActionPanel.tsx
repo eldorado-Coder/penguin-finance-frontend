@@ -191,7 +191,7 @@ const getCoinImage = (amount) => {
 
 const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, expanded }) => {
   const [pendingTx, setPendingTx] = useState(false)
-  const { getTokenLogo, getTokenSymbol } = useAssets()
+  const { getTokenLogo } = useAssets()
   const { onHarvest } = useV2Harvest(farm.pid)
   const { account } = useWeb3React()
   const v2Pools = useV2Pools(account)
@@ -201,7 +201,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
   const iPefiToPefiRatio = Number(getIPefiToPefiRatio(v2Nest))
   const iPefiPriceUsd = iPefiToPefiRatio * pefiPriceUsd
 
-  const { isXl, isLg } = useMatchBreakpoints()
+  const { isXl } = useMatchBreakpoints()
   const isMobile = !isXl
   const { pendingTokens, userData, maxBips: maxAutoNestAllocation } = farm
   const userPendingTokens = userData ? userData.userPendingTokens : []

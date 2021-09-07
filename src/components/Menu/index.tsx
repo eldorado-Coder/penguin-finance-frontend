@@ -7,18 +7,12 @@ import { LanguageContext } from 'contexts/Localisation/languageContext'
 import useTheme from 'hooks/useTheme'
 import useAuth from 'hooks/useAuth'
 import useTokenBalance from 'hooks/useTokenBalance'
-import { usePricePefiUsdt, usePools, useV2Pools, useEmperor } from 'state/hooks'
+import { usePricePefiUsdt, useV2Pools, useEmperor } from 'state/hooks'
 import { getPefiAddress, getXPefiAddress, getIPefiAddress } from 'utils/addressHelpers'
 import { getBalanceNumber } from 'utils/formatBalance'
 import WalletConnectGuideModal from 'components/Modal/WalletConnectGuideModal'
 import SettingModal from 'components/Modal/SettingModal'
 import { config, socials } from './config'
-
-const getXPefiToPefiRatio = (pool) => {
-  return pool.totalStaked && pool.totalSupply
-    ? new BigNumber(pool.totalStaked).div(new BigNumber(pool.totalSupply)).toJSON()
-    : 1
-}
 
 const getIPefiToPefiRatio = (pool) => {
   return pool.totalStaked && pool.totalSupply
@@ -32,7 +26,6 @@ const Menu = (props) => {
   const { selectedLanguage, setSelectedLanguage } = useContext(LanguageContext)
   const { isDark, toggleTheme } = useTheme()
   const pefiPriceUsd = usePricePefiUsdt()
-  const pools = usePools(account)
   const v2Pools = useV2Pools(account)
   const pefiBalance = useTokenBalance(getPefiAddress())
   const xPefiBalance = useTokenBalance(getXPefiAddress())
@@ -42,9 +35,7 @@ const Menu = (props) => {
 
   const { myEmperor } = useEmperor()
   const myNickname = myEmperor.nickname
-  const v1Nest = pools.length > 0 ? pools[0] : null
   const v2Nest = v2Pools.length > 0 ? v2Pools[0] : null
-  // const xPefiToPefiRatio = getXPefiToPefiRatio(v1Nest)
   const iPefiToPefiRatio = getIPefiToPefiRatio(v2Nest)
 
   // add badge to "emperor" and "launchpad" menu
@@ -86,7 +77,6 @@ const Menu = (props) => {
         langs={allLanguages}
         setLang={setSelectedLanguage}
         penguinPriceUsd={pefiPriceUsd.toNumber()}
-        // pefiRatio={Number(xPefiToPefiRatio)}
         iPefiRatio={Number(iPefiToPefiRatio)}
         links={links}
         socials={socials}
@@ -95,13 +85,6 @@ const Menu = (props) => {
         xPefiBalance={getBalanceNumber(xPefiBalance).toFixed(3)}
         iPefiBalance={getBalanceNumber(iPefiBalance).toFixed(3)}
         avaxBalance={getBalanceNumber(avaxBalance).toFixed(3)}
-        // profile={{
-        //   username: profile?.username,
-        //   image: profile?.nft ? `/images/nfts/${profile.nft?.images.sm}` : undefined,
-        //   profileLink: '/profile',
-        //   noProfileLink: '/profile',
-        //   showPip: !profile?.username,
-        // }}
         {...props}
       />
     </>
