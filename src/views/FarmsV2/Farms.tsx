@@ -16,10 +16,8 @@ import { FarmWithStakedValue } from './components/types'
 
 const PROJECT_LIST = [
   { src: '/images/tokens/PEFI.png', name: 'Penguin' },
-  { src: '/images/farms-v2/sushi.svg', name: 'Sushi' },
   { src: '/images/farms-v2/joe.png', name: 'Joe' },
   { src: '/images/farms-v2/png.svg', name: 'Pangolin' },
-  { src: '/images/farms-v2/snob.png', name: 'Snowball' },
 ]
 
 const Farms: React.FC = () => {
@@ -40,7 +38,8 @@ const Farms: React.FC = () => {
     }
   }, [account, dispatch, fastRefresh])
 
-  const activeFarms = v2FarmsLP.filter((farm) => farm.type === 'Pangolin' && farm.multiplier !== '0X')
+  const activeFarms = v2FarmsLP.filter((farm) => Number(farm.multiplier) > 0)
+  console.log('123123--->', v2FarmsLP)
 
   const filteredFarms = useMemo(() => {
     let farms = [...activeFarms]
