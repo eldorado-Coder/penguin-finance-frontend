@@ -6,7 +6,6 @@ import { Card, Text, Button, Flex, useMatchBreakpoints } from 'penguinfinance-ui
 import { WEEKS_PER_YEAR } from 'config'
 import useAssets from 'hooks/useAssets'
 import { useV2Harvest } from 'hooks/useV2Farm'
-import useTheme from 'hooks/useTheme'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { getTokenLogoFromSymbol } from 'utils/token'
 import Balance from 'components/Balance'
@@ -122,6 +121,12 @@ const RewardImage = styled.img<{ size: number; ml?: number }>`
   margin-left: ${({ ml }) => ml && `${ml}px`};
   border-radius: 50%;
 `
+const CoinImage = styled.img<{ size: number; ml?: number }>`
+  height: ${({ size }) => size}px;
+  width: ${({ size }) => size}px;
+  margin: 0px 12px;
+  margin-left: ${({ ml }) => ml && `${ml}px`};
+`
 
 const StyledButton = styled(Button)`
   font-weight: 500;
@@ -175,9 +180,28 @@ const Title = styled(Text)`
   color: ${({ theme }) => theme.colors.red};
 `
 
+const COIN_LIST = [
+  { src: '/images/farms-v2/coins/coin1.png', min: 0 },
+  { src: '/images/farms-v2/coins/coin2.png', min: 500 },
+  { src: '/images/farms-v2/coins/coin3.png', min: 1000 },
+  { src: '/images/farms-v2/coins/coin4.png', min: 5000 },
+  { src: '/images/farms-v2/coins/coin5.png', min: 10000 },
+]
+
+const getCoinImage = (amount) => {
+  let coinImg
+  COIN_LIST.reverse().map((row) => {
+    if (amount > row.min) {
+      coinImg = row.src
+    }
+    return row
+  })
+  return coinImg
+}
+
 const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, expanded }) => {
   const [pendingTx, setPendingTx] = useState(false)
-  const { getTokenLogo, getTokenSymbol } = useAssets()
+  const { getTokenLogo } = useAssets()
   const { onHarvest } = useV2Harvest(farm.pid)
   const { account } = useWeb3React()
   const v2Pools = useV2Pools(account)
@@ -187,7 +211,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
   const iPefiToPefiRatio = Number(getIPefiToPefiRatio(v2Nest))
   const iPefiPriceUsd = iPefiToPefiRatio * pefiPriceUsd
 
-  const { isXl, isLg } = useMatchBreakpoints()
+  const { isXl } = useMatchBreakpoints()
   const isMobile = !isXl
   const { pendingTokens, userData, maxBips: maxAutoNestAllocation } = farm
   const userPendingTokens = userData ? userData.userPendingTokens : []
@@ -201,12 +225,15 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
   const liquidity = totalLp ? totalLp * lpPrice : '-'
 
   const userSharePercentage = totalShares > 0 ? (100 * userShares) / totalShares : 0
-  const theme = useTheme()
   const pefiPerYear = getBalanceNumber(farm.pefiPerYear)
   const pefiPerWeek = pefiPerYear / WEEKS_PER_YEAR
 
+  // const farmApy = farm.apy ? farm.apy.toFixed(2) : '--'
+  const farmApy = farm.apr ? (100 * Number(farm.apr)).toFixed(2) : '--'
+
   const lpSymbol = farm.lpSymbol.replaceAll(' LP', '')
   const lpLogo = getTokenLogoFromSymbol(lpSymbol)
+  const coinImg = getCoinImage(Number(userStakedBalanceInUsd))
 
   const onClickHarvest = async () => {
     setPendingTx(true)
@@ -259,7 +286,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
               />
             )}
           </EarningsContainer>
-          <RewardImage src={lpLogo} alt="pefi-earning" size={56} />
+          {coinImg && <CoinImage src={coinImg} alt="pefi-earning" size={56} />}
         </Flex>
         <Divider />
         <Flex padding="12px 16px">
@@ -273,7 +300,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
               fontWeight="400"
               prefix="APR: "
               suffix="%"
-              value={Number(pefiPerWeek)}
+              value={Number(farmApy)}
             />
             <Balance
               fontSize="14px"
@@ -293,7 +320,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
           <RewardImage src={lpLogo} alt="igloo-stats" size={56} />
         </Flex>
       </EarningsCard>
-      <Flex className='pending-panel' flexDirection="column" mb="16px">
+      <Flex className="pending-panel" flexDirection="column" mb="16px">
         <PendingRewardsCard padding="10px 16px">
           <PendingRewardsContent>
             <Flex alignItems="center" justifyContent="space-around" mr="16px">
@@ -304,7 +331,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
                   const amountInUsd = getTokenPrice(pendingToken) * amount
 
                   return (
-                    <Flex flexDirection="column" alignItems="center" mr="4px" ml="4px">
+                    <Flex flexDirection="column" alignItems="center" mr="4px" ml="4px" key={pendingToken}>
                       <RewardImage src={getTokenLogo(pendingToken)} alt="penguin" size={50} />
                       <BalanceWrapper>
                         <StyledBalance

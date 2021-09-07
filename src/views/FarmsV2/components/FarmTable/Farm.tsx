@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Text, Image, Tag, Flex, useMatchBreakpoints } from 'penguinfinance-uikit2'
+import { Text, Image, Tag, Flex } from 'penguinfinance-uikit2'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { useFarmUser } from 'state/hooks'
 import { FarmCardProps } from '../types'
@@ -48,11 +48,15 @@ const MultiplierTag = styled(Tag)`
   border-color: ${({ theme }) => theme.colors.red};
   color: white;
 `
-const LpTag = styled(Tag)`
+const LpTag = styled(Tag)<{ type?: string }>`
   height: 20px;
   margin-right: 4px;
-  background-color: ${({ theme }) => (theme.isDark ? '#f97316' : '#FF4100')};
-  border-color: ${({ theme }) => (theme.isDark ? '#f97316' : '#FF4100')};
+  background-color: ${({ type }) => type === 'Pangolin' && '#f97316'};
+  background-color: ${({ type }) => type === 'Penguin' && '#FF4100'};
+  background-color: ${({ type }) => type === 'Joe' && '#e3796f'};
+  border-color: ${({ type }) => type === 'Pangolin' && '#f97316'};
+  border-color: ${({ type }) => type === 'Penguin' && '#FF4100'};
+  border-color: ${({ type }) => type === 'Joe' && '#e3796f'};
   color: white;
   font-size: 12px;
   border-radius: 8px;
@@ -67,8 +71,6 @@ const Farm: React.FunctionComponent<FarmCardProps> = ({ farm }) => {
   const { stakedBalance } = useFarmUser(farm.pid, 'Penguin')
   const rawStakedBalance = getBalanceNumber(stakedBalance)
   const farmImage = farm.lpSymbol.split(' ')[0].toLocaleLowerCase()
-  const { isXl } = useMatchBreakpoints()
-  const isMobile = !isXl
 
   const handleRenderFarming = (): JSX.Element => {
     if (rawStakedBalance) {
@@ -93,7 +95,7 @@ const Farm: React.FunctionComponent<FarmCardProps> = ({ farm }) => {
         </Flex>
         <Flex mt="4px">
           <MultiplierTag variant="primary">{`${farm.multiplier || 1}X`}</MultiplierTag>
-          <LpTag>{farm.type}</LpTag>
+          <LpTag type={farm.type}>{farm.type}</LpTag>
           {handleRenderFarming()}
         </Flex>
       </FarmLabelWrapper>

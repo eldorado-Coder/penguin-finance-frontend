@@ -6,15 +6,15 @@ import { Text, Flex } from 'penguinfinance-uikit2'
 import useI18n from 'hooks/useI18n'
 import { ChevronDown, ChevronUp } from 'react-feather'
 import Balance from 'components/Balance'
-import { CommunityTag, CoreTag, BinanceTag } from 'components/Tags'
+// import { CommunityTag, CoreTag, BinanceTag } from 'components/Tags'
 import { PoolCategory } from 'config/constants/types'
 import { usePricePefiUsdt } from 'state/hooks'
 
-const tags = {
-  [PoolCategory.BINANCE]: BinanceTag,
-  [PoolCategory.CORE]: CoreTag,
-  [PoolCategory.COMMUNITY]: CommunityTag,
-}
+// const tags = {
+//   [PoolCategory.BINANCE]: BinanceTag,
+//   [PoolCategory.CORE]: CoreTag,
+//   [PoolCategory.COMMUNITY]: CommunityTag,
+// }
 
 interface Props {
   penguinNestsGuideLink: string
@@ -84,7 +84,7 @@ const CardFooter: React.FC<Props> = ({
   blocksRemaining,
   isFinished,
   blocksUntilStart,
-  poolCategory,
+  // poolCategory,
 }) => {
   const [isOpen, setIsOpen] = useState(false)
   const TranslateString = useI18n()
@@ -93,7 +93,7 @@ const CardFooter: React.FC<Props> = ({
   const Icon = isOpen ? ChevronUp : ChevronDown
 
   const handleClick = () => setIsOpen(!isOpen)
-  const Tag = tags[poolCategory]
+  // const Tag = tags[poolCategory]
 
   // calculate TVL in pefi nest
   const getNestTVL = () => {

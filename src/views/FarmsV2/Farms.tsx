@@ -1,25 +1,24 @@
-import React, { useEffect, useCallback, useState, useMemo } from 'react'
-import { Route, useRouteMatch } from 'react-router-dom'
+import React, { useEffect, useState, useMemo } from 'react'
 import { useDispatch } from 'react-redux'
-import { Flex, Text, Toggle, Input } from 'penguinfinance-uikit2'
+import { Flex, Text, Toggle, Input, useMatchBreakpoints, ButtonMenu, ButtonMenuItem } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import styled from 'styled-components'
 import Page from 'components/layout/Page'
-import { useV2Farms } from 'state/hooks'
+import Select from 'components/Select/Select'
+import { useV2Farms, usePricePefiUsdt } from 'state/hooks'
+import { fetchV2FarmUserDataAsync } from 'state/actions'
 import useRefresh from 'hooks/useRefresh'
 import { getBalanceNumber } from 'utils/formatBalance'
-import { fetchV2FarmUserDataAsync } from 'state/actions'
+import { DAYS_PER_YEAR } from 'config'
+import { getApy } from 'utils/apyHelpers'
 
-import Select from 'components/Select/Select'
-import FarmTable from './components/FarmTable/FarmTable'
-import { FarmWithStakedValue } from './components/types'
+import V1Farms from './V1'
+import V2Farms from './V2'
 
 const PROJECT_LIST = [
-  { src: '/images/tokens/PEFI.png', name: 'Penguin' },
-  { src: '/images/farms-v2/sushi.svg', name: 'Sushi' },
-  { src: '/images/farms-v2/joe.png', name: 'Joe' },
-  { src: '/images/farms-v2/png.svg', name: 'Pangolin' },
-  { src: '/images/farms-v2/snob.png', name: 'Snowball' },
+  { src: '/images/farms-v2/penguin.svg', name: 'Penguin' },
+  { src: '/images/farms-v2/joe.svg', name: 'Joe' },
+  { src: '/images/farms-v2/pangolin.svg', name: 'Pangolin' },
 ]
 
 const Farms: React.FC = () => {
@@ -27,12 +26,14 @@ const Farms: React.FC = () => {
   const [showStakedOnly, setShowStakedOnly] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const [activeProjects, setActiveProjects] = useState(PROJECT_LIST.map((row) => row.name))
+  const [activeTab, setActiveTab] = useState(0) // 0: v2, 1: v1
 
   const dispatch = useDispatch()
   const { fastRefresh } = useRefresh()
-  const { path } = useRouteMatch()
   const { account } = useWeb3React()
   const v2FarmsLP = useV2Farms()
+  const { isSm } = useMatchBreakpoints()
+  const pefiPriceUsd = usePricePefiUsdt().toNumber()
 
   useEffect(() => {
     if (account) {
@@ -40,10 +41,25 @@ const Farms: React.FC = () => {
     }
   }, [account, dispatch, fastRefresh])
 
-  const activeFarms = v2FarmsLP.filter((farm) => farm.type === 'Pangolin' && farm.multiplier !== '0X')
+  const activeFarms = v2FarmsLP.filter((farm) => Number(farm.multiplier) > 0)
+  const activeFarmsWithApy = activeFarms.map((farm) => {
+    const pefiPerYear = getBalanceNumber(farm.pefiPerYear)
+    const pefiPerDay = pefiPerYear / DAYS_PER_YEAR
+    const pefiRewardPerDayInUsd = pefiPriceUsd * pefiPerDay
+
+    const totalLp = getBalanceNumber(farm.totalLp)
+    const liquidityInUsd = totalLp ? totalLp * farm.lpPrice : 0
+
+    const pefiDailyApr = pefiRewardPerDayInUsd / liquidityInUsd
+    const { pngDailyApr } = farm
+    const pngApy = getApy(pngDailyApr)
+    const pefiApy = getApy(pefiDailyApr) === Infinity ? 999999 : getApy(pefiDailyApr)
+
+    return { ...farm, pefiDailyApr, apr: pefiDailyApr + pngDailyApr, apy: pefiApy + pngApy }
+  })
 
   const filteredFarms = useMemo(() => {
-    let farms = [...activeFarms]
+    let farms = [...activeFarmsWithApy]
     // filter
     if (searchTerm) {
       farms = farms.filter((farm) => farm.lpSymbol.toLowerCase().includes(searchTerm.toLowerCase()))
@@ -67,24 +83,16 @@ const Farms: React.FC = () => {
           Number(a.lpPrice) * getBalanceNumber(a.userData?.stakedBalance),
       )
     }
+    if (sortType === 'apr') {
+      farms = farms.sort((a, b) => b.apr - a.apr)
+    }
 
     return farms
-  }, [searchTerm, activeFarms, showStakedOnly, account, activeProjects, sortType])
+  }, [searchTerm, activeFarmsWithApy, showStakedOnly, account, activeProjects, sortType])
 
-  const farmsList = useCallback((farmsToDisplay, removed: boolean) => {
-    const farmsToDisplayWithAPY: FarmWithStakedValue[] = farmsToDisplay.map((farm) => {
-      return { ...farm, apy: 0 }
-    })
-
-    return (
-      <FarmTable
-        data={farmsToDisplayWithAPY.map((farm) => ({
-          farm,
-          removed,
-        }))}
-      />
-    )
-  }, [])
+  const handleSwitchTab = (tab) => {
+    setActiveTab(tab)
+  }
 
   const handleChangeStakedOnly = (event) => {
     setShowStakedOnly(event.target.checked)
@@ -112,8 +120,8 @@ const Farms: React.FC = () => {
         <BannerImage src={`${process.env.PUBLIC_URL}/images/farms/IglooHeader.gif`} alt="igloos banner" />
       </IgloosBannerContainer>
       <FilterWrapper justifyContent="space-between" alignItems="center" flexWrap="wrap">
-        <LeftFilters alignItems="center" justifyContent="space-between" flexWrap="wrap">
-          <Flex mt="16px" alignItems="center">
+        <LeftFilters alignItems="center" mt="16px" justifyContent="space-between" flexWrap={isSm ? 'nowrap' : 'wrap'}>
+          <Flex alignItems="center">
             <ToggleWrapper checked={showStakedOnly}>
               <Toggle checked={showStakedOnly} onChange={handleChangeStakedOnly} />
             </ToggleWrapper>
@@ -121,7 +129,17 @@ const Farms: React.FC = () => {
               Staked Only
             </FilterText>
           </Flex>
-          <Flex ml="16px" mt="16px">
+          <Flex ml="8px" mr="8px" justifyContent="center" alignItems="center">
+            <TabWrapper>
+              <ButtonMenu activeIndex={activeTab} onItemClick={handleSwitchTab} scale="sm">
+                <OptionItem active={activeTab === 0}>{activeTab === 0 ? 'Live' : 'Live'}</OptionItem>
+                <OptionItem active={activeTab === 1}>{activeTab === 1 ? 'Finished' : 'Finished'}</OptionItem>
+              </ButtonMenu>
+            </TabWrapper>
+          </Flex>
+        </LeftFilters>
+        <Flex display={isSm ? 'block !important' : 'flex'} mt="16px">
+          <Flex mr={isSm ? '0px' : '8px'} mb={isSm ? '16px' : '0px'} alignItems="center">
             {PROJECT_LIST.map((project) => {
               const isActiveProject = activeProjects.find((row) => row === project.name)
               return (
@@ -130,47 +148,43 @@ const Farms: React.FC = () => {
                   src={project.src}
                   alt={project.name}
                   isActive={!!isActiveProject}
-                  width="32"
                   onClick={() => handleChangeActiveProject(project.name)}
                 />
               )
             })}
           </Flex>
-        </LeftFilters>
-        <Flex mt="16px">
-          <Flex flexDirection="column">
-            <Text fontSize="12px" textTransform="uppercase" color="textSubtle">
-              Sort by
-            </Text>
-            <SelectWrapper>
-              <Select
-                value={sortType}
-                options={[
-                  { label: 'Liquidity', value: 'liquidity' },
-                  { label: 'Hot', value: 'hot' },
-                  { label: 'APR', value: 'apr' },
-                  { label: 'Multiplier', value: 'multiplier' },
-                  { label: 'Earned', value: 'earned' },
-                ]}
-                onChange={setSortType}
-              />
-            </SelectWrapper>
-          </Flex>
-          <Flex flexDirection="column" ml="16px">
-            <Text fontSize="12px" textTransform="uppercase" color="textSubtle">
-              Search
-            </Text>
-            <StyledInput placeholder="Search Farms..." value={searchTerm} onChange={handleChangeSearchTerm} />
+          <Flex mb="16px">
+            <Flex flexDirection="column">
+              <Text fontSize="12px" textTransform="uppercase" color="textSubtle">
+                Sort by
+              </Text>
+              <SelectWrapper>
+                <Select
+                  value={sortType}
+                  options={[
+                    { label: 'Liquidity', value: 'liquidity' },
+                    { label: 'Hot', value: 'hot' },
+                    { label: 'APR', value: 'apr' },
+                    { label: 'Multiplier', value: 'multiplier' },
+                    { label: 'Earned', value: 'earned' },
+                  ]}
+                  onChange={setSortType}
+                />
+              </SelectWrapper>
+            </Flex>
+            <Flex flexDirection="column" ml="16px">
+              <Text fontSize="12px" textTransform="uppercase" color="textSubtle">
+                Search
+              </Text>
+              <StyledInput placeholder="Search Farms" value={searchTerm} onChange={handleChangeSearchTerm} />
+            </Flex>
           </Flex>
         </Flex>
       </FilterWrapper>
-      {filteredFarms.length > 0 && (
-        <IgloosContentContainer>
-          <Route exact path={`${path}`}>
-            {farmsList(filteredFarms, false)}
-          </Route>
-        </IgloosContentContainer>
-      )}
+      <IgloosContentContainer>
+        {activeTab === 0 && filteredFarms.length > 0 && <V2Farms farms={filteredFarms} />}
+        {activeTab === 1 && <V1Farms />}
+      </IgloosContentContainer>
     </FarmPage>
   )
 }
@@ -212,19 +226,43 @@ const BannerImage = styled.img`
   z-index: -1;
 `
 
-// content
-const IgloosContentContainer = styled.div`
-  position: relative;
+// slider
+const TabWrapper = styled.div`
+  div {
+    border: 2px solid ${({ theme }) => (theme.isDark ? '#221b38' : '#b2b2ce')};
+    background-color: ${({ theme }) => (theme.isDark ? '#332654' : '#e8e4ef')};
+    border-radius: 18px;
+  }
+`
+const OptionItem = styled(ButtonMenuItem)<{ active: boolean }>`
+  min-width: 70px;
+  background-color: ${({ active, theme }) => active && theme.colors.red};
+  color: ${({ active }) => (active ? 'white' : '#b2b2ce')};
+  margin: 0px !important;
 `
 
 const SelectWrapper = styled.div`
   div {
-    color: ${({ theme }) => theme.colors.textSubtle};
+    color: ${({ theme }) => theme.isDark && '#372871'};
+    > div:first-child {
+      > div {
+        background: ${({ theme }) => theme.isDark && '#bba6dd'};
+      }
+    }
+    > div:last-child {
+      background: ${({ theme }) => theme.isDark && '#bba6dd'};
+    }
   }
 `
 
 const StyledInput = styled(Input)`
-  color: ${({ theme }) => theme.colors.textSubtle};
+  border: 1px solid transparent;
+  color: ${({ theme }) => theme.isDark && '#372871'};
+  background: ${({ theme }) => theme.isDark && '#bba6dd'};
+  ::placeholder {
+    color: ${({ theme }) => theme.isDark && '#927fbc'};
+  }
+
   &:focus {
     box-shadow: none !important;
     border: ${({ theme }) => (theme.isDark ? '1px solid #66578d' : '1px solid #d7caec')};
@@ -232,8 +270,8 @@ const StyledInput = styled(Input)`
 `
 
 const ProjectLogo = styled.img<{ isActive?: boolean }>`
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   margin-left: 8px;
   margin-right: 8px;
   cursor: pointer;
@@ -259,6 +297,12 @@ const LeftFilters = styled(Flex)`
   flex-direction: column;
   align-items: center;
 
+  ${({ theme }) => theme.mediaQueries.xs} {
+    flex-direction: row;
+  }
+  ${({ theme }) => theme.mediaQueries.sm} {
+    flex-direction: row;
+  }
   ${({ theme }) => theme.mediaQueries.md} {
     flex-direction: row;
   }
@@ -269,6 +313,8 @@ const ToggleWrapper = styled.div<{ checked?: boolean }>`
     height: 32px;
     width: 56px;
     background: ${({ checked, theme }) => theme.isDark && !checked && '#bba6dd'};
+    background: ${({ checked, theme }) => theme.isDark && checked && '#d4444c'};
+    background: ${({ checked, theme }) => !theme.isDark && checked && '#ec3e3f'};
 
     div {
       height: 24px;
@@ -277,6 +323,11 @@ const ToggleWrapper = styled.div<{ checked?: boolean }>`
       background: white;
     }
   }
+`
+
+// content
+const IgloosContentContainer = styled.div`
+  position: relative;
 `
 
 export default Farms

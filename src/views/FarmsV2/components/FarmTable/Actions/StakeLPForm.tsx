@@ -1,12 +1,11 @@
 import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
 import React, { useCallback, useMemo, useState } from 'react'
-import { Button, Flex, Text } from 'penguinfinance-uikit2'
+import { Button, Text } from 'penguinfinance-uikit2'
 import UnlockButton from 'components/UnlockButton'
 import roundDown from 'utils/roundDown'
 import escapeRegExp from 'utils/escapeRegExp'
 import { BASE_ADD_LIQUIDITY_URL } from 'config'
-import useI18n from 'hooks/useI18n'
 import getLiquidityUrlPathParts from 'utils/getLiquidityUrlPathParts'
 import { getFullDisplayBalance } from 'utils/formatBalance'
 import { Farm as FarmTypes } from 'state/types'
@@ -37,13 +36,11 @@ const StakeLPForm: React.FC<DepositModalProps> = ({
   account,
   needsApproval,
   requested,
-  stakingTokenName,
   farm,
   onApprove,
 }) => {
   const [val, setVal] = useState('')
   const [pendingTx, setPendingTx] = useState(false)
-  const TranslateString = useI18n()
   const fullBalance = useMemo(() => {
     return getFullDisplayBalance(max)
   }, [max])
@@ -61,13 +58,12 @@ const StakeLPForm: React.FC<DepositModalProps> = ({
   )
 
   const handleSelectMax = useCallback(() => {
-    // setVal(roundDown(fullBalance, 2))
     setVal(fullBalance)
   }, [fullBalance, setVal])
 
   const renderText = () => {
     if (Number(val) > Number(fullBalance) || Number(fullBalance) === 0) return `Get ${tokenName}`
-    if (pendingTx) return TranslateString(488, 'Pending Confirmation')
+    if (pendingTx) return 'Pending Confirmation'
     if (val) return 'Confirm Staking'
     return 'Enter Amount'
   }

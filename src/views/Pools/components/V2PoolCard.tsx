@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js'
 import React, { useCallback, useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { NavLink, useHistory } from 'react-router-dom'
-import { Button, Text, Flex, Tag, Heading, useMatchBreakpoints } from 'penguinfinance-uikit2'
+import { Button, Text, Flex, Heading, useMatchBreakpoints } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import UnlockButton from 'components/UnlockButton'
 import SvgIcon from 'components/SvgIcon'
@@ -24,15 +24,6 @@ const StyledCard = styled(Card)<{ isNestPage?: boolean; isMobile?: boolean }>`
 
 const StyledHeading = styled(Heading)`
   font-weight: 800;
-`
-
-const HelperTag = styled(Tag)`
-  margin-right: 6px;
-  width: 28px;
-  border-radius: 50%;
-  span {
-    color: ${({ theme }) => theme.colors.red};
-  }
 `
 
 const CardContent = styled.div`

@@ -34,3 +34,4 @@ export const ASSET_CONTENT_PANGOLIN_URL =
 export const NON_ADDRESS = '0x0000000000000000000000000000000000000000'
 export const PANGOLIN_PEFI_LINK =
   'https://app.pangolin.exchange/#/swap?outputCurrency=0xe896CDeaAC9615145c0cA09C8Cd5C25bced6384c'
+export const PANGOLIN_REWARD_POOL_API = 'https://api.pangolin.exchange/pangolin'

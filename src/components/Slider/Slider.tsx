@@ -39,7 +39,7 @@ const SliderWrapper = styled.div`
   // padding: 0 10px 0 8px;
 `
 
-const Thumb = (props, state) => {
+const Thumb = (props) => {
   return (
     <ThumbWrapper {...props}>
       <StyledThumb />

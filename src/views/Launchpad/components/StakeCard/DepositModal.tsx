@@ -2,10 +2,10 @@ import BigNumber from 'bignumber.js'
 import React, { useCallback, useMemo, useState } from 'react'
 import { Button, Modal } from 'penguinfinance-uikit2'
 import ModalActions from 'components/ModalActions'
-import { useXPefi, useTestXPefi } from 'hooks/useContract'
+import { useTestXPefi } from 'hooks/useContract'
 import { useWeb3React } from '@web3-react/core'
 import useLaunchpadXPefiApprove from 'hooks/useLaunchpadXPefiApprove'
-import { getLaunchpadAddress } from 'utils/addressHelpers';
+import { getLaunchpadAddress } from 'utils/addressHelpers'
 import TokenInput from '../../../../components/TokenInput'
 import useI18n from '../../../../hooks/useI18n'
 import { getFullDisplayBalance } from '../../../../utils/formatBalance'
@@ -22,9 +22,8 @@ const DepositModal: React.FC<DepositModalProps> = ({ max, onConfirm, onDismiss, 
   const [pendingTx, setPendingTx] = useState(false)
   const TranslateString = useI18n()
   const { onApproveXPefi } = useLaunchpadXPefiApprove()
-  // const xPefiContract = useXPefi()
-  const xPefiContract = useTestXPefi();
-  const { account } = useWeb3React();
+  const xPefiContract = useTestXPefi()
+  const { account } = useWeb3React()
 
   const fullBalance = useMemo(() => {
     return getFullDisplayBalance(max)
@@ -52,11 +51,11 @@ const DepositModal: React.FC<DepositModalProps> = ({ max, onConfirm, onDismiss, 
 
       await onConfirm(val)
       setPendingTx(false)
-      onDismiss();
+      onDismiss()
     } catch (error) {
       setPendingTx(false)
     }
-  };
+  }
 
   return (
     <Modal title={`${TranslateString(316, 'Deposit')} ${tokenName} Tokens`} onDismiss={onDismiss}>
@@ -71,11 +70,7 @@ const DepositModal: React.FC<DepositModalProps> = ({ max, onConfirm, onDismiss, 
         <Button scale="md" variant="secondary" onClick={onDismiss}>
           {TranslateString(462, 'Cancel')}
         </Button>
-        <Button
-          scale="md"
-          disabled={pendingTx}
-          onClick={handleStakeXPefi}
-        >
+        <Button scale="md" disabled={pendingTx} onClick={handleStakeXPefi}>
           {pendingTx ? TranslateString(488, 'Pending Confirmation') : TranslateString(464, 'Confirm')}
         </Button>
       </ModalActions>

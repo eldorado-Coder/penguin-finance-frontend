@@ -3,10 +3,10 @@ import { createSlice } from '@reduxjs/toolkit'
 import v2FarmsConfig from 'config/constants/v2Farms'
 import { fetchMasterChefGlobalData, fetchFarms } from './fetchFarms'
 import {
-  fetchFarmUserEarnings,
+  // fetchFarmUserEarnings,
   fetchFarmUserAllowances,
   fetchFarmUserTokenBalances,
-  fetchFarmUserStakedBalances,
+  // fetchFarmUserStakedBalances,
   fetchFarmUserData,
 } from './fetchFarmUser'
 import { FarmsState, Farm } from '../types'
