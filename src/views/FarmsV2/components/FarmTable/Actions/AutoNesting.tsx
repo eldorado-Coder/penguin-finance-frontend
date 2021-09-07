@@ -21,6 +21,7 @@ const Label = styled(Text)`
 const AllocationText = styled(Text)`
   min-width: 160px;
   text-align: center;
+  margin-right: 4px;
   color: ${({ theme }) => (theme.isDark ? '#b2b2ce' : theme.colors.textSubtle)};
 `
 

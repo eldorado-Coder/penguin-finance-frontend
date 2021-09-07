@@ -44,9 +44,10 @@ const CellInner = styled.div<{ justifyContent?: string, minWidth?: number }>`
   }
 `
 
-const StyledTr = styled.tr`
+const StyledTr = styled.tr<{ shouldRenderChild?: boolean }>`
   cursor: pointer;
-  border-bottom: 3px solid ${({ theme }) => (theme.isDark ? theme.colors.background : 'rgb(231, 227, 235)')};
+  border-bottom: ${({ theme, shouldRenderChild }) => !shouldRenderChild && `3px solid ${theme.isDark ? theme.colors.background : 'rgb(231, 227, 235)'}`};
+
 `
 
 const EarnedMobileCell = styled.td`
@@ -81,8 +82,37 @@ const PendingTokenLogo = styled.img`
   margin: 2px 2px;
 `
 
-const Row: React.FunctionComponent<FarmCardProps> = (props) => {
-  const { farm } = props
+const StyledTable = styled.table<{ index?: number }>`
+  border-collapse: collapse;
+  font-size: 14px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  background: ${({ theme }) => theme.card.background};
+  border-radius: ${({ index }) => index === 0 && '16px 16px 0 0'};
+  box-shadow: 0px 1px 4px rgb(0 0 0 / 16%);
+`
+
+const TableBody = styled.tbody`
+  & tr {
+    td {
+      font-size: 16px;
+      vertical-align: middle;
+    }
+  }
+`
+
+const TableWrapper = styled.div<{ shouldRenderChild?: boolean }>`
+  padding: 0 8px;
+  margin-bottom: ${({ shouldRenderChild }) => shouldRenderChild && '8px'};
+`;
+
+interface RowProps extends FarmCardProps {
+  index: number
+}
+
+const Row: React.FunctionComponent<RowProps> = (props) => {
+  const { farm, index } = props
   const [lpPrice, setLpPrice] = useState(1)
   const lpAddress = getAddress(farm.lpAddresses)
   const { onFetchLpPrice } = usePangolinLpPrice()
@@ -132,7 +162,7 @@ const Row: React.FunctionComponent<FarmCardProps> = (props) => {
   const handleRenderRow = () => {
     if (!isXs) {
       return (
-        <StyledTr onClick={toggleActionPanel}>
+        <StyledTr shouldRenderChild={shouldRenderChild} onClick={toggleActionPanel}>
           {columnNames.map((key) => {
             switch (key) {
               case 'farm':
@@ -214,7 +244,7 @@ const Row: React.FunctionComponent<FarmCardProps> = (props) => {
     }
 
     return (
-      <StyledTr onClick={toggleActionPanel}>
+      <StyledTr shouldRenderChild={shouldRenderChild} onClick={toggleActionPanel}>
         <td>
           <tr>
             <FarmMobileCell>
@@ -248,14 +278,16 @@ const Row: React.FunctionComponent<FarmCardProps> = (props) => {
   }
 
   return (
-    <>
-      {handleRenderRow()}
+    <> 
+      <TableWrapper shouldRenderChild={shouldRenderChild}>
+        <StyledTable index={index}>
+          <TableBody>
+            {handleRenderRow()}
+          </TableBody>
+        </StyledTable>
+      </TableWrapper>
       {shouldRenderChild && (
-        <tr>
-          <td colSpan={6}>
-            <ActionPanel {...props} lpPrice={lpPrice} expanded={actionPanelExpanded} />
-          </td>
-        </tr>
+        <ActionPanel {...props} lpPrice={lpPrice} expanded={actionPanelExpanded} />
       )}
     </>
   )
