@@ -15,7 +15,7 @@ import FarmTable from './components/FarmTable/FarmTable'
 import { FarmWithStakedValue } from './components/types'
 
 const PROJECT_LIST = [
-  { src: '/images/tokens/PEFI.png', name: 'Penguin' },
+  { src: '/images/tokens/PEFI.svg', name: 'Penguin' },
   { src: '/images/farms-v2/joe.png', name: 'Joe' },
   { src: '/images/farms-v2/png.svg', name: 'Pangolin' },
 ]
