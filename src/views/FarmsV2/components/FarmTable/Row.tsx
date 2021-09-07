@@ -112,7 +112,8 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
   const { stakedBalance, earnings } = useV2FarmUser(farm.pid, farm.type)
   const hasStakedAmount = !!stakedBalance.toNumber()
   const [actionPanelExpanded, setActionPanelExpanded] = useState(false)
-  const farmAPY = farm.apy ? farm.apy.toFixed(2) : '--'
+  // const farmAPY = farm.apy ? (100 * Number(farm.apy)).toFixed(2) : '--'
+  const farmAPY = farm.apr ? (100 * Number(farm.apr)).toFixed(2) : '--'
 
   const shouldRenderChild = useDelayedUnmount(actionPanelExpanded, 300)
   const { isXl, isXs } = useMatchBreakpoints()

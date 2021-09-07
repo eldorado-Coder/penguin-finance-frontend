@@ -8,6 +8,7 @@ import getV2FarmMasterChefAbi from 'utils/getV2FarmMasterChefAbi'
 import getV2FarmMasterChefAddress from 'utils/getV2FarmMasterChefAddress'
 import { getPangolinLpPrice } from 'utils/price'
 import { getBalanceNumber } from 'utils/formatBalance'
+import { getPangolinRewardPoolApr } from 'utils/apyHelpers'
 import { NON_ADDRESS } from 'config'
 
 export const fetchMasterChefGlobalData = async () => {
@@ -100,6 +101,9 @@ export const fetchFarms = async () => {
           lpPrice = await getPangolinLpPrice(lpAddress)
           totalLiquidityInUsd = lpPrice * getBalanceNumber(new BigNumber(totalLP))
         }
+        const { apr: pngApr, dailyApr: pngDailyApr } = await getPangolinRewardPoolApr(
+          getAddress(farmConfig.pangolinRewardPoolAddresses),
+        )
 
         return {
           ...farmConfig,
@@ -114,6 +118,8 @@ export const fetchFarms = async () => {
           pefiPerYear: new BigNumber(pefiPerYear).toJSON(),
           maxBips: 10000,
           lpPrice,
+          pngApr,
+          pngDailyApr,
         }
       } catch (error) {
         return {
@@ -129,6 +135,8 @@ export const fetchFarms = async () => {
           pefiPerYear: new BigNumber(0),
           maxBips: 10000,
           lpPrice: 1,
+          pngApr: 0,
+          pngDailyApr: 0,
         }
       }
     }),

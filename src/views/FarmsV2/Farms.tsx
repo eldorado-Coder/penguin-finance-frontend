@@ -5,11 +5,12 @@ import { useWeb3React } from '@web3-react/core'
 import styled from 'styled-components'
 import Page from 'components/layout/Page'
 import Select from 'components/Select/Select'
-import { useV2Farms, usePricePefiUsdt, usePricePngUsdt } from 'state/hooks'
+import { useV2Farms, usePricePefiUsdt } from 'state/hooks'
 import { fetchV2FarmUserDataAsync } from 'state/actions'
 import useRefresh from 'hooks/useRefresh'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { DAYS_PER_YEAR } from 'config'
+import { getApy } from 'utils/apyHelpers'
 
 import V1Farms from './V1'
 import V2Farms from './V2'
@@ -50,8 +51,11 @@ const Farms: React.FC = () => {
     const liquidityInUsd = totalLp ? totalLp * farm.lpPrice : 0
 
     const pefiDailyApr = pefiRewardPerDayInUsd / liquidityInUsd
+    const { pngDailyApr } = farm
+    const pngApy = getApy(pngDailyApr)
+    const pefiApy = getApy(pefiDailyApr) === Infinity ? 999999 : getApy(pefiDailyApr)
 
-    return { ...farm, apy: pefiDailyApr }
+    return { ...farm, pefiDailyApr, apr: pefiDailyApr + pngDailyApr, apy: pefiApy + pngApy }
   })
 
   const filteredFarms = useMemo(() => {
@@ -80,7 +84,7 @@ const Farms: React.FC = () => {
       )
     }
     if (sortType === 'apr') {
-      farms = farms.sort((a, b) => b.apy - a.apy)
+      farms = farms.sort((a, b) => b.apr - a.apr)
     }
 
     return farms
