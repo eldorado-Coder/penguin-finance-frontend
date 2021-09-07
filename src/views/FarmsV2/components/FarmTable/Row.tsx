@@ -18,7 +18,7 @@ import CellLayout from './CellLayout'
 import ActionPanel from './Actions/ActionPanel'
 import { DesktopColumnSchema, MobileColumnSchema, FarmCardProps } from '../types'
 
-const CellInner = styled.div<{ justifyContent?: string, minWidth?: number }>`
+const CellInner = styled.div<{ justifyContent?: string; minWidth?: number }>`
   padding: 12px 0px;
   display: flex;
   width: 100%;
@@ -46,8 +46,8 @@ const CellInner = styled.div<{ justifyContent?: string, minWidth?: number }>`
 
 const StyledTr = styled.tr<{ shouldRenderChild?: boolean }>`
   cursor: pointer;
-  border-bottom: ${({ theme, shouldRenderChild }) => !shouldRenderChild && `3px solid ${theme.isDark ? theme.colors.background : 'rgb(231, 227, 235)'}`};
-
+  border-bottom: ${({ theme, shouldRenderChild }) =>
+    !shouldRenderChild && `3px solid ${theme.isDark ? theme.colors.background : 'rgb(231, 227, 235)'}`};
 `
 
 const EarnedMobileCell = styled.td`
@@ -105,7 +105,7 @@ const TableBody = styled.tbody`
 const TableWrapper = styled.div<{ shouldRenderChild?: boolean }>`
   padding: 0 8px;
   margin-bottom: ${({ shouldRenderChild }) => shouldRenderChild && '8px'};
-`;
+`
 
 interface RowProps extends FarmCardProps {
   index: number
@@ -118,10 +118,10 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
   const { onFetchLpPrice } = usePangolinLpPrice()
   const { stakedBalance, earnings } = useV2FarmUser(farm.pid, farm.type)
   const hasStakedAmount = !!stakedBalance.toNumber()
-  const [actionPanelExpanded, setActionPanelExpanded] = useState(hasStakedAmount)
+  const [actionPanelExpanded, setActionPanelExpanded] = useState(false)
   const farmAPY =
     farm.apy && farm.apy.times(new BigNumber(WEEKS_PER_YEAR)).times(new BigNumber(100)).toNumber().toFixed(2)
-  const shouldRenderChild = useDelayedUnmount(actionPanelExpanded, 300)
+  const shouldRenderChild = useDelayedUnmount(actionPanelExpanded, 0)
   const { isXl, isXs } = useMatchBreakpoints()
   const { getTokenLogo } = useAssets()
 
@@ -209,8 +209,8 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
               case 'rewards':
                 return (
                   <td key={key}>
-                    <CellInner minWidth={120} justifyContent='center'>
-                      <CellLayout label="Rewards" alignItems='center'>
+                    <CellInner minWidth={120} justifyContent="center">
+                      <CellLayout label="Rewards" alignItems="center">
                         <TokensWrapper>
                           {pendingTokensWithLogo &&
                             pendingTokensWithLogo.map((row) => {
@@ -224,7 +224,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
               case 'details':
                 return (
                   <td key={key}>
-                    <CellInner justifyContent='center'>
+                    <CellInner justifyContent="center">
                       <CellLayout>
                         <Details actionPanelToggled={actionPanelExpanded} />
                       </CellLayout>
@@ -278,17 +278,13 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
   }
 
   return (
-    <> 
+    <>
       <TableWrapper shouldRenderChild={shouldRenderChild}>
         <StyledTable index={index}>
-          <TableBody>
-            {handleRenderRow()}
-          </TableBody>
+          <TableBody>{handleRenderRow()}</TableBody>
         </StyledTable>
       </TableWrapper>
-      {shouldRenderChild && (
-        <ActionPanel {...props} lpPrice={lpPrice} expanded={actionPanelExpanded} />
-      )}
+      {shouldRenderChild && <ActionPanel {...props} lpPrice={lpPrice} expanded={actionPanelExpanded} />}
     </>
   )
 }
