@@ -159,7 +159,7 @@ const Farms: React.FC = () => {
             <Text fontSize="12px" textTransform="uppercase" color="textSubtle">
               Search
             </Text>
-            <StyledInput placeholder="Search Farms..." value={searchTerm} onChange={handleChangeSearchTerm} />
+            <StyledInput placeholder="Search Farms" value={searchTerm} onChange={handleChangeSearchTerm} />
           </Flex>
         </Flex>
       </FilterWrapper>
@@ -218,12 +218,26 @@ const IgloosContentContainer = styled.div`
 
 const SelectWrapper = styled.div`
   div {
-    color: ${({ theme }) => theme.colors.textSubtle};
+    color: ${({ theme }) => theme.isDark && '#372871'};
+    > div:first-child {
+      > div {
+        background: ${({ theme }) => theme.isDark && '#bba6dd'};
+      }
+    }
+    > div:last-child {
+      background: ${({ theme }) => theme.isDark && '#bba6dd'};
+    }
   }
 `
 
 const StyledInput = styled(Input)`
-  color: ${({ theme }) => theme.colors.textSubtle};
+  border: 1px solid transparent;
+  color: ${({ theme }) => theme.isDark && '#372871'};
+  background: ${({ theme }) => theme.isDark && '#bba6dd'};
+  ::placeholder {
+    color: ${({ theme }) => theme.isDark && '#927fbc'};
+  }
+
   &:focus {
     box-shadow: none !important;
     border: ${({ theme }) => (theme.isDark ? '1px solid #66578d' : '1px solid #d7caec')};
