@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback, useState, useMemo } from 'react'
 import { Route, useRouteMatch } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { Flex, Text, Toggle, Input } from 'penguinfinance-uikit2'
+import { Flex, Text, Toggle, Input, useMatchBreakpoints } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import styled from 'styled-components'
 import Page from 'components/layout/Page'
@@ -31,6 +31,9 @@ const Farms: React.FC = () => {
   const { path } = useRouteMatch()
   const { account } = useWeb3React()
   const v2FarmsLP = useV2Farms()
+  const { isSm } = useMatchBreakpoints()
+
+  console.log('123123--->', isSm)
 
   useEffect(() => {
     if (account) {
@@ -120,8 +123,8 @@ const Farms: React.FC = () => {
             </FilterText>
           </Flex>
         </LeftFilters>
-        <Flex mt="16px">
-          <Flex ml="16px" mt="16px" mr="16px">
+        <Flex mt="16px" display={isSm ? 'block !important' : 'flex'}>
+          <Flex ml={isSm ? '0px' : '16px'} mr={isSm ? '0px' : '16px'} mb={isSm ? '16px' : '0px'} alignItems="center">
             {PROJECT_LIST.map((project) => {
               const isActiveProject = activeProjects.find((row) => row === project.name)
               return (
@@ -136,30 +139,31 @@ const Farms: React.FC = () => {
               )
             })}
           </Flex>
-
-          <Flex flexDirection="column">
-            <Text fontSize="12px" textTransform="uppercase" color="textSubtle">
-              Sort by
-            </Text>
-            <SelectWrapper>
-              <Select
-                value={sortType}
-                options={[
-                  { label: 'Liquidity', value: 'liquidity' },
-                  { label: 'Hot', value: 'hot' },
-                  { label: 'APR', value: 'apr' },
-                  { label: 'Multiplier', value: 'multiplier' },
-                  { label: 'Earned', value: 'earned' },
-                ]}
-                onChange={setSortType}
-              />
-            </SelectWrapper>
-          </Flex>
-          <Flex flexDirection="column" ml="16px">
-            <Text fontSize="12px" textTransform="uppercase" color="textSubtle">
-              Search
-            </Text>
-            <StyledInput placeholder="Search Farms" value={searchTerm} onChange={handleChangeSearchTerm} />
+          <Flex>
+            <Flex flexDirection="column">
+              <Text fontSize="12px" textTransform="uppercase" color="textSubtle">
+                Sort by
+              </Text>
+              <SelectWrapper>
+                <Select
+                  value={sortType}
+                  options={[
+                    { label: 'Liquidity', value: 'liquidity' },
+                    { label: 'Hot', value: 'hot' },
+                    { label: 'APR', value: 'apr' },
+                    { label: 'Multiplier', value: 'multiplier' },
+                    { label: 'Earned', value: 'earned' },
+                  ]}
+                  onChange={setSortType}
+                />
+              </SelectWrapper>
+            </Flex>
+            <Flex flexDirection="column" ml="16px">
+              <Text fontSize="12px" textTransform="uppercase" color="textSubtle">
+                Search
+              </Text>
+              <StyledInput placeholder="Search Farms" value={searchTerm} onChange={handleChangeSearchTerm} />
+            </Flex>
           </Flex>
         </Flex>
       </FilterWrapper>
