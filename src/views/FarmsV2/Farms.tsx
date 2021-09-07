@@ -153,7 +153,7 @@ const Farms: React.FC = () => {
               )
             })}
           </Flex>
-          <Flex>
+          <Flex mb="16px">
             <Flex flexDirection="column">
               <Text fontSize="12px" textTransform="uppercase" color="textSubtle">
                 Sort by
