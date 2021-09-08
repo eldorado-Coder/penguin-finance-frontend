@@ -16,9 +16,14 @@ export default {
     43114: '0xFb26525B14048B7BB1F3794F6129176195Db7766',
   },
   // v2
+  // v2MasterChef: {
+  //   43113: '',
+  //   43114: '0x8075DFD6adC546E2727F559739101aF79c03C6a2',
+  // },
+  // final
   v2MasterChef: {
     43113: '',
-    43114: '0x8075DFD6adC546E2727F559739101aF79c03C6a2',
+    43114: '0x256040dc7b3CECF73a759634fc68aA60EA0D68CB',
   },
   wavax: {
     43113: '',
