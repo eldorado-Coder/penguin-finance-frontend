@@ -17,7 +17,7 @@ export const MobileColumnSchema: ColumnsDefTypes[] = [
   },
   {
     id: 2,
-    name: 'earned',
+    name: 'staked',
     sortable: true,
     label: 'Your Stake',
   },

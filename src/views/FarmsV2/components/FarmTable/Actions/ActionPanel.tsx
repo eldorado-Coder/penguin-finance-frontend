@@ -120,11 +120,12 @@ const RewardImage = styled.img<{ size: number; ml?: number }>`
   margin-left: ${({ ml }) => ml && `${ml}px`};
   border-radius: 50%;
 `
-const CoinImage = styled.img<{ size: number; ml?: number }>`
+const CoinImage = styled.img<{ size: number; ml?: number, mt?: number }>`
   height: ${({ size }) => size}px;
   width: ${({ size }) => size}px;
   margin: 0px 12px;
   margin-left: ${({ ml }) => ml && `${ml}px`};
+  margin-top: ${({ mt }) => mt && `${mt}px`};
 `
 
 const StyledButton = styled(Button)`
@@ -142,7 +143,7 @@ const StyledButton = styled(Button)`
 `
 
 const EarningsContainer = styled.div`
-  min-width: 180px;
+  min-width: 160px;
 `
 
 const Divider = styled.div`
@@ -260,7 +261,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
       <EarningsCard mb="16px">
         <Flex padding="16px 16px 12px">
           <EarningsContainer>
-            <Title fontSize="20px" bold lineHeight={1} mb="16px">
+            <Title fontSize="20px" bold>
               Your Stake
             </Title>
             <Balance
@@ -285,12 +286,12 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
               />
             )}
           </EarningsContainer>
-          {coinImg && <CoinImage src={coinImg} alt="pefi-earning" size={56} />}
+          {coinImg && <CoinImage src={coinImg} alt="pefi-earning" size={80} mt={-16} />}
         </Flex>
         <Divider />
         <Flex padding="12px 16px">
           <EarningsContainer>
-            <Title fontSize="20px" bold lineHeight={1} mb="16px">
+            <Title fontSize="20px" bold>
               Igloo Stats
             </Title>
             <Balance
@@ -316,7 +317,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
               value={Number(pefiPerWeek)}
             />
           </EarningsContainer>
-          <RewardImage src={lpLogo} alt="igloo-stats" size={56} />
+          <RewardImage src={lpLogo} alt="igloo-stats" size={80} />
         </Flex>
       </EarningsCard>
       <Flex className="pending-panel" flexDirection="column" mb="16px">
