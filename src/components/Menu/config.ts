@@ -12,9 +12,9 @@ export const config: MenuEntry[] = [
     href: 'https://app.pangolin.exchange/#/swap?outputCurrency=0xe896CDeaAC9615145c0cA09C8Cd5C25bced6384c',
   },
   {
-    label: 'Igloos',
+    label: 'Farms',
     icon: 'IglooIcon',
-    href: '/igloos',
+    href: '/farms',
   },
   // {
   //   label: 'Igloos V2',
@@ -32,7 +32,7 @@ export const config: MenuEntry[] = [
   //   href: '/info',
   // },
   {
-    label: 'Nests',
+    label: 'Nest',
     icon: 'NestIcon',
     href: '/nests',
   },
