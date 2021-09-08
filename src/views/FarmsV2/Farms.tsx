@@ -32,8 +32,9 @@ const Farms: React.FC = () => {
   const { fastRefresh } = useRefresh()
   const { account } = useWeb3React()
   const v2FarmsLP = useV2Farms()
-  const { isSm } = useMatchBreakpoints()
+  const { isXl, isSm } = useMatchBreakpoints()
   const pefiPriceUsd = usePricePefiUsdt().toNumber()
+  const isMobile = !isXl;
 
   useEffect(() => {
     if (account) {
@@ -111,6 +112,74 @@ const Farms: React.FC = () => {
     }
   }
 
+  const renderProjectsFilters = (
+    <Flex ml={isSm ? '0px' : '8px'} alignItems="center">
+      {PROJECT_LIST.map((project) => {
+        const isActiveProject = activeProjects.find((row) => row === project.name)
+        return (
+          <ProjectLogo
+            key={project.name}
+            src={project.src}
+            alt={project.name}
+            isActive={!!isActiveProject}
+            onClick={() => handleChangeActiveProject(project.name)}
+          />
+        )
+      })}
+    </Flex>
+  );
+
+  const renderActiveFilter = (
+    <Flex margin={isMobile ? '8px 0' : '8px 16px 8px 0'} justifyContent="center" alignItems="center">
+      <TabWrapper>
+        <ButtonMenu activeIndex={activeTab} onItemClick={handleSwitchTab} scale="sm">
+          <OptionItem active={activeTab === 0}>{activeTab === 0 ? 'Live' : 'Live'}</OptionItem>
+          <OptionItem active={activeTab === 1}>{activeTab === 1 ? 'Finished' : 'Finished'}</OptionItem>
+        </ButtonMenu>
+      </TabWrapper>
+    </Flex>
+  )
+
+  const renderSearchAndSortFilter = (
+    <Flex mb="16px">
+      <Flex flexDirection="column">
+        <Text fontSize="12px" textTransform="uppercase" color="textSubtle">
+          Sort by
+        </Text>
+        <SelectWrapper>
+          <Select
+            value={sortType}
+            options={[
+              { label: 'Liquidity', value: 'liquidity' },
+              { label: 'Hot', value: 'hot' },
+              { label: 'APR', value: 'apr' },
+              { label: 'Multiplier', value: 'multiplier' },
+              { label: 'Earned', value: 'earned' },
+            ]}
+            onChange={setSortType}
+          />
+        </SelectWrapper>
+      </Flex>
+      <Flex flexDirection="column" ml="16px">
+        <Text fontSize="12px" textTransform="uppercase" color="textSubtle">
+          Search
+        </Text>
+        <StyledInput placeholder="Search Farms" value={searchTerm} onChange={handleChangeSearchTerm} />
+      </Flex>
+    </Flex>
+  )
+
+  const renderStakedOnlyFilter = (
+    <Flex alignItems="center" mr='16px'>
+      <ToggleWrapper checked={showStakedOnly}>
+        <Toggle checked={showStakedOnly} onChange={handleChangeStakedOnly} />
+      </ToggleWrapper>
+      <FilterText ml="8px" color="textSubtle">
+        Staked Only
+      </FilterText>
+    </Flex>
+  )
+
   return (
     <FarmPage>
       <BgWrapper>
@@ -119,68 +188,29 @@ const Farms: React.FC = () => {
       <IgloosBannerContainer>
         <BannerImage src={`${process.env.PUBLIC_URL}/images/farms/IglooHeader.gif`} alt="igloos banner" />
       </IgloosBannerContainer>
-      <FilterWrapper justifyContent="space-between" alignItems="center" flexWrap="wrap">
-        <LeftFilters alignItems="center" mt="16px" justifyContent="space-between" flexWrap={isSm ? 'nowrap' : 'wrap'}>
-          <Flex alignItems="center">
-            <ToggleWrapper checked={showStakedOnly}>
-              <Toggle checked={showStakedOnly} onChange={handleChangeStakedOnly} />
-            </ToggleWrapper>
-            <FilterText ml="8px" color="textSubtle">
-              Staked Only
-            </FilterText>
+      {isMobile ?
+        <FilterWrapper justifyContent="space-between" alignItems="center" flexWrap="wrap">
+          <Flex justifyContent='space-between' mb='8px'>
+            {renderStakedOnlyFilter}
+            {renderActiveFilter}
           </Flex>
-          <Flex ml="8px" mr="8px" justifyContent="center" alignItems="center">
-            <TabWrapper>
-              <ButtonMenu activeIndex={activeTab} onItemClick={handleSwitchTab} scale="sm">
-                <OptionItem active={activeTab === 0}>{activeTab === 0 ? 'Live' : 'Live'}</OptionItem>
-                <OptionItem active={activeTab === 1}>{activeTab === 1 ? 'Finished' : 'Finished'}</OptionItem>
-              </ButtonMenu>
-            </TabWrapper>
+          {renderSearchAndSortFilter}
+          <Flex mt='16px'>
+            {renderProjectsFilters}
           </Flex>
-        </LeftFilters>
-        <Flex display={isSm ? 'block !important' : 'flex'} mt="16px">
-          <Flex mr={isSm ? '0px' : '8px'} mb={isSm ? '16px' : '0px'} alignItems="center">
-            {PROJECT_LIST.map((project) => {
-              const isActiveProject = activeProjects.find((row) => row === project.name)
-              return (
-                <ProjectLogo
-                  key={project.name}
-                  src={project.src}
-                  alt={project.name}
-                  isActive={!!isActiveProject}
-                  onClick={() => handleChangeActiveProject(project.name)}
-                />
-              )
-            })}
+        </FilterWrapper>
+        : 
+        <FilterWrapper justifyContent="space-between" alignItems="center" flexWrap="wrap">
+          <LeftFilters alignItems="center" mt="16px" justifyContent="space-between" flexWrap={isSm ? 'nowrap' : 'wrap'}>
+            {renderStakedOnlyFilter}
+            {renderProjectsFilters}
+          </LeftFilters>
+          <Flex display={isSm ? 'block !important' : 'flex'} mt="16px">
+            {renderActiveFilter}
+            {renderSearchAndSortFilter}
           </Flex>
-          <Flex mb="16px">
-            <Flex flexDirection="column">
-              <Text fontSize="12px" textTransform="uppercase" color="textSubtle">
-                Sort by
-              </Text>
-              <SelectWrapper>
-                <Select
-                  value={sortType}
-                  options={[
-                    { label: 'Liquidity', value: 'liquidity' },
-                    { label: 'Hot', value: 'hot' },
-                    { label: 'APR', value: 'apr' },
-                    { label: 'Multiplier', value: 'multiplier' },
-                    { label: 'Earned', value: 'earned' },
-                  ]}
-                  onChange={setSortType}
-                />
-              </SelectWrapper>
-            </Flex>
-            <Flex flexDirection="column" ml="16px">
-              <Text fontSize="12px" textTransform="uppercase" color="textSubtle">
-                Search
-              </Text>
-              <StyledInput placeholder="Search Farms" value={searchTerm} onChange={handleChangeSearchTerm} />
-            </Flex>
-          </Flex>
-        </Flex>
-      </FilterWrapper>
+        </FilterWrapper>
+      }
       <IgloosContentContainer>
         {activeTab === 0 && filteredFarms.length > 0 && <V2Farms farms={filteredFarms} />}
         {activeTab === 1 && <V1Farms />}
@@ -287,7 +317,7 @@ const FilterWrapper = styled(Flex)`
   align-items: center;
   margin-top: -16px;
 
-  ${({ theme }) => theme.mediaQueries.md} {
+  ${({ theme }) => theme.mediaQueries.lg} {
     flex-direction: row;
     padding: 8px 8px 0;
   }

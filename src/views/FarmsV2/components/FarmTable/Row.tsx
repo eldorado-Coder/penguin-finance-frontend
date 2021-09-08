@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { useMatchBreakpoints } from 'penguinfinance-uikit2'
+import { useMatchBreakpoints, Flex } from 'penguinfinance-uikit2'
 import { useV2FarmUser } from 'state/hooks'
 import useDelayedUnmount from 'hooks/useDelayedUnmount'
 import useAssets from 'hooks/useAssets'
@@ -100,9 +100,6 @@ const TableBody = styled.tbody`
 
 const TableWrapper = styled.div<{ shouldRenderChild?: boolean }>`
   padding: 0 8px;
-  ${({ theme }) => theme.mediaQueries.xs} {
-    padding: 0px;
-  }
   margin-bottom: ${({ shouldRenderChild }) => shouldRenderChild && '8px'};
 `
 
@@ -118,7 +115,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
   const farmApy = farm.apr ? (100 * Number(farm.apr)).toFixed(2) : ''
 
   const shouldRenderChild = useDelayedUnmount(actionPanelExpanded, 300)
-  const { isXl, isXs } = useMatchBreakpoints()
+  const { isXl, isSm, isXs } = useMatchBreakpoints()
   const { getTokenLogo } = useAssets()
 
   const { pendingTokens } = farm
@@ -139,7 +136,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
   const columnNames = tableSchema.map((column) => column.name)
 
   const handleRenderRow = () => {
-    if (!isXs) {
+    if (!isSm && !isXs) {
       return (
         <StyledTr shouldRenderChild={shouldRenderChild} onClick={toggleActionPanel}>
           {columnNames.map((key) => {
@@ -226,23 +223,26 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
       <StyledTr shouldRenderChild={shouldRenderChild} onClick={toggleActionPanel}>
         <td>
           <tr>
-            <FarmMobileCell>
-              <CellLayout>
-                <Farm {...props} />
-              </CellLayout>
-            </FarmMobileCell>
-          </tr>
-          <tr>
-            <EarnedMobileCell>
-              <CellLayout label="Earned">
-                <Earned earnings={earnings} pid={farm.pid} userDataReady />
-              </CellLayout>
-            </EarnedMobileCell>
-            <AprMobileCell>
-              <CellLayout label="APR">
-                <Amount>{`${farmApy || '--'}%`}</Amount>
-              </CellLayout>
-            </AprMobileCell>
+            <Flex flexDirection='column'>
+              <FarmMobileCell>
+                <CellLayout>
+                  <Farm {...props} />
+                </CellLayout>
+              </FarmMobileCell>
+              <Flex justifyContent='space-between'>
+                <EarnedMobileCell>
+                  <CellLayout label="Your Stake">
+                    <Balance fontSize="16px" fontWeight="400" prefix="$" value={Number(stakedBalanceInUsd)} />
+                   </CellLayout>
+                </EarnedMobileCell>
+                <AprMobileCell>
+                  <CellLayout label="APR">
+                    <Amount>{`${farmApy || '--'}%`}</Amount>
+                  </CellLayout>
+                </AprMobileCell>
+              </Flex>
+            </Flex>
+
           </tr>
         </td>
         <td>
