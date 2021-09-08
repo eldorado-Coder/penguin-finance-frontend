@@ -1,8 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Text, Image, Tag, Flex } from 'penguinfinance-uikit2'
-import { getBalanceNumber } from 'utils/formatBalance'
-import { useFarmUser } from 'state/hooks'
 import { FarmCardProps } from '../types'
 
 const Container = styled.div`
@@ -25,18 +23,6 @@ const FarmLabel = styled(Text)`
 
 const FarmLabelWrapper = styled.div`
   margin-left: 16px;
-`
-
-const StyledTag = styled(Tag)`
-  background: transparent;
-  border-color: ${({ theme }) => theme.colors.red};
-  border-width: 1px;
-  height: 20px;
-
-  div {
-    color: ${({ theme }) => theme.colors.red};
-    font-weight: 500;
-  }
 `
 
 const MultiplierTag = styled(Tag)`
@@ -68,27 +54,11 @@ const StyledImage = styled(Image)<{ isMobile?: boolean }>`
 `
 
 const Farm: React.FunctionComponent<FarmCardProps> = ({ farm }) => {
-  const { stakedBalance } = useFarmUser(farm.pid, 'Penguin')
-  const rawStakedBalance = getBalanceNumber(stakedBalance)
   const farmImage = farm.lpSymbol.split(' ')[0].toLocaleLowerCase()
-
-  const handleRenderFarming = (): JSX.Element => {
-    if (rawStakedBalance) {
-      return (
-        <StyledTag variant="textSubtle">
-          <FarmLabel fontSize="12px" bold textTransform="uppercase">
-            Farming
-          </FarmLabel>
-        </StyledTag>
-      )
-    }
-
-    return null
-  }
 
   return (
     <Container>
-      <StyledImage src={`/images/farms/${farmImage}.svg`} alt={farm.tokenSymbol} width={64} height={64} />
+      <StyledImage src={`/images/farms-v2/pools/${farmImage}.svg`} alt={farm.tokenSymbol} width={56} height={56} />
       <FarmLabelWrapper>
         <Flex>
           <FarmLabel bold>{farm.lpSymbol.replace(' LP', '')}</FarmLabel>
@@ -96,7 +66,6 @@ const Farm: React.FunctionComponent<FarmCardProps> = ({ farm }) => {
         <Flex mt="4px">
           <MultiplierTag variant="primary">{`${farm.multiplier || 1}X`}</MultiplierTag>
           <LpTag type={farm.type}>{farm.type}</LpTag>
-          {handleRenderFarming()}
         </Flex>
       </FarmLabelWrapper>
     </Container>

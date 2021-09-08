@@ -8,6 +8,7 @@ import Select from 'components/Select/Select'
 import { useV2Farms, usePricePefiUsdt } from 'state/hooks'
 import { fetchV2FarmUserDataAsync } from 'state/actions'
 import useRefresh from 'hooks/useRefresh'
+import useTheme from 'hooks/useTheme';
 import { getBalanceNumber } from 'utils/formatBalance'
 import { DAYS_PER_YEAR } from 'config'
 import { getApy } from 'utils/apyHelpers'
@@ -35,6 +36,7 @@ const Farms: React.FC = () => {
   const { isXl, isSm } = useMatchBreakpoints()
   const pefiPriceUsd = usePricePefiUsdt().toNumber()
   const isMobile = !isXl;
+  const theme = useTheme();
 
   useEffect(() => {
     if (account) {
@@ -133,8 +135,8 @@ const Farms: React.FC = () => {
     <Flex margin={isMobile ? '8px 0' : '8px 16px 8px 0'} justifyContent="center" alignItems="center">
       <TabWrapper>
         <ButtonMenu activeIndex={activeTab} onItemClick={handleSwitchTab} scale="sm">
-          <OptionItem active={activeTab === 0}>{activeTab === 0 ? 'Live' : 'Live'}</OptionItem>
-          <OptionItem active={activeTab === 1}>{activeTab === 1 ? 'Finished' : 'Finished'}</OptionItem>
+          <OptionItem active={activeTab === 0}>New (v2)</OptionItem>
+          <OptionItem active={activeTab === 1}>Old (v1)</OptionItem>
         </ButtonMenu>
       </TabWrapper>
     </Flex>
@@ -170,7 +172,7 @@ const Farms: React.FC = () => {
   )
 
   const renderStakedOnlyFilter = (
-    <Flex alignItems="center" mr='16px'>
+    <Flex alignItems="center" mr={isMobile ? '8px' : '16px'}>
       <ToggleWrapper checked={showStakedOnly}>
         <Toggle checked={showStakedOnly} onChange={handleChangeStakedOnly} />
       </ToggleWrapper>
@@ -186,11 +188,11 @@ const Farms: React.FC = () => {
         <IgloosBgContainer />
       </BgWrapper>
       <IgloosBannerContainer>
-        <BannerImage src={`${process.env.PUBLIC_URL}/images/farms/IglooHeader.gif`} alt="igloos banner" />
+        <BannerImage src={`${process.env.PUBLIC_URL}/images/farms-v2/Igloo-${theme.isDark ? 'dark' : 'light'}.svg`} alt="igloos banner" />
       </IgloosBannerContainer>
       {isMobile ?
         <FilterWrapper justifyContent="space-between" alignItems="center" flexWrap="wrap">
-          <Flex justifyContent='space-between' mb='8px'>
+          <Flex mt='8px' justifyContent='center' mb='8px' flexWrap='wrap'>
             {renderStakedOnlyFilter}
             {renderActiveFilter}
           </Flex>

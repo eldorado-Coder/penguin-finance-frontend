@@ -15,6 +15,7 @@ export const config: MenuEntry[] = [
     label: 'Farms',
     icon: 'IglooIcon',
     href: '/farms',
+    badge: 'NEW'
   },
   // {
   //   label: 'Igloos V2',
