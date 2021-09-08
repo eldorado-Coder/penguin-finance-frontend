@@ -21,11 +21,6 @@ export const config: MenuEntry[] = [
   //   icon: 'IglooIcon',
   //   href: '/igloos-v2',
   // },
-  {
-    label: 'Compounder',
-    icon: 'CompounderIcon',
-    href: '/compounder',
-  },
   // {
   //   label: 'Info',
   //   icon: 'IfoIcon',
@@ -65,6 +60,11 @@ export const config: MenuEntry[] = [
     label: 'Collectibles',
     icon: 'NftIcon',
     href: '/collectibles',
+  },
+  {
+    label: 'Compounder',
+    icon: 'CompounderIcon',
+    href: '/compounder',
   },
   // {
   //   label: 'Penguin teams',
