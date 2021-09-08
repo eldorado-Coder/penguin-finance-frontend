@@ -135,8 +135,8 @@ const Farms: React.FC = () => {
     <Flex margin={isMobile ? '8px 0' : '8px 16px 8px 0'} justifyContent="center" alignItems="center">
       <TabWrapper>
         <ButtonMenu activeIndex={activeTab} onItemClick={handleSwitchTab} scale="sm">
-          <OptionItem active={activeTab === 0}>New (v2)</OptionItem>
-          <OptionItem active={activeTab === 1}>Old (v1)</OptionItem>
+          <OptionItem active={activeTab === 0}>New (V2)</OptionItem>
+          <OptionItem active={activeTab === 1}>Old (V1)</OptionItem>
         </ButtonMenu>
       </TabWrapper>
     </Flex>
@@ -202,7 +202,7 @@ const Farms: React.FC = () => {
           </Flex>
         </FilterWrapper>
         : 
-        <FilterWrapper justifyContent="space-between" alignItems="center" flexWrap="wrap">
+        <FilterWrapper justifyContent="space-between" alignItems="center" flexWrap="wrap" mt='-24px'>
           <LeftFilters alignItems="center" mt="16px" justifyContent="space-between" flexWrap={isSm ? 'nowrap' : 'wrap'}>
             {renderStakedOnlyFilter}
             {renderProjectsFilters}
@@ -215,7 +215,14 @@ const Farms: React.FC = () => {
       }
       <IgloosContentContainer>
         {activeTab === 0 && filteredFarms.length > 0 && <V2Farms farms={filteredFarms} />}
-        {activeTab === 1 && <V1Farms />}
+        {activeTab === 1 && 
+          <V1Farms 
+            searchTerm={searchTerm} 
+            showStakedOnly={showStakedOnly} 
+            activeProjects={activeProjects} 
+            sortType={sortType}
+          />
+        }
       </IgloosContentContainer>
     </FarmPage>
   )
@@ -319,9 +326,14 @@ const FilterWrapper = styled(Flex)`
   align-items: center;
   margin-top: -16px;
 
+  ${({ theme }) => theme.mediaQueries.sm} {
+    margin-top: -40px;
+  }
+
   ${({ theme }) => theme.mediaQueries.lg} {
     flex-direction: row;
     padding: 8px 8px 0;
+    margin-top: -64px;
   }
 `
 

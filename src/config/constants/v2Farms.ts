@@ -4,7 +4,7 @@ import { V2FarmConfig, QuoteToken } from './types'
 const v2Farms: V2FarmConfig[] = [
   {
     pid: 0,
-    lpSymbol: 'PEFI-WAVAX LP',
+    lpSymbol: 'PEFI-AVAX LP',
     lpAddresses: {
       43113: '',
       43114: '0x494dd9f783daf777d3fb4303da4de795953592d0',
@@ -59,7 +59,7 @@ const v2Farms: V2FarmConfig[] = [
 
   {
     pid: 2,
-    lpSymbol: 'ETH.e-WAVAX LP',
+    lpSymbol: 'ETH.e-AVAX LP',
     lpAddresses: {
       43113: '',
       43114: '0x7c05d54fc5cb6e4ad87c6f5db3b807c94bb89c52',
