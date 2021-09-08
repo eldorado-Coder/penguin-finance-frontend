@@ -167,7 +167,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
                   <td key={key}>
                     <CellInner minWidth={110}>
                       <CellLayout label="APR">
-                        <Balance fontSize="16px" fontWeight="400" prefix="$" value={Number(farmApy)} />
+                        <Balance fontSize="16px" fontWeight="400" prefix="" value={Number(farmApy)} />
                       </CellLayout>
                     </CellInner>
                   </td>
@@ -223,17 +223,17 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
       <StyledTr shouldRenderChild={shouldRenderChild} onClick={toggleActionPanel}>
         <td>
           <tr>
-            <Flex flexDirection='column'>
+            <Flex flexDirection="column">
               <FarmMobileCell>
                 <CellLayout>
                   <Farm {...props} />
                 </CellLayout>
               </FarmMobileCell>
-              <Flex justifyContent='space-between'>
+              <Flex justifyContent="space-between">
                 <EarnedMobileCell>
                   <CellLayout label="Your Stake">
                     <Balance fontSize="16px" fontWeight="400" prefix="$" value={Number(stakedBalanceInUsd)} />
-                   </CellLayout>
+                  </CellLayout>
                 </EarnedMobileCell>
                 <AprMobileCell>
                   <CellLayout label="APR">
@@ -242,7 +242,6 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
                 </AprMobileCell>
               </Flex>
             </Flex>
-
           </tr>
         </td>
         <td>
