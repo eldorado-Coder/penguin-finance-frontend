@@ -68,8 +68,7 @@ const ActionCard = styled(Card)<{ minWidth?: number }>`
   border-radius: 16px;
   overflow: unset;
   min-width: ${({ minWidth }) => minWidth && `${minWidth}px`};
-
-  filter: ${({ theme }) => theme.card.dropShadow};
+  box-shadow: 0px 2px 8px rgb(0 0 0 / 16%);
 `
 
 const EarningsCard = styled(ActionCard)`
