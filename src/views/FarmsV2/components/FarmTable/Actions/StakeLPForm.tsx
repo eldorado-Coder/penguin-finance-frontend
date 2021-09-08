@@ -92,7 +92,7 @@ const StakeLPForm: React.FC<DepositModalProps> = ({
   return (
     <>
       <InputContainer>
-        <LPTokenBalance fontSize="14px">{`LP Token Balance: ${roundDown(fullBalance, 2)}`}</LPTokenBalance>
+        <LPTokenBalance fontSize="14px">{`Token Balance: ${roundDown(fullBalance, 2)} LP`}</LPTokenBalance>
         <TokenInput
           value={roundDown(val, 2)}
           onSelectMax={handleSelectMax}

@@ -1,13 +1,13 @@
 import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
 import React, { useCallback, useMemo, useState } from 'react'
-import ReactTooltip from 'react-tooltip';
+import ReactTooltip from 'react-tooltip'
 import { Button, Text, Flex } from 'penguinfinance-uikit2'
 import UnlockButton from 'components/UnlockButton'
 import roundDown from 'utils/roundDown'
 import escapeRegExp from 'utils/escapeRegExp'
 import useI18n from 'hooks/useI18n'
-import useIPefiPerHandsPenalty from 'hooks/useIPefiPerHandsPenalty';
+import useIPefiPerHandsPenalty from 'hooks/useIPefiPerHandsPenalty'
 import { getFullDisplayBalance } from 'utils/formatBalance'
 import TokenInput from './TokenInput'
 
@@ -31,7 +31,7 @@ const UnstakeLPForm: React.FC<DepositModalProps> = ({ max, onConfirm, tokenName 
   const fullBalance = useMemo(() => {
     return getFullDisplayBalance(max)
   }, [max])
-  const perHandsPenalty = useIPefiPerHandsPenalty();
+  const perHandsPenalty = useIPefiPerHandsPenalty()
 
   const handleChange = useCallback(
     (e: React.FormEvent<HTMLInputElement>) => {
@@ -71,16 +71,18 @@ const UnstakeLPForm: React.FC<DepositModalProps> = ({ max, onConfirm, tokenName 
 
   const getUnstakeTooltip = () => {
     return `
-      <p style="margin-bottom: 5px;">You are about to remove your PEFI from the Nest. You'll incur a ${(perHandsPenalty/100).toFixed(2)}% Paper Hands Penalty over the withdrawn amount.</p>
+      <p style="margin-bottom: 5px;">You are about to remove your PEFI from the Nest. You'll incur a ${(
+        perHandsPenalty / 100
+      ).toFixed(2)}% Paper Hands Penalty over the withdrawn amount.</p>
     `
-  };
+  }
 
   const canUnStake = !pendingTx && Number(val) > 0 && Number(fullBalance) >= Number(val)
 
   return (
     <>
       <InputContainer>
-        <LPTokenBalance fontSize="14px">{`LP Staked Balance: ${roundDown(fullBalance, 2)}`}</LPTokenBalance>
+        <LPTokenBalance fontSize="14px">{`Stake Balance: ${roundDown(fullBalance, 2)} LP`}</LPTokenBalance>
         <TokenInput
           value={roundDown(val, 2)}
           onSelectMax={handleSelectMax}
@@ -92,14 +94,14 @@ const UnstakeLPForm: React.FC<DepositModalProps> = ({ max, onConfirm, tokenName 
       <ActionContainer>
         {!account && <StyledUnlockButton />}
         {account && (
-          <Flex justifyContent='center'>
-            <CustomToolTipOrigin data-for='unstake-tooltip' data-tip={canUnStake ? getUnstakeTooltip() : ''}>
+          <Flex justifyContent="center">
+            <CustomToolTipOrigin data-for="unstake-tooltip" data-tip={canUnStake ? getUnstakeTooltip() : ''}>
               <StyledButton color="red" tokenBalance={val} scale="md" disabled={!canUnStake} onClick={handleConfirm}>
                 {renderText()}
               </StyledButton>
             </CustomToolTipOrigin>
             <CustomToolTip
-              id='unstake-tooltip'
+              id="unstake-tooltip"
               wrapper="div"
               delayHide={0}
               effect="solid"
@@ -152,7 +154,7 @@ const CustomToolTipOrigin = styled.div`
 const CustomToolTip = styled(ReactTooltip)<{ index: number }>`
   width: 100% !important;
   max-width: 320px !important;
-  background: ${({ theme }) => theme.isDark ? '#ffffff !important' : '#D3464E !important'};
+  background: ${({ theme }) => (theme.isDark ? '#ffffff !important' : '#D3464E !important')};
   box-shadow: ${(props) => `${props.theme.card.boxShadow}!important`};
   color: ${({ theme }) => (theme.isDark ? '#2D2159!important' : '#ffffff!important')};
   opacity: 1 !important;
@@ -171,8 +173,8 @@ const CustomToolTip = styled(ReactTooltip)<{ index: number }>`
     border-bottom-color: #ffffff !important;
   }
   &:after {
-    border-top-color: ${({ theme }) => theme.isDark ? '#ffffff !important' : '#D3464E !important'};
-    border-bottom-color: ${({ theme }) => theme.isDark ? '#ffffff !important' : '#D3464E !important'};
+    border-top-color: ${({ theme }) => (theme.isDark ? '#ffffff !important' : '#D3464E !important')};
+    border-bottom-color: ${({ theme }) => (theme.isDark ? '#ffffff !important' : '#D3464E !important')};
 `
 
 export default UnstakeLPForm
