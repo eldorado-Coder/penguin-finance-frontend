@@ -112,11 +112,12 @@ const PendingRewardsContent = styled(Flex)`
   justify-content: space-around;
 `
 
-const RewardImage = styled.img<{ size: number; ml?: number, borderRadius?: string }>`
+const RewardImage = styled.img<{ size: number; ml?: number, borderRadius?: string, mt?: number }>`
   height: ${({ size }) => size}px;
   width: ${({ size }) => size}px;
   margin: 0px 12px;
   margin-left: ${({ ml }) => ml && `${ml}px`};
+  margin-top: ${({ mt }) => mt && `${mt}px`};
   border-radius: ${({ borderRadius }) => borderRadius};
 `
 const CoinImage = styled.img<{ size: number; ml?: number, mt?: number }>`
@@ -193,7 +194,7 @@ const COIN_LIST = [
 
 const getCoinImage = (amount) => {
   let coinImg
-  COIN_LIST.reverse().map((row) => {
+  COIN_LIST.map((row) => {
     if (amount > row.min) {
       coinImg = row.src
     }
@@ -288,7 +289,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
               />
             {/* )} */}
           </EarningsContainer>
-          <CoinImage src={coinImg} alt="pefi-earning" size={80} mt={-16} />
+          <CoinImage src={coinImg} alt="pefi-earning" size={80} />
         </EarningsWrapper>
         <Divider />
         <EarningsWrapper padding="12px 16px">
@@ -319,7 +320,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
               value={Number(pefiPerWeek)}
             />
           </EarningsContainer>
-          <RewardImage src={`/images/farms-v2/pools/${lpSymbol.toLowerCase()}.svg`} alt="igloo-stats" size={72} />
+          <RewardImage src={`/images/farms-v2/pools/${lpSymbol.toLowerCase()}.svg`} alt="igloo-stats" size={72} mt={16} />
         </EarningsWrapper>
       </EarningsCard>
       <Flex className="pending-panel" flexDirection="column" mb="16px">
