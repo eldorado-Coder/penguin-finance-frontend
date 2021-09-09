@@ -59,7 +59,7 @@ const v2Farms: V2FarmConfig[] = [
 
   {
     pid: 2,
-    lpSymbol: 'ETH-AVAX LP',
+    lpSymbol: 'ETH.e-AVAX LP',
     lpAddresses: {
       43113: '',
       43114: '0x7c05d54fc5cb6e4ad87c6f5db3b807c94bb89c52',
@@ -114,7 +114,7 @@ const v2Farms: V2FarmConfig[] = [
   // },
   {
     pid: 6,
-    lpSymbol: 'PEFI-LINK LP',
+    lpSymbol: 'PEFI-LINK.e LP',
     lpAddresses: {
       43113: '',
       43114: '0x3968c1bda61949724c5bbcacf8baffe19932cb14',

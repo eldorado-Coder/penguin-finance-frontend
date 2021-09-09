@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { useMatchBreakpoints, Flex } from 'penguinfinance-uikit2'
+import { useMatchBreakpoints, Flex, Text } from 'penguinfinance-uikit2'
 import { useV2FarmUser } from 'state/hooks'
 import useDelayedUnmount from 'hooks/useDelayedUnmount'
 import useAssets from 'hooks/useAssets'
@@ -14,14 +14,14 @@ import CellLayout from './CellLayout'
 import ActionPanel from './Actions/ActionPanel'
 import { DesktopColumnSchema, MobileColumnSchema, FarmCardProps } from '../types'
 
-const CellInner = styled.div<{ justifyContent?: string; minWidth?: number }>`
+const CellInner = styled.div<{ justifyContent?: string; minWidth?: number; smMinWidth?: number }>`
   padding: 12px 0px;
   display: flex;
   width: 100%;
   align-items: center;
   padding-right: 8px;
   justify-content: ${({ justifyContent }) => justifyContent};
-  min-width: unset;
+  min-width: ${({ smMinWidth }) => `${smMinWidth}px`};
 
   @media (min-width: 1136px) {
     min-width: ${({ minWidth }) => `${minWidth}px`};
@@ -154,7 +154,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
               case 'staked':
                 return (
                   <td key={key}>
-                    <CellInner minWidth={110}>
+                    <CellInner minWidth={110} smMinWidth={100}>
                       <CellLayout label="Your Stake">
                         {/* <Earned earnings={stakedBalanceInUsd} pid={farm.pid} userDataReady /> */}
                         <Balance fontSize="16px" fontWeight="400" prefix="$" value={Number(stakedBalanceInUsd)} />
@@ -165,9 +165,10 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
               case 'apr':
                 return (
                   <td key={key}>
-                    <CellInner minWidth={110}>
+                    <CellInner minWidth={110} smMinWidth={100}>
                       <CellLayout label="APR">
-                        <Balance fontSize="16px" fontWeight="400" prefix="" value={Number(farmApy)} />
+                        <Text color='textSubtle'>TBD</Text>
+                        {/* <Balance fontSize="16px" fontWeight="400" suffix="%" value={Number(farmApy)} /> */}
                       </CellLayout>
                     </CellInner>
                   </td>
@@ -175,7 +176,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
               case 'liquidity':
                 return (
                   <td key={key}>
-                    <CellInner minWidth={100}>
+                    <CellInner minWidth={100} smMinWidth={100}>
                       <CellLayout label="Liquidity">
                         <Balance fontSize="16px" fontWeight="400" prefix="$" value={Number(liquidity)} />
                       </CellLayout>
@@ -185,7 +186,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
               case 'rewards':
                 return (
                   <td key={key}>
-                    <CellInner minWidth={120} justifyContent="center">
+                    <CellInner minWidth={120} smMinWidth={100} justifyContent="center">
                       <CellLayout label="Rewards" alignItems="center">
                         <TokensWrapper>
                           {pendingTokensWithLogo &&
@@ -200,7 +201,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
               case 'details':
                 return (
                   <td key={key}>
-                    <CellInner justifyContent="center">
+                    <CellInner justifyContent="center" smMinWidth={50} minWidth={100}>
                       <CellLayout>
                         <Details actionPanelToggled={actionPanelExpanded} />
                       </CellLayout>

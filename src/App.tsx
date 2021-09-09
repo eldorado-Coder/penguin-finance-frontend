@@ -57,7 +57,7 @@ const App: React.FC = () => {
               <Home />
             </Route>
             <Route path="/farms">
-              <Farms />
+              <FarmsV2 />
             </Route>
             <Route path="/farms-v2">
               <FarmsV2 />
