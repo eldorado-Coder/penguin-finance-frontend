@@ -20,15 +20,15 @@ const useAssets = () => {
   const getTokenLogo = (tokenAddress) => {
     const asset = assets.find((row) => row.address === tokenAddress)
     if (asset) return asset.logoURI
-    if (tokenAddress === '0x35F77746A902068817f80f4722685ed6a90A3f8f') return '/images/tokens/PEFI.png'
-    if (tokenAddress === '0x128575200A8a04d132FF69937F42E8Bf71F4dF17') return '/images/tokens/ipefi.svg'
+    if (tokenAddress === '0xe896CDeaAC9615145c0cA09C8Cd5C25bced6384c') return '/images/tokens/PEFI.svg'
+    if (tokenAddress === '0xE9476e16FE488B90ada9Ab5C7c2ADa81014Ba9Ee') return '/images/tokens/ipefi.svg'
     return undefined
   }
 
   const getTokenSymbol = (tokenAddress) => {
     if (tokenAddress === '0x60781C2586D68229fde47564546784ab3fACA982') return 'PNG'
-    if (tokenAddress === '0x35F77746A902068817f80f4722685ed6a90A3f8f') return 'PEFI'
-    if (tokenAddress === '0x128575200A8a04d132FF69937F42E8Bf71F4dF17') return 'iPEFI'
+    if (tokenAddress === '0xe896CDeaAC9615145c0cA09C8Cd5C25bced6384c') return 'PEFI'
+    if (tokenAddress === '0xE9476e16FE488B90ada9Ab5C7c2ADa81014Ba9Ee') return 'iPEFI'
     return undefined
   }
 

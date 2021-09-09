@@ -7,7 +7,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Team } from 'config/constants/types'
 import useRefresh from 'hooks/useRefresh'
 import useUsdtPrice from 'hooks/useUsdtPrice'
-import useAvaxPrice from 'hooks/useAvaxPrice'
 import useUserSetting from 'hooks/useUserSetting'
 import useInterval from 'hooks/useInterval'
 import { DAYS_PER_YEAR, CURRENT_NEST_DAILY_REWARDS, CURRENT_V2_NEST_DAILY_REWARDS } from 'config'
@@ -234,17 +233,10 @@ export const useBoosterRocket = (account): BoosterRocketState => {
 
 // Prices
 export const usePriceAvaxUsdt = (): BigNumber => {
-  // TODO: avax price is not correct
   const { price: usdtPrice } = useUsdtPrice()
   const lpSymbol = 'USDT-AVAX LP' // USDT-AVAX LP
   const lp = useLPFromSymbol(lpSymbol)
   return lp.tokenPriceVsQuote ? new BigNumber(usdtPrice).div(lp.tokenPriceVsQuote) : ZERO
-
-  // TODO: using coingecko API (API call)
-  // const lpSymbol = 'USDT-AVAX LP' // USDT-AVAX LP
-  // const lp = useLPFromSymbol(lpSymbol)
-  // const { price: avaxPrice } = useAvaxPrice()
-  // return lp.tokenPriceVsQuote ? new BigNumber(avaxPrice) : ZERO
 }
 
 export const usePricePefiUsdt = (): BigNumber => {

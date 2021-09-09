@@ -2,14 +2,12 @@ import React, { Suspense, lazy } from 'react'
 import { Router, Route, Switch } from 'react-router-dom'
 import { ResetCSS } from 'penguinfinance-uikit2'
 import BigNumber from 'bignumber.js'
-// import { useWeb3React } from '@web3-react/core'
 import { useFetchProfile, useFetchPublicData } from 'state/hooks'
 import GlobalStyle from 'style/Global'
 import Menu from 'components/Menu'
 import ToastListener from 'components/ToastListener'
 import PageLoader from 'components/PageLoader'
 import CurrentBlockWrapper from 'components/CurrentBlockWrapper'
-import Pools from 'views/Pools'
 import GlobalCheckBullHiccupClaimStatus from 'views/Collectibles/components/GlobalCheckBullHiccupClaimStatus'
 import history from './routerHistory'
 
@@ -19,11 +17,11 @@ const Home = lazy(() => import('./views/Home'))
 const Farms = lazy(() => import('./views/Farms'))
 const FarmsV2 = lazy(() => import('./views/FarmsV2'))
 const Arena = lazy(() => import('./views/Arena'))
-const Launchpad = lazy(() => import('./views/Launchpad'))
+// const Launchpad = lazy(() => import('./views/Launchpad'))
 const LaunchpadWithVideo = lazy(() => import('./views/LaunchpadVideo'))
 const LaunchpadDistribution = lazy(() => import('./views/LaunchpadDistribution'))
 const Emperor = lazy(() => import('./views/Emperor'))
-const CovidEmperor = lazy(() => import('./views/CovidEmperor'))
+// const CovidEmperor = lazy(() => import('./views/CovidEmperor'))
 const Club = lazy(() => import('./views/Club'))
 const NotFound = lazy(() => import('./views/NotFound'))
 
@@ -34,9 +32,6 @@ const Collectibles = lazy(() => import('./views/Collectibles'))
 const CompounderIgloos = lazy(() => import('./views/CompounderIgloos'))
 const IPefi = lazy(() => import('./views/IPefi'))
 const Nest = lazy(() => import('./views/Nest'))
-// const Teams = lazy(() => import('./views/Teams'))
-// const Team = lazy(() => import('./views/Teams/Team'))
-// const Profile = lazy(() => import('./views/Profile'))
 
 // This config is required for number formating
 BigNumber.config({
@@ -61,10 +56,10 @@ const App: React.FC = () => {
             <Route path="/" exact>
               <Home />
             </Route>
-            <Route path="/igloos">
-              <Farms />
+            <Route path="/farms">
+              <FarmsV2 />
             </Route>
-            <Route path="/igloos-v2">
+            <Route path="/farms-v2">
               <FarmsV2 />
             </Route>
             <Route path="/nests">

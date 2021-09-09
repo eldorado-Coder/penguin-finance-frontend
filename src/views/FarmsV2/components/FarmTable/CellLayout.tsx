@@ -1,9 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Flex } from 'penguinfinance-uikit2'
 
 const Label = styled.div`
-  font-size: 12px;
-  color: ${({ theme }) => (theme.isDark ? '#8F88A0' : '#8F88A0')};
+  font-size: 14px;
+  color: ${({ theme }) => (theme.isDark ? '#b2b2ce' : '#8F88A0')};
   text-align: left;
 `
 
@@ -14,15 +15,16 @@ const ContentContainer = styled.div`
 `
 
 interface CellLayoutProps {
-  label?: string
+  label?: string,
+  alignItems?: string
 }
 
-const CellLayout: React.FC<CellLayoutProps> = ({ label = '', children }) => {
+const CellLayout: React.FC<CellLayoutProps> = ({ label = '', children, alignItems }) => {
   return (
-    <div>
+    <Flex flexDirection='column' alignItems={alignItems || 'flex-start'}>
       {label && <Label>{label}</Label>}
       <ContentContainer>{children}</ContentContainer>
-    </div>
+    </Flex>
   )
 }
 

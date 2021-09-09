@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js'
-import { Farm as FarmTypes } from 'state/types'
+import { V2Farm as V2FarmTypes } from 'state/types'
 
 export type ColumnsDefTypes = {
   id: number
@@ -17,9 +17,9 @@ export const MobileColumnSchema: ColumnsDefTypes[] = [
   },
   {
     id: 2,
-    name: 'earned',
+    name: 'staked',
     sortable: true,
-    label: 'Earned',
+    label: 'Your Stake',
   },
   {
     id: 3,
@@ -74,12 +74,8 @@ export const DesktopColumnSchema: ColumnsDefTypes[] = [
   },
 ]
 
-export interface FarmWithStakedValue extends FarmTypes {
-  apy?: BigNumber
-}
-
 export interface FarmCardProps {
-  farm: FarmWithStakedValue
+  farm: V2FarmTypes
   removed: boolean
   pefiPrice?: BigNumber
   avaxPrice?: BigNumber

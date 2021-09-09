@@ -1,13 +1,15 @@
 import React, { useCallback, useMemo, useState } from 'react'
 import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
-import { Button, Flex } from 'penguinfinance-uikit2'
+import { Button, Flex, useModal } from 'penguinfinance-uikit2'
 import UnlockButton from 'components/UnlockButton'
 import roundDown from 'utils/roundDown'
 import escapeRegExp from 'utils/escapeRegExp'
 import useI18n from 'hooks/useI18n'
 import { getFullDisplayBalance } from 'utils/formatBalance'
+import useIPefiPerHandsPenalty from 'hooks/useIPefiPerHandsPenalty';
 import TokenInput from '../TokenInput'
+import PerHandsPenaltyWarningModal from './PerHandsPenaltyWarningModal';
 
 interface UnStakeFormProps {
   max: BigNumber
@@ -21,21 +23,30 @@ interface UnStakeFormProps {
 
 const inputRegex = RegExp(`^\\d*(?:\\\\[.])?\\d*$`)
 
-const UnstakeForm: React.FC<UnStakeFormProps> = ({
-  max,
-  onConfirm,
-  tokenName = '',
-  account,
-  requested,
-  stakingTokenName,
-  onApprove,
-}) => {
+const UnstakeForm: React.FC<UnStakeFormProps> = ({ max, onConfirm, tokenName = '', account }) => {
   const [val, setVal] = useState('')
   const [pendingTx, setPendingTx] = useState(false)
   const TranslateString = useI18n()
   const fullBalance = useMemo(() => {
     return getFullDisplayBalance(max)
   }, [max])
+  const perHandsPenalty = useIPefiPerHandsPenalty();
+
+  const handleConfirm = async () => {
+    setPendingTx(true)
+    try {
+      await onConfirm(val)
+      setPendingTx(false)
+      setVal('')
+    } catch (error) {
+      setPendingTx(false)
+      setVal('')
+    }
+  }
+
+  const [onPresentPerHandsPenaltyModal] = useModal(
+    <PerHandsPenaltyWarningModal perHandsPenalty={perHandsPenalty} onConfirm={handleConfirm} />,
+  )
 
   const handleChange = useCallback(
     (e: React.FormEvent<HTMLInputElement>) => {
@@ -61,18 +72,6 @@ const UnstakeForm: React.FC<UnStakeFormProps> = ({
     return 'Enter Amount'
   }
 
-  const handleConfirm = async () => {
-    setPendingTx(true)
-    try {
-      await onConfirm(val)
-      setPendingTx(false)
-      setVal('')
-    } catch (error) {
-      setPendingTx(false)
-      setVal('')
-    }
-  }
-
   const canUnStake = !pendingTx && Number(val) > 0 && Number(fullBalance) >= Number(val)
 
   return (
@@ -87,9 +86,11 @@ const UnstakeForm: React.FC<UnStakeFormProps> = ({
       <Flex mt="8px">
         {!account && <StyledUnlockButton />}
         {account && (
-          <StyledButton tokenBalance={val} scale="md" disabled={!canUnStake} onClick={handleConfirm}>
-            {renderText()}
-          </StyledButton>
+          <>
+            <StyledButton tokenBalance={val} scale="md" disabled={!canUnStake} onClick={onPresentPerHandsPenaltyModal}>
+              {renderText()}
+            </StyledButton>
+          </>
         )}
       </Flex>
     </>

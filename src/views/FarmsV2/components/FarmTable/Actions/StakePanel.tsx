@@ -1,7 +1,6 @@
 import React, { useState, useCallback } from 'react'
 import styled from 'styled-components'
-import { Flex, ButtonMenuItem, ButtonMenu, Text } from 'penguinfinance-uikit2'
-import { BigNumber } from 'bignumber.js'
+import { Flex, ButtonMenuItem, ButtonMenu } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import { useV2FarmUser } from 'state/hooks'
 import { useERC20 } from 'hooks/useContract'
@@ -10,14 +9,11 @@ import { Farm as FarmTypes } from 'state/types'
 import { useV2Stake } from 'hooks/useStake'
 import { useV2Unstake } from 'hooks/useUnstake'
 import { useV2FarmApprove } from 'hooks/useApprove'
-import StakeLPForm from './StakeLPForm'
 import UnstakeLPForm from './UnstakeLPForm'
+import StakeLPForm from './StakeLPForm'
 
-interface FarmWithStakedValue extends FarmTypes {
-  apy?: BigNumber
-}
-
-const Staked: React.FunctionComponent<FarmWithStakedValue> = ({ pid, lpSymbol, lpAddresses, type }) => {
+const Staked: React.FunctionComponent<FarmTypes> = (farm) => {
+  const { pid, lpSymbol, lpAddresses, type } = farm
   const [activeTab, setActiveTab] = useState(0)
   const [requestedApproval, setRequestedApproval] = useState(false)
   const { account } = useWeb3React()
@@ -63,6 +59,7 @@ const Staked: React.FunctionComponent<FarmWithStakedValue> = ({ pid, lpSymbol, l
           needsApproval={!isApproved}
           requested={requestedApproval}
           onApprove={handleApprove}
+          farm={farm}
           stakingTokenName={lpSymbol.replaceAll(' LP', '')}
         />
       ) : (
@@ -84,9 +81,11 @@ const Staked: React.FunctionComponent<FarmWithStakedValue> = ({ pid, lpSymbol, l
 // slider
 const TabWrapper = styled.div`
   div {
-    height: 28px;
-    border: 2px solid ${({ theme }) => (theme.isDark ? '#221b38' : '#b2b2ce')};
-    background-color: ${({ theme }) => (theme.isDark ? '#332654' : '#e8e4ef')};
+    height: 32px;
+    border: 2px solid ${({ theme }) => (theme.isDark ? '#bba6dd' : '#b2b2ce')};
+    border: ${({ theme }) => theme.isDark && 'none'};
+    background-color: ${({ theme }) => (theme.isDark ? '#604e84' : '#e8e4ef')};
+    color: ${({ theme }) => (theme.isDark ? '#bba6dd' : '#b2b2ce')};
     border-radius: 18px;
   }
 `
@@ -95,7 +94,7 @@ const OptionItem = styled(ButtonMenuItem)<{ active: boolean }>`
   background-color: ${({ active, theme }) => active && theme.colors.red};
   color: ${({ active }) => (active ? 'white' : '#b2b2ce')};
   margin: 0px !important;
-  height: 24px;
+  height: ${({ theme }) => (theme.isDark ? '32px' : '28px')};
   font-weight: 400;
   font-size: 14px;
 `

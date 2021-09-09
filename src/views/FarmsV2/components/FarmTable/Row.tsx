@@ -1,15 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
-import BigNumber from 'bignumber.js'
-import { useMatchBreakpoints } from 'penguinfinance-uikit2'
+import { useMatchBreakpoints, Flex, Text } from 'penguinfinance-uikit2'
 import { useV2FarmUser } from 'state/hooks'
 import useDelayedUnmount from 'hooks/useDelayedUnmount'
 import useAssets from 'hooks/useAssets'
-import { usePangolinLpPrice } from 'hooks/usePrice'
-import { WEEKS_PER_YEAR } from 'config'
 import { getBalanceNumber } from 'utils/formatBalance'
 import Balance from 'components/Balance'
-import { getAddress } from 'utils/addressHelpers'
 
 import Farm from './Farm'
 import Earned from './Earned'
@@ -18,21 +14,36 @@ import CellLayout from './CellLayout'
 import ActionPanel from './Actions/ActionPanel'
 import { DesktopColumnSchema, MobileColumnSchema, FarmCardProps } from '../types'
 
-const CellInner = styled.div`
+const CellInner = styled.div<{ justifyContent?: string; minWidth?: number; smMinWidth?: number }>`
   padding: 12px 0px;
   display: flex;
   width: 100%;
   align-items: center;
   padding-right: 8px;
+  justify-content: ${({ justifyContent }) => justifyContent};
+  min-width: ${({ smMinWidth }) => `${smMinWidth}px`};
+
+  @media (min-width: 1136px) {
+    min-width: ${({ minWidth }) => `${minWidth}px`};
+  }
 
   ${({ theme }) => theme.mediaQueries.xl} {
-    padding-right: 32px;
+    padding-right: 16px;
+  }
+
+  ${({ theme }) => theme.mediaQueries.xl} {
+    padding-right: 16px;
+  }
+
+  ${({ theme }) => theme.mediaQueries.xl} {
+    padding-right: 16px;
   }
 `
 
-const StyledTr = styled.tr`
+const StyledTr = styled.tr<{ shouldRenderChild?: boolean }>`
   cursor: pointer;
-  border-bottom: 3px solid ${({ theme }) => (theme.isDark ? theme.colors.background : 'rgb(231, 227, 235)')};
+  border-bottom: ${({ theme, shouldRenderChild }) =>
+    !shouldRenderChild && `3px solid ${theme.isDark ? theme.colors.background : 'rgb(231, 227, 235)'}`};
 `
 
 const EarnedMobileCell = styled.td`
@@ -57,27 +68,54 @@ const Amount = styled.span`
 const TokensWrapper = styled.div`
   display: flex;
   align-items: center;
+  margin-top: 4px;
 `
 
 const PendingTokenLogo = styled.img`
-  width: 30px;
-  height: 30px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   margin: 2px 2px;
 `
 
-const Row: React.FunctionComponent<FarmCardProps> = (props) => {
-  const { farm } = props
-  const [lpPrice, setLpPrice] = useState(1)
-  const lpAddress = getAddress(farm.lpAddresses)
-  const { onFetchLpPrice } = usePangolinLpPrice()
+const StyledTable = styled.table<{ index?: number }>`
+  border-collapse: collapse;
+  font-size: 14px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  background: ${({ theme }) => theme.card.background};
+  border-radius: ${({ index }) => index === 0 && '16px 16px 0 0'};
+  box-shadow: 0px 1px 4px rgb(0 0 0 / 16%);
+`
+
+const TableBody = styled.tbody`
+  & tr {
+    td {
+      font-size: 16px;
+      vertical-align: middle;
+    }
+  }
+`
+
+const TableWrapper = styled.div<{ shouldRenderChild?: boolean }>`
+  padding: 0 8px;
+  margin-bottom: ${({ shouldRenderChild }) => shouldRenderChild && '8px'};
+`
+
+interface RowProps extends FarmCardProps {
+  index: number
+}
+
+const Row: React.FunctionComponent<RowProps> = (props) => {
+  const { farm, index } = props
   const { stakedBalance, earnings } = useV2FarmUser(farm.pid, farm.type)
-  const hasStakedAmount = !!stakedBalance.toNumber()
-  const [actionPanelExpanded, setActionPanelExpanded] = useState(hasStakedAmount)
-  const farmAPY =
-    farm.apy && farm.apy.times(new BigNumber(WEEKS_PER_YEAR)).times(new BigNumber(100)).toNumber().toFixed(2)
+  const [actionPanelExpanded, setActionPanelExpanded] = useState(false)
+  // const farmApy = farm.apy ? (100 * Number(farm.apy)).toFixed(2) : '--'
+  const farmApy = farm.apr ? (100 * Number(farm.apr)).toFixed(2) : ''
+
   const shouldRenderChild = useDelayedUnmount(actionPanelExpanded, 300)
-  const { isXl, isXs } = useMatchBreakpoints()
+  const { isXl, isSm, isXs } = useMatchBreakpoints()
   const { getTokenLogo } = useAssets()
 
   const { pendingTokens } = farm
@@ -86,38 +124,21 @@ const Row: React.FunctionComponent<FarmCardProps> = (props) => {
     pendingTokens.map((pendingTokenAddress) => {
       return { address: pendingTokenAddress, logo: getTokenLogo(pendingTokenAddress) }
     })
-  const liquidity = farm.totalLp ? getBalanceNumber(farm.totalLp) * lpPrice : '-'
-  const stakedBalanceInUsd = stakedBalance ? getBalanceNumber(stakedBalance) * lpPrice : '-'
+  const liquidity = farm.totalLp ? getBalanceNumber(farm.totalLp) * farm.lpPrice : '-'
+  const stakedBalanceInUsd = stakedBalance ? getBalanceNumber(stakedBalance) * farm.lpPrice : '-'
 
   const toggleActionPanel = () => {
     setActionPanelExpanded(!actionPanelExpanded)
   }
-
-  const onSetLpPrice = async () => {
-    const _lpPrice = await onFetchLpPrice(lpAddress)
-    setLpPrice(_lpPrice)
-  }
-
-  useEffect(() => {
-    setActionPanelExpanded(hasStakedAmount)
-  }, [hasStakedAmount])
-
-  useEffect(() => {
-    onSetLpPrice()
-    setInterval(() => {
-      onSetLpPrice()
-    }, 20000)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   const isMobile = !isXl
   const tableSchema = isMobile ? MobileColumnSchema : DesktopColumnSchema
   const columnNames = tableSchema.map((column) => column.name)
 
   const handleRenderRow = () => {
-    if (!isXs) {
+    if (!isSm && !isXs) {
       return (
-        <StyledTr onClick={toggleActionPanel}>
+        <StyledTr shouldRenderChild={shouldRenderChild} onClick={toggleActionPanel}>
           {columnNames.map((key) => {
             switch (key) {
               case 'farm':
@@ -133,10 +154,10 @@ const Row: React.FunctionComponent<FarmCardProps> = (props) => {
               case 'staked':
                 return (
                   <td key={key}>
-                    <CellInner>
+                    <CellInner minWidth={110} smMinWidth={100}>
                       <CellLayout label="Your Stake">
                         {/* <Earned earnings={stakedBalanceInUsd} pid={farm.pid} userDataReady /> */}
-                        <Balance fontSize="14px" fontWeight="400" prefix="$" value={Number(stakedBalanceInUsd)} />
+                        <Balance fontSize="16px" fontWeight="400" prefix="$" value={Number(stakedBalanceInUsd)} />
                       </CellLayout>
                     </CellInner>
                   </td>
@@ -144,9 +165,10 @@ const Row: React.FunctionComponent<FarmCardProps> = (props) => {
               case 'apr':
                 return (
                   <td key={key}>
-                    <CellInner>
+                    <CellInner minWidth={110} smMinWidth={100}>
                       <CellLayout label="APR">
-                        <Amount>{`${farmAPY || '--'}%`}</Amount>
+                        <Text color='textSubtle'>TBD</Text>
+                        {/* <Balance fontSize="16px" fontWeight="400" suffix="%" value={Number(farmApy)} /> */}
                       </CellLayout>
                     </CellInner>
                   </td>
@@ -154,9 +176,9 @@ const Row: React.FunctionComponent<FarmCardProps> = (props) => {
               case 'liquidity':
                 return (
                   <td key={key}>
-                    <CellInner>
+                    <CellInner minWidth={100} smMinWidth={100}>
                       <CellLayout label="Liquidity">
-                        <Balance fontSize="14px" fontWeight="400" prefix="$" value={Number(liquidity)} />
+                        <Balance fontSize="16px" fontWeight="400" prefix="$" value={Number(liquidity)} />
                       </CellLayout>
                     </CellInner>
                   </td>
@@ -164,8 +186,8 @@ const Row: React.FunctionComponent<FarmCardProps> = (props) => {
               case 'rewards':
                 return (
                   <td key={key}>
-                    <CellInner>
-                      <CellLayout label="Rewards">
+                    <CellInner minWidth={120} smMinWidth={100} justifyContent="center">
+                      <CellLayout label="Rewards" alignItems="center">
                         <TokensWrapper>
                           {pendingTokensWithLogo &&
                             pendingTokensWithLogo.map((row) => {
@@ -179,7 +201,7 @@ const Row: React.FunctionComponent<FarmCardProps> = (props) => {
               case 'details':
                 return (
                   <td key={key}>
-                    <CellInner>
+                    <CellInner justifyContent="center" smMinWidth={50} minWidth={100}>
                       <CellLayout>
                         <Details actionPanelToggled={actionPanelExpanded} />
                       </CellLayout>
@@ -199,26 +221,28 @@ const Row: React.FunctionComponent<FarmCardProps> = (props) => {
     }
 
     return (
-      <StyledTr onClick={toggleActionPanel}>
+      <StyledTr shouldRenderChild={shouldRenderChild} onClick={toggleActionPanel}>
         <td>
           <tr>
-            <FarmMobileCell>
-              <CellLayout>
-                <Farm {...props} />
-              </CellLayout>
-            </FarmMobileCell>
-          </tr>
-          <tr>
-            <EarnedMobileCell>
-              <CellLayout label="Earned">
-                <Earned earnings={earnings} pid={farm.pid} userDataReady />
-              </CellLayout>
-            </EarnedMobileCell>
-            <AprMobileCell>
-              <CellLayout label="APR">
-                <Amount>{`${farmAPY || '--'}%`}</Amount>
-              </CellLayout>
-            </AprMobileCell>
+            <Flex flexDirection="column">
+              <FarmMobileCell>
+                <CellLayout>
+                  <Farm {...props} />
+                </CellLayout>
+              </FarmMobileCell>
+              <Flex justifyContent="space-between">
+                <EarnedMobileCell>
+                  <CellLayout label="Your Stake">
+                    <Balance fontSize="16px" fontWeight="400" prefix="$" value={Number(stakedBalanceInUsd)} />
+                  </CellLayout>
+                </EarnedMobileCell>
+                <AprMobileCell>
+                  <CellLayout label="APR">
+                    <Amount>{`${farmApy || '--'}%`}</Amount>
+                  </CellLayout>
+                </AprMobileCell>
+              </Flex>
+            </Flex>
           </tr>
         </td>
         <td>
@@ -234,14 +258,12 @@ const Row: React.FunctionComponent<FarmCardProps> = (props) => {
 
   return (
     <>
-      {handleRenderRow()}
-      {shouldRenderChild && (
-        <tr>
-          <td colSpan={6}>
-            <ActionPanel {...props} lpPrice={lpPrice} expanded={actionPanelExpanded} />
-          </td>
-        </tr>
-      )}
+      <TableWrapper shouldRenderChild={shouldRenderChild}>
+        <StyledTable index={index}>
+          <TableBody>{handleRenderRow()}</TableBody>
+        </StyledTable>
+      </TableWrapper>
+      {shouldRenderChild && <ActionPanel {...props} lpPrice={farm.lpPrice} expanded={actionPanelExpanded} />}
     </>
   )
 }

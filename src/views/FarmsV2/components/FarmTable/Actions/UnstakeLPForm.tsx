@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
 import React, { useCallback, useMemo, useState } from 'react'
-import { Button, Flex, Text } from 'penguinfinance-uikit2'
+import { Button, Text } from 'penguinfinance-uikit2'
 import UnlockButton from 'components/UnlockButton'
 import roundDown from 'utils/roundDown'
 import escapeRegExp from 'utils/escapeRegExp'
@@ -65,21 +65,18 @@ const UnstakeLPForm: React.FC<DepositModalProps> = ({ max, onConfirm, tokenName 
       setVal('')
     }
   }
-
   const canUnStake = !pendingTx && Number(val) > 0 && Number(fullBalance) >= Number(val)
 
   return (
     <>
       <InputContainer>
-        <Text color="textDisabled" fontSize="14px">
-          {`LP Staked Balance: ${Number(fullBalance).toFixed(2)}`}
-        </Text>
+        <LPTokenBalance fontSize="14px">{`Stake Balance: ${roundDown(fullBalance, 2)} LP`}</LPTokenBalance>
         <TokenInput
           value={roundDown(val, 2)}
           onSelectMax={handleSelectMax}
           onChange={handleChange}
           max={fullBalance}
-          symbol={tokenName}
+          symbol={tokenName.replace(' LP', '')}
         />
       </InputContainer>
       <ActionContainer>
@@ -96,26 +93,32 @@ const UnstakeLPForm: React.FC<DepositModalProps> = ({ max, onConfirm, tokenName 
 
 const InputContainer = styled.div`
   width: 100%;
-  margin-top: 16px;
+  margin-top: 12px;
 `
 
 const ActionContainer = styled.div`
   width: 100%;
-  margin-top: 32px;
+  margin-top: 40px;
 `
 
 const StyledButton = styled(Button)<{ tokenBalance?: string }>`
-  border-radius: 16px;
+  border-radius: 10px;
+  height: 40px;
+  font-weight: 400;
+  width: 100%;
+  background-color: ${({ theme }) => (theme.isDark ? theme.colors.red : '#372871')};
+  color: white;
+`
+
+const StyledUnlockButton = styled(UnlockButton)`
+  border-radius: 10px;
   height: 40px;
   font-weight: 400;
   width: 100%;
 `
 
-const StyledUnlockButton = styled(UnlockButton)`
-  border-radius: 16px;
-  height: 40px;
-  font-weight: 400;
-  width: 100%;
+const LPTokenBalance = styled(Text)`
+  color: ${({ theme }) => (theme.isDark ? '#bba6dd' : '#b2b2ce')};
 `
 
 export default UnstakeLPForm

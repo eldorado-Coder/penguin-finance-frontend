@@ -36,6 +36,42 @@ export interface Farm extends FarmConfig {
   totalShares?: BigNumber
   pefiPerYear?: BigNumber
   maxBips?: number
+  lpPrice?: number
+  totalLiquidityInUsd?: number
+  pngApr?: number
+  pngDailyApr?: number
+}
+
+export interface V2Farm extends FarmConfig {
+  tokenAmount?: BigNumber
+  quoteTokenAmount?: BigNumber
+  lpTotalInQuoteToken?: BigNumber
+  tokenPriceVsQuote?: BigNumber
+  strategyRatio?: number
+  poolWeight?: BigNumber
+  withdrawFee?: number
+  userData?: {
+    allowance: BigNumber
+    tokenBalance: BigNumber
+    stakedBalance: BigNumber
+    stakedReceiptBalance?: BigNumber
+    earnings: BigNumber
+    pendingXPefi: BigNumber
+    userPendingTokens?: any[]
+    userShares: BigNumber
+    userIpefiDistributionBips?: BigNumber
+  }
+  pendingTokens?: any[]
+  totalLp?: BigNumber
+  totalShares?: BigNumber
+  pefiPerYear?: BigNumber
+  maxBips?: number
+  lpPrice?: number
+  totalLiquidityInUsd?: number
+  pngApr?: number
+  pngDailyApr?: number
+  apr?: number
+  apy?: number
 }
 
 export interface Lp extends LPConfig {

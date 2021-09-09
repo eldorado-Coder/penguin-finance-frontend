@@ -10,9 +10,7 @@ export interface ITableProps {
 }
 
 const Container = styled.div`
-  filter: ${({ theme }) => theme.card.dropShadow};
   width: 100%;
-  background: ${({ theme }) => theme.card.background};
   border-radius: 16px;
   margin: 16px 0px;
 `
@@ -25,26 +23,12 @@ const TableWrapper = styled.div`
   }
 `
 
-const StyledTable = styled.table`
-  border-collapse: collapse;
-  font-size: 14px;
-  border-radius: 4px;
-  margin-left: auto;
-  margin-right: auto;
-  width: 100%;
-`
-
-const TableBody = styled.tbody`
-  & tr {
-    td {
-      font-size: 16px;
-      vertical-align: middle;
-    }
-  }
-`
-
 const TableContainer = styled.div`
   position: relative;
+`
+
+const ScrollWrapper = styled.div`
+  padding: 0 8px;
 `
 
 const ScrollButtonContainer = styled.div`
@@ -52,6 +36,10 @@ const ScrollButtonContainer = styled.div`
   justify-content: center;
   padding-top: 5px;
   padding-bottom: 5px;
+
+  box-shadow: 0px 1px 4px rgb(0 0 0 / 16%);
+  border-radius: 0 0 16px 16px;
+  background: ${({ theme }) => theme.card.background};
 `
 
 const FarmTable: React.FC<ITableProps> = (props) => {
@@ -68,20 +56,18 @@ const FarmTable: React.FC<ITableProps> = (props) => {
     <Container>
       <TableContainer>
         <TableWrapper ref={tableWrapperEl}>
-          <StyledTable>
-            <TableBody>
-              {data.map((row) => {
-                return <Row {...row} key={`table-row-${row.farm.type}-${row.farm.pid}`} />
-              })}
-            </TableBody>
-          </StyledTable>
+          {data.map((row, index) => {
+            return <Row {...row} index={index} key={`table-row-${row.farm.type}-${row.farm.pid}`} />
+          })}
         </TableWrapper>
-        <ScrollButtonContainer>
-          <Button variant="text" onClick={scrollToTop}>
-            To Top
-            <ChevronUpIcon color="primary" />
-          </Button>
-        </ScrollButtonContainer>
+        <ScrollWrapper>
+          <ScrollButtonContainer>
+            <Button variant="text" onClick={scrollToTop}>
+              To Top
+              <ChevronUpIcon color="primary" />
+            </Button>
+          </ScrollButtonContainer>
+        </ScrollWrapper>
       </TableContainer>
     </Container>
   )

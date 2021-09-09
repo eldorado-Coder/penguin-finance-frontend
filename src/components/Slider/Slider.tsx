@@ -19,7 +19,7 @@ const StyledThumb = styled.div`
   line-height: 16px;
   width: 16px;
   text-align: center;
-  background-color: #8909c3;
+  background-color: white;
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.12);
 
   color: #fff;
@@ -39,7 +39,7 @@ const SliderWrapper = styled.div`
   // padding: 0 10px 0 8px;
 `
 
-const Thumb = (props, state) => {
+const Thumb = (props) => {
   return (
     <ThumbWrapper {...props}>
       <StyledThumb />

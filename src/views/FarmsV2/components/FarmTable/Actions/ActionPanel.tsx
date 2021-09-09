@@ -6,13 +6,20 @@ import { Card, Text, Button, Flex, useMatchBreakpoints } from 'penguinfinance-ui
 import { WEEKS_PER_YEAR } from 'config'
 import useAssets from 'hooks/useAssets'
 import { useV2Harvest } from 'hooks/useV2Farm'
-import useTheme from 'hooks/useTheme'
 import { getBalanceNumber } from 'utils/formatBalance'
-import { getTokenLogoFromSymbol } from 'utils/token'
 import Balance from 'components/Balance'
+import tokens from 'config/constants/tokens'
+import { getAddress } from 'utils/addressHelpers'
+import { usePricePefiUsdt, usePricePngUsdt, useV2Pools } from 'state/hooks'
 import { FarmCardProps } from '../../types'
 import StakePanel from './StakePanel'
 import AutoNesting from './AutoNesting'
+
+const getIPefiToPefiRatio = (pool) => {
+  return pool.totalStaked && pool.totalSupply
+    ? new BigNumber(pool.totalStaked).div(new BigNumber(pool.totalSupply)).toJSON()
+    : 1
+}
 
 const expandAnimation = keyframes`
   from {
@@ -42,17 +49,16 @@ const Container = styled.div<{ expanded }>`
           ${collapseAnimation} 300ms linear forwards
         `};
   overflow: hidden;
-  background: ${({ theme }) => (theme.isDark ? '#121021' : theme.colors.background)};
   display: flex;
   width: 100%;
   flex-direction: column;
-  padding: 16px 16px 0;
+  justify-content: space-between;
+  padding: 8px 8px 0;
   overflow: auto;
 
   ${({ theme }) => theme.mediaQueries.xl} {
     flex-direction: row;
-    justify-content: space-between;
-    padding: 16px 16px 0;
+    padding: 8px 8px 0;
   }
 `
 
@@ -60,14 +66,66 @@ const ActionCard = styled(Card)<{ minWidth?: number }>`
   border-radius: 16px;
   overflow: unset;
   min-width: ${({ minWidth }) => minWidth && `${minWidth}px`};
+  box-shadow: 0px 2px 8px rgb(0 0 0 / 16%);
 `
 
-const RewardImage = styled.img<{ size: number; ml?: number }>`
+const EarningsCard = styled(ActionCard)`
+  min-width: 240px;
+  margin-right: 0;
+
+  img {
+    display: block;
+  }
+
+  ${({ theme }) => theme.mediaQueries.xl} {
+    margin-right: 16px;
+
+    img {
+      display: none;
+    }
+  }
+
+  @media (min-width: 1410px) {
+    min-width: 300px;
+
+    img {
+      display: block;
+    }
+  }
+`
+
+const StakeCard = styled(ActionCard)`
+  margin-right: 0;
+  ${({ theme }) => theme.mediaQueries.xl} {
+    margin-right: 16px;
+  }
+`;
+
+const PendingRewardsCard = styled(ActionCard)`
+  @media (min-width: 1350px) {
+    min-width: 460px;
+  }
+`
+
+const PendingRewardsContent = styled(Flex)`
+  flex-wrap: wrap;
+  justify-content: space-around;
+`
+
+const RewardImage = styled.img<{ size: number; ml?: number, borderRadius?: string, mt?: number }>`
   height: ${({ size }) => size}px;
   width: ${({ size }) => size}px;
   margin: 0px 12px;
   margin-left: ${({ ml }) => ml && `${ml}px`};
-  border-radius: 50%;
+  margin-top: ${({ mt }) => mt && `${mt}px`};
+  border-radius: ${({ borderRadius }) => borderRadius};
+`
+const CoinImage = styled.img<{ size: number; ml?: number, mt?: number }>`
+  height: ${({ size }) => size}px;
+  width: ${({ size }) => size}px;
+  margin: 0px 12px;
+  margin-left: ${({ ml }) => ml && `${ml}px`};
+  margin-top: ${({ mt }) => mt && `${mt}px`};
 `
 
 const StyledButton = styled(Button)`
@@ -84,14 +142,17 @@ const StyledButton = styled(Button)`
   }
 `
 
+const EarningsWrapper = styled(Flex)`
+  height: 49%;
+`;
+
 const EarningsContainer = styled.div`
-  min-width: 180px;
+  min-width: 160px;
 `
 
 const Divider = styled.div`
-  background-color: ${({ theme }) => theme.colors.textSubtle};
-  height: 2px;
-  margin: 16px auto 8px;
+  background-color: ${({ theme }) => theme.isDark ? theme.colors.background : '#e8e4ef'};
+  height: 3px;
   width: 100%;
 `
 
@@ -119,31 +180,63 @@ const BalanceWrapper = styled.div`
   }
 `
 
+const Title = styled(Text)`
+  color: ${({ theme }) => theme.colors.red};
+`
+
+const COIN_LIST = [
+  { src: '/images/farms-v2/coins/coin1.png', min: 0 },
+  { src: '/images/farms-v2/coins/coin2.png', min: 500 },
+  { src: '/images/farms-v2/coins/coin3.png', min: 1000 },
+  { src: '/images/farms-v2/coins/coin4.png', min: 5000 },
+  { src: '/images/farms-v2/coins/coin5.png', min: 10000 },
+]
+
+const getCoinImage = (amount) => {
+  let coinImg
+  COIN_LIST.map((row) => {
+    if (amount > row.min) {
+      coinImg = row.src
+    }
+    return row
+  })
+  return coinImg || COIN_LIST[0].src
+}
+
 const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, expanded }) => {
   const [pendingTx, setPendingTx] = useState(false)
-  const { getTokenLogo, getTokenSymbol } = useAssets()
+  const { getTokenLogo } = useAssets()
   const { onHarvest } = useV2Harvest(farm.pid)
   const { account } = useWeb3React()
+  const v2Pools = useV2Pools(account)
+  const v2Nest = v2Pools.length > 0 ? v2Pools[0] : null
+  const pefiPriceUsd = usePricePefiUsdt().toNumber()
+  const pngPriceUsd = usePricePngUsdt().toNumber()
+  const iPefiToPefiRatio = Number(getIPefiToPefiRatio(v2Nest))
+  const iPefiPriceUsd = iPefiToPefiRatio * pefiPriceUsd
 
-  const { isXl, isLg } = useMatchBreakpoints()
+  const { isXl } = useMatchBreakpoints()
   const isMobile = !isXl
   const { pendingTokens, userData, maxBips: maxAutoNestAllocation } = farm
   const userPendingTokens = userData ? userData.userPendingTokens : []
   const userShares = userData ? getBalanceNumber(userData.userShares) : 0
   const userStakedBalance = userData ? getBalanceNumber(userData.stakedBalance) : 0
-  const uesrAutoNestingAllocation = userData ? userData.userIpefiDistributionBips : 0
+  const userStakedBalanceInUsd = userData ? userStakedBalance * lpPrice : 0
+  const userAutoNestingAllocation = userData ? userData.userIpefiDistributionBips : 0
 
   const totalShares = getBalanceNumber(farm.totalShares)
   const totalLp = getBalanceNumber(farm.totalLp)
   const liquidity = totalLp ? totalLp * lpPrice : '-'
 
   const userSharePercentage = totalShares > 0 ? (100 * userShares) / totalShares : 0
-  const theme = useTheme()
   const pefiPerYear = getBalanceNumber(farm.pefiPerYear)
   const pefiPerWeek = pefiPerYear / WEEKS_PER_YEAR
 
+  // const farmApy = farm.apy ? farm.apy.toFixed(2) : '--'
+  const farmApy = farm.apr ? (100 * Number(farm.apr)).toFixed(2) : '--'
+
   const lpSymbol = farm.lpSymbol.replaceAll(' LP', '')
-  const lpLogo = getTokenLogoFromSymbol(lpSymbol)
+  const coinImg = getCoinImage(Number(userStakedBalanceInUsd))
 
   const onClickHarvest = async () => {
     setPendingTx(true)
@@ -155,17 +248,25 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
     }
   }
 
+  const getTokenPrice = (address) => {
+    const rewardToken = tokens.find((row) => getAddress(row.address) === address)
+    if (rewardToken && rewardToken.symbol === 'PEFI') return pefiPriceUsd
+    if (rewardToken && rewardToken.symbol === 'iPEFI') return iPefiPriceUsd
+    if (rewardToken && rewardToken.symbol === 'PNG') return pngPriceUsd
+    return 1
+  }
+
   return (
     <Container expanded={expanded}>
-      <ActionCard padding="10px 16px" mr={!isMobile && '8px'} mb="16px">
+      <StakeCard padding="20px" mb="16px" minWidth={300}>
         <StakePanel {...farm} />
-      </ActionCard>
-      <ActionCard padding="10px 16px" mr={!isMobile && '8px'} mb="16px" minWidth={300}>
-        <Flex>
+      </StakeCard>
+      <EarningsCard mb="16px">
+        <EarningsWrapper padding="16px 16px 12px">
           <EarningsContainer>
-            <Text fontSize="20px" color="textSubtle" bold lineHeight={1} mb="8px">
+            <Title fontSize="20px" bold>
               Your Stake
-            </Text>
+            </Title>
             <Balance
               fontSize="14px"
               color="textSubtle"
@@ -174,32 +275,35 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
               suffix={` ${lpSymbol}`}
               value={Number(userStakedBalance)}
             />
-            {userSharePercentage > 3 && (
+            <UsdBalanceWrapper>
+              <Balance fontSize="10px" fontWeight="400" prefix="$" value={Number(userStakedBalanceInUsd)} />
+            </UsdBalanceWrapper>
+            {/* {userSharePercentage > 3 && ( */}
               <Balance
                 fontSize="14px"
                 color="textSubtle"
                 fontWeight="400"
                 prefix=" "
-                suffix="% of the igloo"
+                suffix="% of the Igloo"
                 value={Number(userSharePercentage)}
               />
-            )}
+            {/* )} */}
           </EarningsContainer>
-          <RewardImage src={lpLogo} alt="pefi-earning" size={56} />
-        </Flex>
+          <CoinImage src={coinImg} alt="pefi-earning" size={80} />
+        </EarningsWrapper>
         <Divider />
-        <Flex>
+        <EarningsWrapper padding="12px 16px">
           <EarningsContainer>
-            <Text fontSize="20px" color="textSubtle" bold lineHeight={1} mb="8px">
+            <Title fontSize="20px" bold>
               Igloo Stats
-            </Text>
+            </Title>
             <Balance
               fontSize="14px"
               color="textSubtle"
               fontWeight="400"
               prefix="APR: "
               suffix="%"
-              value={Number(pefiPerWeek)}
+              value={Number(farmApy)}
             />
             <Balance
               fontSize="14px"
@@ -216,39 +320,41 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
               value={Number(pefiPerWeek)}
             />
           </EarningsContainer>
-          <RewardImage src={lpLogo} alt="igloo-stats" size={56} />
-        </Flex>
-      </ActionCard>
-      <Flex flexDirection="column" mb="16px">
-        <ActionCard padding="10px 16px">
-          <Flex>
-            <Flex alignItems="center" justifyContent="space-around" mr="40px">
-              {pendingTokens.map((pendingToken) => {
-                const rewardTokenInfo = userPendingTokens.find((row) => row.address === pendingToken)
-                const amount = rewardTokenInfo ? Number(rewardTokenInfo.amount) : 0
-                return (
-                  <Flex flexDirection="column" alignItems="center" mr="8px" ml="8px">
-                    <RewardImage src={getTokenLogo(pendingToken)} alt="penguin" size={50} />
-                    <BalanceWrapper>
-                      <StyledBalance
-                        fontSize="14px"
-                        color="textSubtle"
-                        fontWeight="400"
-                        suffix={` ${getTokenSymbol(pendingToken)}`}
-                        value={getBalanceNumber(new BigNumber(amount))}
-                      />
-                    </BalanceWrapper>
-                    <UsdBalanceWrapper>
-                      <Balance
-                        fontSize="10px"
-                        fontWeight="400"
-                        prefix="$"
-                        value={getBalanceNumber(new BigNumber(amount))}
-                      />
-                    </UsdBalanceWrapper>
-                  </Flex>
-                )
-              })}
+          <RewardImage src={`/images/farms-v2/pools/${lpSymbol.toLowerCase()}.svg`} alt="igloo-stats" size={72} mt={16} />
+        </EarningsWrapper>
+      </EarningsCard>
+      <Flex className="pending-panel" flexDirection="column" mb="16px">
+        <PendingRewardsCard padding="10px 16px">
+          <PendingRewardsContent>
+            <Flex alignItems="center" justifyContent="space-around" mr="16px">
+              {pendingTokens &&
+                pendingTokens.map((pendingToken) => {
+                  const rewardTokenInfo = userPendingTokens.find((row) => row.address === pendingToken)
+                  const amount = rewardTokenInfo ? Number(rewardTokenInfo.amount) : 0
+                  const amountInUsd = getTokenPrice(pendingToken) * amount
+
+                  return (
+                    <Flex flexDirection="column" alignItems="center" mr="4px" ml="4px" key={pendingToken}>
+                      <RewardImage src={getTokenLogo(pendingToken)} alt="penguin" size={50} borderRadius='50%' />
+                      <BalanceWrapper>
+                        <StyledBalance
+                          fontSize="14px"
+                          color="textSubtle"
+                          fontWeight="400"
+                          value={getBalanceNumber(new BigNumber(amount))}
+                        />
+                      </BalanceWrapper>
+                      <UsdBalanceWrapper>
+                        <Balance
+                          fontSize="10px"
+                          fontWeight="400"
+                          prefix="$"
+                          value={getBalanceNumber(new BigNumber(amountInUsd))}
+                        />
+                      </UsdBalanceWrapper>
+                    </Flex>
+                  )
+                })}
             </Flex>
             <Flex flexDirection="column" justifyContent="space-between" pb="4px">
               <Label fontSize="20px" color="textSubtle" bold mt="4px">
@@ -263,10 +369,13 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
                 {pendingTx ? 'Pending...' : 'Harvest'}
               </StyledButton>
             </Flex>
-          </Flex>
-        </ActionCard>
-        <ActionCard padding="10px 16px" mt="8px">
-          <AutoNesting currentAllocation={uesrAutoNestingAllocation} maxAllocation={maxAutoNestAllocation} />
+          </PendingRewardsContent>
+        </PendingRewardsCard>
+        <ActionCard padding="12px 16px" mt="16px">
+          <AutoNesting
+            currentAllocation={account ? userAutoNestingAllocation : (maxAutoNestAllocation * 50) / 100}
+            maxAllocation={maxAutoNestAllocation}
+          />
         </ActionCard>
       </Flex>
     </Container>
