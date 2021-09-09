@@ -95,10 +95,13 @@ export const fetchFarms = async () => {
         const allocPoint = new BigNumber(info.allocPoint._hex)
         const withdrawFee = 100 * (info.withdrawFeeBP / 10000)
         const poolWeight = allocPoint.div(new BigNumber(totalAllocPoint))
-        let lpPrice = 1
+        let lpPrice = farmConfig.lpPrice || 1;
         let totalLiquidityInUsd = getBalanceNumber(new BigNumber(totalLP))
         if (farmConfig.type === 'Pangolin') {
           lpPrice = await getPangolinLpPrice(lpAddress)
+          totalLiquidityInUsd = lpPrice * getBalanceNumber(new BigNumber(totalLP))
+        } else if (farmConfig.type === 'Joe') {
+          console.log('ant : lpPrice => ', lpPrice, farmConfig, getBalanceNumber(new BigNumber(totalLP)));
           totalLiquidityInUsd = lpPrice * getBalanceNumber(new BigNumber(totalLP))
         }
 

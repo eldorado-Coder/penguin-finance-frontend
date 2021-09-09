@@ -166,6 +166,7 @@ const v2Farms: V2FarmConfig[] = [
     hardApy: '896.65%',
     type: 'Joe',
     name: 'pendingPEFI',
+    lpPrice: 764.55
   },
   {
     pid: 5,
@@ -193,6 +194,7 @@ const v2Farms: V2FarmConfig[] = [
     hardApy: '896.65%',
     type: 'Joe',
     name: 'pendingPEFI',
+    lpPrice: 16.63
   },
   {
     pid: 7,
@@ -220,6 +222,7 @@ const v2Farms: V2FarmConfig[] = [
     hardApy: '896.65%',
     type: 'Joe',
     name: 'pendingPEFI',
+    lpPrice: 12910975.76
   },
   {
     pid: 8,
@@ -247,6 +250,7 @@ const v2Farms: V2FarmConfig[] = [
     hardApy: '896.65%',
     type: 'Joe',
     name: 'pendingPEFI',
+    lpPrice: 13497747.77
   },
 ]
 

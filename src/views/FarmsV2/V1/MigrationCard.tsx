@@ -83,7 +83,7 @@ const MigrationCard: React.FC = () => {
     <FCard>
       <Flex flexWrap='wrap'>
         <MigrationVideo ref={videoRef} controls>
-          <source src='https://res.cloudinary.com/dbyunrpzq/video/upload/v1630028768/BooFiLaunchpad_nwkbrj.mp4' />
+          <source src='https://res.cloudinary.com/dbyunrpzq/video/upload/v1631220224/Penguin_Tutorial_qhw7b2.mp4' />
         </MigrationVideo>
         <Actions flexDirection='column' alignItems='center'>
           <PangolinButton onClick={handleGoPangolin}>Go to Pangolin</PangolinButton>

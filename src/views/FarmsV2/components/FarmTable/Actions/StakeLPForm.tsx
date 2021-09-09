@@ -5,7 +5,7 @@ import { Button, Text, LinkExternal, Flex } from 'penguinfinance-uikit2'
 import UnlockButton from 'components/UnlockButton'
 import roundDown from 'utils/roundDown'
 import escapeRegExp from 'utils/escapeRegExp'
-import { BASE_ADD_LIQUIDITY_URL } from 'config'
+import { BASE_ADD_LIQUIDITY_URL, BASE_JOE_ADD_LIQUIDITY_URL } from 'config'
 import getLiquidityUrlPathParts from 'utils/getLiquidityUrlPathParts'
 import { getFullDisplayBalance } from 'utils/formatBalance'
 import { Farm as FarmTypes } from 'state/types'
@@ -82,9 +82,9 @@ const StakeLPForm: React.FC<DepositModalProps> = ({
 
   const canStake = !pendingTx && Number(val) > 0
 
-  const { quoteTokenAddresses, quoteTokenSymbol, tokenAddresses } = farm
+  const { quoteTokenAddresses, quoteTokenSymbol, tokenAddresses, type } = farm
   const liquidityUrlPathParts = getLiquidityUrlPathParts({ quoteTokenAddresses, quoteTokenSymbol, tokenAddresses })
-  const addLiquidityUrl = `${BASE_ADD_LIQUIDITY_URL}/${liquidityUrlPathParts}`
+  const addLiquidityUrl = `${type === 'Joe' ? BASE_JOE_ADD_LIQUIDITY_URL : BASE_ADD_LIQUIDITY_URL}/${liquidityUrlPathParts}`
 
   const handleGetPefi = () => {
     window.open(addLiquidityUrl, '_blank')
@@ -99,10 +99,10 @@ const StakeLPForm: React.FC<DepositModalProps> = ({
           onSelectMax={handleSelectMax}
           onChange={handleChange}
           max={fullBalance}
-          symbol={tokenName.replace(' LP', '')}
+          symbol={tokenName.replace('Joe ', '').replace(' LP', '')}
         />
         <Flex justifyContent='flex-end'>
-          <StyledLinkExternal href={addLiquidityUrl}>{`Get ${tokenName}`}</StyledLinkExternal>
+          <StyledLinkExternal href={addLiquidityUrl}>{`Get ${tokenName.replace('Joe ', '')}`}</StyledLinkExternal>
         </Flex>
       </InputContainer>
       <ActionContainer>
