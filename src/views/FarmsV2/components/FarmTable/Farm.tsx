@@ -54,7 +54,7 @@ const StyledImage = styled(Image)<{ isMobile?: boolean }>`
 `
 
 const Farm: React.FunctionComponent<FarmCardProps> = ({ farm }) => {
-  const farmImage = farm.lpSymbol.split(' ')[0].toLocaleLowerCase()
+  const farmImage = farm.lpSymbol.replace(' LP', '').toLocaleLowerCase()
 
   return (
     <Container>
