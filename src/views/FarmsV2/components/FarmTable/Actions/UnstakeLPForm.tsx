@@ -93,12 +93,12 @@ const UnstakeLPForm: React.FC<DepositModalProps> = ({ max, onConfirm, tokenName 
 
 const InputContainer = styled.div`
   width: 100%;
-  margin-top: 16px;
+  margin-top: 12px;
 `
 
 const ActionContainer = styled.div`
   width: 100%;
-  margin-top: 32px;
+  margin-top: 40px;
 `
 
 const StyledButton = styled(Button)<{ tokenBalance?: string }>`
