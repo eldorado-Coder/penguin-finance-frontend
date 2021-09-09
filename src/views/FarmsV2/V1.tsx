@@ -14,6 +14,7 @@ import { fetchFarmUserDataAsync } from 'state/actions'
 import { QuoteToken } from 'config/constants/types'
 import { getBalanceNumber } from 'utils/formatBalance';
 import { Farm } from 'state/types'
+import MigrationCard from './V1/MigrationCard';
 
 export interface FarmWithStakedValue extends Farm {
   apy?: BigNumber,
@@ -136,6 +137,7 @@ const V1Farms: React.FC<V2FarmProps> = ({
   return (
     <FarmsContainer>    
       <FlexLayout>
+        <MigrationCard />
         {farms.map(farm => {
           return (
             <FarmCard

@@ -195,7 +195,7 @@ const v2Farms: V2FarmConfig[] = [
     name: 'pendingPEFI',
   },
   {
-    pid: 6,
+    pid: 7,
     lpSymbol: 'Joe USDC.e-AVAX LP',
     lpAddresses: {
       43113: '',
@@ -222,7 +222,7 @@ const v2Farms: V2FarmConfig[] = [
     name: 'pendingPEFI',
   },
   {
-    pid: 7,
+    pid: 8,
     lpSymbol: 'Joe USDT.e-AVAX LP',
     lpAddresses: {
       43113: '',
