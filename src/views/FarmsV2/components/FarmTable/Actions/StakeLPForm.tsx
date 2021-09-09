@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
 import React, { useCallback, useMemo, useState } from 'react'
-import { Button, Text } from 'penguinfinance-uikit2'
+import { Button, Text, LinkExternal, Flex } from 'penguinfinance-uikit2'
 import UnlockButton from 'components/UnlockButton'
 import roundDown from 'utils/roundDown'
 import escapeRegExp from 'utils/escapeRegExp'
@@ -80,14 +80,15 @@ const StakeLPForm: React.FC<DepositModalProps> = ({
     }
   }
 
+  const canStake = !pendingTx && Number(val) > 0
+
+  const { quoteTokenAddresses, quoteTokenSymbol, tokenAddresses } = farm
+  const liquidityUrlPathParts = getLiquidityUrlPathParts({ quoteTokenAddresses, quoteTokenSymbol, tokenAddresses })
+  const addLiquidityUrl = `${BASE_ADD_LIQUIDITY_URL}/${liquidityUrlPathParts}`
+
   const handleGetPefi = () => {
-    const { quoteTokenAddresses, quoteTokenSymbol, tokenAddresses } = farm
-    const liquidityUrlPathParts = getLiquidityUrlPathParts({ quoteTokenAddresses, quoteTokenSymbol, tokenAddresses })
-    const addLiquidityUrl = `${BASE_ADD_LIQUIDITY_URL}/${liquidityUrlPathParts}`
     window.open(addLiquidityUrl, '_blank')
   }
-
-  const canStake = !pendingTx && Number(val) > 0
 
   return (
     <>
@@ -100,6 +101,9 @@ const StakeLPForm: React.FC<DepositModalProps> = ({
           max={fullBalance}
           symbol={tokenName.replace(' LP', '')}
         />
+        <Flex justifyContent='flex-end'>
+          <StyledLinkExternal href={addLiquidityUrl}>{`Get ${tokenName}`}</StyledLinkExternal>
+        </Flex>
       </InputContainer>
       <ActionContainer>
         {!account && <StyledUnlockButton />}
@@ -128,12 +132,12 @@ const StakeLPForm: React.FC<DepositModalProps> = ({
 
 const InputContainer = styled.div`
   width: 100%;
-  margin-top: 16px;
+  margin-top: 12px;
 `
 
 const ActionContainer = styled.div`
   width: 100%;
-  margin-top: 32px;
+  margin-top: 20px;
 `
 
 const StyledButton = styled(Button)<{ tokenBalance?: string }>`
@@ -154,6 +158,23 @@ const StyledUnlockButton = styled(UnlockButton)`
 
 const LPTokenBalance = styled(Text)`
   color: ${({ theme }) => (theme.isDark ? '#bba6dd' : '#b2b2ce')};
+`
+
+const StyledLinkExternal = styled(LinkExternal)`
+  text-decoration: none;
+  font-weight: normal;
+  color: ${({ theme }) => theme.isDark ? '#bba6dd' : theme.colors.primary};
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  margin-top: 2px;
+
+  svg {
+    padding-left: 4px;
+    height: 14px;
+    width: auto;
+    fill: ${({ theme }) => theme.isDark ? '#bba6dd' : theme.colors.primary};
+  }
 `
 
 export default StakeLPForm
