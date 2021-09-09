@@ -8,7 +8,7 @@ import Select from 'components/Select/Select'
 import { useV2Farms, usePricePefiUsdt } from 'state/hooks'
 import { fetchV2FarmUserDataAsync } from 'state/actions'
 import useRefresh from 'hooks/useRefresh'
-import useTheme from 'hooks/useTheme';
+import useTheme from 'hooks/useTheme'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { DAYS_PER_YEAR } from 'config'
 import { getApy } from 'utils/apyHelpers'
@@ -35,8 +35,8 @@ const Farms: React.FC = () => {
   const v2FarmsLP = useV2Farms()
   const { isXl, isSm } = useMatchBreakpoints()
   const pefiPriceUsd = usePricePefiUsdt().toNumber()
-  const isMobile = !isXl;
-  const theme = useTheme();
+  const isMobile = !isXl
+  const theme = useTheme()
 
   useEffect(() => {
     if (account) {
@@ -44,7 +44,8 @@ const Farms: React.FC = () => {
     }
   }, [account, dispatch, fastRefresh])
 
-  const activeFarms = v2FarmsLP.filter((farm) => Number(farm.multiplier) > 0)
+  // const activeFarms = v2FarmsLP.filter((farm) => Number(farm.multiplier) > 0)
+  const activeFarms = v2FarmsLP
   const activeFarmsWithApy = activeFarms.map((farm) => {
     const pefiPerYear = getBalanceNumber(farm.pefiPerYear)
     const pefiPerDay = pefiPerYear / DAYS_PER_YEAR
@@ -129,7 +130,7 @@ const Farms: React.FC = () => {
         )
       })}
     </Flex>
-  );
+  )
 
   const renderActiveFilter = (
     <Flex margin={isMobile ? '8px 0' : '8px 16px 8px 0'} justifyContent="center" alignItems="center">
@@ -188,21 +189,22 @@ const Farms: React.FC = () => {
         <IgloosBgContainer />
       </BgWrapper>
       <IgloosBannerContainer>
-        <BannerImage src={`${process.env.PUBLIC_URL}/images/farms-v2/Igloo-${theme.isDark ? 'dark' : 'light'}.svg`} alt="igloos banner" />
+        <BannerImage
+          src={`${process.env.PUBLIC_URL}/images/farms-v2/Igloo-${theme.isDark ? 'dark' : 'light'}.svg`}
+          alt="igloos banner"
+        />
       </IgloosBannerContainer>
-      {isMobile ?
+      {isMobile ? (
         <FilterWrapper justifyContent="space-between" alignItems="center" flexWrap="wrap">
-          <Flex mt='8px' justifyContent='center' mb='8px' flexWrap='wrap'>
+          <Flex mt="8px" justifyContent="center" mb="8px" flexWrap="wrap">
             {renderStakedOnlyFilter}
             {renderActiveFilter}
           </Flex>
           {renderSearchAndSortFilter}
-          <Flex mt='16px'>
-            {renderProjectsFilters}
-          </Flex>
+          <Flex mt="16px">{renderProjectsFilters}</Flex>
         </FilterWrapper>
-        : 
-        <FilterWrapper justifyContent="space-between" alignItems="center" flexWrap="wrap" mt='-24px'>
+      ) : (
+        <FilterWrapper justifyContent="space-between" alignItems="center" flexWrap="wrap" mt="-24px">
           <LeftFilters alignItems="center" mt="16px" justifyContent="space-between" flexWrap={isSm ? 'nowrap' : 'wrap'}>
             {renderStakedOnlyFilter}
             {renderProjectsFilters}
@@ -212,17 +214,17 @@ const Farms: React.FC = () => {
             {renderSearchAndSortFilter}
           </Flex>
         </FilterWrapper>
-      }
+      )}
       <IgloosContentContainer>
         {activeTab === 0 && filteredFarms.length > 0 && <V2Farms farms={filteredFarms} />}
-        {activeTab === 1 && 
-          <V1Farms 
-            searchTerm={searchTerm} 
-            showStakedOnly={showStakedOnly} 
-            activeProjects={activeProjects} 
+        {activeTab === 1 && (
+          <V1Farms
+            searchTerm={searchTerm}
+            showStakedOnly={showStakedOnly}
+            activeProjects={activeProjects}
             sortType={sortType}
           />
-        }
+        )}
       </IgloosContentContainer>
     </FarmPage>
   )
