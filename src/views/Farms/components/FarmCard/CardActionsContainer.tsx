@@ -1,15 +1,17 @@
 import React, { useMemo, useState, useCallback } from 'react'
 import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
+import ReactTooltip from 'react-tooltip';
 import { getContract } from 'utils/erc20'
 import { getAddress } from 'utils/addressHelpers'
-import { Button, Flex, Text } from 'penguinfinance-uikit2'
+import { Button, Flex, Text, Heading } from 'penguinfinance-uikit2'
 import { Farm } from 'state/types'
 import { useFarmFromSymbol, useFarmUser } from 'state/hooks'
 import useI18n from 'hooks/useI18n'
 import UnlockButton from 'components/UnlockButton'
 import { useApprove } from 'hooks/useApprove'
 import useWeb3 from 'hooks/useWeb3'
+import { getBalanceNumber } from 'utils/formatBalance';
 import StakeAction from './StakeAction'
 import HarvestAction from './HarvestAction'
 
@@ -57,6 +59,12 @@ const CardActions: React.FC<FarmCardActionsProps> = ({ farm, account, addLiquidi
     }
   }, [onApprove])
 
+  const getMigrationTooltip = () => {
+    return `
+      <p>The Igloo Migration process will start on September 9, 18:00 UTC. Step-by-step instructions will be provided and withdrawal fees will be set to zero. We highly recommend not migrating until then, but if you’d like to withdraw anyways, simply contact one of our team members on Telegram or Discord.</p>
+    `
+  }
+
   const renderApprovalOrStakeButton = () => {
     // return  <StakeAction
     //     stakedBalance={stakedBalance}
@@ -65,19 +73,45 @@ const CardActions: React.FC<FarmCardActionsProps> = ({ farm, account, addLiquidi
     //     pid={pid}
     //     addLiquidityUrl={addLiquidityUrl}
     //   />
-    return isApproved ? (
-      <StakeAction
-        stakedBalance={stakedBalance}
-        tokenBalance={tokenBalance}
-        tokenName={lpName}
-        pid={pid}
-        addLiquidityUrl={addLiquidityUrl}
-      />
-    ) : (
-      <Button mt="8px" scale="md" disabled={requestedApproval} onClick={handleApprove}>
-        {TranslateString(758, 'Enable Farm')}
-      </Button>
-    )
+    // return isApproved ? (
+    //   <StakeAction
+    //     stakedBalance={stakedBalance}
+    //     tokenBalance={tokenBalance}
+    //     tokenName={lpName}
+    //     pid={pid}
+    //     addLiquidityUrl={addLiquidityUrl}
+    //   />
+    // ) : (
+    //   <Button mt="8px" scale="md" disabled={requestedApproval} onClick={handleApprove}>
+    //     {TranslateString(758, 'Enable Farm')}
+    //   </Button>
+    // )
+    const rawStakedBalance = getBalanceNumber(stakedBalance)  
+    const displayBalance = rawStakedBalance.toLocaleString()
+
+    return (
+      <Flex justifyContent={isApproved ? 'space-between' : 'flex-end'} alignItems='center'>
+        {isApproved && 
+          <Heading color={rawStakedBalance === 0 ? 'textDisabled' : 'text'}>{displayBalance}</Heading>
+        }
+        <div data-for='migration-tooltip' data-tip={getMigrationTooltip()}>
+          <Button mt="8px" scale="md" disabled>
+            Migrate
+          </Button>
+        </div>
+        {account && (
+          <CustomToolTip
+            id='migration-tooltip'
+            wrapper="div"
+            delayHide={0}
+            effect="solid"
+            multiline
+            place="bottom"
+            html
+          />
+        )}
+      </Flex>
+    );
   }
 
   return (
@@ -104,5 +138,35 @@ const CardActions: React.FC<FarmCardActionsProps> = ({ farm, account, addLiquidi
     </Action>
   )
 }
+
+const CustomToolTip = styled(ReactTooltip)`
+  width: 100% !important;
+  max-width: 316px !important;
+  background: ${({ theme }) => (theme.isDark ? '#383466!important' : '#fff!important')};
+  box-shadow: ${(props) => `${props.theme.card.boxShadow}!important`};
+  color: ${({ theme }) => (theme.isDark ? '#fff!important' : '#2D2159!important')};
+  opacity: 1 !important;
+  padding: 12px 16px !important;
+  font-size: 12px !important;
+  border: 1px solid #D3464E !important;
+  border-radius: 48px !important;
+  margin-top: 0px !important;
+  line-height: 16px !important;
+  letter-spacing: 0.2px;
+  > div {
+    width: 100%;
+    white-space: pre-wrap !important;
+  }
+  &:before {
+    border-top-color: #D3464E !important;
+    border-bottom-color: #D3464E !important;
+  }
+  &:after {
+    border-top-color: ${({ theme }) =>
+      theme.isDark ? '#383466!important' : '#fff!important'};
+    border-bottom-color: ${({ theme }) =>
+      theme.isDark ? '#383466!important' : '#fff!important'};
+  }
+`
 
 export default CardActions
