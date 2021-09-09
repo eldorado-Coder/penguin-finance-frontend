@@ -144,7 +144,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
               case 'farm':
                 return (
                   <td key={key}>
-                    <CellInner>
+                    <CellInner minWidth={250} smMinWidth={240}>
                       <CellLayout>
                         <Farm {...props} />
                       </CellLayout>
@@ -165,7 +165,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
               case 'apr':
                 return (
                   <td key={key}>
-                    <CellInner minWidth={110} smMinWidth={100}>
+                    <CellInner minWidth={110} smMinWidth={80}>
                       <CellLayout label="APR">
                         <Text color='textSubtle'>TBD</Text>
                         {/* <Balance fontSize="16px" fontWeight="400" suffix="%" value={Number(farmApy)} /> */}

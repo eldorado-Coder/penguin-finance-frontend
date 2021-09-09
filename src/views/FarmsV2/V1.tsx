@@ -6,7 +6,7 @@ import BigNumber from 'bignumber.js'
 import { useWeb3React } from '@web3-react/core'
 import { SECONDS_PER_YEAR, WEEKS_PER_YEAR, PEFI_POOL_PID } from 'config'
 import FlexLayout from 'components/layout/Flex'
-import FarmCard from 'views/Farms/components/FarmCard/FarmCard';
+import FarmCard from 'views/FarmsV2/V1/FarmCard';
 import { usePefiPerBlock, useFarms, usePriceAvaxUsdt, usePricePefiUsdt, usePriceEthUsdt } from 'state/hooks'
 import useRefresh from 'hooks/useRefresh'
 import useBlockGenerationTime from 'hooks/useBlockGenerationTime'
@@ -14,6 +14,7 @@ import { fetchFarmUserDataAsync } from 'state/actions'
 import { QuoteToken } from 'config/constants/types'
 import { getBalanceNumber } from 'utils/formatBalance';
 import { Farm } from 'state/types'
+import MigrationCard from './V1/MigrationCard';
 
 export interface FarmWithStakedValue extends Farm {
   apy?: BigNumber,
@@ -136,6 +137,7 @@ const V1Farms: React.FC<V2FarmProps> = ({
   return (
     <FarmsContainer>    
       <FlexLayout>
+        <MigrationCard />
         {farms.map(farm => {
           return (
             <FarmCard

@@ -59,8 +59,8 @@ const App: React.FC = () => {
             <Route path="/farms">
               <FarmsV2 />
             </Route>
-            <Route path="/farms-v2">
-              <FarmsV2 />
+            <Route path="/old-farms">
+              <Farms />
             </Route>
             <Route path="/nests">
               <Nest />

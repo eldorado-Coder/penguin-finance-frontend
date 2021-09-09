@@ -99,7 +99,8 @@ export interface V2FarmConfig {
   strategyAddress?: string
   stakingAddress?: string
   swapAddresses?: Address
-  pangolinRewardPoolAddresses?: Address
+  pangolinRewardPoolAddresses?: Address,
+  lpPrice?: number
 }
 
 export interface LPConfig {
