@@ -55,17 +55,18 @@ const StyledImage = styled(Image)<{ isMobile?: boolean }>`
 
 const Farm: React.FunctionComponent<FarmCardProps> = ({ farm }) => {
   const farmImage = farm.lpSymbol.replace(' LP', '').toLocaleLowerCase()
+  const farmType = farm.type === 'Joe' ? 'Trader Joe' : farm.type;
 
   return (
     <Container>
       <StyledImage src={`/images/farms-v2/pools/${farmImage}.svg`} alt={farm.tokenSymbol} width={56} height={56} />
       <FarmLabelWrapper>
         <Flex>
-          <FarmLabel bold>{farm.lpSymbol.replace(' LP', '')}</FarmLabel>
+          <FarmLabel bold>{farm.lpSymbol.replace('Joe ', '').replace(' LP', '')}</FarmLabel>
         </Flex>
         <Flex mt="4px">
           <MultiplierTag variant="primary">{`${farm.multiplier || 1}X`}</MultiplierTag>
-          <LpTag type={farm.type}>{farm.type}</LpTag>
+          <LpTag type={farm.type}>{farmType}</LpTag>
         </Flex>
       </FarmLabelWrapper>
     </Container>
