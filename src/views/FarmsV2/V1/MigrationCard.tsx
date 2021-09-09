@@ -1,5 +1,5 @@
-import { Flex, Button } from 'penguinfinance-uikit2';
-import React, { useState, useRef } from 'react'
+import { Flex, Button, Text, useMatchBreakpoints } from 'penguinfinance-uikit2';
+import React, { useRef } from 'react'
 import styled from 'styled-components'
 
 const FCard = styled.div`
@@ -29,6 +29,8 @@ const FCard = styled.div`
 const StyledButton = styled(Button)`
   width: 100%;
   margin-top: 8px;
+  margin-right: 8px;
+  margin-left: 8px;
 
   @media (min-width: 640px) {
     width: 200px;
@@ -39,31 +41,22 @@ const StyledButton = styled(Button)`
 const PangolinButton = styled(StyledButton)`
   background-color: #f97316;
   color: white;
-  margin-top: 0;
-`;
-
-const Actions = styled(Flex)`
-  width: 100%;
-
-  @media (min-width: 640px) {
-    width: unset;
-}
 `;
 
 const MigrationVideo = styled.video`
   width: 100%;
-  margin-bottom: 16px;
   border-radius: 16px;
 
   @media (min-width: 640px) {
-    width: calc(100% - 216px);
+    width: 100%;
     margin-right: 16px;
-    margin-bottom: 0;
   }
 `;
 
 const MigrationCard: React.FC = () => {
   const videoRef = useRef(null);
+  const { isXl } = useMatchBreakpoints()
+  const isMobile = !isXl
 
   const handleViewVideoGuide = () => {
     if (videoRef && videoRef.current) {
@@ -81,16 +74,17 @@ const MigrationCard: React.FC = () => {
 
   return (
     <FCard>
-      <Flex flexWrap='wrap'>
-        <MigrationVideo ref={videoRef} controls>
-          <source src='https://res.cloudinary.com/dbyunrpzq/video/upload/v1631220224/Penguin_Tutorial_qhw7b2.mp4' />
-        </MigrationVideo>
-        <Actions flexDirection='column' alignItems='center'>
-          <PangolinButton onClick={handleGoPangolin}>Go to Pangolin</PangolinButton>
-          <StyledButton color='primary' onClick={handleViewVideoGuide}>View Video Guide</StyledButton>
-          <StyledButton color='primary' onClick={handleViewTextGuide}>View Text Guide</StyledButton>
-        </Actions>
+      <Flex justifyContent='center'>
+        <Text fontSize='20px' color='textSubtle' bold>Migration Guide</Text>
       </Flex>
+      <Flex justifyContent='center' mb='16px' flexWrap='wrap'>
+        <PangolinButton scale={isMobile ? 'sm' : 'md'} onClick={handleGoPangolin}>Go to Pangolin</PangolinButton>
+        <StyledButton scale={isMobile ? 'sm' : 'md'} color='primary' onClick={handleViewVideoGuide}>View Video Guide</StyledButton>
+        <StyledButton scale={isMobile ? 'sm' : 'md'} color='primary' onClick={handleViewTextGuide}>View Text Guide</StyledButton>
+      </Flex>
+      <MigrationVideo ref={videoRef} controls>
+        <source src='https://res.cloudinary.com/dbyunrpzq/video/upload/v1631220224/Penguin_Tutorial_qhw7b2.mp4' />
+      </MigrationVideo>
     </FCard>
   )
 }
