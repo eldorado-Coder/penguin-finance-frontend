@@ -76,7 +76,7 @@ const UnstakeLPForm: React.FC<DepositModalProps> = ({ max, onConfirm, tokenName 
           onSelectMax={handleSelectMax}
           onChange={handleChange}
           max={fullBalance}
-          symbol={tokenName.replace(' LP', '')}
+          symbol={tokenName.replace('Joe ', '').replace(' LP', '')}
         />
       </InputContainer>
       <ActionContainer>
