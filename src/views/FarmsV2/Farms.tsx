@@ -11,7 +11,7 @@ import useRefresh from 'hooks/useRefresh'
 import useTheme from 'hooks/useTheme'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { DAYS_PER_YEAR } from 'config'
-import { getApy } from 'utils/apyHelpers'
+import { getApy, getApr } from 'utils/apyHelpers'
 
 import V1Farms from './V1'
 import V2Farms from './V2'
@@ -56,9 +56,11 @@ const Farms: React.FC = () => {
 
     const pefiDailyApr = pefiRewardPerDayInUsd / liquidityInUsd
     const { pngDailyApr } = farm
-    const pngApy = getApy(pngDailyApr)
-    const pefiApy = getApy(pefiDailyApr) === Infinity ? 999999 : getApy(pefiDailyApr)
-    return { ...farm, pefiDailyApr, apr: pefiDailyApr + pngDailyApr, apy: pefiApy + pngApy }
+    // const pngApy = getApy(pngDailyApr)
+    // const pefiApy = getApy(pefiDailyApr) === Infinity ? 999999 : getApy(pefiDailyApr)
+    const pngApr = getApr(pngDailyApr)
+    const pefiApr = getApr(pefiDailyApr) === Infinity ? 999999 : getApy(pefiDailyApr)
+    return { ...farm, pefiDailyApr, apr: pngApr + pefiApr, apy: pefiApr + pngApr }
   })
 
   const filteredFarms = useMemo(() => {
@@ -86,8 +88,8 @@ const Farms: React.FC = () => {
           Number(a.lpPrice) * getBalanceNumber(a.userData?.stakedBalance),
       )
     }
-    if (sortType === 'apy') {
-      farms = farms.sort((a, b) => b.apy - a.apy)
+    if (sortType === 'apr') {
+      farms = farms.sort((a, b) => b.apr - a.apr)
     }
 
     return farms
@@ -154,7 +156,7 @@ const Farms: React.FC = () => {
             options={[
               { label: 'Liquidity', value: 'liquidity' },
               { label: 'Hot', value: 'hot' },
-              { label: 'APY', value: 'apy' },
+              { label: 'APR', value: 'apr' },
               { label: 'Multiplier', value: 'multiplier' },
               { label: 'Earned', value: 'earned' },
             ]}

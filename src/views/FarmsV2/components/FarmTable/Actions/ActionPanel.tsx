@@ -99,7 +99,7 @@ const StakeCard = styled(ActionCard)`
   ${({ theme }) => theme.mediaQueries.xl} {
     margin-right: 16px;
   }
-`;
+`
 
 const PendingRewardsCard = styled(ActionCard)`
   @media (min-width: 1350px) {
@@ -112,7 +112,7 @@ const PendingRewardsContent = styled(Flex)`
   justify-content: space-around;
 `
 
-const RewardImage = styled.img<{ size: number; ml?: number, borderRadius?: string, mt?: number }>`
+const RewardImage = styled.img<{ size: number; ml?: number; borderRadius?: string; mt?: number }>`
   height: ${({ size }) => size}px;
   width: ${({ size }) => size}px;
   margin: 0px 12px;
@@ -120,7 +120,7 @@ const RewardImage = styled.img<{ size: number; ml?: number, borderRadius?: strin
   margin-top: ${({ mt }) => mt && `${mt}px`};
   border-radius: ${({ borderRadius }) => borderRadius};
 `
-const CoinImage = styled.img<{ size: number; ml?: number, mt?: number }>`
+const CoinImage = styled.img<{ size: number; ml?: number; mt?: number }>`
   height: ${({ size }) => size}px;
   width: ${({ size }) => size}px;
   margin: 0px 12px;
@@ -144,14 +144,14 @@ const StyledButton = styled(Button)`
 
 const EarningsWrapper = styled(Flex)`
   height: 49%;
-`;
+`
 
 const EarningsContainer = styled.div`
   min-width: 160px;
 `
 
 const Divider = styled.div`
-  background-color: ${({ theme }) => theme.isDark ? theme.colors.background : '#e8e4ef'};
+  background-color: ${({ theme }) => (theme.isDark ? theme.colors.background : '#e8e4ef')};
   height: 3px;
   width: 100%;
 `
@@ -232,8 +232,8 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
   const pefiPerYear = getBalanceNumber(farm.pefiPerYear)
   const pefiPerWeek = pefiPerYear / WEEKS_PER_YEAR
 
-  // const farmApy = farm.apy ? farm.apy.toFixed(2) : '--'
-  const farmApy = farm.apr ? (100 * Number(farm.apr)).toFixed(2) : '--'
+  const farmApr = farm.apr ? (100 * Number(farm.apr)).toFixed(2) : '--'
+  // const farmApy = farm.apr ? (100 * Number(farm.apr)).toFixed(2) : '--'
 
   const lpSymbol = farm.lpSymbol.replaceAll(' LP', '')
   const coinImg = getCoinImage(Number(userStakedBalanceInUsd))
@@ -279,14 +279,14 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
               <Balance fontSize="10px" fontWeight="400" prefix="$" value={Number(userStakedBalanceInUsd)} />
             </UsdBalanceWrapper>
             {/* {userSharePercentage > 3 && ( */}
-              <Balance
-                fontSize="14px"
-                color="textSubtle"
-                fontWeight="400"
-                prefix=" "
-                suffix="% of the Igloo"
-                value={Number(userSharePercentage)}
-              />
+            <Balance
+              fontSize="14px"
+              color="textSubtle"
+              fontWeight="400"
+              prefix=" "
+              suffix="% of the Igloo"
+              value={Number(userSharePercentage)}
+            />
             {/* )} */}
           </EarningsContainer>
           <CoinImage src={coinImg} alt="pefi-earning" size={80} />
@@ -303,7 +303,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
               fontWeight="400"
               prefix="APR: "
               suffix="%"
-              value={Number(farmApy)}
+              value={Number(farmApr)}
             />
             <Balance
               fontSize="14px"
@@ -320,7 +320,12 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
               value={Number(pefiPerWeek)}
             />
           </EarningsContainer>
-          <RewardImage src={`/images/farms-v2/pools/${lpSymbol.toLowerCase()}.svg`} alt="igloo-stats" size={72} mt={16} />
+          <RewardImage
+            src={`/images/farms-v2/pools/${lpSymbol.toLowerCase()}.svg`}
+            alt="igloo-stats"
+            size={72}
+            mt={16}
+          />
         </EarningsWrapper>
       </EarningsCard>
       <Flex className="pending-panel" flexDirection="column" mb="16px">
@@ -335,7 +340,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
 
                   return (
                     <Flex flexDirection="column" alignItems="center" mr="4px" ml="4px" key={pendingToken}>
-                      <RewardImage src={getTokenLogo(pendingToken)} alt="penguin" size={50} borderRadius='50%' />
+                      <RewardImage src={getTokenLogo(pendingToken)} alt="penguin" size={50} borderRadius="50%" />
                       <BalanceWrapper>
                         <StyledBalance
                           fontSize="14px"
