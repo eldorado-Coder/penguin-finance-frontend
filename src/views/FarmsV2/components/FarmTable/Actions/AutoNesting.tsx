@@ -64,9 +64,9 @@ const AutoNesting = ({ currentAllocation, maxAllocation }) => {
         <Label fontSize="20px" color="textSubtle" bold>
           iPEFI Auto-Nesting
         </Label>
-        <AllocationText fontSize="14px">{`${touched ? 'New: ' : 'Current allocation: '}${sliderValue.toFixed(
-          2,
-        )}%`}</AllocationText>
+        <AllocationText fontSize="14px">{`${
+          touched ? 'New: ' : 'Current allocation: '
+        }${sliderValue}%`}</AllocationText>
         <StyledButton color="primary" scale="sm" disabled={!account || pendingTx} onClick={handleUpdateAllocation}>
           Modify
         </StyledButton>

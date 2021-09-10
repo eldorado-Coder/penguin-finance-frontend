@@ -5,14 +5,14 @@ const tokens: Token[] = [
     symbol: 'PEFI',
     address: {
       43113: '',
-      43114: '0x35F77746A902068817f80f4722685ed6a90A3f8f',
+      43114: '0xe896cdeaac9615145c0ca09c8cd5c25bced6384c',
     },
   },
   {
     symbol: 'iPEFI',
     address: {
       43113: '',
-      43114: '0x128575200A8a04d132FF69937F42E8Bf71F4dF17',
+      43114: '0xe9476e16fe488b90ada9ab5c7c2ada81014ba9ee',
     },
   },
   {
@@ -20,6 +20,13 @@ const tokens: Token[] = [
     address: {
       43113: '',
       43114: '0x60781C2586D68229fde47564546784ab3fACA982',
+    },
+  },
+  {
+    symbol: 'JOE',
+    address: {
+      43113: '',
+      43114: '0x6e84a6216ea6dacc71ee8e6b0a5b7322eebc0fdd',
     },
   },
 ]

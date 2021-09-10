@@ -96,3 +96,7 @@ export const getApy = (dailyApr = 0) => {
   const staticFee = 0
   return (1 + dailyApr) ** DAYS_PER_YEAR - 1 + staticFee
 }
+
+export const getApr = (dailyApr = 0) => {
+  return dailyApr * DAYS_PER_YEAR
+}
