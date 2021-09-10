@@ -165,7 +165,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
                 return (
                   <td key={key}>
                     <CellInner minWidth={110} smMinWidth={80}>
-                      <CellLayout label="APR">
+                      <CellLayout label="APY">
                         {/* <Text color='textSubtle'>TBD</Text> */}
                         <Balance fontSize="16px" fontWeight="400" suffix="%" value={Number(farmApy)} />
                       </CellLayout>
@@ -236,7 +236,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
                   </CellLayout>
                 </EarnedMobileCell>
                 <AprMobileCell>
-                  <CellLayout label="APR">
+                  <CellLayout label="APY">
                     <Amount>{`${farmApy || '--'}%`}</Amount>
                   </CellLayout>
                 </AprMobileCell>
