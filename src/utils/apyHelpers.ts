@@ -65,21 +65,31 @@ export const getPangolinRewardPoolApr = async (address) => {
   const aprUrl = `${PANGOLIN_REWARD_POOL_API}/apr/${address}`
   const res = await Axios.get(aprUrl)
   if (res.status === 200) {
-    const apr = res.data.combinedApr / 100
+    const apr = res.data.combinedApr ? res.data.combinedApr / 100 : 0
     return { apr, dailyApr: apr / 365 }
   }
   return { apr: 0, dailyApr: 0 }
 }
 
 export const getJoeRewardPoolApr = async (address) => {
-  return { apr: 0, dailyApr: 0 }
-  const aprUrl = `${PANGOLIN_REWARD_POOL_API}/apr/${address}`
-  const res = await Axios.get(aprUrl)
-  if (res.status === 200) {
-    const apr = res.data.combinedApr / 100
-    return { apr, dailyApr: apr / 365 }
+  let apr = 0
+  // usdt.e-avax
+  if (address === '0xed8cbd9f0ce3c6986b22002f03c6475ceb7a6256') {
+    apr = 0.7429
   }
-  return { apr: 0, dailyApr: 0 }
+  // usdc.e-avax
+  if (address === '0xa389f9430876455c36478deea9769b7ca4e3ddb1') {
+    apr = 0.6507
+  }
+  // pefi-avax
+  if (address === '0xb78c8238bd907c42be45aebdb4a8c8a5d7b49755') {
+    apr = 1.53
+  }
+  // eth.e-avax
+  if (address === '0xfe15c2695f1f920da45c30aae47d11de51007af9') {
+    apr = 0.4811
+  }
+  return { apr, dailyApr: apr / 365 }
 }
 
 export const getApy = (dailyApr = 0) => {
