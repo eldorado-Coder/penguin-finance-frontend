@@ -11,8 +11,7 @@ import useRefresh from 'hooks/useRefresh'
 import useTheme from 'hooks/useTheme'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { DAYS_PER_YEAR } from 'config'
-import { getApy } from 'utils/apyHelpers'
-
+import { getApr } from 'utils/apyHelpers'
 import V1Farms from './V1'
 import V2Farms from './V2'
 
@@ -56,10 +55,9 @@ const Farms: React.FC = () => {
 
     const pefiDailyApr = pefiRewardPerDayInUsd / liquidityInUsd
     const { pngDailyApr } = farm
-    const pngApy = getApy(pngDailyApr)
-    const pefiApy = getApy(pefiDailyApr) === Infinity ? 999999 : getApy(pefiDailyApr)
-
-    return { ...farm, pefiDailyApr, apr: pefiDailyApr + pngDailyApr, apy: pefiApy + pngApy }
+    const pngApr = getApr(pngDailyApr)
+    const pefiApr = getApr(pefiDailyApr) === Infinity ? 999999 : getApr(pefiDailyApr)
+    return { ...farm, pefiDailyApr, apr: pngApr + pefiApr, apy: pefiApr + pngApr }
   })
 
   const filteredFarms = useMemo(() => {

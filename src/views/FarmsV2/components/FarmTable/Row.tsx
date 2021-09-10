@@ -111,8 +111,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
   const { farm, index } = props
   const { stakedBalance, earnings } = useV2FarmUser(farm.pid, farm.type)
   const [actionPanelExpanded, setActionPanelExpanded] = useState(false)
-  // const farmApy = farm.apy ? (100 * Number(farm.apy)).toFixed(2) : '--'
-  const farmApy = farm.apr ? (100 * Number(farm.apr)).toFixed(2) : ''
+  const farmApr = farm.apr >= 0 ? (100 * Number(farm.apr)).toFixed(2) : '--'
 
   const shouldRenderChild = useDelayedUnmount(actionPanelExpanded, 300)
   const { isXl, isSm, isXs } = useMatchBreakpoints()
@@ -167,8 +166,8 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
                   <td key={key}>
                     <CellInner minWidth={110} smMinWidth={80}>
                       <CellLayout label="APR">
-                        <Text color='textSubtle'>TBD</Text>
-                        {/* <Balance fontSize="16px" fontWeight="400" suffix="%" value={Number(farmApy)} /> */}
+                        {/* <Text color='textSubtle'>TBD</Text> */}
+                        <Balance fontSize="16px" fontWeight="400" suffix="%" value={Number(farmApr)} />
                       </CellLayout>
                     </CellInner>
                   </td>
@@ -238,7 +237,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
                 </EarnedMobileCell>
                 <AprMobileCell>
                   <CellLayout label="APR">
-                    <Amount>{`${farmApy || '--'}%`}</Amount>
+                    <Amount>{`${farmApr || '--'}%`}</Amount>
                   </CellLayout>
                 </AprMobileCell>
               </Flex>
