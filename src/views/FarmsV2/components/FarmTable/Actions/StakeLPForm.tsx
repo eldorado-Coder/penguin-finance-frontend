@@ -11,10 +11,6 @@ import { getFullDisplayBalance } from 'utils/formatBalance'
 import { Farm as FarmTypes } from 'state/types'
 import TokenInput from './TokenInput'
 
-interface FarmWithStakedValue extends FarmTypes {
-  apy?: BigNumber
-}
-
 interface DepositModalProps {
   max: BigNumber
   onConfirm: (amount: string) => void
@@ -23,7 +19,7 @@ interface DepositModalProps {
   needsApproval: boolean
   requested: boolean
   stakingTokenName: string
-  farm: FarmWithStakedValue
+  farm: FarmTypes
   onApprove: () => void
 }
 
@@ -84,16 +80,20 @@ const StakeLPForm: React.FC<DepositModalProps> = ({
 
   const { quoteTokenAddresses, quoteTokenSymbol, tokenAddresses, type } = farm
   const liquidityUrlPathParts = getLiquidityUrlPathParts({ quoteTokenAddresses, quoteTokenSymbol, tokenAddresses })
-  const addLiquidityUrl = `${type === 'Joe' ? BASE_JOE_ADD_LIQUIDITY_URL : BASE_ADD_LIQUIDITY_URL}/${liquidityUrlPathParts}`
+  const addLiquidityUrl = `${
+    type === 'Joe' ? BASE_JOE_ADD_LIQUIDITY_URL : BASE_ADD_LIQUIDITY_URL
+  }/${liquidityUrlPathParts}`
 
   const handleGetPefi = () => {
     window.open(addLiquidityUrl, '_blank')
   }
 
+  const lpDecimals = farm.type === 'Joe' ? 5 : 2
+
   return (
     <>
       <InputContainer>
-        <LPTokenBalance fontSize="14px">{`Token Balance: ${roundDown(fullBalance, 2)} LP`}</LPTokenBalance>
+        <LPTokenBalance fontSize="14px">{`Token Balance: ${roundDown(fullBalance, lpDecimals)} LP`}</LPTokenBalance>
         <TokenInput
           value={roundDown(val, 2)}
           onSelectMax={handleSelectMax}
@@ -101,7 +101,7 @@ const StakeLPForm: React.FC<DepositModalProps> = ({
           max={fullBalance}
           symbol={tokenName.replace('Joe ', '').replace(' LP', '')}
         />
-        <Flex justifyContent='flex-end'>
+        <Flex justifyContent="flex-end">
           <StyledLinkExternal href={addLiquidityUrl}>{`Get ${tokenName.replace('Joe ', '')}`}</StyledLinkExternal>
         </Flex>
       </InputContainer>
@@ -163,7 +163,7 @@ const LPTokenBalance = styled(Text)`
 const StyledLinkExternal = styled(LinkExternal)`
   text-decoration: none;
   font-weight: normal;
-  color: ${({ theme }) => theme.isDark ? '#bba6dd' : theme.colors.primary};
+  color: ${({ theme }) => (theme.isDark ? '#bba6dd' : theme.colors.primary)};
   display: flex;
   align-items: center;
   font-size: 12px;
@@ -173,7 +173,7 @@ const StyledLinkExternal = styled(LinkExternal)`
     padding-left: 4px;
     height: 14px;
     width: auto;
-    fill: ${({ theme }) => theme.isDark ? '#bba6dd' : theme.colors.primary};
+    fill: ${({ theme }) => (theme.isDark ? '#bba6dd' : theme.colors.primary)};
   }
 `
 

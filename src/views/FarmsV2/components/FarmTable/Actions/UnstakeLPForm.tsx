@@ -7,6 +7,7 @@ import roundDown from 'utils/roundDown'
 import escapeRegExp from 'utils/escapeRegExp'
 import useI18n from 'hooks/useI18n'
 import { getFullDisplayBalance } from 'utils/formatBalance'
+import { Farm as FarmTypes } from 'state/types'
 import TokenInput from './TokenInput'
 
 interface DepositModalProps {
@@ -17,12 +18,13 @@ interface DepositModalProps {
   needsApproval: boolean
   requested: boolean
   stakingTokenName: string
+  farm: FarmTypes
   onApprove: () => void
 }
 
 const inputRegex = RegExp(`^\\d*(?:\\\\[.])?\\d*$`)
 
-const UnstakeLPForm: React.FC<DepositModalProps> = ({ max, onConfirm, tokenName = '', account }) => {
+const UnstakeLPForm: React.FC<DepositModalProps> = ({ max, tokenName = '', account, farm, onConfirm }) => {
   const [val, setVal] = useState('')
   const [pendingTx, setPendingTx] = useState(false)
   const TranslateString = useI18n()
@@ -66,11 +68,12 @@ const UnstakeLPForm: React.FC<DepositModalProps> = ({ max, onConfirm, tokenName 
     }
   }
   const canUnStake = !pendingTx && Number(val) > 0 && Number(fullBalance) >= Number(val)
+  const lpDecimals = farm.type === 'Joe' ? 5 : 2
 
   return (
     <>
       <InputContainer>
-        <LPTokenBalance fontSize="14px">{`Stake Balance: ${roundDown(fullBalance, 2)} LP`}</LPTokenBalance>
+        <LPTokenBalance fontSize="14px">{`Stake Balance: ${roundDown(fullBalance, lpDecimals)} LP`}</LPTokenBalance>
         <TokenInput
           value={roundDown(val, 2)}
           onSelectMax={handleSelectMax}

@@ -275,6 +275,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
               fontWeight="400"
               prefix=""
               suffix={` ${lpSymbol}`}
+              decimals={farm.type === 'Joe' ? 5 : 2}
               value={Number(userStakedBalance)}
             />
             <UsdBalanceWrapper>
