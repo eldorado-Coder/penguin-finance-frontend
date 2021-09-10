@@ -68,6 +68,11 @@ export const useFetchPublicData = () => {
   const dispatch = useDispatch()
   const { slowRefresh } = useRefresh()
   useEffect(() => {
+    // v2
+    dispatch(fetchV2PoolsPublicDataAsync())
+    dispatch(fetchV2MasterChefPefiPerBlock())
+    dispatch(fetchV2FarmsPublicDataAsync())
+    // v1
     dispatch(fetchMasterChefPefiPerBlock())
     dispatch(fetchFarmsPublicDataAsync())
     dispatch(fetchMasterChefRewards())
@@ -75,10 +80,6 @@ export const useFetchPublicData = () => {
     dispatch(fetchLpsPublicDataAsync())
     // POOL REMOVAL
     dispatch(fetchPoolsPublicDataAsync())
-    // v2
-    dispatch(fetchV2PoolsPublicDataAsync())
-    dispatch(fetchV2MasterChefPefiPerBlock())
-    dispatch(fetchV2FarmsPublicDataAsync())
   }, [dispatch, slowRefresh])
 }
 
