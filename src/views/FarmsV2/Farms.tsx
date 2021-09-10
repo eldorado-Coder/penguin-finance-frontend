@@ -5,6 +5,7 @@ import { useWeb3React } from '@web3-react/core'
 import styled from 'styled-components'
 import Page from 'components/layout/Page'
 import Select from 'components/Select/Select'
+import Balance from 'components/Balance'
 import { useV2Farms, usePricePefiUsdt } from 'state/hooks'
 import { fetchV2FarmUserDataAsync } from 'state/actions'
 import useRefresh from 'hooks/useRefresh'
@@ -14,6 +15,163 @@ import { DAYS_PER_YEAR } from 'config'
 import { getApr } from 'utils/apyHelpers'
 import V1Farms from './V1'
 import V2Farms from './V2'
+
+const FarmPage = styled(Page)`
+  max-width: 1200px;
+`
+
+// bg
+const IgloosBgContainer = styled.div`
+  background-repeat: repeat;
+  background-size: contain;
+  position: absolute;
+  top: -8px;
+  bottom: -8px;
+  right: 0px;
+  left: 0px;
+  z-index: -1;
+`
+
+const BgWrapper = styled.div`
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  right: 0px;
+  left: 0px;
+  z-index: -1;
+`
+
+// banner
+const IgloosBannerContainer = styled.div`
+  margin-bottom: 24px;
+
+  @media (min-width: 640px) {
+    margin-bottom: 0px;
+  }
+`
+const BannerImage = styled.img`
+  z-index: -1;
+`
+
+// tvl container
+const TvlContainer = styled(Flex)`
+  color: ${({ theme }) => (theme.isDark ? '#bba6dd' : '#372871')};
+  font-size: 28px;
+  font-weight: 600;
+  font-family: 'Kanit';
+  white-space: break-spaces;
+  align-items: center;
+  flex-wrap: wrap;
+`
+
+// slider
+const TabWrapper = styled.div`
+  div {
+    border: 2px solid ${({ theme }) => (theme.isDark ? '#221b38' : '#b2b2ce')};
+    background-color: ${({ theme }) => (theme.isDark ? '#332654' : '#e8e4ef')};
+    border-radius: 18px;
+  }
+`
+const OptionItem = styled(ButtonMenuItem)<{ active: boolean }>`
+  min-width: 70px;
+  background-color: ${({ active, theme }) => active && theme.colors.red};
+  color: ${({ active }) => (active ? 'white' : '#b2b2ce')};
+  margin: 0px !important;
+`
+
+const SelectWrapper = styled.div`
+  div {
+    color: ${({ theme }) => theme.isDark && '#372871'};
+    > div:first-child {
+      > div {
+        background: ${({ theme }) => theme.isDark && '#bba6dd'};
+      }
+    }
+    > div:last-child {
+      background: ${({ theme }) => theme.isDark && '#bba6dd'};
+    }
+  }
+`
+
+const StyledInput = styled(Input)`
+  border: 1px solid transparent;
+  color: ${({ theme }) => theme.isDark && '#372871'};
+  background: ${({ theme }) => theme.isDark && '#bba6dd'};
+  ::placeholder {
+    color: ${({ theme }) => theme.isDark && '#927fbc'};
+  }
+
+  &:focus {
+    box-shadow: none !important;
+    border: ${({ theme }) => (theme.isDark ? '1px solid #66578d' : '1px solid #d7caec')};
+  }
+`
+
+const ProjectLogo = styled.img<{ isActive?: boolean }>`
+  width: 40px;
+  height: 40px;
+  margin-left: 8px;
+  margin-right: 8px;
+  cursor: pointer;
+  opacity: ${({ isActive }) => (isActive ? 1 : 0.3)};
+`
+
+const FilterText = styled(Text)`
+  white-space: nowrap;
+`
+
+const FilterWrapper = styled(Flex)`
+  flex-direction: column;
+  align-items: center;
+  margin-top: -16px;
+
+  ${({ theme }) => theme.mediaQueries.sm} {
+    margin-top: -40px;
+  }
+
+  ${({ theme }) => theme.mediaQueries.lg} {
+    flex-direction: row;
+    padding: 8px 8px 0;
+    margin-top: -64px;
+  }
+`
+
+const LeftFilters = styled(Flex)`
+  flex-direction: column;
+  align-items: center;
+
+  ${({ theme }) => theme.mediaQueries.xs} {
+    flex-direction: row;
+  }
+  ${({ theme }) => theme.mediaQueries.sm} {
+    flex-direction: row;
+  }
+  ${({ theme }) => theme.mediaQueries.md} {
+    flex-direction: row;
+  }
+`
+
+const ToggleWrapper = styled.div<{ checked?: boolean }>`
+  div {
+    height: 32px;
+    width: 56px;
+    background: ${({ checked, theme }) => theme.isDark && !checked && '#bba6dd'};
+    background: ${({ checked, theme }) => theme.isDark && checked && '#d4444c'};
+    background: ${({ checked, theme }) => !theme.isDark && checked && '#ec3e3f'};
+
+    div {
+      height: 24px;
+      width: 24px;
+      left: ${({ checked }) => checked && 'calc(100% - 28px) !important'};
+      background: white;
+    }
+  }
+`
+
+// content
+const IgloosContentContainer = styled.div`
+  position: relative;
+`
 
 const PROJECT_LIST = [
   { src: '/images/farms-v2/penguin.svg', name: 'Penguin' },
@@ -31,7 +189,7 @@ const Farms: React.FC = () => {
   const dispatch = useDispatch()
   const { fastRefresh } = useRefresh()
   const { account } = useWeb3React()
-  const v2FarmsLP = useV2Farms()
+  const v2Farms = useV2Farms()
   const { isXl, isSm } = useMatchBreakpoints()
   const pefiPriceUsd = usePricePefiUsdt().toNumber()
   const isMobile = !isXl
@@ -43,20 +201,27 @@ const Farms: React.FC = () => {
     }
   }, [account, dispatch, fastRefresh])
 
-  // const activeFarms = v2FarmsLP.filter((farm) => Number(farm.multiplier) > 0)
-  const activeFarms = v2FarmsLP
+  // const activeFarms = v2Farms.filter((farm) => Number(farm.multiplier) > 0)
+  const activeFarms = v2Farms
+
+  const getV2FarmsTVL = () => {
+    let v2FarmTvl = 0
+    activeFarms.map((farm) => {
+      v2FarmTvl += farm.totalLiquidityInUsd || 0
+      return farm
+    })
+    return v2FarmTvl
+  }
+
   const activeFarmsWithApy = activeFarms.map((farm) => {
     const pefiPerYear = getBalanceNumber(farm.pefiPerYear)
     const pefiPerDay = pefiPerYear / DAYS_PER_YEAR
     const pefiRewardPerDayInUsd = pefiPriceUsd * pefiPerDay
-
-    const totalLp = getBalanceNumber(farm.totalLp)
-    const liquidityInUsd = totalLp ? totalLp * farm.lpPrice : 0
-
-    const pefiDailyApr = pefiRewardPerDayInUsd / liquidityInUsd
+    const pefiDailyApr = pefiRewardPerDayInUsd / farm.totalLiquidityInUsd
     const { pngDailyApr } = farm
     const pngApr = getApr(pngDailyApr)
     const pefiApr = getApr(pefiDailyApr) === Infinity ? 999999 : getApr(pefiDailyApr)
+
     return { ...farm, pefiDailyApr, apr: pngApr + pefiApr, apy: pefiApr + pngApr }
   })
 
@@ -181,6 +346,8 @@ const Farms: React.FC = () => {
     </Flex>
   )
 
+  const tvl = getV2FarmsTVL()
+
   return (
     <FarmPage>
       <BgWrapper>
@@ -194,6 +361,17 @@ const Farms: React.FC = () => {
           alt="v2 farm banner"
         />
       </IgloosBannerContainer>
+      <TvlContainer marginBottom={isMobile ? '30px' : '70px'}>
+        <span>{`Total Value Locked (TLV): `}</span>
+        <Balance
+          fontSize="28px"
+          color={theme.isDark ? '#bba6dd' : '#372871'}
+          fontWeight="600"
+          prefix="$"
+          decimals={0}
+          value={Number(tvl)}
+        />
+      </TvlContainer>
       {isMobile ? (
         <FilterWrapper justifyContent="space-between" alignItems="center" flexWrap="wrap">
           <Flex mt="8px" justifyContent="center" mb="8px" flexWrap="wrap">
@@ -229,151 +407,5 @@ const Farms: React.FC = () => {
     </FarmPage>
   )
 }
-
-const FarmPage = styled(Page)`
-  max-width: 1200px;
-`
-
-// bg
-const IgloosBgContainer = styled.div`
-  background-repeat: repeat;
-  background-size: contain;
-  position: absolute;
-  top: -8px;
-  bottom: -8px;
-  right: 0px;
-  left: 0px;
-  z-index: -1;
-`
-
-const BgWrapper = styled.div`
-  position: absolute;
-  top: 0px;
-  bottom: 0px;
-  right: 0px;
-  left: 0px;
-  z-index: -1;
-`
-
-// banner
-const IgloosBannerContainer = styled.div`
-  margin-bottom: 24px;
-
-  @media (min-width: 640px) {
-    margin-bottom: 64px;
-  }
-`
-const BannerImage = styled.img`
-  z-index: -1;
-`
-
-// slider
-const TabWrapper = styled.div`
-  div {
-    border: 2px solid ${({ theme }) => (theme.isDark ? '#221b38' : '#b2b2ce')};
-    background-color: ${({ theme }) => (theme.isDark ? '#332654' : '#e8e4ef')};
-    border-radius: 18px;
-  }
-`
-const OptionItem = styled(ButtonMenuItem)<{ active: boolean }>`
-  min-width: 70px;
-  background-color: ${({ active, theme }) => active && theme.colors.red};
-  color: ${({ active }) => (active ? 'white' : '#b2b2ce')};
-  margin: 0px !important;
-`
-
-const SelectWrapper = styled.div`
-  div {
-    color: ${({ theme }) => theme.isDark && '#372871'};
-    > div:first-child {
-      > div {
-        background: ${({ theme }) => theme.isDark && '#bba6dd'};
-      }
-    }
-    > div:last-child {
-      background: ${({ theme }) => theme.isDark && '#bba6dd'};
-    }
-  }
-`
-
-const StyledInput = styled(Input)`
-  border: 1px solid transparent;
-  color: ${({ theme }) => theme.isDark && '#372871'};
-  background: ${({ theme }) => theme.isDark && '#bba6dd'};
-  ::placeholder {
-    color: ${({ theme }) => theme.isDark && '#927fbc'};
-  }
-
-  &:focus {
-    box-shadow: none !important;
-    border: ${({ theme }) => (theme.isDark ? '1px solid #66578d' : '1px solid #d7caec')};
-  }
-`
-
-const ProjectLogo = styled.img<{ isActive?: boolean }>`
-  width: 40px;
-  height: 40px;
-  margin-left: 8px;
-  margin-right: 8px;
-  cursor: pointer;
-  opacity: ${({ isActive }) => (isActive ? 1 : 0.3)};
-`
-
-const FilterText = styled(Text)`
-  white-space: nowrap;
-`
-
-const FilterWrapper = styled(Flex)`
-  flex-direction: column;
-  align-items: center;
-  margin-top: -16px;
-
-  ${({ theme }) => theme.mediaQueries.sm} {
-    margin-top: -40px;
-  }
-
-  ${({ theme }) => theme.mediaQueries.lg} {
-    flex-direction: row;
-    padding: 8px 8px 0;
-    margin-top: -64px;
-  }
-`
-
-const LeftFilters = styled(Flex)`
-  flex-direction: column;
-  align-items: center;
-
-  ${({ theme }) => theme.mediaQueries.xs} {
-    flex-direction: row;
-  }
-  ${({ theme }) => theme.mediaQueries.sm} {
-    flex-direction: row;
-  }
-  ${({ theme }) => theme.mediaQueries.md} {
-    flex-direction: row;
-  }
-`
-
-const ToggleWrapper = styled.div<{ checked?: boolean }>`
-  div {
-    height: 32px;
-    width: 56px;
-    background: ${({ checked, theme }) => theme.isDark && !checked && '#bba6dd'};
-    background: ${({ checked, theme }) => theme.isDark && checked && '#d4444c'};
-    background: ${({ checked, theme }) => !theme.isDark && checked && '#ec3e3f'};
-
-    div {
-      height: 24px;
-      width: 24px;
-      left: ${({ checked }) => checked && 'calc(100% - 28px) !important'};
-      background: white;
-    }
-  }
-`
-
-// content
-const IgloosContentContainer = styled.div`
-  position: relative;
-`
 
 export default Farms
