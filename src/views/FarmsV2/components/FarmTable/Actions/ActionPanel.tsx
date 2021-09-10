@@ -249,10 +249,12 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
   }
 
   const getTokenPrice = (address) => {
-    const rewardToken = tokens.find((row) => getAddress(row.address) === address)
+    const rewardToken = tokens.find((row) => getAddress(row.address).toLowerCase() === address.toLowerCase())
+
     if (rewardToken && rewardToken.symbol === 'PEFI') return pefiPriceUsd
     if (rewardToken && rewardToken.symbol === 'iPEFI') return iPefiPriceUsd
     if (rewardToken && rewardToken.symbol === 'PNG') return pngPriceUsd
+    if (rewardToken && rewardToken.symbol === 'JOE') return 1.49
     return 1
   }
 
