@@ -8,7 +8,7 @@ import { useTotalSupply, useBurnedBalance } from 'hooks/useTokenBalance'
 import { useXPefi } from 'hooks/useContract'
 import { getPefiAddress } from 'utils/addressHelpers'
 import {
-  usePefiPerBlock,
+  useV2FarmPefiPerSecond,
   useFarms,
   usePriceAvaxUsdt,
   usePricePefiUsdt,
@@ -56,7 +56,8 @@ const PefiStats: React.FC<HarvestProps> = ({ v1Pool, v2Pool }) => {
   const totalSupply = useTotalSupply()
   const burnedBalance = useBurnedBalance(getPefiAddress())
   const xPefiContract = useXPefi()
-  const pefiPerBlock = usePefiPerBlock()
+  const pefiPerBlock = useV2FarmPefiPerSecond()
+
   const farmsLP = useFarms()
   const compounderFarms = useCompounderFarms()
   const pefiPrice = usePricePefiUsdt()
@@ -269,7 +270,7 @@ const PefiStats: React.FC<HarvestProps> = ({ v1Pool, v2Pool }) => {
             color="textSubtle"
             fontSize="14px"
             decimals={2}
-            suffix=" PEFI/block"
+            suffix=" PEFI/SECOND"
             bold={false}
             value={pefiPerBlock.toNumber()}
             updateInterval={30000}

@@ -120,7 +120,8 @@ export interface ToastsState {
 }
 
 export interface FarmsState {
-  pefiPerBlock: number
+  pefiPerBlock?: number
+  pefiPerSecond?: number
   data: Farm[]
 }
 

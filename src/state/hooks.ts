@@ -521,3 +521,9 @@ export const useV2FarmUser = (pid, type) => {
     earnings: farm.userData ? new BigNumber(farm.userData.earnings) : new BigNumber(0),
   }
 }
+
+// Farms
+export const useV2FarmPefiPerSecond = (): BigNumber => {
+  const pefiPerSecond = useSelector((state: State) => state.v2Farms.pefiPerSecond)
+  return new BigNumber(pefiPerSecond)
+}

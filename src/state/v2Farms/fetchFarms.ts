@@ -19,7 +19,7 @@ export const fetchMasterChefGlobalData = async () => {
     },
   ])
 
-  return { pefiPerBlock: new BigNumber(pefiEmissionPerSecond).div(new BigNumber(10).pow(18)).toNumber() }
+  return { pefiPerSecond: new BigNumber(pefiEmissionPerSecond).div(new BigNumber(10).pow(18)).toNumber() }
 }
 
 export const fetchFarms = async () => {
