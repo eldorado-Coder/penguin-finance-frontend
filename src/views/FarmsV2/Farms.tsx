@@ -188,8 +188,10 @@ const Farms: React.FC = () => {
       </BgWrapper>
       <IgloosBannerContainer>
         <BannerImage
-          src={`${process.env.PUBLIC_URL}/images/farms-v2/Igloo-${theme.isDark ? 'dark' : 'light'}.svg`}
-          alt="igloos banner"
+          src={`${process.env.PUBLIC_URL}/images/farms-v2/v2_farm_banner_animated_${
+            theme.isDark ? 'dark' : 'light'
+          }.svg`}
+          alt="v2 farm banner"
         />
       </IgloosBannerContainer>
       {isMobile ? (
