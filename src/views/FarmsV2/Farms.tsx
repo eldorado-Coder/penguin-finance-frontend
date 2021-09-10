@@ -259,6 +259,9 @@ const Farms: React.FC = () => {
 
   const handleSwitchTab = (tab) => {
     setActiveTab(tab)
+    if (tab === 1) {
+      setShowStakedOnly(true)
+    }
   }
 
   const handleChangeStakedOnly = (event) => {
@@ -338,7 +341,7 @@ const Farms: React.FC = () => {
   const renderStakedOnlyFilter = (
     <Flex alignItems="center" mr={isMobile ? '8px' : '16px'}>
       <ToggleWrapper checked={showStakedOnly}>
-        <Toggle checked={showStakedOnly} onChange={handleChangeStakedOnly} />
+        <Toggle checked={showStakedOnly} disabled={activeTab === 1} onChange={handleChangeStakedOnly} />
       </ToggleWrapper>
       <FilterText ml="8px" color="textSubtle">
         Staked Only
