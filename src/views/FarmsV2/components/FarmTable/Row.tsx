@@ -50,6 +50,12 @@ const EarnedMobileCell = styled.td`
   padding: 16px 0 24px 16px;
 `
 
+const AprBalanceWrapper = styled.div`
+  > div {
+    font-family: 'Kanit';
+  }
+`
+
 const AprMobileCell = styled.td`
   padding-top: 16px;
   padding-bottom: 24px;
@@ -167,7 +173,9 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
                     <CellInner minWidth={110} smMinWidth={80}>
                       <CellLayout label="APR">
                         {/* <Text color='textSubtle'>TBD</Text> */}
-                        <Balance fontSize="16px" fontWeight="400" suffix="%" value={Number(farmApr)} />
+                        <AprBalanceWrapper>
+                          <Balance fontSize="16px" fontWeight="600" color="red" suffix="%" value={Number(farmApr)} />
+                        </AprBalanceWrapper>
                       </CellLayout>
                     </CellInner>
                   </td>
