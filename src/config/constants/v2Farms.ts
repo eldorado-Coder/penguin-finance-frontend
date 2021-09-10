@@ -20,7 +20,7 @@ const v2Farms: V2FarmConfig[] = [
     },
     pangolinRewardPoolAddresses: {
       43113: '',
-      43114: '0x0000000000000000000000000000000000000000',
+      43114: '0xd7EDBb1005ec65721a3976Dba996AdC6e02dc9bA',
     },
     quoteTokenSymbol: QuoteToken.AVAX,
     quoteTokenAddresses: contracts.wavax,
@@ -47,7 +47,7 @@ const v2Farms: V2FarmConfig[] = [
     },
     pangolinRewardPoolAddresses: {
       43113: '',
-      43114: '0x0000000000000000000000000000000000000000',
+      43114: '0x76e404Ab7357fD97d4f1e8Dd52f298A035fd408c',
     },
     quoteTokenSymbol: QuoteToken.PNG,
     quoteTokenAddresses: contracts.png,
@@ -75,7 +75,7 @@ const v2Farms: V2FarmConfig[] = [
     },
     pangolinRewardPoolAddresses: {
       43113: '',
-      43114: '0x0000000000000000000000000000000000000000',
+      43114: '0x830A966B9B447c9B15aB24c0369c4018E75F31C9',
     },
     quoteTokenSymbol: QuoteToken.AVAX,
     quoteTokenAddresses: contracts.wavax,
@@ -166,7 +166,7 @@ const v2Farms: V2FarmConfig[] = [
     hardApy: '896.65%',
     type: 'Joe',
     name: 'pendingPEFI',
-    lpPrice: 764.55
+    lpPrice: 764.55,
   },
   {
     pid: 5,
@@ -194,14 +194,14 @@ const v2Farms: V2FarmConfig[] = [
     hardApy: '896.65%',
     type: 'Joe',
     name: 'pendingPEFI',
-    lpPrice: 16.63
+    lpPrice: 16.63,
   },
   {
     pid: 7,
     lpSymbol: 'Joe USDC.e-AVAX LP',
     lpAddresses: {
       43113: '',
-      43114: '0xA389f9430876455C36478DeEa9769B7Ca4E3DDB1',
+      43114: '0xa389f9430876455c36478deea9769b7ca4e3ddb1',
     },
     strategyAddresses: {
       43113: '',
@@ -222,7 +222,7 @@ const v2Farms: V2FarmConfig[] = [
     hardApy: '896.65%',
     type: 'Joe',
     name: 'pendingPEFI',
-    lpPrice: 12910975.76
+    lpPrice: 12910975.76,
   },
   {
     pid: 8,
@@ -250,7 +250,7 @@ const v2Farms: V2FarmConfig[] = [
     hardApy: '896.65%',
     type: 'Joe',
     name: 'pendingPEFI',
-    lpPrice: 13497747.77
+    lpPrice: 13497747.77,
   },
 ]
 

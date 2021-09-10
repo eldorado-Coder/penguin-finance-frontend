@@ -58,7 +58,6 @@ const Farms: React.FC = () => {
     const { pngDailyApr } = farm
     const pngApy = getApy(pngDailyApr)
     const pefiApy = getApy(pefiDailyApr) === Infinity ? 999999 : getApy(pefiDailyApr)
-
     return { ...farm, pefiDailyApr, apr: pefiDailyApr + pngDailyApr, apy: pefiApy + pngApy }
   })
 
@@ -87,8 +86,8 @@ const Farms: React.FC = () => {
           Number(a.lpPrice) * getBalanceNumber(a.userData?.stakedBalance),
       )
     }
-    if (sortType === 'apr') {
-      farms = farms.sort((a, b) => b.apr - a.apr)
+    if (sortType === 'apy') {
+      farms = farms.sort((a, b) => b.apy - a.apy)
     }
 
     return farms
@@ -155,7 +154,7 @@ const Farms: React.FC = () => {
             options={[
               { label: 'Liquidity', value: 'liquidity' },
               { label: 'Hot', value: 'hot' },
-              { label: 'APR', value: 'apr' },
+              { label: 'APY', value: 'apy' },
               { label: 'Multiplier', value: 'multiplier' },
               { label: 'Earned', value: 'earned' },
             ]}

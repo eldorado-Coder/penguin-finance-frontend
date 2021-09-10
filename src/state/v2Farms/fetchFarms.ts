@@ -6,7 +6,7 @@ import v2FarmsConfig from 'config/constants/v2Farms'
 import { getAddress, getV2MasterChefAddress } from 'utils/addressHelpers'
 import getV2FarmMasterChefAbi from 'utils/getV2FarmMasterChefAbi'
 import getV2FarmMasterChefAddress from 'utils/getV2FarmMasterChefAddress'
-import { getPangolinLpPrice } from 'utils/price'
+import { getPangolinLpPrice, getJoeLpPrice } from 'utils/price'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { getPangolinRewardPoolApr, getJoeRewardPoolApr } from 'utils/apyHelpers'
 import { NON_ADDRESS } from 'config'
@@ -95,13 +95,13 @@ export const fetchFarms = async () => {
         const allocPoint = new BigNumber(info.allocPoint._hex)
         const withdrawFee = 100 * (info.withdrawFeeBP / 10000)
         const poolWeight = allocPoint.div(new BigNumber(totalAllocPoint))
-        let lpPrice = farmConfig.lpPrice || 1;
+        let lpPrice = farmConfig.lpPrice || 1
         let totalLiquidityInUsd = getBalanceNumber(new BigNumber(totalLP))
         if (farmConfig.type === 'Pangolin') {
           lpPrice = await getPangolinLpPrice(lpAddress)
           totalLiquidityInUsd = lpPrice * getBalanceNumber(new BigNumber(totalLP))
         } else if (farmConfig.type === 'Joe') {
-          console.log('ant : lpPrice => ', lpPrice, farmConfig, getBalanceNumber(new BigNumber(totalLP)));
+          lpPrice = await getJoeLpPrice(lpAddress)
           totalLiquidityInUsd = lpPrice * getBalanceNumber(new BigNumber(totalLP))
         }
 
@@ -113,7 +113,7 @@ export const fetchFarms = async () => {
           pngDailyApr = res.dailyApr
         }
         if (farmConfig.type === 'Joe') {
-          const res = await getJoeRewardPoolApr(getAddress(farmConfig.pangolinRewardPoolAddresses))
+          const res = await getJoeRewardPoolApr(getAddress(farmConfig.lpAddresses))
           pngApr = res.apr
           pngDailyApr = res.dailyApr
         }
