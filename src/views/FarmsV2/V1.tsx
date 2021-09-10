@@ -1,40 +1,33 @@
 import React, { useEffect, useMemo } from 'react'
 import styled from 'styled-components'
-import { useRouteMatch } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import BigNumber from 'bignumber.js'
 import { useWeb3React } from '@web3-react/core'
 import { SECONDS_PER_YEAR, WEEKS_PER_YEAR, PEFI_POOL_PID } from 'config'
 import FlexLayout from 'components/layout/Flex'
-import FarmCard from 'views/FarmsV2/V1/FarmCard';
+import FarmCard from 'views/FarmsV2/V1/FarmCard'
 import { usePefiPerBlock, useFarms, usePriceAvaxUsdt, usePricePefiUsdt, usePriceEthUsdt } from 'state/hooks'
 import useRefresh from 'hooks/useRefresh'
 import useBlockGenerationTime from 'hooks/useBlockGenerationTime'
 import { fetchFarmUserDataAsync } from 'state/actions'
 import { QuoteToken } from 'config/constants/types'
-import { getBalanceNumber } from 'utils/formatBalance';
+import { getBalanceNumber } from 'utils/formatBalance'
 import { Farm } from 'state/types'
-import MigrationCard from './V1/MigrationCard';
+import MigrationCard from './V1/MigrationCard'
 
 export interface FarmWithStakedValue extends Farm {
-  apy?: BigNumber,
+  apy?: BigNumber
   totalValue?: BigNumber
 }
 
-interface V2FarmProps {
+interface V1FarmProps {
   searchTerm: string
-  showStakedOnly: boolean 
-  activeProjects: any []
+  showStakedOnly: boolean
+  activeProjects: any[]
   sortType: string
 }
 
-const V1Farms: React.FC<V2FarmProps> = ({ 
-  searchTerm, 
-  showStakedOnly, 
-  activeProjects, 
-  sortType 
-}) => {
-  const { path } = useRouteMatch()
+const V1Farms: React.FC<V1FarmProps> = ({ searchTerm, showStakedOnly, activeProjects, sortType }) => {
   const pefiPerBlock = usePefiPerBlock()
   const farmsLP = useFarms()
   const pefiPrice = usePricePefiUsdt()
@@ -56,7 +49,9 @@ const V1Farms: React.FC<V2FarmProps> = ({
   const activeFarms = farmsLP.filter((farm) => farm.multiplier !== '0X')
 
   const farms = useMemo(() => {
-    const pefiPriceVsAVAX = new BigNumber(activeFarms.find((farm) => farm.pid === PEFI_POOL_PID)?.tokenPriceVsQuote || 0)
+    const pefiPriceVsAVAX = new BigNumber(
+      activeFarms.find((farm) => farm.pid === PEFI_POOL_PID)?.tokenPriceVsQuote || 0,
+    )
     const farmsToDisplayWithAPY: FarmWithStakedValue[] = activeFarms.map((farm) => {
       if (!farm.tokenAmount || !farm.lpTotalInQuoteToken || !farm.lpTotalInQuoteToken) {
         return farm
@@ -86,9 +81,9 @@ const V1Farms: React.FC<V2FarmProps> = ({
         apy = pefiApy && dualApy && pefiApy.plus(dualApy)
       }
 
-      let totalValue = null;
+      let totalValue = null
       if (!farm.lpTotalInQuoteToken) {
-        totalValue = null;
+        totalValue = null
       } else if (farm.quoteTokenSymbol === QuoteToken.AVAX) {
         totalValue = avaxPrice.times(farm.lpTotalInQuoteToken)
       } else if (farm.quoteTokenSymbol === QuoteToken.PEFI) {
@@ -96,13 +91,13 @@ const V1Farms: React.FC<V2FarmProps> = ({
       } else if (farm.quoteTokenSymbol === QuoteToken.ETH) {
         totalValue = ethPriceUsd.times(farm.lpTotalInQuoteToken)
       } else {
-        totalValue = farm.lpTotalInQuoteToken;
+        totalValue = farm.lpTotalInQuoteToken
       }
 
       return { ...farm, apy, totalValue }
-    });
+    })
 
-    let filteredFarms = [...farmsToDisplayWithAPY];
+    let filteredFarms = [...farmsToDisplayWithAPY]
 
     // filter
     if (searchTerm) {
@@ -118,27 +113,39 @@ const V1Farms: React.FC<V2FarmProps> = ({
       filteredFarms = filteredFarms.sort((a, b) => Number(b.totalValue) - Number(a.totalValue))
     }
     if (sortType === 'multiplier') {
-      filteredFarms = filteredFarms.sort((a, b) => Number(b.multiplier.replace('X', '')) - Number(a.multiplier.replace('X', '')))
+      filteredFarms = filteredFarms.sort(
+        (a, b) => Number(b.multiplier.replace('X', '')) - Number(a.multiplier.replace('X', '')),
+      )
     }
     if (sortType === 'earned') {
       filteredFarms = filteredFarms.sort(
-        (a, b) =>
-          getBalanceNumber(b.userData?.earnings) -
-          getBalanceNumber(a.userData?.earnings),
+        (a, b) => getBalanceNumber(b.userData?.earnings) - getBalanceNumber(a.userData?.earnings),
       )
     }
     if (sortType === 'apr') {
       filteredFarms = filteredFarms.sort((a, b) => Number(b.apy) - Number(a.apy))
     }
 
-    return filteredFarms;
-  }, [BLOCKS_PER_WEEK, pefiPerBlock, activeFarms, avaxPrice, ethPriceUsd, pefiPrice, searchTerm, account, showStakedOnly, sortType, activeProjects]);
+    return filteredFarms
+  }, [
+    BLOCKS_PER_WEEK,
+    pefiPerBlock,
+    activeFarms,
+    avaxPrice,
+    ethPriceUsd,
+    pefiPrice,
+    searchTerm,
+    account,
+    showStakedOnly,
+    sortType,
+    activeProjects,
+  ])
 
   return (
-    <FarmsContainer>    
+    <FarmsContainer>
       <FlexLayout>
         <MigrationCard />
-        {farms.map(farm => {
+        {farms.map((farm) => {
           return (
             <FarmCard
               key={farm.pid}

@@ -5,6 +5,7 @@ import { useWeb3React } from '@web3-react/core'
 import styled from 'styled-components'
 import Page from 'components/layout/Page'
 import Select from 'components/Select/Select'
+import Balance from 'components/Balance'
 import { useV2Farms, usePricePefiUsdt } from 'state/hooks'
 import { fetchV2FarmUserDataAsync } from 'state/actions'
 import useRefresh from 'hooks/useRefresh'
@@ -14,219 +15,6 @@ import { DAYS_PER_YEAR } from 'config'
 import { getApr } from 'utils/apyHelpers'
 import V1Farms from './V1'
 import V2Farms from './V2'
-
-const PROJECT_LIST = [
-  { src: '/images/farms-v2/penguin.svg', name: 'Penguin' },
-  { src: '/images/farms-v2/joe.svg', name: 'Joe' },
-  { src: '/images/farms-v2/pangolin.svg', name: 'Pangolin' },
-]
-
-const Farms: React.FC = () => {
-  const [sortType, setSortType] = useState('liquidity')
-  const [showStakedOnly, setShowStakedOnly] = useState(false)
-  const [searchTerm, setSearchTerm] = useState('')
-  const [activeProjects, setActiveProjects] = useState(PROJECT_LIST.map((row) => row.name))
-  const [activeTab, setActiveTab] = useState(0) // 0: v2, 1: v1
-
-  const dispatch = useDispatch()
-  const { fastRefresh } = useRefresh()
-  const { account } = useWeb3React()
-  const v2FarmsLP = useV2Farms()
-  const { isXl, isSm } = useMatchBreakpoints()
-  const pefiPriceUsd = usePricePefiUsdt().toNumber()
-  const isMobile = !isXl
-  const theme = useTheme()
-
-  useEffect(() => {
-    if (account) {
-      dispatch(fetchV2FarmUserDataAsync(account))
-    }
-  }, [account, dispatch, fastRefresh])
-
-  // const activeFarms = v2FarmsLP.filter((farm) => Number(farm.multiplier) > 0)
-  const activeFarms = v2FarmsLP
-  const activeFarmsWithApy = activeFarms.map((farm) => {
-    const pefiPerYear = getBalanceNumber(farm.pefiPerYear)
-    const pefiPerDay = pefiPerYear / DAYS_PER_YEAR
-    const pefiRewardPerDayInUsd = pefiPriceUsd * pefiPerDay
-
-    const totalLp = getBalanceNumber(farm.totalLp)
-    const liquidityInUsd = totalLp ? totalLp * farm.lpPrice : 0
-
-    const pefiDailyApr = pefiRewardPerDayInUsd / liquidityInUsd
-    const { pngDailyApr } = farm
-    const pngApr = getApr(pngDailyApr)
-    const pefiApr = getApr(pefiDailyApr) === Infinity ? 999999 : getApr(pefiDailyApr)
-    return { ...farm, pefiDailyApr, apr: pngApr + pefiApr, apy: pefiApr + pngApr }
-  })
-
-  const filteredFarms = useMemo(() => {
-    let farms = [...activeFarmsWithApy]
-    // filter
-    if (searchTerm) {
-      farms = farms.filter((farm) => farm.lpSymbol.toLowerCase().includes(searchTerm.toLowerCase()))
-    }
-    if (account && showStakedOnly) {
-      farms = farms.filter((farm) => farm.userData && getBalanceNumber(farm.userData.stakedBalance) > 0)
-    }
-    farms = farms.filter((farm) => farm.type && activeProjects.includes(farm.type))
-
-    // sort
-    if (sortType === 'liquidity') {
-      farms = farms.sort((a, b) => b.totalLiquidityInUsd - a.totalLiquidityInUsd)
-    }
-    if (sortType === 'multiplier') {
-      farms = farms.sort((a, b) => Number(b.multiplier) - Number(a.multiplier))
-    }
-    if (sortType === 'earned') {
-      farms = farms.sort(
-        (a, b) =>
-          Number(b.lpPrice) * getBalanceNumber(b.userData?.stakedBalance) -
-          Number(a.lpPrice) * getBalanceNumber(a.userData?.stakedBalance),
-      )
-    }
-    if (sortType === 'apr') {
-      farms = farms.sort((a, b) => b.apr - a.apr)
-    }
-
-    return farms
-  }, [searchTerm, activeFarmsWithApy, showStakedOnly, account, activeProjects, sortType])
-
-  const handleSwitchTab = (tab) => {
-    setActiveTab(tab)
-  }
-
-  const handleChangeStakedOnly = (event) => {
-    setShowStakedOnly(event.target.checked)
-  }
-
-  const handleChangeSearchTerm = (event) => {
-    setSearchTerm(event.target.value)
-  }
-
-  const handleChangeActiveProject = (project) => {
-    const isExisted = activeProjects.find((row) => row === project)
-    if (isExisted) {
-      setActiveProjects(activeProjects.filter((row) => row !== project))
-    } else {
-      setActiveProjects([...activeProjects, project])
-    }
-  }
-
-  const renderProjectsFilters = (
-    <Flex ml={isSm ? '0px' : '8px'} alignItems="center">
-      {PROJECT_LIST.map((project) => {
-        const isActiveProject = activeProjects.find((row) => row === project.name)
-        return (
-          <ProjectLogo
-            key={project.name}
-            src={project.src}
-            alt={project.name}
-            isActive={!!isActiveProject}
-            onClick={() => handleChangeActiveProject(project.name)}
-          />
-        )
-      })}
-    </Flex>
-  )
-
-  const renderActiveFilter = (
-    <Flex margin={isMobile ? '8px 0' : '8px 16px 8px 0'} justifyContent="center" alignItems="center">
-      <TabWrapper>
-        <ButtonMenu activeIndex={activeTab} onItemClick={handleSwitchTab} scale="sm">
-          <OptionItem active={activeTab === 0}>New (V2)</OptionItem>
-          <OptionItem active={activeTab === 1}>Old (V1)</OptionItem>
-        </ButtonMenu>
-      </TabWrapper>
-    </Flex>
-  )
-
-  const renderSearchAndSortFilter = (
-    <Flex mb="16px">
-      <Flex flexDirection="column">
-        <Text fontSize="12px" textTransform="uppercase" color="textSubtle">
-          Sort by
-        </Text>
-        <SelectWrapper>
-          <Select
-            value={sortType}
-            options={[
-              { label: 'Liquidity', value: 'liquidity' },
-              { label: 'Hot', value: 'hot' },
-              { label: 'APR', value: 'apr' },
-              { label: 'Multiplier', value: 'multiplier' },
-              { label: 'Earned', value: 'earned' },
-            ]}
-            onChange={setSortType}
-          />
-        </SelectWrapper>
-      </Flex>
-      <Flex flexDirection="column" ml="16px">
-        <Text fontSize="12px" textTransform="uppercase" color="textSubtle">
-          Search
-        </Text>
-        <StyledInput placeholder="Search Farms" value={searchTerm} onChange={handleChangeSearchTerm} />
-      </Flex>
-    </Flex>
-  )
-
-  const renderStakedOnlyFilter = (
-    <Flex alignItems="center" mr={isMobile ? '8px' : '16px'}>
-      <ToggleWrapper checked={showStakedOnly}>
-        <Toggle checked={showStakedOnly} onChange={handleChangeStakedOnly} />
-      </ToggleWrapper>
-      <FilterText ml="8px" color="textSubtle">
-        Staked Only
-      </FilterText>
-    </Flex>
-  )
-
-  return (
-    <FarmPage>
-      <BgWrapper>
-        <IgloosBgContainer />
-      </BgWrapper>
-      <IgloosBannerContainer>
-        <BannerImage
-          src={`${process.env.PUBLIC_URL}/images/farms-v2/Igloo-${theme.isDark ? 'dark' : 'light'}.svg`}
-          alt="igloos banner"
-        />
-      </IgloosBannerContainer>
-      {isMobile ? (
-        <FilterWrapper justifyContent="space-between" alignItems="center" flexWrap="wrap">
-          <Flex mt="8px" justifyContent="center" mb="8px" flexWrap="wrap">
-            {renderStakedOnlyFilter}
-            {renderActiveFilter}
-          </Flex>
-          {renderSearchAndSortFilter}
-          <Flex mt="16px">{renderProjectsFilters}</Flex>
-        </FilterWrapper>
-      ) : (
-        <FilterWrapper justifyContent="space-between" alignItems="center" flexWrap="wrap" mt="-24px">
-          <LeftFilters alignItems="center" mt="16px" justifyContent="space-between" flexWrap={isSm ? 'nowrap' : 'wrap'}>
-            {renderStakedOnlyFilter}
-            {renderProjectsFilters}
-          </LeftFilters>
-          <Flex display={isSm ? 'block !important' : 'flex'} mt="16px">
-            {renderActiveFilter}
-            {renderSearchAndSortFilter}
-          </Flex>
-        </FilterWrapper>
-      )}
-      <IgloosContentContainer>
-        {activeTab === 0 && filteredFarms.length > 0 && <V2Farms farms={filteredFarms} />}
-        {activeTab === 1 && (
-          <V1Farms
-            searchTerm={searchTerm}
-            showStakedOnly={showStakedOnly}
-            activeProjects={activeProjects}
-            sortType={sortType}
-          />
-        )}
-      </IgloosContentContainer>
-    </FarmPage>
-  )
-}
 
 const FarmPage = styled(Page)`
   max-width: 1200px;
@@ -258,11 +46,22 @@ const IgloosBannerContainer = styled.div`
   margin-bottom: 24px;
 
   @media (min-width: 640px) {
-    margin-bottom: 64px;
+    margin-bottom: 0px;
   }
 `
 const BannerImage = styled.img`
   z-index: -1;
+`
+
+// tvl container
+const TvlContainer = styled(Flex)`
+  color: ${({ theme }) => (theme.isDark ? '#bba6dd' : '#372871')};
+  font-size: 28px;
+  font-weight: 600;
+  font-family: 'Kanit';
+  white-space: break-spaces;
+  align-items: center;
+  flex-wrap: wrap;
 `
 
 // slider
@@ -373,5 +172,243 @@ const ToggleWrapper = styled.div<{ checked?: boolean }>`
 const IgloosContentContainer = styled.div`
   position: relative;
 `
+
+const PROJECT_LIST = [
+  { src: '/images/farms-v2/penguin.svg', name: 'Penguin' },
+  { src: '/images/farms-v2/joe.svg', name: 'Joe' },
+  { src: '/images/farms-v2/pangolin.svg', name: 'Pangolin' },
+]
+
+const Farms: React.FC = () => {
+  const [sortType, setSortType] = useState('liquidity')
+  const [showStakedOnly, setShowStakedOnly] = useState(false)
+  const [searchTerm, setSearchTerm] = useState('')
+  const [activeProjects, setActiveProjects] = useState(PROJECT_LIST.map((row) => row.name))
+  const [activeTab, setActiveTab] = useState(0) // 0: v2, 1: v1
+
+  const dispatch = useDispatch()
+  const { fastRefresh } = useRefresh()
+  const { account } = useWeb3React()
+  const v2Farms = useV2Farms()
+  const { isXl, isSm } = useMatchBreakpoints()
+  const pefiPriceUsd = usePricePefiUsdt().toNumber()
+  const isMobile = !isXl
+  const theme = useTheme()
+
+  useEffect(() => {
+    if (account) {
+      dispatch(fetchV2FarmUserDataAsync(account))
+    }
+  }, [account, dispatch, fastRefresh])
+
+  // const activeFarms = v2Farms.filter((farm) => Number(farm.multiplier) > 0)
+  const activeFarms = v2Farms
+
+  const getV2FarmsTVL = () => {
+    let v2FarmTvl = 0
+    activeFarms.map((farm) => {
+      v2FarmTvl += farm.totalLiquidityInUsd || 0
+      return farm
+    })
+    return v2FarmTvl
+  }
+
+  const activeFarmsWithApy = activeFarms.map((farm) => {
+    const pefiPerYear = getBalanceNumber(farm.pefiPerYear)
+    const pefiPerDay = pefiPerYear / DAYS_PER_YEAR
+    const pefiRewardPerDayInUsd = pefiPriceUsd * pefiPerDay
+    const pefiDailyApr = pefiRewardPerDayInUsd / farm.totalLiquidityInUsd
+    const { pngDailyApr } = farm
+    const pngApr = getApr(pngDailyApr)
+    const pefiApr = getApr(pefiDailyApr) === Infinity ? 999999 : getApr(pefiDailyApr)
+
+    return { ...farm, pefiDailyApr, apr: pngApr + pefiApr, apy: pefiApr + pngApr }
+  })
+
+  const filteredFarms = useMemo(() => {
+    let farms = [...activeFarmsWithApy]
+    // filter
+    if (searchTerm) {
+      farms = farms.filter((farm) => farm.lpSymbol.toLowerCase().includes(searchTerm.toLowerCase()))
+    }
+    if (account && showStakedOnly) {
+      farms = farms.filter((farm) => farm.userData && getBalanceNumber(farm.userData.stakedBalance) > 0)
+    }
+    farms = farms.filter((farm) => farm.type && activeProjects.includes(farm.type))
+
+    // sort
+    if (sortType === 'liquidity') {
+      farms = farms.sort((a, b) => b.totalLiquidityInUsd - a.totalLiquidityInUsd)
+    }
+    if (sortType === 'multiplier') {
+      farms = farms.sort((a, b) => Number(b.multiplier) - Number(a.multiplier))
+    }
+    if (sortType === 'earned') {
+      farms = farms.sort(
+        (a, b) =>
+          Number(b.lpPrice) * getBalanceNumber(b.userData?.stakedBalance) -
+          Number(a.lpPrice) * getBalanceNumber(a.userData?.stakedBalance),
+      )
+    }
+    if (sortType === 'apr') {
+      farms = farms.sort((a, b) => b.apr - a.apr)
+    }
+
+    return farms
+  }, [searchTerm, activeFarmsWithApy, showStakedOnly, account, activeProjects, sortType])
+
+  const handleSwitchTab = (tab) => {
+    setActiveTab(tab)
+    if (tab === 1) {
+      setShowStakedOnly(true)
+    }
+  }
+
+  const handleChangeStakedOnly = (event) => {
+    setShowStakedOnly(event.target.checked)
+  }
+
+  const handleChangeSearchTerm = (event) => {
+    setSearchTerm(event.target.value)
+  }
+
+  const handleChangeActiveProject = (project) => {
+    const isExisted = activeProjects.find((row) => row === project)
+    if (isExisted) {
+      setActiveProjects(activeProjects.filter((row) => row !== project))
+    } else {
+      setActiveProjects([...activeProjects, project])
+    }
+  }
+
+  const renderProjectsFilters = (
+    <Flex ml={isSm ? '0px' : '8px'} alignItems="center">
+      {PROJECT_LIST.map((project) => {
+        const isActiveProject = activeProjects.find((row) => row === project.name)
+        return (
+          <ProjectLogo
+            key={project.name}
+            src={project.src}
+            alt={project.name}
+            isActive={!!isActiveProject}
+            onClick={() => handleChangeActiveProject(project.name)}
+          />
+        )
+      })}
+    </Flex>
+  )
+
+  const renderActiveFilter = (
+    <Flex margin={isMobile ? '8px 0' : '8px 16px 8px 0'} justifyContent="center" alignItems="center">
+      <TabWrapper>
+        <ButtonMenu activeIndex={activeTab} onItemClick={handleSwitchTab} scale="sm">
+          <OptionItem active={activeTab === 0}>New (V2)</OptionItem>
+          <OptionItem active={activeTab === 1}>Old (V1)</OptionItem>
+        </ButtonMenu>
+      </TabWrapper>
+    </Flex>
+  )
+
+  const renderSearchAndSortFilter = (
+    <Flex mb="16px">
+      <Flex flexDirection="column">
+        <Text fontSize="12px" textTransform="uppercase" color="textSubtle">
+          Sort by
+        </Text>
+        <SelectWrapper>
+          <Select
+            value={sortType}
+            options={[
+              { label: 'Liquidity', value: 'liquidity' },
+              { label: 'Hot', value: 'hot' },
+              { label: 'APR', value: 'apr' },
+              { label: 'Multiplier', value: 'multiplier' },
+              { label: 'Earned', value: 'earned' },
+            ]}
+            onChange={setSortType}
+          />
+        </SelectWrapper>
+      </Flex>
+      <Flex flexDirection="column" ml="16px">
+        <Text fontSize="12px" textTransform="uppercase" color="textSubtle">
+          Search
+        </Text>
+        <StyledInput placeholder="Search Farms" value={searchTerm} onChange={handleChangeSearchTerm} />
+      </Flex>
+    </Flex>
+  )
+
+  const renderStakedOnlyFilter = (
+    <Flex alignItems="center" mr={isMobile ? '8px' : '16px'}>
+      <ToggleWrapper checked={showStakedOnly}>
+        <Toggle checked={showStakedOnly} disabled={activeTab === 1} onChange={handleChangeStakedOnly} />
+      </ToggleWrapper>
+      <FilterText ml="8px" color="textSubtle">
+        Staked Only
+      </FilterText>
+    </Flex>
+  )
+
+  const tvl = getV2FarmsTVL()
+
+  return (
+    <FarmPage>
+      <BgWrapper>
+        <IgloosBgContainer />
+      </BgWrapper>
+      <IgloosBannerContainer>
+        <BannerImage
+          src={`${process.env.PUBLIC_URL}/images/farms-v2/v2_farm_banner_animated_${
+            theme.isDark ? 'dark' : 'light'
+          }.svg`}
+          alt="v2 farm banner"
+        />
+      </IgloosBannerContainer>
+      <TvlContainer marginBottom={isMobile ? '30px' : '70px'}>
+        <span>{`Total Value Locked (TLV): `}</span>
+        <Balance
+          fontSize="28px"
+          color={theme.isDark ? '#bba6dd' : '#372871'}
+          fontWeight="600"
+          prefix="$"
+          decimals={0}
+          value={Number(tvl)}
+        />
+      </TvlContainer>
+      {isMobile ? (
+        <FilterWrapper justifyContent="space-between" alignItems="center" flexWrap="wrap">
+          <Flex mt="8px" justifyContent="center" mb="8px" flexWrap="wrap">
+            {renderStakedOnlyFilter}
+            {renderActiveFilter}
+          </Flex>
+          {renderSearchAndSortFilter}
+          <Flex mt="16px">{renderProjectsFilters}</Flex>
+        </FilterWrapper>
+      ) : (
+        <FilterWrapper justifyContent="space-between" alignItems="center" flexWrap="wrap" mt="-24px">
+          <LeftFilters alignItems="center" mt="16px" justifyContent="space-between" flexWrap={isSm ? 'nowrap' : 'wrap'}>
+            {renderStakedOnlyFilter}
+            {renderProjectsFilters}
+          </LeftFilters>
+          <Flex display={isSm ? 'block !important' : 'flex'} mt="16px">
+            {renderActiveFilter}
+            {renderSearchAndSortFilter}
+          </Flex>
+        </FilterWrapper>
+      )}
+      <IgloosContentContainer>
+        {activeTab === 0 && filteredFarms.length > 0 && <V2Farms farms={filteredFarms} />}
+        {activeTab === 1 && (
+          <V1Farms
+            searchTerm={searchTerm}
+            showStakedOnly={showStakedOnly}
+            activeProjects={activeProjects}
+            sortType={sortType}
+          />
+        )}
+      </IgloosContentContainer>
+    </FarmPage>
+  )
+}
 
 export default Farms

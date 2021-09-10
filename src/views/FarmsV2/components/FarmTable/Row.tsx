@@ -50,6 +50,12 @@ const EarnedMobileCell = styled.td`
   padding: 16px 0 24px 16px;
 `
 
+const AprBalanceWrapper = styled.div`
+  > div {
+    font-family: 'Kanit';
+  }
+`
+
 const AprMobileCell = styled.td`
   padding-top: 16px;
   padding-bottom: 24px;
@@ -111,7 +117,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
   const { farm, index } = props
   const { stakedBalance, earnings } = useV2FarmUser(farm.pid, farm.type)
   const [actionPanelExpanded, setActionPanelExpanded] = useState(false)
-  const farmApr = farm.apr >= 0 ? (100 * Number(farm.apr)).toFixed(2) : '--'
+  const farmApr = farm.apr >= 0 ? (100 * Number(farm.apr)).toFixed(0) : '--'
 
   const shouldRenderChild = useDelayedUnmount(actionPanelExpanded, 300)
   const { isXl, isSm, isXs } = useMatchBreakpoints()
@@ -167,7 +173,16 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
                     <CellInner minWidth={110} smMinWidth={80}>
                       <CellLayout label="APR">
                         {/* <Text color='textSubtle'>TBD</Text> */}
-                        <Balance fontSize="16px" fontWeight="400" suffix="%" value={Number(farmApr)} />
+                        <AprBalanceWrapper>
+                          <Balance
+                            fontSize="16px"
+                            fontWeight="600"
+                            color="red"
+                            suffix="%"
+                            decimals={0}
+                            value={Number(farmApr)}
+                          />
+                        </AprBalanceWrapper>
                       </CellLayout>
                     </CellInner>
                   </td>

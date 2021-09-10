@@ -71,6 +71,7 @@ const Staked: React.FunctionComponent<FarmTypes> = (farm) => {
           needsApproval={isApproved}
           requested={requestedApproval}
           onApprove={handleApprove}
+          farm={farm}
           stakingTokenName={lpSymbol.replaceAll(' LP', '')}
         />
       )}
