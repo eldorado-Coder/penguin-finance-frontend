@@ -365,7 +365,7 @@ const Farms: React.FC = () => {
         />
       </IgloosBannerContainer>
       <TvlContainer marginBottom={isMobile ? '30px' : '70px'}>
-        <span>{`Total Value Locked (TLV): `}</span>
+        <span>{`Total Value Locked (TVL): `}</span>
         <Balance
           fontSize="28px"
           color={theme.isDark ? '#bba6dd' : '#372871'}
