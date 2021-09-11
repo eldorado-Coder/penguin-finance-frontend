@@ -117,7 +117,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
   const { farm, index } = props
   const { stakedBalance, earnings } = useV2FarmUser(farm.pid, farm.type)
   const [actionPanelExpanded, setActionPanelExpanded] = useState(false)
-  const farmApr = farm.apr >= 0 ? (100 * Number(farm.apr)).toFixed(0) : 0
+  const farmApr = farm.apr >= 0 ? (100 * Number(farm.apr)).toFixed(2) : 0
 
   const shouldRenderChild = useDelayedUnmount(actionPanelExpanded, 300)
   const { isXl, isSm, isXs } = useMatchBreakpoints()
@@ -179,7 +179,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
                             fontWeight="600"
                             color="red"
                             suffix="%"
-                            decimals={0}
+                            decimals={2}
                             value={Number(farmApr) || 0}
                           />
                         </AprBalanceWrapper>
