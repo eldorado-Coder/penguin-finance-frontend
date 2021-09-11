@@ -11,14 +11,14 @@ import {
 } from './fetchFarmUser'
 import { FarmsState, Farm } from '../types'
 
-const initialState: FarmsState = { pefiPerBlock: 0, data: [...v2FarmsConfig] }
+const initialState: FarmsState = { pefiPerSecond: 0, data: [...v2FarmsConfig] }
 
 export const farmsSlice = createSlice({
   name: 'V2Farms',
   initialState,
   reducers: {
-    setPefiPerBlock: (state, action) => {
-      state.pefiPerBlock = action.payload
+    setPefiPerSecond: (state, action) => {
+      state.pefiPerSecond = action.payload
     },
     setFarmsPublicData: (state, action) => {
       const liveFarmsData: Farm[] = action.payload
@@ -38,12 +38,12 @@ export const farmsSlice = createSlice({
 })
 
 // Actions
-export const { setPefiPerBlock, setFarmsPublicData, setFarmUserData } = farmsSlice.actions
+export const { setPefiPerSecond, setFarmsPublicData, setFarmUserData } = farmsSlice.actions
 
 // Thunks
 export const fetchMasterChefPefiPerBlock = () => async (dispatch) => {
-  const { pefiPerBlock } = await fetchMasterChefGlobalData()
-  dispatch(setPefiPerBlock(pefiPerBlock))
+  const { pefiPerSecond } = await fetchMasterChefGlobalData()
+  dispatch(setPefiPerSecond(pefiPerSecond))
 }
 export const fetchFarmsPublicDataAsync = () => async (dispatch) => {
   const farms = await fetchFarms()

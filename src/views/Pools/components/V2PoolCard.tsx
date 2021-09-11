@@ -116,7 +116,7 @@ const V2PoolCard: React.FC<Props> = ({ pool }) => {
               <Block>
                 <Label>{TranslateString(544, 'iPEFI in Wallet')}:</Label>
                 <Text color="textSubtle" bold fontSize="24px">
-                  {`${getBalanceNumber(stakedBalance).toFixed(2)} ${isMobile ? '' : 'iPEFI'}`}
+                  {`${getBalanceNumber(stakedBalance).toFixed(2)}`}
                 </Text>
               </Block>
               <Block>

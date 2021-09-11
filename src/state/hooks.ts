@@ -68,6 +68,11 @@ export const useFetchPublicData = () => {
   const dispatch = useDispatch()
   const { slowRefresh } = useRefresh()
   useEffect(() => {
+    // v2
+    dispatch(fetchV2PoolsPublicDataAsync())
+    dispatch(fetchV2MasterChefPefiPerBlock())
+    dispatch(fetchV2FarmsPublicDataAsync())
+    // v1
     dispatch(fetchMasterChefPefiPerBlock())
     dispatch(fetchFarmsPublicDataAsync())
     dispatch(fetchMasterChefRewards())
@@ -75,10 +80,6 @@ export const useFetchPublicData = () => {
     dispatch(fetchLpsPublicDataAsync())
     // POOL REMOVAL
     dispatch(fetchPoolsPublicDataAsync())
-    // v2
-    dispatch(fetchV2PoolsPublicDataAsync())
-    dispatch(fetchV2MasterChefPefiPerBlock())
-    dispatch(fetchV2FarmsPublicDataAsync())
   }, [dispatch, slowRefresh])
 }
 
@@ -520,4 +521,10 @@ export const useV2FarmUser = (pid, type) => {
     stakedBalance: farm.userData ? new BigNumber(farm.userData.stakedBalance) : new BigNumber(0),
     earnings: farm.userData ? new BigNumber(farm.userData.earnings) : new BigNumber(0),
   }
+}
+
+// Farms
+export const useV2FarmPefiPerSecond = (): BigNumber => {
+  const pefiPerSecond = useSelector((state: State) => state.v2Farms.pefiPerSecond)
+  return new BigNumber(pefiPerSecond)
 }

@@ -84,34 +84,6 @@ const v2Farms: V2FarmConfig[] = [
     type: 'Pangolin',
     name: 'pendingPEFI',
   },
-  // TODO: pid with wrong lp
-  // {
-  //   pid: 3,
-  //   lpSymbol: 'PEFI-LINK LP',
-  //   lpAddresses: {
-  //     43113: '',
-  //     43114: '0x5875c368cddd5fb9bf2f410666ca5aad236dabd4',
-  //   },
-  //   strategyAddresses: {
-  //     43113: '',
-  //     43114: '0x8adc8df2bfc69bb2aad9dd4666814e458a6d13ed',
-  //   },
-  //   tokenSymbol: 'LINK',
-  //   tokenAddresses: {
-  //     43113: '',
-  //     43114: '0x5947BB275c521040051D82396192181b413227A3',
-  //   },
-  //   pangolinRewardPoolAddresses: {
-  //     43113: '',
-  //     43114: '0x0000000000000000000000000000000000000000',
-  //   },
-  //   quoteTokenSymbol: QuoteToken.PEFI,
-  //   quoteTokenAddresses: contracts.pefi,
-  //   withdrawalFee: '0',
-  //   hardApy: '896.65%',
-  //   type: 'Pangolin',
-  //   name: 'pendingPEFI',
-  // },
   {
     pid: 6,
     lpSymbol: 'PEFI-LINK.e LP',

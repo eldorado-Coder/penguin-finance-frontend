@@ -233,8 +233,6 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
   const pefiPerWeek = pefiPerYear / WEEKS_PER_YEAR
 
   const farmApr = farm.apr ? (100 * Number(farm.apr)).toFixed(2) : '--'
-  // const farmApy = farm.apr ? (100 * Number(farm.apr)).toFixed(2) : '--'
-
   const lpSymbol = farm.lpSymbol.replaceAll(' LP', '')
   const coinImg = getCoinImage(Number(userStakedBalanceInUsd))
 
@@ -275,21 +273,22 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
               fontWeight="400"
               prefix=""
               suffix={` ${lpSymbol}`}
+              decimals={farm.type === 'Joe' ? 5 : 2}
               value={Number(userStakedBalance)}
             />
             <UsdBalanceWrapper>
               <Balance fontSize="10px" fontWeight="400" prefix="$" value={Number(userStakedBalanceInUsd)} />
             </UsdBalanceWrapper>
-            {/* {userSharePercentage > 3 && ( */}
-            <Balance
-              fontSize="14px"
-              color="textSubtle"
-              fontWeight="400"
-              prefix=" "
-              suffix="% of the Igloo"
-              value={Number(userSharePercentage)}
-            />
-            {/* )} */}
+            {userSharePercentage > 4 && (
+              <Balance
+                fontSize="14px"
+                color="textSubtle"
+                fontWeight="400"
+                prefix=" "
+                suffix="% of the Igloo"
+                value={Number(userSharePercentage)}
+              />
+            )}
           </EarningsContainer>
           <CoinImage src={coinImg} alt="pefi-earning" size={80} />
         </EarningsWrapper>
@@ -305,6 +304,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
               fontWeight="400"
               prefix="APR: "
               suffix="%"
+              decimals={2}
               value={Number(farmApr)}
             />
             <Balance

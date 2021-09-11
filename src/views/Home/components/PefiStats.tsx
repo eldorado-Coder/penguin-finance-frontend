@@ -8,8 +8,9 @@ import { useTotalSupply, useBurnedBalance } from 'hooks/useTokenBalance'
 import { useXPefi } from 'hooks/useContract'
 import { getPefiAddress } from 'utils/addressHelpers'
 import {
-  usePefiPerBlock,
+  useV2FarmPefiPerSecond,
   useFarms,
+  useV2Farms,
   usePriceAvaxUsdt,
   usePricePefiUsdt,
   usePriceEthUsdt,
@@ -56,8 +57,9 @@ const PefiStats: React.FC<HarvestProps> = ({ v1Pool, v2Pool }) => {
   const totalSupply = useTotalSupply()
   const burnedBalance = useBurnedBalance(getPefiAddress())
   const xPefiContract = useXPefi()
-  const pefiPerBlock = usePefiPerBlock()
+  const pefiPerBlock = useV2FarmPefiPerSecond()
   const farmsLP = useFarms()
+  const v2Farms = useV2Farms()
   const compounderFarms = useCompounderFarms()
   const pefiPrice = usePricePefiUsdt()
   const avaxPrice = usePriceAvaxUsdt()
@@ -98,8 +100,8 @@ const PefiStats: React.FC<HarvestProps> = ({ v1Pool, v2Pool }) => {
     return new BigNumber(1)
   }
 
-  // calculate TVL in igloos
-  const getIgloosTVL = () => {
+  // calculate TVL in old farms
+  const getFarmsTVL = () => {
     let igloosTVL = new BigNumber(0)
     farmsLP.map((farmLP) => {
       const farmQuoteTokenPrice = getTokenPrice(farmLP.quoteTokenSymbol)
@@ -110,6 +112,16 @@ const PefiStats: React.FC<HarvestProps> = ({ v1Pool, v2Pool }) => {
       return igloosTVL
     })
     return igloosTVL.toNumber()
+  }
+
+  // calculate TVL in v2 farms
+  const getV2FarmsTVL = () => {
+    let v2FarmTvl = 0
+    v2Farms.map((farm) => {
+      v2FarmTvl += farm.totalLiquidityInUsd || 0
+      return farm
+    })
+    return v2FarmTvl
   }
 
   // calculate TVL in compounder farms
@@ -162,8 +174,7 @@ const PefiStats: React.FC<HarvestProps> = ({ v1Pool, v2Pool }) => {
     return 0
   }
 
-  const tvl = getIgloosTVL() + getCompounderFarmsTVL() + getV1NestTVL() + getV2NestTVL()
-  const xPefiToPefiRatio = getXPefiToPefiRatio()
+  const tvl = getFarmsTVL() + getV2FarmsTVL() + getCompounderFarmsTVL() + getV1NestTVL() + getV2NestTVL()
   const pefiMarketcap = getPefiMarketcap()
   const totalStakedBalanceInV1 = new BigNumber(v1Pool.totalStaked) || new BigNumber(0)
   const totalStakedBalanceInV2 = new BigNumber(v2Pool.totalStaked) || new BigNumber(0)
@@ -269,7 +280,7 @@ const PefiStats: React.FC<HarvestProps> = ({ v1Pool, v2Pool }) => {
             color="textSubtle"
             fontSize="14px"
             decimals={2}
-            suffix=" PEFI/block"
+            suffix=" PEFI/SECOND"
             bold={false}
             value={pefiPerBlock.toNumber()}
             updateInterval={30000}
