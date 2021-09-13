@@ -101,7 +101,7 @@ const v2Farms: V2FarmConfig[] = [
     },
     pangolinRewardPoolAddresses: {
       43113: '',
-      43114: '0x0000000000000000000000000000000000000000',
+      43114: '0x2e10D9d08f76807eFdB6903025DE8e006b1185F5',
     },
     quoteTokenSymbol: QuoteToken.AVAX,
     quoteTokenAddresses: contracts.wavax,
@@ -155,7 +155,7 @@ const v2Farms: V2FarmConfig[] = [
     },
     pangolinRewardPoolAddresses: {
       43113: '',
-      43114: '0x0000000000000000000000000000000000000000',
+      43114: '0x574d3245e36Cf8C9dc86430EaDb0fDB2F385F829',
     },
     quoteTokenSymbol: QuoteToken.AVAX,
     quoteTokenAddresses: contracts.wavax,
@@ -236,7 +236,7 @@ const v2Farms: V2FarmConfig[] = [
     },
     pangolinRewardPoolAddresses: {
       43113: '',
-      43114: '0x0000000000000000000000000000000000000000',
+      43114: '0x63A84F66b8c90841Cb930F2dC3D28799F0c6657B',
     },
     quoteTokenSymbol: QuoteToken.AVAX,
     quoteTokenAddresses: contracts.wavax,
@@ -263,7 +263,7 @@ const v2Farms: V2FarmConfig[] = [
     },
     pangolinRewardPoolAddresses: {
       43113: '',
-      43114: '0x0000000000000000000000000000000000000000',
+      43114: '0x006cC053bdb84C2d6380B3C4a573d84636378A47',
     },
     quoteTokenSymbol: QuoteToken.AVAX,
     quoteTokenAddresses: contracts.wavax,

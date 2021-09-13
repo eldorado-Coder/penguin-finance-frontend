@@ -86,8 +86,20 @@ export const getJoeRewardPoolApr = async (address) => {
     apr = 1.53
   }
   // eth.e-avax
-  if (address === '0xfe15c2695f1f920da45c30aae47d11de51007af9') {
+  if (address.toLowerCase() === '0xfe15c2695f1f920da45c30aae47d11de51007af9') {
     apr = 0.4811
+  }
+  // dai.e-avax
+  if (address.toLowerCase() === '0x87dee1cc9ffd464b79e058ba20387c1984aed86a') {
+    apr = 0.9901
+  }
+  // wbtc.e-avax
+  if (address.toLowerCase() === '0xd5a37dc5c9a396a03dd1136fc76a1a02b1c88ffa') {
+    apr = 0.5621
+  }
+  // dai.e-usdc.e
+  if (address.toLowerCase() === '0x63abe32d0ee76c05a11838722a63e012008416e6') {
+    apr = 0.1921
   }
   return { apr, dailyApr: apr / 365 }
 }
