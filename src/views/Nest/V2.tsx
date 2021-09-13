@@ -58,7 +58,7 @@ const NestV2: React.FC = () => {
             <APYCard padding="8px 24px 16px" mb="16px">
               <Flex justifyContent="space-between" alignItems="center">
                 <Text fontSize="20px" color="white" fontWeight={500}>
-                  Staking APY
+                  {`Yesterday's APY `}
                 </Text>
                 <Text fontSize="36px" bold color="white">
                   {getNumberWithCommas(displayedNestApy)}%

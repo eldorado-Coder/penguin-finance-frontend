@@ -37,6 +37,7 @@ export enum QuoteToken {
   'ZUSDT' = 'ZUSDT',
   'LYD' = 'LYD',
   'GDL' = 'GDL',
+  'USDC' = 'USDC',
 }
 
 export enum PoolCategory {
@@ -99,8 +100,9 @@ export interface V2FarmConfig {
   strategyAddress?: string
   stakingAddress?: string
   swapAddresses?: Address
-  pangolinRewardPoolAddresses?: Address,
+  pangolinRewardPoolAddresses?: Address
   lpPrice?: number
+  displayedDecimals?: number
 }
 
 export interface LPConfig {

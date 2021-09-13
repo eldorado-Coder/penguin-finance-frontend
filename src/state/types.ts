@@ -40,6 +40,7 @@ export interface Farm extends FarmConfig {
   totalLiquidityInUsd?: number
   pngApr?: number
   pngDailyApr?: number
+  displayedDecimals?: number
 }
 
 export interface V2Farm extends FarmConfig {
@@ -72,6 +73,7 @@ export interface V2Farm extends FarmConfig {
   pngDailyApr?: number
   apr?: number
   apy?: number
+  displayedDecimals?: number
 }
 
 export interface Lp extends LPConfig {

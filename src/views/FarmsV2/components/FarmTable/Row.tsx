@@ -6,9 +6,8 @@ import useDelayedUnmount from 'hooks/useDelayedUnmount'
 import useAssets from 'hooks/useAssets'
 import { getBalanceNumber } from 'utils/formatBalance'
 import Balance from 'components/Balance'
-
+import useTheme from 'hooks/useTheme'
 import Farm from './Farm'
-import Earned from './Earned'
 import Details from './Details'
 import CellLayout from './CellLayout'
 import ActionPanel from './Actions/ActionPanel'
@@ -93,6 +92,25 @@ const StyledTable = styled.table<{ index?: number }>`
   background: ${({ theme }) => theme.card.background};
   border-radius: ${({ index }) => index === 0 && '16px 16px 0 0'};
   box-shadow: 0px 1px 4px rgb(0 0 0 / 16%);
+
+  .name {
+    width: 32%;
+  }
+  .your-stake {
+    width: 14%;
+  }
+  .apr {
+    width: 12%;
+  }
+  .liquidity {
+    width: 14%;
+  }
+  .rewards {
+    width: 14%;
+  }
+  .actions {
+    width: 14%;
+  }
 `
 
 const TableBody = styled.tbody`
@@ -115,13 +133,14 @@ interface RowProps extends FarmCardProps {
 
 const Row: React.FunctionComponent<RowProps> = (props) => {
   const { farm, index } = props
-  const { stakedBalance, earnings } = useV2FarmUser(farm.pid, farm.type)
+  const { stakedBalance } = useV2FarmUser(farm.pid, farm.type)
   const [actionPanelExpanded, setActionPanelExpanded] = useState(false)
   const farmApr = farm.apr >= 0 ? (100 * Number(farm.apr)).toFixed(2) : 0
 
   const shouldRenderChild = useDelayedUnmount(actionPanelExpanded, 300)
-  const { isXl, isSm, isXs } = useMatchBreakpoints()
+  const { isXl } = useMatchBreakpoints()
   const { getTokenLogo } = useAssets()
+  const { isDark } = useTheme()
 
   const { pendingTokens } = farm
   const pendingTokensWithLogo =
@@ -141,15 +160,15 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
   const columnNames = tableSchema.map((column) => column.name)
 
   const handleRenderRow = () => {
-    if (!isSm && !isXs) {
+    if (!isMobile) {
       return (
         <StyledTr shouldRenderChild={shouldRenderChild} onClick={toggleActionPanel}>
           {columnNames.map((key) => {
             switch (key) {
               case 'farm':
                 return (
-                  <td key={key}>
-                    <CellInner minWidth={250} smMinWidth={240}>
+                  <td className="name" key={key}>
+                    <CellInner>
                       <CellLayout>
                         <Farm {...props} />
                       </CellLayout>
@@ -158,8 +177,8 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
                 )
               case 'staked':
                 return (
-                  <td key={key}>
-                    <CellInner minWidth={110} smMinWidth={100}>
+                  <td className="your-stake" key={key}>
+                    <CellInner>
                       <CellLayout label="Your Stake">
                         {/* <Earned earnings={stakedBalanceInUsd} pid={farm.pid} userDataReady /> */}
                         <Balance fontSize="16px" fontWeight="400" prefix="$" value={Number(stakedBalanceInUsd)} />
@@ -169,15 +188,15 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
                 )
               case 'apr':
                 return (
-                  <td key={key}>
-                    <CellInner minWidth={110} smMinWidth={80}>
+                  <td className="apr" key={key}>
+                    <CellInner>
                       <CellLayout label="APR">
                         {/* <Text color='textSubtle'>TBD</Text> */}
                         <AprBalanceWrapper>
                           <Balance
                             fontSize="16px"
                             fontWeight="600"
-                            color="red"
+                            color={isDark ? '#C74F51' : 'red'}
                             suffix="%"
                             decimals={2}
                             value={Number(farmApr) || 0}
@@ -189,8 +208,8 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
                 )
               case 'liquidity':
                 return (
-                  <td key={key}>
-                    <CellInner minWidth={100} smMinWidth={100}>
+                  <td className="liquidity" key={key}>
+                    <CellInner>
                       <CellLayout label="Liquidity">
                         <Balance fontSize="16px" fontWeight="400" prefix="$" value={Number(liquidity) || 0} />
                       </CellLayout>
@@ -199,8 +218,8 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
                 )
               case 'rewards':
                 return (
-                  <td key={key}>
-                    <CellInner minWidth={120} smMinWidth={100} justifyContent="center">
+                  <td className="rewards" key={key}>
+                    <CellInner justifyContent="center">
                       <CellLayout label="Rewards" alignItems="center">
                         <TokensWrapper>
                           {pendingTokensWithLogo &&
@@ -214,8 +233,8 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
                 )
               case 'details':
                 return (
-                  <td key={key}>
-                    <CellInner justifyContent="center" smMinWidth={50} minWidth={100}>
+                  <td className="actions" key={key}>
+                    <CellInner justifyContent="center">
                       <CellLayout>
                         <Details actionPanelToggled={actionPanelExpanded} />
                       </CellLayout>
