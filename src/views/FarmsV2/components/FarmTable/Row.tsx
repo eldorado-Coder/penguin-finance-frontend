@@ -7,7 +7,6 @@ import useAssets from 'hooks/useAssets'
 import { getBalanceNumber } from 'utils/formatBalance'
 import Balance from 'components/Balance'
 import useTheme from 'hooks/useTheme'
-
 import Farm from './Farm'
 import Details from './Details'
 import CellLayout from './CellLayout'
