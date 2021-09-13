@@ -6,6 +6,7 @@ import useDelayedUnmount from 'hooks/useDelayedUnmount'
 import useAssets from 'hooks/useAssets'
 import { getBalanceNumber } from 'utils/formatBalance'
 import Balance from 'components/Balance'
+import useTheme from 'hooks/useTheme'
 
 import Farm from './Farm'
 import Details from './Details'
@@ -140,6 +141,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
   const shouldRenderChild = useDelayedUnmount(actionPanelExpanded, 300)
   const { isXl } = useMatchBreakpoints()
   const { getTokenLogo } = useAssets()
+  const { isDark } = useTheme()
 
   const { pendingTokens } = farm
   const pendingTokensWithLogo =
@@ -166,7 +168,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
             switch (key) {
               case 'farm':
                 return (
-                  <td className='name' key={key}>
+                  <td className="name" key={key}>
                     <CellInner>
                       <CellLayout>
                         <Farm {...props} />
@@ -176,7 +178,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
                 )
               case 'staked':
                 return (
-                  <td className='your-stake' key={key}>
+                  <td className="your-stake" key={key}>
                     <CellInner>
                       <CellLayout label="Your Stake">
                         {/* <Earned earnings={stakedBalanceInUsd} pid={farm.pid} userDataReady /> */}
@@ -187,7 +189,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
                 )
               case 'apr':
                 return (
-                  <td className='apr' key={key}>
+                  <td className="apr" key={key}>
                     <CellInner>
                       <CellLayout label="APR">
                         {/* <Text color='textSubtle'>TBD</Text> */}
@@ -195,7 +197,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
                           <Balance
                             fontSize="16px"
                             fontWeight="600"
-                            color="red"
+                            color={isDark ? '#C74F51' : 'red'}
                             suffix="%"
                             decimals={2}
                             value={Number(farmApr) || 0}
@@ -207,7 +209,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
                 )
               case 'liquidity':
                 return (
-                  <td className='liquidity' key={key}>
+                  <td className="liquidity" key={key}>
                     <CellInner>
                       <CellLayout label="Liquidity">
                         <Balance fontSize="16px" fontWeight="400" prefix="$" value={Number(liquidity) || 0} />
@@ -217,7 +219,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
                 )
               case 'rewards':
                 return (
-                  <td className='rewards' key={key}>
+                  <td className="rewards" key={key}>
                     <CellInner justifyContent="center">
                       <CellLayout label="Rewards" alignItems="center">
                         <TokensWrapper>
@@ -232,7 +234,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
                 )
               case 'details':
                 return (
-                  <td className='actions' key={key}>
+                  <td className="actions" key={key}>
                     <CellInner justifyContent="center">
                       <CellLayout>
                         <Details actionPanelToggled={actionPanelExpanded} />

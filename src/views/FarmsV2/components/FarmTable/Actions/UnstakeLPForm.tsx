@@ -68,7 +68,7 @@ const UnstakeLPForm: React.FC<DepositModalProps> = ({ max, tokenName = '', accou
     }
   }
   const canUnStake = !pendingTx && Number(val) > 0 && Number(fullBalance) >= Number(val)
-  const lpDecimals = farm.type === 'Joe' ? 5 : 2
+  const lpDecimals = farm.displayedDecimals || 2
 
   return (
     <>

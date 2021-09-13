@@ -88,7 +88,7 @@ const StakeLPForm: React.FC<DepositModalProps> = ({
     window.open(addLiquidityUrl, '_blank')
   }
 
-  const lpDecimals = farm.type === 'Joe' ? 5 : 2
+  const lpDecimals = farm.displayedDecimals || 2
 
   return (
     <>

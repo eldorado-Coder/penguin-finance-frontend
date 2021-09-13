@@ -28,6 +28,7 @@ const v2Farms: V2FarmConfig[] = [
     hardApy: '896.65%',
     type: 'Pangolin',
     name: 'pendingPEFI',
+    displayedDecimals: 2,
   },
   {
     pid: 1,
@@ -55,6 +56,7 @@ const v2Farms: V2FarmConfig[] = [
     hardApy: '896.65%',
     type: 'Pangolin',
     name: 'pendingPEFI',
+    displayedDecimals: 2,
   },
   {
     pid: 2,
@@ -82,6 +84,7 @@ const v2Farms: V2FarmConfig[] = [
     hardApy: '896.65%',
     type: 'Pangolin',
     name: 'pendingPEFI',
+    displayedDecimals: 2,
   },
   {
     pid: 3,
@@ -109,6 +112,7 @@ const v2Farms: V2FarmConfig[] = [
     hardApy: '896.65%',
     type: 'Pangolin',
     name: 'pendingPEFI',
+    displayedDecimals: 2,
   },
   {
     pid: 6,
@@ -136,6 +140,7 @@ const v2Farms: V2FarmConfig[] = [
     hardApy: '896.65%',
     type: 'Pangolin',
     name: 'pendingPEFI',
+    displayedDecimals: 2,
   },
   {
     pid: 11,
@@ -163,6 +168,7 @@ const v2Farms: V2FarmConfig[] = [
     hardApy: '896.65%',
     type: 'Pangolin',
     name: 'pendingPEFI',
+    displayedDecimals: 2,
   },
   {
     pid: 12,
@@ -190,6 +196,7 @@ const v2Farms: V2FarmConfig[] = [
     hardApy: '896.65%',
     type: 'Pangolin',
     name: 'pendingPEFI',
+    displayedDecimals: 2,
   },
   {
     pid: 13,
@@ -217,6 +224,7 @@ const v2Farms: V2FarmConfig[] = [
     hardApy: '896.65%',
     type: 'Pangolin',
     name: 'pendingPEFI',
+    displayedDecimals: 7,
   },
   {
     pid: 14,
@@ -244,6 +252,7 @@ const v2Farms: V2FarmConfig[] = [
     hardApy: '896.65%',
     type: 'Pangolin',
     name: 'pendingPEFI',
+    displayedDecimals: 2,
   },
   {
     pid: 15,
@@ -271,6 +280,7 @@ const v2Farms: V2FarmConfig[] = [
     hardApy: '896.65%',
     type: 'Pangolin',
     name: 'pendingPEFI',
+    displayedDecimals: 7,
   },
   {
     pid: 16,
@@ -298,6 +308,7 @@ const v2Farms: V2FarmConfig[] = [
     hardApy: '896.65%',
     type: 'Pangolin',
     name: 'pendingPEFI',
+    displayedDecimals: 2,
   },
   // Joe pools
   {
@@ -326,7 +337,7 @@ const v2Farms: V2FarmConfig[] = [
     hardApy: '896.65%',
     type: 'Joe',
     name: 'pendingPEFI',
-    lpPrice: 764.55,
+    displayedDecimals: 5,
   },
   {
     pid: 5,
@@ -354,7 +365,7 @@ const v2Farms: V2FarmConfig[] = [
     hardApy: '896.65%',
     type: 'Joe',
     name: 'pendingPEFI',
-    lpPrice: 16.63,
+    displayedDecimals: 5,
   },
   {
     pid: 7,
@@ -382,7 +393,7 @@ const v2Farms: V2FarmConfig[] = [
     hardApy: '896.65%',
     type: 'Joe',
     name: 'pendingPEFI',
-    lpPrice: 12910975.76,
+    displayedDecimals: 7,
   },
   {
     pid: 8,
@@ -410,7 +421,7 @@ const v2Farms: V2FarmConfig[] = [
     hardApy: '896.65%',
     type: 'Joe',
     name: 'pendingPEFI',
-    lpPrice: 13497747.77,
+    displayedDecimals: 5,
   },
   {
     pid: 9,
@@ -438,7 +449,7 @@ const v2Farms: V2FarmConfig[] = [
     hardApy: '896.65%',
     type: 'Joe',
     name: 'pendingPEFI',
-    lpPrice: 1,
+    displayedDecimals: 7,
   },
   {
     pid: 10,
@@ -466,7 +477,7 @@ const v2Farms: V2FarmConfig[] = [
     hardApy: '896.65%',
     type: 'Joe',
     name: 'pendingPEFI',
-    lpPrice: 1,
+    displayedDecimals: 8,
   },
   {
     pid: 18,
@@ -494,7 +505,7 @@ const v2Farms: V2FarmConfig[] = [
     hardApy: '896.65%',
     type: 'Joe',
     name: 'pendingPEFI',
-    lpPrice: 1,
+    displayedDecimals: 6,
   },
 ]
 

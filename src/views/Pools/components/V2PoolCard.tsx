@@ -120,7 +120,7 @@ const V2PoolCard: React.FC<Props> = ({ pool }) => {
                 </Text>
               </Block>
               <Block>
-                <Label>{TranslateString(546, 'Current APY')}:</Label>
+                <Label>{TranslateString(546, `Yesterday's APY: `)}</Label>
                 <Text color="textSubtle" bold fontSize="24px">
                   {`${getNumberWithCommas(displayedNestApy)}%`}
                 </Text>
