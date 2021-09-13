@@ -50,10 +50,15 @@ export const fetchPoolsDailyAprs = async () => {
   return poolsWithEnd.map((row, index) => {
     return {
       sousId: row.sousId,
+      // average APY
+      // dailyApr:
+      //   (getBalanceNumber(new BigNumber(exchangeRateArray[index][0][2]._hex)) -
+      //     getBalanceNumber(new BigNumber(exchangeRateArray[index][0][0]._hex))) /
+      //   2,
+      // yesterday's APY
       dailyApr:
-        (getBalanceNumber(new BigNumber(exchangeRateArray[index][0][2]._hex)) -
-          getBalanceNumber(new BigNumber(exchangeRateArray[index][0][0]._hex))) /
-        2,
+        getBalanceNumber(new BigNumber(exchangeRateArray[index][0][2]._hex)) -
+        getBalanceNumber(new BigNumber(exchangeRateArray[index][0][1]._hex)),
     }
   })
 }
