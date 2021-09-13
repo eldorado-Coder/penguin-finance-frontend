@@ -10,6 +10,7 @@ import { getBalanceNumber } from 'utils/formatBalance'
 import Balance from 'components/Balance'
 import tokens from 'config/constants/tokens'
 import { getAddress } from 'utils/addressHelpers'
+import roundDown from 'utils/roundDown'
 import { usePricePefiUsdt, usePricePngUsdt, useV2Pools } from 'state/hooks'
 import { FarmCardProps } from '../../types'
 import StakePanel from './StakePanel'
@@ -226,13 +227,13 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
 
   const totalShares = getBalanceNumber(farm.totalShares)
   const totalLp = getBalanceNumber(farm.totalLp)
-  const liquidity = totalLp ? totalLp * lpPrice : '-'
+  const liquidity = totalLp ? totalLp * lpPrice : 0
 
   const userSharePercentage = totalShares > 0 ? (100 * userShares) / totalShares : 0
   const pefiPerYear = getBalanceNumber(farm.pefiPerYear)
   const pefiPerWeek = pefiPerYear / WEEKS_PER_YEAR
 
-  const farmApr = farm.apr ? (100 * Number(farm.apr)).toFixed(2) : '--'
+  const farmApr = farm.apr ? (100 * Number(farm.apr)).toFixed(2) : 0
   const lpSymbol = farm.lpSymbol.replaceAll(' LP', '')
   const coinImg = getCoinImage(Number(userStakedBalanceInUsd))
 
@@ -256,6 +257,8 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
     return 1
   }
 
+  const lpDecimals = farm.displayedDecimals || 2
+
   return (
     <Container expanded={expanded}>
       <StakeCard padding="20px" mb="16px" minWidth={300}>
@@ -273,8 +276,8 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
               fontWeight="400"
               prefix=""
               suffix={` ${lpSymbol}`}
-              decimals={farm.type === 'Joe' ? 5 : 2}
-              value={Number(userStakedBalance)}
+              decimals={lpDecimals}
+              value={roundDown(Number(userStakedBalance), lpDecimals)}
             />
             <UsdBalanceWrapper>
               <Balance fontSize="10px" fontWeight="400" prefix="$" value={Number(userStakedBalanceInUsd)} />
