@@ -216,7 +216,7 @@ const Farms: React.FC = () => {
   const activeFarmsWithApy = activeFarms.map((farm) => {
     const pefiPerYear = getBalanceNumber(farm.pefiPerYear)
     const pefiPerDay = pefiPerYear / DAYS_PER_YEAR
-    const pefiRewardPerDayInUsd = pefiPriceUsd * pefiPerDay * 0.55
+    const pefiRewardPerDayInUsd = pefiPriceUsd * pefiPerDay * 0.6
     const pefiDailyApr = pefiRewardPerDayInUsd / farm.totalLiquidityInUsd
     const { pngDailyApr } = farm
     const pngApr = getApr(pngDailyApr)
