@@ -28,6 +28,7 @@ import { fetchCompounderFarmUserDataAsync } from 'state/actions'
 import { QuoteToken } from 'config/constants/types'
 import Select from 'components/Select/Select'
 import FarmCard, { FarmWithStakedValue } from './components/FarmCard/FarmCard'
+import MigrationCard from './MigrationCard';
 
 // temporarily hide projects that wont appear during release so that we don't have empty categories (10.06.2021)
 const PROJECTS = ['All', 'Your Farms', 'Penguin Finance', 'Pangolin', 'Gondola', 'Lydia', 'Snowball']
@@ -295,6 +296,9 @@ const Igloos: React.FC = () => {
             />
           </FilterWrapper>
         </FilterContainer>
+        <Flex justifyContent='center' mb='36px'>
+          <MigrationCard />
+        </Flex>
         <IgloosContentContainer>
           <Route exact path={`${path}`}>
             {farmsList(filteredActiveFarms, false)}
