@@ -131,8 +131,8 @@ export const fetchFarms = async () => {
           pefiPerYear: new BigNumber(pefiPerYear).toJSON(),
           maxBips: 10000,
           lpPrice,
-          pngApr,
-          pngDailyApr,
+          pngApr: pngApr * 0.9,
+          pngDailyApr: pngDailyApr * 0.9,
         }
       } catch (error) {
         return {
