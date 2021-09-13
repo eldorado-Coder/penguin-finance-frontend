@@ -37,6 +37,7 @@ export enum QuoteToken {
   'ZUSDT' = 'ZUSDT',
   'LYD' = 'LYD',
   'GDL' = 'GDL',
+  'USDC' = 'USDC'
 }
 
 export enum PoolCategory {
