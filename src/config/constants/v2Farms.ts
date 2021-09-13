@@ -56,7 +56,6 @@ const v2Farms: V2FarmConfig[] = [
     type: 'Pangolin',
     name: 'pendingPEFI',
   },
-
   {
     pid: 2,
     lpSymbol: 'ETH.e-AVAX LP',
@@ -85,8 +84,35 @@ const v2Farms: V2FarmConfig[] = [
     name: 'pendingPEFI',
   },
   {
+    pid: 3,
+    lpSymbol: 'LINK.e-AVAX LP',
+    lpAddresses: {
+      43113: '',
+      43114: '0x5875c368cddd5fb9bf2f410666ca5aad236dabd4',
+    },
+    strategyAddresses: {
+      43113: '',
+      43114: '0xfc932b66a54890f3b689ac21fb366ea5f8393ef5',
+    },
+    tokenSymbol: 'LINK',
+    tokenAddresses: {
+      43113: '',
+      43114: '0x5947BB275c521040051D82396192181b413227A3',
+    },
+    pangolinRewardPoolAddresses: {
+      43113: '',
+      43114: '0x0000000000000000000000000000000000000000',
+    },
+    quoteTokenSymbol: QuoteToken.AVAX,
+    quoteTokenAddresses: contracts.wavax,
+    withdrawalFee: '0',
+    hardApy: '896.65%',
+    type: 'Pangolin',
+    name: 'pendingPEFI',
+  },
+  {
     pid: 6,
-    lpSymbol: 'PEFI-LINK.e LP',
+    lpSymbol: 'LINK.e-PEFI LP',
     lpAddresses: {
       43113: '',
       43114: '0x3968c1bda61949724c5bbcacf8baffe19932cb14',
@@ -99,6 +125,168 @@ const v2Farms: V2FarmConfig[] = [
     tokenAddresses: {
       43113: '',
       43114: '0x5947BB275c521040051D82396192181b413227A3',
+    },
+    pangolinRewardPoolAddresses: {
+      43113: '',
+      43114: '0x0000000000000000000000000000000000000000',
+    },
+    quoteTokenSymbol: QuoteToken.PEFI,
+    quoteTokenAddresses: contracts.pefi,
+    withdrawalFee: '0',
+    hardApy: '896.65%',
+    type: 'Pangolin',
+    name: 'pendingPEFI',
+  },
+  {
+    pid: 11,
+    lpSymbol: 'PNG-AVAX LP',
+    lpAddresses: {
+      43113: '',
+      43114: '0xd7538cabbf8605bde1f4901b47b8d42c61de0367',
+    },
+    strategyAddresses: {
+      43113: '',
+      43114: '0x5236332b1c21158e9a567c186db000001713cf03',
+    },
+    tokenSymbol: 'PNG',
+    tokenAddresses: {
+      43113: '',
+      43114: '0x60781C2586D68229fde47564546784ab3fACA982',
+    },
+    pangolinRewardPoolAddresses: {
+      43113: '',
+      43114: '0x0000000000000000000000000000000000000000',
+    },
+    quoteTokenSymbol: QuoteToken.AVAX,
+    quoteTokenAddresses: contracts.wavax,
+    withdrawalFee: '0',
+    hardApy: '896.65%',
+    type: 'Pangolin',
+    name: 'pendingPEFI',
+  },
+  {
+    pid: 12,
+    lpSymbol: 'DAI.e-PEFI LP',
+    lpAddresses: {
+      43113: '',
+      43114: '0x07dca207001d5c523749b0b4704d7b81535c6f1f',
+    },
+    strategyAddresses: {
+      43113: '',
+      43114: '0x917fb44342713fe7459be7e5b3cbf5e43e93244c',
+    },
+    tokenSymbol: 'DAI',
+    tokenAddresses: {
+      43113: '',
+      43114: '0xd586E7F844cEa2F87f50152665BCbc2C279D8d70',
+    },
+    pangolinRewardPoolAddresses: {
+      43113: '',
+      43114: '0x0000000000000000000000000000000000000000',
+    },
+    quoteTokenSymbol: QuoteToken.PEFI,
+    quoteTokenAddresses: contracts.pefi,
+    withdrawalFee: '0',
+    hardApy: '896.65%',
+    type: 'Pangolin',
+    name: 'pendingPEFI',
+  },
+  {
+    pid: 13,
+    lpSymbol: 'USDC.e-PEFI LP',
+    lpAddresses: {
+      43113: '',
+      43114: '0x24b0596449d692a5f0371c77c64d368e5566fb3c',
+    },
+    strategyAddresses: {
+      43113: '',
+      43114: '0x83ae77e184e5a994ceee5ed6b1d2aa6d623600c1',
+    },
+    tokenSymbol: 'USDC',
+    tokenAddresses: {
+      43113: '',
+      43114: '0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664',
+    },
+    pangolinRewardPoolAddresses: {
+      43113: '',
+      43114: '0x0000000000000000000000000000000000000000',
+    },
+    quoteTokenSymbol: QuoteToken.PEFI,
+    quoteTokenAddresses: contracts.pefi,
+    withdrawalFee: '0',
+    hardApy: '896.65%',
+    type: 'Pangolin',
+    name: 'pendingPEFI',
+  },
+  {
+    pid: 14,
+    lpSymbol: 'DAI.e-AVAX LP',
+    lpAddresses: {
+      43113: '',
+      43114: '0xba09679ab223c6bdaf44d45ba2d7279959289ab0',
+    },
+    strategyAddresses: {
+      43113: '',
+      43114: '0x4de6f333da8e6af64aa299a8c45b68e1fed3e6b9',
+    },
+    tokenSymbol: 'DAI',
+    tokenAddresses: {
+      43113: '',
+      43114: '0xd586E7F844cEa2F87f50152665BCbc2C279D8d70',
+    },
+    pangolinRewardPoolAddresses: {
+      43113: '',
+      43114: '0x0000000000000000000000000000000000000000',
+    },
+    quoteTokenSymbol: QuoteToken.AVAX,
+    quoteTokenAddresses: contracts.wavax,
+    withdrawalFee: '0',
+    hardApy: '896.65%',
+    type: 'Pangolin',
+    name: 'pendingPEFI',
+  },
+  {
+    pid: 15,
+    lpSymbol: 'USDT.e-AVAX LP',
+    lpAddresses: {
+      43113: '',
+      43114: '0xe28984e1ee8d431346d32bec9ec800efb643eef4',
+    },
+    strategyAddresses: {
+      43113: '',
+      43114: '0x4b72b497f878de57aaaeee8746321cb48afd8d45',
+    },
+    tokenSymbol: 'USDT',
+    tokenAddresses: {
+      43113: '',
+      43114: '0xc7198437980c041c805A1EDcbA50c1Ce5db95118',
+    },
+    pangolinRewardPoolAddresses: {
+      43113: '',
+      43114: '0x0000000000000000000000000000000000000000',
+    },
+    quoteTokenSymbol: QuoteToken.AVAX,
+    quoteTokenAddresses: contracts.wavax,
+    withdrawalFee: '0',
+    hardApy: '896.65%',
+    type: 'Pangolin',
+    name: 'pendingPEFI',
+  },
+  {
+    pid: 16,
+    lpSymbol: 'SNOB-PEFI LP',
+    lpAddresses: {
+      43113: '',
+      43114: '0x0b9753d73e1c62933e913e9c2c94f2ffa8236f6c',
+    },
+    strategyAddresses: {
+      43113: '',
+      43114: '0xe3df340c937abae30c5ed2d8f4a6f044d1a65888',
+    },
+    tokenSymbol: 'SNOB',
+    tokenAddresses: {
+      43113: '',
+      43114: '0xC38f41A296A4493Ff429F1238e030924A1542e50',
     },
     pangolinRewardPoolAddresses: {
       43113: '',
@@ -223,6 +411,90 @@ const v2Farms: V2FarmConfig[] = [
     type: 'Joe',
     name: 'pendingPEFI',
     lpPrice: 13497747.77,
+  },
+  {
+    pid: 9,
+    lpSymbol: 'Joe DAI.e-AVAX LP',
+    lpAddresses: {
+      43113: '',
+      43114: '0x87dee1cc9ffd464b79e058ba20387c1984aed86a',
+    },
+    strategyAddresses: {
+      43113: '',
+      43114: '0x82500282d3928fe0f46f4a45bbdb1d9b29496b76',
+    },
+    tokenSymbol: 'DAI',
+    tokenAddresses: {
+      43113: '',
+      43114: '0xd586E7F844cEa2F87f50152665BCbc2C279D8d70',
+    },
+    pangolinRewardPoolAddresses: {
+      43113: '',
+      43114: '0x0000000000000000000000000000000000000000',
+    },
+    quoteTokenSymbol: QuoteToken.AVAX,
+    quoteTokenAddresses: contracts.wavax,
+    withdrawalFee: '0',
+    hardApy: '896.65%',
+    type: 'Joe',
+    name: 'pendingPEFI',
+    lpPrice: 1,
+  },
+  {
+    pid: 10,
+    lpSymbol: 'Joe WBTC.e-AVAX LP',
+    lpAddresses: {
+      43113: '',
+      43114: '0xd5a37dc5c9a396a03dd1136fc76a1a02b1c88ffa',
+    },
+    strategyAddresses: {
+      43113: '',
+      43114: '0x9f9200475353378e17824d39db3c2438952a4c19',
+    },
+    tokenSymbol: 'WBTC',
+    tokenAddresses: {
+      43113: '',
+      43114: '0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664',
+    },
+    pangolinRewardPoolAddresses: {
+      43113: '',
+      43114: '0x50b7545627a5162F82A992c33b87aDc75187B218',
+    },
+    quoteTokenSymbol: QuoteToken.AVAX,
+    quoteTokenAddresses: contracts.wavax,
+    withdrawalFee: '0',
+    hardApy: '896.65%',
+    type: 'Joe',
+    name: 'pendingPEFI',
+    lpPrice: 1,
+  },
+  {
+    pid: 18,
+    lpSymbol: 'Joe DAI.e-USDC.e LP',
+    lpAddresses: {
+      43113: '',
+      43114: '0x63abe32d0ee76c05a11838722a63e012008416e6',
+    },
+    strategyAddresses: {
+      43113: '',
+      43114: '0x2e81322b04767c5dae5de99fe1446a95583eb02a',
+    },
+    tokenSymbol: 'DAI',
+    tokenAddresses: {
+      43113: '',
+      43114: '0xd586E7F844cEa2F87f50152665BCbc2C279D8d70',
+    },
+    pangolinRewardPoolAddresses: {
+      43113: '',
+      43114: '0x0000000000000000000000000000000000000000',
+    },
+    quoteTokenSymbol: QuoteToken.USDC,
+    quoteTokenAddresses: contracts.usdc,
+    withdrawalFee: '0',
+    hardApy: '896.65%',
+    type: 'Joe',
+    name: 'pendingPEFI',
+    lpPrice: 1,
   },
 ]
 

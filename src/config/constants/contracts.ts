@@ -113,7 +113,10 @@ export default {
     43113: '',
     43114: '0x912b5D41656048Ef681eFa9D32488a3fFE397994',
   },
-
+  usdc: {
+    43113: '',
+    43114: '0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664',
+  },
   // emperor
   emperor: {
     43113: '',
