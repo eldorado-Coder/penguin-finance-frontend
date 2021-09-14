@@ -507,6 +507,35 @@ const v2Farms: V2FarmConfig[] = [
     name: 'pendingPEFI',
     displayedDecimals: 6,
   },
+  // sushi
+  {
+    pid: 17,
+    lpSymbol: 'Sushi SUSHI.e-PEFI LP',
+    lpAddresses: {
+      43113: '',
+      43114: '0x24f01f3dcdee246567029bce8830a866c9cd2b1e',
+    },
+    strategyAddresses: {
+      43113: '',
+      43114: '0x0cb61ec7635d736df54cc88e959c3af478988a15',
+    },
+    tokenSymbol: 'Sushi.e',
+    tokenAddresses: {
+      43113: '',
+      43114: '0x37B608519F91f70F2EeB0e5Ed9AF4061722e4F76',
+    },
+    pangolinRewardPoolAddresses: {
+      43113: '',
+      43114: '0x0000000000000000000000000000000000000000',
+    },
+    quoteTokenSymbol: QuoteToken.PEFI,
+    quoteTokenAddresses: contracts.pefi,
+    withdrawalFee: '0',
+    hardApy: '896.65%',
+    type: 'Sushi',
+    name: 'pendingPEFI',
+    displayedDecimals: 2,
+  },
 ]
 
 export default v2Farms
