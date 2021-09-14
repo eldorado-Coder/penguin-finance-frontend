@@ -9,10 +9,12 @@ export const BASE_EXCHANGE_URL = 'https://app.pangolin.exchange'
 export const BASE_LYDIA_EXCHANGE_URL = 'https://exchange.lydia.finance/'
 export const BASE_GONDOLA_LIQUIDITY_POOL_URL = 'https://app.gondola.finance/#/deposit'
 export const BASE_JOE_EXCHANGE_URL = 'https://www.traderjoexyz.com'
+export const BASE_SUSHI_EXCHANGE_URL = 'https://app.sushi.com'
 export const BASE_ADD_LIQUIDITY_URL = `${BASE_EXCHANGE_URL}/#/add`
 export const BASE_LYDIA_LIQUIDITY_URL = `${BASE_LYDIA_EXCHANGE_URL}/#/add`
 export const BASE_LIQUIDITY_POOL_URL = `${BASE_EXCHANGE_URL}/#/pool`
 export const BASE_JOE_ADD_LIQUIDITY_URL = `${BASE_JOE_EXCHANGE_URL}/#/pool`
+export const BASE_SUSHI_ADD_LIQUIDITY_URL = `${BASE_SUSHI_EXCHANGE_URL}/add`
 export const LOTTERY_MAX_NUMBER_OF_TICKETS = 50
 export const LOTTERY_TICKET_PRICE = 1
 
