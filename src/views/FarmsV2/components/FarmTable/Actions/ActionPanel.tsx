@@ -275,7 +275,8 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
               color="textSubtle"
               fontWeight="400"
               prefix=""
-              suffix={` ${lpSymbol}`}
+              suffix={`${lpSymbol}`}
+              isFlexWrap
               decimals={lpDecimals}
               value={roundDown(Number(userStakedBalance), lpDecimals)}
             />

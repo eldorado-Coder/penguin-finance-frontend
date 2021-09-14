@@ -198,34 +198,34 @@ const v2Farms: V2FarmConfig[] = [
     name: 'pendingPEFI',
     displayedDecimals: 2,
   },
-  {
-    pid: 13,
-    lpSymbol: 'USDC.e-PEFI LP',
-    lpAddresses: {
-      43113: '',
-      43114: '0x24b0596449d692a5f0371c77c64d368e5566fb3c',
-    },
-    strategyAddresses: {
-      43113: '',
-      43114: '0x83ae77e184e5a994ceee5ed6b1d2aa6d623600c1',
-    },
-    tokenSymbol: 'USDC',
-    tokenAddresses: {
-      43113: '',
-      43114: '0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664',
-    },
-    pangolinRewardPoolAddresses: {
-      43113: '',
-      43114: '0x0000000000000000000000000000000000000000',
-    },
-    quoteTokenSymbol: QuoteToken.PEFI,
-    quoteTokenAddresses: contracts.pefi,
-    withdrawalFee: '0',
-    hardApy: '896.65%',
-    type: 'Pangolin',
-    name: 'pendingPEFI',
-    displayedDecimals: 7,
-  },
+  // {
+  //   pid: 13,
+  //   lpSymbol: 'USDC.e-PEFI LP',
+  //   lpAddresses: {
+  //     43113: '',
+  //     43114: '0x24b0596449d692a5f0371c77c64d368e5566fb3c',
+  //   },
+  //   strategyAddresses: {
+  //     43113: '',
+  //     43114: '0x83ae77e184e5a994ceee5ed6b1d2aa6d623600c1',
+  //   },
+  //   tokenSymbol: 'USDC',
+  //   tokenAddresses: {
+  //     43113: '',
+  //     43114: '0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664',
+  //   },
+  //   pangolinRewardPoolAddresses: {
+  //     43113: '',
+  //     43114: '0x0000000000000000000000000000000000000000',
+  //   },
+  //   quoteTokenSymbol: QuoteToken.PEFI,
+  //   quoteTokenAddresses: contracts.pefi,
+  //   withdrawalFee: '0',
+  //   hardApy: '896.65%',
+  //   type: 'Pangolin',
+  //   name: 'pendingPEFI',
+  //   displayedDecimals: 7,
+  // },
   {
     pid: 14,
     lpSymbol: 'DAI.e-AVAX LP',

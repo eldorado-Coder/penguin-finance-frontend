@@ -8,6 +8,7 @@ interface TextProps {
   fontSize?: string
   color?: string
   fontWeight?: string
+  isFlexWrap?: boolean
 }
 
 interface BalanceProps extends TextProps {
@@ -16,6 +17,7 @@ interface BalanceProps extends TextProps {
   unit?: string
   prefix?: string
   suffix?: string
+  isFlexWrap?: boolean
 }
 
 const StyledText = styled(Text)<TextProps>`
@@ -24,6 +26,11 @@ const StyledText = styled(Text)<TextProps>`
   display: flex;
   align-items: center;
   white-space: break-spaces;
+  flex-wrap: ${({ isFlexWrap }) => isFlexWrap && 'wrap'};
+`
+
+const BalanceWrapper = styled.span<{ isFlexWrap?: boolean }>`
+  margin-right: ${({ isFlexWrap }) => isFlexWrap && '5px'};
 `
 
 const Balance: React.FC<BalanceProps> = ({
@@ -36,6 +43,7 @@ const Balance: React.FC<BalanceProps> = ({
   fontWeight,
   prefix,
   suffix,
+  isFlexWrap,
 }) => {
   const previousValue = useRef(0)
 
@@ -44,16 +52,25 @@ const Balance: React.FC<BalanceProps> = ({
   }, [value])
 
   return (
-    <StyledText bold color={color} fontSize={fontSize} isDisabled={isDisabled} fontWeight={fontWeight}>
+    <StyledText
+      bold
+      color={color}
+      fontSize={fontSize}
+      isDisabled={isDisabled}
+      fontWeight={fontWeight}
+      isFlexWrap={!!isFlexWrap}
+    >
       {prefix}
       {value === 0 ? (
         <>
-          <span>0.00</span>
+          <BalanceWrapper isFlexWrap={!!isFlexWrap}>0.00</BalanceWrapper>
           {unit && <span>{` ${unit}`}</span>}
         </>
       ) : (
         <>
-          <CountUp start={previousValue.current} end={value} decimals={decimals} duration={1} separator="," />
+          <BalanceWrapper isFlexWrap={!!isFlexWrap}>
+            <CountUp start={previousValue.current} end={value} decimals={decimals} duration={1} separator="," />
+          </BalanceWrapper>
           {unit && <span>{` ${unit}`}</span>}
         </>
       )}
