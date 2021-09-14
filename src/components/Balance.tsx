@@ -29,8 +29,8 @@ const StyledText = styled(Text)<TextProps>`
   flex-wrap: ${({ isFlexWrap }) => isFlexWrap && 'wrap'};
 `
 
-const BalanceWrapper = styled.span`
-  margin-right: 5px;
+const BalanceWrapper = styled.span<{ isFlexWrap?: boolean }>`
+  margin-right: ${({ isFlexWrap }) => isFlexWrap && '5px'};
 `
 
 const Balance: React.FC<BalanceProps> = ({
@@ -58,17 +58,17 @@ const Balance: React.FC<BalanceProps> = ({
       fontSize={fontSize}
       isDisabled={isDisabled}
       fontWeight={fontWeight}
-      isFlexWrap={isFlexWrap || false}
+      isFlexWrap={!!isFlexWrap}
     >
       {prefix}
       {value === 0 ? (
         <>
-          <BalanceWrapper>0.00</BalanceWrapper>
+          <BalanceWrapper isFlexWrap={!!isFlexWrap}>0.00</BalanceWrapper>
           {unit && <span>{` ${unit}`}</span>}
         </>
       ) : (
         <>
-          <BalanceWrapper>
+          <BalanceWrapper isFlexWrap={!!isFlexWrap}>
             <CountUp start={previousValue.current} end={value} decimals={decimals} duration={1} separator="," />
           </BalanceWrapper>
           {unit && <span>{` ${unit}`}</span>}
