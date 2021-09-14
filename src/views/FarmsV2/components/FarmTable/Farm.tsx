@@ -40,9 +40,13 @@ const LpTag = styled(Tag)<{ type?: string }>`
   background-color: ${({ type }) => type === 'Pangolin' && '#f97316'};
   background-color: ${({ type }) => type === 'Penguin' && '#FF4100'};
   background-color: ${({ type }) => type === 'Joe' && '#e3796f'};
+  background-color: ${({ type }) => type === 'Sushi' && '#fca4a4'};
+
   border-color: ${({ type }) => type === 'Pangolin' && '#f97316'};
   border-color: ${({ type }) => type === 'Penguin' && '#FF4100'};
   border-color: ${({ type }) => type === 'Joe' && '#e3796f'};
+  border-color: ${({ type }) => type === 'Sushi' && '#fca4a4'};
+
   color: white;
   font-size: 12px;
   border-radius: 8px;
@@ -55,14 +59,14 @@ const StyledImage = styled(Image)<{ isMobile?: boolean }>`
 
 const Farm: React.FunctionComponent<FarmCardProps> = ({ farm }) => {
   const farmImage = farm.lpSymbol.replace(' LP', '').toLocaleLowerCase()
-  const farmType = farm.type === 'Joe' ? 'Trader Joe' : farm.type;
+  const farmType = farm.type === 'Joe' ? 'Trader Joe' : farm.type
 
   return (
     <Container>
       <StyledImage src={`/images/farms-v2/pools/${farmImage}.svg`} alt={farm.tokenSymbol} width={56} height={56} />
       <FarmLabelWrapper>
         <Flex>
-          <FarmLabel bold>{farm.lpSymbol.replace('Joe ', '').replace(' LP', '')}</FarmLabel>
+          <FarmLabel bold>{farm.lpSymbol.replace('Joe ', '').replace('Sushi ', '').replace(' LP', '')}</FarmLabel>
         </Flex>
         <Flex mt="4px">
           <MultiplierTag variant="primary">{`${farm.multiplier || 1}X`}</MultiplierTag>

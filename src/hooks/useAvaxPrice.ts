@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import Axios from 'axios'
-import { COINGECKO_API_ENDPOINT } from '../config'
-import { appendParams } from '../utils/axios'
+import { appendParams } from 'utils/axios'
+import { COINGECKO_API_ENDPOINT } from 'config'
 
 const useAvaxPrice = () => {
   const [price, setPrice] = useState(40)
