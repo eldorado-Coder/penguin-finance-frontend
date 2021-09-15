@@ -12,12 +12,11 @@ dayjs.extend(utc)
 
 const DEFAULT_HEIGHT = 300
 
-const Wrapper = styled(Card)`
+const Wrapper = styled(Card)<{ height?: number }>`
   width: 100%;
-  height: ${DEFAULT_HEIGHT}px;
-  padding: 1rem;
-  padding-right: 2rem;
+  height: ${({ height }) => height || DEFAULT_HEIGHT}px;
   display: flex;
+  padding: 0;
   flex-direction: column;
   > * {
     font-size: 1rem;
@@ -50,6 +49,7 @@ const Chart = ({
   topRight,
   bottomLeft,
   bottomRight,
+  height,
   minHeight = DEFAULT_HEIGHT,
   ...rest
 }: LineChartProps) => {
@@ -57,7 +57,7 @@ const Chart = ({
   const parsedValue = value
 
   return (
-    <Wrapper minHeight={minHeight} {...rest}>
+    <Wrapper minHeight={minHeight} height={height} {...rest}>
       <RowBetween>
         {topLeft ?? null}
         {topRight ?? null}
@@ -65,7 +65,7 @@ const Chart = ({
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart
           width={500}
-          height={300}
+          height={height}
           data={data}
           margin={{
             top: 5,
