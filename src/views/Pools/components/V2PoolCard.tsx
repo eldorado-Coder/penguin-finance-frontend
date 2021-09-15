@@ -1,12 +1,11 @@
 import BigNumber from 'bignumber.js'
-import React, { useCallback, useState, useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { NavLink, useHistory } from 'react-router-dom'
 import { Button, Text, Flex, Heading, useMatchBreakpoints } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import UnlockButton from 'components/UnlockButton'
 import SvgIcon from 'components/SvgIcon'
-import { useV2NestContract } from 'hooks/useContract'
 import useI18n from 'hooks/useI18n'
 import { getBalanceNumber, getNumberWithCommas } from 'utils/formatBalance'
 import { Pool } from 'state/types'
@@ -50,12 +49,12 @@ interface Props {
 }
 
 const V2PoolCard: React.FC<Props> = ({ pool }) => {
-  const [handsOnPenalty, setHandsOnPenalty] = useState(6)
   const TranslateString = useI18n()
   const { account } = useWeb3React()
-  const iPefiContract = useV2NestContract()
   const history = useHistory()
   const { sousId, tokenName, isFinished, userData } = pool
+  const iPefiToPefiRatio = pool.currentExchangeRate || 1
+  const paperHandsPenalty = pool.paperHandsPenalty || 6
   const stakedBalance = new BigNumber(userData?.stakedBalance || 0)
   const accountHasStakedBalance = stakedBalance?.toNumber() > 0
   const isCardActive = isFinished && accountHasStakedBalance
@@ -63,23 +62,6 @@ const V2PoolCard: React.FC<Props> = ({ pool }) => {
 
   const { isXl } = useMatchBreakpoints()
   const isMobile = !isXl
-
-  const fetchHandsOnPenalty = useCallback(async () => {
-    const perHandsPenalty = await iPefiContract.methods.paperHandsPenalty().call()
-    setHandsOnPenalty(perHandsPenalty)
-  }, [iPefiContract])
-
-  useEffect(() => {
-    // fetchHandsOnPenalty()
-  }, [fetchHandsOnPenalty])
-
-  const getIPefiToPefiRatio = () => {
-    return pool.totalStaked && pool.totalSupply
-      ? new BigNumber(pool.totalStaked).div(new BigNumber(pool.totalSupply)).toNumber()
-      : 1
-  }
-
-  const iPefiToPefiRatio = getIPefiToPefiRatio()
 
   const handleMovetoNestV2 = () => {
     history.push('/nest-v2')
@@ -130,7 +112,7 @@ const V2PoolCard: React.FC<Props> = ({ pool }) => {
               <Block>
                 <Label>{TranslateString(544, 'Paper Hands Penalty')}:</Label>
                 <Text color="textSubtle" bold fontSize="24px">
-                  {`${Number(handsOnPenalty).toFixed(2)}% PHP`}
+                  {`${Number(paperHandsPenalty).toFixed(2)}% PHP`}
                 </Text>
               </Block>
               <Block>

@@ -7,9 +7,8 @@ import roundDown from 'utils/roundDown'
 import escapeRegExp from 'utils/escapeRegExp'
 import useI18n from 'hooks/useI18n'
 import { getFullDisplayBalance } from 'utils/formatBalance'
-import useIPefiPerHandsPenalty from 'hooks/useIPefiPerHandsPenalty';
 import TokenInput from '../TokenInput'
-import PerHandsPenaltyWarningModal from './PerHandsPenaltyWarningModal';
+import PerHandsPenaltyWarningModal from './PerHandsPenaltyWarningModal'
 
 interface UnStakeFormProps {
   max: BigNumber
@@ -18,19 +17,19 @@ interface UnStakeFormProps {
   account?: string
   requested: boolean
   stakingTokenName: string
+  paperHandsPenalty?: number
   onApprove: () => void
 }
 
 const inputRegex = RegExp(`^\\d*(?:\\\\[.])?\\d*$`)
 
-const UnstakeForm: React.FC<UnStakeFormProps> = ({ max, onConfirm, tokenName = '', account }) => {
+const UnstakeForm: React.FC<UnStakeFormProps> = ({ max, tokenName = '', account, paperHandsPenalty, onConfirm }) => {
   const [val, setVal] = useState('')
   const [pendingTx, setPendingTx] = useState(false)
   const TranslateString = useI18n()
   const fullBalance = useMemo(() => {
     return getFullDisplayBalance(max)
   }, [max])
-  const perHandsPenalty = useIPefiPerHandsPenalty();
 
   const handleConfirm = async () => {
     setPendingTx(true)
@@ -45,7 +44,7 @@ const UnstakeForm: React.FC<UnStakeFormProps> = ({ max, onConfirm, tokenName = '
   }
 
   const [onPresentPerHandsPenaltyModal] = useModal(
-    <PerHandsPenaltyWarningModal perHandsPenalty={perHandsPenalty} onConfirm={handleConfirm} />,
+    <PerHandsPenaltyWarningModal perHandsPenalty={paperHandsPenalty} onConfirm={handleConfirm} />,
   )
 
   const handleChange = useCallback(
