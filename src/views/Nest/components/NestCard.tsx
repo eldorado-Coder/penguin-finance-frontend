@@ -19,7 +19,7 @@ const StyledCard = styled(Card)<{ isNestPage?: boolean }>`
   border-radius: 8px;
   width: 100%;
 
-  ${({ theme }) => theme.mediaQueries.sm} {
+  ${({ theme }) => theme.mediaQueries.md} {
     max-width: 460px;
   }
 `
