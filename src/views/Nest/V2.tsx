@@ -13,6 +13,9 @@ import { useV2Pools } from 'state/hooks'
 import { getPefiAddress } from 'utils/addressHelpers'
 import roundDown from 'utils/roundDown'
 import CardValue from 'components/CardValue'
+import SvgIcon from 'components/SvgIcon'
+import LineChart from 'components/LineChart'
+import CHART_DATA from 'views/Info/data'
 import NestCard from './components/NestCard'
 
 const NestV2: React.FC = () => {
@@ -21,8 +24,11 @@ const NestV2: React.FC = () => {
   const { account } = useWeb3React()
   const pools = useV2Pools(account)
   const iPefiContract = useV2NestContract()
-  const { isXl } = useMatchBreakpoints()
+  const { isXl, isSm } = useMatchBreakpoints()
   const isMobile = !isXl
+
+  const [liquidityHover, setLiquidityHover] = useState<number | undefined>()
+  const [leftLabel, setLeftLabel] = useState<string | undefined>()
 
   const [finishedPools, openPools] = partition(pools, (pool) => pool.isFinished)
 
@@ -55,12 +61,12 @@ const NestV2: React.FC = () => {
       <NestDetailsContainer>
         <NestCardsWrapper justifyContent="space-between">
           <LeftCardsContainer>
-            <APYCard padding="8px 24px 16px" mb="16px">
-              <Flex justifyContent="space-between" alignItems="center">
+            <APYCard padding="16px 24px 16px" mb="16px">
+              <Flex justifyContent="space-between">
                 <Text fontSize="20px" color="white" fontWeight={500}>
                   {`Yesterday's APY `}
                 </Text>
-                <Text fontSize="36px" bold color="white">
+                <Text fontSize="36px" bold color="white" lineHeight={1}>
                   {getNumberWithCommas(displayedNestApy)}%
                 </Text>
               </Flex>
@@ -84,56 +90,137 @@ const NestV2: React.FC = () => {
               ))}
             </Route>
           </LeftCardsContainer>
-          <BalanceCard padding="16px 24px 32px" mb="16px">
-            <Flex flexDirection={isMobile ? 'row' : 'column'} justifyContent="space-between">
-              <div>
-                <BalanceLabel>Balance</BalanceLabel>
-                <Flex mt="4px" alignItems="center">
-                  <CardImage
-                    isMobile={isMobile}
-                    src="/images/pools/iPefi.svg"
-                    alt="ipefi logo"
-                    width={64}
-                    height={64}
-                  />
-                  <Flex flexDirection="column">
-                    <Balance>
-                      <CardValue
-                        className="balance"
-                        fontSize={isMobile ? '22px' : '24px'}
-                        value={roundDown(getBalanceNumber(stakedBalance), 2)}
-                        decimals={2}
-                        lineHeight="1"
-                      />
-                    </Balance>
-                    <BalanceText fontSize={isMobile ? '18px' : '20px'} fontWeight={300} lineHeight="1.4">
-                      iPEFI
-                    </BalanceText>
-                    <BalanceTextSmall>
-                      <CardValue
-                        className="balance"
-                        fontSize="12px"
-                        value={roundDown(xPefiToPefiRatio * getBalanceNumber(stakedBalance), 2)}
-                        decimals={2}
-                        lineHeight="1.2"
-                        prefix="≈ "
-                        suffix=" PEFI"
-                      />
-                    </BalanceTextSmall>
+          <div>
+            <RatioCard padding="16px 24px 16px" mb="16px">
+              <Flex justifyContent="space-between">
+                <Flex flexWrap='wrap'>
+                  <Flex flexDirection='column' mr='40px'>
+                    <Text fontSize="20px" color="white" fontWeight={500}>
+                      Current Ratio
+                    </Text>
+                    <Flex alignItems='flex-end' mt='1px'>
+                      <Text fontSize="36px" bold color="white" lineHeight={1}>
+                        1.135
+                      </Text>
+                      <Text ml='8px' mb='4px' fontSize="14px" color="white" lineHeight={1}>
+                        iPEFI/PEFI
+                      </Text>
+                    </Flex>
+                  </Flex>
+                  <Flex flexDirection='column'>
+                    <Label fontSize="20px" color="white" fontWeight={500}>
+                      Yesterday&apos;s Ratio
+                    </Label>
+                    <Flex alignItems='flex-end' mt='1px'>
+                      <Text fontSize="36px" bold color="white" lineHeight={1}>
+                        1.126
+                      </Text>
+                      <Text ml='8px' mb='4px' fontSize="14px" color="white" lineHeight={1}>
+                        iPEFI/PEFI
+                      </Text>
+                    </Flex>
                   </Flex>
                 </Flex>
-              </div>
-              <div>
-                <BalanceLabel mt={!isMobile && '24px'}>Unstaked</BalanceLabel>
-                <Flex mt="4px" alignItems="center">
-                  <CardImage
-                    isMobile={isMobile}
-                    src="/images/penguin-finance-logo.svg"
-                    alt="penguin logo"
-                    width={64}
-                    height={64}
-                  />
-                  <Flex flexDirection="column">
+                <InfoIconWrapper>
+                  <SvgIcon src={`${process.env.PUBLIC_URL}/images/home/info.svg`} width="25px" height="25px" />
+                </InfoIconWrapper>
+              </Flex>
+            </RatioCard>
+            <StyledCard mb='16px'>
+              <LineChart
+                data={CHART_DATA}
+                height={240}
+                minHeight={240}
+                value={liquidityHover}
+                label={leftLabel}
+                setValue={setLiquidityHover}
+                setLabel={setLeftLabel}
+              />
+            </StyledCard>
+            <BalanceCard mb="16px">
+              <BalanceContainer padding="8px 24px 16px">
+                <Flex width='100%' flexDirection={isMobile ? 'row' : 'column'} justifyContent="space-between">
+                  <div>
+                    <BalanceLabel>Balance</BalanceLabel>
+                    <Flex mt="4px" alignItems="center">
+                      <CardImage
+                        isMobile={isMobile}
+                        src="/images/pools/iPefi.svg"
+                        alt="ipefi logo"
+                        width={64}
+                        height={64}
+                      />
+                      <Flex flexDirection="column">
+                        <Balance>
+                          <CardValue
+                            className="balance"
+                            fontSize={isMobile ? '22px' : '24px'}
+                            value={roundDown(getBalanceNumber(stakedBalance), 2)}
+                            decimals={2}
+                            lineHeight="1"
+                          />
+                        </Balance>
+                        <BalanceText fontSize={isMobile ? '18px' : '20px'} fontWeight={300} lineHeight="1.4">
+                          iPEFI
+                        </BalanceText>
+                        <BalanceTextSmall>
+                          <CardValue
+                            className="balance"
+                            fontSize="12px"
+                            value={roundDown(xPefiToPefiRatio * getBalanceNumber(stakedBalance), 2)}
+                            decimals={2}
+                            lineHeight="1.2"
+                            prefix="≈ "
+                            suffix=" PEFI"
+                          />
+                        </BalanceTextSmall>
+                      </Flex>
+                    </Flex>
+                  </div>
+                  <div>
+                    <BalanceLabel mt={!isMobile && '24px'}>Unstaked</BalanceLabel>
+                    <Flex mt="4px" alignItems="center">
+                      <CardImage
+                        isMobile={isMobile}
+                        src="/images/penguin-finance-logo.svg"
+                        alt="penguin logo"
+                        width={64}
+                        height={64}
+                      />
+                      <Flex flexDirection="column">
+                        <Balance>
+                          <CardValue
+                            className="balance"
+                            fontSize={isMobile ? '22px' : '24px'}
+                            value={account ? roundDown(getBalanceNumber(pefiBalance), 2) : 0}
+                            decimals={2}
+                            lineHeight="1"
+                          />
+                        </Balance>
+                        <BalanceText fontSize={isMobile ? '18px' : '20px'} fontWeight={300} lineHeight="1.4">
+                          PEFI
+                        </BalanceText>
+                        <BalanceTextSmall>
+                          <CardValue
+                            className="balance"
+                            fontSize="12px"
+                            value={account ? roundDown(getBalanceNumber(pefiBalance) / xPefiToPefiRatio, 2) : 0}
+                            decimals={2}
+                            lineHeight="1.2"
+                            prefix="≈ "
+                            suffix=" iPEFI"
+                          />
+                        </BalanceTextSmall>
+                      </Flex>
+                    </Flex>
+                  </div>
+                </Flex>
+              </BalanceContainer>
+              <WealthContainer>
+                <WealthCard flexDirection='column' padding="4px 16px 16px">
+                  <BalanceLabel>Your Wealth</BalanceLabel>
+                  <Flex alignItems='flex-end'>
+                    <BalanceText fontSize='14px' mr='4px'>You have generated</BalanceText>
                     <Balance>
                       <CardValue
                         className="balance"
@@ -141,27 +228,57 @@ const NestV2: React.FC = () => {
                         value={account ? roundDown(getBalanceNumber(pefiBalance), 2) : 0}
                         decimals={2}
                         lineHeight="1"
+                        suffix=' PEFI'
                       />
                     </Balance>
-                    <BalanceText fontSize={isMobile ? '18px' : '20px'} fontWeight={300} lineHeight="1.4">
-                      PEFI
-                    </BalanceText>
-                    <BalanceTextSmall>
+                  </Flex>
+                  <BalanceText fontSize='14px'>in <span>85 days.</span> You&apos;ve deposited <span>300 PEFI</span> and withdrawn <span>150 PEFI</span> from the iPEFI Nest.</BalanceText>
+                </WealthCard>
+                <Flex flexDirection='column' padding="4px 16px 16px">
+                  <BalanceLabel>iPEFI Stats</BalanceLabel>
+                  <Flex alignItems='flex-end'>
+                    <BalanceText bold fontSize='12px' mr='4px' width={120} textAlign='right'>iPEFI TVL</BalanceText>
+                    <Balance statsBalance>
                       <CardValue
                         className="balance"
-                        fontSize="12px"
-                        value={account ? roundDown(getBalanceNumber(pefiBalance) / xPefiToPefiRatio, 2) : 0}
+                        fontSize={isMobile ? '18px' : '20px'}
+                        value={account ? roundDown(getBalanceNumber(pefiBalance), 2) : 0}
                         decimals={2}
-                        lineHeight="1.2"
-                        prefix="≈ "
-                        suffix=" iPEFI"
+                        lineHeight="1"
+                        prefix='$ '
                       />
-                    </BalanceTextSmall>
+                    </Balance>
+                  </Flex>
+                  <Flex alignItems='flex-end' mt='4px'>
+                    <BalanceText bold fontSize='12px' mr='4px' width={120} textAlign='right'>PEFI redistributed by Paper Hands Penalty</BalanceText>
+                    <Balance statsBalance>
+                      <CardValue
+                        className="balance"
+                        fontSize={isMobile ? '18px' : '20px'}
+                        value={account ? roundDown(getBalanceNumber(pefiBalance), 2) : 0}
+                        decimals={2}
+                        lineHeight="1"
+                        suffix=' PEFI'
+                      />
+                    </Balance>
+                  </Flex>
+                  <Flex alignItems='flex-end' mt='4px'>
+                    <BalanceText bold fontSize='12px' mr='4px' width={120} textAlign='right'>7 day avg. APR</BalanceText>
+                    <Balance statsBalance>
+                      <CardValue
+                        className="balance"
+                        fontSize={isMobile ? '18px' : '20px'}
+                        value={account ? roundDown(getBalanceNumber(pefiBalance), 2) : 0}
+                        decimals={2}
+                        lineHeight="1"
+                        suffix='% APR'
+                      />
+                    </Balance>
                   </Flex>
                 </Flex>
-              </div>
-            </Flex>
-          </BalanceCard>
+              </WealthContainer>
+            </BalanceCard>
+          </div>
         </NestCardsWrapper>
       </NestDetailsContainer>
     </Flex>
@@ -171,7 +288,7 @@ const NestV2: React.FC = () => {
 const NestCardsWrapper = styled(Flex)`
   flex-direction: column;
 
-  ${({ theme }) => theme.mediaQueries.sm} {
+  ${({ theme }) => theme.mediaQueries.md} {
     flex-direction: row;
   }
 `
@@ -186,10 +303,26 @@ const APYCard = styled(Card)`
   border-radius: 8px;
   width: 100%;
 
-  ${({ theme }) => theme.mediaQueries.sm} {
+  ${({ theme }) => theme.mediaQueries.md} {
     max-width: 460px;
   }
-`
+`;
+
+const RatioCard = styled(Card)`
+  background: #d4444c;
+  border-radius: 8px;
+  width: 100%;
+  margin-top: 16px;
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    max-width: 560px;
+    margin-top: 0;
+  }
+`;
+
+const Label = styled(Text)`
+  white-space: nowrap;
+`;
 
 const BalanceCard = styled(Card)`
   background: ${({ theme }) => (theme.isDark ? '#30264F' : 'white')};
@@ -197,11 +330,17 @@ const BalanceCard = styled(Card)`
   width: 100%;
   margin-top: 16px;
   height: max-content;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
 
   ${({ theme }) => theme.mediaQueries.sm} {
-    min-width: 260px;
-    width: 240px;
     margin-top: 0;
+  }
+  ${({ theme }) => theme.mediaQueries.md} {
+    min-width: 500px;
+    width: 240px;
+    flex-direction: row;
   }
 `
 
@@ -216,7 +355,7 @@ const BalanceLabel = styled(Text)`
 `
 
 const NestDetailsContainer = styled.div`
-  max-width: 720px;
+  max-width: 960px;
   width: 100%;
 `
 
@@ -232,6 +371,7 @@ const ViewStatsButton = styled(Button)`
 const APYLabel = styled(Text)`
   color: #ddd7ff;
   font-weight: 400;
+  white-space: nowrap;
 `
 
 const CardImage = styled.img<{ isMobile?: boolean }>`
@@ -240,16 +380,26 @@ const CardImage = styled.img<{ isMobile?: boolean }>`
   height: ${({ isMobile }) => (isMobile ? '56px' : '72px')};
 `
 
-const Balance = styled.div`
+const Balance = styled.div<{ statsBalance?: boolean }>`
+  border-bottom: ${({ theme, statsBalance }) => statsBalance && (theme.isDark ? '1px solid #100C18' : '1px solid #e8e4ef')};
+  width: ${({ statsBalance}) => statsBalance && 'calc(100% - 120px)'};
+  text-align: ${({ statsBalance}) => statsBalance && 'center'};
+
   .balance {
     color: ${({ theme }) => theme.colors.red};
     font-weight: 500;
   }
 `
 
-const BalanceText = styled(Text)`
+const BalanceText = styled(Text)<{ width?: number }>`
   color: ${({ theme }) => (theme.isDark ? 'white' : theme.colors.secondary)};
   line-height: 1.2;
+  width: ${({ width }) => width && `${width}px`};
+
+  span {
+    font-size: 18px;
+    color: ${({ theme }) => theme.colors.red};
+  }
 `
 
 const BalanceTextSmall = styled.div`
@@ -258,5 +408,46 @@ const BalanceTextSmall = styled.div`
     font-weight: 400;
   }
 `
+
+const InfoIconWrapper = styled.div`
+  svg {
+    cursor: pointer;
+    path {
+      fill: white;
+    }
+  }
+`
+
+const StyledCard = styled(Card)`
+  border-radius: 8px;
+  width: 100%;
+  padding: 1rem 0 0;
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    max-width: 500px;
+  }
+`
+
+const BalanceContainer = styled(Flex)`
+  ${({ theme }) => theme.mediaQueries.md} {
+    border-right: 2px solid ${({ theme }) => theme.isDark ? '#100C18' : '#e8e4ef'};
+  }
+`;
+
+const WealthCard = styled(Flex)`
+  width: 100%;
+  border-bottom: 2px solid ${({ theme }) => theme.isDark ? '#100C18' : '#e8e4ef'};
+  border-top: 2px solid ${({ theme }) => theme.isDark ? '#100C18' : '#e8e4ef'};
+  ${({ theme }) => theme.mediaQueries.md} {
+    border-top: none;
+  }
+`;
+
+const WealthContainer = styled.div`
+  with: 100%;
+  ${({ theme }) => theme.mediaQueries.md} {
+    width: calc(100% - 200px);
+  }
+`;
 
 export default NestV2
