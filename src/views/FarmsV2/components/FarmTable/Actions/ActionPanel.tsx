@@ -16,12 +16,6 @@ import { FarmCardProps } from '../../types'
 import StakePanel from './StakePanel'
 import AutoNesting from './AutoNesting'
 
-const getIPefiToPefiRatio = (pool) => {
-  return pool.totalStaked && pool.totalSupply
-    ? new BigNumber(pool.totalStaked).div(new BigNumber(pool.totalSupply)).toJSON()
-    : 1
-}
-
 const expandAnimation = keyframes`
   from {
     max-height: 0px;
@@ -213,7 +207,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
   const v2Nest = v2Pools.length > 0 ? v2Pools[0] : null
   const pefiPriceUsd = usePricePefiUsdt().toNumber()
   const pngPriceUsd = usePricePngUsdt().toNumber()
-  const iPefiToPefiRatio = Number(getIPefiToPefiRatio(v2Nest))
+  const iPefiToPefiRatio = v2Nest.currentExchangeRate || 1
   const iPefiPriceUsd = iPefiToPefiRatio * pefiPriceUsd
 
   const { isXl } = useMatchBreakpoints()

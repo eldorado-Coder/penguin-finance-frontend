@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
 import { Menu as UikitMenu, useModal } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
-import BigNumber from 'bignumber.js'
 import { allLanguages } from 'config/localisation/languageCodes'
 import { LanguageContext } from 'contexts/Localisation/languageContext'
 import useTheme from 'hooks/useTheme'
@@ -13,12 +12,6 @@ import { getBalanceNumber } from 'utils/formatBalance'
 import WalletConnectGuideModal from 'components/Modal/WalletConnectGuideModal'
 import SettingModal from 'components/Modal/SettingModal'
 import { config, socials } from './config'
-
-const getIPefiToPefiRatio = (pool) => {
-  return pool.totalStaked && pool.totalSupply
-    ? new BigNumber(pool.totalStaked).div(new BigNumber(pool.totalSupply)).toJSON()
-    : 1
-}
 
 const Menu = (props) => {
   const { account } = useWeb3React()
@@ -36,7 +29,7 @@ const Menu = (props) => {
   const { myEmperor } = useEmperor()
   const myNickname = myEmperor.nickname
   const v2Nest = v2Pools.length > 0 ? v2Pools[0] : null
-  const iPefiToPefiRatio = getIPefiToPefiRatio(v2Nest)
+  const iPefiToPefiRatio = v2Nest.currentExchangeRate || 1
 
   // add badge to "emperor" and "launchpad" menu
   const isEmperorLive = false // event status

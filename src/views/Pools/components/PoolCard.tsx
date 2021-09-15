@@ -205,6 +205,7 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
   const convertedLimit = new BigNumber(stakingLimit).multipliedBy(new BigNumber(10).pow(tokenDecimals))
   const displayedNestApr = (useNestApr() * 100).toFixed(2)
   const displayedNestApy = (useNestApy() * 100).toFixed(2)
+  const iPefiToPefiRatio = pool.currentExchangeRate || 1
 
   const [onPresentDeposit] = useModal(
     <DepositModal
@@ -251,12 +252,6 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
     return () => clearInterval(refreshInterval)
   }, [account, refreshRate, fetchStakedPefiBalance])
 
-  const getIPefiToPefiRatio = () => {
-    return pool.totalStaked && pool.totalSupply
-      ? new BigNumber(pool.totalStaked).div(new BigNumber(pool.totalSupply)).toNumber()
-      : 1
-  }
-
   const handleApprove = useCallback(async () => {
     try {
       setRequestedApproval(true)
@@ -269,8 +264,6 @@ const PoolCard: React.FC<HarvestProps> = ({ pool, isMainPool, isNestPage, isHome
       console.error(e)
     }
   }, [onApprove, setRequestedApproval])
-
-  const iPefiToPefiRatio = getIPefiToPefiRatio()
 
   const handleMovetoNest = () => {
     history.push('/nests')

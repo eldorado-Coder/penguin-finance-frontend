@@ -100,6 +100,11 @@ export interface Pool extends PoolConfig {
     stakedBalance: BigNumber
     pendingReward: BigNumber
   }
+  currentExchangeRate?: number
+  rateOfYesterday?: number
+  paperHandsPenalty?: number
+  avgDailyAprPerWeek?: number
+  distributionPhp?: number
 }
 
 export interface Profile {

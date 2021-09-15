@@ -36,31 +36,64 @@ export const fetchPoolsBlockLimits = async () => {
   })
 }
 
-export const fetchPoolsDailyAprs = async () => {
+export const fetchPoolsGeneralInfos = async () => {
   const poolsWithEnd = v2PoolsConfig.filter((p) => p.sousId !== 0)
-  const calls = poolsWithEnd.map((poolConfig) => {
-    return {
-      address: getAddress(poolConfig.contractAddress),
-      name: 'getExchangeRateHistory',
-      params: [3],
-    }
-  })
+  const data = await Promise.all(
+    poolsWithEnd.map(async (poolConfig) => {
+      const calls = [
+        // current rate
+        {
+          address: getAddress(poolConfig.contractAddress),
+          name: 'currentExchangeRate',
+          params: [],
+        },
+        // yesterday's rate
+        { address: getAddress(poolConfig.contractAddress), name: 'getLatestStoredExchangeRate', params: [] },
+        // rate in the last 7 days
+        {
+          address: getAddress(poolConfig.contractAddress),
+          name: 'getExchangeRateHistory',
+          params: [7],
+        },
+        // paperHandsPenalty
+        {
+          address: getAddress(poolConfig.contractAddress),
+          name: 'paperHandsPenalty',
+          params: [],
+        },
+        // distribution paperHandsPenalty
+        {
+          address: getAddress(poolConfig.contractAddress),
+          name: 'fundsCollectedByPHP',
+          params: [],
+        },
+      ]
 
-  const exchangeRateArray = await multicall(v2NestABI, calls)
-  return poolsWithEnd.map((row, index) => {
-    return {
-      sousId: row.sousId,
-      // average APY
-      // dailyApr:
-      //   (getBalanceNumber(new BigNumber(exchangeRateArray[index][0][2]._hex)) -
-      //     getBalanceNumber(new BigNumber(exchangeRateArray[index][0][0]._hex))) /
-      //   2,
-      // yesterday's APY
-      dailyApr:
-        getBalanceNumber(new BigNumber(exchangeRateArray[index][0][2]._hex)) -
-        getBalanceNumber(new BigNumber(exchangeRateArray[index][0][1]._hex)),
-    }
-  })
+      const [
+        currentExchangeRate,
+        rateOfYesterday,
+        exchangeRateArray,
+        paperHandsPenalty,
+        distributionPhp,
+      ] = await multicall(v2NestABI, calls)
+
+      return {
+        sousId: poolConfig.sousId,
+        currentExchangeRate: getBalanceNumber(new BigNumber(currentExchangeRate)),
+        rateOfYesterday: getBalanceNumber(new BigNumber(rateOfYesterday[0]._hex)),
+        dailyApr:
+          getBalanceNumber(new BigNumber(exchangeRateArray[0][6]._hex)) -
+          getBalanceNumber(new BigNumber(exchangeRateArray[0][5]._hex)),
+        paperHandsPenalty: new BigNumber(paperHandsPenalty).toNumber() / 100,
+        avgDailyAprPerWeek:
+          (getBalanceNumber(new BigNumber(exchangeRateArray[0][6]._hex)) -
+            getBalanceNumber(new BigNumber(exchangeRateArray[0][0]._hex))) /
+          7,
+        distributionPhp: getBalanceNumber(new BigNumber(distributionPhp)),
+      }
+    }),
+  )
+  return data
 }
 
 export const fetchPoolsTotalStaking = async () => {
