@@ -108,6 +108,7 @@ export interface Pool extends PoolConfig {
   paperHandsPenalty?: number
   avgDailyAprPerWeek?: number
   distributionPhp?: number
+  historicalRates?: any[]
 }
 
 export interface Profile {

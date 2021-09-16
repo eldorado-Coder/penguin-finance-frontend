@@ -5,16 +5,13 @@ import masterChefABI from 'config/abi/masterchef.json'
 import sousChefABI from 'config/abi/sousChef.json'
 import v2NestABI from 'config/abi/v2_nest.json'
 import erc20ABI from 'config/abi/erc20.json'
-import { QuoteToken } from 'config/constants/types'
 import multicall from 'utils/multicall'
 import { getAddress, getMasterChefAddress } from 'utils/addressHelpers'
 import { getWeb3 } from 'utils/web3'
 
 const pools = v2PoolsConfig
-const AvaxPools = v2PoolsConfig.filter((p) => p.stakingTokenName === QuoteToken.AVAX)
 const web3 = getWeb3()
 const masterChefContract = new web3.eth.Contract((masterChefABI as unknown) as AbiItem, getMasterChefAddress())
-console.log('123123--->', pools)
 
 export const fetchPoolsAllowance = async (account) => {
   const calls = pools.map((p) => ({

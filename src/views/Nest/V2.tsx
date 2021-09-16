@@ -44,6 +44,7 @@ const NestV2: React.FC = () => {
   const tvl = nestPool.totalSupply
     ? iPefiToPefiRatio * pefiPrice.toNumber() * getBalanceNumber(nestPool.totalSupply)
     : 0
+  const historicalRates = nestPool.historicalRates || []
   const totalProfitAmount = account ? roundDown(getBalanceNumber(new BigNumber(userData?.profitAmount || 0)), 2) : 0
   const totalDepositAmount = account ? roundDown(getBalanceNumber(new BigNumber(userData?.depositAmount || 0)), 2) : 0
   const totalWithdrawAmount = account ? roundDown(getBalanceNumber(new BigNumber(userData?.withdrawAmount || 0)), 2) : 0
@@ -124,7 +125,8 @@ const NestV2: React.FC = () => {
             </RatioCard>
             <StyledCard mb="16px">
               <LineChart
-                data={CHART_DATA}
+                // data={CHART_DATA}
+                data={historicalRates}
                 height={240}
                 minHeight={240}
                 value={liquidityHover}

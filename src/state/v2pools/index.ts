@@ -57,6 +57,7 @@ export const fetchPoolsPublicDataAsync = () => async (dispatch) => {
       avgDailyAprPerWeek,
       paperHandsPenalty,
       distributionPhp,
+      historicalRates,
     } = generalData.find((entry) => entry.sousId === pool.sousId)
 
     return {
@@ -67,6 +68,7 @@ export const fetchPoolsPublicDataAsync = () => async (dispatch) => {
       avgDailyAprPerWeek,
       paperHandsPenalty,
       distributionPhp,
+      historicalRates,
     }
   })
 
