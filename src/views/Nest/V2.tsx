@@ -29,19 +29,24 @@ const NestV2: React.FC = () => {
   const isMobile = !isXl
   const [finishedPools, openPools] = partition(pools, (pool) => pool.isFinished)
 
-  const stakedBalance = new BigNumber(openPools[0].userData?.stakedBalance || 0)
+  const nestPool = openPools[0]
+  const { userData } = nestPool
+  const stakedBalance = new BigNumber(nestPool.userData?.stakedBalance || 0)
   const pefiBalance = useTokenBalance(getPefiAddress())
-  const displayedNestApy = (openPools[0].apy.toNumber() * 100).toFixed(2)
-  const iPefiToPefiRatio = openPools[0].currentExchangeRate || 1
-  const currentExchangeRate = openPools[0].currentExchangeRate || 1
-  const rateOfYesterday = openPools[0].rateOfYesterday || 1
-  const paperHandsPenalty = openPools[0].paperHandsPenalty || 6
-  const distributionPhp = openPools[0].distributionPhp || 6
-  const avgDailyAprPerWeek = openPools[0].avgDailyAprPerWeek || 0
+  const displayedNestApy = (nestPool.apy.toNumber() * 100).toFixed(2)
+  const iPefiToPefiRatio = nestPool.currentExchangeRate || 1
+  const currentExchangeRate = nestPool.currentExchangeRate || 1
+  const rateOfYesterday = nestPool.rateOfYesterday || 1
+  const paperHandsPenalty = nestPool.paperHandsPenalty || 6
+  const distributionPhp = nestPool.distributionPhp || 6
+  const avgDailyAprPerWeek = nestPool.avgDailyAprPerWeek || 0
   const avgYearlyApr = avgDailyAprPerWeek * 365 * 100
-  const tvl = openPools[0].totalSupply
-    ? iPefiToPefiRatio * pefiPrice.toNumber() * getBalanceNumber(openPools[0].totalSupply)
+  const tvl = nestPool.totalSupply
+    ? iPefiToPefiRatio * pefiPrice.toNumber() * getBalanceNumber(nestPool.totalSupply)
     : 0
+  const totalProfitAmount = account ? roundDown(getBalanceNumber(new BigNumber(userData?.profitAmount || 0)), 2) : 0
+  const totalDepositAmount = account ? roundDown(getBalanceNumber(new BigNumber(userData?.depositAmount || 0)), 2) : 0
+  const totalWithdrawAmount = account ? roundDown(getBalanceNumber(new BigNumber(userData?.withdrawAmount || 0)), 2) : 0
 
   const handleLearnMore = () => {
     window.open('https://docs.penguinfinance.io/summary/penguin-nests-staking-and-fee-collection', '_blank')
@@ -218,7 +223,7 @@ const NestV2: React.FC = () => {
                       <CardValue
                         className="balance"
                         fontSize={isMobile ? '22px' : '24px'}
-                        value={account ? roundDown(getBalanceNumber(pefiBalance), 2) : 0}
+                        value={totalProfitAmount}
                         decimals={2}
                         lineHeight="1"
                         suffix=" PEFI"
@@ -226,8 +231,12 @@ const NestV2: React.FC = () => {
                     </Balance>
                   </Flex>
                   <BalanceText fontSize="14px">
-                    in <span>85 days.</span> You&apos;ve deposited <span>300 PEFI</span> and withdrawn{' '}
-                    <span>150 PEFI</span> from the iPEFI Nest.
+                    in <span>85 days.</span>
+                    {`You've deposited `}
+                    <span>{`${totalDepositAmount} PEFI`}</span>
+                    {' and withdrawn '}
+                    <span>{`${totalWithdrawAmount} PEFI`}</span>
+                    {` from the iPEFI Nest.`}
                   </BalanceText>
                 </WealthCard>
                 <Flex flexDirection="column" padding="4px 16px 16px">

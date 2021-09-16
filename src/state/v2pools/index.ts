@@ -7,6 +7,8 @@ import {
   fetchUserBalances,
   fetchUserStakeBalances,
   fetchUserPendingRewards,
+  // new
+  fetchUserInfos,
 } from './fetchPoolsUser'
 import { PoolsState, Pool } from '../types'
 
@@ -72,19 +74,9 @@ export const fetchPoolsPublicDataAsync = () => async (dispatch) => {
 }
 
 export const fetchPoolsUserDataAsync = (account) => async (dispatch) => {
-  const allowances = await fetchPoolsAllowance(account)
-  const stakingTokenBalances = await fetchUserBalances(account)
-  const stakedBalances = await fetchUserStakeBalances(account)
-  // const pendingRewards = await fetchUserPendingRewards(account)
+  if (!account) return
 
-  const userData = v2poolsConfig.map((pool) => ({
-    sousId: pool.sousId,
-    allowance: allowances[pool.sousId],
-    stakingTokenBalance: stakingTokenBalances[pool.sousId],
-    stakedBalance: stakedBalances[pool.sousId],
-    // pendingReward: pendingRewards[pool.sousId],
-  }))
-
+  const userData = await fetchUserInfos(account)
   dispatch(setPoolsUserData(userData))
 }
 

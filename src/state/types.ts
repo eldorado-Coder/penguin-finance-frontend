@@ -99,6 +99,9 @@ export interface Pool extends PoolConfig {
     stakingTokenBalance: BigNumber
     stakedBalance: BigNumber
     pendingReward: BigNumber
+    depositAmount?: BigNumber
+    withdrawAmount?: BigNumber
+    profitAmount?: BigNumber
   }
   currentExchangeRate?: number
   rateOfYesterday?: number
