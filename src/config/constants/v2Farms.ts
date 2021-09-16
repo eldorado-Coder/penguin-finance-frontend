@@ -510,7 +510,7 @@ const v2Farms: V2FarmConfig[] = [
   // sushi
   {
     pid: 17,
-    lpSymbol: 'Sushi SUSHI.e-PEFI LP',
+    lpSymbol: 'Sushi PEFI-SUSHI.e LP',
     lpAddresses: {
       43113: '',
       43114: '0x24f01f3dcdee246567029bce8830a866c9cd2b1e',
