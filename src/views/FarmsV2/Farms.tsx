@@ -62,6 +62,11 @@ const TvlContainer = styled(Flex)`
   white-space: break-spaces;
   align-items: center;
   flex-wrap: wrap;
+  justify-content: center;
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    justify-content: flex-start;
+  }
 `
 
 // slider
