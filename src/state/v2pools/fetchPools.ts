@@ -1,4 +1,5 @@
 import BigNumber from 'bignumber.js'
+import dayjs from 'dayjs'
 import v2PoolsConfig from 'config/constants/v2pools'
 import v2NestABI from 'config/abi/v2_nest.json'
 import penguinABI from 'config/abi/penguin.json'
@@ -67,6 +68,12 @@ export const fetchPoolsGeneralInfos = async () => {
           name: 'fundsCollectedByPHP',
           params: [],
         },
+        // first historical rate timestamp
+        {
+          address: getAddress(poolConfig.contractAddress),
+          name: 'historicTimestamps',
+          params: [0],
+        },
       ]
 
       const [
@@ -75,7 +82,30 @@ export const fetchPoolsGeneralInfos = async () => {
         exchangeRateArray,
         paperHandsPenalty,
         distributionPhp,
+        firstHistoricalRateTimestampRaw,
       ] = await multicall(v2NestABI, calls)
+
+      // get historical rate
+      const firstHistoricalRateTimestamp = new BigNumber(firstHistoricalRateTimestampRaw).toNumber()
+      const now = dayjs().unix()
+      const diffDays = Math.round((now - firstHistoricalRateTimestamp) / 86400)
+
+      const historicalRateCalls = [
+        // rate in the last 7 days
+        {
+          address: getAddress(poolConfig.contractAddress),
+          name: 'getExchangeRateHistory',
+          params: [diffDays],
+        },
+      ]
+      const [historicalRatesRaw] = await multicall(v2NestABI, historicalRateCalls)
+      const historicalRates = historicalRatesRaw[0].map((row, index) => {
+        const timestamp = new BigNumber(historicalRatesRaw[1][index]._hex).toNumber()
+        return {
+          time: dayjs.unix(timestamp).format('YYYY-MM-DD'),
+          value: getBalanceNumber(new BigNumber(row._hex)),
+        }
+      })
 
       return {
         sousId: poolConfig.sousId,
@@ -90,6 +120,7 @@ export const fetchPoolsGeneralInfos = async () => {
             getBalanceNumber(new BigNumber(exchangeRateArray[0][0]._hex))) /
           7,
         distributionPhp: getBalanceNumber(new BigNumber(distributionPhp)),
+        historicalRates,
       }
     }),
   )
