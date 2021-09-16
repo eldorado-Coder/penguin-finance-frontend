@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, ReactNode } from 'react'
-import { ResponsiveContainer, XAxis, Tooltip, AreaChart, Area } from 'recharts'
+import { ResponsiveContainer, XAxis, YAxis, Tooltip, AreaChart, Area } from 'recharts'
 import styled from 'styled-components'
 import Card from 'components/Card'
 import { RowBetween } from 'components/Row'
@@ -70,7 +70,7 @@ const Chart = ({
           margin={{
             top: 5,
             right: 30,
-            left: 20,
+            left: 0,
             bottom: 5,
           }}
           onMouseLeave={() => {
@@ -95,6 +95,7 @@ const Chart = ({
             tickFormatter={(time) => dayjs(time).format('DD')}
             minTickGap={10}
           />
+          <YAxis dataKey="value" axisLine={false} tickLine={false} />
           <Tooltip
             // cursor={{ stroke: theme.bg2 }}
             contentStyle={{ display: 'none' }}
