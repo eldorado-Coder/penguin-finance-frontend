@@ -80,7 +80,7 @@ const Chart = ({
         <CustomTooltipWrapper className="custom-tooltip">
           <CustomTooltipTitle>{date}</CustomTooltipTitle>
           <CustomTooltipContent className="label">
-            <CustomLabel>Rate:</CustomLabel>
+            <CustomLabel>{`Rate: `}</CustomLabel>
             <CustomValue>{rate}</CustomValue>
           </CustomTooltipContent>
         </CustomTooltipWrapper>
@@ -104,7 +104,7 @@ const Chart = ({
           margin={{
             top: 5,
             right: 20,
-            left: 0,
+            left: -10,
             bottom: 5,
           }}
           onMouseLeave={() => {

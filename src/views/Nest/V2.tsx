@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { Route, useRouteMatch } from 'react-router-dom'
 import BigNumber from 'bignumber.js'
+import dayjs from 'dayjs'
 import styled from 'styled-components'
 import { useWeb3React } from '@web3-react/core'
 import { Card, Flex, Text, Button, useMatchBreakpoints } from 'penguinfinance-uikit2'
@@ -14,12 +15,13 @@ import roundDown from 'utils/roundDown'
 import CardValue from 'components/CardValue'
 import SvgIcon from 'components/SvgIcon'
 import LineChart from 'components/LineChart'
-import CHART_DATA from 'views/Info/data'
+import { getPenguinFirstStakeTime } from 'subgraph/utils'
 import NestCard from './components/NestCard'
 
 const NestV2: React.FC = () => {
   const [liquidityHover, setLiquidityHover] = useState<number | undefined>()
   const [leftLabel, setLeftLabel] = useState<string | undefined>()
+  const [firstStakedTime, setFirstStakedTime] = useState<number>(0)
 
   const { path } = useRouteMatch()
   const { account } = useWeb3React()
@@ -58,6 +60,20 @@ const NestV2: React.FC = () => {
   const handleLearnMore = () => {
     window.open('https://docs.penguinfinance.io/summary/penguin-nests-staking-and-fee-collection', '_blank')
   }
+
+  const fetchStakedPefiBalance = useCallback(async () => {
+    const _firstStakedTime = await getPenguinFirstStakeTime(account)
+    if (_firstStakedTime) {
+      setFirstStakedTime(_firstStakedTime)
+    }
+  }, [account])
+
+  useEffect(() => {
+    fetchStakedPefiBalance()
+  }, [account, fetchStakedPefiBalance])
+
+  const now = dayjs().unix()
+  const diffDays = firstStakedTime > 0 ? Math.round((now - firstStakedTime) / 86400) : 0
 
   return (
     <Flex justifyContent="center">
@@ -131,7 +147,6 @@ const NestV2: React.FC = () => {
             </RatioCard>
             <StyledCard mb="16px">
               <LineChart
-                // data={CHART_DATA}
                 data={historicalRates}
                 height={240}
                 minHeight={240}
@@ -239,8 +254,8 @@ const NestV2: React.FC = () => {
                     </Balance>
                   </Flex>
                   <BalanceText fontSize="14px">
-                    in <span>85 days.</span>
-                    {`You've deposited `}
+                    in <span>{`${diffDays} days`}</span>
+                    {`. You've deposited `}
                     <span>{`${totalDepositAmount} PEFI`}</span>
                     {' and withdrawn '}
                     <span>{`${totalWithdrawAmount} PEFI`}</span>
