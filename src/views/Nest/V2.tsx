@@ -44,7 +44,10 @@ const NestV2: React.FC = () => {
   const tvl = nestPool.totalSupply
     ? iPefiToPefiRatio * pefiPrice.toNumber() * getBalanceNumber(nestPool.totalSupply)
     : 0
-  const historicalRates = nestPool.historicalRates || []
+  const historicalRates = nestPool.historicalRates.map(rate => ({
+    ...rate,
+    value: rate.value - 1
+  })) || []
   const totalProfitAmount = account ? roundDown(getBalanceNumber(new BigNumber(userData?.profitAmount || 0)), 2) : 0
   const totalDepositAmount = account ? roundDown(getBalanceNumber(new BigNumber(userData?.depositAmount || 0)), 2) : 0
   const totalWithdrawAmount = account ? roundDown(getBalanceNumber(new BigNumber(userData?.withdrawAmount || 0)), 2) : 0
