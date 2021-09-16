@@ -1,12 +1,12 @@
 import React, { Dispatch, SetStateAction, ReactNode } from 'react'
-import { ResponsiveContainer, XAxis, Tooltip, AreaChart, Area } from 'recharts'
+import { ResponsiveContainer, XAxis, YAxis, Tooltip, AreaChart, Area, TooltipProps } from 'recharts'
+import { ValueType, NameType } from 'recharts/src/component/DefaultTooltipContent'
 import styled from 'styled-components'
-import Card from 'components/Card'
-import { RowBetween } from 'components/Row'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
-import useTheme from 'hooks/useTheme'
 import { darken } from 'polished'
+import Card from 'components/Card'
+import { RowBetween } from 'components/Row'
 
 dayjs.extend(utc)
 
@@ -22,6 +22,25 @@ const Wrapper = styled(Card)<{ height?: number }>`
     font-size: 1rem;
   }
 `
+
+const CustomTooltipWrapper = styled.div`
+  border: 1px solid green;
+  border-color: ${({ theme }) => (theme.isDark ? theme.colors.secondary : 'white')};
+  padding: 8px;
+  background: ${({ theme }) => (theme.isDark ? 'white' : theme.colors.secondary)};
+`
+
+const CustomTooltipTitle = styled.div`
+  color: ${({ theme }) => (theme.isDark ? theme.colors.secondary : 'white')};
+  line-height: 1.2;
+`
+
+const CustomTooltipContent = styled.div`
+  color: ${({ theme }) => theme.colors.red};
+`
+
+const CustomLabel = styled.span``
+const CustomValue = styled.span``
 
 export type LineChartProps = {
   data: any[]
@@ -53,8 +72,23 @@ const Chart = ({
   minHeight = DEFAULT_HEIGHT,
   ...rest
 }: LineChartProps) => {
-  const theme = useTheme()
-  const parsedValue = value
+  const CustomTooltip = ({ active, payload, label: label1 }: TooltipProps<ValueType, NameType>) => {
+    if (active) {
+      const rate = (Number(payload?.[0].value) + 1).toFixed(2)
+      const date = dayjs(label1).format('YYYY-MM-DD')
+      return (
+        <CustomTooltipWrapper className="custom-tooltip">
+          <CustomTooltipTitle>{date}</CustomTooltipTitle>
+          <CustomTooltipContent className="label">
+            <CustomLabel>{`Rate: `}</CustomLabel>
+            <CustomValue>{rate}</CustomValue>
+          </CustomTooltipContent>
+        </CustomTooltipWrapper>
+      )
+    }
+
+    return null
+  }
 
   return (
     <Wrapper minHeight={minHeight} height={height} {...rest}>
@@ -70,7 +104,7 @@ const Chart = ({
           margin={{
             top: 5,
             right: 20,
-            left: 20,
+            left: -10,
             bottom: 5,
           }}
           onMouseLeave={() => {
@@ -95,17 +129,15 @@ const Chart = ({
             tickFormatter={(time) => dayjs(time).format('DD')}
             minTickGap={10}
           />
-          <Tooltip
-            // cursor={{ stroke: theme.bg2 }}
-            contentStyle={{ display: 'none' }}
-            formatter={(_value: number, name: string, props: { payload: { time: string; value: number } }) => {
-              if (setValue && parsedValue !== props.payload.value) {
-                setValue(props.payload.value)
-              }
-              const formattedTime = dayjs(props.payload.time).format('MMM D, YYYY')
-              if (setLabel && label !== formattedTime) setLabel(formattedTime)
+          <YAxis
+            dataKey="value"
+            axisLine={false}
+            tickLine={false}
+            tickFormatter={(v) => {
+              return v + 1
             }}
           />
+          <Tooltip content={<CustomTooltip />} />
           <Area dataKey="value" type="monotone" stroke={color} fill="url(#gradient)" strokeWidth={2} />
         </AreaChart>
       </ResponsiveContainer>
