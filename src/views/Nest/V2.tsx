@@ -27,7 +27,7 @@ const NestV2: React.FC = () => {
   const { account } = useWeb3React()
   const pools = useV2Pools(account)
   const pefiPrice = usePricePefiUsdt()
-  const { isXl } = useMatchBreakpoints()
+  const { isXl, isXs, isSm } = useMatchBreakpoints()
   const isMobile = !isXl
   const [finishedPools, openPools] = partition(pools, (pool) => pool.isFinished)
 
@@ -90,10 +90,10 @@ const NestV2: React.FC = () => {
                 </Text>
               </Flex>
               <Flex justifyContent="space-between" alignItems="center">
-                <ViewStatsButton scale="sm" onClick={handleLearnMore}>
+                <ViewStatsButton isMobile={isXs || isSm} scale="sm" onClick={handleLearnMore}>
                   Learn More
                 </ViewStatsButton>
-                <APYLabel>{`${Number(paperHandsPenalty).toFixed(2)}% Paper Hands Penalty`}</APYLabel>
+                <APYLabel fontSize={(isXs || isSm) ? '14px' : '16px'}>{`${Number(paperHandsPenalty).toFixed(2)}% Paper Hands Penalty`}</APYLabel>
               </Flex>
             </APYCard>
             <Route exact path={`${path}`}>
@@ -112,7 +112,7 @@ const NestV2: React.FC = () => {
           <div>
             <RatioCard padding="16px 24px 16px" mb="16px">
               <Flex justifyContent="space-between">
-                <Flex flexWrap="wrap">
+                <Flex flexWrap="wrap" flexDirection={(isXs || isSm) ? 'column' : 'row'}>
                   <Flex flexDirection="column" mr="40px">
                     <Text fontSize="20px" color="white" fontWeight={500}>
                       Current Ratio
@@ -126,7 +126,7 @@ const NestV2: React.FC = () => {
                       </Text>
                     </Flex>
                   </Flex>
-                  <Flex flexDirection="column">
+                  <YesterdayRatio flexDirection="column">
                     <Label fontSize="20px" color="white" fontWeight={500}>
                       {`Yesterday's Ratio `}
                     </Label>
@@ -138,7 +138,7 @@ const NestV2: React.FC = () => {
                         iPEFI/PEFI
                       </Text>
                     </Flex>
-                  </Flex>
+                  </YesterdayRatio>
                 </Flex>
                 <InfoIconWrapper>
                   <SvgIcon src={`${process.env.PUBLIC_URL}/images/home/info.svg`} width="25px" height="25px" />
@@ -275,7 +275,7 @@ const NestV2: React.FC = () => {
                         value={roundDown(tvl, 0)}
                         decimals={0}
                         lineHeight="1"
-                        prefix="$ "
+                        prefix="$"
                       />
                     </Balance>
                   </Flex>
@@ -393,11 +393,13 @@ const NestDetailsContainer = styled.div`
   width: 100%;
 `
 
-const ViewStatsButton = styled(Button)`
+const ViewStatsButton = styled(Button)<{ isMobile?: boolean }>`
   background: white;
   border-radius: 4px;
   font-weight: 400;
-  margin-right: 16px;
+  margin-right: ${({ isMobile }) => isMobile ? '16px' : '8px'};
+  padding: ${({ isMobile }) => isMobile && '10px'};
+  font-size: ${({ isMobile }) => isMobile ? '14px' : '16px'};
   white-space: nowrap;
   color: ${({ theme }) => theme.colors.secondary};
 `
@@ -484,5 +486,12 @@ const WealthContainer = styled.div`
     width: calc(100% - 200px);
   }
 `
+
+const YesterdayRatio = styled(Flex)`
+  margin-top: 16px;
+  ${({ theme }) => theme.mediaQueries.sm} {
+    margin-top: 0;
+  }
+`;
 
 export default NestV2
