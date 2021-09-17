@@ -535,6 +535,8 @@ const v2Farms: V2FarmConfig[] = [
     type: 'Sushi',
     name: 'pendingPEFI',
     displayedDecimals: 2,
+    infoLink: 'https://penguin-finance.medium.com/introducing-pefi-sushi-e-the-first-sushiswap-lp-yield-farm-on-avalanche-fdfd64f3b3a1',
+    guideLink: 'https://penguin-finance.medium.com/introducing-pefi-sushi-e-the-first-sushiswap-lp-yield-farm-on-avalanche-fdfd64f3b3a1'
   },
 ]
 
