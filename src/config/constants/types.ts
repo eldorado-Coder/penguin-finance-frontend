@@ -74,7 +74,9 @@ export interface FarmConfig {
   name?: string
   strategyAddress?: string
   stakingAddress?: string
-  swapAddresses?: Address
+  swapAddresses?: Address,
+  infoLink?: string,
+  guideLink?: string
 }
 
 export interface V2FarmConfig {
@@ -102,7 +104,9 @@ export interface V2FarmConfig {
   swapAddresses?: Address
   pangolinRewardPoolAddresses?: Address
   lpPrice?: number
-  displayedDecimals?: number
+  displayedDecimals?: number,
+  infoLink?: string,
+  guideLink?: string
 }
 
 export interface LPConfig {

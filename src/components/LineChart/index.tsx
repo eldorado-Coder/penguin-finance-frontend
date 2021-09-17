@@ -59,7 +59,7 @@ export type LineChartProps = {
 
 const Chart = ({
   data,
-  color = '#56B2A4',
+  color = '#d4444c',
   value,
   label,
   setValue,
@@ -74,8 +74,8 @@ const Chart = ({
 }: LineChartProps) => {
   const CustomTooltip = ({ active, payload, label: label1 }: TooltipProps<ValueType, NameType>) => {
     if (active) {
-      const rate = (Number(payload?.[0].value) + 1).toFixed(2)
-      const date = dayjs(label1).format('YYYY-MM-DD')
+      const rate = (Number(payload?.[0].value) + 1).toFixed(4)
+      const date = dayjs(label1).format('YYYY/MM/DD')
       return (
         <CustomTooltipWrapper className="custom-tooltip">
           <CustomTooltipTitle>{date}</CustomTooltipTitle>

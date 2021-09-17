@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Text, Image, Tag, Flex } from 'penguinfinance-uikit2'
+import SvgIcon from 'components/SvgIcon';
 import { FarmCardProps } from '../types'
 
 const Container = styled.div`
@@ -57,16 +58,36 @@ const StyledImage = styled(Image)<{ isMobile?: boolean }>`
   height: 64px;
 `
 
+const InfoIconWrapper = styled.div`
+  margin-top: 2px;
+  margin-left: 4px;
+  svg {
+    cursor: pointer;
+    path {
+      fill: ${({ theme }) => (theme.isDark ? 'white' : theme.colors.secondary)};
+    }
+  }
+`;
+
 const Farm: React.FunctionComponent<FarmCardProps> = ({ farm }) => {
   const farmImage = farm.lpSymbol.replace(' LP', '').toLocaleLowerCase()
   const farmType = farm.type === 'Joe' ? 'Trader Joe' : farm.type
+
+  const handleViewInfo = () => {
+    window.open(farm.infoLink, '_blank');
+  };
 
   return (
     <Container>
       <StyledImage src={`/images/farms-v2/pools/${farmImage}.svg`} alt={farm.tokenSymbol} width={56} height={56} />
       <FarmLabelWrapper>
-        <Flex>
+        <Flex alignItems='center'>
           <FarmLabel bold>{farm.lpSymbol.replace('Joe ', '').replace('Sushi ', '').replace(' LP', '')}</FarmLabel>
+          {farm.infoLink && 
+            <InfoIconWrapper onClick={handleViewInfo}>
+              <SvgIcon src={`${process.env.PUBLIC_URL}/images/farms-v2/info.svg`} width="16px" height="16px" />
+            </InfoIconWrapper>
+          }
         </Flex>
         <Flex mt="4px">
           <MultiplierTag variant="primary">{`${farm.multiplier || 1}X`}</MultiplierTag>
