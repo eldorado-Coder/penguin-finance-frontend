@@ -134,7 +134,7 @@ const Chart = ({
             axisLine={false}
             tickLine={false}
             tickFormatter={(v) => {
-              return v + 1
+              return Number(v + 1).toFixed(2)
             }}
           />
           <Tooltip content={<CustomTooltip />} />
