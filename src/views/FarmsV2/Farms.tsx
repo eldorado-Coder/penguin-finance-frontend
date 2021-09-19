@@ -183,6 +183,7 @@ const PROJECT_LIST = [
   { src: '/images/farms-v2/joe.svg', name: 'Joe' },
   { src: '/images/farms-v2/pangolin.svg', name: 'Pangolin' },
   { src: '/images/farms-v2/sushi.svg', name: 'Sushi' },
+  { src: '/images/farms-v2/lydia.svg', name: 'Lydia' },
 ]
 
 const Farms: React.FC = () => {
