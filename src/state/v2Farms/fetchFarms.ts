@@ -6,7 +6,7 @@ import v2FarmsConfig from 'config/constants/v2Farms'
 import { getAddress, getV2MasterChefAddress } from 'utils/addressHelpers'
 import getV2FarmMasterChefAbi from 'utils/getV2FarmMasterChefAbi'
 import getV2FarmMasterChefAddress from 'utils/getV2FarmMasterChefAddress'
-import { getPangolinLpPrice, getJoeLpPrice, getSushiLpPrice } from 'utils/price'
+import { getPangolinLpPrice, getJoeLpPrice, getSushiLpPrice, getLydiaLpPrice } from 'utils/price'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { getPangolinRewardPoolApr, getJoeRewardPoolApr } from 'utils/apyHelpers'
 import { NON_ADDRESS } from 'config'
@@ -106,6 +106,9 @@ export const fetchFarms = async () => {
         } else if (farmConfig.type === 'Sushi') {
           lpPrice = await getSushiLpPrice(lpAddress)
           totalLiquidityInUsd = lpPrice * getBalanceNumber(new BigNumber(totalLP))
+        } else if (farmConfig.type === 'Lydia') {
+          lpPrice = await getLydiaLpPrice(lpAddress)
+          totalLiquidityInUsd = lpPrice * getBalanceNumber(new BigNumber(totalLP))
         }
 
         let pngApr = 0
@@ -119,6 +122,14 @@ export const fetchFarms = async () => {
           const res = await getJoeRewardPoolApr(getAddress(farmConfig.lpAddresses))
           pngApr = res.apr
           pngDailyApr = res.dailyApr
+        }
+        if (farmConfig.type === 'Sushi') {
+          pngApr = 0
+          pngDailyApr = 0
+        }
+        if (farmConfig.type === 'Lydia') {
+          pngApr = 0
+          pngDailyApr = 0
         }
 
         return {

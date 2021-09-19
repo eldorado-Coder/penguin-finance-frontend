@@ -2,6 +2,7 @@ import Axios from 'axios'
 import { getPair as getPangolinPair } from 'subgraph/utils/pangolin'
 import { getPair as getJoePair } from 'subgraph/utils/joe'
 import { getPair as getSushiPair } from 'subgraph/utils/sushi'
+import { getPair as getLydiaPair } from 'subgraph/utils/lydia'
 import { appendParams } from 'utils/axios'
 import { COINGECKO_API_ENDPOINT } from 'config'
 
@@ -39,5 +40,11 @@ export const getSushiLpPrice = async (address) => {
   // only for sushi.e-pefi
   const token1Price = await getTokenPriceFromCoingecko('penguin-finance')
   const price = (2 * (token1Price * Number(pair.reserve1))) / Number(pair.totalSupply)
+  return price || 1
+}
+
+export const getLydiaLpPrice = async (address) => {
+  const pair = await getLydiaPair(address)
+  const price = Number(pair.reserveUSD) / Number(pair.totalSupply)
   return price || 1
 }
