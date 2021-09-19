@@ -79,7 +79,7 @@ const UnstakeLPForm: React.FC<DepositModalProps> = ({ max, tokenName = '', accou
           onSelectMax={handleSelectMax}
           onChange={handleChange}
           max={fullBalance}
-          symbol={tokenName.replace('Joe ', '').replace('Sushi ', '').replace(' LP', '')}
+          symbol={tokenName.replace('Joe ', '').replace('Lydia ', '').replace('Sushi ', '').replace(' LP', '')}
         />
       </InputContainer>
       <ActionContainer>

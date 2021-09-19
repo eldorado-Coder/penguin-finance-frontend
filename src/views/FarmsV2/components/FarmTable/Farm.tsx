@@ -84,7 +84,9 @@ const Farm: React.FunctionComponent<FarmCardProps> = ({ farm }) => {
       <StyledImage src={`/images/farms-v2/pools/${farmImage}.svg`} alt={farm.tokenSymbol} width={56} height={56} />
       <FarmLabelWrapper>
         <Flex alignItems="center">
-          <FarmLabel bold>{farm.lpSymbol.replace('Joe ', '').replace('Sushi ', '').replace(' LP', '')}</FarmLabel>
+          <FarmLabel bold>
+            {farm.lpSymbol.replace('Joe ', '').replace('Lydia ', '').replace('Sushi ', '').replace(' LP', '')}
+          </FarmLabel>
           {farm.infoLink && (
             <InfoIconWrapper onClick={handleViewInfo}>
               <SvgIcon src={`${process.env.PUBLIC_URL}/images/farms-v2/info.svg`} width="16px" height="16px" />
