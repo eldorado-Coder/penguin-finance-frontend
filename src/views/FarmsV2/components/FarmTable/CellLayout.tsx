@@ -15,13 +15,13 @@ const ContentContainer = styled.div`
 `
 
 interface CellLayoutProps {
-  label?: string,
+  label?: string
   alignItems?: string
 }
 
 const CellLayout: React.FC<CellLayoutProps> = ({ label = '', children, alignItems }) => {
   return (
-    <Flex flexDirection='column' alignItems={alignItems || 'flex-start'}>
+    <Flex flexDirection="column" alignItems={alignItems || 'flex-start'}>
       {label && <Label>{label}</Label>}
       <ContentContainer>{children}</ContentContainer>
     </Flex>

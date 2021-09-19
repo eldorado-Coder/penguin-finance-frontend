@@ -229,7 +229,7 @@ const Farms: React.FC = () => {
     const pngApr = getApr(pngDailyApr)
     const pefiApr = getApr(pefiDailyApr) === Infinity ? 999999 : getApr(pefiDailyApr)
 
-    return { ...farm, pefiDailyApr, apr: pngApr + pefiApr, apy: pefiApr + pngApr }
+    return { ...farm, pefiDailyApr, pefiApr, apr: pngApr + pefiApr, apy: pefiApr + pngApr }
   })
 
   const filteredFarms = useMemo(() => {

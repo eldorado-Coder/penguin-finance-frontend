@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useMatchBreakpoints, Flex, Text } from 'penguinfinance-uikit2'
+import ReactTooltip from 'react-tooltip'
 import { useV2FarmUser } from 'state/hooks'
 import useDelayedUnmount from 'hooks/useDelayedUnmount'
 import useAssets from 'hooks/useAssets'
@@ -122,6 +123,41 @@ const TableBody = styled.tbody`
   }
 `
 
+// tooltip
+const CustomToolTipOrigin = styled.div``
+
+const CustomAprToolTip = styled(ReactTooltip)<{ index: number }>`
+  width: 100% !important;
+  max-width: 320px !important;
+  background: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#322C59!important')};
+  box-shadow: ${(props) => `${props.theme.card.boxShadow}!important`};
+  color: ${({ theme }) => (theme.isDark ? '#322C59!important' : '#ffffff!important')};
+  opacity: 1 !important;
+  padding: 0px 12px !important;
+  font-size: 16px !important;
+  border: 2px solid #fff !important;
+  border-radius: 16px !important;
+  margin-top: 0px !important;
+  > div {
+    width: 100%;
+    white-space: pre-wrap !important;
+  }
+  p {
+    margin-bottom: -20px !important;
+    &:last-child {
+      margin-bottom: 0px !important;
+    }
+  }
+  &:before {
+    border-top-color: #ffffff !important;
+    border-bottom-color: #ffffff !important;
+  }
+  &:after {
+    border-top-color: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#322C59')};
+    border-bottom-color: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#322C59')};
+  }
+`
+
 const TableWrapper = styled.div<{ shouldRenderChild?: boolean }>`
   padding: 0 8px;
   margin-bottom: ${({ shouldRenderChild }) => shouldRenderChild && '8px'};
@@ -140,7 +176,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
   const shouldRenderChild = useDelayedUnmount(actionPanelExpanded, 300)
   const { isXl } = useMatchBreakpoints()
   const { getTokenLogo } = useAssets()
-  const { isDark } = useTheme()
+  const { isDark, theme } = useTheme()
 
   const { pendingTokens } = farm
   const pendingTokensWithLogo =
@@ -158,6 +194,40 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
   const isMobile = !isXl
   const tableSchema = isMobile ? MobileColumnSchema : DesktopColumnSchema
   const columnNames = tableSchema.map((column) => column.name)
+
+  const getAPRTooltip = () => {
+    let additionalAprLabel = ''
+    if (farm.type === 'Pangolin') {
+      additionalAprLabel = 'Pangolin'
+    }
+    if (farm.type === 'Joe') {
+      additionalAprLabel = 'Trader Joe'
+    }
+    if (farm.type === 'Sushi') {
+      additionalAprLabel = 'Sushiswap'
+    }
+    if (farm.type === 'Lydia') {
+      additionalAprLabel = 'Lydia Finance'
+    }
+    const mainApr = farm.pefiApr || 0
+    const additionalApr = farm.pngApr || 0
+    const totalApr = farm.apr || 0
+
+    return `
+      <div style="display: flex; width: 100%; align-items: center;">
+        <div style="width: 60%; text-align: center;">
+          <p>Penguin Finance</p>
+          <p>${additionalAprLabel}</p>
+          <p>Total APR</p>
+        </div>
+        <div style="margin-left: 5px; padding-right: 5px; ">
+          <p style="font-weight: 500">${(mainApr * 100).toFixed(2)}% APR</p>
+          <p style="font-weight: 500">${(additionalApr * 100).toFixed(2)}% APR</p>
+          <p style="color: ${theme.colors.red}; font-weight: 500">${(totalApr * 100).toFixed(2)}% APR</p>
+        </div>
+      </div>
+    `
+  }
 
   const handleRenderRow = () => {
     if (!isMobile) {
@@ -191,19 +261,30 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
                   <td className="apr" key={key}>
                     <CellInner>
                       <CellLayout label="APR">
-                        {/* <Text color='textSubtle'>TBD</Text> */}
-                        <AprBalanceWrapper>
-                          <Balance
-                            fontSize="16px"
-                            fontWeight="600"
-                            color={isDark ? '#C74F51' : 'red'}
-                            suffix="%"
-                            decimals={2}
-                            value={Number(farmApr) || 0}
-                          />
-                        </AprBalanceWrapper>
+                        <CustomToolTipOrigin data-for={`apr-tooltip-${index}`} data-tip={getAPRTooltip()}>
+                          <AprBalanceWrapper>
+                            <Balance
+                              fontSize="16px"
+                              fontWeight="600"
+                              color={isDark ? '#C74F51' : 'red'}
+                              suffix="%"
+                              decimals={2}
+                              value={Number(farmApr) || 0}
+                            />
+                          </AprBalanceWrapper>
+                        </CustomToolTipOrigin>
                       </CellLayout>
                     </CellInner>
+                    <CustomAprToolTip
+                      id={`apr-tooltip-${index}`}
+                      wrapper="div"
+                      delayHide={0}
+                      effect="solid"
+                      index={index}
+                      multiline
+                      place="top"
+                      html
+                    />
                   </td>
                 )
               case 'liquidity':

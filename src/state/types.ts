@@ -71,6 +71,7 @@ export interface V2Farm extends FarmConfig {
   totalLiquidityInUsd?: number
   pngApr?: number
   pngDailyApr?: number
+  pefiApr?: number
   apr?: number
   apy?: number
   displayedDecimals?: number
