@@ -101,6 +101,10 @@ export const getJoeRewardPoolApr = async (address) => {
   if (address.toLowerCase() === '0x63abe32d0ee76c05a11838722a63e012008416e6') {
     apr = 0.1921
   }
+  // joe-avax
+  if (address.toLowerCase() === '0x454e67025631c065d3cfad6d71e6892f74487a15') {
+    apr = 1.33
+  }
   return { apr, dailyApr: apr / 365 }
 }
 
