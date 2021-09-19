@@ -103,14 +103,13 @@ const StakeLPForm: React.FC<DepositModalProps> = ({
           onSelectMax={handleSelectMax}
           onChange={handleChange}
           max={fullBalance}
-          symbol={tokenName.replace('Joe ', '').replace('Sushi ', '').replace(' LP', '')}
+          symbol={tokenName.replace('Joe ', '').replace('Lydia ', '').replace('Sushi ', '').replace(' LP', '')}
         />
-        <Flex justifyContent={farm.guideLink ? 'space-between' : "flex-end"}>
-          {farm.guideLink && 
-            <StyledLinkExternal href={farm.guideLink}>SUSHI LP Guide</StyledLinkExternal>
-          }
+        <Flex justifyContent={farm.guideLink ? 'space-between' : 'flex-end'}>
+          {farm.guideLink && <StyledLinkExternal href={farm.guideLink}>SUSHI LP Guide</StyledLinkExternal>}
           <StyledLinkExternal href={addLiquidityUrl}>{`Get ${tokenName
             .replace('Joe ', '')
+            .replace('Lydia ', '')
             .replace('Sushi ', '')}`}</StyledLinkExternal>
         </Flex>
       </InputContainer>
