@@ -104,6 +104,20 @@ export const getJoeRewardPoolApr = async (address) => {
   return { apr, dailyApr: apr / 365 }
 }
 
+// lydia LP
+export const getLydiaRewardPoolApr = async (address) => {
+  let apr = 0
+  // pefi-lyd
+  if (address === '0xcc592739c6c64f797e46cd00f12a6f15c2df1c04') {
+    apr = 1.8862
+  }
+  // pefi-usdt.e
+  if (address === '0xdb57a10b415fb4f246fca159bb9b98ad0b126a71') {
+    apr = 3.7411
+  }
+  return { apr, dailyApr: apr / 365 }
+}
+
 export const getApy = (dailyApr = 0) => {
   const staticFee = 0
   return (1 + dailyApr) ** DAYS_PER_YEAR - 1 + staticFee
