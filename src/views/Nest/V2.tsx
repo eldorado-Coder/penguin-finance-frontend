@@ -72,6 +72,10 @@ const NestV2: React.FC = () => {
     fetchStakedPefiBalance()
   }, [account, fetchStakedPefiBalance])
 
+  const onClickAdCard = () => {
+    window.open('https://twitter.com/penguin_defi/status/1431640280063750155', '_blank')
+  }
+
   const now = dayjs().unix()
   const diffDays = firstStakedTime > 0 ? Math.round((now - firstStakedTime) / 86400) : 0
 
@@ -110,7 +114,7 @@ const NestV2: React.FC = () => {
                 <NestCard key={pool.sousId} pool={pool} isMainPool />
               ))}
             </Route>
-            <AdCard />
+            <AdCard onClick={onClickAdCard} />
           </LeftCardsContainer>
           <div>
             <RatioCard padding="16px 24px 16px" mb="16px">
