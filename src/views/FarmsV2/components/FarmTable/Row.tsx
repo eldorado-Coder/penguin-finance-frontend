@@ -128,12 +128,12 @@ const CustomToolTipOrigin = styled.div``
 
 const CustomAprToolTip = styled(ReactTooltip)<{ index: number }>`
   width: 100% !important;
-  max-width: 320px !important;
+  max-width: 280px !important;
   background: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#322C59!important')};
   box-shadow: ${(props) => `${props.theme.card.boxShadow}!important`};
   color: ${({ theme }) => (theme.isDark ? '#322C59!important' : '#ffffff!important')};
   opacity: 1 !important;
-  padding: 0px 12px !important;
+  padding: 0px 8px !important;
   font-size: 16px !important;
   border: 2px solid #fff !important;
   border-radius: 16px !important;
@@ -144,8 +144,11 @@ const CustomAprToolTip = styled(ReactTooltip)<{ index: number }>`
   }
   p {
     margin-bottom: -20px !important;
+    &:first-child {
+      margin-top: -20px !important;
+    }
     &:last-child {
-      margin-bottom: 0px !important;
+      margin-bottom: -20px !important;
     }
   }
   &:before {
