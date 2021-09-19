@@ -72,6 +72,10 @@ const NestV2: React.FC = () => {
     fetchStakedPefiBalance()
   }, [account, fetchStakedPefiBalance])
 
+  const onClickAdCard = () => {
+    window.open('https://twitter.com/penguin_defi/status/1431640280063750155', '_blank')
+  }
+
   const now = dayjs().unix()
   const diffDays = firstStakedTime > 0 ? Math.round((now - firstStakedTime) / 86400) : 0
 
@@ -93,7 +97,9 @@ const NestV2: React.FC = () => {
                 <ViewStatsButton isMobile={isXs || isSm} scale="sm" onClick={handleLearnMore}>
                   Learn More
                 </ViewStatsButton>
-                <APYLabel fontSize={(isXs || isSm) ? '14px' : '16px'}>{`${Number(paperHandsPenalty).toFixed(2)}% Paper Hands Penalty`}</APYLabel>
+                <APYLabel fontSize={isXs || isSm ? '14px' : '16px'}>{`${Number(paperHandsPenalty).toFixed(
+                  2,
+                )}% Paper Hands Penalty`}</APYLabel>
               </Flex>
             </APYCard>
             <Route exact path={`${path}`}>
@@ -108,11 +114,12 @@ const NestV2: React.FC = () => {
                 <NestCard key={pool.sousId} pool={pool} isMainPool />
               ))}
             </Route>
+            <AdCard onClick={onClickAdCard} />
           </LeftCardsContainer>
           <div>
             <RatioCard padding="16px 24px 16px" mb="16px">
               <Flex justifyContent="space-between">
-                <Flex flexWrap="wrap" flexDirection={(isXs || isSm) ? 'column' : 'row'}>
+                <Flex flexWrap="wrap" flexDirection={isXs || isSm ? 'column' : 'row'}>
                   <Flex flexDirection="column" mr="40px">
                     <Text fontSize="20px" color="white" fontWeight={500}>
                       Current Ratio
@@ -156,9 +163,9 @@ const NestV2: React.FC = () => {
                 setLabel={setLeftLabel}
               />
             </StyledCard>
-            <BalanceCard mb="16px">
+            <BalanceCard>
               <BalanceContainer padding="8px 24px 16px">
-                <Flex width="100%" flexDirection={isMobile ? 'row' : 'column'} justifyContent="space-between">
+                <Flex width="100%" flexDirection={isSm ? 'row' : 'column'} justifyContent="space-between">
                   <div>
                     <BalanceLabel>Balance</BalanceLabel>
                     <Flex mt="4px" alignItems="center">
@@ -342,6 +349,24 @@ const APYCard = styled(Card)`
   }
 `
 
+const AdCard = styled(Card)`
+  background: ${({ theme }) => (theme.isDark ? '#30264F' : theme.colors.secondary)};
+  border-radius: 8px;
+  margin-top: 16px;
+  background-size: cover;
+  background-position: center center;
+  background-image: url('/images/pools/boo_finance_intro.png');
+  min-height: 180px;
+  cursor: pointer;
+  ${({ theme }) => theme.mediaQueries.sm} {
+    min-height: 300px;
+  }
+  ${({ theme }) => theme.mediaQueries.md} {
+    max-width: 460px;
+    min-height: 224px;
+  }
+`
+
 const RatioCard = styled(Card)`
   background: #d4444c;
   border-radius: 8px;
@@ -397,9 +422,9 @@ const ViewStatsButton = styled(Button)<{ isMobile?: boolean }>`
   background: white;
   border-radius: 4px;
   font-weight: 400;
-  margin-right: ${({ isMobile }) => isMobile ? '16px' : '8px'};
+  margin-right: ${({ isMobile }) => (isMobile ? '16px' : '8px')};
   padding: ${({ isMobile }) => isMobile && '10px'};
-  font-size: ${({ isMobile }) => isMobile ? '14px' : '16px'};
+  font-size: ${({ isMobile }) => (isMobile ? '14px' : '16px')};
   white-space: nowrap;
   color: ${({ theme }) => theme.colors.secondary};
 `
@@ -481,7 +506,7 @@ const WealthCard = styled(Flex)`
 `
 
 const WealthContainer = styled.div`
-  with: 100%;
+  width: 100%;
   ${({ theme }) => theme.mediaQueries.md} {
     width: calc(100% - 200px);
   }
@@ -492,6 +517,6 @@ const YesterdayRatio = styled(Flex)`
   ${({ theme }) => theme.mediaQueries.sm} {
     margin-top: 0;
   }
-`;
+`
 
 export default NestV2

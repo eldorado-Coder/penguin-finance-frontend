@@ -24,6 +24,7 @@ interface Props {
   isFinished: boolean
   blocksUntilStart: number
   poolCategory: PoolCategory
+  isEmpty?: boolean
 }
 
 const StyledFooter = styled.div<{ isFinished: boolean }>`

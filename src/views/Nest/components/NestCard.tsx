@@ -40,6 +40,7 @@ const CardContent = styled.div`
 const CardAction = styled.div`
   background: ${(props) => props.theme.card.background};
   border-radius: 0 0 32px 32px;
+  min-height: 8px;
 `
 
 interface PoolWithApy extends Pool {
@@ -154,7 +155,7 @@ const NestCard: React.FC<HarvestProps> = ({ pool }) => {
         )}
       </CardContent>
       <CardAction>
-        <CardFooter
+        {/* <CardFooter
           penguinNestsGuideLink={penguinNestsGuideLink}
           totalPefiStaked={totalStaked}
           totalXPefiBalance={totalSupply}
@@ -162,7 +163,7 @@ const NestCard: React.FC<HarvestProps> = ({ pool }) => {
           isFinished={isFinished}
           blocksUntilStart={blocksUntilStart}
           poolCategory={poolCategory}
-        />
+        /> */}
       </CardAction>
     </StyledCard>
   )
