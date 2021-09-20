@@ -114,7 +114,7 @@ const NestV2: React.FC = () => {
                 <NestCard key={pool.sousId} pool={pool} isMainPool />
               ))}
             </Route>
-            <AdCard onClick={onClickAdCard} />
+            {/* <AdCard onClick={onClickAdCard} /> */}
           </LeftCardsContainer>
           <div>
             <RatioCard padding="16px 24px 16px" mb="16px">
@@ -147,9 +147,9 @@ const NestV2: React.FC = () => {
                     </Flex>
                   </YesterdayRatio>
                 </Flex>
-                <InfoIconWrapper>
+                {/* <InfoIconWrapper>
                   <SvgIcon src={`${process.env.PUBLIC_URL}/images/home/info.svg`} width="25px" height="25px" />
-                </InfoIconWrapper>
+                </InfoIconWrapper> */}
               </Flex>
             </RatioCard>
             <StyledCard mb="16px">
