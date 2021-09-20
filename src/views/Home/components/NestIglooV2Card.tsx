@@ -23,8 +23,7 @@ const NestIglooV2Card = () => {
   const { isXl } = useMatchBreakpoints()
   const isMobile = !isXl
   const onClickNestIglooV2Card = () => {
-    // history.push('/farms')
-    history.push('/')
+    history.push('/farms')
   }
 
   return (
