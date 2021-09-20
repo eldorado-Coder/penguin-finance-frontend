@@ -10,6 +10,7 @@ import PageLoader from 'components/PageLoader'
 import CurrentBlockWrapper from 'components/CurrentBlockWrapper'
 import GlobalCheckBullHiccupClaimStatus from 'views/Collectibles/components/GlobalCheckBullHiccupClaimStatus'
 import history from './routerHistory'
+import LaunchpadVideo from './views/LaunchpadVideo'
 
 // Route-based code splitting
 // Only pool is included in the main bundle because of it's the most visited page'
@@ -17,9 +18,10 @@ const Home = lazy(() => import('./views/Home'))
 const Farms = lazy(() => import('./views/Farms'))
 const FarmsV2 = lazy(() => import('./views/FarmsV2'))
 const Arena = lazy(() => import('./views/Arena'))
-// const Launchpad = lazy(() => import('./views/Launchpad'))
+const Launchpad = lazy(() => import('./views/Launchpad'))
 const LaunchpadWithVideo = lazy(() => import('./views/LaunchpadVideo'))
 const LaunchpadDistribution = lazy(() => import('./views/LaunchpadDistribution'))
+const LaunchpadBoofi = lazy(() => import('./views/LaunchpadBoofi'))
 const Emperor = lazy(() => import('./views/Emperor'))
 // const CovidEmperor = lazy(() => import('./views/CovidEmperor'))
 const Club = lazy(() => import('./views/Club'))
@@ -81,7 +83,10 @@ const App: React.FC = () => {
               <Info />
             </Route>
             <Route path="/launchpad">
-              <LaunchpadWithVideo />
+              <LaunchpadVideo />
+            </Route>
+            <Route path="/launchpad-boofi">
+              <LaunchpadBoofi />
             </Route>
             <Route path="/sherpa-launchpad">
               <LaunchpadDistribution />
