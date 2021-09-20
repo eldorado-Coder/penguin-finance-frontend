@@ -29,6 +29,20 @@ const tokens: Token[] = [
       43114: '0x6e84a6216ea6dacc71ee8e6b0a5b7322eebc0fdd',
     },
   },
+  {
+    symbol: 'LYD',
+    address: {
+      43113: '',
+      43114: '0x4c9b4e1ac6f24cde3660d5e4ef1ebf77c710c084',
+    },
+  },
+  {
+    symbol: 'Sushi.e',
+    address: {
+      43113: '',
+      43114: '0x37B608519F91f70F2EeB0e5Ed9AF4061722e4F76',
+    },
+  },
 ]
 
 export default tokens

@@ -12,6 +12,7 @@ export const PAIRS_SEARCH = ({ address }: { address?: string }) => {
       {
         reserveUSD
         totalSupply
+        reserve0
         reserve1
       }
     }`
