@@ -33,6 +33,13 @@ export const getJoeLpPrice = async (address) => {
   return price || 1
 }
 
+export const getJoePrice = async () => {
+  const joeAvaxPair = '0x454e67025631c065d3cfad6d71e6892f74487a15'
+  const pair = await getJoePair(joeAvaxPair)
+  const price = Number(pair.reserveUSD) / (2 * Number(pair.reserve0))
+  return price || 1
+}
+
 export const getSushiLpPrice = async (address) => {
   const pair = await getSushiPair(address)
 
