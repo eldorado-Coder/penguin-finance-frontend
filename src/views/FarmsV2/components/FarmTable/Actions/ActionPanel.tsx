@@ -12,6 +12,8 @@ import tokens from 'config/constants/tokens'
 import { getAddress } from 'utils/addressHelpers'
 import roundDown from 'utils/roundDown'
 import { usePricePefiUsdt, usePricePngUsdt, useV2Pools } from 'state/hooks'
+import useJoePrice from 'hooks/useJoePrice'
+import useTokenPrice from 'hooks/useTokenPrice'
 import { FarmCardProps } from '../../types'
 import StakePanel from './StakePanel'
 import AutoNesting from './AutoNesting'
@@ -207,11 +209,12 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
   const v2Nest = v2Pools.length > 0 ? v2Pools[0] : null
   const pefiPriceUsd = usePricePefiUsdt().toNumber()
   const pngPriceUsd = usePricePngUsdt().toNumber()
+  const joePriceUsd = useJoePrice()
+  const { lydPrice: lydPriceUsd, sushiPrice: sushiPriceUsd } = useTokenPrice()
   const iPefiToPefiRatio = v2Nest.currentExchangeRate || 1
   const iPefiPriceUsd = iPefiToPefiRatio * pefiPriceUsd
 
   const { isXl } = useMatchBreakpoints()
-  const isMobile = !isXl
   const { pendingTokens, userData, maxBips: maxAutoNestAllocation } = farm
   const userPendingTokens = userData ? userData.userPendingTokens : []
   const userShares = userData ? getBalanceNumber(userData.userShares) : 0
@@ -243,11 +246,12 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
 
   const getTokenPrice = (address) => {
     const rewardToken = tokens.find((row) => getAddress(row.address).toLowerCase() === address.toLowerCase())
-
     if (rewardToken && rewardToken.symbol === 'PEFI') return pefiPriceUsd
     if (rewardToken && rewardToken.symbol === 'iPEFI') return iPefiPriceUsd
     if (rewardToken && rewardToken.symbol === 'PNG') return pngPriceUsd
-    if (rewardToken && rewardToken.symbol === 'JOE') return 1.49
+    if (rewardToken && rewardToken.symbol === 'JOE') return joePriceUsd
+    if (rewardToken && rewardToken.symbol === 'LYD') return lydPriceUsd
+    if (rewardToken && rewardToken.symbol === 'Sushi.e') return sushiPriceUsd
     return 1
   }
 
