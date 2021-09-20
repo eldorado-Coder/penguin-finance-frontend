@@ -368,7 +368,7 @@ const AdCard = styled(Card)`
 `
 
 const RatioCard = styled(Card)`
-  background: #d4444c;
+  background: ${({ theme }) => theme.colors.red};
   border-radius: 8px;
   width: 100%;
   margin-top: 16px;
