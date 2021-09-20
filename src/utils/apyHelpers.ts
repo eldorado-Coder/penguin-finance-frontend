@@ -74,32 +74,50 @@ export const getPangolinRewardPoolApr = async (address) => {
 export const getJoeRewardPoolApr = async (address) => {
   let apr = 0
   // usdt.e-avax
-  if (address === '0xed8cbd9f0ce3c6986b22002f03c6475ceb7a6256') {
-    apr = 0.7429
+  if (address.toLowerCase() === '0xed8cbd9f0ce3c6986b22002f03c6475ceb7a6256') {
+    apr = 0.9921
   }
   // usdc.e-avax
-  if (address === '0xa389f9430876455c36478deea9769b7ca4e3ddb1') {
-    apr = 0.6507
+  if (address.toLowerCase() === '0xa389f9430876455c36478deea9769b7ca4e3ddb1') {
+    apr = 1.11
   }
   // pefi-avax
-  if (address === '0xb78c8238bd907c42be45aebdb4a8c8a5d7b49755') {
-    apr = 1.53
+  if (address.toLowerCase() === '0xb78c8238bd907c42be45aebdb4a8c8a5d7b49755') {
+    apr = 1.13
   }
   // eth.e-avax
   if (address.toLowerCase() === '0xfe15c2695f1f920da45c30aae47d11de51007af9') {
-    apr = 0.4811
+    apr = 0.8056
   }
   // dai.e-avax
   if (address.toLowerCase() === '0x87dee1cc9ffd464b79e058ba20387c1984aed86a') {
-    apr = 0.9901
+    apr = 0.9869
   }
   // wbtc.e-avax
   if (address.toLowerCase() === '0xd5a37dc5c9a396a03dd1136fc76a1a02b1c88ffa') {
-    apr = 0.5621
+    apr = 0.6638
   }
   // dai.e-usdc.e
   if (address.toLowerCase() === '0x63abe32d0ee76c05a11838722a63e012008416e6') {
-    apr = 0.1921
+    apr = 0.2503
+  }
+  // joe-avax
+  if (address.toLowerCase() === '0x454e67025631c065d3cfad6d71e6892f74487a15') {
+    apr = 1.37
+  }
+  return { apr, dailyApr: apr / 365 }
+}
+
+// lydia LP
+export const getLydiaRewardPoolApr = async (address) => {
+  let apr = 0
+  // pefi-lyd
+  if (address === '0xcc592739c6c64f797e46cd00f12a6f15c2df1c04') {
+    apr = 1.8862
+  }
+  // pefi-usdt.e
+  if (address === '0xdb57a10b415fb4f246fca159bb9b98ad0b126a71') {
+    apr = 3.7411
   }
   return { apr, dailyApr: apr / 365 }
 }

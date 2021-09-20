@@ -99,15 +99,17 @@ const StakeLPForm: React.FC<DepositModalProps> = ({
       <InputContainer>
         <LPTokenBalance fontSize="14px">{`Token Balance: ${roundDown(fullBalance, lpDecimals)} LP`}</LPTokenBalance>
         <TokenInput
-          value={roundDown(val, 2)}
+          value={roundDown(val, lpDecimals)}
           onSelectMax={handleSelectMax}
           onChange={handleChange}
           max={fullBalance}
-          symbol={tokenName.replace('Joe ', '').replace('Sushi ', '').replace(' LP', '')}
+          symbol={tokenName.replace('Joe ', '').replace('Lydia ', '').replace('Sushi ', '').replace(' LP', '')}
         />
-        <Flex justifyContent="flex-end">
+        <Flex justifyContent={farm.guideLink ? 'space-between' : 'flex-end'}>
+          {farm.guideLink && <StyledLinkExternal href={farm.guideLink}>SUSHI LP Guide</StyledLinkExternal>}
           <StyledLinkExternal href={addLiquidityUrl}>{`Get ${tokenName
             .replace('Joe ', '')
+            .replace('Lydia ', '')
             .replace('Sushi ', '')}`}</StyledLinkExternal>
         </Flex>
       </InputContainer>

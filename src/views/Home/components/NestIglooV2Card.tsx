@@ -13,7 +13,8 @@ const StyledNestIglooCardBg = styled.div`
   height: 100%;
   background-size: cover;
   background-position: center center;
-  background-image: url('/images/home/turbo_igloo.png');
+  /* background-image: url('/images/home/turbo_igloo.png'); */
+  background-image: url('/images/home/avalanche_autumn_is_coming.png');
   cursor: pointer;
 `
 

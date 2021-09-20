@@ -507,10 +507,38 @@ const v2Farms: V2FarmConfig[] = [
     name: 'pendingPEFI',
     displayedDecimals: 6,
   },
+  {
+    pid: 19,
+    lpSymbol: 'Joe JOE-AVAX LP',
+    lpAddresses: {
+      43113: '',
+      43114: '0x454e67025631c065d3cfad6d71e6892f74487a15',
+    },
+    strategyAddresses: {
+      43113: '',
+      43114: '0x16deef2cfb15711cd820eb81fc415474a2aa6e59',
+    },
+    tokenSymbol: 'JOE',
+    tokenAddresses: {
+      43113: '',
+      43114: '0x6e84a6216eA6dACC71eE8E6b0a5B7322EEbC0fDd',
+    },
+    pangolinRewardPoolAddresses: {
+      43113: '',
+      43114: '0x0000000000000000000000000000000000000000',
+    },
+    quoteTokenSymbol: QuoteToken.AVAX,
+    quoteTokenAddresses: contracts.wavax,
+    withdrawalFee: '0',
+    hardApy: '896.65%',
+    type: 'Joe',
+    name: 'pendingPEFI',
+    displayedDecimals: 6,
+  },
   // sushi
   {
     pid: 17,
-    lpSymbol: 'Sushi SUSHI.e-PEFI LP',
+    lpSymbol: 'Sushi PEFI-SUSHI.e LP',
     lpAddresses: {
       43113: '',
       43114: '0x24f01f3dcdee246567029bce8830a866c9cd2b1e',
@@ -535,6 +563,67 @@ const v2Farms: V2FarmConfig[] = [
     type: 'Sushi',
     name: 'pendingPEFI',
     displayedDecimals: 2,
+    infoLink:
+      'https://penguin-finance.medium.com/introducing-pefi-sushi-e-the-first-sushiswap-lp-yield-farm-on-avalanche-fdfd64f3b3a1',
+    guideLink:
+      'https://penguin-finance.medium.com/introducing-pefi-sushi-e-the-first-sushiswap-lp-yield-farm-on-avalanche-fdfd64f3b3a1',
+  },
+  // lydia
+  {
+    pid: 20,
+    lpSymbol: 'Lydia PEFI-USDT.e LP',
+    lpAddresses: {
+      43113: '',
+      43114: '0xdb57a10b415fb4f246fca159bb9b98ad0b126a71',
+    },
+    strategyAddresses: {
+      43113: '',
+      43114: '0xdb5733bd52d878498d49595d6c24106f0121c1ed',
+    },
+    tokenSymbol: 'USDT',
+    tokenAddresses: {
+      43113: '',
+      43114: '0xc7198437980c041c805A1EDcbA50c1Ce5db95118',
+    },
+    pangolinRewardPoolAddresses: {
+      43113: '',
+      43114: '0x0000000000000000000000000000000000000000',
+    },
+    quoteTokenSymbol: QuoteToken.PEFI,
+    quoteTokenAddresses: contracts.pefi,
+    withdrawalFee: '0',
+    hardApy: '896.65%',
+    type: 'Lydia',
+    name: 'pendingPEFI',
+    displayedDecimals: 7,
+  },
+  {
+    pid: 21,
+    lpSymbol: 'Lydia PEFI-LYD LP',
+    lpAddresses: {
+      43113: '',
+      43114: '0xcc592739c6c64f797e46cd00f12a6f15c2df1c04',
+    },
+    strategyAddresses: {
+      43113: '',
+      43114: '0x2fcf9ad14a8f880741ddb014d58d9e8f5f2b2331',
+    },
+    tokenSymbol: 'LYD',
+    tokenAddresses: {
+      43113: '',
+      43114: '0x4C9B4E1AC6F24CdE3660D5E4Ef1eBF77C710C084',
+    },
+    pangolinRewardPoolAddresses: {
+      43113: '',
+      43114: '0x0000000000000000000000000000000000000000',
+    },
+    quoteTokenSymbol: QuoteToken.PEFI,
+    quoteTokenAddresses: contracts.pefi,
+    withdrawalFee: '0',
+    hardApy: '896.65%',
+    type: 'Lydia',
+    name: 'pendingPEFI',
+    displayedDecimals: 7,
   },
 ]
 

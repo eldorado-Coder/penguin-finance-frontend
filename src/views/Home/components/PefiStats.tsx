@@ -1,11 +1,10 @@
-import React, { useState, useCallback, useEffect } from 'react'
+import React from 'react'
 import { Card, CardBody, Heading, Text } from 'penguinfinance-uikit2'
 import styled from 'styled-components'
 import BigNumber from 'bignumber.js'
 import useI18n from 'hooks/useI18n'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { useTotalSupply, useBurnedBalance } from 'hooks/useTokenBalance'
-import { useXPefi } from 'hooks/useContract'
 import { getPefiAddress } from 'utils/addressHelpers'
 import {
   useV2FarmPefiPerSecond,
@@ -56,7 +55,6 @@ const PefiStats: React.FC<HarvestProps> = ({ v1Pool, v2Pool }) => {
   const TranslateString = useI18n()
   const totalSupply = useTotalSupply()
   const burnedBalance = useBurnedBalance(getPefiAddress())
-  const xPefiContract = useXPefi()
   const pefiPerBlock = useV2FarmPefiPerSecond()
   const farmsLP = useFarms()
   const v2Farms = useV2Farms()
@@ -67,29 +65,12 @@ const PefiStats: React.FC<HarvestProps> = ({ v1Pool, v2Pool }) => {
   const pngPriceUsd = usePricePngUsdt()
   const linkPriceUsd = usePriceLinkUsdt()
   const lydPriceUsd = usePriceLydUsdt()
-  const [handsOnPenalty, setHandsOnPenalty] = useState(0)
   const { isDark } = useTheme()
-
-  const fetchEarlyWithdrawalFee = useCallback(async () => {
-    const earlyWithdrawalFee = await xPefiContract.methods.earlyWithdrawalFee().call()
-    const maxEarlyWithdrawalFee = await xPefiContract.methods.MAX_EARLY_WITHDRAW_FEE().call()
-    const penalty = (earlyWithdrawalFee / maxEarlyWithdrawalFee) * 100
-    setHandsOnPenalty(penalty)
-  }, [xPefiContract])
-
-  useEffect(() => {
-    fetchEarlyWithdrawalFee()
-  }, [fetchEarlyWithdrawalFee])
+  const iPefiToPefiRatio = v2Pool.currentExchangeRate || 1
 
   const getXPefiToPefiRatio = () => {
     return v1Pool.totalStaked && v1Pool.totalSupply
       ? new BigNumber(v1Pool.totalStaked).div(new BigNumber(v1Pool.totalSupply)).toNumber()
-      : 1
-  }
-
-  const getIPefiToPefiRatio = () => {
-    return v2Pool.totalStaked && v2Pool.totalSupply
-      ? new BigNumber(v2Pool.totalStaked).div(new BigNumber(v2Pool.totalSupply)).toNumber()
       : 1
   }
 
@@ -164,7 +145,7 @@ const PefiStats: React.FC<HarvestProps> = ({ v1Pool, v2Pool }) => {
 
   // calculate TVL in v2 pefi nest
   const getV2NestTVL = () => {
-    if (v2Pool.totalSupply) return getIPefiToPefiRatio() * pefiPrice.toNumber() * getBalanceNumber(v2Pool.totalSupply)
+    if (v2Pool.totalSupply) return iPefiToPefiRatio * pefiPrice.toNumber() * getBalanceNumber(v2Pool.totalSupply)
     return 0
   }
 

@@ -19,7 +19,7 @@ const StyledCard = styled(Card)<{ isNestPage?: boolean }>`
   border-radius: 8px;
   width: 100%;
 
-  ${({ theme }) => theme.mediaQueries.sm} {
+  ${({ theme }) => theme.mediaQueries.md} {
     max-width: 460px;
   }
 `
@@ -40,6 +40,7 @@ const CardContent = styled.div`
 const CardAction = styled.div`
   background: ${(props) => props.theme.card.background};
   border-radius: 0 0 32px 32px;
+  min-height: 8px;
 `
 
 interface PoolWithApy extends Pool {
@@ -92,15 +93,11 @@ const NestCard: React.FC<HarvestProps> = ({ pool }) => {
   const needsApproval = !allowance.toNumber() && !isBnbPool
   const isCardActive = isFinished && accountHasStakedBalance
   const convertedLimit = new BigNumber(stakingLimit).multipliedBy(new BigNumber(10).pow(tokenDecimals))
+  const iPefiToPefiRatio = pool.currentExchangeRate || 1
+  const paperHandsPenalty = pool.paperHandsPenalty || 6
 
   const handleSwitchTab = (tab) => {
     setActiveTab(tab)
-  }
-
-  const getIPefiToPefiRatio = () => {
-    return pool.totalStaked && pool.totalSupply
-      ? new BigNumber(pool.totalStaked).div(new BigNumber(pool.totalSupply)).toNumber()
-      : 1
   }
 
   const handleApprove = useCallback(async () => {
@@ -115,8 +112,6 @@ const NestCard: React.FC<HarvestProps> = ({ pool }) => {
       console.error(e)
     }
   }, [onApprove, setRequestedApproval])
-
-  const iPefiToPefiRatio = getIPefiToPefiRatio()
 
   return (
     <StyledCard isActive={isCardActive} isFinished={isFinished && sousId !== 0}>
@@ -155,11 +150,12 @@ const NestCard: React.FC<HarvestProps> = ({ pool }) => {
             requested={isFinished || requestedApproval}
             onApprove={handleApprove}
             stakingTokenName={stakingTokenName}
+            paperHandsPenalty={paperHandsPenalty}
           />
         )}
       </CardContent>
       <CardAction>
-        <CardFooter
+        {/* <CardFooter
           penguinNestsGuideLink={penguinNestsGuideLink}
           totalPefiStaked={totalStaked}
           totalXPefiBalance={totalSupply}
@@ -167,7 +163,7 @@ const NestCard: React.FC<HarvestProps> = ({ pool }) => {
           isFinished={isFinished}
           blocksUntilStart={blocksUntilStart}
           poolCategory={poolCategory}
-        />
+        /> */}
       </CardAction>
     </StyledCard>
   )

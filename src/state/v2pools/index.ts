@@ -1,12 +1,14 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
 import v2poolsConfig from 'config/constants/v2pools'
-import { fetchPoolsTotalStaking, fetchPoolsDailyAprs } from './fetchPools'
+import { fetchPoolsTotalStaking, fetchPoolsGeneralInfos } from './fetchPools'
 import {
   fetchPoolsAllowance,
   fetchUserBalances,
   fetchUserStakeBalances,
   fetchUserPendingRewards,
+  // new
+  fetchUserInfos,
 } from './fetchPoolsUser'
 import { PoolsState, Pool } from '../types'
 
@@ -43,16 +45,30 @@ export const { setPoolsPublicData, setPoolsUserData, updatePoolsUserData } = V2P
 
 // Thunks
 export const fetchPoolsPublicDataAsync = () => async (dispatch) => {
-  // const blockLimits = await fetchPoolsBlockLimits()
   const totalStakings = await fetchPoolsTotalStaking()
-  const dailyAprs = await fetchPoolsDailyAprs()
+  const generalData = await fetchPoolsGeneralInfos()
+
   const liveData = v2poolsConfig.map((pool) => {
     const totalStaking = totalStakings.find((entry) => entry.sousId === pool.sousId)
-    const dailyAprItem = dailyAprs.find((entry) => entry.sousId === pool.sousId)
+    const {
+      dailyApr,
+      currentExchangeRate,
+      rateOfYesterday,
+      avgDailyAprPerWeek,
+      paperHandsPenalty,
+      distributionPhp,
+      historicalRates,
+    } = generalData.find((entry) => entry.sousId === pool.sousId)
 
     return {
       ...totalStaking,
-      dailyApr: dailyAprItem.dailyApr,
+      dailyApr,
+      currentExchangeRate,
+      rateOfYesterday,
+      avgDailyAprPerWeek,
+      paperHandsPenalty,
+      distributionPhp,
+      historicalRates,
     }
   })
 
@@ -60,19 +76,9 @@ export const fetchPoolsPublicDataAsync = () => async (dispatch) => {
 }
 
 export const fetchPoolsUserDataAsync = (account) => async (dispatch) => {
-  const allowances = await fetchPoolsAllowance(account)
-  const stakingTokenBalances = await fetchUserBalances(account)
-  const stakedBalances = await fetchUserStakeBalances(account)
-  // const pendingRewards = await fetchUserPendingRewards(account)
+  if (!account) return
 
-  const userData = v2poolsConfig.map((pool) => ({
-    sousId: pool.sousId,
-    allowance: allowances[pool.sousId],
-    stakingTokenBalance: stakingTokenBalances[pool.sousId],
-    stakedBalance: stakedBalances[pool.sousId],
-    // pendingReward: pendingRewards[pool.sousId],
-  }))
-
+  const userData = await fetchUserInfos(account)
   dispatch(setPoolsUserData(userData))
 }
 

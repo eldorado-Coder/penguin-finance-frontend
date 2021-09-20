@@ -75,11 +75,11 @@ const UnstakeLPForm: React.FC<DepositModalProps> = ({ max, tokenName = '', accou
       <InputContainer>
         <LPTokenBalance fontSize="14px">{`Stake Balance: ${roundDown(fullBalance, lpDecimals)} LP`}</LPTokenBalance>
         <TokenInput
-          value={roundDown(val, 2)}
+          value={roundDown(val, lpDecimals)}
           onSelectMax={handleSelectMax}
           onChange={handleChange}
           max={fullBalance}
-          symbol={tokenName.replace('Joe ', '').replace('Sushi ', '').replace(' LP', '')}
+          symbol={tokenName.replace('Joe ', '').replace('Lydia ', '').replace('Sushi ', '').replace(' LP', '')}
         />
       </InputContainer>
       <ActionContainer>

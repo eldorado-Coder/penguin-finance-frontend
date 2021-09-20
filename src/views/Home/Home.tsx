@@ -100,7 +100,8 @@ const PoolCardWrapper = styled.div`
 `
 
 const HomeBgContainer = styled.div`
-  background-image: url('/images/home/HomePageBackground.png');
+  background-image: ${({ theme }) =>
+    theme.isDark ? `url('/images/home/home_background_dark.png')` : `url('/images/home/home_background_light.png')`};
   background-repeat: repeat;
   background-size: contain;
   position: absolute;

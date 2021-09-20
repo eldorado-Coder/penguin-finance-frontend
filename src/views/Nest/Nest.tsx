@@ -23,7 +23,7 @@ const Nest: React.FC = () => {
             <Text color="primary" fontSize="32px" bold>
               Earn more PEFI
             </Text>
-            <Description mb="16px">Stake your PEFI for iPEFI and maximize your yield. No Impermanent Loss.</Description>
+            <Description mb="16px" bold>Stake your PEFI for iPEFI and maximize your yield. No Impermanent Loss.</Description>
           </V2NestDetailsContainer>
         ) : (
           <V1NestDetailsContainer>
@@ -41,7 +41,7 @@ const Nest: React.FC = () => {
       <Flex justifyContent="center">
         {activeTab === 0 ? (
           <V2NestDetailsContainer>
-            <NestDescription mb="24px" mt="24px">
+            <NestDescription mb="24px">
               When your PEFI is staked into the Penguin Nest, you receive iPEFI. PEFI is minted & collected from fees
               within the Penguin Ecosystem and distributed among iPEFI holders. Your iPEFI is continuously compounding;
               when you unstake you will receive all the originally deposited PEFI and any earned PEFI minus the Paper
@@ -73,17 +73,17 @@ const Nest: React.FC = () => {
         />
       </NestBannerContainer>
       {renderNestHeader()}
-      <Flex justifyContent="center" pb="32px">
+      {renderNestDescription()}
+      {/* <Flex justifyContent="center" pb="32px">
         <TabWrapper>
           <ButtonMenu activeIndex={activeTab} onItemClick={handleSwitchTab} scale="sm">
             <OptionItem active={activeTab === 0}>{activeTab === 0 ? 'New (iPEFI) ' : 'New'}</OptionItem>
             <OptionItem active={activeTab === 1}>{activeTab === 1 ? 'Old (xPEFI) ' : 'Old'}</OptionItem>
           </ButtonMenu>
         </TabWrapper>
-      </Flex>
+      </Flex> */}
       {activeTab === 0 && <NestV2 />}
       {activeTab === 1 && <NestV1 />}
-      {renderNestDescription()}
     </NestPage>
   )
 }
@@ -129,12 +129,12 @@ const V1NestDetailsContainer = styled.div`
 `
 
 const V2NestDetailsContainer = styled.div`
-  max-width: 720px;
+  max-width: 960px;
   width: 100%;
 `
 
 const NestDescription = styled(Text)`
-  max-width: 480px;
+  max-width: 960px;
   color: ${({ theme }) => (theme.isDark ? '#DDD7ff' : theme.colors.secondary)};
 `
 

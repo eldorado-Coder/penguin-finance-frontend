@@ -71,6 +71,7 @@ export interface V2Farm extends FarmConfig {
   totalLiquidityInUsd?: number
   pngApr?: number
   pngDailyApr?: number
+  pefiApr?: number
   apr?: number
   apy?: number
   displayedDecimals?: number
@@ -99,7 +100,16 @@ export interface Pool extends PoolConfig {
     stakingTokenBalance: BigNumber
     stakedBalance: BigNumber
     pendingReward: BigNumber
+    depositAmount?: BigNumber
+    withdrawAmount?: BigNumber
+    profitAmount?: BigNumber
   }
+  currentExchangeRate?: number
+  rateOfYesterday?: number
+  paperHandsPenalty?: number
+  avgDailyAprPerWeek?: number
+  distributionPhp?: number
+  historicalRates?: any[]
 }
 
 export interface Profile {

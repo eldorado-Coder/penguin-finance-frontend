@@ -62,6 +62,11 @@ const TvlContainer = styled(Flex)`
   white-space: break-spaces;
   align-items: center;
   flex-wrap: wrap;
+  justify-content: center;
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    justify-content: flex-start;
+  }
 `
 
 // slider
@@ -178,6 +183,7 @@ const PROJECT_LIST = [
   { src: '/images/farms-v2/joe.svg', name: 'Joe' },
   { src: '/images/farms-v2/pangolin.svg', name: 'Pangolin' },
   { src: '/images/farms-v2/sushi.svg', name: 'Sushi' },
+  { src: '/images/farms-v2/lydia.svg', name: 'Lydia' },
 ]
 
 const Farms: React.FC = () => {
@@ -223,7 +229,7 @@ const Farms: React.FC = () => {
     const pngApr = getApr(pngDailyApr)
     const pefiApr = getApr(pefiDailyApr) === Infinity ? 999999 : getApr(pefiDailyApr)
 
-    return { ...farm, pefiDailyApr, apr: pngApr + pefiApr, apy: pefiApr + pngApr }
+    return { ...farm, pefiDailyApr, pefiApr, apr: pngApr + pefiApr, apy: pefiApr + pngApr }
   })
 
   const filteredFarms = useMemo(() => {
