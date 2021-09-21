@@ -230,16 +230,17 @@ const Farms: React.FC = () => {
     const pefiPerDay = pefiPerYear / DAYS_PER_YEAR
     const pefiRewardPerDayInUsd = pefiPriceUsd * pefiPerDay * (1 - 0.15 - 0.1)
     const pefiDailyApr = farm.totalLiquidityInUsd > 0 ? pefiRewardPerDayInUsd / farm.totalLiquidityInUsd : 0
-    const { pngDailyApr } = farm
+    let { pngDailyApr } = farm
     let pngApr = getApr(pngDailyApr)
     const pefiApr = getApr(pefiDailyApr) === Infinity ? 999999 : getApr(pefiDailyApr)
     if (farm.type === 'Lydia') {
       const lydiaFarm = lydiaFarms.find((row) => row.lpSymbol === farm.lpSymbol)
       const poolLiquidityUsd = farm.lpPrice * getBalanceNumber(lydiaFarm.lpTokenBalanceMC)
-      pngApr = getLydiaFarmApr(lydiaFarm.poolWeight, lydPriceUsd, poolLiquidityUsd, lydPerSec)
+      pngApr = getLydiaFarmApr(lydiaFarm.poolWeight, lydPriceUsd, poolLiquidityUsd, lydPerSec) * 0.9
+      pngDailyApr = pngApr / 365
     }
 
-    return { ...farm, pefiDailyApr, pefiApr, pngApr, apr: pngApr + pefiApr, apy: pefiApr + pngApr }
+    return { ...farm, pefiDailyApr, pefiApr, pngDailyApr, pngApr, apr: pngApr + pefiApr, apy: pefiApr + pngApr }
   })
 
   const filteredFarms = useMemo(() => {
