@@ -8,7 +8,7 @@ import getV2FarmMasterChefAbi from 'utils/getV2FarmMasterChefAbi'
 import getV2FarmMasterChefAddress from 'utils/getV2FarmMasterChefAddress'
 import { getPangolinLpPrice, getJoeLpPrice, getSushiLpPrice, getLydiaLpPrice } from 'utils/price'
 import { getBalanceNumber } from 'utils/formatBalance'
-import { getPangolinRewardPoolApr, getJoeRewardPoolApr, getLydiaRewardPoolApr } from 'utils/apyHelpers'
+import { getPangolinRewardPoolApr, getJoeRewardPoolApr } from 'utils/apyHelpers'
 import { NON_ADDRESS } from 'config'
 
 export const fetchMasterChefGlobalData = async () => {
