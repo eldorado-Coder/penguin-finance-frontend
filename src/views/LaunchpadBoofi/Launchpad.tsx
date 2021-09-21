@@ -350,6 +350,7 @@ const BoofiCard = styled.div`
   position: relative;
   padding: 24px;
   margin-top: 8px;
+  margin-bottom: 24px;
 `
 
 const BoofiLabel = styled(Text)`
