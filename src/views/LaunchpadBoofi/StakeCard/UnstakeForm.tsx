@@ -77,14 +77,16 @@ const UnstakeForm: React.FC<UnStakeFormProps> = ({ max, tokenName = '', account,
         symbol={tokenName}
       />
       <Flex mt="8px">
-        {!account && <StyledUnlockButton />}
+        <StyledButton scale="md">Coming Soon</StyledButton>
+
+        {/* {!account && <StyledUnlockButton />}
         {account && (
           <>
             <StyledButton tokenBalance={val} scale="md" disabled={!canUnStake} onClick={onConfirm}>
               {renderText()}
             </StyledButton>
           </>
-        )}
+        )} */}
       </Flex>
     </>
   )
@@ -93,11 +95,8 @@ const UnstakeForm: React.FC<UnStakeFormProps> = ({ max, tokenName = '', account,
 const StyledButton = styled(Button)<{ tokenBalance?: string }>`
   width: 100%;
   border-radius: 8px;
-  color: ${({ theme }) => theme.isDark && '#30264f'};
-  background-color: '${({ theme }) => !theme.isDark && '#372871'}';
-  background-color: ${({ theme, tokenBalance }) => tokenBalance && !theme.isDark && '#Ec3E3F'};
-  background-color: ${({ theme, tokenBalance }) => tokenBalance && theme.isDark && '#D4444C'};
-  color: ${({ tokenBalance }) => tokenBalance && 'white'};
+  color: white;
+  background-color: #38db93;
 `
 
 const StyledUnlockButton = styled(UnlockButton)`
