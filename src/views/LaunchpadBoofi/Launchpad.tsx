@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import { Text, Button, Flex, Progress, useMatchBreakpoints } from 'penguinfinance-uikit2'
 import useTheme from 'hooks/useTheme'
 import Page from 'components/layout/Page'
+import StakeCard from './StakeCard/StakeCard';
+import TiersCard from './TiersCard/TiersCard';
 
 const Launchpad: React.FC = () => {
   const { isDark } = useTheme()
@@ -131,11 +133,15 @@ const Launchpad: React.FC = () => {
           </Flex>
         }
       </BoofiCard>
-      <Flex justifyContent='center'>
+      <Flex justifyContent='space-between' flexWrap='wrap'>
+        <TiersCard />
+        <StakeCard />
+      </Flex>
+      {/* <Flex justifyContent='center'>
         <MigrationVideo controls>
           <source src='/images/launchpad/boofi-launchpad.mp4' />
         </MigrationVideo>
-      </Flex>
+      </Flex> */}
       <EndedLabel fontWeight={500} fontSize='24px' mt='32px'>Ended</EndedLabel>
       <SherpaCard>
         <SherpaContainer flexWrap='wrap'>
@@ -304,7 +310,6 @@ const BoofiCard = styled.div`
   position: relative;
   padding: 24px;
   margin-top: 8px;
-  margin-bottom: 32px;
 `;
 
 const BoofiLabel = styled(Text)`
