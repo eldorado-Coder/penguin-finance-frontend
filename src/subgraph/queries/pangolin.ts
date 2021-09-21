@@ -37,3 +37,15 @@ export const TOKENS_SEARCH = ({ address, symbol }: { address?: string; symbol?: 
     }`
   return gql(queryString)
 }
+
+export const BUNDLES_SEARCH = () => {
+  const queryString = `
+    query bundle {
+      bundle(id: "1")
+      {
+        id
+        ethPrice
+      }
+    }`
+  return gql(queryString)
+}

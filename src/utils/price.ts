@@ -1,5 +1,5 @@
 import Axios from 'axios'
-import { getPair as getPangolinPair } from 'subgraph/utils/pangolin'
+import { getPair as getPangolinPair, getAvaxBundle } from 'subgraph/utils/pangolin'
 import { getPair as getJoePair } from 'subgraph/utils/joe'
 import { getPair as getSushiPair } from 'subgraph/utils/sushi'
 import { getPair as getLydiaPair } from 'subgraph/utils/lydia'
@@ -52,6 +52,12 @@ export const getSushiLpPrice = async (address) => {
 
 export const getLydiaLpPrice = async (address) => {
   const pair = await getLydiaPair(address)
+  const avaxPrice = await getAvaxPrice()
   const price = Number(pair.reserveUSD) / Number(pair.totalSupply)
-  return price || 1
+  return price ? avaxPrice * price : 1
+}
+
+export const getAvaxPrice = async () => {
+  const bundle = await getAvaxBundle()
+  return bundle ? bundle.ethPrice : 1
 }
