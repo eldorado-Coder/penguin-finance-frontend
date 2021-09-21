@@ -182,17 +182,19 @@ const Title = styled(Text)`
 `
 
 const COIN_LIST = [
-  { src: '/images/farms-v2/coins/coin1.png', min: 0 },
-  { src: '/images/farms-v2/coins/coin2.png', min: 500 },
-  { src: '/images/farms-v2/coins/coin3.png', min: 1000 },
-  { src: '/images/farms-v2/coins/coin4.png', min: 5000 },
-  { src: '/images/farms-v2/coins/coin5.png', min: 10000 },
+  { src: '/images/farms-v2/coins/coin1.svg', min: 0 },
+  { src: '/images/farms-v2/coins/coin2.svg', min: 100 },
+  { src: '/images/farms-v2/coins/coin3.svg', min: 300 },
+  { src: '/images/farms-v2/coins/coin4.svg', min: 1000 },
+  { src: '/images/farms-v2/coins/coin5.svg', min: 2000 },
+  { src: '/images/farms-v2/coins/coin6.svg', min: 9000 },
+  { src: '/images/farms-v2/coins/coin7.svg', min: 20000 },
 ]
 
 const getCoinImage = (amount) => {
   let coinImg
   COIN_LIST.map((row) => {
-    if (amount > row.min) {
+    if (amount >= row.min) {
       coinImg = row.src
     }
     return row

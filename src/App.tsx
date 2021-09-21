@@ -83,7 +83,8 @@ const App: React.FC = () => {
               <Info />
             </Route>
             <Route path="/launchpad">
-              <LaunchpadVideo />
+              {/* <LaunchpadVideo /> */}
+              <LaunchpadBoofi />
             </Route>
             <Route path="/launchpad-boofi">
               <LaunchpadBoofi />

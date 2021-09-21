@@ -6,13 +6,14 @@ import styled from 'styled-components'
 import Page from 'components/layout/Page'
 import Select from 'components/Select/Select'
 import Balance from 'components/Balance'
-import { useV2Farms, usePricePefiUsdt } from 'state/hooks'
+import { useV2Farms, useLydiaFarms, useLydiaFarmRewardRate, usePricePefiUsdt } from 'state/hooks'
 import { fetchV2FarmUserDataAsync } from 'state/actions'
 import useRefresh from 'hooks/useRefresh'
 import useTheme from 'hooks/useTheme'
+import useTokenPrice from 'hooks/useTokenPrice'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { DAYS_PER_YEAR } from 'config'
-import { getApr } from 'utils/apyHelpers'
+import { getApr, getLydiaFarmApr } from 'utils/apyHelpers'
 import V1Farms from './V1'
 import V2Farms from './V2'
 
@@ -197,8 +198,12 @@ const Farms: React.FC = () => {
   const { fastRefresh } = useRefresh()
   const { account } = useWeb3React()
   const v2Farms = useV2Farms()
+  const lydiaFarms = useLydiaFarms()
   const { isXl, isSm } = useMatchBreakpoints()
   const pefiPriceUsd = usePricePefiUsdt().toNumber()
+  const lydPerSec = useLydiaFarmRewardRate()
+  const { lydPrice: lydPriceUsd } = useTokenPrice()
+
   const isMobile = !isXl
   const theme = useTheme()
 
@@ -225,11 +230,17 @@ const Farms: React.FC = () => {
     const pefiPerDay = pefiPerYear / DAYS_PER_YEAR
     const pefiRewardPerDayInUsd = pefiPriceUsd * pefiPerDay * (1 - 0.15 - 0.1)
     const pefiDailyApr = farm.totalLiquidityInUsd > 0 ? pefiRewardPerDayInUsd / farm.totalLiquidityInUsd : 0
-    const { pngDailyApr } = farm
-    const pngApr = getApr(pngDailyApr)
+    let { pngDailyApr } = farm
+    let pngApr = getApr(pngDailyApr)
     const pefiApr = getApr(pefiDailyApr) === Infinity ? 999999 : getApr(pefiDailyApr)
+    if (farm.type === 'Lydia') {
+      const lydiaFarm = lydiaFarms.find((row) => row.lpSymbol === farm.lpSymbol)
+      const poolLiquidityUsd = farm.lpPrice * getBalanceNumber(lydiaFarm.lpTokenBalanceMC)
+      pngApr = getLydiaFarmApr(lydiaFarm.poolWeight, lydPriceUsd, poolLiquidityUsd, lydPerSec) * 0.9
+      pngDailyApr = pngApr / 365
+    }
 
-    return { ...farm, pefiDailyApr, pefiApr, apr: pngApr + pefiApr, apy: pefiApr + pngApr }
+    return { ...farm, pefiDailyApr, pefiApr, pngDailyApr, pngApr, apr: pngApr + pefiApr, apy: pefiApr + pngApr }
   })
 
   const filteredFarms = useMemo(() => {

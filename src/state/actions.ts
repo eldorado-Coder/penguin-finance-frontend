@@ -1,4 +1,5 @@
 export { fetchMasterChefPefiPerBlock, fetchFarmsPublicDataAsync, fetchFarmUserDataAsync } from './farms'
+export { fetchMasterChefLydPerSec, fetchFarmsPublicDataAsync as fetchLydiaFarmsPublicDataAsync } from './lydiaFarms'
 export {
   fetchMasterChefRewards,
   fetchCompounderFarmsPublicDataAsync,
