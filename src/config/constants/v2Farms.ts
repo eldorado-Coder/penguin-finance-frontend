@@ -595,7 +595,7 @@ const v2Farms: V2FarmConfig[] = [
     hardApy: '896.65%',
     type: 'Lydia',
     name: 'pendingPEFI',
-    displayedDecimals: 7,
+    displayedDecimals: 2,
   },
   {
     pid: 21,
@@ -623,7 +623,7 @@ const v2Farms: V2FarmConfig[] = [
     hardApy: '896.65%',
     type: 'Lydia',
     name: 'pendingPEFI',
-    displayedDecimals: 7,
+    displayedDecimals: 2,
   },
 ]
 
