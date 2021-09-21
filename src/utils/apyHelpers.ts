@@ -1,5 +1,6 @@
 import Axios from 'axios'
-import { NEST_APR_PER_DAY, DAYS_PER_YEAR, PANGOLIN_REWARD_POOL_API } from 'config'
+import BigNumber from 'bignumber.js'
+import { NEST_APR_PER_DAY, SECONDS_PER_YEAR, DAYS_PER_YEAR, PANGOLIN_REWARD_POOL_API } from 'config'
 
 const roundToTwoDp = (number) => Math.round(number * 100) / 100
 
@@ -108,18 +109,10 @@ export const getJoeRewardPoolApr = async (address) => {
   return { apr, dailyApr: apr / 365 }
 }
 
-// lydia LP
-export const getLydiaRewardPoolApr = async (address) => {
-  let apr = 0
-  // pefi-lyd
-  if (address === '0xcc592739c6c64f797e46cd00f12a6f15c2df1c04') {
-    apr = 1.8862
-  }
-  // pefi-usdt.e
-  if (address === '0xdb57a10b415fb4f246fca159bb9b98ad0b126a71') {
-    apr = 3.7411
-  }
-  return { apr, dailyApr: apr / 365 }
+export const getLydiaFarmApr = (poolWeight, lydPriceUsd, poolLiquidityUsd, lydPerSec): number => {
+  const yearlyLydRewardAllocation = lydPerSec * SECONDS_PER_YEAR * poolWeight
+  const apr = (yearlyLydRewardAllocation * lydPriceUsd) / poolLiquidityUsd
+  return apr || 0
 }
 
 export const getApy = (dailyApr = 0) => {

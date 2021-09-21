@@ -19,7 +19,7 @@ const farms: FarmConfig[] = [
     withdrawalFee: '2.56',
     hardApy: '896.65%',
     type: 'Penguin',
-    name: 'pendingPEFI'
+    name: 'pendingPEFI',
   },
   {
     pid: 1,
@@ -38,7 +38,7 @@ const farms: FarmConfig[] = [
     withdrawalFee: '2.56',
     hardApy: '196.24%',
     type: 'Penguin',
-    name: 'pendingPEFI'
+    name: 'pendingPEFI',
   },
   {
     pid: 2,
@@ -57,7 +57,7 @@ const farms: FarmConfig[] = [
     withdrawalFee: '2.56',
     hardApy: '967.57%',
     type: 'Penguin',
-    name: 'pendingPEFI'
+    name: 'pendingPEFI',
   },
   {
     pid: 3,
@@ -76,7 +76,7 @@ const farms: FarmConfig[] = [
     withdrawalFee: '2.56',
     hardApy: '1354.80%',
     type: 'Penguin',
-    name: 'pendingPEFI'
+    name: 'pendingPEFI',
   },
   {
     pid: 4,
@@ -95,7 +95,7 @@ const farms: FarmConfig[] = [
     withdrawalFee: '2.56',
     hardApy: '1347.55%',
     type: 'Penguin',
-    name: 'pendingPEFI'
+    name: 'pendingPEFI',
   },
   {
     pid: 5,
@@ -114,7 +114,7 @@ const farms: FarmConfig[] = [
     withdrawalFee: '4',
     hardApy: '300.35%',
     type: 'Penguin',
-    name: 'pendingPEFI'
+    name: 'pendingPEFI',
   },
   {
     pid: 6,
@@ -133,103 +133,8 @@ const farms: FarmConfig[] = [
     withdrawalFee: '4',
     hardApy: '300.35%',
     type: 'Penguin',
-    name: 'pendingPEFI'
+    name: 'pendingPEFI',
   },
-  // {
-  //   pid: 7,
-  //   lpSymbol: 'ETH-ZETH LP',
-  //   lpAddresses: {
-  //     43113: '',
-  //     43114: '0xc37ECFA7Bbf1dF92Da7C4A3d92d8CF8657D1FF7f',
-  //   },
-  //   tokenSymbol: 'ETH',
-  //   tokenAddresses: {
-  //     43113: '',
-  //     43114: '0xf20d962a6c8f70c731bd838a3a388D7d48fA6e15',
-  //   },
-  //   quoteTokenSymbol: QuoteToken.ZETH,
-  //   quoteTokenAddresses: contracts.zeth,
-  //   withdrawalFee: '3.2',
-  //   hardApy: '1354.80%',
-  //   type: 'Gondola',
-  //   name: 'pendingGondola'
-  // },
-  // {
-  //   pid: 4,
-  //   lpSymbol: 'USDT-ZUSDT LP',
-  //   lpAddresses: {
-  //     43113: '',
-  //     43114: '0xE586dB7Db75B87A3E84110a73b99960F5f106c6A',
-  //   },
-  //   tokenSymbol: 'USDT',
-  //   tokenAddresses: {
-  //     43113: '',
-  //     43114: '0xde3A24028580884448a5397872046a019649b084',
-  //   },
-  //   quoteTokenSymbol: QuoteToken.ZUSDT,
-  //   quoteTokenAddresses: contracts.zusdt,
-  //   withdrawalFee: '3.2',
-  //   hardApy: '1347.55%',
-  //   type: 'Gondola',
-  //   name: 'pendingGondola'
-  // },
-  // {
-  //   pid: 2,
-  //   lpSymbol: 'AVAX-ETH LP',
-  //   lpAddresses: {
-  //     43113: '',
-  //     43114: '0x58128aB3EcBF703682EDe72f341944BFfe3524b9',
-  //   },
-  //   tokenSymbol: 'ETH',
-  //   tokenAddresses: {
-  //     43113: '',
-  //     43114: '0xf20d962a6c8f70c731bd838a3a388D7d48fA6e15',
-  //   },
-  //   quoteTokenSymbol: QuoteToken.AVAX,
-  //   quoteTokenAddresses: contracts.wavax,
-  //   withdrawalFee: '4',
-  //   hardApy: '300.35%',
-  //   type: 'Lydia',
-  //   name: 'pendingLyd'
-  // },
-  // {
-  //   pid: 3,
-  //   lpSymbol: 'LYD-USDT LP',
-  //   lpAddresses: {
-  //     43113: '',
-  //     43114: '0x752C59f22fAAA861108649F4596034796C69bC3f',
-  //   },
-  //   tokenSymbol: 'USDT',
-  //   tokenAddresses: {
-  //     43113: '',
-  //     43114: '0xde3A24028580884448a5397872046a019649b084',
-  //   },
-  //   quoteTokenSymbol: QuoteToken.LYD,
-  //   quoteTokenAddresses: contracts.lyd,
-  //   withdrawalFee: '4',
-  //   hardApy: '300.35%',
-  //   type: 'Lydia',
-  //   name: 'pendingLyd'
-  // },
-  // {
-  //   pid: 7,
-  //   lpSymbol: 'LYD-PNG LP',
-  //   lpAddresses: {
-  //     43113: '',
-  //     43114: '0x161f750b753c7120599d07c352607F458ecB918e',
-  //   },
-  //   tokenSymbol: 'PNG',
-  //   tokenAddresses: {
-  //     43113: '',
-  //     43114: '0x60781C2586D68229fde47564546784ab3fACA982',
-  //   },
-  //   quoteTokenSymbol: QuoteToken.LYD,
-  //   quoteTokenAddresses: contracts.lyd,
-  //   withdrawalFee: '3.2',
-  //   hardApy: '1347.55%',
-  //   type: 'Lydia',
-  //   name: 'pendingLyd'
-  // },
 ]
 
 export default farms

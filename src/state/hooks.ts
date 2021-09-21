@@ -28,6 +28,8 @@ import {
   push as pushToast,
   remove as removeToast,
   clear as clearToast,
+  fetchMasterChefLydPerSec, // lydia
+  fetchLydiaFarmsPublicDataAsync, // lydia
 
   /*
    * v2
@@ -80,6 +82,9 @@ export const useFetchPublicData = () => {
     dispatch(fetchLpsPublicDataAsync())
     // POOL REMOVAL
     dispatch(fetchPoolsPublicDataAsync())
+    // lydia farms
+    dispatch(fetchMasterChefLydPerSec())
+    dispatch(fetchLydiaFarmsPublicDataAsync())
   }, [dispatch, slowRefresh])
 }
 
@@ -527,4 +532,20 @@ export const useV2FarmUser = (pid, type) => {
 export const useV2FarmPefiPerSecond = (): BigNumber => {
   const pefiPerSecond = useSelector((state: State) => state.v2Farms.pefiPerSecond)
   return new BigNumber(pefiPerSecond)
+}
+
+// Lydia Farms
+export const useLydiaFarms = (): Farm[] => {
+  const farms = useSelector((state: State) => state.lydiaFarms.data)
+  return farms
+}
+
+export const useLydiaFarmRewardRate = (): number => {
+  const lydPerSec = useSelector((state: State) => state.lydiaFarms.lydPerSec)
+  return lydPerSec
+}
+
+export const useLydiaFarmFromPid = (pid, type): Farm => {
+  const farm = useSelector((state: State) => state.lydiaFarms.data.find((f) => f.pid === pid && f.type === type))
+  return farm
 }

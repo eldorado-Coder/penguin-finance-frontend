@@ -127,11 +127,6 @@ export const fetchFarms = async () => {
           pngApr = 0
           pngDailyApr = 0
         }
-        if (farmConfig.type === 'Lydia') {
-          const res = await getLydiaRewardPoolApr(getAddress(farmConfig.lpAddresses))
-          pngApr = res.apr
-          pngDailyApr = res.dailyApr
-        }
 
         return {
           ...farmConfig,

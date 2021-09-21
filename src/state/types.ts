@@ -19,6 +19,7 @@ export interface Farm extends FarmConfig {
   tokenPriceVsQuote?: BigNumber
   strategyRatio?: number
   poolWeight?: BigNumber
+  lpTokenBalanceMC?: BigNumber
   withdrawFee?: number
   userData?: {
     allowance: BigNumber
@@ -137,6 +138,10 @@ export interface FarmsState {
   data: Farm[]
 }
 
+export interface LydiaFarmsState {
+  lydPerSec?: number
+  data: Farm[]
+}
 export interface CompounderFarmsState {
   pefiPerBlock: number
   gondolaPerSec: number
@@ -278,6 +283,7 @@ export interface GlobalState {
 export interface State {
   lps: LpsState
   farms: FarmsState
+  lydiaFarms: LydiaFarmsState
   compounderFarms: CompounderFarmsState
   toasts: ToastsState
   pools: PoolsState
