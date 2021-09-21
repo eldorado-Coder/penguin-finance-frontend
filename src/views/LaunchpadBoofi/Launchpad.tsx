@@ -30,7 +30,10 @@ const Launchpad: React.FC = () => {
   }
 
   const handleLearnBoofi = () => {
-    return null
+    window.open(
+      'https://medium.com/@boofinance2021/introducing-boofinance-innovative-yield-farms-deflationary-nfts-on-avalanche-5f285835a317',
+      '_blank',
+    )
   }
 
   const handleViewBoofi = () => {
@@ -45,7 +48,7 @@ const Launchpad: React.FC = () => {
     },
     {
       label: 'Staking Phase',
-      description: 'September 22nd - September 29th',
+      description: 'September 24th - September 29th',
     },
     {
       label: 'Distribution Phase',
