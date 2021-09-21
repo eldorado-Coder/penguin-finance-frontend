@@ -8,7 +8,7 @@ import getV2FarmMasterChefAbi from 'utils/getV2FarmMasterChefAbi'
 import getV2FarmMasterChefAddress from 'utils/getV2FarmMasterChefAddress'
 import { getPangolinLpPrice, getJoeLpPrice, getSushiLpPrice, getLydiaLpPrice } from 'utils/price'
 import { getBalanceNumber } from 'utils/formatBalance'
-import { getPangolinRewardPoolApr, getJoeRewardPoolApr, getLydiaRewardPoolApr } from 'utils/apyHelpers'
+import { getPangolinRewardPoolApr, getJoeRewardPoolApr } from 'utils/apyHelpers'
 import { NON_ADDRESS } from 'config'
 
 export const fetchMasterChefGlobalData = async () => {
@@ -126,11 +126,6 @@ export const fetchFarms = async () => {
         if (farmConfig.type === 'Sushi') {
           pngApr = 0
           pngDailyApr = 0
-        }
-        if (farmConfig.type === 'Lydia') {
-          const res = await getLydiaRewardPoolApr(getAddress(farmConfig.lpAddresses))
-          pngApr = res.apr
-          pngDailyApr = res.dailyApr
         }
 
         return {

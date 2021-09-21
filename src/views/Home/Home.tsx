@@ -5,7 +5,7 @@ import { BaseLayout, Flex, useMatchBreakpoints } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import useTheme from 'hooks/useTheme'
 import Page from 'components/layout/Page'
-import NestIglooV2Card from 'views/Home/components/NestIglooV2Card'
+import ArtworkCard from 'views/Home/components/ArtworkCard'
 import FarmStakingCard from 'views/Home/components/FarmStakingCard'
 import PefiStats from 'views/Home/components/PefiStats'
 import IglooCard from 'views/Home/components/IglooCard'
@@ -151,7 +151,7 @@ const Home: React.FC = () => {
         <div>
           <Cards>
             <FarmStakingCardWrapper>
-              <NestIglooV2Card />
+              <ArtworkCard />
               <FarmStakingCard />
             </FarmStakingCardWrapper>
             <PefiStatsCardWrapper>
