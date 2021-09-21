@@ -92,7 +92,8 @@ const StakeForm: React.FC<StakeFormProps> = ({
         symbol={tokenName}
       />
       <Flex mt="8px">
-        {!account && <StyledUnlockButton />}
+        <StyledButton scale="md">Coming Soon</StyledButton>
+        {/* {!account && <StyledUnlockButton />}
         {account &&
           (needsApproval ? (
             <StyledButton disabled={requested} onClick={onApprove} scale="md">
@@ -110,7 +111,7 @@ const StakeForm: React.FC<StakeFormProps> = ({
                 </StyledButton>
               )}
             </>
-          ))}
+          ))} */}
       </Flex>
     </>
   )
