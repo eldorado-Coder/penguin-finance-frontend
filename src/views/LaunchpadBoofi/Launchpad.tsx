@@ -164,7 +164,7 @@ const Launchpad: React.FC = () => {
         <StakeCard />
       </Flex> */}
       <Flex justifyContent="center">
-        <MigrationVideo controls>
+        <MigrationVideo autoPlay controls>
           <source src="/images/launchpad/boofi-launchpad.mp4" />
         </MigrationVideo>
       </Flex>
