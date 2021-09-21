@@ -5,7 +5,12 @@ import { Button, Text, LinkExternal, Flex } from 'penguinfinance-uikit2'
 import UnlockButton from 'components/UnlockButton'
 import roundDown from 'utils/roundDown'
 import escapeRegExp from 'utils/escapeRegExp'
-import { BASE_ADD_LIQUIDITY_URL, BASE_JOE_ADD_LIQUIDITY_URL, BASE_SUSHI_ADD_LIQUIDITY_URL } from 'config'
+import {
+  BASE_ADD_LIQUIDITY_URL,
+  BASE_JOE_ADD_LIQUIDITY_URL,
+  BASE_SUSHI_ADD_LIQUIDITY_URL,
+  BASE_LYDIA_ADD_LIQUIDITY_URL,
+} from 'config'
 import getLiquidityUrlPathParts from 'utils/getLiquidityUrlPathParts'
 import { getFullDisplayBalance } from 'utils/formatBalance'
 import { Farm as FarmTypes } from 'state/types'
@@ -15,6 +20,7 @@ const liquidityAddUrls = {
   Pangolin: BASE_ADD_LIQUIDITY_URL,
   Joe: BASE_JOE_ADD_LIQUIDITY_URL,
   Sushi: BASE_SUSHI_ADD_LIQUIDITY_URL,
+  Lydia: BASE_LYDIA_ADD_LIQUIDITY_URL,
 }
 
 interface DepositModalProps {
