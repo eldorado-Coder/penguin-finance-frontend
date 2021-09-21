@@ -76,7 +76,7 @@ const Launchpad: React.FC = () => {
         {isMobile ?
           <Flex flexDirection='column'>
             <MobileProgressWrapper>
-              <Progress primaryStep={30} />
+              <Progress primaryStep={isMobile ? 22 : 30} />
               <MobileProgressMarks flexDirection='column' justifyContent='space-between'>
                 {marks.map(mark => {
                   return (
@@ -386,17 +386,20 @@ const ProgressWrapper = styled.div`
   margin-top: 64px;
 
   > div:first-child {
-    color: white;
+    background-color: #c3e2d2;
     width: calc(100% - 40px);
     margin-left: 20px;
+    height: 12px;
     div {
+      height: 12px;
       background: white;
+      border-radius: 50px;
     }
   }
 `;
 
 const Mark = styled.div<{ isActive?: boolean, isMobile?: boolean }>`
-  background: ${({ isActive }) => isActive ? 'white' : '#eeeaf4'};
+  background: ${({ isActive }) => isActive ? 'white' : '#c3e2d2'};
   color: #38db93;
   width: 40px;
   height: 40px;
@@ -413,7 +416,7 @@ const Stage = styled(Flex)<{ isMobile?: boolean }>`
   color: white;
   width: ${({ isMobile }) => isMobile ? '100%' : '33.33%'};
   height: ${({ isMobile }) => isMobile ? '33.33%' : 'unset'};
-  margin-top: ${({ isMobile }) => !isMobile && '-64px'};
+  margin-top: ${({ isMobile }) => !isMobile && '-56px'};
 `;
 
 const StageLabel = styled(Text)`
@@ -429,7 +432,7 @@ const StageDescriptionContainer = styled(Flex)<{ isMobile?: boolean }>`
 
 const StageDescription = styled(Text)<{ isMobile?: boolean}>`
   color: #22b67f;
-  margin-top: ${({ isMobile })=> isMobile ? '0' : '32px'};
+  margin-top: ${({ isMobile })=> isMobile ? '0' : '24px'};
   padding:  ${({ isMobile })=> !isMobile && '0 16px'};
   text-align: ${({ isMobile })=> !isMobile && 'center'};
 `;
@@ -446,12 +449,15 @@ const MobileProgressWrapper = styled.div`
   margin-top: 64px;
 
   > div:first-child {
-    color: white;
+    background-color: #c3e2d2;
     transform: rotate(90deg);
     width: 300px;
     margin-left: -130px;
     margin-top: 120px;
+    height: 12px;
     div {
+      height: 12px;
+      border-radius: 32px;
       background: white;
     }
   }
