@@ -159,15 +159,15 @@ const Launchpad: React.FC = () => {
           </Flex>
         )}
       </BoofiCard>
-      <Flex justifyContent="space-between" flexWrap="wrap">
+      {/* <Flex justifyContent="space-between" flexWrap="wrap">
         <TiersCard />
         <StakeCard />
-      </Flex>
-      {/* <Flex justifyContent='center'>
-        <MigrationVideo controls>
-          <source src='/images/launchpad/boofi-launchpad.mp4' />
-        </MigrationVideo>
       </Flex> */}
+      <Flex justifyContent="center">
+        <MigrationVideo autoPlay controls>
+          <source src="/images/launchpad/boofi-launchpad.mp4" />
+        </MigrationVideo>
+      </Flex>
       <EndedLabel fontWeight={500} fontSize="24px" mt="32px">
         Ended
       </EndedLabel>
@@ -207,18 +207,18 @@ const Launchpad: React.FC = () => {
           <BuySherpaButton onClick={handleBuySherpa}>Buy SHERPA</BuySherpaButton>
         </SherpaActions>
       </SherpaCard>
-      {/* <FCard>
+      <FCard>
         <Description textAlign="center">
-          The Penguin Launchpad is a fundraising platform built on Avalanche with fairness,
-          decentralization, and transparency as core principles. By utilizing iPEFI, we ensure that your
-          token is distributed to a vast and committed userbase with thorough DeFi experience.
+          The Penguin Launchpad is a fundraising platform built on Avalanche with fairness, decentralization, and
+          transparency as core principles. By utilizing iPEFI, we ensure that your token is distributed to a vast and
+          committed userbase with thorough DeFi experience.
         </Description>
         <Flex justifyContent="center" mt="32px">
           <NormalButton scale="sm" onClick={onClickLaunchToken}>
             Launch Your Project To Orbit
           </NormalButton>
         </Flex>
-      </FCard> */}
+      </FCard>
     </LaunchpadPage>
   )
 }
@@ -350,6 +350,7 @@ const BoofiCard = styled.div`
   position: relative;
   padding: 24px;
   margin-top: 8px;
+  margin-bottom: 24px;
 `
 
 const BoofiLabel = styled(Text)`
