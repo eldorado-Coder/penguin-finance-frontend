@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Page from 'components/layout/Page'
 
-const arenaBgVideoUrl = 'https://res.cloudinary.com/dbyunrpzq/video/upload/v1624544901/penguin_arena_clpyb0.mp4'
+const arenaBgVideoUrl = 'https://res.cloudinary.com/dbyunrpzq/video/upload/v1632206011/The_Journey_to_the_Arena_Part_01_uvqzti.mp4'
 
 const Arena: React.FC = () => {
   return (
