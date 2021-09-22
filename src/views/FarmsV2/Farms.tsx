@@ -233,22 +233,21 @@ const Farms: React.FC = () => {
     const pefiPerDay = pefiPerYear / DAYS_PER_YEAR
     const pefiRewardPerDayInUsd = pefiPriceUsd * pefiPerDay * (1 - 0.15 - 0.1)
     const pefiDailyApr = farm.totalLiquidityInUsd > 0 ? pefiRewardPerDayInUsd / farm.totalLiquidityInUsd : 0
-    const pefiApr = getApr(pefiDailyApr) === Infinity ? 999999 : getApr(pefiDailyApr)
+    const pefiApr = getApr(pefiDailyApr)
 
-    let { pngDailyApr } = farm
-    let pngApr = getApr(pngDailyApr)
+    let { stakingApr, swapFeeApr } = farm
 
     if (farm.type === 'Lydia') {
       const lydiaFarm = lydiaFarms.find((row) => row.lpSymbol === farm.lpSymbol)
       const poolLiquidityUsd = farm.lpPrice * getBalanceNumber(lydiaFarm.lpTokenBalanceMC)
-      pngApr = getLydiaFarmApr(lydiaFarm.poolWeight, lydPriceUsd, poolLiquidityUsd, lydPerSec) * 0.9
-      pngDailyApr = pngApr / 365
+      stakingApr = getLydiaFarmApr(lydiaFarm.poolWeight, lydPriceUsd, poolLiquidityUsd, lydPerSec) * 0.9
+      swapFeeApr = getApr(farm.swapDailyReward / poolLiquidityUsd) * 0.9
     }
 
     if (farm.type === 'Joe') {
       const poolLiquidityUsd = farm.lpPrice * Number(farm.joePoolLpBalance)
       const poolWeight = farm.joePoolAllocPoint / joeGlobalData.totalAllocPoint
-      pngApr =
+      stakingApr =
         getJoeFarmApr(
           poolWeight,
           joePriceUsd,
@@ -256,10 +255,18 @@ const Farms: React.FC = () => {
           joeGlobalData.joePerSec,
           joeGlobalData.rewardPercentToFarm,
         ) * 0.9
-      pngDailyApr = pngApr / 365
+      swapFeeApr = getApr(farm.swapDailyReward / poolLiquidityUsd) * 0.9
     }
 
-    return { ...farm, pefiDailyApr, pefiApr, pngDailyApr, pngApr, apr: pngApr + pefiApr, apy: pefiApr + pngApr }
+    return {
+      ...farm,
+      pefiDailyApr,
+      pefiApr,
+      stakingApr,
+      swapFeeApr,
+      apr: stakingApr + swapFeeApr + pefiApr,
+      apy: stakingApr + swapFeeApr + pefiApr,
+    }
   })
 
   const filteredFarms = useMemo(() => {

@@ -39,8 +39,6 @@ export interface Farm extends FarmConfig {
   maxBips?: number
   lpPrice?: number
   totalLiquidityInUsd?: number
-  pngApr?: number
-  pngDailyApr?: number
   displayedDecimals?: number
 }
 
@@ -70,14 +68,15 @@ export interface V2Farm extends FarmConfig {
   maxBips?: number
   lpPrice?: number
   totalLiquidityInUsd?: number
-  pngApr?: number
-  pngDailyApr?: number
+  stakingApr?: number
+  swapFeeApr?: number
   pefiApr?: number
   apr?: number
   apy?: number
   displayedDecimals?: number
   joePoolAllocPoint?: number
   joePoolLpBalance?: number
+  swapDailyReward?: number
 }
 
 export interface Lp extends LPConfig {

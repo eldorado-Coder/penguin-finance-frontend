@@ -8,7 +8,8 @@ import getV2FarmMasterChefAbi from 'utils/getV2FarmMasterChefAbi'
 import getV2FarmMasterChefAddress from 'utils/getV2FarmMasterChefAddress'
 import { getPangolinLpPrice, getJoeLpPrice, getSushiLpPrice, getLydiaLpPrice } from 'utils/price'
 import { getBalanceNumber } from 'utils/formatBalance'
-import { getPangolinRewardPoolApr, getJoeRewardPoolApr } from 'utils/apyHelpers'
+import { getPangolinRewardPoolApr } from 'utils/apyHelpers'
+import { getPairSwapDailyReward } from 'subgraph/utils'
 import { getPoolInfo as getJoePoolInfo } from 'subgraph/utils/joe'
 import { NON_ADDRESS } from 'config'
 
@@ -120,19 +121,18 @@ export const fetchFarms = async () => {
 
         let pngApr = 0
         let pngDailyApr = 0
+        let swapFeeApr = 0
+        let stakingApr = 0
+        let swapDailyReward = 0
+
         if (farmConfig.type === 'Pangolin') {
           const res = await getPangolinRewardPoolApr(getAddress(farmConfig.pangolinRewardPoolAddresses))
           pngApr = res.apr
           pngDailyApr = res.dailyApr
-        }
-        if (farmConfig.type === 'Joe') {
-          const res = await getJoeRewardPoolApr(getAddress(farmConfig.lpAddresses))
-          pngApr = res.apr
-          pngDailyApr = res.dailyApr
-        }
-        if (farmConfig.type === 'Sushi') {
-          pngApr = 0
-          pngDailyApr = 0
+          swapFeeApr = res.swapFeeApr
+          stakingApr = res.stakingApr
+        } else {
+          swapDailyReward = await getPairSwapDailyReward(lpAddress, farmConfig.type)
         }
 
         return {
@@ -148,8 +148,9 @@ export const fetchFarms = async () => {
           pefiPerYear: new BigNumber(pefiPerYear).toJSON(),
           maxBips: 10000,
           lpPrice,
-          pngApr: pngApr * 0.9,
-          pngDailyApr: pngDailyApr * 0.9,
+          swapFeeApr: swapFeeApr * 0.9,
+          stakingApr: stakingApr * 0.9,
+          swapDailyReward,
           joePoolAllocPoint,
           joePoolLpBalance,
         }
