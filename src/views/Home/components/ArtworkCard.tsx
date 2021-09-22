@@ -13,7 +13,7 @@ const StyledArtworkCardBg = styled.div`
   height: 100%;
   background-size: cover;
   background-position: center center;
-  background-image: url('/images/home/introducing_boofi_finance.png');
+  background-image: url('/images/home/boofinance-tiersartwork.png');
   cursor: pointer;
 `
 
@@ -24,7 +24,7 @@ const ArtworkCard = () => {
   const onClickArtworkV2Card = () => {
     // history.push('/farms')
     window.open(
-      'https://medium.com/@boofinance2021/introducing-boofinance-innovative-yield-farms-deflationary-nfts-on-avalanche-5f285835a317',
+      'https://penguin-finance.medium.com/penguin-launchpad-boofinance-ido-tiers-are-here-29ba4cd90053',
       '_blank',
     )
   }

@@ -31,7 +31,7 @@ const Launchpad: React.FC = () => {
 
   const handleLearnBoofi = () => {
     window.open(
-      'https://medium.com/@boofinance2021/introducing-boofinance-innovative-yield-farms-deflationary-nfts-on-avalanche-5f285835a317',
+      'https://penguin-finance.medium.com/penguin-launchpad-boofinance-ido-tiers-are-here-29ba4cd90053',
       '_blank',
     )
   }
@@ -41,7 +41,7 @@ const Launchpad: React.FC = () => {
   }
 
   const marks = [1, 2, 3, 4]
-  const launchStage = 2
+  const launchStage = 1
   const stageContents = [
     {
       label: 'Pre-Launch Phase',
@@ -88,7 +88,7 @@ const Launchpad: React.FC = () => {
         {isMobile ? (
           <Flex flexDirection="column">
             <MobileProgressWrapper>
-              <Progress primaryStep={42} />
+              <Progress primaryStep={22} />
               <MobileProgressMarks flexDirection="column" justifyContent="space-between">
                 {marks.map((mark) => {
                   return (
@@ -129,7 +129,7 @@ const Launchpad: React.FC = () => {
         ) : (
           <Flex>
             <ProgressWrapper>
-              <Progress primaryStep={39} />
+              <Progress primaryStep={28} />
               <Flex justifyContent="space-between">
                 {marks.map((mark) => {
                   return (
@@ -162,15 +162,15 @@ const Launchpad: React.FC = () => {
           </Flex>
         )}
       </BoofiCard>
-      <Flex justifyContent="space-between" flexWrap="wrap">
+      {/* <Flex justifyContent="space-between" flexWrap="wrap">
         <TiersCard />
         <StakeCard />
-      </Flex>
-      {/* <Flex justifyContent="center">
+      </Flex> */}
+      <Flex justifyContent="center">
         <MigrationVideo controls>
           <source src="/images/launchpad/boofi-launchpad.mp4" />
         </MigrationVideo>
-      </Flex> */}
+      </Flex>
       <EndedLabel fontWeight={500} fontSize="24px" mt="32px">
         Ended
       </EndedLabel>
