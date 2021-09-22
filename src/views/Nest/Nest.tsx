@@ -68,7 +68,7 @@ const Nest: React.FC = () => {
       </BgWrapper>
       <NestBannerContainer>
         <BannerImage
-          src={`${process.env.PUBLIC_URL}/images/pools/${isDark ? 'nest_banner_dark2.svg' : 'nest_banner_light2.svg'}`}
+          src={`${process.env.PUBLIC_URL}/images/pools/${isDark ? 'nest_banner_dark3.svg' : 'nest_banner_light3.svg'}`}
           alt="nest banner"
         />
       </NestBannerContainer>
