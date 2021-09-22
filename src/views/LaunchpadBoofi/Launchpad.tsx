@@ -159,15 +159,15 @@ const Launchpad: React.FC = () => {
           </Flex>
         )}
       </BoofiCard>
-      {/* <Flex justifyContent="space-between" flexWrap="wrap">
+      <Flex justifyContent="space-between" flexWrap="wrap">
         <TiersCard />
         <StakeCard />
-      </Flex> */}
-      <Flex justifyContent="center">
+      </Flex>
+      {/* <Flex justifyContent="center">
         <MigrationVideo autoPlay controls>
           <source src="/images/launchpad/boofi-launchpad.mp4" />
         </MigrationVideo>
-      </Flex>
+      </Flex> */}
       <EndedLabel fontWeight={500} fontSize="24px" mt="32px">
         Ended
       </EndedLabel>
