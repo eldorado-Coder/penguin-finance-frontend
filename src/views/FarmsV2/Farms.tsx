@@ -241,7 +241,7 @@ const Farms: React.FC = () => {
       const lydiaFarm = lydiaFarms.find((row) => row.lpSymbol === farm.lpSymbol)
       const poolLiquidityUsd = farm.lpPrice * getBalanceNumber(lydiaFarm.lpTokenBalanceMC)
       stakingApr = getLydiaFarmApr(lydiaFarm.poolWeight, lydPriceUsd, poolLiquidityUsd, lydPerSec) * 0.9
-      swapFeeApr = getApr(farm.swapDailyReward / poolLiquidityUsd) * 0.9
+      swapFeeApr = getApr(farm.swapDailyReward / poolLiquidityUsd)
     }
 
     if (farm.type === 'Joe') {
@@ -255,7 +255,7 @@ const Farms: React.FC = () => {
           joeGlobalData.joePerSec,
           joeGlobalData.rewardPercentToFarm,
         ) * 0.9
-      swapFeeApr = getApr(farm.swapDailyReward / poolLiquidityUsd) * 0.9
+      swapFeeApr = getApr(farm.swapDailyReward / poolLiquidityUsd)
     }
 
     return {

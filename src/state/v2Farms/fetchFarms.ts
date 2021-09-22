@@ -144,7 +144,7 @@ export const fetchFarms = async () => {
           pefiPerYear: new BigNumber(pefiPerYear).toJSON(),
           maxBips: 10000,
           lpPrice,
-          swapFeeApr: swapFeeApr * 0.9,
+          swapFeeApr,
           stakingApr: stakingApr * 0.9,
           swapDailyReward,
           joePoolAllocPoint,
