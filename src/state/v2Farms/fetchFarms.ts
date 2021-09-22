@@ -119,16 +119,12 @@ export const fetchFarms = async () => {
           totalLiquidityInUsd = lpPrice * getBalanceNumber(new BigNumber(totalLP))
         }
 
-        let pngApr = 0
-        let pngDailyApr = 0
         let swapFeeApr = 0
         let stakingApr = 0
         let swapDailyReward = 0
 
         if (farmConfig.type === 'Pangolin') {
           const res = await getPangolinRewardPoolApr(getAddress(farmConfig.pangolinRewardPoolAddresses))
-          pngApr = res.apr
-          pngDailyApr = res.dailyApr
           swapFeeApr = res.swapFeeApr
           stakingApr = res.stakingApr
         } else {
@@ -168,8 +164,9 @@ export const fetchFarms = async () => {
           pefiPerYear: new BigNumber(0),
           maxBips: 10000,
           lpPrice: 1,
-          pngApr: 0,
-          pngDailyApr: 0,
+          swapFeeApr: 0,
+          stakingApr: 0,
+          swapDailyReward: 0,
           joePoolAllocPoint: 0,
           joePoolLpBalance: 1,
         }
