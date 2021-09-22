@@ -6,14 +6,15 @@ import styled from 'styled-components'
 import Page from 'components/layout/Page'
 import Select from 'components/Select/Select'
 import Balance from 'components/Balance'
-import { useV2Farms, useLydiaFarms, useLydiaFarmRewardRate, usePricePefiUsdt } from 'state/hooks'
+import { useV2Farms, useLydiaFarms, useLydiaFarmRewardRate, useJoeFarmsGlobalData, usePricePefiUsdt } from 'state/hooks'
 import { fetchV2FarmUserDataAsync } from 'state/actions'
 import useRefresh from 'hooks/useRefresh'
 import useTheme from 'hooks/useTheme'
 import useTokenPrice from 'hooks/useTokenPrice'
+import useJoePrice from 'hooks/useJoePrice'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { DAYS_PER_YEAR } from 'config'
-import { getApr, getLydiaFarmApr } from 'utils/apyHelpers'
+import { getApr, getLydiaFarmApr, getJoeFarmApr } from 'utils/apyHelpers'
 import V1Farms from './V1'
 import V2Farms from './V2'
 
@@ -200,9 +201,11 @@ const Farms: React.FC = () => {
   const v2Farms = useV2Farms()
   const lydiaFarms = useLydiaFarms()
   const { isXl, isSm } = useMatchBreakpoints()
-  const pefiPriceUsd = usePricePefiUsdt().toNumber()
   const lydPerSec = useLydiaFarmRewardRate()
+  const joeGlobalData = useJoeFarmsGlobalData()
+  const pefiPriceUsd = usePricePefiUsdt().toNumber()
   const { lydPrice: lydPriceUsd } = useTokenPrice()
+  const joePriceUsd = useJoePrice()
 
   const isMobile = !isXl
   const theme = useTheme()
@@ -230,13 +233,29 @@ const Farms: React.FC = () => {
     const pefiPerDay = pefiPerYear / DAYS_PER_YEAR
     const pefiRewardPerDayInUsd = pefiPriceUsd * pefiPerDay * (1 - 0.15 - 0.1)
     const pefiDailyApr = farm.totalLiquidityInUsd > 0 ? pefiRewardPerDayInUsd / farm.totalLiquidityInUsd : 0
+    const pefiApr = getApr(pefiDailyApr) === Infinity ? 999999 : getApr(pefiDailyApr)
+
     let { pngDailyApr } = farm
     let pngApr = getApr(pngDailyApr)
-    const pefiApr = getApr(pefiDailyApr) === Infinity ? 999999 : getApr(pefiDailyApr)
+
     if (farm.type === 'Lydia') {
       const lydiaFarm = lydiaFarms.find((row) => row.lpSymbol === farm.lpSymbol)
       const poolLiquidityUsd = farm.lpPrice * getBalanceNumber(lydiaFarm.lpTokenBalanceMC)
       pngApr = getLydiaFarmApr(lydiaFarm.poolWeight, lydPriceUsd, poolLiquidityUsd, lydPerSec) * 0.9
+      pngDailyApr = pngApr / 365
+    }
+
+    if (farm.type === 'Joe') {
+      const poolLiquidityUsd = farm.lpPrice * Number(farm.joePoolLpBalance)
+      const poolWeight = farm.joePoolAllocPoint / joeGlobalData.totalAllocPoint
+      pngApr =
+        getJoeFarmApr(
+          poolWeight,
+          joePriceUsd,
+          poolLiquidityUsd,
+          joeGlobalData.joePerSec,
+          joeGlobalData.rewardPercentToFarm,
+        ) * 0.9
       pngDailyApr = pngApr / 365
     }
 

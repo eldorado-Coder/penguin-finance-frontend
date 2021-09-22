@@ -9,6 +9,7 @@ import getV2FarmMasterChefAddress from 'utils/getV2FarmMasterChefAddress'
 import { getPangolinLpPrice, getJoeLpPrice, getSushiLpPrice, getLydiaLpPrice } from 'utils/price'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { getPangolinRewardPoolApr, getJoeRewardPoolApr } from 'utils/apyHelpers'
+import { getPoolInfo as getJoePoolInfo } from 'subgraph/utils/joe'
 import { NON_ADDRESS } from 'config'
 
 export const fetchMasterChefGlobalData = async () => {
@@ -97,12 +98,18 @@ export const fetchFarms = async () => {
         const poolWeight = allocPoint.div(new BigNumber(totalAllocPoint))
         let lpPrice = farmConfig.lpPrice || 1
         let totalLiquidityInUsd = getBalanceNumber(new BigNumber(totalLP))
+        let joePoolAllocPoint = 0
+        let joePoolLpBalance = 1
+
         if (farmConfig.type === 'Pangolin') {
           lpPrice = await getPangolinLpPrice(lpAddress)
           totalLiquidityInUsd = lpPrice * getBalanceNumber(new BigNumber(totalLP))
         } else if (farmConfig.type === 'Joe') {
           lpPrice = await getJoeLpPrice(lpAddress)
           totalLiquidityInUsd = lpPrice * getBalanceNumber(new BigNumber(totalLP))
+          const joePoolInfo = await getJoePoolInfo(lpAddress)
+          joePoolAllocPoint = joePoolInfo ? joePoolInfo.allocPoint : 0
+          joePoolLpBalance = joePoolInfo ? joePoolInfo.jlpBalance : 0
         } else if (farmConfig.type === 'Sushi') {
           lpPrice = await getSushiLpPrice(lpAddress)
           totalLiquidityInUsd = lpPrice * getBalanceNumber(new BigNumber(totalLP))
@@ -143,6 +150,8 @@ export const fetchFarms = async () => {
           lpPrice,
           pngApr: pngApr * 0.9,
           pngDailyApr: pngDailyApr * 0.9,
+          joePoolAllocPoint,
+          joePoolLpBalance,
         }
       } catch (error) {
         return {
@@ -160,6 +169,8 @@ export const fetchFarms = async () => {
           lpPrice: 1,
           pngApr: 0,
           pngDailyApr: 0,
+          joePoolAllocPoint: 0,
+          joePoolLpBalance: 1,
         }
       }
     }),

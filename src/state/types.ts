@@ -76,6 +76,8 @@ export interface V2Farm extends FarmConfig {
   apr?: number
   apy?: number
   displayedDecimals?: number
+  joePoolAllocPoint?: number
+  joePoolLpBalance?: number
 }
 
 export interface Lp extends LPConfig {
@@ -142,6 +144,16 @@ export interface LydiaFarmsState {
   lydPerSec?: number
   data: Farm[]
 }
+
+export interface JoeFarmsState {
+  joePerSec?: number
+  devPercent?: number
+  investorPercent?: number
+  treasuryPercent?: number
+  totalAllocPoint?: number
+  data: Farm[]
+}
+
 export interface CompounderFarmsState {
   pefiPerBlock: number
   gondolaPerSec: number
@@ -284,6 +296,7 @@ export interface State {
   lps: LpsState
   farms: FarmsState
   lydiaFarms: LydiaFarmsState
+  joeFarms: JoeFarmsState
   compounderFarms: CompounderFarmsState
   toasts: ToastsState
   pools: PoolsState

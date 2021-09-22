@@ -109,9 +109,15 @@ export const getJoeRewardPoolApr = async (address) => {
   return { apr, dailyApr: apr / 365 }
 }
 
-export const getLydiaFarmApr = (poolWeight, lydPriceUsd, poolLiquidityUsd, lydPerSec): number => {
-  const yearlyLydRewardAllocation = lydPerSec * SECONDS_PER_YEAR * poolWeight
-  const apr = (yearlyLydRewardAllocation * lydPriceUsd) / poolLiquidityUsd
+export const getLydiaFarmApr = (poolWeight, rewardTokenPrice, poolLiquidityUsd, rewardRatePerSec): number => {
+  const yearlyLydRewardAllocation = rewardRatePerSec * SECONDS_PER_YEAR * poolWeight
+  const apr = (yearlyLydRewardAllocation * rewardTokenPrice) / poolLiquidityUsd
+  return apr || 0
+}
+
+export const getJoeFarmApr = (poolWeight, rewardTokenPrice, poolLiquidityUsd, rewardRatePerSec, multiplier): number => {
+  const yearlyLydRewardAllocation = rewardRatePerSec * SECONDS_PER_YEAR * poolWeight
+  const apr = (multiplier * yearlyLydRewardAllocation * rewardTokenPrice) / poolLiquidityUsd
   return apr || 0
 }
 
