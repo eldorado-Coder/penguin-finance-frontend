@@ -41,7 +41,7 @@ const Launchpad: React.FC = () => {
   }
 
   const marks = [1, 2, 3, 4]
-  const launchStage = 2;
+  const launchStage = 2
   const stageContents = [
     {
       label: 'Pre-Launch Phase',
@@ -73,11 +73,13 @@ const Launchpad: React.FC = () => {
         Upcoming Offerings
       </BoofiLabel>
       <BoofiCard>
-        <Flex alignItems='center' justifyContent='space-between' flexWrap='wrap'>
-          <img src='/images/launchpad/boofi-logo.svg' alt='boofi' width={320} />
-          <BoofiDescriptionWrapper alignItems='center' justifyContent='space-between'>
-            <BoofiDescription>Unique yield farming protocol on Avalanche offering deflationary NFTs and decentralized governance.</BoofiDescription>
-            <BoofiActions flexDirection='column'>
+        <Flex alignItems="center" justifyContent="space-between" flexWrap="wrap">
+          <img src="/images/launchpad/boofi-logo.svg" alt="boofi" width={320} />
+          <BoofiDescriptionWrapper alignItems="center" justifyContent="space-between">
+            <BoofiDescription>
+              Unique yield farming protocol on Avalanche offering deflationary NFTs and decentralized governance.
+            </BoofiDescription>
+            <BoofiActions flexDirection="column">
               <BoofiButton onClick={handleLearnBoofi}>Learn More</BoofiButton>
               <BoofiButton onClick={handleViewBoofi}>View Website</BoofiButton>
             </BoofiActions>
@@ -87,8 +89,8 @@ const Launchpad: React.FC = () => {
           <Flex flexDirection="column">
             <MobileProgressWrapper>
               <Progress primaryStep={42} />
-              <MobileProgressMarks flexDirection='column' justifyContent='space-between'>
-                {marks.map(mark => {
+              <MobileProgressMarks flexDirection="column" justifyContent="space-between">
+                {marks.map((mark) => {
                   return (
                     <Mark isMobile key={mark} isActive={mark <= launchStage}>
                       {mark}
@@ -128,8 +130,8 @@ const Launchpad: React.FC = () => {
           <Flex>
             <ProgressWrapper>
               <Progress primaryStep={39} />
-              <Flex justifyContent='space-between'>
-                {marks.map(mark => {
+              <Flex justifyContent="space-between">
+                {marks.map((mark) => {
                   return (
                     <Mark key={mark} isActive={mark <= launchStage}>
                       {mark}
@@ -165,7 +167,7 @@ const Launchpad: React.FC = () => {
         <StakeCard />
       </Flex>
       {/* <Flex justifyContent="center">
-        <MigrationVideo autoPlay controls>
+        <MigrationVideo controls>
           <source src="/images/launchpad/boofi-launchpad.mp4" />
         </MigrationVideo>
       </Flex> */}
@@ -321,7 +323,7 @@ const WebViewButton = styled(Button)`
   @media (min-width: 640px) {
     font-size: 16px;
   }
-`;
+`
 
 const BuySherpaButton = styled(Button)`
   background: #32283d;
@@ -489,7 +491,7 @@ const StageDescription = styled(Text)<{ isMobile?: boolean }>`
 const BoofiDescriptionWrapper = styled(Flex)`
   min-width: 100%;
   flex-direction: column;
-  
+
   @media (min-width: 640px) {
     flex-direction: row;
   }
@@ -507,7 +509,7 @@ const BoofiActions = styled(Flex)`
     flex-direction: column;
     margin-top: 0;
   }
-`;
+`
 
 const BoofiButton = styled(Button)`
   height: 32px;
@@ -530,7 +532,7 @@ const BoofiButton = styled(Button)`
       margin-right: 0;
     }
   }
-`;
+`
 
 const MobileProgressWrapper = styled.div`
   width: 100%;
