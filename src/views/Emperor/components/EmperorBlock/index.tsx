@@ -208,10 +208,10 @@ const EmperorBlock: React.FC = () => {
       <CardBlockHeader>
         <TitleBgWrapper color={!account && getPenguinColor(currentEmperor)} account={account}>
           <img
-            src={`${process.env.PUBLIC_URL}/images/emperor/banner/emperor_blitz_title.svg`}
+            src={`${process.env.PUBLIC_URL}/images/emperor/banner/emperor_banner.svg`}
             width="100%"
             height="120px"
-            alt="blitz-title"
+            alt="emperor-banner"
           />
         </TitleBgWrapper>
       </CardBlockHeader>
