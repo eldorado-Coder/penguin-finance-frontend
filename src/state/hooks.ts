@@ -30,6 +30,7 @@ import {
   clear as clearToast,
   fetchMasterChefLydPerSec, // lydia
   fetchLydiaFarmsPublicDataAsync, // lydia
+  fetchJoeMasterChefGlobalData, // joe
 
   /*
    * v2
@@ -46,6 +47,7 @@ import {
 import {
   State,
   Farm,
+  V2Farm,
   Lp,
   Pool,
   ProfileState,
@@ -85,6 +87,8 @@ export const useFetchPublicData = () => {
     // lydia farms
     dispatch(fetchMasterChefLydPerSec())
     dispatch(fetchLydiaFarmsPublicDataAsync())
+    // joe farms
+    dispatch(fetchJoeMasterChefGlobalData())
   }, [dispatch, slowRefresh])
 }
 
@@ -507,7 +511,7 @@ export const useV2Pools = (account): Pool[] => {
 }
 
 // v2 igloos
-export const useV2Farms = (): Farm[] => {
+export const useV2Farms = (): V2Farm[] => {
   const farms = useSelector((state: State) => state.v2Farms.data)
   return farms
 }
@@ -548,4 +552,19 @@ export const useLydiaFarmRewardRate = (): number => {
 export const useLydiaFarmFromPid = (pid, type): Farm => {
   const farm = useSelector((state: State) => state.lydiaFarms.data.find((f) => f.pid === pid && f.type === type))
   return farm
+}
+
+// Joe Farms
+export const useJoeFarmsGlobalData = (): {
+  joePerSec: number
+  rewardPercentToFarm: number
+  totalAllocPoint: number
+} => {
+  const data = useSelector((state: State) => state.joeFarms)
+  const { joePerSec, devPercent, investorPercent, treasuryPercent, totalAllocPoint } = data
+  return {
+    joePerSec,
+    rewardPercentToFarm: (1000 - devPercent - investorPercent - treasuryPercent) / 1000,
+    totalAllocPoint,
+  }
 }

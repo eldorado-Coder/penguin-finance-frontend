@@ -31,7 +31,7 @@ const Launchpad: React.FC = () => {
 
   const handleLearnBoofi = () => {
     window.open(
-      'https://medium.com/@boofinance2021/introducing-boofinance-innovative-yield-farms-deflationary-nfts-on-avalanche-5f285835a317',
+      'https://penguin-finance.medium.com/penguin-launchpad-boofinance-ido-tiers-are-here-29ba4cd90053',
       '_blank',
     )
   }
@@ -79,16 +79,16 @@ const Launchpad: React.FC = () => {
             <BoofiDescription>
               Unique yield farming protocol on Avalanche offering deflationary NFTs and decentralized governance.
             </BoofiDescription>
-            <Flex flexDirection="column">
+            <BoofiActions flexDirection="column">
               <BoofiButton onClick={handleLearnBoofi}>Learn More</BoofiButton>
               <BoofiButton onClick={handleViewBoofi}>View Website</BoofiButton>
-            </Flex>
+            </BoofiActions>
           </BoofiDescriptionWrapper>
         </Flex>
         {isMobile ? (
           <Flex flexDirection="column">
             <MobileProgressWrapper>
-              <Progress primaryStep={isMobile ? 22 : 30} />
+              <Progress primaryStep={22} />
               <MobileProgressMarks flexDirection="column" justifyContent="space-between">
                 {marks.map((mark) => {
                   return (
@@ -129,7 +129,7 @@ const Launchpad: React.FC = () => {
         ) : (
           <Flex>
             <ProgressWrapper>
-              <Progress primaryStep={30} />
+              <Progress primaryStep={28} />
               <Flex justifyContent="space-between">
                 {marks.map((mark) => {
                   return (
@@ -167,7 +167,7 @@ const Launchpad: React.FC = () => {
         <StakeCard />
       </Flex> */}
       <Flex justifyContent="center">
-        <MigrationVideo autoPlay controls>
+        <MigrationVideo controls>
           <source src="/images/launchpad/boofi-launchpad.mp4" />
         </MigrationVideo>
       </Flex>
@@ -318,6 +318,11 @@ const WebViewButton = styled(Button)`
   white-space: nowrap;
   border-radius: 6px;
   margin-bottom: 8px;
+  font-size: 14px;
+
+  @media (min-width: 640px) {
+    font-size: 16px;
+  }
 `
 
 const BuySherpaButton = styled(Button)`
@@ -327,18 +332,10 @@ const BuySherpaButton = styled(Button)`
   white-space: nowrap;
   font-weight: 500;
   border-radius: 6px;
-`
+  font-size: 14px;
 
-const BoofiButton = styled(Button)`
-  height: 32px;
-  background: white;
-  color: #38db93;
-  border-radius: 6px;
-  font-weight: 500;
-  white-space: nowrap;
-
-  &:first-child {
-    margin-bottom: 8px;
+  @media (min-width: 640px) {
+    font-size: 16px;
   }
 `
 
@@ -363,6 +360,11 @@ const BoofiLabel = styled(Text)`
 const BoofiDescription = styled(Text)`
   color: white;
   max-width: 400px;
+  text-align: center;
+
+  @media (min-width: 640px) {
+    text-align: left;
+  }
 `
 
 const SherpaLogo = styled.img`
@@ -488,8 +490,47 @@ const StageDescription = styled(Text)<{ isMobile?: boolean }>`
 
 const BoofiDescriptionWrapper = styled(Flex)`
   min-width: 100%;
+  flex-direction: column;
+
+  @media (min-width: 640px) {
+    flex-direction: row;
+  }
+
   @media (min-width: 1200px) {
     min-width: 60%;
+  }
+`
+
+const BoofiActions = styled(Flex)`
+  flex-direction: row;
+  margin-top: 16px;
+
+  @media (min-width: 640px) {
+    flex-direction: column;
+    margin-top: 0;
+  }
+`
+
+const BoofiButton = styled(Button)`
+  height: 32px;
+  background: white;
+  color: #38db93;
+  border-radius: 6px;
+  font-weight: 500;
+  white-space: nowrap;
+  font-size: 14px;
+
+  @media (min-width: 640px) {
+    font-size: 16px;
+  }
+
+  &:first-child {
+    margin-right: 8px;
+
+    @media (min-width: 640px) {
+      margin-bottom: 8px;
+      margin-right: 0;
+    }
   }
 `
 

@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import { useDispatch } from 'react-redux'
 import farmsReducer from './farms'
 import lydiaFarmsReducer from './lydiaFarms'
+import joeFarmsReducer from './joeFarms'
 import compounderFarmsReducer from './compounderFarms'
 import lpsReducer from './lps'
 import toastsReducer from './toasts'
@@ -25,6 +26,7 @@ const store = configureStore({
     lps: lpsReducer,
     farms: farmsReducer,
     lydiaFarms: lydiaFarmsReducer,
+    joeFarms: joeFarmsReducer,
     compounderFarms: compounderFarmsReducer,
     toasts: toastsReducer,
     pools: poolsReducer,

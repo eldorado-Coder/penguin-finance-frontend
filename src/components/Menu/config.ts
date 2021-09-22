@@ -14,8 +14,7 @@ export const config: MenuEntry[] = [
   {
     label: 'Farms',
     icon: 'IglooIcon',
-    href: '/farms',
-    badge: 'NEW'
+    href: '/farms'
   },
   // {
   //   label: 'Igloos V2',
@@ -41,6 +40,7 @@ export const config: MenuEntry[] = [
     label: 'Arena',
     icon: 'BattleIcon',
     href: '/arena',
+    badge: 'NEW'
   },
   {
     label: 'Launchpad',
@@ -99,22 +99,37 @@ export const config: MenuEntry[] = [
     icon: 'AuditIcon',
     href: 'https://www.certik.org/projects/penguinfinance',
   },
-]
-
-export const socials = [
   {
-    label: 'Discord',
+    label: 'Official Discord',
     icon: 'DiscordIcon',
     href: 'https://discord.gg/R5Rv68GXXc',
   },
   {
-    label: 'Telegram',
+    label: 'Official Telegram',
     icon: 'TelegramIcon',
     href: 'https://t.me/penguin_defi',
   },
   {
-    label: 'Twitter',
+    label: 'Official Twitter',
     icon: 'TwitterIcon',
     href: 'https://twitter.com/penguin_defi',
   },
+]
+
+export const socials = [
+  //   {
+  //     label: 'Discord',
+  //     icon: 'DiscordIcon',
+  //     href: 'https://discord.gg/R5Rv68GXXc',
+  //   },
+  //   {
+  //     label: 'Telegram',
+  //     icon: 'TelegramIcon',
+  //     href: 'https://t.me/penguin_defi',
+  //   },
+  //   {
+  //     label: 'Twitter',
+  //     icon: 'TwitterIcon',
+  //     href: 'https://twitter.com/penguin_defi',
+  //   },
 ]
