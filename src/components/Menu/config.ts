@@ -14,8 +14,7 @@ export const config: MenuEntry[] = [
   {
     label: 'Farms',
     icon: 'IglooIcon',
-    href: '/farms',
-    badge: 'NEW',
+    href: '/farms'
   },
   // {
   //   label: 'Igloos V2',
@@ -41,6 +40,7 @@ export const config: MenuEntry[] = [
     label: 'Arena',
     icon: 'BattleIcon',
     href: '/arena',
+    badge: 'NEW'
   },
   {
     label: 'Launchpad',

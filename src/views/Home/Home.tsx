@@ -23,9 +23,9 @@ const Hero = styled.div<{ isMobile?: boolean }>`
   justify-content: center;
   flex-direction: column;
   margin: auto;
-  margin-bottom: ${({ isMobile }) => (!isMobile ? '32px' : '16px')};
+  margin-bottom: ${({ isMobile }) => (!isMobile ? '40px' : '16px')};
   text-align: center;
-  height: ${({ isMobile }) => (!isMobile ? '165px' : '70px')};
+  height: 80px;
 
   h1 {
     color: white;
@@ -39,15 +39,19 @@ const Hero = styled.div<{ isMobile?: boolean }>`
     z-index: 1;
   }
 
+  ${({ theme }) => theme.mediaQueries.sm} {
+    height: 180px;
+  }
+
   ${({ theme }) => theme.mediaQueries.lg} {
     background-position: center center;
-    height: 165px;
+    height: 200px;
   }
 `
 
 const HeroBgImageContainer = styled.div`
   position: absolute;
-  width: 100%;
+  width: 103%;
 `
 
 const HeroBgImage = styled.img<{ isMobile?: boolean }>`
@@ -142,7 +146,7 @@ const Home: React.FC = () => {
           <HeroBgImageContainer>
             <HeroBgImage
               isMobile={isMobile}
-              src={`${process.env.PUBLIC_URL}/images/home/${isDark ? 'new_banner_dark.svg' : 'new_banner_light.svg'}`}
+              src={`${process.env.PUBLIC_URL}/images/home/${isDark ? 'banner_dark.svg' : 'banner_light.svg'}`}
               alt="astronaut"
             />
           </HeroBgImageContainer>

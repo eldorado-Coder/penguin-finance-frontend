@@ -41,7 +41,7 @@ const Launchpad: React.FC = () => {
   }
 
   const marks = [1, 2, 3, 4]
-  const launchStage = 1
+  const launchStage = 2;
   const stageContents = [
     {
       label: 'Pre-Launch Phase',
@@ -73,24 +73,22 @@ const Launchpad: React.FC = () => {
         Upcoming Offerings
       </BoofiLabel>
       <BoofiCard>
-        <Flex alignItems="center" justifyContent="space-between" flexWrap="wrap">
-          <img src="/images/launchpad/boofi-logo.svg" alt="boofi" width={320} />
-          <BoofiDescriptionWrapper alignItems="center" justifyContent="space-between">
-            <BoofiDescription>
-              Unique yield farming protocol on Avalanche offering deflationary NFTs and decentralized governance.
-            </BoofiDescription>
-            <Flex flexDirection="column">
+        <Flex alignItems='center' justifyContent='space-between' flexWrap='wrap'>
+          <img src='/images/launchpad/boofi-logo.svg' alt='boofi' width={320} />
+          <BoofiDescriptionWrapper alignItems='center' justifyContent='space-between'>
+            <BoofiDescription>Unique yield farming protocol on Avalanche offering deflationary NFTs and decentralized governance.</BoofiDescription>
+            <BoofiActions flexDirection='column'>
               <BoofiButton onClick={handleLearnBoofi}>Learn More</BoofiButton>
               <BoofiButton onClick={handleViewBoofi}>View Website</BoofiButton>
-            </Flex>
+            </BoofiActions>
           </BoofiDescriptionWrapper>
         </Flex>
         {isMobile ? (
           <Flex flexDirection="column">
             <MobileProgressWrapper>
-              <Progress primaryStep={isMobile ? 22 : 30} />
-              <MobileProgressMarks flexDirection="column" justifyContent="space-between">
-                {marks.map((mark) => {
+              <Progress primaryStep={42} />
+              <MobileProgressMarks flexDirection='column' justifyContent='space-between'>
+                {marks.map(mark => {
                   return (
                     <Mark isMobile key={mark} isActive={mark <= launchStage}>
                       {mark}
@@ -129,9 +127,9 @@ const Launchpad: React.FC = () => {
         ) : (
           <Flex>
             <ProgressWrapper>
-              <Progress primaryStep={30} />
-              <Flex justifyContent="space-between">
-                {marks.map((mark) => {
+              <Progress primaryStep={39} />
+              <Flex justifyContent='space-between'>
+                {marks.map(mark => {
                   return (
                     <Mark key={mark} isActive={mark <= launchStage}>
                       {mark}
@@ -318,7 +316,12 @@ const WebViewButton = styled(Button)`
   white-space: nowrap;
   border-radius: 6px;
   margin-bottom: 8px;
-`
+  font-size: 14px;
+
+  @media (min-width: 640px) {
+    font-size: 16px;
+  }
+`;
 
 const BuySherpaButton = styled(Button)`
   background: #32283d;
@@ -327,18 +330,10 @@ const BuySherpaButton = styled(Button)`
   white-space: nowrap;
   font-weight: 500;
   border-radius: 6px;
-`
+  font-size: 14px;
 
-const BoofiButton = styled(Button)`
-  height: 32px;
-  background: white;
-  color: #38db93;
-  border-radius: 6px;
-  font-weight: 500;
-  white-space: nowrap;
-
-  &:first-child {
-    margin-bottom: 8px;
+  @media (min-width: 640px) {
+    font-size: 16px;
   }
 `
 
@@ -363,6 +358,11 @@ const BoofiLabel = styled(Text)`
 const BoofiDescription = styled(Text)`
   color: white;
   max-width: 400px;
+  text-align: center;
+
+  @media (min-width: 640px) {
+    text-align: left;
+  }
 `
 
 const SherpaLogo = styled.img`
@@ -488,10 +488,49 @@ const StageDescription = styled(Text)<{ isMobile?: boolean }>`
 
 const BoofiDescriptionWrapper = styled(Flex)`
   min-width: 100%;
+  flex-direction: column;
+  
+  @media (min-width: 640px) {
+    flex-direction: row;
+  }
+
   @media (min-width: 1200px) {
     min-width: 60%;
   }
 `
+
+const BoofiActions = styled(Flex)`
+  flex-direction: row;
+  margin-top: 16px;
+
+  @media (min-width: 640px) {
+    flex-direction: column;
+    margin-top: 0;
+  }
+`;
+
+const BoofiButton = styled(Button)`
+  height: 32px;
+  background: white;
+  color: #38db93;
+  border-radius: 6px;
+  font-weight: 500;
+  white-space: nowrap;
+  font-size: 14px;
+
+  @media (min-width: 640px) {
+    font-size: 16px;
+  }
+
+  &:first-child {
+    margin-right: 8px;
+
+    @media (min-width: 640px) {
+      margin-bottom: 8px;
+      margin-right: 0;
+    }
+  }
+`;
 
 const MobileProgressWrapper = styled.div`
   width: 100%;
