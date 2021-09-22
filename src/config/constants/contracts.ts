@@ -15,6 +15,10 @@ export default {
     43113: '',
     43114: '0xFb26525B14048B7BB1F3794F6129176195Db7766',
   },
+  joeMasterChef: {
+    43113: '',
+    43114: '0xd6a4F121CA35509aF06A0Be99093d08462f53052',
+  },
   // v2
   // v2MasterChef: {
   //   43113: '',

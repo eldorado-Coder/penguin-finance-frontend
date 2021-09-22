@@ -7,7 +7,7 @@ import { LydiaFarmsState, Farm } from '../types'
 const initialState: LydiaFarmsState = { lydPerSec: 0, data: [...farmsConfig] }
 
 export const farmsSlice = createSlice({
-  name: 'Farms',
+  name: 'LydiaFarms',
   initialState,
   reducers: {
     setLydPerSec: (state, action) => {

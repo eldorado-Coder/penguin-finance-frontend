@@ -19,6 +19,42 @@ export const PAIRS_SEARCH = ({ address }: { address?: string }) => {
   return gql(queryString)
 }
 
+export const PAIR_DAY_DATA_SEARCH = ({ address }: { address?: string }) => {
+  const queryString = `
+    query pairHourDatas {
+      pairHourDatas(
+        first: 24,
+        orderBy: hourStartUnix, orderDirection: desc
+        where: {
+          ${address ? `pair: "${address}"` : ``}
+        }
+      )
+      {
+        hourStartUnix
+        hourlyVolumeUSD
+      }
+    }`
+  return gql(queryString)
+}
+
+export const PAIR_DAY_DATA_SEARCH1 = ({ address }: { address?: string }) => {
+  const queryString = `
+    query pairHourDatas {
+      pairHourDatas(
+        first: 24,
+        orderBy: date, orderDirection: desc
+        where: {
+          ${address ? `pair: "${address}"` : ``}
+        }
+      )
+      {
+        date
+        volumeUSD
+      }
+    }`
+  return gql(queryString)
+}
+
 export const TOKENS_SEARCH = ({ address, symbol }: { address?: string; symbol?: string }) => {
   const queryString = `
     query tokens {

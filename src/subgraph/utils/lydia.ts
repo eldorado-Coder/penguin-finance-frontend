@@ -1,5 +1,5 @@
 import { lydiaClient } from '../client'
-import { PAIRS_SEARCH, TOKENS_SEARCH } from '../queries'
+import { PAIRS_SEARCH, TOKENS_SEARCH, PAIR_DAY_DATA_SEARCH } from '../queries'
 
 export const getPair = async (address: string) => {
   if (!address) return null
@@ -10,4 +10,23 @@ export const getPair = async (address: string) => {
 export const getToken = async (address: string, symbol: string) => {
   const { pairs } = await lydiaClient.request(TOKENS_SEARCH({ address, symbol }))
   return pairs[0]
+}
+
+export const getPairDayData = async (address: string) => {
+  if (!address) return null
+  const { pairHourDatas } = await lydiaClient.request(PAIR_DAY_DATA_SEARCH({ address: address.toLowerCase() }))
+  return pairHourDatas
+}
+
+export const getPairDailyVolume = async (address: string) => {
+  if (!address) return 0
+  const pairDayData = await getPairDayData(address)
+  let dailyVolume = 0
+  if (pairDayData && pairDayData.length > 0) {
+    pairDayData.map((row) => {
+      dailyVolume += Number(row.hourlyVolumeUSD)
+      return row
+    })
+  }
+  return dailyVolume
 }
