@@ -1,14 +1,18 @@
 import BigNumber from 'bignumber.js'
-import React, { useCallback, useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { Text, Flex, Tag, ButtonMenu, ButtonMenuItem } from 'penguinfinance-uikit2'
+import { Text, Flex } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import { useLaunchpadTierHurdles, useLaunchpad } from 'state/hooks'
 import SvgIcon from 'components/SvgIcon'
 import { getBalanceNumber } from 'utils/formatBalance'
 import Card from '../Card'
 
-const PENGUIN_TIERS = ['Astronaut', 'Ghoul', 'Spacelord']
+const TIERS = [
+    { label: 'Ghoul', iPefi: '500' },
+    { label: 'Reaper', iPefi: '10,000' },
+    { label: 'Demonlord', iPefi: '50,000'}
+]
 
 const TiersCard = () => {
   const { account } = useWeb3React()
@@ -20,44 +24,42 @@ const TiersCard = () => {
   return (
     <StyledCard>
       <CardContent>
-        <div>
-          <Flex alignItems='center'>
-            <Label fontSize='32px' bold mr='16px'>Tiers</Label>
+        <TierContent>
+          <Wrapper justifyContent='space-between' alignItems='center'>
+            <Label fontSize='32px' bold mr='16px' lineHeight={1.2}>Tiers</Label>
             <InfoIconWrapper>
               <SvgIcon src={`${process.env.PUBLIC_URL}/images/home/info.svg`} width="25px" height="25px" />
             </InfoIconWrapper>
-          </Flex>
-          <CurrentTiersWrapper>
-            <Flex flexDirection='column' alignItems='center' mr='16px'>
-              {PENGUIN_TIERS.map(penguinTier => (
-                <Text key={`label-${penguinTier}`} fontSize='18px' fontWeight={400} className={penguinTier.toLowerCase()}>
-                  {penguinTier}
+          </Wrapper>
+          <CurrentTiersWrapper flexDirection='column' alignItems='center'>
+            {TIERS.map((penguinTier, index) => (
+              <Wrapper justifyContent='space-between' key={`label-${penguinTier.label}`}>
+                <Text fontSize='18px' fontWeight={400} className={penguinTier.label.toLowerCase()}>
+                  {penguinTier.label}
                 </Text>
-              ))}
-            </Flex>
-            <Flex flexDirection='column' alignItems='center'>
-              {PENGUIN_TIERS.map((penguinTier, index) => (
-                <Text key={`value-${penguinTier}`} fontSize='18px' bold className={penguinTier.toLowerCase()}>
-                  {`(+${tierHurdles.length > 0 ? tierHurdles[index] : 0} iPEFI)`}
+                <Text key={`value-${penguinTier}`} fontSize='18px' bold className={penguinTier.label.toLowerCase()}>
+                  {`(+${penguinTier.iPefi} iPEFI)`}
                 </Text>
-              ))}
-            </Flex>
+              </Wrapper>
+            ))}
           </CurrentTiersWrapper>
-          <Flex>
-            <Label minWidth={116} textAlign='right' mr='16px'>Your Allocation:</Label>
-            <Label bold>62.5 AP</Label>
-          </Flex>
-          <Flex>
-            <Label minWidth={116} textAlign='right' mr='16px'>Your Stake:</Label>
+          <Wrapper justifyContent='space-between'>
+            <Label textAlign='right'>Your Stake:</Label>
             <Label bold>15000.00 iPEFI</Label>
-          </Flex>
-          <Flex mb='16px'>
-            <Label minWidth={116} textAlign='right' mr='16px'>Price per BOOFI:</Label>
+          </Wrapper>
+          <Wrapper justifyContent='space-between'>
+            <Label textAlign='right'>Your Allocation:</Label>
+            <Label bold>62.5 AP</Label>
+          </Wrapper>
+          <Wrapper justifyContent='space-between' mb='16px'>
+            <Label textAlign='right'>Price per BOOFI:</Label>
             <Label bold>$0.02</Label>
-          </Flex>
-        </div>
+          </Wrapper>
+        </TierContent>
         {hasTier ? (
-          <img src={`${process.env.PUBLIC_URL}/images/launchpad/${PENGUIN_TIERS[yourPenguinTier]}.png`} alt="my-tier" />
+          <TierWrapper>
+            <img src={`${process.env.PUBLIC_URL}/images/launchpad/${TIERS[yourPenguinTier].label}.svg`} alt="my-tier" />
+          </TierWrapper>
         ) : (
           <NoneTierWrapper>
             <SvgIcon src={`${process.env.PUBLIC_URL}/images/launchpad/none_tier.svg`} width="100%" height="20px" />
@@ -104,16 +106,31 @@ const CardContent = styled.div`
 const CurrentTiersWrapper = styled(Flex)`
   margin-bottom: 24px;
   margin-top: 16px;
-  .astronaut {
-    color: #2c77e5;
+  width: 100%;
+  .reaper {
+    color: #ffc200;
   }
   .ghoul {
-    color: #38db93;
+    color: #55ff45;
   }
-  .spacelord {
-    color: #9200e7;
+  .demonlord {
+    color: #bc00d0;
   }
 `
+
+const TierContent = styled.div`
+  width: 100%;
+
+  @media (min-width: 640px) {
+    width: calc(100% - 216px);
+    margin-right: 16px;
+    min-width: 220px;
+  }
+`
+
+const Wrapper = styled(Flex)`
+  width: 100%;
+`;
 
 const InfoIconWrapper = styled.div`
   svg {
@@ -126,20 +143,17 @@ const InfoIconWrapper = styled.div`
 
 const Label = styled(Text)<{ minWidth?: number }>`
   color: ${({ theme }) => (theme.isDark ? 'white' : theme.colors.secondary)};
-  min-width: ${({ minWidth }) => `${minWidth}px`};
 `;
 
 const NoneTierWrapper = styled.div`
-  margin: 0 auto;
   margin-top: 32px;
-    
-  @media (min-width: 640px) {
-    margin: unset;
-    margin-top: 32px;
-  }
+  max-width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+
   svg {
-    width: 200px !important;
-    height: 200px;
+    width: 100%;
+    max-width: 200px;
     .none-tier-st1 {
       fill: ${({ theme }) => !theme.isDark && 'black!important'};
     }
@@ -148,6 +162,18 @@ const NoneTierWrapper = styled.div`
     }
   }
 `
+
+const TierWrapper = styled(Flex)`
+  max-width: 200px;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  img {
+    width: 100%;
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+`;
 
 export default TiersCard;
 
