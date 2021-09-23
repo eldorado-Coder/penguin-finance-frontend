@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import ModalActions from 'components/ModalActions'
 import ModalInput from 'components/ModalInput'
 import useI18n from 'hooks/useI18n'
-import { useXPefi } from 'hooks/useContract'
+import { useIPefi } from 'hooks/useContract'
 import { useEmperor } from 'state/hooks'
 
 interface StealCrownModalProps {
@@ -18,19 +18,19 @@ const StealCrownModal: React.FC<StealCrownModalProps> = ({ onConfirm, onDismiss 
   const [maxAmount, setMaxAmount] = useState('')
   const [pendingTx, setPendingTx] = useState(false)
   const TranslateString = useI18n()
-  const xPefiContract = useXPefi()
+  const iPefiContract = useIPefi()
   const { account } = useWeb3React()
   const { maxBidIncrease, minBidIncrease, currentEmperor } = useEmperor()
   const currentBidAmount = currentEmperor.bidAmount
 
-  const fetchXPefiBalance = useCallback(async () => {
-    const xPefiBalance = (await xPefiContract.methods.balanceOf(account).call()) / 1e18
-    setMaxAmount(xPefiBalance.toString())
-  }, [account, xPefiContract])
+  const fetchIPefiBalance = useCallback(async () => {
+    const iPefiBalance = (await iPefiContract.methods.balanceOf(account).call()) / 1e18
+    setMaxAmount(iPefiBalance.toString())
+  }, [account, iPefiContract])
 
   useEffect(() => {
-    fetchXPefiBalance()
-  }, [fetchXPefiBalance])
+    fetchIPefiBalance()
+  }, [fetchIPefiBalance])
 
   const onChangeAmount = useCallback(
     (e: React.FormEvent<HTMLInputElement>) => {
@@ -58,7 +58,7 @@ const StealCrownModal: React.FC<StealCrownModalProps> = ({ onConfirm, onDismiss 
           value={amount}
           onSelectMax={handleSelectMax}
           max={maxAmount}
-          symbol="xPEFI"
+          symbol="iPEFI"
           onChange={onChangeAmount}
           inputTitle={TranslateString(1070, 'Amount')}
           showError={false}
@@ -93,7 +93,7 @@ const StealCrownModal: React.FC<StealCrownModalProps> = ({ onConfirm, onDismiss 
           <ButtonGroupContainer>
             <Link fontSize="14px" bold={false} href="./nests" external color="failure">
               <Button variant="primary" onClick={onDismiss} scale="md">
-                {TranslateString(462, 'Get xPEFI')}
+                {TranslateString(462, 'Get iPEFI')}
               </Button>
             </Link>
             <Button

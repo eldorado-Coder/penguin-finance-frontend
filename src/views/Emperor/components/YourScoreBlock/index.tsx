@@ -7,10 +7,10 @@ import BigNumber from 'bignumber.js'
 import { useWeb3React } from '@web3-react/core'
 import SvgIcon from 'components/SvgIcon'
 import { useEmperor } from 'state/hooks'
-import { useXPefi } from 'hooks/useContract'
+import { useIPefi } from 'hooks/useContract'
 import { getEmperorAddress } from 'utils/addressHelpers'
 import { badWordsFilter } from 'utils/address'
-import { useEmperorActions, useXPefiApprove } from 'hooks/useEmperor'
+import { useEmperorActions, useIPefiApprove } from 'hooks/useEmperor'
 import { NON_ADDRESS } from 'config'
 import RegisterModal from './RegisterModal'
 // import StealCrownModal from './StealCrownModal'
@@ -212,10 +212,10 @@ const StyledText = styled(Text)`
 const YourScoreBlock: React.FC = () => {
   const TranslateString = useI18n()
   const { account } = useWeb3React()
-  const { myEmperor, currentEmperor, maxBidIncrease, openingBid, finalDate } = useEmperor()
+  const { myEmperor, currentEmperor, maxBidIncrease, openingBid, finalDate, poisonCost } = useEmperor()
   const { onRegister, onSteal, onStealAndPoison, onChangeStyle, onChangeColor } = useEmperorActions()
-  const { onApproveXPefi } = useXPefiApprove()
-  const xPefiContract = useXPefi()
+  const { onApproveIPefi } = useIPefiApprove()
+  const iPefiContract = useIPefi()
   const [pendingTx, setPendingTx] = useState(false)
   const [maxAmount, setMaxAmount] = useState('')
 
@@ -233,14 +233,14 @@ const YourScoreBlock: React.FC = () => {
     stealAndPoisonTooltip = getStealAndPoisonTooltip('', myEmperor.lastPoisonedBy, myEmperor.timePoisonedRemaining)
   }
 
-  const fetchXPefiBalance = useCallback(async () => {
-    const xPefiBalance = (await xPefiContract.methods.balanceOf(account).call()) / 1e18
-    setMaxAmount(xPefiBalance.toString())
-  }, [account, xPefiContract])
+  const fetchIPefiBalance = useCallback(async () => {
+    const iPefiBalance = (await iPefiContract.methods.balanceOf(account).call()) / 1e18
+    setMaxAmount(iPefiBalance.toString())
+  }, [account, iPefiContract])
 
   useEffect(() => {
-    fetchXPefiBalance()
-  }, [fetchXPefiBalance])
+    fetchIPefiBalance()
+  }, [fetchIPefiBalance])
 
   const getMyStatus = () => {
     if (account) {
@@ -278,6 +278,9 @@ const YourScoreBlock: React.FC = () => {
     if (Number(finalDate) < Date.now() / 1000) return false
     if (isMyEmperorPoisoned) return false
 
+    const amount = currentEmperor.address === NON_ADDRESS ? openingBid : currentEmperorBidAmount + maxBidIncrease
+    if ((amount + poisonCost) > Number(maxAmount)) return false;
+
     return true
   }
 
@@ -288,10 +291,10 @@ const YourScoreBlock: React.FC = () => {
         currentEmperor.address === NON_ADDRESS
           ? new BigNumber(openingBid).toString()
           : new BigNumber(currentEmperorBidAmount).plus(new BigNumber(maxBidIncrease)).toString()
-      const allowanceBalance = (await xPefiContract.methods.allowance(account, getEmperorAddress()).call()) / 1e18
+      const allowanceBalance = (await iPefiContract.methods.allowance(account, getEmperorAddress()).call()) / 1e18
       if (allowanceBalance === 0) {
         // call approve function
-        await onApproveXPefi()
+        await onApproveIPefi()
       }
       await onSteal(String(amount))
       setPendingTx(false)
@@ -307,10 +310,10 @@ const YourScoreBlock: React.FC = () => {
         currentEmperor.address === NON_ADDRESS
           ? new BigNumber(openingBid).toString()
           : new BigNumber(currentEmperorBidAmount).plus(new BigNumber(maxBidIncrease)).toString()
-      const allowanceBalance = (await xPefiContract.methods.allowance(account, getEmperorAddress()).call()) / 1e18
+      const allowanceBalance = (await iPefiContract.methods.allowance(account, getEmperorAddress()).call()) / 1e18
       if (allowanceBalance === 0) {
         // call approve function
-        await onApproveXPefi()
+        await onApproveIPefi()
       }
       await onStealAndPoison(String(amount))
       setPendingTx(false)

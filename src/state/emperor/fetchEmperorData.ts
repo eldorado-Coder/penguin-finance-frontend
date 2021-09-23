@@ -41,8 +41,13 @@ export const fetchGeneralData = async () => {
         address: emperorContractAddress,
         name: 'poisonDuration',
       },
+      // poisonCost
+      {
+        address: emperorContractAddress,
+        name: 'poisonCost',
+      },
     ]
-    const [maxBidIncrease, minBidIncrease, openingBid, finalDate, poisonDuration] = await multicall(
+    const [maxBidIncrease, minBidIncrease, openingBid, finalDate, poisonDuration, poisonCost] = await multicall(
       emperorAbi,
       generalDataCalls,
     )
@@ -53,6 +58,7 @@ export const fetchGeneralData = async () => {
       openingBid: getBalanceNumber(openingBid),
       finalDate: finalDate[0].toNumber(),
       poisonDuration: poisonDuration[0].toNumber(),
+      poisonCost: getBalanceNumber(poisonCost)
     }
   } catch (error) {
     return {}

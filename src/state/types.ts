@@ -180,6 +180,18 @@ export interface LaunchpadState {
   tierHurdles: number[]
 }
 
+export interface LaunchpadBoofiState {
+  allowance: number
+  stakedBalance: number
+  yourPenguinTier: number
+  allocation: number
+  canUnstake: boolean
+  timeRemainingToUnstake: number
+  depositEnd: number
+  xPefi: number
+  tierHurdles: number[]
+}
+
 export interface BoosterRocketState {
   // user
   hasTheUserAgreed: boolean
@@ -274,6 +286,7 @@ export interface EmperorState {
   openingBid?: number
   finalDate?: number
   poisonDuration?: number
+  poisonCost?: number
 }
 
 export interface DonationsState {
@@ -307,6 +320,7 @@ export interface State {
   emperor: EmperorState
   donations: DonationsState
   launchpad: LaunchpadState
+  launchpadBoofi: LaunchpadBoofiState
   boosterRocket: BoosterRocketState
 
   // nest
