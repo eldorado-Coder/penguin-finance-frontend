@@ -23,13 +23,17 @@ const TiersCard = () => {
   const hasTier = launchpadStaked >= 300
   const tierHurdles = useLaunchpadBoofiTierHurdles()
 
+  const handleInfoIconClick = () => {
+    window.open('https://penguin-finance.medium.com/penguin-launchpad-boofinance-ido-tiers-are-here-29ba4cd90053', '_blank');
+  }
+
   return (
     <StyledCard>
       <CardContent>
         <TierContent>
           <Wrapper justifyContent='space-between' alignItems='center'>
             <Label fontSize='32px' bold mr='16px' lineHeight={1.2}>Tiers</Label>
-            <InfoIconWrapper>
+            <InfoIconWrapper onClick={handleInfoIconClick}>
               <SvgIcon src={`${process.env.PUBLIC_URL}/images/home/info.svg`} width="25px" height="25px" />
             </InfoIconWrapper>
           </Wrapper>
