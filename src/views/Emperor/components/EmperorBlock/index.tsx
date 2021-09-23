@@ -164,6 +164,10 @@ const MyPenguinImageWrapper = styled.div<{ penguin: string; color: string }>`
 
 const StyledText = styled(Text)`
   color: ${({ theme }) => (theme.isDark ? theme.colors.primary : theme.colors.secondary)};
+
+  @media (min-width: 1200px) and (max-height: 800px) {
+    font-size: 12px;
+  }
 `
 
 const EmperorBlock: React.FC = () => {
@@ -236,8 +240,8 @@ const EmperorBlock: React.FC = () => {
                 {TranslateString(1074, currentEmperorNickname)}
               </StyledText>
             </Flex>
-            <StyledText bold fontSize="14px">{`Current Bid: ${currentEmperorBidAmount.toFixed(2)} iPEFI`}</StyledText>
-            <StyledText bold fontSize="14px">{`Current Jackpot: ${currentEmperor.jackpot.toFixed(0)} iPEFI`}</StyledText>
+            <StyledText bold fontSize="14px">{`Current Bid: ${currentEmperorBidAmount?.toFixed(2)} iPEFI`}</StyledText>
+            <StyledText bold fontSize="14px">{`Current Jackpot: ${currentEmperor?.jackpot?.toFixed(0)} iPEFI`}</StyledText>
           </EmperorInfoContainer>
         )}
       </CardBlockContent>
