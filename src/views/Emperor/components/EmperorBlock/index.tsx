@@ -236,6 +236,7 @@ const EmperorBlock: React.FC = () => {
                 {TranslateString(1074, currentEmperorNickname)}
               </StyledText>
             </Flex>
+            <StyledText bold fontSize="14px">{`Current Bid: ${currentEmperorBidAmount.toFixed(2)} iPEFI`}</StyledText>
             <StyledText bold fontSize="14px">{`Current Jackpot: ${currentEmperor.jackpot.toFixed(0)} iPEFI`}</StyledText>
           </EmperorInfoContainer>
         )}
