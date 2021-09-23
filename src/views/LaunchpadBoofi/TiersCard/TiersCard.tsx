@@ -3,24 +3,26 @@ import React from 'react'
 import styled from 'styled-components'
 import { Text, Flex } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
-import { useLaunchpadTierHurdles, useLaunchpad } from 'state/hooks'
+import { useLaunchpadBoofiTierHurdles, useLaunchpadBoofi } from 'state/hooks'
 import SvgIcon from 'components/SvgIcon'
+import Balance from 'components/Balance'
 import { getBalanceNumber } from 'utils/formatBalance'
+import { PRICE_PER_BOOFI } from '../utils';
 import Card from '../Card'
 
 const TIERS = [
-    { label: 'Ghoul', iPefi: '500' },
-    { label: 'Reaper', iPefi: '10,000' },
-    { label: 'Demonlord', iPefi: '50,000'}
+  { label: 'Ghoul', iPefi: '500' },
+  { label: 'Reaper', iPefi: '10,000' },
+  { label: 'Demonlord', iPefi: '50,000'}
 ]
 
 const TiersCard = () => {
   const { account } = useWeb3React()
-  const { stakedBalance: staked, yourPenguinTier } = useLaunchpad(account)
+  const { stakedBalance: staked, yourPenguinTier, allocation } = useLaunchpadBoofi(account)
   const launchpadStaked = getBalanceNumber(new BigNumber(staked))
   const hasTier = launchpadStaked >= 300
+  const tierHurdles = useLaunchpadBoofiTierHurdles()
 
-  const tierHurdles = useLaunchpadTierHurdles()
   return (
     <StyledCard>
       <CardContent>
@@ -38,27 +40,27 @@ const TiersCard = () => {
                   {penguinTier.label}
                 </Text>
                 <Text key={`value-${penguinTier}`} fontSize='18px' bold className={penguinTier.label.toLowerCase()}>
-                  {`(+${penguinTier.iPefi} iPEFI)`}
+                  {`(+${tierHurdles[index]} iPEFI)`}
                 </Text>
               </Wrapper>
             ))}
           </CurrentTiersWrapper>
           <Wrapper justifyContent='space-between'>
             <Label textAlign='right'>Your Stake:</Label>
-            <Label bold>15000.00 iPEFI</Label>
+            <Balance fontSize="16px" decimals={2} value={Math.floor(launchpadStaked * 100) / 100} />
           </Wrapper>
           <Wrapper justifyContent='space-between'>
             <Label textAlign='right'>Your Allocation:</Label>
-            <Label bold>62.5 AP</Label>
+            <Label bold>{`${getBalanceNumber(new BigNumber(allocation)).toFixed(2)} AP`}</Label>
           </Wrapper>
           <Wrapper justifyContent='space-between' mb='16px'>
             <Label textAlign='right'>Price per BOOFI:</Label>
-            <Label bold>$0.02</Label>
+            <Label bold>{`$${PRICE_PER_BOOFI[yourPenguinTier]}`}</Label>
           </Wrapper>
         </TierContent>
         {hasTier ? (
           <TierWrapper>
-            <img src={`${process.env.PUBLIC_URL}/images/launchpad/${TIERS[yourPenguinTier]}.svg`} alt="my-tier" />
+            <img src={`${process.env.PUBLIC_URL}/images/launchpad/${TIERS[yourPenguinTier].label}.svg`} alt="my-tier" />
           </TierWrapper>
         ) : (
           <NoneTierWrapper>

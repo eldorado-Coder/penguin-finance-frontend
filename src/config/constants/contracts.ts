@@ -149,6 +149,11 @@ export default {
     // TODO: final version
     43114: '0x1c0fe0A000f6DF48B2DaBf86A19934dd6B6F9477',
   },
+  launchPadBoofi: {
+    43113: '',
+    // TODO: final version
+    43114: '0x8197B03862C20e83316F138A0400047D5B62A5Db',
+  },
   // boosterRocket
   boosterRocket: {
     43113: '',
