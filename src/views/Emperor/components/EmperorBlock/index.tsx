@@ -180,7 +180,7 @@ const EmperorBlock: React.FC = () => {
   const myEmperorPenguin = getNormalPenguin(myEmperor)
 
   const handleViewStarterGuide = () => {
-    window.open('https://medium.com/@boofinance2021/introducing-boofinance-innovative-yield-farms-deflationary-nfts-on-avalanche-5f285835a317', '_blank')
+    window.open('https://penguin-finance.medium.com/the-penguin-emperor-is-back-new-rules-huge-prizes-d4a6b79c3816', '_blank')
   }
 
   const renderPenguins = () => {
