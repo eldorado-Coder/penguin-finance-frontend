@@ -34,7 +34,7 @@ export const config: MenuEntry[] = [
   {
     label: 'Emperor',
     icon: 'CrownIcon',
-    href: '/emperor',
+    href: '/emperor'
   },
   {
     label: 'Arena',

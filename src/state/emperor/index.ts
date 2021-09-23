@@ -12,6 +12,7 @@ const initialState: EmperorState = {
   openingBid: 0,
   finalDate: 0,
   poisonDuration: 0,
+  poisonCost: 0
 }
 
 export const EmperorSlice = createSlice({
@@ -22,7 +23,7 @@ export const EmperorSlice = createSlice({
       state.currentEmperor = {}
     },
     setGeneralData: (state, action) => {
-      const { finalDate, maxBidIncrease, minBidIncrease, openingBid, poisonDuration } = action.payload
+      const { finalDate, maxBidIncrease, minBidIncrease, openingBid, poisonDuration, poisonCost } = action.payload
       if (finalDate) {
         state.finalDate = finalDate
       }
@@ -37,6 +38,9 @@ export const EmperorSlice = createSlice({
       }
       if (poisonDuration) {
         state.poisonDuration = poisonDuration
+      }
+      if (poisonCost) {
+        state.poisonCost = poisonCost
       }
     },
 

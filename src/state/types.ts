@@ -286,6 +286,7 @@ export interface EmperorState {
   openingBid?: number
   finalDate?: number
   poisonDuration?: number
+  poisonCost?: number
 }
 
 export interface DonationsState {
