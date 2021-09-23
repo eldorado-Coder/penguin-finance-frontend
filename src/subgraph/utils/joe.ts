@@ -7,9 +7,12 @@ export const getPair = async (address: string) => {
   return pairs[0]
 }
 
-export const getPairDayData = async (address: string) => {
+export const getPairDayData = async (address: string, dateAfter: number) => {
   if (!address) return null
-  const { pairHourDatas } = await joeExchangeClient.request(PAIR_DAY_DATA_SEARCH1({ address: address.toLowerCase() }))
+
+  const { pairHourDatas } = await joeExchangeClient.request(
+    PAIR_DAY_DATA_SEARCH1({ address: address.toLowerCase(), dateAfter }),
+  )
   return pairHourDatas
 }
 
@@ -24,9 +27,10 @@ export const getPoolInfo = async (address: string) => {
   return pools[0]
 }
 
-export const getPairDailyVolume = async (address: string) => {
+export const getPairDailyVolume = async (address: string, dateAfter: number) => {
   if (!address) return 0
-  const pairDayData = await getPairDayData(address)
+  const pairDayData = await getPairDayData(address, dateAfter)
+
   let dailyVolume = 0
   if (pairDayData && pairDayData.length > 0) {
     pairDayData.map((row) => {
