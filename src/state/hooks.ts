@@ -22,9 +22,11 @@ import {
   fetchPoolsPublicDataAsync,
   fetchPoolsUserDataAsync,
   fetchLaunchpadUserDataAsync,
+  fetchLaunchpadBoofiUserDataAsync,
   fetchBoosterRocketUserDataAsync, // boosterRocket
   fetchEmperor,
   updateLaunchpadTierHurdles,
+  updateLaunchpadBoofiTierHurdles,
   push as pushToast,
   remove as removeToast,
   clear as clearToast,
@@ -55,6 +57,7 @@ import {
   GlobalState,
   DonationsState,
   LaunchpadState,
+  LaunchpadBoofiState,
   BoosterRocketState,
   // v2
   NestMigratorState,
@@ -218,6 +221,35 @@ export const useLaunchpadTierHurdles = () => {
   }, [dispatch, fastRefresh])
 
   const tierHurdles = useSelector((state: State) => state.launchpad.tierHurdles)
+  return tierHurdles
+}
+
+// launchpad
+export const useLaunchpadBoofi = (account): LaunchpadBoofiState => {
+  const { fastRefresh } = useRefresh()
+  const dispatch = useDispatch()
+  useEffect(() => {
+    const fetchLaunchpadBoofiData = async () => {
+      dispatch(fetchLaunchpadBoofiUserDataAsync(account))
+    }
+
+    if (account) {
+      fetchLaunchpadBoofiData()
+    }
+  }, [account, dispatch, fastRefresh])
+
+  const launchpadBoofi = useSelector((state: State) => state.launchpadBoofi)
+  return launchpadBoofi
+}
+
+export const useLaunchpadBoofiTierHurdles = () => {
+  const { fastRefresh } = useRefresh()
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(updateLaunchpadBoofiTierHurdles())
+  }, [dispatch, fastRefresh])
+
+  const tierHurdles = useSelector((state: State) => state.launchpadBoofi.tierHurdles)
   return tierHurdles
 }
 

@@ -13,6 +13,7 @@ import achievementsReducer from './achievements'
 import globalReducer from './global'
 import donationsReducer from './donations'
 import launchpadReducer from './launchpad'
+import launchpadBoofiReducer from './launchpadBoofi'
 import boosterRocketReducer from './boosterRocket'
 // v2
 import nestMigratorReducer from './nestMigrator'
@@ -35,6 +36,7 @@ const store = configureStore({
     global: globalReducer,
     donations: donationsReducer,
     launchpad: launchpadReducer,
+    launchpadBoofi: launchpadBoofiReducer,
     boosterRocket: boosterRocketReducer,
     // v2
     nestMigrator: nestMigratorReducer,
