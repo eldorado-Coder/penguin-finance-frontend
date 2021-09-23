@@ -32,6 +32,7 @@ export const getPairDailyVolume = async (address: string, type: string) => {
 
 export const getPairSwapDailyReward = async (address: string, type: string) => {
   const pairDailyVolume = await getPairDailyVolume(address, type)
+
   let swapDailyReward = 0
   if (type === 'Joe') {
     swapDailyReward = 0.0025 * pairDailyVolume
