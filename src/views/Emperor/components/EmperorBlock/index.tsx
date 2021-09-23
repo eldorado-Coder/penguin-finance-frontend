@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Text, Button, Flex } from 'penguinfinance-uikit2'
+import { Text, Button, Flex, useMatchBreakpoints } from 'penguinfinance-uikit2'
 import useI18n from 'hooks/useI18n'
 import { useWeb3React } from '@web3-react/core'
 import { useEmperor } from 'state/hooks'
@@ -54,7 +54,7 @@ const CardBlockContent = styled.div<{ account?: string }>`
   padding-bottom: 16px;
   position: relative;
   text-align: center;
-  margin-top: 25%;
+  margin-top: 23%;
   min-width: 150px;
   max-width: ${(props) => !props.account && '220px'};
   padding: 8px;
@@ -64,6 +64,10 @@ const CardBlockContent = styled.div<{ account?: string }>`
     width: 100%;
     margin-top: 25%;
     padding: 24px 16px 12px;
+  }
+  @media (max-width: 640px) {
+    min-width: 122px;
+    max-width: 122px;
   }
   @media (min-width: 768px) {
     width: 100%;
@@ -134,11 +138,11 @@ const ShieldContainer = styled.div`
   }
 `
 
-const KingPenguinImageWrapper = styled.div<{ penguin: string; color: string }>`
+const KingPenguinImageWrapper = styled.div<{ penguin: string; color: string, isSm: boolean }>`
   z-index: -1;
   position: absolute;
-  width: 12.5%;
-  left: 44%;
+  width: ${({ isSm }) => isSm ? "21.5% " : "12.5%"};
+  left: ${({ isSm }) => isSm ? "39%" : "44%"};
   bottom: 33%;
   svg {
     ${({ penguin, color }) => `.${penguin}-st0 {
@@ -174,6 +178,7 @@ const EmperorBlock: React.FC = () => {
   const currentEmperorBidAmount = (currentEmperor && currentEmperor.bidAmount) || 0
   const currentEmperorPenguin = getKingPenguin(currentEmperor)
   const myEmperorPenguin = getNormalPenguin(myEmperor)
+  const { isSm } = useMatchBreakpoints()
 
   const handleViewStarterGuide = () => {
     window.open('https://medium.com/@boofinance2021/introducing-boofinance-innovative-yield-farms-deflationary-nfts-on-avalanche-5f285835a317', '_blank')
@@ -183,11 +188,11 @@ const EmperorBlock: React.FC = () => {
     if (!account) return null
     return (
       <>
-        <KingPenguinImageWrapper penguin={`${currentEmperorPenguin}`} color={getPenguinColor(currentEmperor)}>
+        <KingPenguinImageWrapper isSm={isSm} penguin={`${currentEmperorPenguin}`} color={getPenguinColor(currentEmperor)}>
           <SvgIcon
             src={`${process.env.PUBLIC_URL}/images/emperor/penguins/${currentEmperorPenguin}.svg`}
             width="100%"
-            height="20px"
+            height="50px"
           />
         </KingPenguinImageWrapper>
         {currentEmperor.address && myEmperor.address && currentEmperor.address !== myEmperor.address && (
@@ -195,7 +200,7 @@ const EmperorBlock: React.FC = () => {
             <SvgIcon
               src={`${process.env.PUBLIC_URL}/images/emperor/penguins/${myEmperorPenguin}.svg`}
               width="100%"
-              height="20px"
+              height="50px"
             />
           </MyPenguinImageWrapper>
         )}
@@ -232,12 +237,12 @@ const EmperorBlock: React.FC = () => {
                   <SvgIcon src={`${process.env.PUBLIC_URL}/images/emperor/shield.svg`} width="22px" height="22px" />
                 </ShieldContainer>
               )}
-              <StyledText bold fontSize="22px">
+              <StyledText bold fontSize={isSm ? "12px" : "22px"}>
                 {TranslateString(1074, currentEmperorNickname)}
               </StyledText>
             </Flex>
-            <StyledText bold fontSize="14px">{`Current Bid: ${currentEmperorBidAmount.toFixed(2)} iPEFI`}</StyledText>
-            <StyledText bold fontSize="14px">{`Current Jackpot: ${currentEmperor.jackpot.toFixed(0)} iPEFI`}</StyledText>
+            <StyledText bold fontSize={isSm ? "8px" : "14px"}>{`Current Bid: ${currentEmperorBidAmount.toFixed(2)} iPEFI`}</StyledText>
+            <StyledText bold fontSize={isSm ? "8px" : "14px"}>{`Current Jackpot: ${currentEmperor.jackpot.toFixed(0)} iPEFI`}</StyledText>
           </EmperorInfoContainer>
         )}
       </CardBlockContent>
