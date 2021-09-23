@@ -1,4 +1,6 @@
+import dayjs from 'dayjs'
 import { getAvaxPrice } from 'utils/price'
+import { HOURS_PER_DAY, SECONDS_PER_HOUR } from 'config'
 import { getPairDailyVolume as getPangolinPairDailyVolume } from './pangolin'
 import { getPairDailyVolume as getJoePairDailyVolume } from './joe'
 import { getPairDailyVolume as getLydiaPairDailyVolume } from './lydia'
@@ -8,18 +10,21 @@ export * from './nest'
 export * from './penguin'
 
 export const getPairDailyVolume = async (address: string, type: string) => {
+  const now = dayjs().unix()
+  const dateAfter = (Math.floor(now / SECONDS_PER_HOUR) - HOURS_PER_DAY) * SECONDS_PER_HOUR
+
   let dailyVolume = 0
   if (type === 'Pangolin') {
-    dailyVolume = await getPangolinPairDailyVolume(address)
+    dailyVolume = await getPangolinPairDailyVolume(address, dateAfter)
   }
   if (type === 'Joe') {
-    dailyVolume = await getJoePairDailyVolume(address)
+    dailyVolume = await getJoePairDailyVolume(address, dateAfter)
   }
   if (type === 'Lydia') {
-    dailyVolume = await getLydiaPairDailyVolume(address)
+    dailyVolume = await getLydiaPairDailyVolume(address, dateAfter)
   }
   if (type === 'Sushi') {
-    dailyVolume = await getSushiPairDailyVolume(address)
+    dailyVolume = await getSushiPairDailyVolume(address, dateAfter)
   }
 
   return dailyVolume
@@ -28,7 +33,9 @@ export const getPairDailyVolume = async (address: string, type: string) => {
 export const getPairSwapDailyReward = async (address: string, type: string) => {
   const pairDailyVolume = await getPairDailyVolume(address, type)
   let swapDailyReward = 0
-  if (type === 'Joe') swapDailyReward = 0.0025 * pairDailyVolume
+  if (type === 'Joe') {
+    swapDailyReward = 0.0025 * pairDailyVolume
+  }
   if (type === 'Sushi') swapDailyReward = 0.003 * pairDailyVolume
   if (type === 'Lydia') {
     const avaxPrice = await getAvaxPrice()
