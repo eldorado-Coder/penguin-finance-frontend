@@ -27,7 +27,7 @@ export const PAIR_DAY_DATA_SEARCH = ({ address, dateAfter }: { address?: string;
         orderBy: hourStartUnix, orderDirection: desc
         where: {
           ${address ? `pair: "${address}"` : ``}
-          ${dateAfter ? `date_gt: ${dateAfter}` : ``}
+          ${dateAfter ? `hourStartUnix_gt: ${dateAfter}` : ``}
         }
       )
       {

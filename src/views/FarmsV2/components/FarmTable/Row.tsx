@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { useMatchBreakpoints, Flex, Text } from 'penguinfinance-uikit2'
+import { useMatchBreakpoints, Flex } from 'penguinfinance-uikit2'
 import ReactTooltip from 'react-tooltip'
 import { useV2FarmUser } from 'state/hooks'
 import useDelayedUnmount from 'hooks/useDelayedUnmount'
@@ -171,11 +171,10 @@ interface RowProps extends FarmCardProps {
 }
 
 const Row: React.FunctionComponent<RowProps> = (props) => {
+  const [actionPanelExpanded, setActionPanelExpanded] = useState(false)
+
   const { farm, index } = props
   const { stakedBalance } = useV2FarmUser(farm.pid, farm.type)
-  const [actionPanelExpanded, setActionPanelExpanded] = useState(false)
-  const farmApr = farm.apr >= 0 ? (100 * Number(farm.apr)).toFixed(2) : 0
-
   const shouldRenderChild = useDelayedUnmount(actionPanelExpanded, 300)
   const { isXl } = useMatchBreakpoints()
   const { getTokenLogo } = useAssets()
@@ -187,8 +186,9 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
     pendingTokens.map((pendingTokenAddress) => {
       return { address: pendingTokenAddress, logo: getTokenLogo(pendingTokenAddress) }
     })
-  const liquidity = farm.totalLp ? getBalanceNumber(farm.totalLp) * farm.lpPrice : 0
+  const liquidity = farm.totalLiquidityInUsd
   const stakedBalanceInUsd = stakedBalance ? getBalanceNumber(stakedBalance) * farm.lpPrice : 0
+  const farmApr = farm.apr >= 0 ? (100 * Number(farm.apr)).toFixed(2) : 0
 
   const toggleActionPanel = () => {
     setActionPanelExpanded(!actionPanelExpanded)
@@ -256,7 +256,6 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
                   <td className="your-stake" key={key}>
                     <CellInner>
                       <CellLayout label="Your Stake">
-                        {/* <Earned earnings={stakedBalanceInUsd} pid={farm.pid} userDataReady /> */}
                         <Balance fontSize="16px" fontWeight="400" prefix="$" value={Number(stakedBalanceInUsd)} />
                       </CellLayout>
                     </CellInner>
