@@ -58,9 +58,9 @@ const Menu = (props) => {
 
   links[emperorIndex] = {
     ...links[emperorIndex],
-    badge: 'LIVE',
-    badgeLightColor: '#37DB94',
-    badgeDarkColor: '#37DB94',
+    badge: 'NEW',
+    badgeLightColor: '#EC3E3F',
+    badgeDarkColor: '#EC3E3F',
   }
 
   return (
