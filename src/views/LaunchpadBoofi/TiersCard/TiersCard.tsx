@@ -62,7 +62,7 @@ const TiersCard = () => {
             <Label bold>{`$${PRICE_PER_BOOFI[yourPenguinTier]}`}</Label>
           </Wrapper>
         </TierContent>
-        {hasTier ? (
+        {/* {hasTier ? (
           <TierWrapper>
             <img src={`${process.env.PUBLIC_URL}/images/launchpad/${TIERS[yourPenguinTier].label}.svg`} alt="my-tier" />
           </TierWrapper>
@@ -70,7 +70,7 @@ const TiersCard = () => {
           <NoneTierWrapper>
             <SvgIcon src={`${process.env.PUBLIC_URL}/images/launchpad/none_tier.svg`} width="100%" height="20px" />
           </NoneTierWrapper>
-        )}
+        )} */}
       </CardContent>
     </StyledCard>
   );
@@ -128,8 +128,8 @@ const TierContent = styled.div`
   width: 100%;
 
   @media (min-width: 640px) {
-    width: calc(100% - 216px);
-    margin-right: 16px;
+    /* width: calc(100% - 216px); */
+    /* margin-right: 16px; */
     min-width: 220px;
   }
 `
