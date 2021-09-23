@@ -88,7 +88,7 @@ const Launchpad: React.FC = () => {
         {isMobile ? (
           <Flex flexDirection="column">
             <MobileProgressWrapper>
-              <Progress primaryStep={30} />
+              <Progress primaryStep={42} />
               <MobileProgressMarks flexDirection="column" justifyContent="space-between">
                 {marks.map((mark) => {
                   return (
@@ -129,7 +129,7 @@ const Launchpad: React.FC = () => {
         ) : (
           <Flex>
             <ProgressWrapper>
-              <Progress primaryStep={32} />
+              <Progress primaryStep={39} />
               <Flex justifyContent="space-between">
                 {marks.map((mark) => {
                   return (
