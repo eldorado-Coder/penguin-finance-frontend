@@ -17,15 +17,17 @@ export const getAvaxBundle = async () => {
   return bundle
 }
 
-export const getPairDayData = async (address: string) => {
+export const getPairDayData = async (address: string, dateAfter: number) => {
   if (!address) return null
-  const { pairHourDatas } = await pangolinClient.request(PAIR_DAY_DATA_SEARCH({ address: address.toLowerCase() }))
+  const { pairHourDatas } = await pangolinClient.request(
+    PAIR_DAY_DATA_SEARCH({ address: address.toLowerCase(), dateAfter }),
+  )
   return pairHourDatas
 }
 
-export const getPairDailyVolume = async (address: string) => {
+export const getPairDailyVolume = async (address: string, dateAfter: number) => {
   if (!address) return 0
-  const pairDayData = await getPairDayData(address)
+  const pairDayData = await getPairDayData(address, dateAfter)
   let dailyVolume = 0
   if (pairDayData && pairDayData.length > 0) {
     pairDayData.map((row) => {

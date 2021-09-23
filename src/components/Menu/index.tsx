@@ -56,6 +56,13 @@ const Menu = (props) => {
     badgeDarkColor: '#37DB94',
   }
 
+  links[emperorIndex] = {
+    ...links[emperorIndex],
+    badge: 'LIVE',
+    badgeLightColor: '#37DB94',
+    badgeDarkColor: '#37DB94',
+  }
+
   return (
     <>
       <WalletConnectGuideModal />

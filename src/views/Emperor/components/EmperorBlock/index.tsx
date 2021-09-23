@@ -176,7 +176,7 @@ const EmperorBlock: React.FC = () => {
   const myEmperorPenguin = getNormalPenguin(myEmperor)
 
   const handleViewStarterGuide = () => {
-    window.open('https://penguin-finance.medium.com/the-second-round-of-emperor-blitz-commences-a1377a0c8614', '_blank')
+    window.open('https://medium.com/@boofinance2021/introducing-boofinance-innovative-yield-farms-deflationary-nfts-on-avalanche-5f285835a317', '_blank')
   }
 
   const renderPenguins = () => {
@@ -236,7 +236,8 @@ const EmperorBlock: React.FC = () => {
                 {TranslateString(1074, currentEmperorNickname)}
               </StyledText>
             </Flex>
-            <StyledText bold fontSize="14px">{`Current Bid: ${currentEmperorBidAmount.toFixed(2)} xPEFI`}</StyledText>
+            <StyledText bold fontSize="14px">{`Current Bid: ${currentEmperorBidAmount.toFixed(2)} iPEFI`}</StyledText>
+            <StyledText bold fontSize="14px">{`Current Jackpot: ${currentEmperor.jackpot.toFixed(0)} iPEFI`}</StyledText>
           </EmperorInfoContainer>
         )}
       </CardBlockContent>

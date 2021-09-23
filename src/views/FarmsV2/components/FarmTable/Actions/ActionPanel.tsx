@@ -14,6 +14,7 @@ import roundDown from 'utils/roundDown'
 import { usePricePefiUsdt, usePricePngUsdt, useV2Pools } from 'state/hooks'
 import useJoePrice from 'hooks/useJoePrice'
 import useTokenPrice from 'hooks/useTokenPrice'
+
 import { FarmCardProps } from '../../types'
 import StakePanel from './StakePanel'
 import AutoNesting from './AutoNesting'
@@ -278,7 +279,8 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
               suffix={`${lpSymbol}`}
               isFlexWrap
               decimals={lpDecimals}
-              value={roundDown(Number(userStakedBalance), lpDecimals)}
+              value={roundDown(Number(Number(userStakedBalance).toFixed(lpDecimals + 1)), lpDecimals)}
+              // value={Number(Number(userStakedBalance).toFixed(lpDecimals))}
             />
             <UsdBalanceWrapper>
               <Balance fontSize="10px" fontWeight="400" prefix="$" value={Number(userStakedBalanceInUsd)} />

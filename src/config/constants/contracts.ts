@@ -127,11 +127,17 @@ export default {
     // 43114: '0xfd162b5733b01C0b6aD7575A0A18a8EA3Fd69A83',
     // 43114: '0xF36DA227A479a49D823Af1E7b3df632A698a9Ac6',
     // 43114: '0x5c2270c65DfA52c853DFb9f43dC913C059016fb6',
-    43114: '0x4d461d5d024cB363Bc85bb70246A39c72f2Ad89F',
+    // 43114: '0x4d461d5d024cB363Bc85bb70246A39c72f2Ad89F',
+    // 43114: '0x56bf3c0C79E8Ba1c3df01113673dE6334B7d2a3f',
+    // final
+    43114: '0xAb2B099beF83b7E3AB3d8690a5DB15f64c648697',
   },
   emperorPenguinDB: {
     43113: '',
-    43114: '0x2669fCbf2018ae8fA5d396466E7da1294d0D554B',
+    // 43114: '0x2669fCbf2018ae8fA5d396466E7da1294d0D554B',
+    // 43114: '0x8e28c0986c05dc59502051201ee64624f93c5e67',
+    // final
+    43114: '0x8E28C0986C05dC59502051201eE64624F93c5E67',
   },
 
   // covid emperor
@@ -148,6 +154,11 @@ export default {
     43113: '',
     // TODO: final version
     43114: '0x1c0fe0A000f6DF48B2DaBf86A19934dd6B6F9477',
+  },
+  launchPadBoofi: {
+    43113: '',
+    // TODO: final version
+    43114: '0x8197B03862C20e83316F138A0400047D5B62A5Db',
   },
   // boosterRocket
   boosterRocket: {

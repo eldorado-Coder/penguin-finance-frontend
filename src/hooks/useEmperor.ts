@@ -17,7 +17,8 @@ import {
   donatePefi,
   // approve
   approveXPefi,
-  approvePefi,
+  approveIPefi,
+  approvePefi
 } from 'utils/callHelpers'
 import { getEmperorAddress, getWithoutBordersAddress } from 'utils/addressHelpers'
 import {
@@ -28,6 +29,7 @@ import {
   useCharityEmperor,
   useCharityPenguinDB,
   useXPefi,
+  useIPefi,
   usePenguin,
 } from './useContract'
 
@@ -164,6 +166,18 @@ const useXPefiApprove = () => {
   return { onApproveXPefi: handleXPefiApprove }
 }
 
+const useIPefiApprove = () => {
+  const { account } = useWeb3React()
+  const iPefiContract = useIPefi()
+
+  const handleIPefiApprove = useCallback(async () => {
+    const txHash = await approveIPefi(iPefiContract, account, getEmperorAddress())
+    console.info(txHash)
+  }, [account, iPefiContract])
+
+  return { onApproveIPefi: handleIPefiApprove }
+}
+
 const usePefiApprove = () => {
   const { account } = useWeb3React()
   const pefiContract = usePenguin()
@@ -176,4 +190,4 @@ const usePefiApprove = () => {
   return { onApprovePefi: handlePefiApprove }
 }
 
-export { useEmperorActions, useCharityEmperorActions, useXPefiApprove, usePefiApprove }
+export { useEmperorActions, useCharityEmperorActions, useXPefiApprove, usePefiApprove, useIPefiApprove }

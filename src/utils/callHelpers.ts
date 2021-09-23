@@ -1,5 +1,6 @@
 import BigNumber from 'bignumber.js'
 import { ethers } from 'ethers'
+import { ACCOUNTS_SEARCH } from 'subgraph/queries'
 
 export const approve = async (lpContract, masterChefContract, account) => {
   return lpContract.methods
@@ -11,18 +12,10 @@ export const claimXPefi = async (strategyContract, account) => {
   return strategyContract.methods.claimXPEFI().send({ from: account })
 }
 
-export const stake = async (masterChefContract, pid, amount, account, gasPrice?: number) => {
-  // if (pid === 0) {
-  //   return masterChefContract.methods
-  //     .enterStaking(new BigNumber(amount).times(new BigNumber(10).pow(18)).toString())
-  //     .send({ from: account, gas: 200000 })
-  //     .on('transactionHash', (tx) => {
-  //       return tx.transactionHash
-  //     })
-  // }
+export const stake = async (masterChefContract, pid, amount, account) => {
   return masterChefContract.methods
     .deposit(pid, new BigNumber(amount).times(new BigNumber(10).pow(18)).toString())
-    .send({ from: account, gas: gasPrice || 200000 })
+    .send({ from: account })
     .on('transactionHash', (tx) => {
       return tx.transactionHash
     })
@@ -50,7 +43,7 @@ export const launchpadStake = async (launchpadContract, amount, account) => {
 export const boosterRocketAgreeTerms = async (boosterRocketContract, account) => {
   return boosterRocketContract.methods
     .agreeToTermsAndConditions()
-    .send({ from: account, gas: 700000 })
+    .send({ from: account })
     .on('transactionHash', (tx) => {
       return tx.transactionHash
     })
@@ -58,27 +51,26 @@ export const boosterRocketAgreeTerms = async (boosterRocketContract, account) =>
 export const boosterRocketPurchaseTokens = async (boosterRocketContract, amount, account) => {
   return boosterRocketContract.methods
     .purchaseTokens(new BigNumber(amount).times(new BigNumber(10).pow(18)).toString())
-    .send({ from: account, gas: 700000 })
+    .send({ from: account })
     .on('transactionHash', (tx) => {
       return tx.transactionHash
     })
 }
 
-export const sousStake = async (sousChefContract, amount, account, gasPrice?: number) => {
+export const sousStake = async (sousChefContract, amount, account) => {
   return sousChefContract.methods
     .enter(new BigNumber(amount).times(new BigNumber(10).pow(18)).toString())
-    .send({ from: account, gas: gasPrice || 200000 })
+    .send({ from: account })
     .on('transactionHash', (tx) => {
       return tx.transactionHash
     })
 }
 
-export const sousStakeBnb = async (sousChefContract, amount, account, gasPrice?: number) => {
+export const sousStakeBnb = async (sousChefContract, amount, account) => {
   return sousChefContract.methods
     .deposit()
     .send({
       from: account,
-      gas: gasPrice || 200000,
       value: new BigNumber(amount).times(new BigNumber(10).pow(18)).toString(),
     })
     .on('transactionHash', (tx) => {
@@ -86,10 +78,10 @@ export const sousStakeBnb = async (sousChefContract, amount, account, gasPrice?:
     })
 }
 
-export const unstake = async (masterChefContract, pid, amount, account, gasPrice?: number) => {
+export const unstake = async (masterChefContract, pid, amount, account) => {
   return masterChefContract.methods
     .withdraw(pid, new BigNumber(amount).times(new BigNumber(10).pow(18)).toString())
-    .send({ from: account, gas: gasPrice || 200000 })
+    .send({ from: account })
     .on('transactionHash', (tx) => {
       return tx.transactionHash
     })
@@ -113,7 +105,7 @@ export const launchpadUnstake = async (launchpadContract, amount, account) => {
     })
 }
 
-export const sousUnstake = async (sousChefContract, amount, account, gasPrice?: number) => {
+export const sousUnstake = async (sousChefContract, amount, account) => {
   // shit code: hard fix for old CTK and BLK
   if (sousChefContract.options.address === '0x3B9B74f48E89Ebd8b45a53444327013a2308A9BC') {
     return sousChefContract.methods
@@ -134,7 +126,7 @@ export const sousUnstake = async (sousChefContract, amount, account, gasPrice?: 
 
   return sousChefContract.methods
     .leave(new BigNumber(amount).times(new BigNumber(10).pow(18)).toString())
-    .send({ from: account, gas: gasPrice || 200000 })
+    .send({ from: account })
     .on('transactionHash', (tx) => {
       return tx.transactionHash
     })
@@ -150,18 +142,9 @@ export const sousEmegencyUnstake = async (sousChefContract, amount, account) => 
 }
 
 export const harvest = async (masterChefContract, pid, account) => {
-  // if (pid === 0) {
-  //   return masterChefContract.methods
-  //     .leaveStaking('0')
-  //     .send({ from: account, gas: 200000 })
-  //     .on('transactionHash', (tx) => {
-  //       return tx.transactionHash
-  //     })
-  // }
-
   return masterChefContract.methods
     .deposit(pid, '0')
-    .send({ from: account, gas: 200000 })
+    .send({ from: account })
     .on('transactionHash', (tx) => {
       return tx.transactionHash
     })
@@ -170,7 +153,7 @@ export const harvest = async (masterChefContract, pid, account) => {
 export const soushHarvest = async (sousChefContract, account) => {
   return sousChefContract.methods
     .deposit('0')
-    .send({ from: account, gas: 200000 })
+    .send({ from: ACCOUNTS_SEARCH })
     .on('transactionHash', (tx) => {
       return tx.transactionHash
     })
@@ -179,7 +162,7 @@ export const soushHarvest = async (sousChefContract, account) => {
 export const soushHarvestBnb = async (sousChefContract, account) => {
   return sousChefContract.methods
     .deposit()
-    .send({ from: account, gas: 200000, value: new BigNumber(0) })
+    .send({ from: account, value: new BigNumber(0) })
     .on('transactionHash', (tx) => {
       return tx.transactionHash
     })
@@ -189,7 +172,7 @@ export const soushHarvestBnb = async (sousChefContract, account) => {
 export const registerEmperor = async (emperorContract, { nickName, color, style }, account) => {
   return emperorContract.methods
     .registerYourPenguin(nickName, color, style.toString())
-    .send({ from: account, gas: 200000 })
+    .send({ from: account })
     .on('transactionHash', (tx) => {
       return tx.transactionHash
     })
@@ -198,7 +181,7 @@ export const registerEmperor = async (emperorContract, { nickName, color, style 
 export const changeEmperorStyle = async (emperorContract, style, account) => {
   return emperorContract.methods
     .changeStyle(style)
-    .send({ from: account, gas: 200000 })
+    .send({ from: account })
     .on('transactionHash', (tx) => {
       return tx.transactionHash
     })
@@ -207,7 +190,7 @@ export const changeEmperorStyle = async (emperorContract, style, account) => {
 export const changeEmperorColor = async (emperorContract, color, account) => {
   return emperorContract.methods
     .changeColor(color)
-    .send({ from: account, gas: 200000 })
+    .send({ from: account })
     .on('transactionHash', (tx) => {
       return tx.transactionHash
     })
@@ -216,7 +199,7 @@ export const changeEmperorColor = async (emperorContract, color, account) => {
 export const stealCrown = async (emperorContract, amount, account) => {
   return emperorContract.methods
     .stealCrown(new BigNumber(amount).times(new BigNumber(10).pow(18)).toString())
-    .send({ from: account, gas: 900000 })
+    .send({ from: account })
     .on('transactionHash', (tx) => {
       return tx.transactionHash
     })
@@ -225,7 +208,7 @@ export const stealCrown = async (emperorContract, amount, account) => {
 export const stealCrownAndPoison = async (emperorContract, amount, account) => {
   return emperorContract.methods
     .stealCrownAndPoison(new BigNumber(amount).times(new BigNumber(10).pow(18)).toString())
-    .send({ from: account, gas: 900000 })
+    .send({ from: account })
     .on('transactionHash', (tx) => {
       return tx.transactionHash
     })
@@ -234,6 +217,16 @@ export const stealCrownAndPoison = async (emperorContract, amount, account) => {
 export const approveXPefi = async (xPefiContract, account, address) => {
   const approveAmount = '1000000000000000000000000000'
   return xPefiContract.methods
+    .approve(address, new BigNumber(approveAmount).times(new BigNumber(10).pow(18)).toString())
+    .send({ from: account })
+    .on('transactionHash', (tx) => {
+      return tx.transactionHash
+    })
+}
+
+export const approveIPefi = async (iPefiContract, account, address) => {
+  const approveAmount = '1000000000000000000000000000'
+  return iPefiContract.methods
     .approve(address, new BigNumber(approveAmount).times(new BigNumber(10).pow(18)).toString())
     .send({ from: account, gas: 200000 })
     .on('transactionHash', (tx) => {
@@ -245,7 +238,7 @@ export const approvePefi = async (pefiContract, account, address) => {
   const approveAmount = '1000000000000000000000000000'
   return pefiContract.methods
     .approve(address, new BigNumber(approveAmount).times(new BigNumber(10).pow(18)).toString())
-    .send({ from: account, gas: 200000 })
+    .send({ from: account })
     .on('transactionHash', (tx) => {
       return tx.transactionHash
     })
@@ -255,7 +248,7 @@ export const approvePefi = async (pefiContract, account, address) => {
 export const registerCharityEmperor = async (donationContract, { nickName, color, style }, account) => {
   return donationContract.methods
     .registerYourPenguin(nickName, color, style.toString())
-    .send({ from: account, gas: 200000 })
+    .send({ from: account })
     .on('transactionHash', (tx) => {
       return tx.transactionHash
     })
@@ -264,7 +257,7 @@ export const registerCharityEmperor = async (donationContract, { nickName, color
 export const changeCharityEmperorStyle = async (donationContract, style, account) => {
   return donationContract.methods
     .changeStyle(style)
-    .send({ from: account, gas: 200000 })
+    .send({ from: account })
     .on('transactionHash', (tx) => {
       return tx.transactionHash
     })
@@ -273,7 +266,7 @@ export const changeCharityEmperorStyle = async (donationContract, style, account
 export const changeCharityEmperorColor = async (donationContract, color, account) => {
   return donationContract.methods
     .changeColor(color)
-    .send({ from: account, gas: 200000 })
+    .send({ from: account })
     .on('transactionHash', (tx) => {
       return tx.transactionHash
     })
@@ -282,7 +275,7 @@ export const changeCharityEmperorColor = async (donationContract, color, account
 export const donateAvax = async (donationContract, amount, account) => {
   return donationContract.methods
     .donateAvax()
-    .send({ from: account, gas: 450000, value: new BigNumber(amount).times(new BigNumber(10).pow(18)).toString() })
+    .send({ from: account, value: new BigNumber(amount).times(new BigNumber(10).pow(18)).toString() })
     .on('transactionHash', (tx) => {
       return tx.transactionHash
     })
@@ -291,7 +284,7 @@ export const donateAvax = async (donationContract, amount, account) => {
 export const donatePefi = async (donationContract, amount, account) => {
   return donationContract.methods
     .donatePefi(new BigNumber(amount).times(new BigNumber(10).pow(18)).toString())
-    .send({ from: account, gas: 450000 })
+    .send({ from: account })
     .on('transactionHash', (tx) => {
       return tx.transactionHash
     })
@@ -301,43 +294,43 @@ export const donatePefi = async (donationContract, amount, account) => {
 export const migrateNest = async (nestMigrateContract, account) => {
   return nestMigrateContract.methods
     .migrateXPEFI()
-    .send({ from: account, gas: 800000 })
+    .send({ from: account })
     .on('transactionHash', (tx) => {
       return tx.transactionHash
     })
 }
 
-export const v2FarmStake = async (masterChefContract, pid, amount, to, account, gasPrice?: number) => {
+export const v2FarmStake = async (masterChefContract, pid, amount, to, account) => {
   return masterChefContract.methods
     .deposit(pid, new BigNumber(amount).times(new BigNumber(10).pow(18)).toString(), to || account)
-    .send({ from: account, gas: gasPrice || 800000 })
+    .send({ from: account })
     .on('transactionHash', (tx) => {
       return tx.transactionHash
     })
 }
 
-export const v2FarmUnstake = async (masterChefContract, pid, amount, to, account, gasPrice?: number) => {
+export const v2FarmUnstake = async (masterChefContract, pid, amount, to, account) => {
   return masterChefContract.methods
     .withdrawAndHarvest(pid, new BigNumber(amount).times(new BigNumber(10).pow(18)).toString(), to || account)
-    .send({ from: account, gas: gasPrice || 800000 })
+    .send({ from: account })
     .on('transactionHash', (tx) => {
       return tx.transactionHash
     })
 }
 
-export const v2FarmHarvest = async (masterChefContract, pid, to, account, gasPrice?: number) => {
+export const v2FarmHarvest = async (masterChefContract, pid, to, account) => {
   return masterChefContract.methods
     .harvest(pid, to || account)
-    .send({ from: account, gas: gasPrice || 800000 })
+    .send({ from: account })
     .on('transactionHash', (tx) => {
       return tx.transactionHash
     })
 }
 
-export const v2FarmSetAutoNestAllocation = async (masterChefContract, amount, account, gasPrice?: number) => {
+export const v2FarmSetAutoNestAllocation = async (masterChefContract, amount, account) => {
   return masterChefContract.methods
     .setIpefiDistributionBips(amount)
-    .send({ from: account, gas: gasPrice || 300000 })
+    .send({ from: account })
     .on('transactionHash', (tx) => {
       return tx.transactionHash
     })

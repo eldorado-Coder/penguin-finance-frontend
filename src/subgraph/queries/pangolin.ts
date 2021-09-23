@@ -19,7 +19,7 @@ export const PAIRS_SEARCH = ({ address }: { address?: string }) => {
   return gql(queryString)
 }
 
-export const PAIR_DAY_DATA_SEARCH = ({ address }: { address?: string }) => {
+export const PAIR_DAY_DATA_SEARCH = ({ address, dateAfter }: { address?: string; dateAfter?: number }) => {
   const queryString = `
     query pairHourDatas {
       pairHourDatas(
@@ -27,6 +27,7 @@ export const PAIR_DAY_DATA_SEARCH = ({ address }: { address?: string }) => {
         orderBy: hourStartUnix, orderDirection: desc
         where: {
           ${address ? `pair: "${address}"` : ``}
+          ${dateAfter ? `hourStartUnix_gt: ${dateAfter}` : ``}
         }
       )
       {
@@ -37,7 +38,7 @@ export const PAIR_DAY_DATA_SEARCH = ({ address }: { address?: string }) => {
   return gql(queryString)
 }
 
-export const PAIR_DAY_DATA_SEARCH1 = ({ address }: { address?: string }) => {
+export const PAIR_DAY_DATA_SEARCH1 = ({ address, dateAfter }: { address?: string; dateAfter?: number }) => {
   const queryString = `
     query pairHourDatas {
       pairHourDatas(
@@ -45,6 +46,7 @@ export const PAIR_DAY_DATA_SEARCH1 = ({ address }: { address?: string }) => {
         orderBy: date, orderDirection: desc
         where: {
           ${address ? `pair: "${address}"` : ``}
+          ${dateAfter ? `date_gt: ${dateAfter}` : ``}
         }
       )
       {

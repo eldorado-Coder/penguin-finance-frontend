@@ -271,7 +271,7 @@ const NestV2: React.FC = () => {
                 </WealthCard>
                 <Flex flexDirection="column" padding="4px 16px 16px">
                   <BalanceLabel>iPEFI Stats</BalanceLabel>
-                  <Flex alignItems="flex-end">
+                  <Flex alignItems="center">
                     <BalanceText bold fontSize="12px" mr="4px" width={120} textAlign="right">
                       iPEFI TVL
                     </BalanceText>
@@ -286,7 +286,7 @@ const NestV2: React.FC = () => {
                       />
                     </Balance>
                   </Flex>
-                  <Flex alignItems="flex-end" mt="4px">
+                  <Flex alignItems="center" mt="12px">
                     <BalanceText bold fontSize="12px" mr="4px" width={120} textAlign="right">
                       PEFI redistributed by Paper Hands Penalty
                     </BalanceText>
@@ -301,7 +301,7 @@ const NestV2: React.FC = () => {
                       />
                     </Balance>
                   </Flex>
-                  <Flex alignItems="flex-end" mt="4px">
+                  <Flex alignItems="center" mt="12px">
                     <BalanceText bold fontSize="12px" mr="4px" width={120} textAlign="right">
                       7 day avg. APR
                     </BalanceText>
@@ -442,8 +442,8 @@ const CardImage = styled.img<{ isMobile?: boolean }>`
 `
 
 const Balance = styled.div<{ statsBalance?: boolean }>`
-  border-bottom: ${({ theme, statsBalance }) =>
-    statsBalance && (theme.isDark ? '1px solid #100C18' : '1px solid #e8e4ef')};
+  /* border-bottom: ${({ theme, statsBalance }) =>
+    statsBalance && (theme.isDark ? '1px solid #100C18' : '1px solid #e8e4ef')}; */
   width: ${({ statsBalance }) => statsBalance && 'calc(100% - 120px)'};
   text-align: ${({ statsBalance }) => statsBalance && 'center'};
 
