@@ -202,7 +202,7 @@ const EmperorBgContainer = styled.video`
 `
 
 const EmperorWrapper = styled.div<{ isSm: boolean }>`
-  background: ${({ isSm }) => isSm ? "#21172F" : "transparent"};
+  background: ${({ isSm }) => isSm ? "#231631" : "transparent"};
   z-index: -1;
   padding-bottom: 8px;
 `
