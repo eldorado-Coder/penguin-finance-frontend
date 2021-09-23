@@ -4,7 +4,6 @@ export const JOE_PAIRS_SEARCH = ({ address }: { address?: string }) => {
   const queryString = `
     query pairs {
       pairs(
-        block: { number: 4702226 }
         first: 5,
         where: {
           ${address ? `id: "${address}"` : ``}
