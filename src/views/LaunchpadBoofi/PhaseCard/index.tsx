@@ -22,7 +22,6 @@ const stageContents = [
 const PhaseCard = ({ launchStage }: { launchStage: number }) => {
   const { isXl } = useMatchBreakpoints()
   const isMobile = !isXl
-  const { isDark } = useTheme()
 
   const handleLearnBoofi = () => {
     window.open(
@@ -35,6 +34,20 @@ const PhaseCard = ({ launchStage }: { launchStage: number }) => {
     window.open('https://www.boofinance.io/', '_blank')
   }
 
+  const renderSocialIconsWrapper = (
+    <SocialIconsWrapper justifyContent="space-between" flexWrap="wrap">
+      <a href="https://discord.com/invite/A3KbWpsZfE" target="_blank" rel="noreferrer">
+        <SvgIcon src={`${process.env.PUBLIC_URL}/images/discord.svg`} width="100%" height="20px" />
+      </a>
+      <a href="https://t.me/BooFinance" target="_blank" rel="noreferrer">
+        <SvgIcon src={`${process.env.PUBLIC_URL}/images/telegram.svg`} width="100%" height="20px" />
+      </a>
+      <a href="https://twitter.com/Boo_Finance" target="_blank" rel="noreferrer">
+        <SvgIcon src={`${process.env.PUBLIC_URL}/images/twitter.svg`} width="100%" height="20px" />
+      </a>
+    </SocialIconsWrapper>
+  )
+
   return (
     <PhaseCardContainer>
       <Flex alignItems="center" justifyContent="space-between" flexWrap="wrap">
@@ -43,21 +56,14 @@ const PhaseCard = ({ launchStage }: { launchStage: number }) => {
           <StepDescription>
             Unique yield farming protocol on Avalanche offering deflationary NFTs and decentralized governance.
           </StepDescription>
-          <ButtonActions flexDirection="column">
-            <StyledButton onClick={handleLearnBoofi}>Learn More</StyledButton>
-            <StyledButton onClick={handleViewBoofi}>View Website</StyledButton>
-            <SocialIconsWrapper justifyContent="space-between" flexWrap="wrap">
-              <a href="https://discord.gg/R5Rv68GXXc" target="_blank" rel="noreferrer">
-                <SvgIcon src={`${process.env.PUBLIC_URL}/images/discord.svg`} width="100%" height="20px" />
-              </a>
-              <a href="https://t.me/penguin_defi" target="_blank" rel="noreferrer">
-                <SvgIcon src={`${process.env.PUBLIC_URL}/images/telegram.svg`} width="100%" height="20px" />
-              </a>
-              <a href="https://twitter.com/penguin_defi" target="_blank" rel="noreferrer">
-                <SvgIcon src={`${process.env.PUBLIC_URL}/images/twitter.svg`} width="100%" height="20px" />
-              </a>
-            </SocialIconsWrapper>
-          </ButtonActions>
+          <Flex flexDirection="column">
+            <ButtonActions flexDirection="column">
+              <StyledButton onClick={handleLearnBoofi}>Learn More</StyledButton>
+              <StyledButton onClick={handleViewBoofi}>View Website</StyledButton>
+              {!isMobile && renderSocialIconsWrapper}
+            </ButtonActions>
+            {isMobile && renderSocialIconsWrapper}
+          </Flex>
         </StepDescriptionWrapper>
       </Flex>
       {isMobile ? (
@@ -289,6 +295,13 @@ const MobileProgressMarks = styled(Flex)`
 const SocialIconsWrapper = styled(Flex)`
   margin-top: 8px;
 
+  @media (max-width: 640px) {
+    justify-content: center;
+    svg {
+      padding: 0 8px;
+    }
+  }
+
   svg {
     fill: white;
 
@@ -297,4 +310,5 @@ const SocialIconsWrapper = styled(Flex)`
     }
   }
 `
+
 export default PhaseCard
