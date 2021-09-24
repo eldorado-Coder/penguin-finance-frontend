@@ -48,25 +48,13 @@ const PhaseCard = ({ launchStage }: { launchStage: number }) => {
             <StyledButton onClick={handleViewBoofi}>View Website</StyledButton>
             <SocialIconsWrapper justifyContent="space-between" flexWrap="wrap">
               <a href="https://discord.gg/R5Rv68GXXc" target="_blank" rel="noreferrer">
-                <SvgIcon
-                  src={`${process.env.PUBLIC_URL}/images/launchpad/${isDark ? 'boofi-discord' : 'boofi-discord'}.svg`}
-                  width="100%"
-                  height="20px"
-                />
+                <SvgIcon src={`${process.env.PUBLIC_URL}/images/discord.svg`} width="100%" height="20px" />
               </a>
               <a href="https://t.me/penguin_defi" target="_blank" rel="noreferrer">
-                <SvgIcon
-                  src={`${process.env.PUBLIC_URL}/images/launchpad/${isDark ? 'boofi-telegram' : 'boofi-telegram'}.svg`}
-                  width="100%"
-                  height="20px"
-                />
+                <SvgIcon src={`${process.env.PUBLIC_URL}/images/telegram.svg`} width="100%" height="20px" />
               </a>
               <a href="https://twitter.com/penguin_defi" target="_blank" rel="noreferrer">
-                <SvgIcon
-                  src={`${process.env.PUBLIC_URL}/images/launchpad/${isDark ? 'boofi-twitter' : 'boofi-twitter'}.svg`}
-                  width="100%"
-                  height="20px"
-                />
+                <SvgIcon src={`${process.env.PUBLIC_URL}/images/twitter.svg`} width="100%" height="20px" />
               </a>
             </SocialIconsWrapper>
           </ButtonActions>
@@ -297,11 +285,13 @@ const MobileProgressMarks = styled(Flex)`
   height: 300px;
   margin-top: -150px;
 `
+
 const SocialIconsWrapper = styled(Flex)`
   margin-top: 8px;
 
   svg {
-    fill: ${({ theme }) => (theme.isDark ? 'white' : 'white')};
+    fill: 'white';
+
     &:hover {
       opacity: 0.65;
     }
