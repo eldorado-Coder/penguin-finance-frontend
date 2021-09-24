@@ -1,24 +1,28 @@
-import React from 'react'
-import styled from 'styled-components'
+import React, { useState, useCallback } from 'react'
 import BigNumber from 'bignumber.js'
+import styled from 'styled-components'
 import { useWeb3React } from '@web3-react/core'
 import { Card, Flex, Text, Button } from 'penguinfinance-uikit2'
 import partition from 'lodash/partition'
-import Page from 'components/layout/Page'
 import { SECONDS_PER_YEAR } from 'config'
 import { getBalanceNumber } from 'utils/formatBalance'
 import priceToBnb from 'utils/priceToBnb'
 import useBlock from 'hooks/useBlock'
-import useTheme from 'hooks/useTheme'
 import useBlockGenerationTime from 'hooks/useBlockGenerationTime'
+import { useNestMigrateApprove } from 'hooks/useApprove'
+import { useNestMigrate } from 'hooks/useMigrate'
+import useTheme from 'hooks/useTheme'
 import { useFarms, usePriceAvaxUsdt, usePools, usePriceEthAvax, useNestMigrator } from 'state/hooks'
 import { PoolCategory } from 'config/constants/types'
+import Page from 'components/layout/Page'
 import UnlockButton from 'components/UnlockButton'
 import SvgIcon from 'components/SvgIcon'
 import CardValue from 'components/CardValue'
 import roundDown from 'utils/roundDown'
+import { getIPefiAddress } from 'utils/addressHelpers'
 
 const IPefi: React.FC = () => {
+  const [pending, setPending] = useState(false)
   const { account } = useWeb3React()
   const farms = useFarms()
   const pools = usePools(account)
@@ -26,8 +30,10 @@ const IPefi: React.FC = () => {
   const avaxPriceUSD = usePriceAvaxUsdt()
   const ethPriceBnb = usePriceEthAvax()
   const block = useBlock()
-  const { isDark } = useTheme()
   const AVAX_BLOCK_TIME = useBlockGenerationTime()
+  const { onNestMigrateApprove } = useNestMigrateApprove()
+  const { onNestMigrate } = useNestMigrate()
+  const { isDark } = useTheme()
   const BLOCKS_PER_YEAR = new BigNumber(SECONDS_PER_YEAR).div(new BigNumber(AVAX_BLOCK_TIME))
 
   const poolsWithApy = pools.map((pool) => {
@@ -59,13 +65,72 @@ const IPefi: React.FC = () => {
   })
 
   const [, openPools] = partition(poolsWithApy, (pool) => pool.isFinished)
+  const xPefiBalance = new BigNumber(openPools[0].userData?.stakedBalance || 0)
+  const expectedIPefiBalance = new BigNumber(nestMigrator.expectedIPefi || 0)
+  const xPefiAllowance = new BigNumber(nestMigrator.xPefiAllowance || 0)
 
-  const handleMigrate = () => {
-    return null
+  const handleXPefiApprove = useCallback(async () => {
+    try {
+      setPending(true)
+      await onNestMigrateApprove()
+      setPending(false)
+    } catch (e) {
+      console.error(e)
+      setPending(false)
+    }
+  }, [onNestMigrateApprove, setPending])
+
+  const handleMigrate = useCallback(async () => {
+    try {
+      setPending(true)
+      await onNestMigrate()
+      setPending(false)
+    } catch (e) {
+      console.error('migration error:', e)
+      setPending(false)
+    }
+  }, [onNestMigrate, setPending])
+
+  const addMetamask = async (tokenAddress: string, tokenSymbol: string, tokenDecimals: number) => {
+    const provider = (window as any).ethereum
+    if (provider) {
+      try {
+        await provider.request({
+          method: 'wallet_watchAsset',
+          params: {
+            type: 'ERC20',
+            options: {
+              address: tokenAddress,
+              symbol: tokenSymbol,
+              decimals: tokenDecimals,
+              image: '',
+            },
+          },
+        })
+      } catch (error) {
+        console.log('Error => addMetamask')
+      }
+    }
   }
 
-  const xPefiBalance = new BigNumber(openPools[0].userData?.stakedBalance || 0)
-  const iPefiBalance = new BigNumber(nestMigrator.expectedIPefi || 0)
+  const handleAddIPefiToken = async () => {
+    await addMetamask(getIPefiAddress(), 'iPEFI', 18)
+  }
+
+  const renderActionButton = () => {
+    if (!xPefiAllowance.toNumber()) {
+      return (
+        <StyledButton scale="md" disabled={pending} onClick={handleXPefiApprove}>
+          Approve xPEFI
+        </StyledButton>
+      )
+    }
+    return (
+      <StyledButton scale="md" disabled={pending || getBalanceNumber(xPefiBalance) === 0} onClick={handleMigrate}>
+        Migrate
+      </StyledButton>
+    )
+  }
 
   return (
     <NestPage>
@@ -80,13 +145,13 @@ const IPefi: React.FC = () => {
       </NestBannerContainer>
       <Flex justifyContent="center">
         <NestDetailsContainer flexDirection="column" alignItems="center">
-          <Text color="primary" mb="12px" fontSize="24px" bold textAlign="center">
+          <Text color="primary" mb="24px" fontSize="32px" bold textAlign="center">
             Migrate your xPEFI and get iPEFI
           </Text>
-          <NestDescription mb="24px" textAlign="center">
-            The Nest V2 contract is here! Migrate from the old staking token (xPEFI) to receive the newer, improved
-            iPEFI. After migration, your PEFI equivalent should be the same pre-migration. We&apos;ll institute the new
-            Paper Hands Penalty for iPEFI 48 hours after release.
+          <NestDescription mb="24px" mt="24px" textAlign="center">
+            {`The Nest V2 contract is here! Migrate from the old staking token (xPEFI) to receive the newer, improved
+            iPEFI. After migration, your PEFI equivalent will remain unchanged, your xPEFI will simply be upgraded to
+            iPEFI. We'll institute the new Paper Hands Penalty for iPEFI 48 hours after release.`}
           </NestDescription>
           <CardWrapper justifyContent="space-between">
             <MigrateCard padding="8px 24px 16px" mb="32px">
@@ -98,7 +163,6 @@ const IPefi: React.FC = () => {
                       <CardValue
                         className="balance"
                         fontSize="20px"
-                        // value={getBalanceNumber(stakedBalance)}
                         value={roundDown(getBalanceNumber(xPefiBalance), 2)}
                         decimals={2}
                         lineHeight="1"
@@ -113,14 +177,13 @@ const IPefi: React.FC = () => {
                   <SvgIcon src={`${process.env.PUBLIC_URL}/images/home/arrow-right.svg`} width="32px" height="32px" />
                 </MigrateIconWrapper>
                 <Flex flexDirection="column" alignItems="center">
-                  <CardImage src="/images/pools/xPefi.png" alt="xpefi logo" width={80} height={80} />
+                  <CardImage src="/images/pools/iPefi.svg" alt="ipefi logo" width={80} height={80} />
                   <Flex alignItems="center">
                     <Balance>
                       <CardValue
                         className="balance"
                         fontSize="20px"
-                        // value={getBalanceNumber(stakedBalance)}
-                        value={roundDown(getBalanceNumber(iPefiBalance), 2)}
+                        value={roundDown(getBalanceNumber(expectedIPefiBalance), 2)}
                         decimals={2}
                         lineHeight="1"
                       />
@@ -131,13 +194,10 @@ const IPefi: React.FC = () => {
                   </Flex>
                 </Flex>
               </Flex>
-              {account ? (
-                <StyledButton scale="md" onClick={handleMigrate}>
-                  Migrate
-                </StyledButton>
-              ) : (
-                <StyledUnlockButton />
-              )}
+              {account ? <> {renderActionButton()} </> : <StyledUnlockButton />}
+              <StyledButton scale="md" onClick={handleAddIPefiToken}>
+                Add iPEFI to Metamask
+              </StyledButton>
             </MigrateCard>
           </CardWrapper>
           <Alert textAlign="center">
@@ -176,10 +236,7 @@ const IgloosBgContainer = styled.div`
 `
 
 const NestBannerContainer = styled.div`
-  margin-bottom: 24px;
-  @media (min-width: 640px) {
-    margin-bottom: 64px;
-  }
+  margin-bottom: 8px;
 `
 
 const BannerImage = styled.img`
@@ -188,14 +245,16 @@ const BannerImage = styled.img`
 `
 
 const NestDescription = styled(Text)`
-  max-width: 480px;
+  max-width: 960px;
   color: ${({ theme }) => (theme.isDark ? '#DDD7ff' : theme.colors.secondary)};
 `
+
 const StyledButton = styled(Button)<{ tokenBalance?: string }>`
   width: 100%;
   border-radius: 8px;
   color: ${({ theme }) => theme.isDark && '#30264f'};
   background-color: ${({ theme }) => !theme.isDark && '#372871'};
+  margin-top: 16px;
 `
 
 const CardWrapper = styled(Flex)`
