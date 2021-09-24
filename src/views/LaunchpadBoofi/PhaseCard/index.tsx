@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Text, Flex, Button, Progress, useMatchBreakpoints } from 'penguinfinance-uikit2'
+import useTheme from 'hooks/useTheme'
+import SvgIcon from 'components/SvgIcon'
 
 const marks = [1, 2, 3, 4]
 const stageContents = [
@@ -20,6 +22,7 @@ const stageContents = [
 const PhaseCard = ({ launchStage }: { launchStage: number }) => {
   const { isXl } = useMatchBreakpoints()
   const isMobile = !isXl
+  const { isDark } = useTheme()
 
   const handleLearnBoofi = () => {
     window.open(
@@ -43,6 +46,17 @@ const PhaseCard = ({ launchStage }: { launchStage: number }) => {
           <ButtonActions flexDirection="column">
             <StyledButton onClick={handleLearnBoofi}>Learn More</StyledButton>
             <StyledButton onClick={handleViewBoofi}>View Website</StyledButton>
+            <SocialIconsWrapper justifyContent="space-between" flexWrap="wrap">
+              <a href="https://discord.gg/R5Rv68GXXc" target="_blank" rel="noreferrer">
+                <SvgIcon src={`${process.env.PUBLIC_URL}/images/discord.svg`} width="100%" height="20px" />
+              </a>
+              <a href="https://t.me/penguin_defi" target="_blank" rel="noreferrer">
+                <SvgIcon src={`${process.env.PUBLIC_URL}/images/telegram.svg`} width="100%" height="20px" />
+              </a>
+              <a href="https://twitter.com/penguin_defi" target="_blank" rel="noreferrer">
+                <SvgIcon src={`${process.env.PUBLIC_URL}/images/twitter.svg`} width="100%" height="20px" />
+              </a>
+            </SocialIconsWrapper>
           </ButtonActions>
         </StepDescriptionWrapper>
       </Flex>
@@ -272,4 +286,15 @@ const MobileProgressMarks = styled(Flex)`
   margin-top: -150px;
 `
 
+const SocialIconsWrapper = styled(Flex)`
+  margin-top: 8px;
+
+  svg {
+    fill: white;
+
+    &:hover {
+      opacity: 0.65;
+    }
+  }
+`
 export default PhaseCard
