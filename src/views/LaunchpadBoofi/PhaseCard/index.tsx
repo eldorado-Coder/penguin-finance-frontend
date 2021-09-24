@@ -42,10 +42,25 @@ const PhaseCard = ({ launchStage }: { launchStage: number }) => {
           <StepDescription>
             Unique yield farming protocol on Avalanche offering deflationary NFTs and decentralized governance.
           </StepDescription>
-          <ButtonActions flexDirection="column">
-            <StyledButton onClick={handleLearnBoofi}>Learn More</StyledButton>
-            <StyledButton onClick={handleViewBoofi}>View Website</StyledButton>
-            {!isMobile && (
+          <Flex flexDirection="column">
+            <ButtonActions flexDirection="column">
+              <StyledButton onClick={handleLearnBoofi}>Learn More</StyledButton>
+              <StyledButton onClick={handleViewBoofi}>View Website</StyledButton>
+              {!isMobile && (
+                <SocialIconsWrapper justifyContent="space-between" flexWrap="wrap">
+                  <a href="https://discord.com/invite/A3KbWpsZfE" target="_blank" rel="noreferrer">
+                    <SvgIcon src={`${process.env.PUBLIC_URL}/images/discord.svg`} width="100%" height="20px" />
+                  </a>
+                  <a href="https://t.me/BooFinance" target="_blank" rel="noreferrer">
+                    <SvgIcon src={`${process.env.PUBLIC_URL}/images/telegram.svg`} width="100%" height="20px" />
+                  </a>
+                  <a href="https://twitter.com/Boo_Finance" target="_blank" rel="noreferrer">
+                    <SvgIcon src={`${process.env.PUBLIC_URL}/images/twitter.svg`} width="100%" height="20px" />
+                  </a>
+                </SocialIconsWrapper>
+              )}
+            </ButtonActions>
+            {isMobile && (
               <SocialIconsWrapper justifyContent="space-between" flexWrap="wrap">
                 <a href="https://discord.com/invite/A3KbWpsZfE" target="_blank" rel="noreferrer">
                   <SvgIcon src={`${process.env.PUBLIC_URL}/images/discord.svg`} width="100%" height="20px" />
@@ -58,20 +73,7 @@ const PhaseCard = ({ launchStage }: { launchStage: number }) => {
                 </a>
               </SocialIconsWrapper>
             )}
-          </ButtonActions>
-          {isMobile && (
-            <SocialIconsWrapper justifyContent="space-between" flexWrap="wrap">
-              <a href="https://discord.com/invite/A3KbWpsZfE" target="_blank" rel="noreferrer">
-                <SvgIcon src={`${process.env.PUBLIC_URL}/images/discord.svg`} width="100%" height="20px" />
-              </a>
-              <a href="https://t.me/BooFinance" target="_blank" rel="noreferrer">
-                <SvgIcon src={`${process.env.PUBLIC_URL}/images/telegram.svg`} width="100%" height="20px" />
-              </a>
-              <a href="https://twitter.com/Boo_Finance" target="_blank" rel="noreferrer">
-                <SvgIcon src={`${process.env.PUBLIC_URL}/images/twitter.svg`} width="100%" height="20px" />
-              </a>
-            </SocialIconsWrapper>
-          )}
+          </Flex>
         </StepDescriptionWrapper>
       </Flex>
       {isMobile ? (
@@ -303,7 +305,8 @@ const MobileProgressMarks = styled(Flex)`
 const SocialIconsWrapper = styled(Flex)`
   margin-top: 8px;
 
-  @media (max-width: 968px) {
+  @media (max-width: 640px) {
+    justify-content: center;
     svg {
       padding: 0 8px;
     }
