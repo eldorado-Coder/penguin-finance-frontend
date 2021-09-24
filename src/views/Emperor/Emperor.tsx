@@ -11,6 +11,7 @@ import useUserSetting from 'hooks/useUserSetting'
 import EmperorBlock from './components/EmperorBlock'
 import YourScoreBlock from './components/YourScoreBlock'
 import TopPenguinsBlock from './components/TopPenguinsBlock'
+import smBgImage from '../../assets/images/emperor-bg-sm.png'
 
 const JACKPOTS = {
   LOCK: `${process.env.PUBLIC_URL}/images/emperor/jackpot/jackpot_lock.gif`,
@@ -25,14 +26,18 @@ const EmperorPage = styled(Page)`
   @media (min-width: 768px) {
     padding: 40px 30px;
   }
+  @media (max-width: 640px) {
+    background: #231631;
+  }
 `
 
-const ChestWrapper = styled.div<{ jackpot: string }>`
+const ChestWrapper = styled.div<{ jackpot: string, isSm: boolean }>`
   position: absolute;
-  width: 9.5%;
-  left: 26%;
+  width: ${({ isSm }) => isSm ? "25.5%" : "9.5%"};
+  left: ${({ isSm }) => isSm ? "2%" : "26%"};;
   bottom: 18%;
   z-index: 11;
+  transform: rotate(4deg);
 
   img {
     cursor: pointer;
@@ -125,6 +130,10 @@ const GridItem = styled.div`
     width: 280px;
     max-width: 280px;
   }
+  @media (max-width: 640px) {
+    max-width: 280px;
+    width: 100%;
+  }
 `
 
 const Grid = styled.div<{ align: string; marginTop?: { xs?: number; sm?: number; md?: number; lg?: number } }>`
@@ -136,27 +145,27 @@ const Grid = styled.div<{ align: string; marginTop?: { xs?: number; sm?: number;
   padding: 0 3%;
   @media (min-width: 640px) {
     ${({ marginTop }) =>
-      marginTop.xs && {
-        marginTop: `${marginTop.xs}px`,
-      }}
+    marginTop.xs && {
+      marginTop: `${marginTop.xs}px`,
+    }}
   }
   @media (min-width: 768px) {
     ${({ marginTop }) =>
-      marginTop.sm && {
-        marginTop: `${marginTop.sm}px`,
-      }}
+    marginTop.sm && {
+      marginTop: `${marginTop.sm}px`,
+    }}
   }
   @media (min-width: 1200px) {
     ${({ marginTop }) =>
-      marginTop.md && {
-        marginTop: `${marginTop.md}px`,
-      }}
+    marginTop.md && {
+      marginTop: `${marginTop.md}px`,
+    }}
   }
   @media (min-width: 1450px) {
     ${({ marginTop }) =>
-      marginTop.lg && {
-        marginTop: `${marginTop.lg}px`,
-      }}
+    marginTop.lg && {
+      marginTop: `${marginTop.lg}px`,
+    }}
   }
   @media (max-width: 1600px) {
     font-size: 24px;
@@ -177,6 +186,12 @@ const PGGRid = styled(Grid)`
   @media (min-width: 1200px) and (max-height: 900px) {
     margin-top: -140px;
   }
+  @media (max-width: 640px) and (max-height: 900px) {
+    flex-direction: column;
+    align-items: center;
+    margin-top: 0;
+    padding: 0;
+  }
 `
 
 const EmperorBgContainer = styled.video`
@@ -188,6 +203,37 @@ const EmperorBgContainer = styled.video`
   left: 0px;
   z-index: -1;
 `
+
+const EmperorWrapper = styled.div<{ isSm: boolean }>`
+  background: ${({ isSm }) => isSm ? "#231631" : "transparent"};
+  z-index: -1;
+  padding-bottom: 8px;
+`
+const EmperorSmWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  height: 375px;
+  display: flex;
+  justify-content: center;
+`
+const ThroneSmBgContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+`
+const EmperorSmBgImage = styled.img`
+  width: 100%;
+  height: 100%;
+`
+const EmperorBlockWrapper = styled.div`
+  margin-top: 100px;
+  width: 180px;
+  z-index: 1;
+`
+
 // emperor end
 const EmperorEndBgContainer = styled.div``
 
@@ -235,6 +281,29 @@ const Emperor: React.FC = () => {
     }
   }
 
+  const renderJackpot = (isMobile) => {
+    return (
+      <ChestWrapper isSm={isMobile} jackpot={jackpot} onClick={handleOpenJackpot}>
+        <PaperWrapper isOpen={jackpot === JACKPOTS.UNLOCK}>
+          <JackpotPaper
+            onLoad={onJackpotLoaded}
+            src={`${process.env.PUBLIC_URL}/images/emperor/jackpot/Mapefi.svg`}
+            alt="jackpot_paper"
+          />
+          {showJackpot && (
+            <Text className="price" fontSize="24px">
+              {currentEmperor.jackpot} <span>x</span>PEFI
+            </Text>
+          )}
+        </PaperWrapper>
+        <img className="jackpot-lock" src={JACKPOTS.LOCK} alt="jackpot_lock" />
+        <img className="jackpot-open" src={JACKPOTS.OPEN} alt="jackpot_open" />
+        <img className="jackpot-unlock" src={JACKPOTS.UNLOCK} alt="jackpot_unlock" />
+      </ChestWrapper>
+    )
+  }
+
+
   const onJackpotLoaded = () => {
     setShowJackpot(true)
   }
@@ -242,30 +311,15 @@ const Emperor: React.FC = () => {
   const renderEmperorStatsPage = () => {
     return (
       <>
-        {account && (
-          <ChestWrapper jackpot={jackpot} onClick={handleOpenJackpot}>
-            <PaperWrapper isOpen={jackpot === JACKPOTS.UNLOCK}>
-              <JackpotPaper
-                onLoad={onJackpotLoaded}
-                src={`${process.env.PUBLIC_URL}/images/emperor/jackpot/Mapefi.svg`}
-                alt="jackpot_paper"
-              />
-              {showJackpot && (
-                <Text className="price" fontSize="24px">
-                  {currentEmperor.jackpot} <span>i</span>PEFI
-                </Text>
-              )}
-            </PaperWrapper>
-            <img className="jackpot-lock" src={JACKPOTS.LOCK} alt="jackpot_lock" />
-            <img className="jackpot-open" src={JACKPOTS.OPEN} alt="jackpot_open" />
-            <img className="jackpot-unlock" src={JACKPOTS.UNLOCK} alt="jackpot_unlock" />
-          </ChestWrapper>
-        )}
-        <Grid align="center" marginTop={{ xs: 80, sm: 100 }}>
-          <GridItem>
-            <EmperorBlock />
-          </GridItem>
-        </Grid>
+        {account && !isSm && (renderJackpot(false))}
+        {!isSm ? (
+          <Grid align="center" marginTop={{ xs: 80, sm: 100 }}>
+            <GridItem>
+              <EmperorBlock />
+            </GridItem>
+          </Grid>
+        ) : null}
+
         {account && (
           <PGGRid align="between" marginTop={{ xs: -40, sm: -190, md: -200, lg: -200 }}>
             <GridItem>
@@ -312,12 +366,25 @@ const Emperor: React.FC = () => {
         volume={isMusic ? 100 : 0}
       />
 
-      {/* background video */}
-      <EmperorBgContainer width="100%" height="100%" autoPlay loop muted>
-        <source src={emperorEnded ? emperorWinnerVideo : emperorDefaultVideo} />
-      </EmperorBgContainer>
-
-      {!emperorEnded ? <>{renderEmperorStatsPage()}</> : <>{renderEmperorEndPage()}</>}
+      {/* background video on larg screen and background image on small screen */}
+      <EmperorWrapper isSm={isSm}>
+        {isSm ? (
+          <EmperorSmWrapper>
+            <ThroneSmBgContainer>
+              <EmperorSmBgImage src={smBgImage} alt="" />
+            </ThroneSmBgContainer>
+            <EmperorBlockWrapper>
+              <EmperorBlock />
+            </EmperorBlockWrapper>
+            {account && renderJackpot(true)}
+          </EmperorSmWrapper>
+        ) : (
+          <EmperorBgContainer width="100%" height="100%" autoPlay loop muted>
+            <source src={emperorEnded ? emperorWinnerVideo : emperorDefaultVideo} />
+          </EmperorBgContainer>
+        )}
+        {!emperorEnded ? <>{renderEmperorStatsPage()}</> : <>{renderEmperorEndPage()}</>}
+      </EmperorWrapper>
     </EmperorPage>
   )
 }

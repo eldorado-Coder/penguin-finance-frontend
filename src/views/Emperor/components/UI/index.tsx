@@ -10,6 +10,9 @@ export const CardBlock = styled.div`
     width: 70%;
     margin-left: 15%;
   }
+  @media (max-width: 640px) {
+    margin-top: 16px;
+  }
 `
 
 export const CardBlockHeader = styled.div`
@@ -42,7 +45,7 @@ export const UnlockButton = styled(Button)`
   }
 `
 
-export const PGButton = styled(NormalButton)<{ colorType?: string }>`
+export const PGButton = styled(NormalButton) <{ colorType?: string }>`
   font-size: 10px;
   padding: 0 8px;
   height: 28px;
