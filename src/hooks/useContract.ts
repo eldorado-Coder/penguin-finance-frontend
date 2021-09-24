@@ -20,6 +20,7 @@ import {
   getXPefiAddress,
   getIPefiAddress,
   getLaunchpadAddress,
+  getBoofiLaunchpadAddress,
   getTestXPefiAddress,
   // booster rocket
   getBoosterRocketAddress,
@@ -191,6 +192,11 @@ export const useTestXPefi = () => {
 export const useLaunchPad = () => {
   const abi = (launchpad as unknown) as AbiItem
   return useContract(abi, getLaunchpadAddress())
+}
+
+export const useBoofiLaunchPad = () => {
+  const abi = (launchpad as unknown) as AbiItem
+  return useContract(abi, getBoofiLaunchpadAddress())
 }
 
 export const useBoosterRocket = () => {

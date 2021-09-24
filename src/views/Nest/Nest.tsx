@@ -23,7 +23,9 @@ const Nest: React.FC = () => {
             <Text color="primary" fontSize="32px" bold>
               Earn more PEFI
             </Text>
-            <Description mb="16px" bold>Stake your PEFI for iPEFI and maximize your yield. No Impermanent Loss.</Description>
+            <Description mb="16px" bold>
+              Stake your PEFI for iPEFI and maximize your yield. No Impermanent Loss.
+            </Description>
           </V2NestDetailsContainer>
         ) : (
           <V1NestDetailsContainer>
