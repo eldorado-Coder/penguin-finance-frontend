@@ -290,7 +290,7 @@ const SocialIconsWrapper = styled(Flex)`
   margin-top: 8px;
 
   svg {
-    fill: 'white';
+    fill: white;
 
     &:hover {
       opacity: 0.65;
