@@ -14,7 +14,7 @@ const TiersCard = () => {
   const { account } = useWeb3React()
   const { stakedBalance: staked, yourPenguinTier, allocation } = useBoofiLaunchpad(account)
   const launchpadStaked = getBalanceNumber(new BigNumber(staked))
-  const hasTier = launchpadStaked >= 500
+  const hasTier = launchpadStaked > 0
   const tierHurdles = useBoofiLaunchpadTierHurdles()
 
   const handleInfoIconClick = () => {
@@ -67,7 +67,11 @@ const TiersCard = () => {
           </TierWrapper>
         ) : (
           <NoneTierWrapper>
-            <SvgIcon src={`${process.env.PUBLIC_URL}/images/launchpad/none_tier.svg`} width="100%" height="20px" />
+            <SvgIcon
+              src={`${process.env.PUBLIC_URL}/images/launchpad/boofi_none_tier.svg`}
+              width="100%"
+              height="20px"
+            />
           </NoneTierWrapper>
         )}
       </CardContent>
