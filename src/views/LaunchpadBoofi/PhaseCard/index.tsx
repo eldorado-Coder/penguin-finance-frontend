@@ -22,7 +22,6 @@ const stageContents = [
 const PhaseCard = ({ launchStage }: { launchStage: number }) => {
   const { isXl } = useMatchBreakpoints()
   const isMobile = !isXl
-  const { isDark } = useTheme()
 
   const handleLearnBoofi = () => {
     window.open(
@@ -46,6 +45,21 @@ const PhaseCard = ({ launchStage }: { launchStage: number }) => {
           <ButtonActions flexDirection="column">
             <StyledButton onClick={handleLearnBoofi}>Learn More</StyledButton>
             <StyledButton onClick={handleViewBoofi}>View Website</StyledButton>
+            {!isMobile && (
+              <SocialIconsWrapper justifyContent="space-between" flexWrap="wrap">
+                <a href="https://discord.com/invite/A3KbWpsZfE" target="_blank" rel="noreferrer">
+                  <SvgIcon src={`${process.env.PUBLIC_URL}/images/discord.svg`} width="100%" height="20px" />
+                </a>
+                <a href="https://t.me/BooFinance" target="_blank" rel="noreferrer">
+                  <SvgIcon src={`${process.env.PUBLIC_URL}/images/telegram.svg`} width="100%" height="20px" />
+                </a>
+                <a href="https://twitter.com/Boo_Finance" target="_blank" rel="noreferrer">
+                  <SvgIcon src={`${process.env.PUBLIC_URL}/images/twitter.svg`} width="100%" height="20px" />
+                </a>
+              </SocialIconsWrapper>
+            )}
+          </ButtonActions>
+          {isMobile && (
             <SocialIconsWrapper justifyContent="space-between" flexWrap="wrap">
               <a href="https://discord.com/invite/A3KbWpsZfE" target="_blank" rel="noreferrer">
                 <SvgIcon src={`${process.env.PUBLIC_URL}/images/discord.svg`} width="100%" height="20px" />
@@ -57,7 +71,7 @@ const PhaseCard = ({ launchStage }: { launchStage: number }) => {
                 <SvgIcon src={`${process.env.PUBLIC_URL}/images/twitter.svg`} width="100%" height="20px" />
               </a>
             </SocialIconsWrapper>
-          </ButtonActions>
+          )}
         </StepDescriptionWrapper>
       </Flex>
       {isMobile ? (
@@ -289,6 +303,12 @@ const MobileProgressMarks = styled(Flex)`
 const SocialIconsWrapper = styled(Flex)`
   margin-top: 8px;
 
+  @media (max-width: 968px) {
+    svg {
+      padding: 0 8px;
+    }
+  }
+
   svg {
     fill: white;
 
@@ -297,4 +317,5 @@ const SocialIconsWrapper = styled(Flex)`
     }
   }
 `
+
 export default PhaseCard
