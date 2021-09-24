@@ -26,6 +26,9 @@ const EmperorPage = styled(Page)`
   @media (min-width: 768px) {
     padding: 40px 30px;
   }
+  @media (max-width: 640px) {
+    background: #231631;
+  }
 `
 
 const ChestWrapper = styled.div<{ jackpot: string, isSm: boolean }>`
@@ -373,7 +376,7 @@ const Emperor: React.FC = () => {
             <EmperorBlockWrapper>
               <EmperorBlock />
             </EmperorBlockWrapper>
-            {renderJackpot(true)}
+            {account && renderJackpot(true)}
           </EmperorSmWrapper>
         ) : (
           <EmperorBgContainer width="100%" height="100%" autoPlay loop muted>
