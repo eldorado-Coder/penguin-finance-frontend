@@ -188,7 +188,7 @@ export interface LaunchpadBoofiState {
   canUnstake: boolean
   timeRemainingToUnstake: number
   depositEnd: number
-  xPefi: number
+  iPefi: number
   tierHurdles: number[]
 }
 

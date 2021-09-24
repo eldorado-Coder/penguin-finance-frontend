@@ -1,35 +1,36 @@
 import launchpadBoofiABI from 'config/abi/launchpadBoofi.json'
 import { AbiItem } from 'web3-utils'
-import xPefiAbi from 'config/abi/xPefi.json'
+import iPefiAbi from 'config/abi/iPefi.json'
 import multicall from 'utils/multicall'
-import { getLaunchpadBoofiAddress, getTestXPefiAddress } from 'utils/addressHelpers'
+import { getBoofiLaunchpadAddress, getIPefiAddress } from 'utils/addressHelpers'
 import BigNumber from 'bignumber.js'
 import { getWeb3 } from 'utils/web3'
+import { getBalanceNumber } from 'utils/formatBalance'
 
 export const fetchUserData = async (account) => {
   const calls = [
     {
-      address: getLaunchpadBoofiAddress(),
+      address: getBoofiLaunchpadAddress(),
       name: 'amountStaked',
       params: [account],
     },
     {
-      address: getLaunchpadBoofiAddress(),
+      address: getBoofiLaunchpadAddress(),
       name: 'penguinTiers',
       params: [account],
     },
     {
-      address: getLaunchpadBoofiAddress(),
+      address: getBoofiLaunchpadAddress(),
       name: 'allocations',
       params: [account],
     },
     {
-      address: getLaunchpadBoofiAddress(),
+      address: getBoofiLaunchpadAddress(),
       name: 'canUnstake',
       params: [account],
     },
     {
-      address: getLaunchpadBoofiAddress(),
+      address: getBoofiLaunchpadAddress(),
       name: 'timeRemainingToUnstake',
       params: [account],
     },
@@ -57,7 +58,7 @@ export const fetchUserData = async (account) => {
 export const fetchUserStakedBalance = async (account) => {
   const calls = [
     {
-      address: getLaunchpadBoofiAddress(),
+      address: getBoofiLaunchpadAddress(),
       name: 'amountStaked',
       params: [account],
     },
@@ -70,7 +71,7 @@ export const fetchUserStakedBalance = async (account) => {
 export const fetchUserPenguinTier = async (account) => {
   const calls = [
     {
-      address: getLaunchpadBoofiAddress(),
+      address: getBoofiLaunchpadAddress(),
       name: 'penguinTiers',
       params: [account],
     },
@@ -84,7 +85,7 @@ export const fetchUserPenguinTier = async (account) => {
 export const fetchUserAllocation = async (account) => {
   const calls = [
     {
-      address: getLaunchpadBoofiAddress(),
+      address: getBoofiLaunchpadAddress(),
       name: 'allocations',
       params: [account],
     },
@@ -97,7 +98,7 @@ export const fetchUserAllocation = async (account) => {
 export const fetchUserCanUnstake = async (account) => {
   const calls = [
     {
-      address: getLaunchpadBoofiAddress(),
+      address: getBoofiLaunchpadAddress(),
       name: 'canUnstake',
       params: [account],
     },
@@ -110,7 +111,7 @@ export const fetchUserCanUnstake = async (account) => {
 export const fetchDepositEnd = async () => {
   const calls = [
     {
-      address: getLaunchpadBoofiAddress(),
+      address: getBoofiLaunchpadAddress(),
       name: 'depositEnd',
     },
   ]
@@ -123,7 +124,7 @@ export const fetchTierHurdles = async () => {
   const calls = []
   for (let i = 0; i < 3; i++) {
     calls.push({
-      address: getLaunchpadBoofiAddress(),
+      address: getBoofiLaunchpadAddress(),
       name: 'tierHurdles',
       params: [i],
     })
@@ -131,26 +132,24 @@ export const fetchTierHurdles = async () => {
 
   const tierHurdles = await multicall(launchpadBoofiABI, calls)
 
-  return tierHurdles.map((tierHurdle) => tierHurdle[0] / 1e18)
+  return tierHurdles.map((tierHurdle) => (tierHurdle[0] / 1e18).toFixed(0))
 }
 
 // xPefi allowance and balance
 export const fetchLaunchpadAllowance = async (account) => {
   const web3 = getWeb3()
-  const abi = (xPefiAbi as unknown) as AbiItem
-  // const xPefiContract = new web3.eth.Contract(abi, getXPefiAddress())
-  const xPefiContract = new web3.eth.Contract(abi, getTestXPefiAddress())
-  const allowanceBalance = (await xPefiContract.methods.allowance(account, getLaunchpadBoofiAddress()).call()) / 1e18
+  const abi = (iPefiAbi as unknown) as AbiItem
+  const iPefiContract = new web3.eth.Contract(abi, getIPefiAddress())
+  const allowanceBalance = (await iPefiContract.methods.allowance(account, getBoofiLaunchpadAddress()).call()) / 1e18
 
   return allowanceBalance
 }
 
-export const fetchUserXPefiBalance = async (account) => {
+export const fetchUserIPefiBalance = async (account) => {
   const web3 = getWeb3()
-  const abi = (xPefiAbi as unknown) as AbiItem
-  // const xPefiContract = new web3.eth.Contract(abi, getXPefiAddress())
-  const xPefiContract = new web3.eth.Contract(abi, getTestXPefiAddress())
-  const balanceOf = await xPefiContract.methods.balanceOf(account).call()
+  const abi = (iPefiAbi as unknown) as AbiItem
+  const iPefiContract = new web3.eth.Contract(abi, getIPefiAddress())
+  const balanceOf = await iPefiContract.methods.balanceOf(account).call()
 
   return balanceOf
 }

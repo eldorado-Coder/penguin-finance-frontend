@@ -51,9 +51,6 @@ const Launchpad: React.FC = () => {
           </Flex>
         )}
       </UpcomingOfferContainer>
-
-      {/* middle */}
-
       <EndedOfferContainer>
         <EndedOfferLabel fontWeight={500} fontSize="24px" mt="32px">
           Ended

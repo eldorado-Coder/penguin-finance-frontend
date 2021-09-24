@@ -4,7 +4,7 @@ import {
   fetchLaunchpadAllowance,
   fetchUserStakedBalance,
   fetchDepositEnd,
-  fetchUserXPefiBalance,
+  fetchUserIPefiBalance,
   // launchpad
   fetchUserData,
   fetchTierHurdles,
@@ -19,7 +19,7 @@ const initialState: LaunchpadBoofiState = {
   canUnstake: false,
   timeRemainingToUnstake: 0,
   depositEnd: 0,
-  xPefi: 0,
+  iPefi: 0,
   tierHurdles: [],
 }
 
@@ -35,7 +35,7 @@ export const LaunchpadBoofiSlice = createSlice({
       state.canUnstake = action.payload.canUnstake
       state.timeRemainingToUnstake = action.payload.timeRemainingToUnstake
       state.depositEnd = action.payload.depositEnd
-      state.xPefi = action.payload.xPefi
+      state.iPefi = action.payload.iPefi
     },
     setStakedValance: (state, action) => {
       state.stakedBalance = action.payload
@@ -53,9 +53,11 @@ export const LaunchpadBoofiSlice = createSlice({
 export const { setTierHurdles, setAllowance, setStakedValance, setLaunchpadUserData } = LaunchpadBoofiSlice.actions
 
 export const fetchLaunchpadBoofiUserDataAsync = (account: string) => async (dispatch) => {
+  if (!account) return
   const allowance = await fetchLaunchpadAllowance(account)
-  const xPefi = await fetchUserXPefiBalance(account)
+  const iPefi = await fetchUserIPefiBalance(account)
   const depositEnd = await fetchDepositEnd()
+
   // from launchpad
   const {
     stakedBalance,
@@ -74,7 +76,7 @@ export const fetchLaunchpadBoofiUserDataAsync = (account: string) => async (disp
       canUnstake,
       timeRemainingToUnstake,
       depositEnd,
-      xPefi,
+      iPefi,
     }),
   )
 }

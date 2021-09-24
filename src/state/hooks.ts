@@ -230,7 +230,7 @@ export const useLaunchpadTierHurdles = () => {
 }
 
 // launchpad
-export const useLaunchpadBoofi = (account): LaunchpadBoofiState => {
+export const useBoofiLaunchpad = (account): LaunchpadBoofiState => {
   const { fastRefresh } = useRefresh()
   const dispatch = useDispatch()
   useEffect(() => {
@@ -247,7 +247,7 @@ export const useLaunchpadBoofi = (account): LaunchpadBoofiState => {
   return launchpadBoofi
 }
 
-export const useLaunchpadBoofiTierHurdles = () => {
+export const useBoofiLaunchpadTierHurdles = () => {
   const { fastRefresh } = useRefresh()
   const dispatch = useDispatch()
   useEffect(() => {

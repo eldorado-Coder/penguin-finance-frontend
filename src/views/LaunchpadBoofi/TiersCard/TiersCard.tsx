@@ -1,64 +1,63 @@
-import BigNumber from 'bignumber.js'
 import React from 'react'
+import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
 import { Text, Flex } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
-import { useLaunchpadBoofiTierHurdles, useLaunchpadBoofi } from 'state/hooks'
+import { useBoofiLaunchpadTierHurdles, useBoofiLaunchpad } from 'state/hooks'
 import SvgIcon from 'components/SvgIcon'
 import Balance from 'components/Balance'
 import { getBalanceNumber } from 'utils/formatBalance'
-import { PRICE_PER_BOOFI } from '../utils';
+import { TIERS, PRICE_PER_BOOFI } from '../utils'
 import Card from '../Card'
-
-const TIERS = [
-  { label: 'Ghoul', iPefi: '500' },
-  { label: 'Reaper', iPefi: '10,000' },
-  { label: 'Demonlord', iPefi: '50,000'}
-]
 
 const TiersCard = () => {
   const { account } = useWeb3React()
-  const { stakedBalance: staked, yourPenguinTier, allocation } = useLaunchpadBoofi(account)
+  const { stakedBalance: staked, yourPenguinTier, allocation } = useBoofiLaunchpad(account)
   const launchpadStaked = getBalanceNumber(new BigNumber(staked))
-  const hasTier = launchpadStaked >= 300
-  const tierHurdles = useLaunchpadBoofiTierHurdles()
+  const hasTier = launchpadStaked >= 500
+  const tierHurdles = useBoofiLaunchpadTierHurdles()
 
   const handleInfoIconClick = () => {
-    window.open('https://penguin-finance.medium.com/penguin-launchpad-boofinance-ido-tiers-are-here-29ba4cd90053', '_blank');
+    window.open(
+      'https://penguin-finance.medium.com/penguin-launchpad-boofinance-ido-tiers-are-here-29ba4cd90053',
+      '_blank',
+    )
   }
 
   return (
     <StyledCard>
       <CardContent>
         <TierContent>
-          <Wrapper justifyContent='space-between' alignItems='center'>
-            <Label fontSize='32px' bold mr='16px' lineHeight={1.2}>Tiers</Label>
+          <Wrapper justifyContent="space-between" alignItems="center">
+            <Label fontSize="32px" bold mr="16px" lineHeight={1.2}>
+              Tiers
+            </Label>
             <InfoIconWrapper onClick={handleInfoIconClick}>
               <SvgIcon src={`${process.env.PUBLIC_URL}/images/home/info.svg`} width="25px" height="25px" />
             </InfoIconWrapper>
           </Wrapper>
-          <CurrentTiersWrapper flexDirection='column' alignItems='center'>
+          <CurrentTiersWrapper flexDirection="column" alignItems="center">
             {TIERS.map((penguinTier, index) => (
-              <Wrapper justifyContent='space-between' key={`label-${penguinTier.label}`}>
-                <Text fontSize='18px' fontWeight={400} className={penguinTier.label.toLowerCase()}>
+              <Wrapper justifyContent="space-between" key={`label-${penguinTier.label}`}>
+                <Text fontSize="18px" fontWeight={400} className={penguinTier.label.toLowerCase()}>
                   {penguinTier.label}
                 </Text>
-                <Text key={`value-${penguinTier}`} fontSize='18px' bold className={penguinTier.label.toLowerCase()}>
+                <Text key={`value-${penguinTier}`} fontSize="18px" bold className={penguinTier.label.toLowerCase()}>
                   {`(+${tierHurdles[index]} iPEFI)`}
                 </Text>
               </Wrapper>
             ))}
           </CurrentTiersWrapper>
-          <Wrapper justifyContent='space-between'>
-            <Label textAlign='right'>Your Stake:</Label>
+          <Wrapper justifyContent="space-between">
+            <Label textAlign="right">Your Stake:</Label>
             <Balance fontSize="16px" decimals={2} value={Math.floor(launchpadStaked * 100) / 100} />
           </Wrapper>
-          <Wrapper justifyContent='space-between'>
-            <Label textAlign='right'>Your Allocation:</Label>
+          <Wrapper justifyContent="space-between">
+            <Label textAlign="right">Your Allocation:</Label>
             <Label bold>{`${getBalanceNumber(new BigNumber(allocation)).toFixed(2)} AP`}</Label>
           </Wrapper>
-          <Wrapper justifyContent='space-between' mb='16px'>
-            <Label textAlign='right'>Price per BOOFI:</Label>
+          <Wrapper justifyContent="space-between" mb="16px">
+            <Label textAlign="right">Price per BOOFI:</Label>
             <Label bold>{`$${PRICE_PER_BOOFI[yourPenguinTier]}`}</Label>
           </Wrapper>
         </TierContent>
@@ -73,8 +72,8 @@ const TiersCard = () => {
         )}
       </CardContent>
     </StyledCard>
-  );
-};
+  )
+}
 
 const StyledCard = styled(Card)`
   border-radius: 8px;
@@ -136,7 +135,7 @@ const TierContent = styled.div`
 
 const Wrapper = styled(Flex)`
   width: 100%;
-`;
+`
 
 const InfoIconWrapper = styled.div`
   svg {
@@ -149,7 +148,7 @@ const InfoIconWrapper = styled.div`
 
 const Label = styled(Text)<{ minWidth?: number }>`
   color: ${({ theme }) => (theme.isDark ? 'white' : theme.colors.secondary)};
-`;
+`
 
 const NoneTierWrapper = styled.div`
   margin-top: 32px;
@@ -179,7 +178,6 @@ const TierWrapper = styled(Flex)`
     margin-top: auto;
     margin-bottom: auto;
   }
-`;
+`
 
-export default TiersCard;
-
+export default TiersCard

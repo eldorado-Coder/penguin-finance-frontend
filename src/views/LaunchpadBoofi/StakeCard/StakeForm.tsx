@@ -3,39 +3,29 @@ import styled from 'styled-components'
 import React, { useCallback, useMemo, useState } from 'react'
 import { Button, Flex } from 'penguinfinance-uikit2'
 import UnlockButton from 'components/UnlockButton'
-import roundDown from 'utils/roundDown'
-import escapeRegExp from 'utils/escapeRegExp'
 import { PANGOLIN_PEFI_LINK } from 'config'
-import useI18n from 'hooks/useI18n'
+import { useIPefi } from 'hooks/useContract'
 import { getFullDisplayBalance } from 'utils/formatBalance'
+import roundDown from 'utils/roundDown'
+import { getBoofiLaunchpadAddress } from 'utils/addressHelpers'
+import escapeRegExp from 'utils/escapeRegExp'
 import TokenInput from './TokenInput'
-
-interface StakeFormProps {
-  max: BigNumber
-  onConfirm: (amount: string) => void
-  tokenName?: string
-  account?: string
-  needsApproval: boolean
-  requested: boolean
-  stakingTokenName: string
-  onApprove: () => void
-}
 
 const inputRegex = RegExp(`^\\d*(?:\\\\[.])?\\d*$`)
 
-const StakeForm: React.FC<StakeFormProps> = ({
-  max,
-  onConfirm,
-  tokenName = '',
-  account,
-  needsApproval,
-  requested,
-  stakingTokenName,
-  onApprove,
-}) => {
+interface StakeFormProps {
+  max: BigNumber
+  tokenName?: string
+  account?: string
+  onApprove: () => void
+  onConfirm: (amount: string) => void
+}
+
+const StakeForm: React.FC<StakeFormProps> = ({ max, onConfirm, tokenName = '', account, onApprove }) => {
   const [val, setVal] = useState('')
   const [pendingTx, setPendingTx] = useState(false)
-  const TranslateString = useI18n()
+  const iPefiContract = useIPefi()
+
   const fullBalance = useMemo(() => {
     return getFullDisplayBalance(max)
   }, [max])
@@ -53,13 +43,12 @@ const StakeForm: React.FC<StakeFormProps> = ({
   )
 
   const handleSelectMax = useCallback(() => {
-    // setVal(roundDown(fullBalance, 2))
     setVal(fullBalance)
   }, [fullBalance, setVal])
 
   const renderText = () => {
     if (Number(val) > Number(fullBalance) || Number(fullBalance) === 0) return 'Get more PEFI'
-    if (pendingTx) return TranslateString(488, 'Pending Confirmation')
+    if (pendingTx) return 'Pending Confirmation'
     if (val) return 'Confirm Staking'
     return 'Enter Amount'
   }
@@ -67,6 +56,11 @@ const StakeForm: React.FC<StakeFormProps> = ({
   const handleStake = async () => {
     setPendingTx(true)
     try {
+      const allowanceBalance =
+        (await iPefiContract.methods.allowance(account, getBoofiLaunchpadAddress()).call()) / 1e18
+      if (allowanceBalance === 0) {
+        await onApprove()
+      }
       await onConfirm(val)
       setPendingTx(false)
       setVal('')
@@ -92,26 +86,20 @@ const StakeForm: React.FC<StakeFormProps> = ({
         symbol={tokenName}
       />
       <Flex mt="8px">
-        <StyledButton scale="md">Coming Soon</StyledButton>
-        {/* {!account && <StyledUnlockButton />}
-        {account &&
-          (needsApproval ? (
-            <StyledButton disabled={requested} onClick={onApprove} scale="md">
-              {`Approve ${stakingTokenName}`}
-            </StyledButton>
-          ) : (
-            <>
-              {Number(fullBalance) >= Number(val) && Number(fullBalance) > 0 ? (
-                <StyledButton tokenBalance={val} scale="md" disabled={!canStake} onClick={handleStake}>
-                  {renderText()}
-                </StyledButton>
-              ) : (
-                <StyledButton tokenBalance={val} scale="md" disabled={pendingTx} onClick={handleGetPefi}>
-                  {renderText()}
-                </StyledButton>
-              )}
-            </>
-          ))} */}
+        {!account && <StyledUnlockButton />}
+        {account && (
+          <>
+            {Number(fullBalance) >= Number(val) && Number(fullBalance) > 0 ? (
+              <StyledButton tokenBalance={val} scale="md" disabled={!canStake} onClick={handleStake}>
+                {renderText()}
+              </StyledButton>
+            ) : (
+              <StyledButton tokenBalance={val} scale="md" disabled={pendingTx} onClick={handleGetPefi}>
+                {renderText()}
+              </StyledButton>
+            )}
+          </>
+        )}
       </Flex>
     </>
   )
