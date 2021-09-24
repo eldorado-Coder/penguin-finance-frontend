@@ -60,7 +60,7 @@ const Menu = (props) => {
     ...links[emperorIndex],
     badge: 'NEW',
     badgeLightColor: '#EC3E3F',
-    badgeDarkColor: '#EC3E3F',
+    badgeDarkColor: '#ffffff',
   }
 
   return (
