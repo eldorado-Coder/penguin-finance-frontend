@@ -168,6 +168,13 @@ const MyPenguinImageWrapper = styled.div<{ penguin: string; color: string }>`
 
 const StyledText = styled(Text)`
   color: ${({ theme }) => (theme.isDark ? theme.colors.primary : theme.colors.secondary)};
+
+  @media (min-width: 1200px) and (max-height: 800px) {
+    font-size: 12px;
+  }
+  @media (max-width: 1080px) {
+    font-size: 11px;
+  }
 `
 
 const EmperorBlock: React.FC = () => {
@@ -181,7 +188,10 @@ const EmperorBlock: React.FC = () => {
   const { isSm } = useMatchBreakpoints()
 
   const handleViewStarterGuide = () => {
-    window.open('https://medium.com/@boofinance2021/introducing-boofinance-innovative-yield-farms-deflationary-nfts-on-avalanche-5f285835a317', '_blank')
+    window.open(
+      'https://penguin-finance.medium.com/the-penguin-emperor-is-back-new-rules-huge-prizes-d4a6b79c3816',
+      '_blank',
+    )
   }
 
   const renderPenguins = () => {
