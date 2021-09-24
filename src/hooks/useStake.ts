@@ -7,6 +7,7 @@ import {
   updateUserBalance,
   fetchPoolsPublicDataAsync,
   fetchLaunchpadUserDataAsync,
+  fetchLaunchpadBoofiUserDataAsync,
   // v2
   updateV2PoolUserStakedBalance,
   updateV2PoolUserBalance,
@@ -22,7 +23,14 @@ import {
   // v2
   v2FarmStake,
 } from 'utils/callHelpers'
-import { useLaunchPad, useMasterchef, useSousChef, useV2SousChef, useV2MasterChef } from './useContract'
+import {
+  useLaunchPad,
+  useBoofiLaunchPad,
+  useMasterchef,
+  useSousChef,
+  useV2SousChef,
+  useV2MasterChef,
+} from './useContract'
 
 const useStake = (pid: number, type?: string) => {
   const dispatch = useDispatch()
@@ -75,6 +83,23 @@ export const useLaunchpadStake = () => {
     async (amount: string) => {
       const txHash = await launchpadStake(launchpadContract, amount, account)
       dispatch(fetchLaunchpadUserDataAsync(account))
+      console.info(txHash)
+    },
+    [account, dispatch, launchpadContract],
+  )
+
+  return { onStake: handleStake }
+}
+
+export const useBoofiLaunchpadStake = () => {
+  const dispatch = useDispatch()
+  const { account } = useWeb3React()
+  const launchpadContract = useBoofiLaunchPad()
+
+  const handleStake = useCallback(
+    async (amount: string) => {
+      const txHash = await launchpadStake(launchpadContract, amount, account)
+      dispatch(fetchLaunchpadBoofiUserDataAsync(account))
       console.info(txHash)
     },
     [account, dispatch, launchpadContract],

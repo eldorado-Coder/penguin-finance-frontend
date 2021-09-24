@@ -1,35 +1,30 @@
+import React, { useState } from 'react'
 import BigNumber from 'bignumber.js'
-import React, { useCallback, useState } from 'react'
 import styled from 'styled-components'
-import { Text, Flex, Tag, ButtonMenu, ButtonMenuItem } from 'penguinfinance-uikit2'
+import { Text, Flex, ButtonMenu, ButtonMenuItem } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
+import { useBoofiLaunchpad } from 'state/hooks'
+import { useBoofiLaunchpadStake } from 'hooks/useStake'
+import { useBoofiLaunchpadUnstake } from 'hooks/useUnstake'
+import { useBoofiLaunchpadApprove } from 'hooks/useApprove'
 import StakeForm from './StakeForm'
 import UnstakeForm from './UnstakeForm'
 import Card from '../Card'
 
 const StakeCard = () => {
-  const [requestedApproval, setRequestedApproval] = useState(false)
   const [activeTab, setActiveTab] = useState(0)
   const { account } = useWeb3React()
+  const { onStake } = useBoofiLaunchpadStake()
+  const { onUnstake } = useBoofiLaunchpadUnstake()
+  const { onApproveIPefi } = useBoofiLaunchpadApprove()
+  const { stakedBalance: staked, canUnstake, timeRemainingToUnstake, iPefi } = useBoofiLaunchpad(account)
+
+  const iPEFIBalance = new BigNumber(iPefi)
+  const stakedBalance = new BigNumber(staked)
 
   const handleSwitchTab = (tab) => {
     setActiveTab(tab)
   }
-
-  const handleApprove = () => {
-    return null;
-  };
-
-  const handleUnstake = () => {
-    return null;
-  };
-
-  const handleStake = () => {
-    return null;
-  }
-
-  const iPEFIBalance = new BigNumber(10);
-  const stakedBalance = new BigNumber(10);
 
   return (
     <StyledCard>
@@ -48,23 +43,19 @@ const StakeCard = () => {
         {activeTab === 0 ? (
           <StakeForm
             max={iPEFIBalance}
-            onConfirm={handleStake}
-            tokenName='iPEFI'
+            tokenName="iPEFI"
             account={account}
-            needsApproval={false}
-            requested={requestedApproval}
-            onApprove={handleApprove}
-            stakingTokenName='iPEFI'
+            onApprove={onApproveIPefi}
+            onConfirm={onStake}
           />
         ) : (
           <UnstakeForm
             max={stakedBalance}
-            onConfirm={handleUnstake}
-            tokenName='iPEFI'
+            tokenName="iPEFI"
             account={account}
-            requested={requestedApproval}
-            onApprove={handleApprove}
-            stakingTokenName='iPEFI'
+            unstakedEnabled={canUnstake}
+            timeRemainingToUnstake={timeRemainingToUnstake}
+            onConfirm={onUnstake}
           />
         )}
       </CardContent>
@@ -114,11 +105,11 @@ const OptionItem = styled(ButtonMenuItem)<{ active: boolean }>`
 
 const StakeLabel = styled(Text)`
   font-size: 18px;
-  color: ${({ theme }) => theme.isDark ? 'white' : '#372871'};
+  color: ${({ theme }) => (theme.isDark ? 'white' : '#372871')};
 
   ${({ theme }) => theme.mediaQueries.sm} {
     font-size: 20px;
   }
 `
 
-export default StakeCard;
+export default StakeCard

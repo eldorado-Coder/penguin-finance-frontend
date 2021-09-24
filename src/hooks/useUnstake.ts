@@ -7,6 +7,7 @@ import {
   updateUserBalance,
   fetchPoolsPublicDataAsync,
   fetchLaunchpadUserDataAsync,
+  fetchLaunchpadBoofiUserDataAsync,
   // v2
   updateV2PoolUserStakedBalance,
   updateV2PoolUserBalance,
@@ -25,6 +26,7 @@ import {
 } from 'utils/callHelpers'
 import {
   useLaunchPad,
+  useBoofiLaunchPad,
   useMasterchef,
   useSousChef,
   // v2
@@ -87,6 +89,23 @@ export const useLaunchpadUnstake = () => {
     async (amount: string) => {
       const txHash = await launchpadUnstake(launchpadContract, amount, account)
       dispatch(fetchLaunchpadUserDataAsync(account))
+      console.info(txHash)
+    },
+    [account, dispatch, launchpadContract],
+  )
+
+  return { onUnstake: handleUnstake }
+}
+
+export const useBoofiLaunchpadUnstake = () => {
+  const dispatch = useDispatch()
+  const { account } = useWeb3React()
+  const launchpadContract = useBoofiLaunchPad()
+
+  const handleUnstake = useCallback(
+    async (amount: string) => {
+      const txHash = await launchpadUnstake(launchpadContract, amount, account)
+      dispatch(fetchLaunchpadBoofiUserDataAsync(account))
       console.info(txHash)
     },
     [account, dispatch, launchpadContract],

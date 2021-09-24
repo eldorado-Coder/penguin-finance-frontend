@@ -11,8 +11,8 @@ import {
   // v2
   fetchV2FarmUserDataAsync,
 } from 'state/actions'
-import { approve } from 'utils/callHelpers'
-import { getNestMigratorAddress } from 'utils/addressHelpers'
+import { approve, approveIPefi } from 'utils/callHelpers'
+import { getNestMigratorAddress, getBoofiLaunchpadAddress } from 'utils/addressHelpers'
 import {
   useMasterchef,
   usePenguin,
@@ -21,6 +21,7 @@ import {
   useLottery,
   useStrategyContract,
   useXPefi,
+  useIPefi,
   // v2
   useV2MasterChef,
 } from './useContract'
@@ -173,4 +174,17 @@ export const useV2FarmApprove = (lpContract: Contract, type?: string) => {
   }, [account, dispatch, lpContract, v2MasterChefContract])
 
   return { onApprove: handleApprove }
+}
+
+// launchpad Boofi
+export const useBoofiLaunchpadApprove = () => {
+  const { account } = useWeb3React()
+  const iPefiContract = useIPefi()
+
+  const handleIPefiApprove = useCallback(async () => {
+    const txHash = await approveIPefi(iPefiContract, account, getBoofiLaunchpadAddress())
+    console.info(txHash)
+  }, [account, iPefiContract])
+
+  return { onApproveIPefi: handleIPefiApprove }
 }
