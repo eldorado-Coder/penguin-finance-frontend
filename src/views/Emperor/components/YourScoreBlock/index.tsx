@@ -55,9 +55,6 @@ const TitleBgWrapper = styled.div<{ color: string; account: string }>`
       margin-left: 6%;
     }
   }
-  @media (max-width: 640px) {
-    margin-top: -2%;
-  }
 `
 
 const CardBlockBody = styled.div<{ account: string }>`
@@ -97,9 +94,6 @@ const CardBlockBody = styled.div<{ account: string }>`
   }
   @media (min-width: 1200px) and (max-height: 800px) {
     padding-top: 16px;
-  }
-  @media (max-width: 640px) {
-    transform: scale(0.85);
   }
 `
 
