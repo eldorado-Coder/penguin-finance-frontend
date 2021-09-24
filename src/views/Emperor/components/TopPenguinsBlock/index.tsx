@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Text, useMatchBreakpoints } from 'penguinfinance-uikit2'
+import { Text } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import { useEmperor } from 'state/hooks'
 import { getShortenNickName, formatTime, badWordsFilter } from 'utils/address'
@@ -16,12 +16,11 @@ const CardBlockContent = styled.div`
   }
 `
 
-const TitleBgWrapper = styled.div<{ color: string; account: string, isSm: boolean }>`
+const TitleBgWrapper = styled.div<{ color: string; account: string }>`
   z-index: -1;
   width: 100%;
   text-align: center;
   position: absolute;
-  top: ${({ isSm }) => isSm ? "-0.5%" : null};
   margin-top: ${(props) => (props.account ? 0 : '-30%')};
 
   svg {
@@ -182,8 +181,6 @@ const TopPenguinsBlock: React.FC = () => {
     return { id: index, ...row }
   })
 
-  const { isSm } = useMatchBreakpoints()
-
   const headerColor: string =
     topEmperors.length > 0 ? getPenguinColor(topEmperors[0]).code : getPenguinColor(currentEmperor).code
 
@@ -191,7 +188,7 @@ const TopPenguinsBlock: React.FC = () => {
     <CardBlock>
       <CardBlockContent>
         <CardBlockHeader>
-          <TitleBgWrapper color={headerColor} account={account} isSm={isSm}>
+          <TitleBgWrapper color={headerColor} account={account}>
             {account ? (
               <img
                 src={`${process.env.PUBLIC_URL}/images/emperor/banner/top_penguins_banner.svg`}
