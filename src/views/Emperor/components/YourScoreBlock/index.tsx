@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import styled from 'styled-components'
-import { Button, Text, useModal } from 'penguinfinance-uikit2'
+import { Button, Text, useModal, useMatchBreakpoints } from 'penguinfinance-uikit2'
 import ReactTooltip from 'react-tooltip'
 import useI18n from 'hooks/useI18n'
 import BigNumber from 'bignumber.js'
@@ -26,18 +26,18 @@ const CardBlockContent = styled.div`
   }
 `
 
-const TitleBgWrapper = styled.div<{ color: string; account: string }>`
+const TitleBgWrapper = styled.div<{ color: string; account: string; isMobile?: boolean }>`
   z-index: -1;
   width: 100%;
   text-align: center;
-  margin-top: ${(props) => (props.account ? '7%' : '-30%')};
+  margin-top: ${(props) => (props.isMobile ? '3%' : '7%')};
   position: absolute;
 
   svg {
     width: 300px;
   }
 
-  transform: ${(props) => props.account && 'scale(1.3)'};
+  transform: ${(props) => props.account && 'scale(1.2)'};
   @media (min-width: 640px) {
     transform: ${(props) => props.account && 'scale(1.4)'};
   }
@@ -64,7 +64,7 @@ const CardBlockBody = styled.div<{ account: string }>`
   position: relative;
   text-align: center;
 
-  margin-top: 25%;
+  margin-top: 30%;
   min-width: 120px;
   padding: 24px 8px 8px;
 
@@ -218,6 +218,8 @@ const YourScoreBlock: React.FC = () => {
   const iPefiContract = useIPefi()
   const [pendingTx, setPendingTx] = useState(false)
   const [maxAmount, setMaxAmount] = useState('')
+  const { isSm, isXs } = useMatchBreakpoints()
+  const isMobile = isSm || isXs;
 
   const currentEmperorBidAmount = (currentEmperor && currentEmperor.bidAmount) || 0
   const isMyEmperorPoisoned = myEmperor.timePoisonedRemaining > 0
@@ -342,7 +344,7 @@ const YourScoreBlock: React.FC = () => {
     <CardBlock>
       <CardBlockContent>
         <CardBlockHeader>
-          <TitleBgWrapper color={getPenguinColor(myEmperor)} account={account}>
+          <TitleBgWrapper isMobile={isMobile} color={getPenguinColor(myEmperor)} account={account}>
             {account ? (
               <img
                 src={`${process.env.PUBLIC_URL}/images/emperor/banner/your_penguin_banner.svg`}
