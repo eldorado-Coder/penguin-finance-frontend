@@ -14,7 +14,7 @@ const TiersCard = () => {
   const { account } = useWeb3React()
   const { stakedBalance: staked, yourPenguinTier, allocation } = useBoofiLaunchpad(account)
   const launchpadStaked = getBalanceNumber(new BigNumber(staked))
-  const hasTier = launchpadStaked >= 500
+  const hasTier = launchpadStaked > 0
   const tierHurdles = useBoofiLaunchpadTierHurdles()
 
   const handleInfoIconClick = () => {
