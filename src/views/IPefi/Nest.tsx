@@ -214,7 +214,6 @@ const NestPage = styled(Page)`
 `
 
 // bg
-// bg
 const BgWrapper = styled.div`
   background: ${({ theme }) => (theme.isDark ? '#1A1028' : '#F9F8F9')};
   position: absolute;
