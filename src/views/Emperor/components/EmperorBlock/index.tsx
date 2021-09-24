@@ -168,6 +168,9 @@ const StyledText = styled(Text)`
   @media (min-width: 1200px) and (max-height: 800px) {
     font-size: 12px;
   }
+  @media (max-width: 1080px) {
+    font-size: 11px;
+  }
 `
 
 const EmperorBlock: React.FC = () => {
@@ -180,7 +183,10 @@ const EmperorBlock: React.FC = () => {
   const myEmperorPenguin = getNormalPenguin(myEmperor)
 
   const handleViewStarterGuide = () => {
-    window.open('https://penguin-finance.medium.com/the-penguin-emperor-is-back-new-rules-huge-prizes-d4a6b79c3816', '_blank')
+    window.open(
+      'https://penguin-finance.medium.com/the-penguin-emperor-is-back-new-rules-huge-prizes-d4a6b79c3816',
+      '_blank',
+    )
   }
 
   const renderPenguins = () => {
@@ -241,7 +247,9 @@ const EmperorBlock: React.FC = () => {
               </StyledText>
             </Flex>
             <StyledText bold fontSize="14px">{`Current Bid: ${currentEmperorBidAmount?.toFixed(2)} iPEFI`}</StyledText>
-            <StyledText bold fontSize="14px">{`Current Jackpot: ${currentEmperor?.jackpot?.toFixed(0)} iPEFI`}</StyledText>
+            <StyledText bold fontSize="14px">{`Current Jackpot: ${currentEmperor?.jackpot?.toFixed(
+              0,
+            )} iPEFI`}</StyledText>
           </EmperorInfoContainer>
         )}
       </CardBlockContent>
