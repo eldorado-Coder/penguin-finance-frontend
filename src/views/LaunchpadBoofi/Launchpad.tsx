@@ -10,8 +10,6 @@ import SherpaCard from './SherpaCard'
 
 const Launchpad: React.FC = () => {
   const { isDark } = useTheme()
-  const { isXl, isXs, isSm } = useMatchBreakpoints()
-  const isMobile = !isXl
 
   const onClickLaunchToken = () => {
     window.open(
