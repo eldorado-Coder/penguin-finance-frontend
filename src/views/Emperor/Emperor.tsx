@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import Sound from 'react-sound'
 import { useWeb3React } from '@web3-react/core'
-import { Text, useMatchBreakpoints } from 'penguinfinance-uikit2'
+import { Text, useMatchBreakpoints, Flex } from 'penguinfinance-uikit2'
 import { useDispatch } from 'react-redux'
 import { fetchEmperor } from 'state/emperor'
 import { useEmperor } from 'state/hooks'
@@ -22,15 +22,24 @@ const EmperorPage = styled(Page)`
   max-width: 100%; //1120px;
   overflow: hidden;
   padding: 0px;
+  background: #231631;
   @media (min-width: 768px) {
     padding: 40px 30px;
   }
 `
 
-const ChestWrapper = styled.div<{ jackpot: string }>`
+const Wrapper = styled.div<{ isMobile?: boolean }>`
   position: absolute;
-  width: 9.5%;
-  left: 26%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  height: ${({ isMobile }) => isMobile ? '400px' : '100%'};
+`
+
+const ChestWrapper = styled.div<{ jackpot: string, isMobile?: boolean }>`
+  position: absolute;
+  width: ${({ isMobile }) => isMobile ? '28%' : '9.5%'};
+  left: ${({ isMobile }) => isMobile ? '1%' : '26%'};
   bottom: 18%;
   z-index: 11;
 
@@ -98,10 +107,10 @@ const PaperWrapper = styled.div<{ isOpen: boolean }>`
   }
 `
 
-const JackpotPaper = styled.img`
+const JackpotPaper = styled.img<{ isMobile?: boolean}>`
   object-fit: cover;
   position: absolute;
-  min-width: 120px;
+  min-width: ${({ isMobile }) => isMobile ? '110px' : '120px'};
 
   @media (min-width: 1200px) {
     min-width: 180px;
@@ -179,14 +188,15 @@ const PGGRid = styled(Grid)`
   }
 `
 
-const EmperorBgContainer = styled.video`
-  object-fit: fill;
+const EmperorBgContainer = styled.video<{ isMobile?: boolean}>`
+  object-fit: ${({ isMobile }) => isMobile ? 'cover' : 'fill'};
   position: absolute;
   top: 0px;
   bottom: 0px;
   right: 0px;
   left: 0px;
-  z-index: -1;
+  z-index: 0;
+  min-height: ${({ isMobile }) => isMobile && '400px'};
 `
 // emperor end
 const EmperorEndBgContainer = styled.div``
@@ -205,7 +215,8 @@ const Emperor: React.FC = () => {
   const [showJackpot, setShowJackpot] = useState(false)
   const jackpotRef = useRef(jackpot)
   const { isMusic } = useUserSetting()
-  const { isSm } = useMatchBreakpoints()
+  const { isSm, isXs } = useMatchBreakpoints()
+  const isMobile = isSm || isXs;
 
   jackpotRef.current = jackpot
 
@@ -243,39 +254,57 @@ const Emperor: React.FC = () => {
     return (
       <>
         {account && (
-          <ChestWrapper jackpot={jackpot} onClick={handleOpenJackpot}>
-            <PaperWrapper isOpen={jackpot === JACKPOTS.UNLOCK}>
-              <JackpotPaper
-                onLoad={onJackpotLoaded}
-                src={`${process.env.PUBLIC_URL}/images/emperor/jackpot/Mapefi.svg`}
-                alt="jackpot_paper"
-              />
-              {showJackpot && (
-                <Text className="price" fontSize="24px">
-                  {currentEmperor.jackpot} <span>i</span>PEFI
-                </Text>
-              )}
-            </PaperWrapper>
-            <img className="jackpot-lock" src={JACKPOTS.LOCK} alt="jackpot_lock" />
-            <img className="jackpot-open" src={JACKPOTS.OPEN} alt="jackpot_open" />
-            <img className="jackpot-unlock" src={JACKPOTS.UNLOCK} alt="jackpot_unlock" />
-          </ChestWrapper>
+          <Wrapper isMobile={isMobile}>
+            <ChestWrapper isMobile={isMobile} jackpot={jackpot} onClick={handleOpenJackpot}>
+              <PaperWrapper isOpen={jackpot === JACKPOTS.UNLOCK}>
+                <JackpotPaper
+                  isMobile={isMobile}
+                  onLoad={onJackpotLoaded}
+                  src={`${process.env.PUBLIC_URL}/images/emperor/jackpot/Mapefi.svg`}
+                  alt="jackpot_paper"
+                />
+                {showJackpot && (
+                  <Text className="price" fontSize="24px">
+                    {currentEmperor.jackpot} <span>i</span>PEFI
+                  </Text>
+                )}
+              </PaperWrapper>
+              <img className="jackpot-lock" src={JACKPOTS.LOCK} alt="jackpot_lock" />
+              <img className="jackpot-open" src={JACKPOTS.OPEN} alt="jackpot_open" />
+              <img className="jackpot-unlock" src={JACKPOTS.UNLOCK} alt="jackpot_unlock" />
+            </ChestWrapper>
+          </Wrapper>
         )}
-        <Grid align="center" marginTop={{ xs: 80, sm: 100 }}>
-          <GridItem>
-            <EmperorBlock />
-          </GridItem>
-        </Grid>
-        {account && (
-          <PGGRid align="between" marginTop={{ xs: -40, sm: -190, md: -200, lg: -200 }}>
-            <GridItem>
-              <TopPenguinsBlock />
-            </GridItem>
-            <GridItem>
-              <YourScoreBlock />
-            </GridItem>
-          </PGGRid>
-        )}
+        {isMobile ? 
+          <>
+            <Flex flexDirection='column' alignItems='center' padding='40px 32px'>            
+              <EmperorBlock />
+              {account && 
+                <Flex width='100%' flexDirection='column' mt='260px'>
+                  <YourScoreBlock />
+                  <TopPenguinsBlock />
+                </Flex>
+              }
+            </Flex>
+          </>
+          : <>
+            <Grid align="center" marginTop={{ xs: 80, sm: 100 }}>
+              <GridItem>
+                <EmperorBlock />
+              </GridItem>
+            </Grid>
+            {account && (
+              <PGGRid align="between" marginTop={{ xs: -40, sm: -190, md: -200, lg: -200 }}>
+                <GridItem>
+                  <TopPenguinsBlock />
+                </GridItem>
+                <GridItem>
+                  <YourScoreBlock />
+                </GridItem>
+              </PGGRid>
+            )}
+          </>
+        }
       </>
     )
   }
@@ -313,7 +342,7 @@ const Emperor: React.FC = () => {
       />
 
       {/* background video */}
-      <EmperorBgContainer width="100%" height="100%" autoPlay loop muted>
+      <EmperorBgContainer isMobile={isMobile} width="100%" height={!isMobile && "100%"} autoPlay loop muted>
         <source src={emperorEnded ? emperorWinnerVideo : emperorDefaultVideo} />
       </EmperorBgContainer>
 

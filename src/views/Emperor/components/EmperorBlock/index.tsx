@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Text, Button, Flex } from 'penguinfinance-uikit2'
+import { Text, Button, Flex, useMatchBreakpoints } from 'penguinfinance-uikit2'
 import useI18n from 'hooks/useI18n'
 import { useWeb3React } from '@web3-react/core'
 import { useEmperor } from 'state/hooks'
@@ -9,15 +9,15 @@ import SvgIcon from 'components/SvgIcon'
 import { getPenguinColor, getKingPenguin, getNormalPenguin } from '../utils'
 import { UnlockButton, CardBlockHeader, CardBlock as Block } from '../UI'
 
-const CardBlock = styled(Block)`
-  margin-top: -100px;
+const CardBlock = styled(Block)<{ isMobile?: boolean }>`
+  margin-top: ${({ isMobile }) => isMobile ? '-56px' : '-100px'};
 
   @media (min-width: 1200px) and (max-height: 800px) {
     margin-top: -120px;
   }
 `
 
-const TitleBgWrapper = styled.div<{ color: string; account: string }>`
+const TitleBgWrapper = styled.div<{ color: string; account: string; isMobile?: boolean }>`
   z-index: -1;
   width: 100%;
   text-align: center;
@@ -31,7 +31,8 @@ const TitleBgWrapper = styled.div<{ color: string; account: string }>`
     }
   }
 
-  transform: scale(1);
+  transform: scale(0.7);
+  margin-top: -4px;
   @media (min-width: 640px) {
     transform: scale(1.3);
   }
@@ -54,12 +55,13 @@ const CardBlockContent = styled.div<{ account?: string }>`
   padding-bottom: 16px;
   position: relative;
   text-align: center;
-  margin-top: 25%;
-  min-width: 150px;
-  max-width: ${(props) => !props.account && '220px'};
+  margin-top: 22%;
+  min-width: 156px;
+  max-width: 156px;
   padding: 8px;
   margin-left: auto;
   margin-right: auto;
+
   @media (min-width: 640px) {
     width: 100%;
     margin-top: 25%;
@@ -97,13 +99,15 @@ const WalletContainer = styled(Flex)`
     font-size: 10px;
     padding: 0 8px;
     height: 28px;
-    margin-top: 4px;
-    margin-bottom: 8px;
+    margin-top: 8px;
+    margin-bottom: 4px;
 
     @media (min-width: 640px) {
       font-size: 12px;
       padding: 0 12px;
       height: 36px;
+      margin-top: 4px;
+      margin-bottom: 8px;
     }
     @media (min-width: 768px) {
       font-size: 14px;
@@ -134,11 +138,11 @@ const ShieldContainer = styled.div`
   }
 `
 
-const KingPenguinImageWrapper = styled.div<{ penguin: string; color: string }>`
-  z-index: -1;
+const KingPenguinImageWrapper = styled.div<{ penguin: string; color: string; isMobile?: boolean }>`
+  z-index: 1;
   position: absolute;
-  width: 12.5%;
-  left: 44%;
+  width: ${({ isMobile }) => isMobile ? '23%' : '11.5%'};
+  left: ${({ isMobile }) => isMobile ? '38%' : '44%'};
   bottom: 33%;
   svg {
     ${({ penguin, color }) => `.${penguin}-st0 {
@@ -147,10 +151,18 @@ const KingPenguinImageWrapper = styled.div<{ penguin: string; color: string }>`
   }
 `
 
-const MyPenguinImageWrapper = styled.div<{ penguin: string; color: string }>`
+const Wrapper = styled.div<{ isMobile?: boolean }>`
   position: absolute;
-  width: 9.5%;
-  right: 26%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  height: ${({ isMobile }) => isMobile ? '400px' : '100%'};
+`
+
+const MyPenguinImageWrapper = styled.div<{ penguin: string; color: string, isMobile?: boolean }>`
+  position: absolute;
+  width: ${({ isMobile }) => isMobile ? '23%' : '9.5%'};
+  right: ${({ isMobile }) => isMobile ? '1%' : '26%'};
   bottom: 17%;
   z-index: 11;
 
@@ -181,6 +193,8 @@ const EmperorBlock: React.FC = () => {
   const currentEmperorBidAmount = (currentEmperor && currentEmperor.bidAmount) || 0
   const currentEmperorPenguin = getKingPenguin(currentEmperor)
   const myEmperorPenguin = getNormalPenguin(myEmperor)
+  const { isSm, isXs } = useMatchBreakpoints()
+  const isMobile = isSm || isXs;
 
   const handleViewStarterGuide = () => {
     window.open(
@@ -189,34 +203,40 @@ const EmperorBlock: React.FC = () => {
     )
   }
 
+  console.log('ant : currentEmperorPenguin=> ', currentEmperorPenguin);
+
   const renderPenguins = () => {
     if (!account) return null
     return (
       <>
-        <KingPenguinImageWrapper penguin={`${currentEmperorPenguin}`} color={getPenguinColor(currentEmperor)}>
-          <SvgIcon
-            src={`${process.env.PUBLIC_URL}/images/emperor/penguins/${currentEmperorPenguin}.svg`}
-            width="100%"
-            height="20px"
-          />
-        </KingPenguinImageWrapper>
-        {currentEmperor.address && myEmperor.address && currentEmperor.address !== myEmperor.address && (
-          <MyPenguinImageWrapper penguin={`${myEmperorPenguin}`} color={getPenguinColor(myEmperor)}>
+        <Wrapper isMobile={isMobile}>
+          <KingPenguinImageWrapper isMobile={isMobile} penguin={`${currentEmperorPenguin}`} color={getPenguinColor(currentEmperor)}>
             <SvgIcon
-              src={`${process.env.PUBLIC_URL}/images/emperor/penguins/${myEmperorPenguin}.svg`}
+              src={`${process.env.PUBLIC_URL}/images/emperor/penguins/${currentEmperorPenguin}.svg`}
               width="100%"
               height="20px"
             />
-          </MyPenguinImageWrapper>
+          </KingPenguinImageWrapper>
+        </Wrapper>
+        {currentEmperor.address && myEmperor.address && currentEmperor.address !== myEmperor.address && (
+          <Wrapper isMobile={isMobile}>
+            <MyPenguinImageWrapper isMobile={isMobile} penguin={`${myEmperorPenguin}`} color={getPenguinColor(myEmperor)}>
+              <SvgIcon
+                src={`${process.env.PUBLIC_URL}/images/emperor/penguins/${myEmperorPenguin}.svg`}
+                width="100%"
+                height="20px"
+              />
+            </MyPenguinImageWrapper>
+          </Wrapper>
         )}
       </>
     )
   }
 
   return (
-    <CardBlock>
+    <CardBlock isMobile={isMobile}>
       <CardBlockHeader>
-        <TitleBgWrapper color={!account && getPenguinColor(currentEmperor)} account={account}>
+        <TitleBgWrapper isMobile={isMobile} color={!account && getPenguinColor(currentEmperor)} account={account}>
           <img
             src={`${process.env.PUBLIC_URL}/images/emperor/banner/emperor_banner.svg`}
             width="100%"

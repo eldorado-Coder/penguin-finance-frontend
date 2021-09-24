@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Text } from 'penguinfinance-uikit2'
+import { Text, useMatchBreakpoints } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import { useEmperor } from 'state/hooks'
 import { getShortenNickName, formatTime, badWordsFilter } from 'utils/address'
@@ -15,6 +15,10 @@ const CardBlockContent = styled.div`
     z-index: 15;
   }
 `
+
+const TopPenguinsCardBlock = styled(CardBlock)<{ isMobile?: boolean }>`
+  margin-top: ${({ isMobile }) =>  isMobile && '40px'};
+`;
 
 const TitleBgWrapper = styled.div<{ color: string; account: string }>`
   z-index: -1;
@@ -54,7 +58,7 @@ const CardBlockBody = styled.div<{ account: string }>`
   border-radius: 8px;
   position: relative;
   text-align: center;
-  margin-top: 20%;
+  margin-top: 30%;
   min-width: 180px;
   padding: 44px 8px 8px;
   padding-top: ${(props) => !props.account && '32px'};
@@ -177,6 +181,9 @@ const StyledText = styled(Text)`
 const TopPenguinsBlock: React.FC = () => {
   const { account } = useWeb3React()
   const { currentEmperor, topEmperors } = useEmperor()
+  const { isSm, isXs } = useMatchBreakpoints()
+  const isMobile = isSm || isXs;
+
   const _topEmperors = topEmperors.map((row, index) => {
     return { id: index, ...row }
   })
@@ -185,7 +192,7 @@ const TopPenguinsBlock: React.FC = () => {
     topEmperors.length > 0 ? getPenguinColor(topEmperors[0]).code : getPenguinColor(currentEmperor).code
 
   return (
-    <CardBlock>
+    <TopPenguinsCardBlock isMobile={isMobile}>
       <CardBlockContent>
         <CardBlockHeader>
           <TitleBgWrapper color={headerColor} account={account}>
@@ -240,7 +247,7 @@ const TopPenguinsBlock: React.FC = () => {
           )}
         </CardBlockBody>
       </CardBlockContent>
-    </CardBlock>
+    </TopPenguinsCardBlock>
   )
 }
 
