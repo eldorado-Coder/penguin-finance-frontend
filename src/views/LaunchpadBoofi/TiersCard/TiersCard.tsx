@@ -67,7 +67,11 @@ const TiersCard = () => {
           </TierWrapper>
         ) : (
           <NoneTierWrapper>
-            <SvgIcon src={`${process.env.PUBLIC_URL}/images/launchpad/none_tier.svg`} width="100%" height="20px" />
+            <SvgIcon
+              src={`${process.env.PUBLIC_URL}/images/launchpad/boofi_none_tier.svg`}
+              width="100%"
+              height="20px"
+            />
           </NoneTierWrapper>
         )}
       </CardContent>
