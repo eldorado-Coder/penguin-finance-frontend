@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
-import { Text, Button, Flex, useMatchBreakpoints } from 'penguinfinance-uikit2'
+import { Text, Button, Flex } from 'penguinfinance-uikit2'
 import useTheme from 'hooks/useTheme'
 import Page from 'components/layout/Page'
 import StakeCard from './StakeCard/StakeCard'
@@ -9,6 +9,7 @@ import PhaseCard from './PhaseCard'
 import SherpaCard from './SherpaCard'
 
 const Launchpad: React.FC = () => {
+  const [launchStage] = useState(2)
   const { isDark } = useTheme()
 
   const onClickLaunchToken = () => {
@@ -17,8 +18,6 @@ const Launchpad: React.FC = () => {
       '_blank',
     )
   }
-
-  const launchStage = 1
 
   return (
     <LaunchpadPage>
@@ -38,18 +37,23 @@ const Launchpad: React.FC = () => {
           Upcoming Offerings
         </UpcomingOfferLabel>
         <PhaseCard launchStage={launchStage} />
-        <Flex justifyContent="center">
-          <MigrationVideo controls>
-            <source src="/images/launchpad/boofi-launchpad.mp4" />
-          </MigrationVideo>
-        </Flex>
+        {launchStage === 1 && (
+          <Flex justifyContent="center">
+            <MigrationVideo controls>
+              <source src="/images/launchpad/boofi-launchpad.mp4" />
+            </MigrationVideo>
+          </Flex>
+        )}
+        {launchStage === 2 && (
+          <Flex justifyContent="space-between" flexWrap="wrap">
+            <TiersCard />
+            <StakeCard />
+          </Flex>
+        )}
       </UpcomingOfferContainer>
 
       {/* middle */}
-      {/* <Flex justifyContent="space-between" flexWrap="wrap">
-        <TiersCard />
-        <StakeCard />
-      </Flex> */}
+
       <EndedOfferContainer>
         <EndedOfferLabel fontWeight={500} fontSize="24px" mt="32px">
           Ended
