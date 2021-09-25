@@ -51,7 +51,7 @@ const Menu = (props) => {
   // }
   links[launchpadIndex] = {
     ...links[launchpadIndex],
-    badge: 'SOON',
+    badge: 'LIVE',
     badgeLightColor: '#37DB94',
     badgeDarkColor: '#37DB94',
   }

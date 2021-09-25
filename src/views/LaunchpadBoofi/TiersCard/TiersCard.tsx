@@ -19,7 +19,7 @@ const TiersCard = () => {
 
   const handleInfoIconClick = () => {
     window.open(
-      'https://penguin-finance.medium.com/penguin-launchpad-boofinance-ido-tiers-are-here-29ba4cd90053',
+      'https://penguin-finance.medium.com/penguin-launchpad-allocation-staking-for-boofi-is-live-728f17ceea6c',
       '_blank',
     )
   }
