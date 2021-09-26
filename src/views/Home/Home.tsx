@@ -10,9 +10,10 @@ import FarmStakingCard from 'views/Home/components/FarmStakingCard'
 import PefiStats from 'views/Home/components/PefiStats'
 import IglooCard from 'views/Home/components/IglooCard'
 import EarnAPYCard from 'views/Home/components/EarnAPYCard'
+import EmperorInfoCard from 'views/Home/components/EmperorInfoCard'
 import PercentagePefiStakedNestV2 from 'views/Home/components/PercentagePefiStakedNestV2'
 import V2PoolCard from 'views/Pools/components/V2PoolCard'
-import { usePools, useV2Pools } from 'state/hooks'
+import { usePools, useV2Pools, usePricePefiUsdt } from 'state/hooks'
 
 const Hero = styled.div<{ isMobile?: boolean }>`
   position: relative;
@@ -137,6 +138,9 @@ const Home: React.FC = () => {
   })
   const xPefiPool = v1PoolsWithApy.length > 0 ? v1PoolsWithApy[0] : null
   const iPefiPool = v2PoolsWithApy.length > 0 ? v2PoolsWithApy[0] : null
+  const iPefiToPefiRatio = iPefiPool.currentExchangeRate || 1
+  const pefiPriceUsd = usePricePefiUsdt().toNumber()
+  const iPefiPriceUsd = iPefiToPefiRatio * pefiPriceUsd
   const { isDark } = useTheme()
 
   return (
@@ -161,7 +165,8 @@ const Home: React.FC = () => {
             <PefiStatsCardWrapper>
               <IglooCard />
               <SpacingWrapper />
-              <EarnAPYCard apy={iPefiPool.apy} />
+              {/* <EarnAPYCard apy={iPefiPool.apy} /> */}
+              <EmperorInfoCard iPefiPrice={iPefiPriceUsd} />
               <SpacingWrapper />
               <PercentagePefiStakedNestV2 pool={iPefiPool} />
             </PefiStatsCardWrapper>
