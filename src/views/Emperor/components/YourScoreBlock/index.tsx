@@ -39,13 +39,15 @@ const TitleBgWrapper = styled.div<{ color: string; account: string; isMobile?: b
 
   transform: ${(props) => props.account && 'scale(1.2)'};
   @media (min-width: 640px) {
-    transform: ${(props) => props.account && 'scale(1.4)'};
+    transform: ${(props) => props.account && 'scale(1.2)'};
   }
   @media (min-width: 768px) {
     margin-top: ${(props) => (props.account ? '7%' : '-32%')};
+    transform: ${(props) => props.account && 'scale(1.3)'};
   }
   @media (min-width: 1200px) {
     margin-top: ${(props) => (props.account ? '7%' : '-24%')};
+    transform: ${(props) => props.account && 'scale(1.4)'};
   }
   @media (min-width: 1200px) and (max-height: 800px) {
     transform: ${(props) => props.account && 'scale(1.5)'};
@@ -75,20 +77,20 @@ const CardBlockBody = styled.div<{ account: string }>`
   }
   @media (min-width: 768px) {
     width: 100%;
-    padding: 64px 20px 16px;
+    padding: 32px 20px 16px;
     padding-top: ${(props) => !props.account && '24px'};
-    margin-top: 22%;
+    margin-top: 28%;
   }
   @media (min-width: 1200px) {
     width: 100%;
     border-radius: 16px;
-    padding: 48px 24px 16px;
+    padding: 32px 24px 16px;
     padding-top: ${(props) => !props.account && '24px'};
     margin-top: 30%;
   }
   @media (min-width: 1450px) {
     min-width: 240px;
-    padding: 40px 24px 16px;
+    padding: 32px 24px 16px;
     padding-top: ${(props) => !props.account && '24px'};
     margin-top: 32%;
   }
@@ -205,8 +207,17 @@ const CustomToolTip = styled(ReactTooltip)`
   }
 `
 
-const StyledText = styled(Text)`
+const StyledText = styled(Text)<{ smFontSize?: string; lgFontSize?: string }>`
   color: ${({ theme }) => (theme.isDark ? theme.colors.primary : theme.colors.secondary)};
+  font-size: ${({ smFontSize }) => smFontSize};
+  @media (min-width: 640px) {
+    
+  }
+  @media (min-width: 768px) {
+  }
+  @media (min-width: 1200px) {
+    font-size: ${({ lgFontSize }) => lgFontSize};
+  }
 `
 
 const YourScoreBlock: React.FC = () => {
@@ -368,16 +379,16 @@ const YourScoreBlock: React.FC = () => {
         <CardBlockBody account={account}>
           {myStatus === 'not connected' && (
             <WalletContainer>
-              <StyledText bold fontSize="22px">
+              <StyledText bold smFontSize="16px" lgFontSize='22px'>
                 {TranslateString(1074, 'Check your Rank')}
               </StyledText>
-              <StyledText fontSize="14px">Connect wallet to view</StyledText>
+              <StyledText smFontSize="14px" lgFontSize='14px'>Connect wallet to view</StyledText>
               <UnlockButton />
             </WalletContainer>
           )}
           {myStatus === 'not registered' && (
             <RegisterContainer>
-              <StyledText bold fontSize="16px">
+              <StyledText bold smFontSize="16px" lgFontSize='16px'>
                 {TranslateString(1074, 'Start by styling your Penguin. Your crown awaits.')}
               </StyledText>
               <RegisterButtonContainer>
@@ -388,13 +399,13 @@ const YourScoreBlock: React.FC = () => {
 
           {myStatus === 'registered' && (
             <RegisterContainer>
-              <StyledText bold color="primary" fontSize="22px">
+              <StyledText bold color="primary" smFontSize="18px" lgFontSize='22px'>
                 {TranslateString(1074, myEmperor && badWordsFilter(myEmperor.nickname))}
               </StyledText>
-              <StyledText bold fontSize="18px">
+              <StyledText bold smFontSize="16px" lgFontSize='18px'>
                 {TranslateString(1074, 'You have been Emperor for:')}
               </StyledText>
-              <StyledText bold color="primary" fontSize="18px">
+              <StyledText bold color="primary" smFontSize="16px" lgFontSize='18px'>
                 {`${myEmperor.timeAsEmperor} seconds`}
               </StyledText>
               <StealButtonContainer>
@@ -465,13 +476,13 @@ const YourScoreBlock: React.FC = () => {
 
           {myStatus === 'king' && (
             <RegisterContainer>
-              <StyledText bold fontSize="22px">
+              <StyledText bold smFontSize="18px" lgFontSize='22px'>
                 {TranslateString(1074, myEmperor && badWordsFilter(myEmperor.nickname))}
               </StyledText>
-              <StyledText bold fontSize="18px">
+              <StyledText bold smFontSize="16px" lgFontSize='18px'>
                 {TranslateString(1074, 'You have been Emperor for:')}
               </StyledText>
-              <StyledText bold color="primary" fontSize="22px">
+              <StyledText bold color="primary" smFontSize="16px" lgFontSize='22px'>
                 {`${myEmperor.timeAsEmperor} seconds`}
               </StyledText>
             </RegisterContainer>

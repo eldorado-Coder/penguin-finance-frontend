@@ -37,11 +37,15 @@ const TitleBgWrapper = styled.div<{ color: string; account: string }>`
 
   transform: ${(props) => props.account && 'scale(1.2)'};
   @media (min-width: 640px) {
-    transform: ${(props) => props.account && 'scale(1.4)'};
+    transform: ${(props) => props.account && 'scale(1.2)'};
     margin-top: ${(props) => (props.account ? '10%' : '-30%')};
   }
   @media (min-width: 768px) {
+    transform: ${(props) => props.account && 'scale(1.3)'};
     margin-top: ${(props) => (props.account ? '10%' : '-20%')};
+  }
+  @media (min-width: 1200px) {
+    transform: ${(props) => props.account && 'scale(1.4)'};
   }
   @media (min-width: 1200px) and (max-height: 800px) {
     transform: ${(props) => props.account && 'scale(1.4)'};
