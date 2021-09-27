@@ -33,7 +33,7 @@ const Wrapper = styled.div<{ isMobile?: boolean }>`
   width: 100%;
   top: 0;
   left: 0;
-  height: ${({ isMobile }) => isMobile ? '400px' : '100%'};
+  height: ${({ isMobile }) => isMobile ? '440px' : '100%'};
 `
 
 const ChestWrapper = styled.div<{ jackpot: string, isMobile?: boolean }>`
@@ -125,10 +125,10 @@ const GridItem = styled.div`
 
   @media (min-width: 640px) {
     max-width: 280px;
-    width: 260px;
+    width: 240px;
   }
   @media (min-width: 768px) {
-    max-width: 260px;
+    max-width: 240px;
   }
   @media (min-width: 1200px) {
     width: 280px;
@@ -196,7 +196,7 @@ const EmperorBgContainer = styled.video<{ isMobile?: boolean}>`
   right: 0px;
   left: 0px;
   z-index: 0;
-  min-height: ${({ isMobile }) => isMobile && '400px'};
+  min-height: ${({ isMobile }) => isMobile && '440px'};
 `
 // emperor end
 const EmperorEndBgContainer = styled.div``
@@ -280,7 +280,7 @@ const Emperor: React.FC = () => {
             <Flex flexDirection='column' alignItems='center' padding='40px 32px'>            
               <EmperorBlock />
               {account && 
-                <Flex width='100%' flexDirection='column' mt='260px'>
+                <Flex width='100%' flexDirection='column' mt='300px'>
                   <YourScoreBlock />
                   <TopPenguinsBlock />
                 </Flex>
@@ -294,7 +294,7 @@ const Emperor: React.FC = () => {
               </GridItem>
             </Grid>
             {account && (
-              <PGGRid align="between" marginTop={{ xs: -40, sm: -190, md: -200, lg: -200 }}>
+              <PGGRid align="between" marginTop={{ xs: -40, sm: -90, md: -200, lg: -200 }}>
                 <GridItem>
                   <TopPenguinsBlock />
                 </GridItem>
