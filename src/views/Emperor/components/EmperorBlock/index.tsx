@@ -70,6 +70,8 @@ const CardBlockContent = styled.div<{ account?: string }>`
   @media (min-width: 640px) {
     width: 100%;
     margin-top: 25%;
+    min-width: 220px;
+    max-width: 220px;
     padding: 24px 16px 12px;
   }
   @media (min-width: 768px) {
@@ -161,7 +163,7 @@ const Wrapper = styled.div<{ isMobile?: boolean }>`
   width: 100%;
   top: 0;
   left: 0;
-  height: ${({ isMobile }) => (isMobile ? '400px' : '100%')};
+  height: ${({ isMobile }) => isMobile ? '440px' : '100%'};
 `
 
 const MyPenguinImageWrapper = styled.div<{ penguin: string; color: string; isMobile?: boolean }>`
@@ -181,6 +183,7 @@ const MyPenguinImageWrapper = styled.div<{ penguin: string; color: string; isMob
 
 const StyledText = styled(Text)`
   color: ${({ theme }) => (theme.isDark ? theme.colors.primary : theme.colors.secondary)};
+  white-space: nowrap;
 
   @media (min-width: 1200px) and (max-height: 800px) {
     font-size: 12px;
@@ -189,6 +192,16 @@ const StyledText = styled(Text)`
     font-size: 11px;
   }
 `
+
+const NicName = styled(Text)`
+  color: ${({ theme }) => (theme.isDark ? theme.colors.primary : theme.colors.secondary)};
+  white-space: nowrap;
+  font-size: 18px;
+
+  @media (min-width: 1200px) {
+    font-size: 22px;
+  }
+`;
 
 const EmperorBlock: React.FC = () => {
   const TranslateString = useI18n()
@@ -273,9 +286,9 @@ const EmperorBlock: React.FC = () => {
                   <SvgIcon src={`${process.env.PUBLIC_URL}/images/emperor/shield.svg`} width="22px" height="22px" />
                 </ShieldContainer>
               )}
-              <StyledText bold fontSize="20px">
+              <NicName bold fontSize="22px">
                 {TranslateString(1074, currentEmperorNickname)}
-              </StyledText>
+              </NicName>
             </Flex>
             <StyledText bold fontSize="12px">{`Current Bid: ${currentEmperorBidAmount?.toFixed(2)} iPEFI`}</StyledText>
             <StyledText bold fontSize="12px">{`Current Jackpot: ${currentEmperor?.jackpot?.toFixed(
