@@ -13,6 +13,7 @@ const Nfts: Nft[] = [
     sortOrder: 999,
     bunnyId: 1,
     rarity: 2,
+    collection: 'doctor'
   },
   {
     name: 'Penguin Nurse',
@@ -26,6 +27,7 @@ const Nfts: Nft[] = [
     sortOrder: 999,
     bunnyId: 2,
     rarity: 37,
+    collection: 'doctor'
   },
   {
     name: 'Astronaut',
@@ -39,19 +41,7 @@ const Nfts: Nft[] = [
     sortOrder: 999,
     bunnyId: 3,
     rarity: 0,
-  },
-  {
-    name: 'Penguineer',
-    description: 'Limited-edition Sherpa Cash Inspired NFT Collectible',
-    images: {
-      lg: 'penguin_penguineer.png',
-      md: 'penguin_penguineer.png',
-      sm: 'penguin_penguineer.png',
-      // ipfs: 'https://gateway.pinata.cloud/ipfs/QmQ6EE6gkVzAQUdQLLM7CyrnME6LZHCoy92ZERW8HXmyjw/hiccup.png',
-    },
-    sortOrder: 999,
-    bunnyId: 4,
-    rarity: 0,
+    collection: 'launchpad'
   },
   {
     name: 'Spacelord',
@@ -65,7 +55,22 @@ const Nfts: Nft[] = [
     sortOrder: 999,
     bunnyId: 5,
     rarity: 0,
+    collection: 'launchpad'
   },
+  {
+    name: 'Penguineer',
+    description: 'Limited-edition Sherpa Cash Inspired NFT Collectible',
+    images: {
+      lg: 'penguin_penguineer.png',
+      md: 'penguin_penguineer.png',
+      sm: 'penguin_penguineer.png',
+      // ipfs: 'https://gateway.pinata.cloud/ipfs/QmQ6EE6gkVzAQUdQLLM7CyrnME6LZHCoy92ZERW8HXmyjw/hiccup.png',
+    },
+    sortOrder: 999,
+    bunnyId: 4,
+    rarity: 0,
+    collection: 'launchpad'
+  }
 ]
 
 export default Nfts
