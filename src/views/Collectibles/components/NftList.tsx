@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState, useMemo } from 'react'
 import orderBy from 'lodash/orderBy'
 import styled from 'styled-components'
 import nfts from 'config/constants/nfts'
@@ -66,18 +66,46 @@ const NftList = () => {
     }
   }, [account, fetchClaimableStatuses])
 
-  return (
-    <CardGrid>
-      {orderBy(nfts, 'sortOrder').map((nft) => {
-        const tokenIds = nftTokenIds[nft.bunnyId] ? nftTokenIds[nft.bunnyId].tokenIds : []
+  const nftCollections = useMemo(() => {
+    const collections = [];
 
+    // eslint-disable-next-line no-restricted-syntax
+    for (const nft of nfts) {
+      const collectionIndex = collections.findIndex(collection => collection.name === nft.collection);
+
+      if (collectionIndex > -1) {
+        collections[collectionIndex].nftList.push(nft);
+      } else {
+        collections.push({
+          name: nft.collection,
+          nftList: [nft]
+        });
+      }
+    }
+
+    return collections;
+  }, []);
+
+  return (
+    <>
+      {nftCollections.map(nftCollection => {
         return (
-          <div key={nft.name}>
-            <NftCard nft={nft} canClaim={claimableNfts[nft.bunnyId]} tokenIds={tokenIds} onSuccess={handleSuccess} />
+          <div key={nftCollection.collectionName}>
+            <CardGrid>
+              {orderBy(nftCollection.nftList, 'sortOrder').map((nft) => {
+                const tokenIds = nftTokenIds[nft.bunnyId] ? nftTokenIds[nft.bunnyId].tokenIds : []
+
+                return (
+                  <div key={nft.name}>
+                    <NftCard nft={nft} canClaim={claimableNfts[nft.bunnyId]} tokenIds={tokenIds} onSuccess={handleSuccess} />
+                  </div>
+                )
+              })}
+            </CardGrid>
           </div>
         )
       })}
-    </CardGrid>
+    </>
   )
 }
 
