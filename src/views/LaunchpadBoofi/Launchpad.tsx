@@ -4,6 +4,7 @@ import { Text, Button, Flex } from 'penguinfinance-uikit2'
 import useTheme from 'hooks/useTheme'
 import Page from 'components/layout/Page'
 import StakeCard from './StakeCard/StakeCard'
+import DistributionCard from './DistributionCard/DistributionCard';
 import TiersCard from './TiersCard/TiersCard'
 import PhaseCard from './PhaseCard'
 import SherpaCard from './SherpaCard'
@@ -44,10 +45,11 @@ const Launchpad: React.FC = () => {
             </MigrationVideo>
           </Flex>
         )}
-        {launchStage === 2 && (
+        {launchStage !== 1 && (
           <Flex justifyContent="space-between" flexWrap="wrap">
             <TiersCard />
-            <StakeCard />
+            <DistributionCard />
+            {/* <StakeCard /> */}
           </Flex>
         )}
       </UpcomingOfferContainer>
