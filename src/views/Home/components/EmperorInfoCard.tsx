@@ -50,7 +50,7 @@ const EmperorInfoCard = ({ iPefiPrice }: { iPefiPrice: number }) => {
   return (
     <StyledCard>
       <CardBody>
-        <Text size="md">The current Penguin Emperor Jackpot is</Text>
+        <Text size="md">The last Penguin Emperor Jackpot was</Text>
         <CardMidContent color="primary">
           {currentEmperor && currentEmperor.jackpot ? (
             `${currentEmperorJackpot} iPEFI`

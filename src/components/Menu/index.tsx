@@ -7,7 +7,7 @@ import useTheme from 'hooks/useTheme'
 import useAuth from 'hooks/useAuth'
 import useTokenBalance from 'hooks/useTokenBalance'
 import { usePricePefiUsdt, useV2Pools, useEmperor } from 'state/hooks'
-import { getPefiAddress, getXPefiAddress, getIPefiAddress } from 'utils/addressHelpers'
+import { getPefiAddress, getIPefiAddress } from 'utils/addressHelpers'
 import { getBalanceNumber } from 'utils/formatBalance'
 import WalletConnectGuideModal from 'components/Modal/WalletConnectGuideModal'
 import SettingModal from 'components/Modal/SettingModal'
@@ -21,7 +21,6 @@ const Menu = (props) => {
   const pefiPriceUsd = usePricePefiUsdt()
   const v2Pools = useV2Pools(account)
   const pefiBalance = useTokenBalance(getPefiAddress())
-  const xPefiBalance = useTokenBalance(getXPefiAddress())
   const iPefiBalance = useTokenBalance(getIPefiAddress())
   const avaxBalance = useTokenBalance()
   const [onToggleSettingModal] = useModal(<SettingModal />)
@@ -41,10 +40,6 @@ const Menu = (props) => {
   const launchpadIndex = links.findIndex((link) => link.label === 'Launchpad')
   const collectiblesIndex = links.findIndex((link) => link.label === 'Collectibles')
 
-  // links[emperorIndex] = {
-  //   ...links[emperorIndex],
-  //   badge: isEmperorLive ? 'LIVE' : 'SOON',
-  // }
   // links[collectiblesIndex] = {
   //   ...links[collectiblesIndex],
   //   badge: isCollectiblesNew ? 'NEW' : '',
@@ -56,12 +51,12 @@ const Menu = (props) => {
     badgeDarkColor: '#37DB94',
   }
 
-  links[emperorIndex] = {
-    ...links[emperorIndex],
-    badge: 'NEW',
-    badgeLightColor: '#EC3E3F',
-    badgeDarkColor: '#ffffff',
-  }
+  // links[emperorIndex] = {
+  //   ...links[emperorIndex],
+  //   badge: 'NEW',
+  //   badgeLightColor: '#EC3E3F',
+  //   badgeDarkColor: '#ffffff',
+  // }
 
   return (
     <>
@@ -82,7 +77,6 @@ const Menu = (props) => {
         socials={socials}
         onSettingClick={onToggleSettingModal}
         pefiBalance={getBalanceNumber(pefiBalance).toFixed(3)}
-        xPefiBalance={getBalanceNumber(xPefiBalance).toFixed(3)}
         iPefiBalance={getBalanceNumber(iPefiBalance).toFixed(3)}
         avaxBalance={getBalanceNumber(avaxBalance).toFixed(3)}
         {...props}
