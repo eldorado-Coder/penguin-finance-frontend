@@ -9,7 +9,7 @@ import PhaseCard from './PhaseCard'
 import SherpaCard from './SherpaCard'
 
 const Launchpad: React.FC = () => {
-  const [launchStage] = useState(2)
+  const [launchStage] = useState(3)
   const { isDark } = useTheme()
 
   const onClickLaunchToken = () => {
