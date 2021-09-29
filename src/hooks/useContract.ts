@@ -19,12 +19,15 @@ import {
   getEmperorPenguinDBAddress,
   getXPefiAddress,
   getIPefiAddress,
-  getLaunchpadAddress,
-  getBoofiLaunchpadAddress,
   getTestXPefiAddress,
-  // booster rocket
+  // launchpad - sherpa
+  getLaunchpadAddress,
   getBoosterRocketAddress,
   getBoosterRocketPefiAddress,
+  // launchpad - boofi
+  getBoofiLaunchpadAddress,
+  getBoofiBoosterRocketAddress,
+  getBoofiBoosterRocketPayTokenAddress,
 
   // v2
   getNestMigratorAddress,
@@ -189,14 +192,10 @@ export const useTestXPefi = () => {
   return useContract(abi, getTestXPefiAddress())
 }
 
+// launchpad sherpa
 export const useLaunchPad = () => {
   const abi = (launchpad as unknown) as AbiItem
   return useContract(abi, getLaunchpadAddress())
-}
-
-export const useBoofiLaunchPad = () => {
-  const abi = (launchpad as unknown) as AbiItem
-  return useContract(abi, getBoofiLaunchpadAddress())
 }
 
 export const useBoosterRocket = () => {
@@ -207,6 +206,22 @@ export const useBoosterRocket = () => {
 export const useBoosterRocketPayToken = () => {
   const abi = (boosterRocketPefi as unknown) as AbiItem
   return useContract(abi, getBoosterRocketPefiAddress())
+}
+
+// launchpad - boofi
+export const useBoofiLaunchPad = () => {
+  const abi = (launchpad as unknown) as AbiItem
+  return useContract(abi, getBoofiLaunchpadAddress())
+}
+
+export const useBoofiBoosterRocket = () => {
+  const abi = (boosterRocket as unknown) as AbiItem
+  return useContract(abi, getBoofiBoosterRocketAddress())
+}
+
+export const useBoofiBoosterRocketPayToken = () => {
+  const abi = (boosterRocketPefi as unknown) as AbiItem
+  return useContract(abi, getBoofiBoosterRocketPayTokenAddress())
 }
 
 // v2

@@ -13,9 +13,15 @@ import emperorReducer from './emperor'
 import achievementsReducer from './achievements'
 import globalReducer from './global'
 import donationsReducer from './donations'
+
+// launchpad - Sherpa
 import launchpadReducer from './launchpad'
-import launchpadBoofiReducer from './launchpadBoofi'
 import boosterRocketReducer from './boosterRocket'
+
+// launchpad - Boofi
+import launchpadBoofiReducer from './launchpadBoofi'
+import boofiBoosterRocketReducer from './boofiBoosterRocket'
+
 // v2
 import nestMigratorReducer from './nestMigrator'
 import v2PoolsReducer from './v2pools'
@@ -37,9 +43,14 @@ const store = configureStore({
     achievements: achievementsReducer,
     global: globalReducer,
     donations: donationsReducer,
+
+    // launchpad - Sherpa
     launchpad: launchpadReducer,
-    launchpadBoofi: launchpadBoofiReducer,
     boosterRocket: boosterRocketReducer,
+
+    // launchpad - Boofi
+    launchpadBoofi: launchpadBoofiReducer,
+    boofiBoosterRocket: boofiBoosterRocketReducer,
     // v2
     nestMigrator: nestMigratorReducer,
     v2Pools: v2PoolsReducer,

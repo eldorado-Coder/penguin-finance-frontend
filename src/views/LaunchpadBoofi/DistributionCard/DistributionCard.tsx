@@ -4,26 +4,27 @@ import styled from 'styled-components'
 import { Text, Flex, ButtonMenu, ButtonMenuItem } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import { useBoofiLaunchpad } from 'state/hooks'
-import { useBoofiLaunchpadStake } from 'hooks/useStake'
 import { useBoofiLaunchpadUnstake } from 'hooks/useUnstake'
 import { useBoofiLaunchpadApprove } from 'hooks/useApprove'
-import StakeForm from './StakeForm'
+import PurchaseForm from './PurchaseForm'
 import UnstakeForm from './UnstakeForm'
 import Card from '../Card'
 
 const DistributionCard = () => {
   const [activeTab, setActiveTab] = useState(0)
   const { account } = useWeb3React()
-  const { onStake } = useBoofiLaunchpadStake()
   const { onUnstake } = useBoofiLaunchpadUnstake()
   const { onApproveIPefi } = useBoofiLaunchpadApprove()
-  const { stakedBalance: staked, canUnstake, timeRemainingToUnstake, iPefi } = useBoofiLaunchpad(account)
+  const { stakedBalance: staked, canUnstake, timeRemainingToUnstake } = useBoofiLaunchpad(account)
 
-  const iPEFIBalance = new BigNumber(iPefi)
   const stakedBalance = new BigNumber(staked)
 
   const handleSwitchTab = (tab) => {
     setActiveTab(tab)
+  }
+
+  const onPurchase = () => {
+    return null
   }
 
   return (
@@ -41,17 +42,11 @@ const DistributionCard = () => {
           </StakeLabel>
         </Flex>
         {activeTab === 0 ? (
-          <StakeForm
-            max={iPEFIBalance}
-            tokenName="PEFI"
-            account={account}
-            onApprove={onApproveIPefi}
-            onConfirm={onStake}
-          />
+          <PurchaseForm tokenName="iPEFI" account={account} onApprove={onApproveIPefi} onConfirm={onPurchase} />
         ) : (
           <UnstakeForm
             max={stakedBalance}
-            tokenName="BOOFI"
+            tokenName="iPEFI"
             account={account}
             unstakedEnabled={canUnstake}
             timeRemainingToUnstake={timeRemainingToUnstake}
