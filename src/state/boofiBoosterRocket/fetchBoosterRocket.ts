@@ -6,7 +6,7 @@ import {
   getBoofiBoosterRocketBuyTokenAddress,
 } from 'utils/addressHelpers'
 import { getBalanceNumber, getFullDisplayBalance } from 'utils/formatBalance'
-import boosterRocketABI from 'config/abi/boosterRocket.json'
+import boofiBoosterRocketABI from 'config/abi/boofiBoosterRocket.json'
 import erc20Abi from 'config/abi/erc20.json'
 
 export const fetchGlobalData = async () => {
@@ -44,7 +44,7 @@ export const fetchGlobalData = async () => {
     totalTokensSold,
     totalProceeds,
     allocationRate,
-  ] = await multicall(boosterRocketABI, calls)
+  ] = await multicall(boofiBoosterRocketABI, calls)
 
   return {
     eventStarted: eventStarted[0],
@@ -71,7 +71,7 @@ export const fetchUserData = async (account) => {
     },
   ]
 
-  const [hasTheUserAgreed, canPurchaseAmount] = await multicall(boosterRocketABI, calls)
+  const [hasTheUserAgreed, canPurchaseAmount] = await multicall(boofiBoosterRocketABI, calls)
 
   return {
     hasTheUserAgreed: hasTheUserAgreed[0],
