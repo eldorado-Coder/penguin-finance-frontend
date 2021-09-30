@@ -319,9 +319,14 @@ export interface State {
   global: GlobalState
   emperor: EmperorState
   donations: DonationsState
+
+  // launchpad - sherpa
   launchpad: LaunchpadState
-  launchpadBoofi: LaunchpadBoofiState
   boosterRocket: BoosterRocketState
+
+  // launchpad - boofi
+  launchpadBoofi: LaunchpadBoofiState
+  boofiBoosterRocket: BoosterRocketState
 
   // nest
   nestMigrator: NestMigratorState

@@ -21,10 +21,16 @@ export { profileFetchStart, profileFetchSucceeded, profileFetchFailed } from './
 export { fetchStart, teamFetchSucceeded, fetchFailed, teamsFetchSucceeded } from './teams'
 export { fetchEmperor } from './emperor'
 export { fetchDonations } from './donations'
+
+// launchpad - sherpa
 export { fetchLaunchpadUserDataAsync, updateLaunchpadTierHurdles } from './launchpad'
-export { fetchLaunchpadBoofiUserDataAsync, updateLaunchpadBoofiTierHurdles } from './launchpadBoofi'
 export { fetchBoosterRocketUserDataAsync } from './boosterRocket'
-// v2
+
+// launchpad - boofi
+export { fetchLaunchpadBoofiUserDataAsync, updateLaunchpadBoofiTierHurdles } from './launchpadBoofi'
+export { fetchBoosterRocketUserDataAsync as fetchBoofiBoosterRocketUserDataAsync } from './boofiBoosterRocket'
+
+// v2 migrator
 export { fetchNestMigratorUserDataAsync } from './nestMigrator'
 
 // v2 nest

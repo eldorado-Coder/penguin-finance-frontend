@@ -85,14 +85,11 @@ export const getCompounderFarmLpAddress = (lpSymbol: string, farmType: string) =
   return getAddress(farm.lpAddresses)
 }
 
-// launchpad
+// launchpad sherpa
 export const getLaunchpadAddress = () => {
   return getAddress(addresses.launchPad)
 }
-export const getBoofiLaunchpadAddress = () => {
-  return getAddress(addresses.launchPadBoofi)
-}
-// booster rocket
+
 export const getBoosterRocketAddress = () => {
   return getAddress(addresses.boosterRocket)
 }
@@ -103,6 +100,23 @@ export const getBoosterRocketPefiAddress = () => {
 
 export const getBoosterRocketSherpaAddress = () => {
   return getAddress(addresses.boosterRocketSherpa)
+}
+
+// launchpad boofi
+export const getBoofiLaunchpadAddress = () => {
+  return getAddress(addresses.launchPadBoofi)
+}
+
+export const getBoofiBoosterRocketAddress = () => {
+  return getAddress(addresses.booFiBoosterRocket)
+}
+
+export const getBoofiBoosterRocketPayTokenAddress = () => {
+  return getAddress(addresses.booFiBoosterRocketPayToken)
+}
+
+export const getBoofiBoosterRocketBuyTokenAddress = () => {
+  return getAddress(addresses.booFiBoosterRocketBuyToken)
 }
 
 // v2

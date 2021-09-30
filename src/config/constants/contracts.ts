@@ -149,18 +149,11 @@ export default {
     43113: '',
     43114: '0xaAD41CCf76c035DAF80d662584823215f2e0487D',
   },
-  // launchpad
+  // launchpad Sherpa
   launchPad: {
     43113: '',
     43114: '0x1c0fe0A000f6DF48B2DaBf86A19934dd6B6F9477',
   },
-  launchPadBoofi: {
-    43113: '',
-    // 43114: '0x8197B03862C20e83316F138A0400047D5B62A5Db',
-    // TODO: final version
-    43114: '0xb1a3f09D7A5dFB45600931E18375501973772426',
-  },
-  // boosterRocket
   boosterRocket: {
     43113: '',
     43114: '0x9035e72A23e379E505b787018b3b5aB3972D73D9',
@@ -172,6 +165,24 @@ export default {
   boosterRocketSherpa: {
     43113: '',
     43114: '0xa5e59761ebd4436fa4d20e1a27cba29fb2471fc6',
+  },
+
+  // launchpad - Boofi
+  launchPadBoofi: {
+    43113: '',
+    43114: '0xb1a3f09D7A5dFB45600931E18375501973772426',
+  },
+  booFiBoosterRocket: {
+    43113: '',
+    43114: '0xe7F53b48c945FDE5Aa9b6766D66d0627622757bE',
+  },
+  booFiBoosterRocketPayToken: {
+    43113: '',
+    43114: '0xe896CDeaAC9615145c0cA09C8Cd5C25bced6384c',
+  },
+  booFiBoosterRocketBuyToken: {
+    43113: '',
+    43114: '0xbf102adfe38cae2265c9d4b21c8bbd2ae5867eb8',
   },
 
   // v2
