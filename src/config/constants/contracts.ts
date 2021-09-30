@@ -160,7 +160,9 @@ export default {
   },
   booFiBoosterRocket: {
     43113: '',
-    43114: '0xe7F53b48c945FDE5Aa9b6766D66d0627622757bE',
+    // 43114: '0xe7F53b48c945FDE5Aa9b6766D66d0627622757bE',
+    // final
+    43114: '0x90D2652B7abB628fDf907ed4ECc4711EA8ffBAf9',
   },
   booFiBoosterRocketPayToken: {
     43113: '',
@@ -168,9 +170,7 @@ export default {
   },
   booFiBoosterRocketBuyToken: {
     43113: '',
-    43114: '0xbf102adfe38cae2265c9d4b21c8bbd2ae5867eb8',
-    // TODO: final contract - will be replaced after test
-    // 43114: '0x90D2652B7abB628fDf907ed4ECc4711EA8ffBAf9',
+    43114: '0xB00F1ad977a949a3CCc389Ca1D1282A2946963b0',
   },
   boofi: {
     43113: '',
