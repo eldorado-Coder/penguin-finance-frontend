@@ -36,7 +36,7 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({ tokenName = '', account, on
   const canPurchase =
     account &&
     !pendingTx &&
-    eventOngoing &&
+    // eventOngoing &&
     Number(buyTokenAmount) > 0 &&
     Number(buyTokenAmount) <= Number(canPurchaseAmount) &&
     Number(buyTokenAmount) <= Number(tokensLeftToDistribute)
