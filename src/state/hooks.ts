@@ -21,9 +21,14 @@ import {
   fetchLpsPublicDataAsync,
   fetchPoolsPublicDataAsync,
   fetchPoolsUserDataAsync,
+
+  // launchpad - sherpa
   fetchLaunchpadUserDataAsync,
+  fetchBoosterRocketUserDataAsync,
+
+  // launchpad - boofi
   fetchLaunchpadBoofiUserDataAsync,
-  fetchBoosterRocketUserDataAsync, // boosterRocket
+  fetchBoofiBoosterRocketUserDataAsync,
   fetchEmperor,
   updateLaunchpadTierHurdles,
   updateLaunchpadBoofiTierHurdles,
@@ -200,7 +205,7 @@ export const usePoolFromPid = (sousId): Pool => {
   return pool
 }
 
-// launchpad
+// launchpad - Sherpa
 export const useLaunchpad = (account): LaunchpadState => {
   const { fastRefresh } = useRefresh()
   const dispatch = useDispatch()
@@ -229,7 +234,22 @@ export const useLaunchpadTierHurdles = () => {
   return tierHurdles
 }
 
-// launchpad
+export const useBoosterRocket = (account): BoosterRocketState => {
+  const { fastRefresh } = useRefresh()
+  const dispatch = useDispatch()
+  useEffect(() => {
+    const fetchBoosterRocketData = async () => {
+      dispatch(fetchBoosterRocketUserDataAsync(account))
+    }
+
+    fetchBoosterRocketData()
+  }, [account, dispatch, fastRefresh])
+
+  const boosterRocket = useSelector((state: State) => state.boosterRocket)
+  return boosterRocket
+}
+
+// launchpad - Boofi
 export const useBoofiLaunchpad = (account): LaunchpadBoofiState => {
   const { fastRefresh } = useRefresh()
   const dispatch = useDispatch()
@@ -258,19 +278,18 @@ export const useBoofiLaunchpadTierHurdles = () => {
   return tierHurdles
 }
 
-// boosterRocket
-export const useBoosterRocket = (account): BoosterRocketState => {
+export const useBoofiBoosterRocket = (account): BoosterRocketState => {
   const { fastRefresh } = useRefresh()
   const dispatch = useDispatch()
   useEffect(() => {
     const fetchBoosterRocketData = async () => {
-      dispatch(fetchBoosterRocketUserDataAsync(account))
+      dispatch(fetchBoofiBoosterRocketUserDataAsync(account))
     }
 
     fetchBoosterRocketData()
   }, [account, dispatch, fastRefresh])
 
-  const boosterRocket = useSelector((state: State) => state.boosterRocket)
+  const boosterRocket = useSelector((state: State) => state.boofiBoosterRocket)
   return boosterRocket
 }
 

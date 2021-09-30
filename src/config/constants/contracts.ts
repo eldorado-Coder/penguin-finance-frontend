@@ -20,11 +20,6 @@ export default {
     43114: '0xd6a4F121CA35509aF06A0Be99093d08462f53052',
   },
   // v2
-  // v2MasterChef: {
-  //   43113: '',
-  //   43114: '0x8075DFD6adC546E2727F559739101aF79c03C6a2',
-  // },
-  // final
   v2MasterChef: {
     43113: '',
     43114: '0x256040dc7b3CECF73a759634fc68aA60EA0D68CB',
@@ -124,19 +119,10 @@ export default {
   // emperor
   emperor: {
     43113: '',
-    // 43114: '0xfd162b5733b01C0b6aD7575A0A18a8EA3Fd69A83',
-    // 43114: '0xF36DA227A479a49D823Af1E7b3df632A698a9Ac6',
-    // 43114: '0x5c2270c65DfA52c853DFb9f43dC913C059016fb6',
-    // 43114: '0x4d461d5d024cB363Bc85bb70246A39c72f2Ad89F',
-    // 43114: '0x56bf3c0C79E8Ba1c3df01113673dE6334B7d2a3f',
-    // final
     43114: '0xAb2B099beF83b7E3AB3d8690a5DB15f64c648697',
   },
   emperorPenguinDB: {
     43113: '',
-    // 43114: '0x2669fCbf2018ae8fA5d396466E7da1294d0D554B',
-    // 43114: '0x8e28c0986c05dc59502051201ee64624f93c5e67',
-    // final
     43114: '0x8E28C0986C05dC59502051201eE64624F93c5E67',
   },
 
@@ -149,18 +135,11 @@ export default {
     43113: '',
     43114: '0xaAD41CCf76c035DAF80d662584823215f2e0487D',
   },
-  // launchpad
+  // launchpad Sherpa
   launchPad: {
     43113: '',
     43114: '0x1c0fe0A000f6DF48B2DaBf86A19934dd6B6F9477',
   },
-  launchPadBoofi: {
-    43113: '',
-    // 43114: '0x8197B03862C20e83316F138A0400047D5B62A5Db',
-    // TODO: final version
-    43114: '0xb1a3f09D7A5dFB45600931E18375501973772426',
-  },
-  // boosterRocket
   boosterRocket: {
     43113: '',
     43114: '0x9035e72A23e379E505b787018b3b5aB3972D73D9',
@@ -172,6 +151,30 @@ export default {
   boosterRocketSherpa: {
     43113: '',
     43114: '0xa5e59761ebd4436fa4d20e1a27cba29fb2471fc6',
+  },
+
+  // launchpad - Boofi
+  launchPadBoofi: {
+    43113: '',
+    43114: '0xb1a3f09D7A5dFB45600931E18375501973772426',
+  },
+  booFiBoosterRocket: {
+    43113: '',
+    // 43114: '0xe7F53b48c945FDE5Aa9b6766D66d0627622757bE',
+    // final
+    43114: '0x90D2652B7abB628fDf907ed4ECc4711EA8ffBAf9',
+  },
+  booFiBoosterRocketPayToken: {
+    43113: '',
+    43114: '0xe896CDeaAC9615145c0cA09C8Cd5C25bced6384c',
+  },
+  booFiBoosterRocketBuyToken: {
+    43113: '',
+    43114: '0xB00F1ad977a949a3CCc389Ca1D1282A2946963b0',
+  },
+  boofi: {
+    43113: '',
+    43114: '0xB00F1ad977a949a3CCc389Ca1D1282A2946963b0',
   },
 
   // v2

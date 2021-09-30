@@ -335,3 +335,21 @@ export const v2FarmSetAutoNestAllocation = async (masterChefContract, amount, ac
       return tx.transactionHash
     })
 }
+
+// launchpad - boofi
+export const boofiBoosterRocketAgreeTerms = async (boosterRocketContract, account) => {
+  return boosterRocketContract.methods
+    .agreeToTermsAndConditions()
+    .send({ from: account })
+    .on('transactionHash', (tx) => {
+      return tx.transactionHash
+    })
+}
+export const boofiBoosterRocketPurchaseTokens = async (boosterRocketContract, amount, account) => {
+  return boosterRocketContract.methods
+    .purchaseTokens(new BigNumber(amount).times(new BigNumber(10).pow(18)).toString())
+    .send({ from: account })
+    .on('transactionHash', (tx) => {
+      return tx.transactionHash
+    })
+}
