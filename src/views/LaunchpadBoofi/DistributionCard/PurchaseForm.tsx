@@ -18,30 +18,24 @@ import TermsAndConditionModal from './TermsAndConditionModal'
 interface PurchaseFormProps {
   tokenName?: string
   account?: string
-  onAgreeTerms?: () => void
   onConfirm: (amount: string) => void
 }
 
-const PurchaseForm: React.FC<PurchaseFormProps> = ({ tokenName = '', account, onAgreeTerms, onConfirm }) => {
+const PurchaseForm: React.FC<PurchaseFormProps> = ({ tokenName = '', account, onConfirm }) => {
   const [buyTokenAmount, setBuyTokenAmount] = useState('')
   const [payTokenCost, setPayTokenCost] = useState(0)
   const [pendingTx, setPendingTx] = useState(false)
 
   const payTokenContract = useBoofiBoosterRocketPayToken()
   const boosterRocketContract = useBoofiBoosterRocketContract()
-  const {
-    payTokenBalance,
-    tokensLeftToDistribute,
-    eventOngoing,
-    canPurchaseAmount,
-    hasTheUserAgreed,
-  } = useBoofiBoosterRocketStore(account)
+  const { payTokenBalance, tokensLeftToDistribute, eventOngoing, canPurchaseAmount } = useBoofiBoosterRocketStore(
+    account,
+  )
   const buyTokenMaxBalance = String(canPurchaseAmount)
   const canPurchase =
     account &&
     !pendingTx &&
     eventOngoing &&
-    hasTheUserAgreed &&
     Number(buyTokenAmount) > 0 &&
     Number(buyTokenAmount) <= canPurchaseAmount &&
     Number(buyTokenAmount) <= tokensLeftToDistribute
@@ -123,7 +117,7 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({ tokenName = '', account, on
         purchaseTokenSymbol="BOOFI"
         purchaseTokenMax={tokensLeftToDistribute}
       />
-      <ViewTermsButton mt="16px" disabled={!account} onClick={onPresentTermsAndConditions}>
+      <ViewTermsButton mt="16px" onClick={onPresentTermsAndConditions}>
         View Terms & Conditions
       </ViewTermsButton>
       <Flex mt="8px">
