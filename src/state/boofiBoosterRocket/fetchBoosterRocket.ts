@@ -5,7 +5,7 @@ import {
   getBoofiBoosterRocketPayTokenAddress,
   getBoofiBoosterRocketBuyTokenAddress,
 } from 'utils/addressHelpers'
-import { getBalanceNumber } from 'utils/formatBalance'
+import { getBalanceNumber, getFullDisplayBalance } from 'utils/formatBalance'
 import boosterRocketABI from 'config/abi/boosterRocket.json'
 import erc20Abi from 'config/abi/erc20.json'
 
@@ -75,7 +75,7 @@ export const fetchUserData = async (account) => {
 
   return {
     hasTheUserAgreed: hasTheUserAgreed[0],
-    canPurchaseAmount: getBalanceNumber(new BigNumber(canPurchaseAmount)),
+    canPurchaseAmount: getFullDisplayBalance(new BigNumber(canPurchaseAmount)),
     tokensPurchased: 0,
   }
 }

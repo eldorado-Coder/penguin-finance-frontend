@@ -38,8 +38,8 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({ tokenName = '', account, on
     !pendingTx &&
     eventOngoing &&
     Number(buyTokenAmount) > 0 &&
-    Number(buyTokenAmount) <= canPurchaseAmount &&
-    Number(buyTokenAmount) <= tokensLeftToDistribute
+    Number(buyTokenAmount) <= Number(canPurchaseAmount) &&
+    Number(buyTokenAmount) <= Number(tokensLeftToDistribute)
 
   const [onPresentTermsAndConditions] = useModal(<TermsAndConditionModal />)
 
