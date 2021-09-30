@@ -5,14 +5,13 @@ import { Text, Flex } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import SvgIcon from 'components/SvgIcon'
 import Balance from 'components/Balance'
-import CardValue from 'components/CardValue'
 import {
   useBoofiLaunchpadTierHurdles,
   useBoofiLaunchpad,
   useBoofiBoosterRocket as useBoofiBoosterRocketStore,
 } from 'state/hooks'
 import { getBalanceNumber } from 'utils/formatBalance'
-import { TIERS, PRICE_PER_BOOFI, totalBoofiDistributionAmount } from '../utils'
+import { TIERS, PRICE_PER_BOOFI } from '../utils'
 import Card from '../Card'
 
 const TiersCard = () => {
@@ -21,9 +20,7 @@ const TiersCard = () => {
   const launchpadStaked = getBalanceNumber(new BigNumber(staked))
   const hasTier = launchpadStaked > 0
   const tierHurdles = useBoofiLaunchpadTierHurdles()
-  const { tokensLeftToDistribute } = useBoofiBoosterRocketStore(account)
-  const remainingBoofiAmount = Number(tokensLeftToDistribute.toFixed(2))
-  const distributedBoofiAmount = totalBoofiDistributionAmount - remainingBoofiAmount
+  const { tokensLeftToDistribute, totalTokensSold } = useBoofiBoosterRocketStore(account)
 
   const handleInfoIconClick = () => {
     window.open(
@@ -70,11 +67,11 @@ const TiersCard = () => {
           </Wrapper>
           <Wrapper justifyContent="space-between">
             <Label textAlign="right">BOOFI remaining:</Label>
-            <Balance fontSize="16px" value={remainingBoofiAmount} decimals={2} />
+            <Balance fontSize="16px" value={tokensLeftToDistribute} decimals={2} />
           </Wrapper>
           <Wrapper justifyContent="space-between" mb="16px">
             <Label textAlign="right">BOOFI distributed:</Label>
-            <Balance fontSize="16px" value={distributedBoofiAmount} decimals={2} />
+            <Balance fontSize="16px" value={totalTokensSold} decimals={2} />
           </Wrapper>
         </TierContent>
         {hasTier ? (
