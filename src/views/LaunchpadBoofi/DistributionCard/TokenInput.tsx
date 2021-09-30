@@ -43,6 +43,9 @@ const TokenInput: React.FC<TokenInputProps> = ({
               <>
                 <span>{`${value || 0} ${purchaseTokenSymbol}`}</span>
                 {`for ${roundDown(payTokenCost, 2)} ${payTokenSymbol}`}
+                {parseFloat(payTokenCost) > max && (
+                  <Warning src="/images/launchpad/warning.png" alt="warning" width={16} height={16} />
+                )}
               </>
             )}
           </TokenValue>
@@ -66,9 +69,6 @@ const TokenInput: React.FC<TokenInputProps> = ({
                 <div>{TranslateString(526, `${payTokenSymbol} Available: `)}</div>
                 <div>{`${roundDown(max, 2)} ${payTokenSymbol}`}</div>
               </StyledMaxText>
-              {roundDown(max, 2) === '0' && (
-                <Warning src="/images/launchpad/warning.png" alt="warning" width={16} height={16} />
-              )}
             </Flex>
           )}
           <Flex flexWrap="wrap">
@@ -108,6 +108,8 @@ const TokenValueWrapper = styled(Flex)`
 const TokenValue = styled.div`
   font-size: 18px;
   color: ${({ theme }) => (theme.isDark ? 'white' : '#372871')};
+  display: flex;
+  align-items: center;
 `
 
 const StyledTokenInput = styled.div`
@@ -165,6 +167,7 @@ const StyledButton = styled(Button)`
 const Warning = styled.img`
   width: 16px;
   height: 16px;
+  margin-left: 4px;
 `
 
 export default TokenInput
