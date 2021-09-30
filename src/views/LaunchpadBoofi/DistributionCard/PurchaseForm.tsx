@@ -64,10 +64,12 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({ tokenName = '', account, on
   )
 
   const handleSelectMax = useCallback(() => {
-    setBuyTokenAmount(Number(buyTokenMaxBalance).toFixed(2))
+    if (!account) return
+
+    setBuyTokenAmount(buyTokenMaxBalance)
     updatePayTokenBalance(buyTokenMaxBalance)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [buyTokenMaxBalance, setBuyTokenAmount])
+  }, [account, buyTokenMaxBalance, setBuyTokenAmount])
 
   const renderText = () => {
     if (pendingTx) return 'Pending Confirmation'
@@ -87,9 +89,7 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({ tokenName = '', account, on
         await payTokenContract.methods.approve(getBoofiBoosterRocketAddress(), approveAmount).send({ from: account })
       }
 
-      const amount = Math.min(Number(buyTokenAmount), Number(buyTokenMaxBalance))
-      await onConfirm(String(amount))
-
+      await onConfirm(buyTokenAmount)
       setPendingTx(false)
       setBuyTokenAmount('')
     } catch (error) {

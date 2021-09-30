@@ -42,7 +42,7 @@ const TokenInput: React.FC<TokenInputProps> = ({
             ) : (
               <>
                 <span>{`${value || 0} ${purchaseTokenSymbol}`}</span>
-                {`for ${payTokenCost} ${payTokenSymbol}`}
+                {`for ${roundDown(payTokenCost, 2)} ${payTokenSymbol}`}
               </>
             )}
           </TokenValue>
