@@ -1,8 +1,8 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
 import {
-  fetchGlobalData, // global
-  fetchUserData, // user
+  fetchGlobalData,
+  fetchUserData,
   fetchUserPayTokenBalance,
   fetchUserBuyTokenBalance,
 } from './fetchBoosterRocket'
@@ -25,7 +25,7 @@ const initialState: BoosterRocketState = {
 }
 
 export const BoosterRocketSlice = createSlice({
-  name: 'BoosterRocket',
+  name: 'BoofiBoosterRocket',
   initialState,
   reducers: {
     setBoosterRocketGlobalData: (state, action) => {

@@ -5,7 +5,6 @@ import multicall from 'utils/multicall'
 import { getBoofiLaunchpadAddress, getIPefiAddress } from 'utils/addressHelpers'
 import BigNumber from 'bignumber.js'
 import { getWeb3 } from 'utils/web3'
-import { getBalanceNumber } from 'utils/formatBalance'
 
 export const fetchUserData = async (account) => {
   const calls = [
