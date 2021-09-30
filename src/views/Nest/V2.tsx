@@ -442,11 +442,8 @@ const CardImage = styled.img<{ isMobile?: boolean }>`
 `
 
 const Balance = styled.div<{ statsBalance?: boolean }>`
-  /* border-bottom: ${({ theme, statsBalance }) =>
-    statsBalance && (theme.isDark ? '1px solid #100C18' : '1px solid #e8e4ef')}; */
   width: ${({ statsBalance }) => statsBalance && 'calc(100% - 120px)'};
   text-align: ${({ statsBalance }) => statsBalance && 'center'};
-
   .balance {
     color: ${({ theme }) => theme.colors.red};
     font-weight: 500;

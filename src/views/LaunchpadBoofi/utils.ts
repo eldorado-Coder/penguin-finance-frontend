@@ -1,5 +1,6 @@
 import BigNumber from 'bignumber.js'
 
+export const totalBoofiDistributionAmount = 2000000
 export const TIERS = [{ label: 'Ghoul' }, { label: 'Reaper' }, { label: 'Demonlord' }]
 export const PRICE_PER_BOOFI = [0.125, 0.115, 0.1]
 

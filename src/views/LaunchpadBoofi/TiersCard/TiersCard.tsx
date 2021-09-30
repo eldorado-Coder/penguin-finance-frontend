@@ -3,11 +3,16 @@ import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
 import { Text, Flex } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
-import { useBoofiLaunchpadTierHurdles, useBoofiLaunchpad } from 'state/hooks'
 import SvgIcon from 'components/SvgIcon'
 import Balance from 'components/Balance'
+import CardValue from 'components/CardValue'
+import {
+  useBoofiLaunchpadTierHurdles,
+  useBoofiLaunchpad,
+  useBoofiBoosterRocket as useBoofiBoosterRocketStore,
+} from 'state/hooks'
 import { getBalanceNumber } from 'utils/formatBalance'
-import { TIERS, PRICE_PER_BOOFI } from '../utils'
+import { TIERS, PRICE_PER_BOOFI, totalBoofiDistributionAmount } from '../utils'
 import Card from '../Card'
 
 const TiersCard = () => {
@@ -16,6 +21,9 @@ const TiersCard = () => {
   const launchpadStaked = getBalanceNumber(new BigNumber(staked))
   const hasTier = launchpadStaked > 0
   const tierHurdles = useBoofiLaunchpadTierHurdles()
+  const { tokensLeftToDistribute } = useBoofiBoosterRocketStore(account)
+  const remainingBoofiAmount = Number(tokensLeftToDistribute.toFixed(2))
+  const distributedBoofiAmount = totalBoofiDistributionAmount - remainingBoofiAmount
 
   const handleInfoIconClick = () => {
     window.open(
@@ -50,15 +58,23 @@ const TiersCard = () => {
           </CurrentTiersWrapper>
           <Wrapper justifyContent="space-between">
             <Label textAlign="right">Your Stake:</Label>
-            <Balance fontSize="16px" decimals={2} value={Math.floor(launchpadStaked * 100) / 100} />
+            <Balance fontSize="16px" value={Math.floor(launchpadStaked * 100) / 100} decimals={2} />
           </Wrapper>
           <Wrapper justifyContent="space-between">
             <Label textAlign="right">Your Allocation:</Label>
-            <Label bold>{`${getBalanceNumber(new BigNumber(allocation)).toFixed(2)} AP`}</Label>
+            <Balance fontSize="16px" value={getBalanceNumber(new BigNumber(allocation))} decimals={2} suffix=" AP" />
+          </Wrapper>
+          <Wrapper justifyContent="space-between">
+            <Label textAlign="right">Price per BOOFI:</Label>
+            <Balance fontSize="16px" value={PRICE_PER_BOOFI[yourPenguinTier]} decimals={3} prefix="$" />
+          </Wrapper>
+          <Wrapper justifyContent="space-between">
+            <Label textAlign="right">BOOFI remaining:</Label>
+            <Balance fontSize="16px" value={remainingBoofiAmount} decimals={2} />
           </Wrapper>
           <Wrapper justifyContent="space-between" mb="16px">
-            <Label textAlign="right">Price per BOOFI:</Label>
-            <Label bold>{`$${PRICE_PER_BOOFI[yourPenguinTier]}`}</Label>
+            <Label textAlign="right">BOOFI distributed:</Label>
+            <Balance fontSize="16px" value={distributedBoofiAmount} decimals={2} />
           </Wrapper>
         </TierContent>
         {hasTier ? (
