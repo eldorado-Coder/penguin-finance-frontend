@@ -90,11 +90,11 @@ const StakeForm: React.FC<StakeFormProps> = ({ max, onConfirm, tokenName = '', a
         {account && (
           <>
             {Number(fullBalance) >= Number(val) && Number(fullBalance) > 0 ? (
-              <StyledButton tokenBalance={val} scale="md" disabled={!canStake} onClick={handleStake}>
+              <StyledButton tokenBalance={val} scale="md" disabled onClick={handleStake}>
                 {renderText()}
               </StyledButton>
             ) : (
-              <StyledButton tokenBalance={val} scale="md" disabled={pendingTx} onClick={handleGetPefi}>
+              <StyledButton tokenBalance={val} scale="md" disabled onClick={handleGetPefi}>
                 {renderText()}
               </StyledButton>
             )}
