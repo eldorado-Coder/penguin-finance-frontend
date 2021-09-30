@@ -19,6 +19,7 @@ import UnlockButton from 'components/UnlockButton'
 import SvgIcon from 'components/SvgIcon'
 import CardValue from 'components/CardValue'
 import roundDown from 'utils/roundDown'
+import { addTokenToMetamask } from 'utils/token'
 import { getIPefiAddress } from 'utils/addressHelpers'
 
 const IPefi: React.FC = () => {
@@ -91,30 +92,8 @@ const IPefi: React.FC = () => {
     }
   }, [onNestMigrate, setPending])
 
-  const addMetamask = async (tokenAddress: string, tokenSymbol: string, tokenDecimals: number) => {
-    const provider = (window as any).ethereum
-    if (provider) {
-      try {
-        await provider.request({
-          method: 'wallet_watchAsset',
-          params: {
-            type: 'ERC20',
-            options: {
-              address: tokenAddress,
-              symbol: tokenSymbol,
-              decimals: tokenDecimals,
-              image: '',
-            },
-          },
-        })
-      } catch (error) {
-        console.log('Error => addMetamask')
-      }
-    }
-  }
-
   const handleAddIPefiToken = async () => {
-    await addMetamask(getIPefiAddress(), 'iPEFI', 18)
+    await addTokenToMetamask(getIPefiAddress(), 'iPEFI', 18)
   }
 
   const renderActionButton = () => {

@@ -119,6 +119,10 @@ export const getBoofiBoosterRocketBuyTokenAddress = () => {
   return getAddress(addresses.booFiBoosterRocketBuyToken)
 }
 
+export const getBoofiAddress = () => {
+  return getAddress(addresses.boofi)
+}
+
 // v2
 export const getNestMigratorAddress = () => {
   return getAddress(addresses.nestMigrator)

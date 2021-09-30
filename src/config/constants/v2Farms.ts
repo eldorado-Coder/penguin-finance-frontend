@@ -465,11 +465,11 @@ const v2Farms: V2FarmConfig[] = [
     tokenSymbol: 'WBTC',
     tokenAddresses: {
       43113: '',
-      43114: '0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664',
+      43114: '0x50b7545627a5162F82A992c33b87aDc75187B218',
     },
     pangolinRewardPoolAddresses: {
       43113: '',
-      43114: '0x50b7545627a5162F82A992c33b87aDc75187B218',
+      43114: '0x0000000000000000000000000000000000000000',
     },
     quoteTokenSymbol: QuoteToken.AVAX,
     quoteTokenAddresses: contracts.wavax,

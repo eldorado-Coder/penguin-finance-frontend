@@ -7,6 +7,8 @@ import UnlockButton from 'components/UnlockButton'
 import roundDown from 'utils/roundDown'
 import escapeRegExp from 'utils/escapeRegExp'
 import { getFullDisplayBalance } from 'utils/formatBalance'
+import { addTokenToMetamask } from 'utils/token'
+import { getBoofiAddress } from 'utils/addressHelpers'
 import { getUnstakeTooltip } from '../utils'
 import TokenInput from './TokenInput'
 
@@ -66,6 +68,10 @@ const UnstakeForm: React.FC<UnStakeFormProps> = ({
     setVal(fullBalance)
   }, [fullBalance, setVal])
 
+  const handleAddBoofiToken = async () => {
+    await addTokenToMetamask(getBoofiAddress(), 'BOOFI', 18)
+  }
+
   const renderText = () => {
     if (Number(val) > Number(fullBalance)) return 'Not Enough Funds'
     if (pendingTx) return 'Pending Confirmation'
@@ -113,6 +119,11 @@ const UnstakeForm: React.FC<UnStakeFormProps> = ({
             )}
           </>
         )}
+      </Flex>
+      <Flex mt="8px">
+        <StyledButton scale="md" onClick={handleAddBoofiToken}>
+          Add BOOFI to Metamask
+        </StyledButton>
       </Flex>
     </>
   )
