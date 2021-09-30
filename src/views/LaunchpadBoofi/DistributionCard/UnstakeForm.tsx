@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useState } from 'react'
 import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
-import { Button, Flex, useModal } from 'penguinfinance-uikit2'
+import { Button, Flex } from 'penguinfinance-uikit2'
 import ReactTooltip from 'react-tooltip'
 import UnlockButton from 'components/UnlockButton'
 import roundDown from 'utils/roundDown'
@@ -9,7 +9,6 @@ import escapeRegExp from 'utils/escapeRegExp'
 import { getFullDisplayBalance } from 'utils/formatBalance'
 import { getUnstakeTooltip } from '../utils'
 import TokenInput from './TokenInput'
-import TermsAndConditionModal from './TermsAndConditionModal';
 
 const inputRegex = RegExp(`^\\d*(?:\\\\[.])?\\d*$`)
 
@@ -32,8 +31,6 @@ const UnstakeForm: React.FC<UnStakeFormProps> = ({
 }) => {
   const [val, setVal] = useState('')
   const [pendingTx, setPendingTx] = useState(false)
-
-  const [onPresentTermsAndConditions] = useModal(<TermsAndConditionModal />)
 
   const unstakeTooltip = getUnstakeTooltip(timeRemainingToUnstake)
 
@@ -88,7 +85,6 @@ const UnstakeForm: React.FC<UnStakeFormProps> = ({
         symbol={tokenName}
         unstakeMode
       />
-      <ViewTermsButton mt='16px' onClick={onPresentTermsAndConditions}>View Terms & Conditions</ViewTermsButton>
       <Flex mt="8px">
         {!account && <StyledUnlockButton />}
         {account && (
@@ -137,16 +133,6 @@ const StyledUnlockButton = styled(UnlockButton)`
 
 const ButtonToolTipWrapper = styled.div`
   width: 100%;
-`
-
-const ViewTermsButton = styled(Button)<{ tokenBalance?: string }>`
-  width: 100%;
-  border-radius: 8px;
-  color: ${({ theme }) => theme.isDark && '#30264f'};
-  background-color: ${({ theme }) => !theme.isDark && '#372871'};
-  background-color: ${({ theme, tokenBalance }) => tokenBalance && !theme.isDark && '#Ec3E3F'};
-  background-color: ${({ theme, tokenBalance }) => tokenBalance && theme.isDark && '#D4444C'};
-  color: ${({ tokenBalance }) => tokenBalance && 'white'};
 `
 
 const CustomToolTip = styled(ReactTooltip)`

@@ -25,24 +25,24 @@ const ModalFooter = styled.div`
 `
 
 interface TermsAndConditionProps {
+  onConfirm: () => void
   onDismiss?: () => void
 }
 
-const TermsAndConditionModal: React.FC<TermsAndConditionProps> = ({ onDismiss }) => {
-  // const [pendingTx, setPendingTx] = useState(false)
-  // const TranslateString = useI18n()
+const TermsAndConditionModal: React.FC<TermsAndConditionProps> = ({ onDismiss, onConfirm }) => {
+  const [pendingTx, setPendingTx] = useState(false)
   const [disableAgree, setDisableAgree] = useState(true)
 
-  // const onAgree = async () => {
-  //   setPendingTx(true)
-  //   try {
-  //     await onConfirm()
-  //     setPendingTx(false)
-  //     onDismiss()
-  //   } catch (error) {
-  //     setPendingTx(false)
-  //   }
-  // }
+  const onAgree = async () => {
+    setPendingTx(true)
+    try {
+      await onConfirm()
+      setPendingTx(false)
+      onDismiss()
+    } catch (error) {
+      setPendingTx(false)
+    }
+  }
 
   const handleScroll = (event) => {
     if (event.target.scrollHeight - event.target.scrollTop < event.target.clientHeight + 100) {
@@ -65,12 +65,12 @@ const TermsAndConditionModal: React.FC<TermsAndConditionProps> = ({ onDismiss })
       </ModalContent>
       <ModalFooter>
         <ModalActions>
-          {/* <Button scale="md" variant="secondary" onClick={onDismiss}>
-            {TranslateString(462, 'Decline')}
+          <Button scale="md" variant="secondary" onClick={onDismiss}>
+            Decline
           </Button>
           <Button scale="md" disabled={pendingTx || disableAgree} onClick={onAgree}>
-            {pendingTx ? TranslateString(488, 'Pending Confirmation') : TranslateString(464, 'Agree & Sign')}
-          </Button> */}
+            {pendingTx ? 'Pending Confirmation' : 'Agree & Sign'}
+          </Button>
         </ModalActions>
       </ModalFooter>
     </StyledModal>

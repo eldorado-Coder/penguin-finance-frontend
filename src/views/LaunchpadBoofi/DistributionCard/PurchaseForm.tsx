@@ -4,7 +4,6 @@ import ReactTooltip from 'react-tooltip'
 import React, { useCallback, useState } from 'react'
 import { Button, Flex, useModal } from 'penguinfinance-uikit2'
 import UnlockButton from 'components/UnlockButton'
-import { PANGOLIN_PEFI_LINK } from 'config'
 import { getBalanceNumber } from 'utils/formatBalance'
 import roundDown from 'utils/roundDown'
 import { getBoofiBoosterRocketAddress } from 'utils/addressHelpers'
@@ -19,35 +18,35 @@ import TermsAndConditionModal from './TermsAndConditionModal'
 interface PurchaseFormProps {
   tokenName?: string
   account?: string
-  onApprove: () => void
+  onAgreeTerms?: () => void
   onConfirm: (amount: string) => void
 }
 
-const PurchaseForm: React.FC<PurchaseFormProps> = ({ onConfirm, tokenName = '', account, onApprove }) => {
-  const [buyTokenBalance, setBuyTokenBalance] = useState('')
+const PurchaseForm: React.FC<PurchaseFormProps> = ({ tokenName = '', account, onAgreeTerms, onConfirm }) => {
+  const [buyTokenAmount, setBuyTokenAmount] = useState('')
   const [payTokenCost, setPayTokenCost] = useState(0)
   const [pendingTx, setPendingTx] = useState(false)
 
   const payTokenContract = useBoofiBoosterRocketPayToken()
   const boosterRocketContract = useBoofiBoosterRocketContract()
-  const boosterRocketData = useBoofiBoosterRocketStore(account)
   const {
     payTokenBalance,
     tokensLeftToDistribute,
     eventOngoing,
     canPurchaseAmount,
     hasTheUserAgreed,
-  } = boosterRocketData
+  } = useBoofiBoosterRocketStore(account)
   const buyTokenMaxBalance = String(canPurchaseAmount)
-
   const canPurchase =
+    account &&
+    !pendingTx &&
     eventOngoing &&
     hasTheUserAgreed &&
-    Number(buyTokenBalance) > 0 &&
-    Number(buyTokenBalance) <= canPurchaseAmount &&
-    Number(buyTokenBalance) <= tokensLeftToDistribute
+    Number(buyTokenAmount) > 0 &&
+    Number(buyTokenAmount) <= canPurchaseAmount &&
+    Number(buyTokenAmount) <= tokensLeftToDistribute
 
-  const [onPresentTermsAndConditions] = useModal(<TermsAndConditionModal />)
+  const [onPresentTermsAndConditions] = useModal(<TermsAndConditionModal onConfirm={onAgreeTerms} />)
 
   const updatePayTokenBalance = async (value) => {
     if (Number(value) > 0) {
@@ -63,24 +62,22 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({ onConfirm, tokenName = '', 
     async (e: React.FormEvent<HTMLInputElement>) => {
       if (!account) return
       const { value } = e.currentTarget
-      setBuyTokenBalance(value)
+      setBuyTokenAmount(value)
       updatePayTokenBalance(value)
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [setBuyTokenBalance, account],
+    [setBuyTokenAmount, account],
   )
 
   const handleSelectMax = useCallback(() => {
-    setBuyTokenBalance(Number(buyTokenMaxBalance).toFixed(2))
+    setBuyTokenAmount(Number(buyTokenMaxBalance).toFixed(2))
     updatePayTokenBalance(buyTokenMaxBalance)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [buyTokenMaxBalance, setBuyTokenBalance])
+  }, [buyTokenMaxBalance, setBuyTokenAmount])
 
   const renderText = () => {
-    if (Number(buyTokenBalance) > Number(buyTokenMaxBalance) || Number(buyTokenMaxBalance) === 0)
-      return 'Stake more iPEFI'
     if (pendingTx) return 'Pending Confirmation'
-    if (buyTokenBalance) return 'Get BOOFI'
+    if (Number(buyTokenAmount) > 0) return 'Get BOOFI'
     return 'Enter Amount'
   }
 
@@ -96,22 +93,16 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({ onConfirm, tokenName = '', 
         await payTokenContract.methods.approve(getBoofiBoosterRocketAddress(), approveAmount).send({ from: account })
       }
 
-      const amount = Math.min(Number(buyTokenBalance), Number(buyTokenMaxBalance))
+      const amount = Math.min(Number(buyTokenAmount), Number(buyTokenMaxBalance))
       await onConfirm(String(amount))
 
       setPendingTx(false)
-      setBuyTokenBalance('')
+      setBuyTokenAmount('')
     } catch (error) {
       setPendingTx(false)
-      setBuyTokenBalance('')
+      setBuyTokenAmount('')
     }
   }
-
-  const handleGetPefi = () => {
-    window.open(PANGOLIN_PEFI_LINK, '_blank')
-  }
-
-  const canStake = !pendingTx && Number(buyTokenBalance) > 0
 
   const getBoofiTooltip = () => {
     return `
@@ -122,47 +113,44 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({ onConfirm, tokenName = '', 
   return (
     <>
       <TokenInput
-        value={roundDown(buyTokenBalance, 2)}
+        value={roundDown(buyTokenAmount, 2)}
         onSelectMax={handleSelectMax}
         onChange={handleChange}
-        max={buyTokenMaxBalance}
+        max={payTokenBalance}
         symbol={tokenName}
+        payTokenSymbol="PEFI"
+        payTokenCost={String(payTokenCost)}
+        purchaseTokenSymbol="BOOFI"
+        purchaseTokenMax={tokensLeftToDistribute}
       />
-      <ViewTermsButton mt="16px" onClick={onPresentTermsAndConditions}>
+      <ViewTermsButton mt="16px" disabled={!account} onClick={onPresentTermsAndConditions}>
         View Terms & Conditions
       </ViewTermsButton>
       <Flex mt="8px">
-        {!account && <StyledUnlockButton />}
-        {account && (
+        {account ? (
           <>
-            {Number(buyTokenMaxBalance) >= Number(buyTokenBalance) && Number(buyTokenMaxBalance) > 0 ? (
-              <>
-                <TooltipContainer data-for="get-boofi-tooltip" data-tip={getBoofiTooltip()}>
-                  <StyledButton
-                    tokenBalance={buyTokenBalance}
-                    scale="md"
-                    disabled={!canStake}
-                    onClick={handlePurchaseToken}
-                  >
-                    {renderText()}
-                  </StyledButton>
-                </TooltipContainer>
-                <CustomToolTip
-                  id="get-boofi-tooltip"
-                  wrapper="div"
-                  delayHide={0}
-                  effect="solid"
-                  multiline
-                  place="bottom"
-                  html
-                />
-              </>
-            ) : (
-              <StyledButton tokenBalance={buyTokenBalance} scale="md" disabled={pendingTx} onClick={handleGetPefi}>
+            <TooltipContainer data-for="get-boofi-tooltip" data-tip={getBoofiTooltip()}>
+              <StyledButton
+                tokenBalance={buyTokenAmount}
+                scale="md"
+                disabled={!canPurchase}
+                onClick={handlePurchaseToken}
+              >
                 {renderText()}
               </StyledButton>
-            )}
+            </TooltipContainer>
+            <CustomToolTip
+              id="get-boofi-tooltip"
+              wrapper="div"
+              delayHide={0}
+              effect="solid"
+              multiline
+              place="bottom"
+              html
+            />
           </>
+        ) : (
+          <StyledUnlockButton />
         )}
       </Flex>
     </>

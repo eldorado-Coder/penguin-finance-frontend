@@ -9,8 +9,11 @@ interface TokenInputProps extends InputProps {
   max: number | string
   symbol: string
   maxBalanceShow?: boolean
-  boofiAvailable?: number
   unstakeMode?: boolean
+  payTokenSymbol?: string
+  payTokenCost?: string
+  purchaseTokenSymbol?: string
+  purchaseTokenMax?: number
   onSelectMax?: () => void
 }
 
@@ -19,56 +22,65 @@ const TokenInput: React.FC<TokenInputProps> = ({
   max,
   symbol,
   maxBalanceShow = true,
-  boofiAvailable = 50000,
   unstakeMode,
+  payTokenSymbol,
+  payTokenCost,
+  purchaseTokenSymbol,
+  purchaseTokenMax = 50000,
   onChange,
   onSelectMax,
 }) => {
-
-  console.log('ant : max => ', max);
   const TranslateString = useI18n()
   return (
     <StyledTokenInput>
       <Input className="input" inputClassName="tokenInput" onChange={onChange} placeholder="" value={value} />
       <Wrapper>
         <TokenValueWrapper justifyContent="space-between" alignItems="center">
-          <TokenValue>{unstakeMode ? `${value || 0} ${symbol}` : 
+          <TokenValue>
+            {unstakeMode ? (
+              `${value || 0} ${symbol}`
+            ) : (
               <>
-                <span>{`${value || 0} BOOFI`}</span>
-                {`for 0 ${symbol}`}
+                <span>{`${value || 0} ${purchaseTokenSymbol}`}</span>
+                {`for ${payTokenCost} ${payTokenSymbol}`}
               </>
-            }
+            )}
           </TokenValue>
           <StyledButton scale="sm" onClick={onSelectMax}>
             {TranslateString(452, 'MAX')}
           </StyledButton>
         </TokenValueWrapper>
       </Wrapper>
-      {unstakeMode ? 
-        <Flex justifyContent='flex-end'>
-          <StyledMaxText mr='8px'>
+      {unstakeMode ? (
+        <Flex justifyContent="flex-end">
+          <StyledMaxText mr="8px">
             {TranslateString(526, `${symbol} Available:`)} {roundDown(max, 2)} {symbol}
           </StyledMaxText>
-          <img src='/images/launchpad/boo-logo.svg' alt='boo-logo' width={20} />
+          <img src="/images/launchpad/boo-logo.svg" alt="boo-logo" width={20} />
         </Flex>
-        : <Flex justifyContent='space-between' alignItems='center'>
+      ) : (
+        <Flex justifyContent="space-between" alignItems="center">
           {maxBalanceShow && (
-            <Flex alignItems='center'>
-              <StyledMaxText mr='8px'>
-                {TranslateString(526, `${symbol} Available:`)} {roundDown(max, 2)} {symbol}
+            <Flex alignItems="center">
+              <StyledMaxText mr="8px">
+                {TranslateString(526, `${payTokenSymbol} Available:`)} {roundDown(max, 2)} {payTokenSymbol}
               </StyledMaxText>
-              {roundDown(max, 2) === '0' &&
-                <Warning src='/images/launchpad/warning.png' alt='warning' width={16} height={16} />
-              }
+              {roundDown(max, 2) === '0' && (
+                <Warning src="/images/launchpad/warning.png" alt="warning" width={16} height={16} />
+              )}
             </Flex>
           )}
           <Flex>
-            <BoofiAvailableText bold mr='4px'>BOOFI Available:</BoofiAvailableText>
-            <BoofiAvailableBalance bold mr='8px'>{boofiAvailable}</BoofiAvailableBalance>
-            <img src='/images/launchpad/boo-logo.svg' alt='boo-logo' width={20} />
+            <BoofiAvailableText bold mr="4px">
+              {`${purchaseTokenSymbol} Available:`}
+            </BoofiAvailableText>
+            <BoofiAvailableBalance bold mr="8px">
+              {roundDown(purchaseTokenMax, 2)}
+            </BoofiAvailableBalance>
+            <img src="/images/launchpad/boo-logo.svg" alt="boo-logo" width={20} />
           </Flex>
         </Flex>
-      }
+      )}
     </StyledTokenInput>
   )
 }
@@ -129,11 +141,11 @@ const StyledMaxText = styled(Text)`
 
 const BoofiAvailableText = styled(Text)`
   color: ${({ theme }) => !theme.isDark && '#372871'};
-`;
+`
 
 const BoofiAvailableBalance = styled(Text)`
   color: #38db93;
-`;
+`
 
 const StyledButton = styled(Button)`
   height: 36px;
@@ -147,6 +159,6 @@ const StyledButton = styled(Button)`
 const Warning = styled.img`
   width: 16px;
   height: 16px;
-`;
+`
 
 export default TokenInput
