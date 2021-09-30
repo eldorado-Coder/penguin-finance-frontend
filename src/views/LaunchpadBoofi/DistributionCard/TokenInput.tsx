@@ -42,7 +42,7 @@ const TokenInput: React.FC<TokenInputProps> = ({
             ) : (
               <>
                 <span>{`${value || 0} ${purchaseTokenSymbol}`}</span>
-                {`for ${payTokenCost} ${payTokenSymbol}`}
+                {`for ${roundDown(payTokenCost, 2)} ${payTokenSymbol}`}
               </>
             )}
           </TokenValue>
@@ -63,21 +63,24 @@ const TokenInput: React.FC<TokenInputProps> = ({
           {maxBalanceShow && (
             <Flex alignItems="center">
               <StyledMaxText mr="8px">
-                {TranslateString(526, `${payTokenSymbol} Available:`)} {roundDown(max, 2)} {payTokenSymbol}
+                <div>{TranslateString(526, `${payTokenSymbol} Available: `)}</div>
+                <div>{`${roundDown(max, 2)} ${payTokenSymbol}`}</div>
               </StyledMaxText>
               {roundDown(max, 2) === '0' && (
                 <Warning src="/images/launchpad/warning.png" alt="warning" width={16} height={16} />
               )}
             </Flex>
           )}
-          <Flex>
+          <Flex flexWrap="wrap">
             <BoofiAvailableText bold mr="4px">
               {`${purchaseTokenSymbol} Available:`}
             </BoofiAvailableText>
-            <BoofiAvailableBalance bold mr="8px">
-              {roundDown(purchaseTokenMax, 2)}
-            </BoofiAvailableBalance>
-            <img src="/images/launchpad/boo-logo.svg" alt="boo-logo" width={20} />
+            <Flex>
+              <BoofiAvailableBalance bold mr="8px">
+                {roundDown(purchaseTokenMax, 2)}
+              </BoofiAvailableBalance>
+              <img src="/images/launchpad/boo-logo.svg" alt="boo-logo" width={20} />
+            </Flex>
           </Flex>
         </Flex>
       )}
@@ -137,6 +140,9 @@ const StyledTokenInput = styled.div`
 const StyledMaxText = styled(Text)`
   font-weight: 300;
   color: ${({ theme }) => !theme.isDark && '#372871'};
+  display: flex;
+  flex-wrap: wrap;
+  white-space: break-spaces;
 `
 
 const BoofiAvailableText = styled(Text)`

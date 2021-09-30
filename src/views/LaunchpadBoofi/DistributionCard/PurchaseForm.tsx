@@ -18,30 +18,24 @@ import TermsAndConditionModal from './TermsAndConditionModal'
 interface PurchaseFormProps {
   tokenName?: string
   account?: string
-  onAgreeTerms?: () => void
   onConfirm: (amount: string) => void
 }
 
-const PurchaseForm: React.FC<PurchaseFormProps> = ({ tokenName = '', account, onAgreeTerms, onConfirm }) => {
+const PurchaseForm: React.FC<PurchaseFormProps> = ({ tokenName = '', account, onConfirm }) => {
   const [buyTokenAmount, setBuyTokenAmount] = useState('')
   const [payTokenCost, setPayTokenCost] = useState(0)
   const [pendingTx, setPendingTx] = useState(false)
 
   const payTokenContract = useBoofiBoosterRocketPayToken()
   const boosterRocketContract = useBoofiBoosterRocketContract()
-  const {
-    payTokenBalance,
-    tokensLeftToDistribute,
-    eventOngoing,
-    canPurchaseAmount,
-    hasTheUserAgreed,
-  } = useBoofiBoosterRocketStore(account)
-  const buyTokenMaxBalance = String(canPurchaseAmount)
+  const { payTokenBalance, tokensLeftToDistribute, eventOngoing, canPurchaseAmount } = useBoofiBoosterRocketStore(
+    account,
+  )
+  const purchaseTokenMaxBalance = String(canPurchaseAmount)
   const canPurchase =
     account &&
     !pendingTx &&
     eventOngoing &&
-    hasTheUserAgreed &&
     Number(buyTokenAmount) > 0 &&
     Number(buyTokenAmount) <= canPurchaseAmount &&
     Number(buyTokenAmount) <= tokensLeftToDistribute
@@ -61,6 +55,7 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({ tokenName = '', account, on
   const handleChange = useCallback(
     async (e: React.FormEvent<HTMLInputElement>) => {
       if (!account) return
+
       const { value } = e.currentTarget
       setBuyTokenAmount(value)
       updatePayTokenBalance(value)
@@ -70,10 +65,12 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({ tokenName = '', account, on
   )
 
   const handleSelectMax = useCallback(() => {
-    setBuyTokenAmount(Number(buyTokenMaxBalance).toFixed(2))
-    updatePayTokenBalance(buyTokenMaxBalance)
+    if (!account) return
+
+    setBuyTokenAmount(purchaseTokenMaxBalance)
+    updatePayTokenBalance(purchaseTokenMaxBalance)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [buyTokenMaxBalance, setBuyTokenAmount])
+  }, [account, purchaseTokenMaxBalance, setBuyTokenAmount])
 
   const renderText = () => {
     if (pendingTx) return 'Pending Confirmation'
@@ -93,9 +90,7 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({ tokenName = '', account, on
         await payTokenContract.methods.approve(getBoofiBoosterRocketAddress(), approveAmount).send({ from: account })
       }
 
-      const amount = Math.min(Number(buyTokenAmount), Number(buyTokenMaxBalance))
-      await onConfirm(String(amount))
-
+      await onConfirm(buyTokenAmount)
       setPendingTx(false)
       setBuyTokenAmount('')
     } catch (error) {
@@ -121,9 +116,9 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({ tokenName = '', account, on
         payTokenSymbol="PEFI"
         payTokenCost={String(payTokenCost)}
         purchaseTokenSymbol="BOOFI"
-        purchaseTokenMax={tokensLeftToDistribute}
+        purchaseTokenMax={Number(purchaseTokenMaxBalance)}
       />
-      <ViewTermsButton mt="16px" disabled={!account} onClick={onPresentTermsAndConditions}>
+      <ViewTermsButton mt="16px" onClick={onPresentTermsAndConditions}>
         View Terms & Conditions
       </ViewTermsButton>
       <Flex mt="8px">

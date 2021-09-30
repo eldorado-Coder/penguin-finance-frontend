@@ -15,7 +15,7 @@ const DistributionCard = () => {
   const [activeTab, setActiveTab] = useState(0)
   const { account } = useWeb3React()
   const { onUnstake } = useBoofiLaunchpadUnstake()
-  const { onAgreeTerms, onPurchaseToken } = useBoofiBoosterRocketActions()
+  const { onPurchaseToken } = useBoofiBoosterRocketActions()
 
   const { stakedBalance: staked, canUnstake, timeRemainingToUnstake } = useBoofiLaunchpad(account)
   const stakedBalance = new BigNumber(staked)
@@ -39,7 +39,7 @@ const DistributionCard = () => {
           </StakeLabel>
         </Flex>
         {activeTab === 0 ? (
-          <PurchaseForm tokenName="iPEFI" account={account} onAgreeTerms={onAgreeTerms} onConfirm={onPurchaseToken} />
+          <PurchaseForm tokenName="PEFI" account={account} onConfirm={onPurchaseToken} />
         ) : (
           <UnstakeForm
             max={stakedBalance}
