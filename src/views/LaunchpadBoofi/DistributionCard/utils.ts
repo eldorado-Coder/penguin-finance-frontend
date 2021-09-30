@@ -18,7 +18,7 @@ export const termsAndConditions = [
   // Applicable Law and Jurisdiction
   getTextItem('title', 0,'Applicable Law and Jurisdiction'),
   getTextItem('description', 0,'Access to and use of the Site as well as the Terms are governed and construed in accordance with Swiss Law. The parties agree to irrevocably submit to the exclusive jurisdiction of the Switzerland Courts, unless as part of a dispute resolution, they agree in writing otherwise.'),
-  getTextItem('description', 0,'Depending on your country of residence, you may not be able to use all the functions of the Site. We are required by law to block transactions involving residents of the US. '),
+  getTextItem('description', 0,'Depending on your country of residence, you may not be able to use all the functions of the Site.'),
   getTextItem('description', 0,'The User understands that it is obliged to comply with its country´s Law and Regulations, as well as the conditions and limitations of this contract and any other binding document related to Penguin Finance.'),
   getTextItem('description', 0,'Penguin Finance complies with all applicable law, working on an anonymity model, reserving the power to enforce, block, void or exclude any member that is in infringement of these conditions or any law or regulation.'),
   // No offer, no advice
