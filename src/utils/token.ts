@@ -17,3 +17,25 @@ export const getTokenLogoFromAddress = (address: string): string => {
       return '/images/farms/pefi-avax.svg'
   }
 }
+
+export const addTokenToMetamask = async (tokenAddress: string, tokenSymbol: string, tokenDecimals: number) => {
+  const provider = (window as any).ethereum
+  if (provider) {
+    try {
+      await provider.request({
+        method: 'wallet_watchAsset',
+        params: {
+          type: 'ERC20',
+          options: {
+            address: tokenAddress,
+            symbol: tokenSymbol,
+            decimals: tokenDecimals,
+            image: '',
+          },
+        },
+      })
+    } catch (error) {
+      console.log('Error => addMetamask')
+    }
+  }
+}

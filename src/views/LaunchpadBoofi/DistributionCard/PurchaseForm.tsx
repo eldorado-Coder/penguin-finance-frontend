@@ -6,12 +6,13 @@ import { Button, Flex, useModal } from 'penguinfinance-uikit2'
 import UnlockButton from 'components/UnlockButton'
 import { getBalanceNumber } from 'utils/formatBalance'
 import roundDown from 'utils/roundDown'
-import { getBoofiBoosterRocketAddress } from 'utils/addressHelpers'
+import { getBoofiBoosterRocketAddress, getBoofiAddress } from 'utils/addressHelpers'
 import { useBoofiBoosterRocket as useBoofiBoosterRocketStore } from 'state/hooks'
 import {
   useBoofiBoosterRocketPayToken,
   useBoofiBoosterRocket as useBoofiBoosterRocketContract,
 } from 'hooks/useContract'
+import { addTokenToMetamask } from 'utils/token'
 import TokenInput from './TokenInput'
 import TermsAndConditionModal from './TermsAndConditionModal'
 
@@ -105,6 +106,10 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({ tokenName = '', account, on
     `
   }
 
+  const handleAddBoofiToken = async () => {
+    await addTokenToMetamask(getBoofiAddress(), 'BOOFI', 18)
+  }
+
   return (
     <>
       <TokenInput
@@ -125,12 +130,7 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({ tokenName = '', account, on
         {account ? (
           <>
             <TooltipContainer data-for="get-boofi-tooltip" data-tip={getBoofiTooltip()}>
-              <StyledButton
-                tokenBalance={buyTokenAmount}
-                scale="md"
-                disabled={!canPurchase}
-                onClick={handlePurchaseToken}
-              >
+              <StyledButton scale="md" disabled={!canPurchase} onClick={handlePurchaseToken}>
                 {renderText()}
               </StyledButton>
             </TooltipContainer>
@@ -148,11 +148,16 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({ tokenName = '', account, on
           <StyledUnlockButton />
         )}
       </Flex>
+      <Flex mt="8px">
+        <StyledButton scale="md" onClick={handleAddBoofiToken}>
+          Add BOOFI to Metamask
+        </StyledButton>
+      </Flex>
     </>
   )
 }
 
-const StyledButton = styled(Button)<{ tokenBalance?: string }>`
+const StyledButton = styled(Button)`
   width: 100%;
   border-radius: 8px;
   color: white;

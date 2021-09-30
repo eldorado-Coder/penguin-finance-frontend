@@ -184,6 +184,10 @@ export default {
     43113: '',
     43114: '0xbf102adfe38cae2265c9d4b21c8bbd2ae5867eb8',
   },
+  boofi: {
+    43113: '',
+    43114: '0xB00F1ad977a949a3CCc389Ca1D1282A2946963b0',
+  },
 
   // v2
   iPefi: {
