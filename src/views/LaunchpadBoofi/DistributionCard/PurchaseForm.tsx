@@ -46,7 +46,7 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({ tokenName = '', account, on
     Number(buyTokenAmount) <= canPurchaseAmount &&
     Number(buyTokenAmount) <= tokensLeftToDistribute
 
-  const [onPresentTermsAndConditions] = useModal(<TermsAndConditionModal onConfirm={onAgreeTerms} />)
+  const [onPresentTermsAndConditions] = useModal(<TermsAndConditionModal />)
 
   const updatePayTokenBalance = async (value) => {
     if (Number(value) > 0) {
@@ -106,7 +106,7 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({ tokenName = '', account, on
 
   const getBoofiTooltip = () => {
     return `
-      <p>IMPORTANT: By exchanging your PEFI tokens for BOOFI and interacting with the Penguin Launchpad's smart contracts, you're automatically agreeing to our Terms and Conditions. Your consent will be signed on-chain once you purchase BOOFI.</p>
+      <p>IMPORTANT: By exchanging your PEFI tokens for BOOFI and interacting with the Penguin Launchpad's smart contracts, you're automatically agreeing to our Terms and Conditions. Your consent will be signed on-chain once you acquire BOOFI.</p>
     `
   }
 

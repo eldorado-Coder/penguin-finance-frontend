@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Button, Text, Modal } from 'penguinfinance-uikit2'
+import React from 'react'
+import { Text, Modal } from 'penguinfinance-uikit2'
 import styled from 'styled-components'
 import ModalActions from 'components/ModalActions'
 import { termsAndConditions } from './utils'
@@ -22,37 +22,20 @@ const TermRow = styled.div`
 // footer
 const ModalFooter = styled.div`
   padding: 0px 24px;
+
+  div {
+    padding: 12px 0;
+  }
 `
 
 interface TermsAndConditionProps {
-  onConfirm: () => void
   onDismiss?: () => void
 }
 
-const TermsAndConditionModal: React.FC<TermsAndConditionProps> = ({ onDismiss, onConfirm }) => {
-  const [pendingTx, setPendingTx] = useState(false)
-  const [disableAgree, setDisableAgree] = useState(true)
-
-  const onAgree = async () => {
-    setPendingTx(true)
-    try {
-      await onConfirm()
-      setPendingTx(false)
-      onDismiss()
-    } catch (error) {
-      setPendingTx(false)
-    }
-  }
-
-  const handleScroll = (event) => {
-    if (event.target.scrollHeight - event.target.scrollTop < event.target.clientHeight + 100) {
-      setDisableAgree(false)
-    }
-  }
-
+const TermsAndConditionModal: React.FC<TermsAndConditionProps> = ({ onDismiss }) => {
   return (
     <StyledModal title="Terms and conditions" bodyPadding="0px" onDismiss={onDismiss}>
-      <ModalContent onScroll={handleScroll}>
+      <ModalContent>
         {termsAndConditions.map((row) => {
           return (
             <TermRow key={row.text}>
@@ -64,14 +47,7 @@ const TermsAndConditionModal: React.FC<TermsAndConditionProps> = ({ onDismiss, o
         })}
       </ModalContent>
       <ModalFooter>
-        <ModalActions>
-          <Button scale="md" variant="secondary" onClick={onDismiss}>
-            Decline
-          </Button>
-          <Button scale="md" disabled={pendingTx || disableAgree} onClick={onAgree}>
-            {pendingTx ? 'Pending Confirmation' : 'Agree & Sign'}
-          </Button>
-        </ModalActions>
+        <ModalActions />
       </ModalFooter>
     </StyledModal>
   )
