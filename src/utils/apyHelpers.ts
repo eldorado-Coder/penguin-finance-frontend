@@ -93,6 +93,8 @@ export const getApy = (dailyApr = 0) => {
 }
 
 export const getApr = (dailyApr = 0) => {
+  if (Number.isNaN(dailyApr)) return 0
+
   const apr = dailyApr * DAYS_PER_YEAR
   return apr === Infinity ? 999999 : apr
 }
