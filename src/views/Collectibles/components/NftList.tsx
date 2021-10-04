@@ -1,12 +1,13 @@
 import React, { useCallback, useEffect, useState, useMemo } from 'react'
 import orderBy from 'lodash/orderBy'
 import styled from 'styled-components'
+import { Text } from 'penguinfinance-uikit2'
 import nfts from 'config/constants/nfts'
 import { useWeb3React } from '@web3-react/core'
 import { getBunnySpecialContract } from 'utils/contractHelpers'
 import useGetWalletNfts from 'hooks/useGetWalletNfts'
 import makeBatchRequest from 'utils/makeBatchRequest'
-import { useToast } from 'state/hooks'
+import YourNfts from './YourNfts';
 import NftCard from './NftCard'
 import NftGrid from './NftGrid'
 
@@ -28,7 +29,6 @@ const NftList = () => {
   const [claimableNfts, setClaimableNfts] = useState<State>({})
   const { nfts: nftTokenIds, refresh } = useGetWalletNfts()
   const { account } = useWeb3React()
-  const { toastError } = useToast()
 
   const fetchClaimableStatuses = useCallback(
     async (walletAddress: string) => {
@@ -88,21 +88,23 @@ const NftList = () => {
 
   return (
     <>
+      <YourNfts />
+      <CardGrid>
+        <Text bold fontSize='24px' color='primary'>All NFTs</Text>
+      </CardGrid>
       {nftCollections.map(nftCollection => {
         return (
-          <div key={nftCollection.collectionName}>
-            <CardGrid>
-              {orderBy(nftCollection.nftList, 'sortOrder').map((nft) => {
-                const tokenIds = nftTokenIds[nft.bunnyId] ? nftTokenIds[nft.bunnyId].tokenIds : []
+          <CardGrid key={nftCollection.name}>
+            {orderBy(nftCollection.nftList, 'sortOrder').map((nft) => {
+              const tokenIds = nftTokenIds[nft.bunnyId] ? nftTokenIds[nft.bunnyId].tokenIds : []
 
-                return (
-                  <div key={nft.name}>
-                    <NftCard nft={nft} canClaim={claimableNfts[nft.bunnyId]} tokenIds={tokenIds} onSuccess={handleSuccess} />
-                  </div>
-                )
-              })}
-            </CardGrid>
-          </div>
+              return (
+                <div key={`nft-${nft.name}`}>
+                  <NftCard nft={nft} canClaim={claimableNfts[nft.bunnyId]} tokenIds={tokenIds} onSuccess={handleSuccess} />
+                </div>
+              )
+            })}
+          </CardGrid>
         )
       })}
     </>

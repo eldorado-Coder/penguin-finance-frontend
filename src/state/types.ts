@@ -332,6 +332,9 @@ export interface State {
   nestMigrator: NestMigratorState
   v2Pools: PoolsState
   v2Farms: FarmsState
+
+  // collectibles
+  userCollectibles: UserCollectiblesState
 }
 
 // v2
@@ -339,4 +342,8 @@ export interface NestMigratorState {
   expectedIPefi: number
   pefiAllowance: number
   xPefiAllowance: number
+}
+
+export interface UserCollectiblesState {
+  nftIds: number []
 }

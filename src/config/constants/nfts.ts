@@ -13,7 +13,8 @@ const Nfts: Nft[] = [
     sortOrder: 999,
     bunnyId: 1,
     rarity: 2,
-    collection: 'doctor'
+    collection: 'doctor',
+    address: '0x42F80C76c0f19cbEEea24eAAAf351E077Aa80781',
   },
   {
     name: 'Penguin Nurse',
@@ -27,7 +28,8 @@ const Nfts: Nft[] = [
     sortOrder: 999,
     bunnyId: 2,
     rarity: 37,
-    collection: 'doctor'
+    collection: 'doctor',
+    address: '0x3A96c8976697335B3c3cD073eF2739A0Ea47420C',
   },
   {
     name: 'Astronaut',
@@ -41,7 +43,8 @@ const Nfts: Nft[] = [
     sortOrder: 999,
     bunnyId: 3,
     rarity: 0,
-    collection: 'launchpad'
+    collection: 'launchpad',
+    address: '0x617D5019334ccb99F9a2AF752f8Af629CE21D8f3',
   },
   {
     name: 'Spacelord',
@@ -55,7 +58,8 @@ const Nfts: Nft[] = [
     sortOrder: 999,
     bunnyId: 5,
     rarity: 0,
-    collection: 'launchpad'
+    collection: 'launchpad',
+    address: '0x79f1DdE49cdB17fE388D2dbC0db0fd9798810f59',
   },
   {
     name: 'Penguineer',
@@ -69,7 +73,8 @@ const Nfts: Nft[] = [
     sortOrder: 999,
     bunnyId: 4,
     rarity: 0,
-    collection: 'launchpad'
+    collection: 'launchpad',
+    address: '0xbE2199322B992D19B18D9F36DCa5521b6ad773F1',
   }
 ]
 

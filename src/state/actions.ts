@@ -26,6 +26,9 @@ export { fetchDonations } from './donations'
 export { fetchLaunchpadUserDataAsync, updateLaunchpadTierHurdles } from './launchpad'
 export { fetchBoosterRocketUserDataAsync } from './boosterRocket'
 
+// collectibles
+export { fetchUserCollectiblesDataAsync } from './collectibles';
+
 // launchpad - boofi
 export { fetchLaunchpadBoofiUserDataAsync, updateLaunchpadBoofiTierHurdles } from './launchpadBoofi'
 export { fetchBoosterRocketUserDataAsync as fetchBoofiBoosterRocketUserDataAsync } from './boofiBoosterRocket'
