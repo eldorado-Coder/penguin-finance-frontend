@@ -245,24 +245,32 @@ const NestV2: React.FC = () => {
               <WealthContainer>
                 <WealthCard flexDirection="column" padding="4px 16px 16px">
                   <BalanceLabel>Your Wealth</BalanceLabel>
-                  <Flex alignItems="flex-end">
-                    <BalanceText fontSize="14px" mr="4px">
-                      You have generated
-                    </BalanceText>
-                    <Balance>
-                      <CardValue
-                        className="balance"
-                        fontSize={isMobile ? '22px' : '24px'}
-                        value={totalProfitAmount}
-                        decimals={2}
-                        lineHeight="1"
-                        suffix=" PEFI"
-                      />
-                    </Balance>
-                  </Flex>
+                  {Number(totalProfitAmount) > 0 && (
+                    <Flex alignItems="flex-end">
+                      <BalanceText fontSize="14px" mr="4px">
+                        You have generated
+                      </BalanceText>
+                      <Balance>
+                        <CardValue
+                          className="balance"
+                          fontSize={isMobile ? '22px' : '24px'}
+                          value={totalProfitAmount}
+                          decimals={2}
+                          lineHeight="1"
+                          suffix=" PEFI"
+                        />
+                      </Balance>
+                    </Flex>
+                  )}
                   <BalanceText fontSize="14px">
-                    in <span>{`${diffDays} days`}</span>
-                    {`. You've deposited `}
+                    {Number(totalProfitAmount) > 0 && (
+                      <>
+                        {`in `}
+                        <span>{`${diffDays} days`}</span>
+                        {`. `}
+                      </>
+                    )}
+                    {`You've deposited `}
                     <span>{`${totalDepositAmount} PEFI`}</span>
                     {' and withdrawn '}
                     <span>{`${totalWithdrawAmount} PEFI`}</span>
