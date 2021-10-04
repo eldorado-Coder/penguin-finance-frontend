@@ -160,7 +160,8 @@ export type Nft = {
   bunnyId: number
   video?: NftVideo
   rarity?: number
-  collection: string
+  collection: string,
+  address: string
 }
 
 export type TeamImages = {

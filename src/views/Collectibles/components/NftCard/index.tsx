@@ -25,7 +25,7 @@ interface NftCardProps {
   nft: Nft
   canClaim?: boolean
   tokenIds?: number[]
-  onSuccess: () => void
+  onSuccess?: () => void
 }
 
 const Header = styled(InfoRow)`
