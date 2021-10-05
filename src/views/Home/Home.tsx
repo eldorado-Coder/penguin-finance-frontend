@@ -7,12 +7,13 @@ import useTheme from 'hooks/useTheme'
 import Page from 'components/layout/Page'
 import ArtworkCard from 'views/Home/components/ArtworkCard'
 import FarmStakingCard from 'views/Home/components/FarmStakingCard'
-import PefiStats from 'views/Home/components/PefiStats'
 import IglooCard from 'views/Home/components/IglooCard'
 import EarnAPYCard from 'views/Home/components/EarnAPYCard'
 import EmperorInfoCard from 'views/Home/components/EmperorInfoCard'
 import PercentagePefiStakedNestV2 from 'views/Home/components/PercentagePefiStakedNestV2'
 import V2PoolCard from 'views/Pools/components/V2PoolCard'
+import PefiStats from 'views/Home/components/PefiStats'
+import ComingSoonCard from 'views/Home/components/ComingSoonCard'
 import { usePools, useV2Pools, usePricePefiUsdt } from 'state/hooks'
 
 const Hero = styled.div<{ isMobile?: boolean }>`
@@ -66,6 +67,7 @@ const Cards = styled(BaseLayout)`
   align-items: stretch;
   justify-content: stretch;
   margin-bottom: 32px;
+  grid-gap: 24px;
 
   & > div {
     grid-column: span 6;
@@ -93,7 +95,7 @@ const FarmStakingCardWrapper = styled(Flex)`
 const PefiStatsCardWrapper = styled.div``
 
 const SpacingWrapper = styled.div`
-  height: 36px;
+  height: 24px;
 `
 
 const PoolCardWrapper = styled.div`
@@ -160,22 +162,22 @@ const Home: React.FC = () => {
           <Cards>
             <FarmStakingCardWrapper>
               <ArtworkCard />
-              <FarmStakingCard />
             </FarmStakingCardWrapper>
             <PefiStatsCardWrapper>
               <IglooCard />
               <SpacingWrapper />
-              {/* <EarnAPYCard apy={iPefiPool.apy} /> */}
-              <EmperorInfoCard iPefiPrice={iPefiPriceUsd} />
-              <SpacingWrapper />
-              <PercentagePefiStakedNestV2 pool={iPefiPool} />
+              <EarnAPYCard apy={iPefiPool.apy} />
+              {/* <EmperorInfoCard iPefiPrice={iPefiPriceUsd} /> */}
+              {/* <PercentagePefiStakedNestV2 pool={iPefiPool} /> */}
             </PefiStatsCardWrapper>
+            <FarmStakingCard />
             {iPefiPool && (
               <PoolCardWrapper>
                 <V2PoolCard pool={iPefiPool} isMainPool={false} isHomePage />
               </PoolCardWrapper>
             )}
             <PefiStats v1Pool={xPefiPool} v2Pool={iPefiPool} />
+            <ComingSoonCard />
             <SpacingWrapper />
           </Cards>
         </div>

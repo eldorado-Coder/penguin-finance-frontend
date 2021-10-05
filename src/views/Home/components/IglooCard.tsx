@@ -10,11 +10,15 @@ const StyledCard = styled(Card)`
   position: relative;
   width: 100%;
   background: ${({ theme }) => theme.colors.secondary};
+  border-radius: 16px;
 
   ${({ theme }) => theme.mediaQueries.lg} {
     margin: 0;
     max-width: none;
   }
+`
+const StyledCardBody = styled(CardBody)`
+  padding: 12px 16px;
 `
 const CardMidContent = styled(Heading).attrs({ size: 'xl' })`
   line-height: 44px;
@@ -36,7 +40,7 @@ const StyledNavLink = styled(NavLink)`
 const IglooCard = () => {
   return (
     <StyledCard>
-      <CardBody>
+      <StyledCardBody>
         <Text size="md">Earn</Text>
         <CardMidContent>PEFI, PNG & JOE</CardMidContent>
         <Flex justifyContent="space-between">
@@ -45,7 +49,7 @@ const IglooCard = () => {
             <SvgIcon src={`${process.env.PUBLIC_URL}/images/home/arrow-right.svg`} width="25px" height="25px" />
           </StyledNavLink>
         </Flex>
-      </CardBody>
+      </StyledCardBody>
     </StyledCard>
   )
 }
