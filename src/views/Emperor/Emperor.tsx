@@ -11,7 +11,6 @@ import useUserSetting from 'hooks/useUserSetting'
 import EmperorBlock from './components/EmperorBlock'
 import YourScoreBlock from './components/YourScoreBlock'
 import TopPenguinsBlock from './components/TopPenguinsBlock'
-import smBgImage from '../../assets/images/emperor-bg-sm.png'
 
 const JACKPOTS = {
   LOCK: `${process.env.PUBLIC_URL}/images/emperor/jackpot/jackpot_lock.gif`,
@@ -375,7 +374,7 @@ const Emperor: React.FC = () => {
         {isSm ? (
           <EmperorSmWrapper>
             <ThroneSmBgContainer>
-              <EmperorSmBgImage src={smBgImage} alt="" />
+              <EmperorSmBgImage src='/images/emperor/emperor-bg-sm.png' alt="emperor background" />
             </ThroneSmBgContainer>
             <Flex flexDirection='column' alignItems='center' padding='40px 32px'>
               <EmperorBlock />
