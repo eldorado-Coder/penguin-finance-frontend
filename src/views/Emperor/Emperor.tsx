@@ -107,7 +107,7 @@ const PaperWrapper = styled.div<{ isOpen: boolean }>`
   }
 `
 
-const JackpotPaper = styled.img<{ isMobile?: boolean}>`
+const JackpotPaper = styled.img<{ isMobile?: boolean }>`
   object-fit: cover;
   position: absolute;
   min-width: ${({ isMobile }) => isMobile ? '110px' : '120px'};
@@ -145,27 +145,27 @@ const Grid = styled.div<{ align: string; marginTop?: { xs?: number; sm?: number;
   padding: 0 3%;
   @media (min-width: 640px) {
     ${({ marginTop }) =>
-      marginTop.xs && {
-        marginTop: `${marginTop.xs}px`,
-      }}
+    marginTop.xs && {
+      marginTop: `${marginTop.xs}px`,
+    }}
   }
   @media (min-width: 768px) {
     ${({ marginTop }) =>
-      marginTop.sm && {
-        marginTop: `${marginTop.sm}px`,
-      }}
+    marginTop.sm && {
+      marginTop: `${marginTop.sm}px`,
+    }}
   }
   @media (min-width: 1200px) {
     ${({ marginTop }) =>
-      marginTop.md && {
-        marginTop: `${marginTop.md}px`,
-      }}
+    marginTop.md && {
+      marginTop: `${marginTop.md}px`,
+    }}
   }
   @media (min-width: 1450px) {
     ${({ marginTop }) =>
-      marginTop.lg && {
-        marginTop: `${marginTop.lg}px`,
-      }}
+    marginTop.lg && {
+      marginTop: `${marginTop.lg}px`,
+    }}
   }
   @media (max-width: 1600px) {
     font-size: 24px;
@@ -188,7 +188,7 @@ const PGGRid = styled(Grid)`
   }
 `
 
-const EmperorBgContainer = styled.video<{ isMobile?: boolean}>`
+const EmperorBgContainer = styled.video<{ isMobile?: boolean }>`
   object-fit: ${({ isMobile }) => isMobile ? 'cover' : 'fill'};
   position: absolute;
   top: 0px;
@@ -205,6 +205,35 @@ const BlitzImage = styled.img`
   width: 100%;
   height: 100%;
   position: absolute;
+`
+
+const EmperorWrapper = styled.div<{ isSm: boolean }>`
+  background: ${({ isSm }) => isSm ? "#231631" : "transparent"};
+  z-index: -1;
+  padding-bottom: 8px;
+`
+const EmperorSmWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  min-height: 440px;
+`
+const ThroneSmBgContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+`
+const EmperorBlockWrapper = styled.div`
+  margin-top: 100px;
+  width: 180px;
+  z-index: 1;
+`
+
+const EmperorSmBgImage = styled.img`
+  width: 100%;
+  height: 100%;
 `
 
 const Emperor: React.FC = () => {
@@ -275,12 +304,11 @@ const Emperor: React.FC = () => {
             </ChestWrapper>
           </Wrapper>
         )}
-        {isMobile ? 
+        {isMobile ?
           <>
-            <Flex flexDirection='column' alignItems='center' padding='40px 32px'>            
-              <EmperorBlock />
-              {account && 
-                <Flex width='100%' flexDirection='column' mt='300px'>
+            <Flex flexDirection='column' alignItems='center' padding='40px 32px'>
+              {account &&
+                <Flex width='100%' flexDirection='column' px="10px">
                   <YourScoreBlock />
                   <TopPenguinsBlock />
                 </Flex>
@@ -341,12 +369,25 @@ const Emperor: React.FC = () => {
         volume={isMusic ? 100 : 0}
       />
 
-      {/* background video */}
-      <EmperorBgContainer isMobile={isMobile} width="100%" height={!isMobile && "100%"} autoPlay loop muted>
-        <source src={emperorEnded ? emperorWinnerVideo : emperorDefaultVideo} />
-      </EmperorBgContainer>
+      {/* background video on larg screen and background image on small screen */}
+      <EmperorWrapper isSm={isSm}>
+        {isSm ? (
+          <EmperorSmWrapper>
+            <ThroneSmBgContainer>
+              <EmperorSmBgImage src='/images/emperor/emperor-bg-sm.png' alt="emperor background" />
+            </ThroneSmBgContainer>
+            <Flex flexDirection='column' alignItems='center' padding='40px 32px'>
+              <EmperorBlock />
+            </Flex>
+          </EmperorSmWrapper>
+        ) : (
+          <EmperorBgContainer width="100%" height="100%" autoPlay loop muted>
+            <source src={emperorEnded ? emperorWinnerVideo : emperorDefaultVideo} />
+          </EmperorBgContainer>
+        )}
 
-      {!emperorEnded ? <>{renderEmperorStatsPage()}</> : <>{renderEmperorEndPage()}</>}
+        {!emperorEnded ? <>{renderEmperorStatsPage()}</> : <>{renderEmperorEndPage()}</>}
+      </EmperorWrapper>
     </EmperorPage>
   )
 }
