@@ -1,19 +1,19 @@
 import BigNumber from 'bignumber.js'
 import erc20ABI from 'config/abi/erc20.json'
 import multicall from 'utils/multicall'
-import farmsConfig from 'config/constants/farms'
-import { getAddress } from 'utils/addressHelpers'
-import getFarmMasterChefAbi from 'utils/getFarmMasterChefAbi';
-import getFarmMasterChefAddress from 'utils/getFarmMasterChefAddress';
+import { getAddress, getClubPenguinMasterChefAddress } from 'utils/addressHelpers'
+import clubPenguinFarmsConfig from 'config/constants/clubPenguinFarms'
+import clubPenguinMasterChefAbi from 'config/abi/clubPenguin.json'
+
+const masterChefAddress = getClubPenguinMasterChefAddress()
 
 export const fetchFarmUserAllowances = async (account: string) => {
-  const calls = farmsConfig.map((farm) => {
-    const lpContractAddress = getAddress(farm.lpAddresses)
-    const masterChefAddress = getFarmMasterChefAddress(farm.type);
-    return { address: lpContractAddress, name: 'allowance', params: [account, masterChefAddress] }
+  const calls = clubPenguinFarmsConfig.map((farm) => {
+    const stakingTokenContractAddress = getAddress(farm.stakingTokenAddresses)
+    return { address: stakingTokenContractAddress, name: 'allowance', params: [account, masterChefAddress] }
   })
 
-  const rawLpAllowances = await multicall(erc20ABI, calls);
+  const rawLpAllowances = await multicall(erc20ABI, calls)
   const parsedLpAllowances = rawLpAllowances.map((lpBalance) => {
     return new BigNumber(lpBalance).toJSON()
   })
@@ -22,11 +22,11 @@ export const fetchFarmUserAllowances = async (account: string) => {
 }
 
 export const fetchFarmUserTokenBalances = async (account: string) => {
-  const calls = farmsConfig.map((farm) => {
-    const lpContractAddress = getAddress(farm.lpAddresses)
+  const calls = clubPenguinFarmsConfig.map((farm) => {
+    const stakingTokenContractAddress = getAddress(farm.stakingTokenAddresses)
 
     return {
-      address: lpContractAddress,
+      address: stakingTokenContractAddress,
       name: 'balanceOf',
       params: [account],
     }
@@ -40,20 +40,21 @@ export const fetchFarmUserTokenBalances = async (account: string) => {
 }
 
 export const fetchFarmUserStakedBalances = async (account: string) => {
-  const results = [];
-  for (let i = 0; i < farmsConfig.length; i++) {
-    const call = [{
-      address: getFarmMasterChefAddress(farmsConfig[i].type),
-      name: 'userInfo',
-      params: [farmsConfig[i].pid, account],
-    }];
+  const results = []
+  for (let i = 0; i < clubPenguinFarmsConfig.length; i++) {
+    const call = [
+      {
+        address: masterChefAddress,
+        name: 'userInfo',
+        params: [clubPenguinFarmsConfig[i].pid, account],
+      },
+    ]
 
-    const masterChefABI = getFarmMasterChefAbi(farmsConfig[i].type);
-    const farmRes = multicall(masterChefABI, call);
-    results.push(farmRes);
+    const farmRes = multicall(clubPenguinMasterChefAbi, call)
+    results.push(farmRes)
   }
 
-  const rawStakedBalances = await Promise.all(results);
+  const rawStakedBalances = await Promise.all(results)
   const parsedStakedBalances = rawStakedBalances.map((stakedBalance) => {
     return new BigNumber(stakedBalance[0][0]._hex).toJSON()
   })
@@ -61,20 +62,21 @@ export const fetchFarmUserStakedBalances = async (account: string) => {
 }
 
 export const fetchFarmUserEarnings = async (account: string) => {
-  const results = [];
-  for (let i = 0; i < farmsConfig.length; i++) {
-    const call = [{
-      address: getFarmMasterChefAddress(farmsConfig[i].type),
-      name: farmsConfig[i].name,
-      params: [farmsConfig[i].pid, account],
-    }];
+  const results = []
+  for (let i = 0; i < clubPenguinFarmsConfig.length; i++) {
+    const call = [
+      {
+        address: masterChefAddress,
+        name: 'pendingRewards',
+        params: [clubPenguinFarmsConfig[i].pid, account],
+      },
+    ]
 
-    const masterChefABI = getFarmMasterChefAbi(farmsConfig[i].type);
-    const farmRes = multicall(masterChefABI, call);
-    results.push(farmRes);
+    const farmRes = multicall(clubPenguinMasterChefAbi, call)
+    results.push(farmRes)
   }
 
-  const rawEarnings = await Promise.all(results);
+  const rawEarnings = await Promise.all(results)
 
   const parsedEarnings = rawEarnings.map((earnings) => {
     return new BigNumber(earnings[0]).toJSON()

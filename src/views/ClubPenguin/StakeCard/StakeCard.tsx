@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
 import { Text, Flex, ButtonMenu, ButtonMenuItem } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
-import { useBoofiLaunchpad } from 'state/hooks'
+import { useClubPenguinFarms } from 'state/hooks'
 import { useClubPenguinStake } from 'hooks/useStake'
 import { useClubPenguinUnstake } from 'hooks/useUnstake'
 import { useClubPenguinApprove } from 'hooks/useApprove'
@@ -17,10 +17,11 @@ const StakeCard = () => {
   const { onStake } = useClubPenguinStake(0)
   const { onUnstake } = useClubPenguinUnstake(0)
   const { onApproveIPefi } = useClubPenguinApprove()
-  const { stakedBalance: staked, canUnstake, timeRemainingToUnstake, iPefi } = useBoofiLaunchpad(account)
-
-  const iPEFIBalance = new BigNumber(iPefi)
-  const stakedBalance = new BigNumber(staked)
+  const clubFarms = useClubPenguinFarms(account)
+  const activeFarm = clubFarms[0]
+  const { userData } = activeFarm
+  const iPEFIBalance = userData ? new BigNumber(userData.tokenBalance) : new BigNumber(0)
+  const stakedBalance = userData ? new BigNumber(userData.stakedBalance) : new BigNumber(0)
 
   const handleSwitchTab = (tab) => {
     setActiveTab(tab)
@@ -31,13 +32,13 @@ const StakeCard = () => {
       <CardContent>
         <TabWrapper>
           <ButtonMenu variant="subtle" activeIndex={activeTab} onItemClick={handleSwitchTab}>
-            <OptionItem active={activeTab === 0}>Stake iPEFI</OptionItem>
+            <OptionItem active={activeTab === 0}>Stake</OptionItem>
             <OptionItem active={activeTab === 1}>Unstake</OptionItem>
           </ButtonMenu>
         </TabWrapper>
         <Flex mt="24px" mb="8px" justifyContent="space-between" alignItems="center">
           <StakeLabel color="primary" fontWeight="500">
-            {activeTab === 0 ? 'Stake iPEFI to earn allocations' : 'Unstake'}
+            {activeTab === 0 ? 'Stake iPEFI, get SHERPA' : 'Unstake'}
           </StakeLabel>
         </Flex>
         {activeTab === 0 ? (
@@ -49,14 +50,7 @@ const StakeCard = () => {
             onConfirm={onStake}
           />
         ) : (
-          <UnstakeForm
-            max={stakedBalance}
-            tokenName="iPEFI"
-            account={account}
-            unstakedEnabled={canUnstake}
-            timeRemainingToUnstake={timeRemainingToUnstake}
-            onConfirm={onUnstake}
-          />
+          <UnstakeForm max={stakedBalance} tokenName="SHERPA" account={account} onConfirm={onUnstake} />
         )}
       </CardContent>
     </StyledCard>
@@ -75,9 +69,9 @@ const StyledCard = styled(Card)<{ isNestPage?: boolean }>`
 `
 
 const CardContent = styled.div`
+  border-radius: 8px;
   padding: 24px;
   background: ${(props) => props.theme.card.background};
-  border-radius: 32px 32px 0 0;
 `
 
 const TabWrapper = styled.div`
@@ -98,7 +92,7 @@ const OptionItem = styled(ButtonMenuItem)<{ active: boolean }>`
   min-width: 100px;
   font-weight: 500;
   box-shadow: none;
-  background-color: ${({ active }) => active && '#38db93'};
+  background-color: ${({ active, theme }) => active && theme.colors.red};
   color: ${({ active }) => (active ? 'white' : '#A79FBC')};
   color: ${({ active, theme }) => theme.isDark && !active && '#BBA6DD'};
 `

@@ -4,11 +4,10 @@ import styled from 'styled-components'
 import { useHistory } from 'react-router-dom'
 import { Button, Flex } from 'penguinfinance-uikit2'
 import UnlockButton from 'components/UnlockButton'
-import { PANGOLIN_PEFI_LINK } from 'config'
 import { useIPefi } from 'hooks/useContract'
 import { getFullDisplayBalance } from 'utils/formatBalance'
 import roundDown from 'utils/roundDown'
-import { getBoofiLaunchpadAddress } from 'utils/addressHelpers'
+import { getClubPenguinMasterChefAddress } from 'utils/addressHelpers'
 import escapeRegExp from 'utils/escapeRegExp'
 import TokenInput from './TokenInput'
 
@@ -49,7 +48,6 @@ const StakeForm: React.FC<StakeFormProps> = ({ max, onConfirm, tokenName = '', a
   }, [fullBalance, setVal])
 
   const renderText = () => {
-    if (Number(val) > Number(fullBalance) || Number(fullBalance) === 0) return 'Get more iPEFI'
     if (pendingTx) return 'Pending Confirmation'
     if (val) return 'Confirm Staking'
     return 'Enter Amount'
@@ -59,7 +57,7 @@ const StakeForm: React.FC<StakeFormProps> = ({ max, onConfirm, tokenName = '', a
     setPendingTx(true)
     try {
       const allowanceBalance =
-        (await iPefiContract.methods.allowance(account, getBoofiLaunchpadAddress()).call()) / 1e18
+        (await iPefiContract.methods.allowance(account, getClubPenguinMasterChefAddress()).call()) / 1e18
       if (allowanceBalance === 0) {
         await onApprove()
       }
@@ -76,6 +74,10 @@ const StakeForm: React.FC<StakeFormProps> = ({ max, onConfirm, tokenName = '', a
     history.push('/nests')
   }
 
+  const handleViewTutorial = () => {
+    console.log('view tutorial--->')
+  }
+
   const canStake = !pendingTx && Number(val) > 0
 
   return (
@@ -87,19 +89,21 @@ const StakeForm: React.FC<StakeFormProps> = ({ max, onConfirm, tokenName = '', a
         max={fullBalance}
         symbol={tokenName}
       />
-      <Flex mt="8px">
+      <StyledFlex justifyContent="space-between">
+        <StyledButton1 tokenBalance={val} scale="md" disabled={pendingTx} onClick={handleGetIPefi}>
+          Get iPEFI
+        </StyledButton1>
+        <StyledButton1 tokenBalance={val} scale="md" disabled={pendingTx} onClick={handleViewTutorial}>
+          View Tutorial
+        </StyledButton1>
+      </StyledFlex>
+      <Flex mt="16px">
         {!account && <StyledUnlockButton />}
         {account && (
           <>
-            {Number(fullBalance) >= Number(val) && Number(fullBalance) > 0 ? (
-              <StyledButton tokenBalance={val} scale="md" disabled={!canStake} onClick={handleStake}>
-                {renderText()}
-              </StyledButton>
-            ) : (
-              <StyledButton tokenBalance={val} scale="md" disabled={pendingTx} onClick={handleGetIPefi}>
-                {renderText()}
-              </StyledButton>
-            )}
+            <StyledButton2 tokenBalance={val} scale="md" disabled={!canStake} onClick={handleStake}>
+              {renderText()}
+            </StyledButton2>
           </>
         )}
       </Flex>
@@ -107,17 +111,29 @@ const StakeForm: React.FC<StakeFormProps> = ({ max, onConfirm, tokenName = '', a
   )
 }
 
-const StyledButton = styled(Button)<{ tokenBalance?: string }>`
+const StyledFlex = styled(Flex)`
+  gap: 10px;
+  margin-top: 16px;
+`
+
+const StyledButton1 = styled(Button)`
+  width: 100%;
+  border-radius: 8px;
+  background: ${({ theme }) => (theme.isDark ? '#604E84' : '#ECE8F2')};
+  color: ${({ theme }) => (theme.isDark ? 'white' : theme.colors.red)};
+  box-shadow: none;
+`
+
+const StyledButton2 = styled(Button)`
   width: 100%;
   border-radius: 8px;
   color: white;
-  background-color: #38db93;
+  background-color: ${({ theme }) => theme.colors.red};
 `
 
 const StyledUnlockButton = styled(UnlockButton)`
   width: 100%;
   border-radius: 8px;
-  background-color: #38db93;
 `
 
 export default StakeForm
