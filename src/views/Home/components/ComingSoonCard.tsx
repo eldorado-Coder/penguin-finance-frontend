@@ -7,11 +7,19 @@ import CardValue from './CardValue'
 const CardContainer = styled(Card)`
   margin-left: auto;
   margin-right: auto;
-  background: ${({ theme }) => theme.isDark && '#30264F'};
+  background: ${({ theme }) => theme.isDark ? '#272044' : '#342C6D'};
+  border-radius: 26px;
+  box-shadow: 0px 1px 8px rgb(0 0 0 / 24%);
 `
 
 const StyledHeading = styled(Heading)`
   font-weight: 800;
+  color: white;
+
+  @media (min-width: 1200px) {
+    font-size: 58px;
+    line-height: 70px;
+  }
 `
 
 const Row = styled.div`
@@ -22,51 +30,67 @@ const Row = styled.div`
   margin-bottom: 8px;
 `
 
+const StyledCardBody = styled(CardBody)`
+  @media (min-width: 1200px) {
+    padding: 24px 40px;
+  }
+`
+
+const StyledText = styled(Text)`
+  font-weight: 300;
+  font-size: 14px;
+
+  @media (min-width: 1200px) {
+    font-size: 20px;
+    line-height: 25px;
+  }
+`;
+
 const ComingSoonCard: React.FC = () => {
   const { isDark } = useTheme()
 
   return (
     <CardContainer>
-      <CardBody>
-        <StyledHeading size="xl" mb="24px" color="primary">
+      <StyledCardBody>
+        <StyledHeading size="xl" mb="8px" color="primary">
           Coming Soon
         </StyledHeading>
         <Row>
-          <Text bold color={isDark ? 'red' : 'textSubtle'} fontSize="14px">
+          <StyledText color='white'>
             Club Penguin dApp
-          </Text>
+          </StyledText>
         </Row>
         <Row>
-          <Text bold color={isDark ? 'red' : 'textSubtle'} fontSize="14px">
+          <StyledText color='white'>
             Penguin Collectible NFTs
-          </Text>
+          </StyledText>
         </Row>
         <Row>
-          <Text bold color={isDark ? 'red' : 'textSubtle'} fontSize="14px">
+          <StyledText color='white'>
             CryptoPuffies
-          </Text>
+          </StyledText>
         </Row>
         <Row>
-          <Text bold color={isDark ? 'red' : 'textSubtle'} fontSize="14px">
+          <StyledText color='white'>
             Pangolin vs Joe Emperor Game
-          </Text>
+          </StyledText>
         </Row>
         <Row>
-          <Text bold color={isDark ? 'red' : 'textSubtle'} fontSize="14px">
+          <StyledText color='white'>
             Make Igloos, Not War
-          </Text>
+          </StyledText>
         </Row>
         <Row>
-          <Text bold color={isDark ? 'red' : 'textSubtle'} fontSize="14px">
+          <StyledText color='white'>
             Penguin Area
-          </Text>
+          </StyledText>
         </Row>
         <Row>
-          <Text bold color={isDark ? 'red' : 'textSubtle'} fontSize="14px">
+          <StyledText color='white'>
             Read our Roadmap
-          </Text>
+          </StyledText>
         </Row>
-      </CardBody>
+      </StyledCardBody>
     </CardContainer>
   )
 }
