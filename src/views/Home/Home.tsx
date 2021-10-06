@@ -16,6 +16,10 @@ import PefiStats from 'views/Home/components/PefiStats'
 import ComingSoonCard from 'views/Home/components/ComingSoonCard'
 import { usePools, useV2Pools, usePricePefiUsdt } from 'state/hooks'
 
+const StyledPage = styled(Page)`
+  max-width: 1380px;
+`;
+
 const Hero = styled.div<{ isMobile?: boolean }>`
   position: relative;
   align-items: center;
@@ -69,6 +73,11 @@ const Cards = styled(BaseLayout)`
   margin-bottom: 32px;
   grid-gap: 24px;
 
+  @media (min-width: 1200px) {
+    margin-bottom: 30px;
+    grid-gap: 56px;
+  }
+
   & > div {
     grid-column: span 6;
     width: 100%;
@@ -96,6 +105,10 @@ const PefiStatsCardWrapper = styled.div``
 
 const SpacingWrapper = styled.div`
   height: 24px;
+
+  @media (min-width: 1200px) {
+    height: 30px;
+  }
 `
 
 const PoolCardWrapper = styled.div`
@@ -147,8 +160,8 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <Page>
-        <Hero isMobile={isMobile}>
+      <StyledPage>
+        {/* <Hero isMobile={isMobile}>
           <HeroBgImageContainer>
             <HeroBgImage
               isMobile={isMobile}
@@ -156,8 +169,8 @@ const Home: React.FC = () => {
               alt="astronaut"
             />
           </HeroBgImageContainer>
-        </Hero>
-        <HomeBgContainer />
+        </Hero> */}
+        {/* <HomeBgContainer /> */}
         <div>
           <Cards>
             <FarmStakingCardWrapper>
@@ -170,18 +183,22 @@ const Home: React.FC = () => {
               {/* <EmperorInfoCard iPefiPrice={iPefiPriceUsd} /> */}
               {/* <PercentagePefiStakedNestV2 pool={iPefiPool} /> */}
             </PefiStatsCardWrapper>
+          </Cards>
+          <Cards>
             <FarmStakingCard />
             {iPefiPool && (
               <PoolCardWrapper>
                 <V2PoolCard pool={iPefiPool} isMainPool={false} isHomePage />
               </PoolCardWrapper>
             )}
+          </Cards>
+          <Cards>
             <PefiStats v1Pool={xPefiPool} v2Pool={iPefiPool} />
             <ComingSoonCard />
-            <SpacingWrapper />
           </Cards>
+          <SpacingWrapper />
         </div>
-      </Page>
+      </StyledPage>
     </>
   )
 }
