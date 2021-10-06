@@ -10,11 +10,19 @@ const NftDistributors: NftDistributor[] = [
     },
   },
   {
-    collection: 'launchpad',
+    collection: 'sherpa',
     description: 'NFT Distributor for Sherpa Launchpad Staking',
     address: {
       43113: '',
       43114: '0x730459373cEA7B24fa7144406EC2a895D8498d5e',
+    },
+  },
+  {
+    collection: 'boofi',
+    description: 'NFT Distributor for Boofi Launchpad Staking',
+    address: {
+      43113: '',
+      43114: '0xdE9030A5D572440E2a5CED7442289155AFA4c26A',
     },
   },
 ]
