@@ -4,7 +4,7 @@ import { Heading, Card, CardBody, Flex, Skeleton } from 'penguinfinance-uikit2'
 import { NavLink } from 'react-router-dom'
 import SvgIcon from 'components/SvgIcon'
 import { getNumberWithCommas } from 'utils/formatBalance'
-import BigNumber from 'bignumber.js'
+import { useEmperor } from 'state/hooks'
 
 const StyledCard = styled(Card)`
   margin-left: auto;
@@ -36,18 +36,35 @@ const StyledNavLink = styled(NavLink)`
   }
 `
 
-const EarnAPYCard = ({ apy }: { apy: BigNumber }) => {
-  const displayedApy = getNumberWithCommas((100 * apy.toNumber()).toFixed(2))
+const EmperorInfoCard = ({ iPefiPrice }: { iPefiPrice: number }) => {
+  const { currentEmperor } = useEmperor()
+  const currentEmperorJackpot =
+    (currentEmperor && currentEmperor.jackpot && getNumberWithCommas(Number(currentEmperor.jackpot).toFixed(2))) || 0
+  const currentEmperorJackpotInUsd =
+    (currentEmperor &&
+      currentEmperor.jackpot &&
+      iPefiPrice &&
+      getNumberWithCommas((Number(iPefiPrice) * Number(currentEmperor.jackpot)).toFixed(2))) ||
+    0
+
   return (
     <StyledCard>
       <CardBody>
-        <Text size="md">Enjoy a comfy</Text>
+        <Text size="md">The last Penguin Emperor Jackpot was</Text>
         <CardMidContent color="primary">
-          {apy ? `${displayedApy}% APY` : <Skeleton animation="pulse" variant="rect" height="44px" />}
+          {currentEmperor && currentEmperor.jackpot ? (
+            `${currentEmperorJackpot} iPEFI`
+          ) : (
+            <Skeleton animation="pulse" variant="rect" height="44px" />
+          )}
         </CardMidContent>
         <Flex justifyContent="space-between">
-          <Text size="md">by holding iPEFI</Text>
-          <StyledNavLink exact activeClassName="active" to="/nests" id="farm-apy-cta">
+          {currentEmperor && currentEmperor.jackpot && iPefiPrice ? (
+            <Text size="md">{`($${currentEmperorJackpotInUsd})`}</Text>
+          ) : (
+            <Skeleton animation="pulse" variant="rect" height="22px" />
+          )}
+          <StyledNavLink exact activeClassName="active" to="/emperor" id="farm-apy-cta">
             <SvgIcon src={`${process.env.PUBLIC_URL}/images/home/arrow-right.svg`} width="25px" height="25px" />
           </StyledNavLink>
         </Flex>
@@ -56,4 +73,4 @@ const EarnAPYCard = ({ apy }: { apy: BigNumber }) => {
   )
 }
 
-export default EarnAPYCard
+export default EmperorInfoCard

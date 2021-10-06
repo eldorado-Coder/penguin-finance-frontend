@@ -5,15 +5,20 @@ import { BaseLayout, Flex, useMatchBreakpoints } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import useTheme from 'hooks/useTheme'
 import Page from 'components/layout/Page'
-import ArtworkCard from 'views/Home/components/ArtworkCard'
-import FarmStakingCard from 'views/Home/components/FarmStakingCard'
-import PefiStats from 'views/Home/components/PefiStats'
-import IglooCard from 'views/Home/components/IglooCard'
-import EarnAPYCard from 'views/Home/components/EarnAPYCard'
-import EmperorInfoCard from 'views/Home/components/EmperorInfoCard'
-import PercentagePefiStakedNestV2 from 'views/Home/components/PercentagePefiStakedNestV2'
+import ArtworkCard from 'views/HomeV2/components/ArtworkCard'
+import FarmStakingCard from 'views/HomeV2/components/FarmStakingCard'
+import IglooCard from 'views/HomeV2/components/IglooCard'
+import EarnAPYCard from 'views/HomeV2/components/EarnAPYCard'
+import EmperorInfoCard from 'views/HomeV2/components/EmperorInfoCard'
+import PercentagePefiStakedNestV2 from 'views/HomeV2/components/PercentagePefiStakedNestV2'
 import V2PoolCard from 'views/Pools/components/V2PoolCard'
+import PefiStats from 'views/HomeV2/components/PefiStats'
+import ComingSoonCard from 'views/HomeV2/components/ComingSoonCard'
 import { usePools, useV2Pools, usePricePefiUsdt } from 'state/hooks'
+
+const StyledPage = styled(Page)`
+  max-width: 1380px;
+`
 
 const Hero = styled.div<{ isMobile?: boolean }>`
   position: relative;
@@ -66,6 +71,12 @@ const Cards = styled(BaseLayout)`
   align-items: stretch;
   justify-content: stretch;
   margin-bottom: 32px;
+  grid-gap: 24px;
+
+  @media (min-width: 1200px) {
+    margin-bottom: 30px;
+    grid-gap: 56px;
+  }
 
   & > div {
     grid-column: span 6;
@@ -93,7 +104,11 @@ const FarmStakingCardWrapper = styled(Flex)`
 const PefiStatsCardWrapper = styled.div``
 
 const SpacingWrapper = styled.div`
-  height: 36px;
+  height: 24px;
+
+  @media (min-width: 1200px) {
+    height: 30px;
+  }
 `
 
 const PoolCardWrapper = styled.div`
@@ -145,8 +160,8 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <Page>
-        <Hero isMobile={isMobile}>
+      <StyledPage>
+        {/* <Hero isMobile={isMobile}>
           <HeroBgImageContainer>
             <HeroBgImage
               isMobile={isMobile}
@@ -154,32 +169,36 @@ const Home: React.FC = () => {
               alt="astronaut"
             />
           </HeroBgImageContainer>
-        </Hero>
-        <HomeBgContainer />
+        </Hero> */}
+        {/* <HomeBgContainer /> */}
         <div>
           <Cards>
             <FarmStakingCardWrapper>
               <ArtworkCard />
-              <FarmStakingCard />
             </FarmStakingCardWrapper>
             <PefiStatsCardWrapper>
               <IglooCard />
               <SpacingWrapper />
-              {/* <EarnAPYCard apy={iPefiPool.apy} /> */}
-              <EmperorInfoCard iPefiPrice={iPefiPriceUsd} />
-              <SpacingWrapper />
-              <PercentagePefiStakedNestV2 pool={iPefiPool} />
+              <EarnAPYCard apy={iPefiPool.apy} />
+              {/* <EmperorInfoCard iPefiPrice={iPefiPriceUsd} /> */}
+              {/* <PercentagePefiStakedNestV2 pool={iPefiPool} /> */}
             </PefiStatsCardWrapper>
+          </Cards>
+          <Cards>
+            <FarmStakingCard />
             {iPefiPool && (
               <PoolCardWrapper>
                 <V2PoolCard pool={iPefiPool} isMainPool={false} isHomePage />
               </PoolCardWrapper>
             )}
-            <PefiStats v1Pool={xPefiPool} v2Pool={iPefiPool} />
-            <SpacingWrapper />
           </Cards>
+          <Cards>
+            <PefiStats v1Pool={xPefiPool} v2Pool={iPefiPool} />
+            <ComingSoonCard />
+          </Cards>
+          <SpacingWrapper />
         </div>
-      </Page>
+      </StyledPage>
     </>
   )
 }

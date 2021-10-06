@@ -13,7 +13,8 @@ import LaunchpadVideo from './views/LaunchpadVideo'
 
 // Route-based code splitting
 // Only pool is included in the main bundle because of it's the most visited page'
-const Home = lazy(() => import('./views/Home'))
+const HomeV1 = lazy(() => import('./views/Home'))
+const HomeV2 = lazy(() => import('./views/HomeV2'))
 const Farms = lazy(() => import('./views/Farms'))
 const FarmsV2 = lazy(() => import('./views/FarmsV2'))
 const Arena = lazy(() => import('./views/Arena'))
@@ -56,7 +57,8 @@ const App: React.FC = () => {
               <CompounderIgloos />
             </Route>
             <Route path="/" exact>
-              <Home />
+              {/* <HomeV2 /> */}
+              <HomeV1 />
             </Route>
             <Route path="/farms">
               <FarmsV2 />
