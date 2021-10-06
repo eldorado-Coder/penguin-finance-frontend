@@ -202,3 +202,7 @@ export interface Token {
   decimals?: number
   projectLink?: string
 }
+
+export interface ClubPenguinFarmConfig {
+  pid: number
+}

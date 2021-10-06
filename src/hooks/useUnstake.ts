@@ -23,6 +23,7 @@ import {
   // v2
   v2FarmUnstake,
   v2FarmHarvest,
+  clubPenguinUnstake,
 } from 'utils/callHelpers'
 import {
   useLaunchPad,
@@ -32,6 +33,7 @@ import {
   // v2
   useV2SousChef,
   useV2MasterChef,
+  useClubPenguinMasterChef, // club penguin
 } from './useContract'
 
 const useUnstake = (pid: number, type?: string) => {
@@ -178,6 +180,25 @@ export const useV2Harvest = (pid: number, type?: string) => {
   )
 
   return { onHarvest: handleHarvest }
+}
+
+// club penguin
+export const useClubPenguinUnstake = (pid: number) => {
+  const dispatch = useDispatch()
+  const { account } = useWeb3React()
+  const clubPenguinMasterChefContract = useClubPenguinMasterChef()
+
+  const handleUnstake = useCallback(
+    async (amount: string) => {
+      const txHash = await clubPenguinUnstake(clubPenguinMasterChefContract, pid, amount, account)
+      // TODO: should be changed
+      dispatch(fetchLaunchpadBoofiUserDataAsync(account))
+      console.info(txHash)
+    },
+    [account, pid, dispatch, clubPenguinMasterChefContract],
+  )
+
+  return { onUnstake: handleUnstake }
 }
 
 export default useUnstake

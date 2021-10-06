@@ -140,6 +140,13 @@ export const getV2MasterChefAddress = () => {
 
 // nft collectibles
 export const getNftDistributorAddress = (type) => {
-  const _nftDistributor = nftDistributors.find((row) => row.collection === type)
+  let _nftDistributor = nftDistributors.find((row) => row.collection === type)
+  if (!_nftDistributor) {
+    _nftDistributor = nftDistributors[0]
+  }
   return getAddress(_nftDistributor.address)
+}
+
+export const getClubPenguinMasterChefAddress = () => {
+  return getAddress(addresses.clubPenguinMasterChef)
 }

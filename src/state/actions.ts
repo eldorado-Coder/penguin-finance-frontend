@@ -27,7 +27,7 @@ export { fetchLaunchpadUserDataAsync, updateLaunchpadTierHurdles } from './launc
 export { fetchBoosterRocketUserDataAsync } from './boosterRocket'
 
 // collectibles
-export { fetchUserCollectiblesDataAsync } from './collectibles';
+export { fetchUserCollectiblesDataAsync } from './collectibles'
 
 // launchpad - boofi
 export { fetchLaunchpadBoofiUserDataAsync, updateLaunchpadBoofiTierHurdles } from './launchpadBoofi'
@@ -52,3 +52,9 @@ export {
   fetchFarmsPublicDataAsync as fetchV2FarmsPublicDataAsync,
   fetchFarmUserDataAsync as fetchV2FarmUserDataAsync,
 } from './v2Farms'
+
+// club penguins
+export {
+  fetchFarmsPublicDataAsync as fetchClubPenguinFarmsPublicDataAsync,
+  fetchFarmUserDataAsync as fetchClubPenguinFarmUserDataAsync,
+} from './clubPenguin'

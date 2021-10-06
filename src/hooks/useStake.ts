@@ -22,6 +22,7 @@ import {
   launchpadStake,
   // v2
   v2FarmStake,
+  clubPenguinStake,
 } from 'utils/callHelpers'
 import {
   useLaunchPad,
@@ -30,6 +31,7 @@ import {
   useSousChef,
   useV2SousChef,
   useV2MasterChef,
+  useClubPenguinMasterChef, // club penguin
 } from './useContract'
 
 const useStake = (pid: number, type?: string) => {
@@ -149,6 +151,25 @@ export const useV2Stake = (pid: number, type?: string) => {
       console.info(txHash)
     },
     [account, dispatch, v2MasterChefContract, pid],
+  )
+
+  return { onStake: handleStake }
+}
+
+// club penguin
+export const useClubPenguinStake = (pid: number) => {
+  const dispatch = useDispatch()
+  const { account } = useWeb3React()
+  const clubPenguinMasterChefContract = useClubPenguinMasterChef()
+
+  const handleStake = useCallback(
+    async (amount: string) => {
+      const txHash = await clubPenguinStake(clubPenguinMasterChefContract, pid, amount, account)
+      // TODO: should be changed
+      dispatch(fetchLaunchpadBoofiUserDataAsync(account))
+      console.info(txHash)
+    },
+    [account, pid, dispatch, clubPenguinMasterChefContract],
   )
 
   return { onStake: handleStake }

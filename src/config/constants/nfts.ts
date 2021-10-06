@@ -14,7 +14,7 @@ const Nfts: Nft[] = [
     sortOrder: 999,
     bunnyId: 1,
     rarity: 2,
-    collection: 'doctor',
+    collection: 'Penguins Without Borders',
     address: '0x42F80C76c0f19cbEEea24eAAAf351E077Aa80781',
   },
   {
@@ -28,7 +28,7 @@ const Nfts: Nft[] = [
     sortOrder: 999,
     bunnyId: 2,
     rarity: 37,
-    collection: 'doctor',
+    collection: 'Penguins Without Borders',
     address: '0x3A96c8976697335B3c3cD073eF2739A0Ea47420C',
   },
   // sherpa launchpad
@@ -43,7 +43,7 @@ const Nfts: Nft[] = [
     sortOrder: 999,
     bunnyId: 3,
     rarity: 0,
-    collection: 'sherpa',
+    collection: 'Penguin Launchpad: SHERPA',
     address: '0x617D5019334ccb99F9a2AF752f8Af629CE21D8f3',
   },
   {
@@ -57,7 +57,7 @@ const Nfts: Nft[] = [
     sortOrder: 999,
     bunnyId: 5,
     rarity: 0,
-    collection: 'sherpa',
+    collection: 'Penguin Launchpad: SHERPA',
     address: '0x79f1DdE49cdB17fE388D2dbC0db0fd9798810f59',
   },
   {
@@ -71,7 +71,7 @@ const Nfts: Nft[] = [
     sortOrder: 999,
     bunnyId: 4,
     rarity: 0,
-    collection: 'sherpa',
+    collection: 'Penguin Launchpad: SHERPA',
     address: '0xbE2199322B992D19B18D9F36DCa5521b6ad773F1',
   },
 
@@ -87,7 +87,7 @@ const Nfts: Nft[] = [
     sortOrder: 999,
     bunnyId: 7,
     rarity: 0,
-    collection: 'boofi',
+    collection: 'Penguin Launchpad: BOOFI',
     address: '0x02B2fFB0034405183e9741DC0124ce27B90C65E9',
   },
   {
@@ -101,7 +101,7 @@ const Nfts: Nft[] = [
     sortOrder: 999,
     bunnyId: 8,
     rarity: 0,
-    collection: 'boofi',
+    collection: 'Penguin Launchpad: BOOFI',
     address: '0xaF7CB6Bf00ea3457965CB05dbA034C762d6492A0',
   },
   {
@@ -115,7 +115,7 @@ const Nfts: Nft[] = [
     sortOrder: 999,
     bunnyId: 9,
     rarity: 0,
-    collection: 'boofi',
+    collection: 'Penguin Launchpad: BOOFI',
     address: '0x623fFc678b756eadBC15A66f1d79C2Fc3d436ced',
   },
 ]
