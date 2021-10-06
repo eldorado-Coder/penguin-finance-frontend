@@ -48,6 +48,7 @@ const StakeForm: React.FC<StakeFormProps> = ({ max, onConfirm, tokenName = '', a
   }, [fullBalance, setVal])
 
   const renderText = () => {
+    if (Number(val) > Number(fullBalance) || Number(fullBalance) === 0) return 'Get more iPEFI'
     if (pendingTx) return 'Pending Confirmation'
     if (val) return 'Confirm Staking'
     return 'Enter Amount'
@@ -101,9 +102,17 @@ const StakeForm: React.FC<StakeFormProps> = ({ max, onConfirm, tokenName = '', a
         {!account && <StyledUnlockButton />}
         {account && (
           <>
-            <StyledButton2 tokenBalance={val} scale="md" disabled={!canStake} onClick={handleStake}>
-              {renderText()}
-            </StyledButton2>
+            <>
+              {Number(fullBalance) >= Number(val) && Number(fullBalance) > 0 ? (
+                <StyledButton2 tokenBalance={val} scale="md" disabled={!canStake} onClick={handleStake}>
+                  {renderText()}
+                </StyledButton2>
+              ) : (
+                <StyledButton2 tokenBalance={val} scale="md" disabled onClick={handleGetIPefi}>
+                  {renderText()}
+                </StyledButton2>
+              )}
+            </>
           </>
         )}
       </Flex>
