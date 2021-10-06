@@ -77,7 +77,7 @@ const StyledCard = styled(Card)<{ isNestPage?: boolean }>`
 const CardContent = styled.div`
   padding: 24px;
   background: ${(props) => props.theme.card.background};
-  border-radius: 32px 32px 0 0;
+  border-radius: 32px;
 `
 
 const TabWrapper = styled.div`
