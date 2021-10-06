@@ -8,9 +8,10 @@ import getV2FarmMasterChefAbi from 'utils/getV2FarmMasterChefAbi'
 import getV2FarmMasterChefAddress from 'utils/getV2FarmMasterChefAddress'
 import { getPangolinLpPrice, getJoeLpPrice, getSushiLpPrice, getLydiaLpPrice } from 'utils/price'
 import { getBalanceNumber } from 'utils/formatBalance'
-import { getPangolinRewardPoolApr } from 'utils/apyHelpers'
+import { getPangolinRewardPoolApr, getApr } from 'utils/apyHelpers'
 import { getPairSwapDailyReward } from 'subgraph/utils'
 import { getPoolInfo as getJoePoolInfo } from 'subgraph/utils/joe'
+import { getPair as getSushiPair } from 'subgraph/utils/sushi'
 import { NON_ADDRESS } from 'config'
 
 export const fetchMasterChefGlobalData = async () => {
@@ -129,6 +130,12 @@ export const fetchFarms = async () => {
           stakingApr = res.stakingApr
         } else {
           swapDailyReward = await getPairSwapDailyReward(lpAddress, farmConfig.type)
+          if (farmConfig.type === 'Sushi') {
+            const pair = await getSushiPair(lpAddress)
+            if (pair.reserveUSD > 0) {
+              swapFeeApr = getApr(swapDailyReward / pair.reserveUSD)
+            }
+          }
         }
 
         return {

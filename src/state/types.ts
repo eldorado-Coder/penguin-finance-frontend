@@ -345,5 +345,6 @@ export interface NestMigratorState {
 }
 
 export interface UserCollectiblesState {
-  nftIds: number []
+  nftCollections: string[]
+  nftClaimStatus: any[]
 }

@@ -74,8 +74,8 @@ export interface FarmConfig {
   name?: string
   strategyAddress?: string
   stakingAddress?: string
-  swapAddresses?: Address,
-  infoLink?: string,
+  swapAddresses?: Address
+  infoLink?: string
   guideLink?: string
 }
 
@@ -104,8 +104,8 @@ export interface V2FarmConfig {
   swapAddresses?: Address
   pangolinRewardPoolAddresses?: Address
   lpPrice?: number
-  displayedDecimals?: number,
-  infoLink?: string,
+  displayedDecimals?: number
+  infoLink?: string
   guideLink?: string
 }
 
@@ -160,8 +160,14 @@ export type Nft = {
   bunnyId: number
   video?: NftVideo
   rarity?: number
-  collection: string,
+  collection: string
   address: string
+}
+
+export type NftDistributor = {
+  collection: string
+  description: string
+  address: Address
 }
 
 export type TeamImages = {

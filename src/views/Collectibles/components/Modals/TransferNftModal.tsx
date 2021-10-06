@@ -2,12 +2,11 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import Web3 from 'web3'
 import { useWeb3React } from '@web3-react/core'
-import { Button, Input, Modal, Text } from 'penguinfinance-uikit2'
+import { Button, Input, Modal, Text, Flex } from 'penguinfinance-uikit2'
 import { useToast } from 'state/hooks'
 import { Nft } from 'config/constants/types'
 import useI18n from 'hooks/useI18n'
 import { usePancakeRabbits } from 'hooks/useContract'
-import InfoRow from './InfoRow'
 
 interface TransferNftModalProps {
   nft: Nft
@@ -88,10 +87,10 @@ const TransferNftModal: React.FC<TransferNftModalProps> = ({ nft, tokenIds, onSu
             {error}
           </Text>
         )}
-        <InfoRow>
+        <Flex alignItems="center" justifyContent="space-between">
           <Text>{TranslateString(999, 'Transferring')}:</Text>
           <Value>{`1x "${nft.name}" NFT`}</Value>
-        </InfoRow>
+        </Flex>
         <Label htmlFor="transferAddress">{TranslateString(999, 'Receiving address')}:</Label>
         <Input
           id="transferAddress"

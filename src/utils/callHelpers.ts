@@ -353,3 +353,13 @@ export const boofiBoosterRocketPurchaseTokens = async (boosterRocketContract, am
       return tx.transactionHash
     })
 }
+
+// nft collectibles
+export const nftDistributorClaim = async (distributorContract, account) => {
+  return distributorContract.methods
+    .claim()
+    .send({ from: account })
+    .on('transactionHash', (tx) => {
+      return tx.transactionHash
+    })
+}
