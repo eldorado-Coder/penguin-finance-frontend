@@ -4,8 +4,8 @@ import { Card, useMatchBreakpoints } from 'penguinfinance-uikit2'
 import { useHistory } from 'react-router-dom'
 
 const StyledArtworkCard = styled(Card)<{ isMobile?: boolean }>`
-  height: ${({ isMobile }) => (isMobile ? 'calc(50vw - 16px)' : '230px')};
-  margin-bottom: 24px;
+  height: ${({ isMobile }) => (isMobile ? 'calc(50vw - 16px)' : '380px')};
+  /* margin-bottom: 24px; */
   background: ${({ theme }) => theme.isDark && '#30264F'};
 `
 
