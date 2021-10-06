@@ -4,7 +4,7 @@ import { Flex } from 'penguinfinance-uikit2'
 import useTheme from 'hooks/useTheme'
 import Page from 'components/layout/Page'
 import StakeCard from './StakeCard/StakeCard'
-import TiersCard from './TiersCard/TiersCard'
+import InfoCard from './InfoCard'
 
 const ClubPenguin: React.FC = () => {
   const { isDark } = useTheme()
@@ -24,7 +24,7 @@ const ClubPenguin: React.FC = () => {
       </ClubPenguinBannerContainer>
       <ClubPenguinContent>
         <Flex justifyContent="space-between" flexWrap="wrap">
-          <TiersCard />
+          <InfoCard />
           <StakeCard />
         </Flex>
       </ClubPenguinContent>

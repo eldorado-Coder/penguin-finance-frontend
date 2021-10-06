@@ -34,7 +34,8 @@ const TokenInput: React.FC<TokenInputProps> = ({
       </Wrapper>
       {maxBalanceShow && (
         <StyledMaxText>
-          {TranslateString(526, `${symbol} Available:`)} {roundDown(max, 2)}
+          {TranslateString(526, `${symbol} Available:`)} {roundDown(max, 2)} {symbol}
+          {Number(max) < 0.1 && <Warning src="/images/launchpad/warning.png" alt="warning" width={16} height={16} />}
         </StyledMaxText>
       )}
     </StyledTokenInput>
@@ -100,8 +101,13 @@ const StyledButton = styled(Button)`
   font-size: 16px;
   font-weight: 400;
   color: white;
-  background-color: #38db93;
+  background-color: ${({ theme }) => theme.colors.red};
   box-shadow: none;
+`
+const Warning = styled.img`
+  width: 16px;
+  height: 16px;
+  margin-left: 4px;
 `
 
 export default TokenInput

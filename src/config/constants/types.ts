@@ -205,4 +205,5 @@ export interface Token {
 
 export interface ClubPenguinFarmConfig {
   pid: number
+  stakingTokenAddresses: Address
 }
