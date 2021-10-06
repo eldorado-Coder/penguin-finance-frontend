@@ -50,7 +50,7 @@ const StakeCard = () => {
             onConfirm={onStake}
           />
         ) : (
-          <UnstakeForm max={stakedBalance} tokenName="SHERPA" account={account} onConfirm={onUnstake} />
+          <UnstakeForm max={stakedBalance} tokenName="iPEFI" account={account} onConfirm={onUnstake} />
         )}
       </CardContent>
     </StyledCard>
