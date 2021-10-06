@@ -10,39 +10,28 @@ import {
   ChevronDownIcon,
   Text,
   CardFooter,
-  useModal,
   Flex,
 } from 'penguinfinance-uikit2'
 import { Nft } from 'config/constants/types'
-import { useNftDistributor } from 'hooks/useNftDistributor'
-import ClaimNftModal from '../Modals/ClaimNftModal'
 import Preview from './Preview'
 
 interface NftCardProps {
   nft: Nft
-  canClaim?: boolean
   tokenIds?: number[]
 }
 
-const NftCard: React.FC<NftCardProps> = ({ nft, canClaim = false, tokenIds = [] }) => {
+const NftCard: React.FC<NftCardProps> = ({ nft, tokenIds = [] }) => {
   const [isOpen, setIsOpen] = useState(false)
   const { name, description } = nft
   const walletOwnsNft = tokenIds.length > 0
   const Icon = isOpen ? ChevronUpIcon : ChevronDownIcon
-  const { onClaim } = useNftDistributor(nft.collection)
 
   const handleClick = async () => {
     setIsOpen(!isOpen)
   }
 
-  const onConfirm = async () => {
-    onClaim()
-  }
-
-  const [onPresentClaimModal] = useModal(<ClaimNftModal nft={nft} onConfirm={onConfirm} />)
-
   return (
-    <PGCard isActive={walletOwnsNft || canClaim}>
+    <PGCard isActive={walletOwnsNft}>
       <PGCardBody>
         <Header alignItems="center" justifyContent="space-between">
           <Heading size="lg">{name}</Heading>
@@ -52,11 +41,6 @@ const NftCard: React.FC<NftCardProps> = ({ nft, canClaim = false, tokenIds = [] 
             </Tag>
           )}
         </Header>
-        {canClaim && (
-          <Button scale="sm" onClick={onPresentClaimModal}>
-            Claim
-          </Button>
-        )}
       </PGCardBody>
       <Preview nft={nft} isOwned={walletOwnsNft} />
       <Footer p="16px 0 0">

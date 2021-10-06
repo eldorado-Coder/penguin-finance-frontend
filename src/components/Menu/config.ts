@@ -14,7 +14,7 @@ export const config: MenuEntry[] = [
   {
     label: 'Farms',
     icon: 'IglooIcon',
-    href: '/farms'
+    href: '/farms',
   },
   // {
   //   label: 'Igloos V2',
@@ -34,24 +34,24 @@ export const config: MenuEntry[] = [
   {
     label: 'Emperor',
     icon: 'CrownIcon',
-    href: '/emperor'
+    href: '/emperor',
   },
   {
     label: 'Arena',
     icon: 'BattleIcon',
     href: '/arena',
-    badge: 'NEW'
+    badge: 'NEW',
   },
   {
     label: 'Launchpad',
     icon: 'LaunchpadIcon',
     href: '/launchpad',
   },
-  // {
-  //   label: 'Club Penguin',
-  //   icon: 'BattleIcon',
-  //   href: '/club',
-  // },
+  {
+    label: 'Club Penguin',
+    icon: 'BattleIcon',
+    href: '/club',
+  },
   // {
   //   label: 'Penguin lottery',
   //   icon: 'NftIcon',

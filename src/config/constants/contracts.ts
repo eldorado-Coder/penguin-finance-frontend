@@ -160,8 +160,6 @@ export default {
   },
   booFiBoosterRocket: {
     43113: '',
-    // 43114: '0xe7F53b48c945FDE5Aa9b6766D66d0627622757bE',
-    // final
     43114: '0x90D2652B7abB628fDf907ed4ECc4711EA8ffBAf9',
   },
   booFiBoosterRocketPayToken: {
@@ -185,5 +183,10 @@ export default {
   nestMigrator: {
     43113: '',
     43114: '0x20901c664765c910623A9F1fed3e35d1B90DDEd8',
+  },
+  // club penguin
+  clubPenguinMasterChef: {
+    43113: '',
+    43114: '0x4accCfF8b8e104B61D2A5fEA507641D610e475d4',
   },
 }

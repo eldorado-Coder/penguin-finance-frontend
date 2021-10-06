@@ -51,6 +51,8 @@ import {
   // pools
   fetchV2MasterChefPefiPerBlock,
   fetchV2FarmsPublicDataAsync,
+  // club penguin
+  fetchClubPenguinFarmsPublicDataAsync,
 } from './actions'
 import {
   State,
@@ -100,6 +102,8 @@ export const useFetchPublicData = () => {
     dispatch(fetchLydiaFarmsPublicDataAsync())
     // joe farms
     dispatch(fetchJoeMasterChefGlobalData())
+    // club penguin
+    dispatch(fetchClubPenguinFarmsPublicDataAsync())
   }, [dispatch, slowRefresh])
 }
 
