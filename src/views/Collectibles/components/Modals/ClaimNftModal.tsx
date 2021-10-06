@@ -1,15 +1,12 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { useWeb3React } from '@web3-react/core'
-import { useBunnySpecialContract } from 'hooks/useContract'
-import { useToast } from 'state/hooks'
 import { Button, InjectedModalProps, Modal, Text, Flex } from 'penguinfinance-uikit2'
 import { Nft } from 'config/constants/types'
 import useI18n from 'hooks/useI18n'
 
 interface ClaimNftModalProps extends InjectedModalProps {
   nft: Nft
-  onSuccess: () => void
+  onConfirm: () => void
 }
 
 const ModalContent = styled.div`
@@ -22,30 +19,18 @@ const Actions = styled.div`
   grid-gap: 8px;
 `
 
-const ClaimNftModal: React.FC<ClaimNftModalProps> = ({ nft, onSuccess, onDismiss }) => {
-  const [isConfirming, setIsConfirming] = useState(false)
+const ClaimNftModal: React.FC<ClaimNftModalProps> = ({ nft, onConfirm, onDismiss }) => {
+  const [pendingTx, setPendingTx] = useState(false)
   const TranslateString = useI18n()
-  const { account } = useWeb3React()
-  const { toastError, toastSuccess } = useToast()
-  const bunnySpecialContract = useBunnySpecialContract()
 
   const handleConfirm = async () => {
-    bunnySpecialContract.methods
-      .mintNFT(nft.bunnyId)
-      .send({ from: account })
-      .on('sending', () => {
-        setIsConfirming(true)
-      })
-      .on('receipt', () => {
-        toastSuccess('Successfully claimed!')
-        onDismiss()
-        onSuccess()
-      })
-      .on('error', (error) => {
-        console.error('Unable to claim NFT', error)
-        toastError('Error', 'Unable to claim NFT, please try again.')
-        setIsConfirming(false)
-      })
+    setPendingTx(true)
+    try {
+      await onConfirm()
+      setPendingTx(false)
+    } catch (error) {
+      setPendingTx(false)
+    }
   }
 
   return (
@@ -60,7 +45,7 @@ const ClaimNftModal: React.FC<ClaimNftModalProps> = ({ nft, onSuccess, onDismiss
         <Button scale="md" variant="secondary" onClick={onDismiss}>
           {TranslateString(462, 'Cancel')}
         </Button>
-        <Button scale="md" onClick={handleConfirm} disabled={!account || isConfirming}>
+        <Button scale="md" onClick={handleConfirm} disabled={pendingTx}>
           {TranslateString(464, 'Confirm')}
         </Button>
       </Actions>

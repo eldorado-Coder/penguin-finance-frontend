@@ -1,10 +1,11 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
-import { fetchUserCollectibles } from './fetchUserCollectibles'
+import { fetchUserCollectibles, fetchUserNftClaimStatus } from './fetchUserCollectibles'
 import { UserCollectiblesState } from '../types'
 
 const initialState: UserCollectiblesState = {
-  nftIds: [],
+  nftCollections: [],
+  nftClaimStatus: [],
 }
 
 export const UserCollectiblesSlice = createSlice({
@@ -12,20 +13,30 @@ export const UserCollectiblesSlice = createSlice({
   initialState,
   reducers: {
     setUserCollectiblesData: (state, action) => {
-      state.nftIds = action.payload.nftIds
-    }
+      state.nftCollections = action.payload.nftCollections
+    },
+    setUserNFTClaimStatus: (state, action) => {
+      state.nftClaimStatus = action.payload.nftClaimStatus
+    },
   },
 })
 
 // Actions
-export const { setUserCollectiblesData } = UserCollectiblesSlice.actions
+export const { setUserCollectiblesData, setUserNFTClaimStatus } = UserCollectiblesSlice.actions
 
 export const fetchUserCollectiblesDataAsync = (account: string) => async (dispatch) => {
-  const nftIds = await fetchUserCollectibles(account);
+  if (!account) return
+  const nftCollections = await fetchUserCollectibles(account)
+  const nftClaimStatus = await fetchUserNftClaimStatus(account)
 
   dispatch(
     setUserCollectiblesData({
-      nftIds
+      nftCollections,
+    }),
+  )
+  dispatch(
+    setUserNFTClaimStatus({
+      nftClaimStatus,
     }),
   )
 }

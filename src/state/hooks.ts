@@ -38,7 +38,6 @@ import {
   fetchMasterChefLydPerSec, // lydia
   fetchLydiaFarmsPublicDataAsync, // lydia
   fetchJoeMasterChefGlobalData, // joe
-
   fetchUserCollectiblesDataAsync, // collectibles
 
   /*
@@ -70,7 +69,7 @@ import {
   BoosterRocketState,
   // v2
   NestMigratorState,
-  UserCollectiblesState
+  UserCollectiblesState,
 } from './types'
 import { fetchProfile } from './profile'
 import { fetchTeam, fetchTeams } from './teams'
@@ -309,9 +308,9 @@ export const useUserCollectibles = (account): UserCollectiblesState => {
       fetchCollectiblesData()
     }
   }, [account, dispatch, fastRefresh])
-  
-  const launchpadBoofi = useSelector((state: State) => state.userCollectibles)
-  return launchpadBoofi
+
+  const userCollectibles = useSelector((state: State) => state.userCollectibles)
+  return userCollectibles
 }
 
 // Prices

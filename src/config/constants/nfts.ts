@@ -23,7 +23,6 @@ const Nfts: Nft[] = [
       lg: 'penguin_nurse.png',
       md: 'penguin_nurse.png',
       sm: 'penguin_nurse.png',
-      // ipfs: 'https://gateway.pinata.cloud/ipfs/QmQ6EE6gkVzAQUdQLLM7CyrnME6LZHCoy92ZERW8HXmyjw/hiccup.png',
     },
     sortOrder: 999,
     bunnyId: 2,
@@ -38,7 +37,6 @@ const Nfts: Nft[] = [
       lg: 'penguin_astronaut.png',
       md: 'penguin_astronaut.png',
       sm: 'penguin_astronaut.png',
-      // ipfs: 'https://gateway.pinata.cloud/ipfs/QmQ6EE6gkVzAQUdQLLM7CyrnME6LZHCoy92ZERW8HXmyjw/hiccup.png',
     },
     sortOrder: 999,
     bunnyId: 3,
@@ -53,7 +51,6 @@ const Nfts: Nft[] = [
       lg: 'penguin_spacelord.png',
       md: 'penguin_spacelord.png',
       sm: 'penguin_spacelord.png',
-      // ipfs: 'https://gateway.pinata.cloud/ipfs/QmQ6EE6gkVzAQUdQLLM7CyrnME6LZHCoy92ZERW8HXmyjw/hiccup.png',
     },
     sortOrder: 999,
     bunnyId: 5,
@@ -68,14 +65,13 @@ const Nfts: Nft[] = [
       lg: 'penguin_penguineer.png',
       md: 'penguin_penguineer.png',
       sm: 'penguin_penguineer.png',
-      // ipfs: 'https://gateway.pinata.cloud/ipfs/QmQ6EE6gkVzAQUdQLLM7CyrnME6LZHCoy92ZERW8HXmyjw/hiccup.png',
     },
     sortOrder: 999,
     bunnyId: 4,
     rarity: 0,
     collection: 'launchpad',
     address: '0xbE2199322B992D19B18D9F36DCa5521b6ad773F1',
-  }
+  },
 ]
 
 export default Nfts
