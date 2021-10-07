@@ -4,7 +4,7 @@ const Nfts: Nft[] = [
   // penguin without borders
   {
     name: 'Doctor Aukee',
-    description: 'The cutest doctor in the whole wide world. Always ready to help their fellow Penguins.',
+    description: `A reward to a very charitable Penguins who contributed either: 100 AVAX, 2300 PEFI or more to the Penguins Without Borders campaign. Donations raised were then sent to India's Covid Crypto Relief Fund.`,
     images: {
       lg: 'penguin_aukee.png',
       md: 'penguin_aukee.png',
@@ -19,7 +19,7 @@ const Nfts: Nft[] = [
   },
   {
     name: 'Penguin Nurse',
-    description: 'Whole hearted Penguins, willing to risk their life for others. Some of the bravest birds on Earth.',
+    description: `A reward to a very charitable Penguins who contributed either: 5 AVAX, 115 PEFI or more to the Penguins Without Borders campaign. Donations raised were then sent to India's Covid Crypto Relief Fund.`,
     images: {
       lg: 'penguin_nurse.png',
       md: 'penguin_nurse.png',
@@ -34,7 +34,7 @@ const Nfts: Nft[] = [
   // sherpa launchpad
   {
     name: 'Astronaut',
-    description: 'Penguin Sherpa Launchpad Collection',
+    description: `Awarded for staking +300 xPEFI in the Penguin Launchpad's Offering of Sherpa Cash.`,
     images: {
       lg: 'penguin_astronaut.png',
       md: 'penguin_astronaut.png',
@@ -47,22 +47,8 @@ const Nfts: Nft[] = [
     address: '0x617D5019334ccb99F9a2AF752f8Af629CE21D8f3',
   },
   {
-    name: 'Spacelord',
-    description: 'Penguin Sherpa Launchpad Collection',
-    images: {
-      lg: 'penguin_spacelord.png',
-      md: 'penguin_spacelord.png',
-      sm: 'penguin_spacelord.png',
-    },
-    sortOrder: 999,
-    bunnyId: 5,
-    rarity: 0,
-    collection: 'Penguin Launchpad: SHERPA',
-    address: '0x79f1DdE49cdB17fE388D2dbC0db0fd9798810f59',
-  },
-  {
     name: 'Penguineer',
-    description: 'Limited-edition Sherpa Cash Inspired NFT Collectible',
+    description: `Awarded for staking +1500 xPEFI in the Penguin Launchpad's Offering of Sherpa Cash.`,
     images: {
       lg: 'penguin_penguineer.png',
       md: 'penguin_penguineer.png',
@@ -74,11 +60,25 @@ const Nfts: Nft[] = [
     collection: 'Penguin Launchpad: SHERPA',
     address: '0xbE2199322B992D19B18D9F36DCa5521b6ad773F1',
   },
+  {
+    name: 'Spacelord',
+    description: `Awarded for staking 15000 xPEFI or more, in the Penguin Launchpad for Sherpa Cash. This holder of this NFT will be entitled to a beautiful gift.`,
+    images: {
+      lg: 'penguin_spacelord.png',
+      md: 'penguin_spacelord.png',
+      sm: 'penguin_spacelord.png',
+    },
+    sortOrder: 999,
+    bunnyId: 5,
+    rarity: 0,
+    collection: 'Penguin Launchpad: SHERPA',
+    address: '0x79f1DdE49cdB17fE388D2dbC0db0fd9798810f59',
+  },
 
   // boofi launchpad
   {
     name: 'Ghoul',
-    description: 'Penguin Boofi Launchpad Collection',
+    description: `Unlocked by staking +500 iPEFI in the Penguin Launchpad for BooFinance.`,
     images: {
       lg: 'penguin_boofi_ghoul.jpg',
       md: 'penguin_boofi_ghoul.jpg',
@@ -92,7 +92,7 @@ const Nfts: Nft[] = [
   },
   {
     name: 'Reaper',
-    description: 'Penguin Boofi Launchpad Collection',
+    description: `Unlocked for staking +10,000 iPEFI in the Penguin Launchpad for BooFinance.`,
     images: {
       lg: 'penguin_boofi_reaper.jpg',
       md: 'penguin_boofi_reaper.jpg',
@@ -106,7 +106,7 @@ const Nfts: Nft[] = [
   },
   {
     name: 'Demonlord',
-    description: 'Penguin Boofi Launchpad Collection',
+    description: `Unlocked for staking 50,000 iPEFI or more, in the Penguin Launchpad for BooFinance. The holder of this NFT is destined to a pleasantly spooky surprise. A smart Penguin should keep it handy.`,
     images: {
       lg: 'penguin_boofi_demonlord.jpg',
       md: 'penguin_boofi_demonlord.jpg',

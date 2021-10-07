@@ -24,7 +24,6 @@ export const fetchFarms = async () => {
       const {
         rewardToken,
         rewardStartTimestamp,
-        rewardEndTimestamp,
         tokensPerSecond,
         totalIPEFIInPool,
         totalRewardAmount,
@@ -35,7 +34,6 @@ export const fetchFarms = async () => {
         ...farmConfig,
         rewardToken,
         rewardStartTimestamp: new BigNumber(rewardStartTimestamp._hex).toNumber(),
-        rewardEndTimestamp: new BigNumber(rewardEndTimestamp._hex).toNumber(),
         tokensPerSecond: new BigNumber(tokensPerSecond._hex).toJSON(),
         totalIPEFIInPool: new BigNumber(totalIPEFIInPool._hex).toJSON(),
         totalRewardAmount: new BigNumber(totalRewardAmount._hex).toJSON(),

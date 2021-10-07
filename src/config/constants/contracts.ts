@@ -187,6 +187,7 @@ export default {
   // club penguin
   clubPenguinMasterChef: {
     43113: '',
-    43114: '0x4accCfF8b8e104B61D2A5fEA507641D610e475d4',
+    // 43114: '0x4accCfF8b8e104B61D2A5fEA507641D610e475d4',
+    43114: '0x0115B9E65Dd39380Ed177b6B751B0B7f36513F59',
   },
 }

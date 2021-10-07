@@ -3,8 +3,9 @@ import styled from 'styled-components'
 import { Flex } from 'penguinfinance-uikit2'
 import useTheme from 'hooks/useTheme'
 import Page from 'components/layout/Page'
-import StakeCard from './StakeCard/StakeCard'
 import InfoCard from './InfoCard'
+import RewardCard from './RewardCard'
+import StakeCard from './StakeCard/StakeCard'
 
 const ClubPenguin: React.FC = () => {
   const { isDark } = useTheme()
@@ -16,16 +17,19 @@ const ClubPenguin: React.FC = () => {
         <BannerImage
           src={
             isDark
-              ? `${process.env.PUBLIC_URL}/images/launchpad/banners/launchpad_banner_dark.gif`
-              : `${process.env.PUBLIC_URL}/images/launchpad/banners/launchpad_banner_light.gif`
+              ? `${process.env.PUBLIC_URL}/images/club/banners/club_banner_dark.svg`
+              : `${process.env.PUBLIC_URL}/images/club/banners/club_banner_light.svg`
           }
-          alt="launchpad banner"
+          alt="club penguin banner"
         />
       </ClubPenguinBannerContainer>
       <ClubPenguinContent>
         <Flex justifyContent="space-between" flexWrap="wrap">
           <InfoCard />
-          <StakeCard />
+          <CardWrapper flexDirection="column">
+            <RewardCard />
+            <StakeCard />
+          </CardWrapper>
         </Flex>
       </ClubPenguinContent>
     </ClubPenguinPage>
@@ -63,5 +67,12 @@ const BannerImage = styled.img`
 
 // content
 const ClubPenguinContent = styled.div``
+
+const CardWrapper = styled(Flex)`
+  width: 100%;
+  ${({ theme }) => theme.mediaQueries.lg} {
+    width: 49%;
+  }
+`
 
 export default ClubPenguin

@@ -87,6 +87,9 @@ const App: React.FC = () => {
             <Route path="/club">
               <ClubPenguin />
             </Route>
+            <Route path="/club-old">
+              <Club />
+            </Route>
             <Route path="/launchpad">
               {/* <LaunchpadVideo /> */}
               <LaunchpadBoofi />
@@ -96,9 +99,6 @@ const App: React.FC = () => {
             </Route>
             <Route path="/sherpa-launchpad">
               <LaunchpadDistribution />
-            </Route>
-            <Route path="/club">
-              <Club />
             </Route>
             <Route path="/emperor">
               <Emperor />

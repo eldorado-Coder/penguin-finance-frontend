@@ -110,13 +110,13 @@
         "internalType": "contract IERC20"
       },
       {
-        "type": "uint256",
-        "name": "_rewardStartTimestamp",
-        "internalType": "uint256"
+        "type": "address",
+        "name": "_rewarder",
+        "internalType": "contract IIcebergRewarder"
       },
       {
         "type": "uint256",
-        "name": "_rewardEndTimestamp",
+        "name": "_rewardStartTimestamp",
         "internalType": "uint256"
       },
       {
@@ -277,6 +277,11 @@
         "internalType": "contract IERC20"
       },
       {
+        "type": "address",
+        "name": "rewarder",
+        "internalType": "contract IIcebergRewarder"
+      },
+      {
         "type": "uint256",
         "name": "lastRewardTimestamp",
         "internalType": "uint256"
@@ -289,11 +294,6 @@
       {
         "type": "uint256",
         "name": "rewardStartTimestamp",
-        "internalType": "uint256"
-      },
-      {
-        "type": "uint256",
-        "name": "rewardEndTimestamp",
         "internalType": "uint256"
       },
       {
@@ -402,11 +402,6 @@
       },
       {
         "type": "uint256",
-        "name": "_rewardEndTimestamp",
-        "internalType": "uint256"
-      },
-      {
-        "type": "uint256",
         "name": "_tokensPerSecond",
         "internalType": "uint256"
       },
@@ -432,19 +427,6 @@
   },
   {
     "type": "function",
-    "stateMutability": "view",
-    "outputs": [
-      {
-        "type": "uint256",
-        "name": "",
-        "internalType": "uint256"
-      }
-    ],
-    "name": "totalAllocPoint",
-    "inputs": []
-  },
-  {
-    "type": "function",
     "stateMutability": "nonpayable",
     "outputs": [],
     "name": "transferOwnership",
@@ -466,6 +448,24 @@
         "type": "uint256",
         "name": "_pid",
         "internalType": "uint256"
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "outputs": [],
+    "name": "updateRewarder",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_pid",
+        "internalType": "uint256"
+      },
+      {
+        "type": "address",
+        "name": "_rewarder",
+        "internalType": "contract IIcebergRewarder"
       }
     ]
   },
