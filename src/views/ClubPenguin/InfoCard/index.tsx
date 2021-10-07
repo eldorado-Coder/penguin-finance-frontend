@@ -32,7 +32,7 @@ const InfoCard = () => {
       </CardHeader>
       <CardContent>
         <Text fontSize="18px" color="white">
-          {`Sherpa Cash is an up-and-upcoming privacy protocol building on the Avalanche blockchain. By leveraging the Sherpa Cash protocol, users can anonimize transactions to better protect their privacy. `}
+          {`Sherpa Cash is an up-and-coming privacy protocol building on the Avalanche blockchain. By leveraging the Sherpa Cash protocol, users can anonimize transactions to better protect their privacy. `}
         </Text>
       </CardContent>
     </StyledCard>
