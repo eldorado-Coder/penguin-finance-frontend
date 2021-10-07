@@ -16,10 +16,10 @@ const ClubPenguin: React.FC = () => {
         <BannerImage
           src={
             isDark
-              ? `${process.env.PUBLIC_URL}/images/launchpad/banners/launchpad_banner_dark.gif`
-              : `${process.env.PUBLIC_URL}/images/launchpad/banners/launchpad_banner_light.gif`
+              ? `${process.env.PUBLIC_URL}/images/club/banners/club_banner_dark.svg`
+              : `${process.env.PUBLIC_URL}/images/club/banners/club_banner_light.svg`
           }
-          alt="launchpad banner"
+          alt="club penguin banner"
         />
       </ClubPenguinBannerContainer>
       <ClubPenguinContent>
