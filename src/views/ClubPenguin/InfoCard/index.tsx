@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Image, Text, Flex, Button } from 'penguinfinance-uikit2'
+import { Text, Flex, Button } from 'penguinfinance-uikit2'
+import SvgIcon from 'components/SvgIcon'
 import Card from '../Card'
 
 const InfoCard = () => {
@@ -35,6 +36,22 @@ const InfoCard = () => {
           {`Sherpa Cash is an up-and-coming privacy protocol building on the Avalanche blockchain. By leveraging the Sherpa Cash protocol, users can anonimize transactions to better protect their privacy. `}
         </Text>
       </CardContent>
+      <CardFooter>
+        <SocialIconsWrapper>
+          <a href="https://t.me/sherpa_cash" target="_blank" rel="noreferrer">
+            <SvgIcon src={`${process.env.PUBLIC_URL}/images/telegram.svg`} width="100%" height="32px" />
+          </a>
+          <a href="https://discord.com/invite/8bWeGSB4Zx" target="_blank" rel="noreferrer">
+            <SvgIcon src={`${process.env.PUBLIC_URL}/images/discord.svg`} width="100%" height="32px" />
+          </a>
+          <a href="https://twitter.com/sherpa_cash" target="_blank" rel="noreferrer">
+            <SvgIcon src={`${process.env.PUBLIC_URL}/images/twitter.svg`} width="100%" height="32px" />
+          </a>
+          <a href="https://medium.com/sherpa-cash" target="_blank" rel="noreferrer">
+            <SvgIcon src={`${process.env.PUBLIC_URL}/images/medium.svg`} width="100%" height="32px" />
+          </a>
+        </SocialIconsWrapper>
+      </CardFooter>
     </StyledCard>
   )
 }
@@ -62,6 +79,7 @@ const LogoWrapper = styled(Flex)`
 
 const CardContent = styled.div`
   margin-top: 36px;
+  height: 100%;
 `
 
 const ButtonActions = styled(Flex)`
@@ -93,6 +111,22 @@ const StyledButton = styled(Button)`
     @media (min-width: 640px) {
       margin-bottom: 8px;
       margin-right: 0;
+    }
+  }
+`
+
+const CardFooter = styled.div``
+
+const SocialIconsWrapper = styled(Flex)`
+  justify-content: flex-end;
+  a {
+    margin: 0px 10px;
+  }
+  svg {
+    fill: white;
+    height: 40px;
+    &:hover {
+      opacity: 0.65;
     }
   }
 `
