@@ -20,10 +20,7 @@ const InfoCard = () => {
       <CardHeader>
         <Flex alignItems="center" justifyContent="space-between" flexWrap="wrap">
           <LogoWrapper alignItems="center">
-            <Image src="/images/launchpad/sherpalogo.png" width={64} height={64} alt="sherpa" mr="4px" />
-            <Text fontSize="30px" bold color="white">
-              SHERPA
-            </Text>
+            <img src="/images/club/sherpa.png" alt="sherpa" />
           </LogoWrapper>
           <Flex flexDirection="column">
             <ButtonActions flexDirection="column">
@@ -59,7 +56,7 @@ const CardHeader = styled.div``
 
 const LogoWrapper = styled(Flex)`
   img {
-    position: relative;
+    height: 90px;
   }
 `
 
