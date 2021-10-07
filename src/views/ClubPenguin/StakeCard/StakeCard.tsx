@@ -63,9 +63,9 @@ const StyledCard = styled(Card)<{ isNestPage?: boolean }>`
   margin-top: 16px;
   box-shadow: 0px 1px 6px rgb(0 0 0 / 16%);
 
-  ${({ theme }) => theme.mediaQueries.lg} {
+  /* ${({ theme }) => theme.mediaQueries.lg} {
     width: 49%;
-  }
+  } */
 `
 
 const CardContent = styled.div`

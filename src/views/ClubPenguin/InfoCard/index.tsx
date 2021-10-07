@@ -60,6 +60,7 @@ const StyledCard = styled(Card)`
   border-radius: 8px;
   margin-top: 16px;
   width: 100%;
+  height: 100%;
   padding: 24px;
   box-shadow: 0px 1px 6px rgb(0 0 0 / 16%);
   background-color: ${({ theme }) => theme.colors.red};
@@ -73,13 +74,13 @@ const CardHeader = styled.div``
 
 const LogoWrapper = styled(Flex)`
   img {
-    height: 90px;
+    height: 100px;
   }
 `
 
 const CardContent = styled.div`
-  margin-top: 36px;
-  height: 100%;
+  margin-top: 8px;
+  margin-bottom: 60px;
 `
 
 const ButtonActions = styled(Flex)`
