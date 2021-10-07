@@ -22,7 +22,7 @@ const RewardCard = () => {
       <StyledFlex justifyContent="space-between">
         <InfoBlock>
           <InfoBlockTitle>
-            <Text fontSize="18px" color="white" bold>
+            <Text fontSize="20px" color="white">
               Your Rewards
             </Text>
           </InfoBlockTitle>
@@ -30,17 +30,17 @@ const RewardCard = () => {
             <LogoWrapper type="sherpa">
               <img src="/images/club/sherpa_without_text.png" alt="sherpa" />
             </LogoWrapper>
-            <div>
-              <StyledBalance fontSize="18px" color="#30264f" value={earningBalance} decimals={2} />
-              <Text bold fontSize="20px" color="secondary" textAlign="right">
+            <BalanceWrapper flexDirection='column' alignItems='center'>
+              <StyledBalance fontWeight='400' fontSize="24px" color="secondary" value={earningBalance} decimals={2} />
+              <StyledText lineHeight={1} fontWeight='400' fontSize="28px" color="secondary" textAlign="right">
                 SHERPA
-              </Text>
-            </div>
+              </StyledText>
+            </BalanceWrapper>
           </InfoBlockContent>
         </InfoBlock>
         <InfoBlock>
           <InfoBlockTitle>
-            <Text fontSize="18px" color="white" bold>
+            <Text fontSize="20px" color="white">
               Your Stake
             </Text>
           </InfoBlockTitle>
@@ -48,12 +48,12 @@ const RewardCard = () => {
             <LogoWrapper>
               <img src="/images/club/ipefi.svg" alt="sherpa" />
             </LogoWrapper>
-            <div>
-              <StyledBalance fontSize="18px" color="#30264f" value={stakedBalance} decimals={2} />
-              <Text bold fontSize="20px" color="secondary" textAlign="right">
+            <BalanceWrapper flexDirection='column' alignItems='center'>
+              <StyledBalance fontWeight='400' fontSize="24px" color="secondary" value={stakedBalance} decimals={2} />
+              <StyledText lineHeight={1} fontWeight='400' fontSize="28px" color="secondary" textAlign="right">
                 iPEFI
-              </Text>
-            </div>
+              </StyledText>
+            </BalanceWrapper>
           </InfoBlockContent>
         </InfoBlock>
       </StyledFlex>
@@ -65,12 +65,23 @@ const StyledCard = styled(Card)`
   border-radius: 8px;
   margin-top: 16px;
   width: 100%;
-  padding: 16px;
+  padding: 8px 16px 16px;
   box-shadow: 0px 1px 6px rgb(0 0 0 / 16%);
   background-color: ${({ theme }) => theme.colors.red};
 `
 const StyledFlex = styled(Flex)`
-  gap: 10px;
+  gap: 20px;
+  flex-wrap: wrap;
+
+  @media (min-width: 640px) {
+    flex-wrap: nowrap;
+  }
+  @media (min-width: 1080px) {
+    flex-wrap: wrap;
+  }
+  @media (min-width: 1200px) {
+    flex-wrap: nowrap;
+  }
 `
 
 const InfoBlock = styled.div`
@@ -82,16 +93,47 @@ const InfoBlockTitle = styled.div``
 const InfoBlockContent = styled(Flex)`
   margin-top: 4px;
   background: white;
-  border-radius: 8px;
-  padding: 16px;
+  border-radius: 20px;
+  padding: 12px;
 `
 
 const LogoWrapper = styled(Flex)<{ type?: string }>`
   img {
-    height: 70px;
+    height: 72px;
+
+    @media (min-width: 1200px) {
+      height: 64px;
+    }
+    @media (min-width: 1450px) {
+      height: 84px;
+    }
   }
 `
 
-const StyledBalance = styled(Balance)``
+const StyledBalance = styled(Balance)`
+  line-height: 1;
+`
+
+const StyledText = styled(Text)`
+  font-size: 28px;
+
+  @media (min-width: 1200px) {
+    font-size: 24px;
+  }
+  @media (min-width: 1450px) {
+    font-size: 28px;
+  }
+`;
+
+const BalanceWrapper = styled(Flex)`
+  width: calc(100% - 84px);
+
+  @media (min-width: 1200px) {
+    width: calc(100% - 86px);
+  }
+  @media (min-width: 1450px) {
+    width: calc(100% - 100px);
+  }
+`;
 
 export default RewardCard
