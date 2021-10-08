@@ -44,7 +44,6 @@ const Menu = (props) => {
   //   ...links[collectiblesIndex],
   //   badge: isCollectiblesNew ? 'NEW' : '',
   // }
-
   // links[launchpadIndex] = {
   //   ...links[launchpadIndex],
   //   badge: 'LIVE',
