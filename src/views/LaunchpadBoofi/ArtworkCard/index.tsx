@@ -41,7 +41,7 @@ const StyledCardBg = styled.div`
   height: 100%;
   background-size: cover;
   background-position: center center;
-  background-image: url('/images/launchpad/club_penguin_live.png');
+  background-image: url('/images/launchpad/club_penguin_coming.png');
   cursor: pointer;
 `
 
