@@ -15,9 +15,9 @@ const NftCollection = ({ canClaim, nftCollection }) => {
   return (
     <>
       <CollectionHead alignItems="center">
-        <Heading size="lg" mr="16px">
+        <StyledHeading size="xl" color="secondary" mr="16px">
           {`${nftCollection.name} Collection`}
-        </Heading>
+        </StyledHeading>
         {canClaim && (
           <Button scale="md" onClick={onClaim}>
             Claim
@@ -65,9 +65,9 @@ const NftList = () => {
     <>
       <YourNfts />
       <CardGrid>
-        <Text bold fontSize="24px" color="primary">
+        <StyledText bold fontSize="36px" color="secondary">
           All NFTs
-        </Text>
+        </StyledText>
       </CardGrid>
       {nftCollections.map((nftCollection, index) => {
         const canClaim = nftClaimStatus[index]?.canClaim || false
@@ -76,6 +76,25 @@ const NftList = () => {
     </>
   )
 }
+
+const StyledText = styled(Text)`
+  color: #a893ca;
+  @font-face {
+    font-family: 'GothamUltra Font';
+    src: url(${process.env.PUBLIC_URL}/fonts/GothamUltra.otf) format('truetype');
+    font-display: swap;
+  }
+  font-family: 'GothamUltra Font';
+`
+
+const StyledHeading = styled(Heading)`
+  color: ${({ theme }) => (theme.isDark ? 'white' : theme.colors.secondary)};
+  @font-face {
+    font-family: 'GothamBold Font';
+    src: url(${process.env.PUBLIC_URL}/fonts/GothamBold.ttf) format('truetype');
+  }
+  font-family: 'GothamBold Font';
+`
 
 const CollectionHead = styled(Flex)`
   padding: 12px 24px 0px;
