@@ -88,7 +88,7 @@ const DetailsButton = styled(Button).attrs({ variant: 'text', fullWidth: true })
 `
 
 const InfoBlock = styled(Flex)`
-  padding: 0px 24px 24px;
+  padding: 0px 0px 24px;
 
   p {
     text-align: center;
