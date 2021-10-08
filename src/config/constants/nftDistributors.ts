@@ -2,14 +2,6 @@ import { NftDistributor } from './types'
 
 const NftDistributors: NftDistributor[] = [
   {
-    collection: 'Penguins without Borders',
-    description: 'NFT Distributor for Penguin Without Borders',
-    address: {
-      43113: '',
-      43114: '0xa9b1Ada032194e61Ae1BC1d8f3B878B67Ea62d52',
-    },
-  },
-  {
     collection: 'Sherpa Launchpad',
     description: 'NFT Distributor for Sherpa Launchpad Staking',
     address: {
@@ -23,6 +15,14 @@ const NftDistributors: NftDistributor[] = [
     address: {
       43113: '',
       43114: '0xdE9030A5D572440E2a5CED7442289155AFA4c26A',
+    },
+  },
+  {
+    collection: 'Penguins without Borders',
+    description: 'NFT Distributor for Penguin Without Borders',
+    address: {
+      43113: '',
+      43114: '0xa9b1Ada032194e61Ae1BC1d8f3B878B67Ea62d52',
     },
   },
 ]
