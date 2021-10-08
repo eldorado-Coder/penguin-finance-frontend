@@ -182,7 +182,7 @@ export interface LaunchpadState {
 
 export interface LaunchpadBoofiState {
   allowance: number
-  stakedBalance: number
+  stakedBalance: string
   yourPenguinTier: number
   allocation: number
   canUnstake: boolean
