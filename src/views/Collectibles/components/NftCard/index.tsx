@@ -57,7 +57,7 @@ const NftCard: React.FC<NftCardProps> = ({ nft, tokenIds = [] }) => {
             <Text as="p" color="textSubtle">
               {description}
             </Text>
-            <Button mt="16px">Coming Soon</Button>
+            {/* <Button mt="16px">Coming Soon</Button> */}
           </InfoBlock>
         )}
       </Footer>

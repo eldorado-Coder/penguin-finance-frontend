@@ -8,7 +8,7 @@ import { useUserCollectibles } from 'state/hooks'
 import NftCard from '../NftCard'
 
 const YourNfts = () => {
-  const [sortType, setSortType] = useState('Penguins Without Borders')
+  const [sortType, setSortType] = useState('Penguins without Borders')
 
   const { account } = useWeb3React()
   const { nftCollections } = useUserCollectibles(account)
@@ -21,9 +21,9 @@ const YourNfts = () => {
         <Select
           value={sortType}
           options={[
-            { label: 'Penguins Without Borders', value: 'Penguins Without Borders' },
-            { label: 'Penguin Launchpad: SHERPA', value: 'Penguin Launchpad: SHERPA' },
-            { label: 'Penguin Launchpad: BOOFI', value: 'Penguin Launchpad: BOOFI' },
+            { label: 'Penguins without Borders', value: 'Penguins without Borders' },
+            { label: 'Sherpa Launchpad', value: 'Sherpa Launchpad' },
+            { label: 'BooFinance Launchpad', value: 'BooFinance Launchpad' },
           ]}
           onChange={setSortType}
         />

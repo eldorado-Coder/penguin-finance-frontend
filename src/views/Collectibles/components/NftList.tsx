@@ -16,7 +16,7 @@ const NftCollection = ({ canClaim, nftCollection }) => {
     <>
       <CollectionHead alignItems="center">
         <Heading size="lg" mr="16px">
-          {nftCollection.name}
+          {`${nftCollection.name} Collection`}
         </Heading>
         {canClaim && (
           <Button scale="md" onClick={onClaim}>

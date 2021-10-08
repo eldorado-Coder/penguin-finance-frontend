@@ -2,7 +2,7 @@ import { NftDistributor } from './types'
 
 const NftDistributors: NftDistributor[] = [
   {
-    collection: 'Penguins Without Borders',
+    collection: 'Penguins without Borders',
     description: 'NFT Distributor for Penguin Without Borders',
     address: {
       43113: '',
@@ -10,7 +10,7 @@ const NftDistributors: NftDistributor[] = [
     },
   },
   {
-    collection: 'Penguin Launchpad: SHERPA',
+    collection: 'Sherpa Launchpad',
     description: 'NFT Distributor for Sherpa Launchpad Staking',
     address: {
       43113: '',
@@ -18,7 +18,7 @@ const NftDistributors: NftDistributor[] = [
     },
   },
   {
-    collection: 'Penguin Launchpad: BOOFI',
+    collection: 'BooFinance Launchpad',
     description: 'NFT Distributor for Boofi Launchpad Staking',
     address: {
       43113: '',
