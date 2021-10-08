@@ -17,32 +17,28 @@ import Preview from './Preview'
 
 interface NftCardProps {
   nft: Nft
-  tokenIds?: number[]
+  tokenId?: string
 }
 
-const NftCard: React.FC<NftCardProps> = ({ nft, tokenIds = [] }) => {
+const NftCard: React.FC<NftCardProps> = ({ nft, tokenId }) => {
   const [isOpen, setIsOpen] = useState(false)
   const { name, description } = nft
-  const walletOwnsNft = tokenIds.length > 0
   const Icon = isOpen ? ChevronUpIcon : ChevronDownIcon
 
   const handleClick = async () => {
     setIsOpen(!isOpen)
   }
 
+  const displayedName = tokenId ? `${name} #${tokenId}` : name
+
   return (
-    <PGCard isActive={walletOwnsNft}>
+    <PGCard>
       <PGCardBody>
         <Header alignItems="center" justifyContent="space-between">
-          <Heading size="lg">{name}</Heading>
-          {walletOwnsNft && (
-            <Tag outline variant="secondary">
-              In Wallet
-            </Tag>
-          )}
+          <Heading size="lg">{displayedName}</Heading>
         </Header>
       </PGCardBody>
-      <Preview nft={nft} isOwned={walletOwnsNft} />
+      <Preview nft={nft} />
       <Footer p="16px 0 0">
         <DetailsButton endIcon={<Icon width="32px" color="primary" />} onClick={handleClick}>
           Details
@@ -88,7 +84,7 @@ const DetailsButton = styled(Button).attrs({ variant: 'text', fullWidth: true })
 `
 
 const InfoBlock = styled(Flex)`
-  padding: 0px 24px 24px;
+  padding: 0px 0px 24px;
 
   p {
     text-align: center;

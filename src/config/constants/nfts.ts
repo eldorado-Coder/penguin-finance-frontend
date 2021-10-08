@@ -1,36 +1,6 @@
 import { Nft } from './types'
 
 const Nfts: Nft[] = [
-  // penguin without borders
-  {
-    name: 'Doctor Aukee',
-    description: `A reward to a very charitable Penguins who contributed either: 100 AVAX, 2300 PEFI or more to the Penguins Without Borders campaign. Donations raised were then sent to India's Covid Crypto Relief Fund.`,
-    images: {
-      lg: 'penguin_aukee.png',
-      md: 'penguin_aukee.png',
-      sm: 'penguin_aukee.png',
-      // ipfs: 'https://gateway.pinata.cloud/ipfs/QmNS1A5HsRW1JvFWtGkm4o9TgZVe2P7kA8TB4yxvS6A7ms/bullish.png',
-    },
-    sortOrder: 999,
-    bunnyId: 1,
-    rarity: 2,
-    collection: 'Penguins without Borders',
-    address: '0x42F80C76c0f19cbEEea24eAAAf351E077Aa80781',
-  },
-  {
-    name: 'Penguin Nurse',
-    description: `A reward to a very charitable Penguins who contributed either: 5 AVAX, 115 PEFI or more to the Penguins Without Borders campaign. Donations raised were then sent to India's Covid Crypto Relief Fund.`,
-    images: {
-      lg: 'penguin_nurse.png',
-      md: 'penguin_nurse.png',
-      sm: 'penguin_nurse.png',
-    },
-    sortOrder: 999,
-    bunnyId: 2,
-    rarity: 37,
-    collection: 'Penguins without Borders',
-    address: '0x3A96c8976697335B3c3cD073eF2739A0Ea47420C',
-  },
   // sherpa launchpad
   {
     name: 'Astronaut',
@@ -117,6 +87,37 @@ const Nfts: Nft[] = [
     rarity: 0,
     collection: 'BooFinance Launchpad',
     address: '0x623fFc678b756eadBC15A66f1d79C2Fc3d436ced',
+  },
+
+  // penguin without borders
+  {
+    name: 'Doctor Cubiz',
+    description: `A reward to a very charitable Penguins who contributed either: 100 AVAX, 2300 PEFI or more to the Penguins Without Borders campaign. Donations raised were then sent to India's Covid Crypto Relief Fund.`,
+    images: {
+      lg: 'penguin_aukee.png',
+      md: 'penguin_aukee.png',
+      sm: 'penguin_aukee.png',
+      // ipfs: 'https://gateway.pinata.cloud/ipfs/QmNS1A5HsRW1JvFWtGkm4o9TgZVe2P7kA8TB4yxvS6A7ms/bullish.png',
+    },
+    sortOrder: 999,
+    bunnyId: 1,
+    rarity: 2,
+    collection: 'Penguins without Borders',
+    address: '0x42F80C76c0f19cbEEea24eAAAf351E077Aa80781',
+  },
+  {
+    name: 'Aukee the Nurse',
+    description: `A reward to a very charitable Penguins who contributed either: 5 AVAX, 115 PEFI or more to the Penguins Without Borders campaign. Donations raised were then sent to India's Covid Crypto Relief Fund.`,
+    images: {
+      lg: 'penguin_nurse.png',
+      md: 'penguin_nurse.png',
+      sm: 'penguin_nurse.png',
+    },
+    sortOrder: 999,
+    bunnyId: 2,
+    rarity: 37,
+    collection: 'Penguins without Borders',
+    address: '0x3A96c8976697335B3c3cD073eF2739A0Ea47420C',
   },
 ]
 

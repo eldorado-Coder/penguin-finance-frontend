@@ -12,7 +12,12 @@ const YourNfts = () => {
 
   const { account } = useWeb3React()
   const { nftCollections } = useUserCollectibles(account)
-  const userNfts = nfts.filter((nft) => nftCollections.find((nftCollection) => nftCollection === nft.address))
+
+  const userNfts = nftCollections.map((nftCollection) => {
+    const _nft = nfts.find((nft) => nft.address === nftCollection.address)
+    if (_nft) return { ...nftCollection, ..._nft }
+    return nftCollection
+  })
   const sortedNfts = userNfts.sort((a) => (a.collection === sortType ? -1 : 1))
 
   const renderSort = () => (
@@ -43,11 +48,13 @@ const YourNfts = () => {
           </StyledHeader>
           <CardGrid>
             {sortedNfts.map((nft) => {
-              return (
-                <div key={`your-nft-${nft.name}`}>
-                  <NftCard nft={nft} />
-                </div>
-              )
+              return nft.tokenIds.map((tokenId) => {
+                return (
+                  <div key={`your-nft-${nft.name}`}>
+                    <NftCard nft={nft} tokenId={String(tokenId)} />
+                  </div>
+                )
+              })
             })}
           </CardGrid>
         </>
