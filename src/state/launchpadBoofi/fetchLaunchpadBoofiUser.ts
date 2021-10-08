@@ -40,7 +40,7 @@ export const fetchUserData = async (account) => {
     calls,
   )
 
-  const stakedBalance = new BigNumber(amountStaked).toNumber()
+  const stakedBalance = new BigNumber(amountStaked).toString()
   const penguinTier = new BigNumber(penguinTiers).toNumber()
   const allocation = new BigNumber(allocations).toNumber()
   const _canUnStake = canUnStake[0]
@@ -64,7 +64,7 @@ export const fetchUserStakedBalance = async (account) => {
   ]
 
   const [amountStaked] = await multicall(launchpadBoofiABI, calls)
-  return new BigNumber(amountStaked).toNumber()
+  return new BigNumber(amountStaked).toString()
 }
 
 export const fetchUserPenguinTier = async (account) => {
