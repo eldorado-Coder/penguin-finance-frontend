@@ -30,9 +30,9 @@ const RewardCard = () => {
             <LogoWrapper type="sherpa">
               <img src="/images/club/sherpa_without_text.png" alt="sherpa" />
             </LogoWrapper>
-            <BalanceWrapper flexDirection='column' alignItems='center'>
-              <StyledBalance fontWeight='400' fontSize="24px" color="secondary" value={earningBalance} decimals={2} />
-              <StyledText lineHeight={1} fontWeight='400' fontSize="28px" color="secondary" textAlign="right">
+            <BalanceWrapper flexDirection="column" alignItems="center">
+              <StyledBalance fontWeight="400" fontSize="24px" color="#30264f" value={earningBalance} decimals={2} />
+              <StyledText lineHeight={1} fontWeight="400" fontSize="28px" color="secondary" textAlign="right">
                 SHERPA
               </StyledText>
             </BalanceWrapper>
@@ -48,9 +48,9 @@ const RewardCard = () => {
             <LogoWrapper>
               <img src="/images/club/ipefi.svg" alt="sherpa" />
             </LogoWrapper>
-            <BalanceWrapper flexDirection='column' alignItems='center'>
-              <StyledBalance fontWeight='400' fontSize="24px" color="secondary" value={stakedBalance} decimals={2} />
-              <StyledText lineHeight={1} fontWeight='400' fontSize="28px" color="secondary" textAlign="right">
+            <BalanceWrapper flexDirection="column" alignItems="center">
+              <StyledBalance fontWeight="400" fontSize="24px" color="#30264f" value={stakedBalance} decimals={2} />
+              <StyledText lineHeight={1} fontWeight="400" fontSize="28px" color="secondary" textAlign="right">
                 iPEFI
               </StyledText>
             </BalanceWrapper>
@@ -123,7 +123,7 @@ const StyledText = styled(Text)`
   @media (min-width: 1450px) {
     font-size: 28px;
   }
-`;
+`
 
 const BalanceWrapper = styled(Flex)`
   width: calc(100% - 84px);
@@ -134,6 +134,6 @@ const BalanceWrapper = styled(Flex)`
   @media (min-width: 1450px) {
     width: calc(100% - 100px);
   }
-`;
+`
 
 export default RewardCard
