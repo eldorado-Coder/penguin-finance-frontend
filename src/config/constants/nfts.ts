@@ -92,7 +92,7 @@ const Nfts: Nft[] = [
   // penguin without borders
   {
     name: 'Doctor Cubiz',
-    description: `A reward to a very charitable Penguins who contributed either: 100 AVAX, 2300 PEFI or more to the Penguins Without Borders campaign. Donations raised were then sent to India's Covid Crypto Relief Fund.`,
+    description: `A reward to very charitable Penguins who contributed either: 100 AVAX, 2300 PEFI or more to the Penguins Without Borders campaign. Donations raised were then sent to India's Covid Crypto Relief Fund.`,
     images: {
       lg: 'penguin_aukee.png',
       md: 'penguin_aukee.png',
@@ -107,7 +107,7 @@ const Nfts: Nft[] = [
   },
   {
     name: 'Aukee the Nurse',
-    description: `A reward to a very charitable Penguins who contributed either: 5 AVAX, 115 PEFI or more to the Penguins Without Borders campaign. Donations raised were then sent to India's Covid Crypto Relief Fund.`,
+    description: `A reward to very charitable Penguins who contributed either: 5 AVAX, 115 PEFI or more to the Penguins Without Borders campaign. Donations raised were then sent to India's Covid Crypto Relief Fund.`,
     images: {
       lg: 'penguin_nurse.png',
       md: 'penguin_nurse.png',
