@@ -1,3 +1,4 @@
+import BigNumber from 'bignumber.js'
 import collectibleABI from 'config/abi/collectible.json'
 import nftDistributorABI from 'config/abi/nftDistributor.json'
 import multicall from 'utils/multicall'
@@ -16,9 +17,8 @@ export const fetchUserCollectibles = async (account) => {
 
   const userNftCollections = []
   for (let index = 0; index < nfts.length; index++) {
-    if (useNftTokens[index][0].length > 0) {
-      userNftCollections.push(nfts[index].address)
-    }
+    const tokenIds = useNftTokens[index][0].map((row) => new BigNumber(row._hex).toNumber()).sort()
+    userNftCollections.push({ address: nfts[index].address, tokenIds })
   }
   return userNftCollections
 }
