@@ -10,7 +10,11 @@ const ArtworkCard = () => {
   const isMobile = !isXl
 
   const onClickArtworkCard = () => {
-    history.push('/club')
+    // history.push('/club')
+    window.open(
+      'https://penguin-finance.medium.com/club-penguin-is-coming-to-avalanche-earn-free-tokens-by-staking-ipefi-78ef794ca0d5',
+      '_blank',
+    )
   }
 
   return (
