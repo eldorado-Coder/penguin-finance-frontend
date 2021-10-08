@@ -92,7 +92,7 @@ const Nfts: Nft[] = [
   // penguin without borders
   {
     name: 'Doctor Cubiz',
-    description: `A reward to a very charitable Penguins who contributed either: 100 AVAX, 2300 PEFI or more to the Penguins Without Borders campaign. Donations raised were then sent to India's Covid Crypto Relief Fund.`,
+    description: `A reward to very charitable Penguins who contributed either: 100 AVAX, 2300 PEFI or more to the Penguins Without Borders campaign. Donations raised were then sent to India's Covid Crypto Relief Fund.`,
     images: {
       lg: 'penguin_aukee.png',
       md: 'penguin_aukee.png',
@@ -103,11 +103,11 @@ const Nfts: Nft[] = [
     bunnyId: 1,
     rarity: 2,
     collection: 'Penguins without Borders',
-    address: '0x42F80C76c0f19cbEEea24eAAAf351E077Aa80781',
+    address: '0xA6DcF9651F5A08231790dA4F1918799A91d15BF4',
   },
   {
     name: 'Aukee the Nurse',
-    description: `A reward to a very charitable Penguins who contributed either: 5 AVAX, 115 PEFI or more to the Penguins Without Borders campaign. Donations raised were then sent to India's Covid Crypto Relief Fund.`,
+    description: `A reward to very charitable Penguins who contributed either: 5 AVAX, 115 PEFI or more to the Penguins Without Borders campaign. Donations raised were then sent to India's Covid Crypto Relief Fund.`,
     images: {
       lg: 'penguin_nurse.png',
       md: 'penguin_nurse.png',
@@ -117,7 +117,7 @@ const Nfts: Nft[] = [
     bunnyId: 2,
     rarity: 37,
     collection: 'Penguins without Borders',
-    address: '0x3A96c8976697335B3c3cD073eF2739A0Ea47420C',
+    address: '0x0ADFEb081657A140D2eEF996C8FaD88931920099',
   },
 ]
 

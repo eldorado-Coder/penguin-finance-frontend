@@ -40,7 +40,6 @@ export const config: MenuEntry[] = [
     label: 'Arena',
     icon: 'BattleIcon',
     href: '/arena',
-    badge: 'NEW',
   },
   {
     label: 'Launchpad',
@@ -61,6 +60,7 @@ export const config: MenuEntry[] = [
     label: 'Collectibles',
     icon: 'NftIcon',
     href: '/collectibles',
+    badge: 'NEW',
   },
   {
     label: 'Compounder',
