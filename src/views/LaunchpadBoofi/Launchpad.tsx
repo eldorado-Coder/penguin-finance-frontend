@@ -4,9 +4,11 @@ import { Text, Button, Flex } from 'penguinfinance-uikit2'
 import useTheme from 'hooks/useTheme'
 import Page from 'components/layout/Page'
 import StakeCard from './StakeCard/StakeCard'
-import DistributionCard from './DistributionCard/DistributionCard';
-import TiersCard from './TiersCard/TiersCard'
+import DistributionCard from './DistributionCard/DistributionCard'
 import PhaseCard from './PhaseCard'
+import TiersCard from './TiersCard/TiersCard'
+import ArtworkCard from './ArtworkCard'
+import UnStakeCard from './UnStakeCard/UnStakeCard'
 import SherpaCard from './SherpaCard'
 
 const Launchpad: React.FC = () => {
@@ -34,9 +36,9 @@ const Launchpad: React.FC = () => {
         />
       </LaunchpadBannerContainer>
       <UpcomingOfferContainer>
-        <UpcomingOfferLabel fontWeight={500} fontSize="24px">
-          Upcoming Offerings
-        </UpcomingOfferLabel>
+        <Text fontWeight={500} fontSize="24px" color="#38db93">
+          Ended
+        </Text>
         <PhaseCard launchStage={launchStage} />
         {launchStage === 1 && (
           <Flex justifyContent="center">
@@ -45,20 +47,28 @@ const Launchpad: React.FC = () => {
             </MigrationVideo>
           </Flex>
         )}
-        {launchStage !== 1 && (
+        {launchStage === 2 && (
+          <Flex justifyContent="space-between" flexWrap="wrap">
+            <TiersCard />
+            <StakeCard />
+          </Flex>
+        )}
+        {launchStage === 3 && (
           <Flex justifyContent="space-between" flexWrap="wrap">
             <TiersCard />
             <DistributionCard />
-            {/* <StakeCard /> */}
           </Flex>
         )}
+        {launchStage === 4 && (
+          <Flex justifyContent="space-between" flexWrap="wrap" mt="-16px">
+            <ArtworkCard />
+            <UnStakeCard />
+          </Flex>
+        )}
+        <SherpaCardContainer>
+          <SherpaCard />
+        </SherpaCardContainer>
       </UpcomingOfferContainer>
-      <EndedOfferContainer>
-        <EndedOfferLabel fontWeight={500} fontSize="24px" mt="32px">
-          Ended
-        </EndedOfferLabel>
-        <SherpaCard />
-      </EndedOfferContainer>
       <FCard>
         <Description textAlign="center">
           The Penguin Launchpad is a fundraising platform built on Avalanche with fairness, decentralization, and
@@ -111,7 +121,7 @@ const FCard = styled.div`
   box-shadow: 0px 1px 6px rgb(0 0 0 / 16%);
   position: relative;
   padding: 32px 24px;
-  margin-top: 16px;
+  margin-top: 24px;
 
   span {
     color: ${({ theme }) => theme.colors.success};
@@ -135,19 +145,13 @@ const NormalButton = styled(Button)`
 // upcoming offer
 const UpcomingOfferContainer = styled.div``
 
-const UpcomingOfferLabel = styled(Text)`
-  color: #38db93;
-`
-
-const EndedOfferContainer = styled.div``
-
-const EndedOfferLabel = styled(Text)`
-  color: #f24e4d;
-`
-
 const MigrationVideo = styled.video`
   width: 100%;
   border-radius: 16px;
+`
+
+const SherpaCardContainer = styled.div`
+  margin-top: 24px;
 `
 
 export default Launchpad
