@@ -3,7 +3,7 @@ import { Nft } from './types'
 const Nfts: Nft[] = [
   // penguin without borders
   {
-    name: 'Doctor Aukee',
+    name: 'Doctor Cubiz',
     description: `A reward to a very charitable Penguins who contributed either: 100 AVAX, 2300 PEFI or more to the Penguins Without Borders campaign. Donations raised were then sent to India's Covid Crypto Relief Fund.`,
     images: {
       lg: 'penguin_aukee.png',
@@ -18,7 +18,7 @@ const Nfts: Nft[] = [
     address: '0x42F80C76c0f19cbEEea24eAAAf351E077Aa80781',
   },
   {
-    name: 'Penguin Nurse',
+    name: 'Aukee the Nurse',
     description: `A reward to a very charitable Penguins who contributed either: 5 AVAX, 115 PEFI or more to the Penguins Without Borders campaign. Donations raised were then sent to India's Covid Crypto Relief Fund.`,
     images: {
       lg: 'penguin_nurse.png',
