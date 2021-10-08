@@ -2,8 +2,8 @@ import { useCallback } from 'react'
 import { useWeb3React } from '@web3-react/core'
 import { useDispatch } from 'react-redux'
 import { fetchFarmUserDataAsync, updateUserBalance, updateUserPendingReward } from 'state/actions'
-import { soushHarvest, soushHarvestBnb, harvest } from 'utils/callHelpers'
-import { useMasterchef, useSousChef } from './useContract'
+import { soushHarvest, soushHarvestBnb, harvest, v2FarmHarvest } from 'utils/callHelpers'
+import { useMasterchef, useSousChef, useV2MasterChef } from './useContract'
 
 export const useHarvest = (farmPid: number) => {
   const dispatch = useDispatch()
@@ -51,6 +51,21 @@ export const useSousHarvest = (sousId, isUsingBnb = false) => {
     dispatch(updateUserPendingReward(sousId, account))
     dispatch(updateUserBalance(sousId, account))
   }, [account, dispatch, isUsingBnb, masterChefContract, sousChefContract, sousId])
+
+  return { onReward: handleHarvest }
+}
+
+export const useAllV2FarmHarvest = (farmPids: number[]) => {
+  const { account } = useWeb3React()
+  const masterChefContract = useV2MasterChef()
+
+  const handleHarvest = useCallback(async () => {
+    const harvestPromises = farmPids.reduce((accum, pid) => {
+      return [...accum, v2FarmHarvest(masterChefContract, pid, account, account)]
+    }, [])
+
+    return Promise.all(harvestPromises)
+  }, [account, farmPids, masterChefContract])
 
   return { onReward: handleHarvest }
 }

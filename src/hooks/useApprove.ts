@@ -12,7 +12,7 @@ import {
   fetchV2FarmUserDataAsync,
 } from 'state/actions'
 import { approve, approveIPefi } from 'utils/callHelpers'
-import { getNestMigratorAddress, getBoofiLaunchpadAddress } from 'utils/addressHelpers'
+import { getNestMigratorAddress, getBoofiLaunchpadAddress, getClubPenguinMasterChefAddress } from 'utils/addressHelpers'
 import {
   useMasterchef,
   usePenguin,
@@ -183,6 +183,19 @@ export const useBoofiLaunchpadApprove = () => {
 
   const handleIPefiApprove = useCallback(async () => {
     const txHash = await approveIPefi(iPefiContract, account, getBoofiLaunchpadAddress())
+    console.info(txHash)
+  }, [account, iPefiContract])
+
+  return { onApproveIPefi: handleIPefiApprove }
+}
+
+// launchpad Boofi
+export const useClubPenguinApprove = () => {
+  const { account } = useWeb3React()
+  const iPefiContract = useIPefi()
+
+  const handleIPefiApprove = useCallback(async () => {
+    const txHash = await approveIPefi(iPefiContract, account, getClubPenguinMasterChefAddress())
     console.info(txHash)
   }, [account, iPefiContract])
 

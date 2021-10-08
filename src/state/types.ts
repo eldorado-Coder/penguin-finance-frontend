@@ -1,6 +1,14 @@
 import { Toast } from 'penguinfinance-uikit2'
 import BigNumber from 'bignumber.js'
-import { CampaignType, LPConfig, FarmConfig, Nft, PoolConfig, Team } from 'config/constants/types'
+import {
+  CampaignType,
+  LPConfig,
+  FarmConfig,
+  Nft,
+  PoolConfig,
+  Team,
+  ClubPenguinFarmConfig,
+} from 'config/constants/types'
 
 export type TranslatableText =
   | string
@@ -332,6 +340,10 @@ export interface State {
   nestMigrator: NestMigratorState
   v2Pools: PoolsState
   v2Farms: FarmsState
+
+  // collectibles
+  userCollectibles: UserCollectiblesState
+  clubPenguinFarms: ClubPenguinFarmsState
 }
 
 // v2
@@ -339,4 +351,34 @@ export interface NestMigratorState {
   expectedIPefi: number
   pefiAllowance: number
   xPefiAllowance: number
+}
+
+export interface UserCollectiblesState {
+  nftCollections: any[]
+  nftClaimStatus: any[]
+}
+
+// club penguin farm
+export interface ClubPenguinFarm extends ClubPenguinFarmConfig {
+  userData?: {
+    allowance: BigNumber
+    tokenBalance: BigNumber
+    stakedBalance: BigNumber
+    stakedReceiptBalance?: BigNumber
+    earnings: BigNumber
+    pendingXPefi: BigNumber
+    userPendingTokens?: any[]
+    userShares: BigNumber
+    userIpefiDistributionBips?: BigNumber
+  }
+  rewardToken?: string
+  rewardStartTimestamp?: number
+  tokensPerSecond?: BigNumber
+  totalIPEFIInPool?: BigNumber
+  totalRewardAmount?: BigNumber
+  rewardDistributed?: BigNumber
+}
+
+export interface ClubPenguinFarmsState {
+  data: ClubPenguinFarm[]
 }

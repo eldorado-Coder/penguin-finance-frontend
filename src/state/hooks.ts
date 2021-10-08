@@ -38,6 +38,7 @@ import {
   fetchMasterChefLydPerSec, // lydia
   fetchLydiaFarmsPublicDataAsync, // lydia
   fetchJoeMasterChefGlobalData, // joe
+  fetchUserCollectiblesDataAsync, // collectibles
 
   /*
    * v2
@@ -50,6 +51,9 @@ import {
   // pools
   fetchV2MasterChefPefiPerBlock,
   fetchV2FarmsPublicDataAsync,
+  // club penguin
+  fetchClubPenguinFarmsPublicDataAsync,
+  fetchClubPenguinFarmUserDataAsync,
 } from './actions'
 import {
   State,
@@ -68,6 +72,8 @@ import {
   BoosterRocketState,
   // v2
   NestMigratorState,
+  UserCollectiblesState,
+  ClubPenguinFarm,
 } from './types'
 import { fetchProfile } from './profile'
 import { fetchTeam, fetchTeams } from './teams'
@@ -98,6 +104,8 @@ export const useFetchPublicData = () => {
     dispatch(fetchLydiaFarmsPublicDataAsync())
     // joe farms
     dispatch(fetchJoeMasterChefGlobalData())
+    // club penguin
+    dispatch(fetchClubPenguinFarmsPublicDataAsync())
   }, [dispatch, slowRefresh])
 }
 
@@ -291,6 +299,24 @@ export const useBoofiBoosterRocket = (account): BoosterRocketState => {
 
   const boosterRocket = useSelector((state: State) => state.boofiBoosterRocket)
   return boosterRocket
+}
+
+// collectibles
+export const useUserCollectibles = (account): UserCollectiblesState => {
+  const { fastRefresh } = useRefresh()
+  const dispatch = useDispatch()
+  useEffect(() => {
+    const fetchCollectiblesData = async () => {
+      dispatch(fetchUserCollectiblesDataAsync(account))
+    }
+
+    if (account) {
+      fetchCollectiblesData()
+    }
+  }, [account, dispatch, fastRefresh])
+
+  const userCollectibles = useSelector((state: State) => state.userCollectibles)
+  return userCollectibles
 }
 
 // Prices
@@ -619,4 +645,23 @@ export const useJoeFarmsGlobalData = (): {
     rewardPercentToFarm: (1000 - devPercent - investorPercent - treasuryPercent) / 1000,
     totalAllocPoint,
   }
+}
+
+// v2 igloos
+export const useClubPenguinFarms = (account): ClubPenguinFarm[] => {
+  const { fastRefresh } = useRefresh()
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      dispatch(fetchClubPenguinFarmUserDataAsync(account))
+    }
+
+    if (account) {
+      fetchUserData()
+    }
+  }, [account, dispatch, fastRefresh])
+
+  const farms = useSelector((state: State) => state.clubPenguinFarms.data)
+  return farms
 }

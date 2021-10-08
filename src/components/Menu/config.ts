@@ -14,7 +14,7 @@ export const config: MenuEntry[] = [
   {
     label: 'Farms',
     icon: 'IglooIcon',
-    href: '/farms'
+    href: '/farms',
   },
   // {
   //   label: 'Igloos V2',
@@ -34,13 +34,12 @@ export const config: MenuEntry[] = [
   {
     label: 'Emperor',
     icon: 'CrownIcon',
-    href: '/emperor'
+    href: '/emperor',
   },
   {
     label: 'Arena',
     icon: 'BattleIcon',
     href: '/arena',
-    badge: 'NEW'
   },
   {
     label: 'Launchpad',
@@ -61,6 +60,7 @@ export const config: MenuEntry[] = [
     label: 'Collectibles',
     icon: 'NftIcon',
     href: '/collectibles',
+    badge: 'NEW',
   },
   {
     label: 'Compounder',

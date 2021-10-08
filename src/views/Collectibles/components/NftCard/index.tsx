@@ -10,25 +10,58 @@ import {
   ChevronDownIcon,
   Text,
   CardFooter,
-  useModal,
   Flex,
 } from 'penguinfinance-uikit2'
-import { useProfile } from 'state/hooks'
-import useI18n from 'hooks/useI18n'
 import { Nft } from 'config/constants/types'
-import InfoRow from '../InfoRow'
-import TransferNftModal from '../TransferNftModal'
-import ClaimNftModal from '../ClaimNftModal'
 import Preview from './Preview'
 
 interface NftCardProps {
   nft: Nft
-  canClaim?: boolean
-  tokenIds?: number[]
-  onSuccess: () => void
+  tokenId?: string
 }
 
-const Header = styled(InfoRow)`
+const NftCard: React.FC<NftCardProps> = ({ nft, tokenId }) => {
+  const [isOpen, setIsOpen] = useState(false)
+  const { name, description } = nft
+  const Icon = isOpen ? ChevronUpIcon : ChevronDownIcon
+
+  const handleClick = async () => {
+    setIsOpen(!isOpen)
+  }
+
+  const displayedName = tokenId ? `${name} #${tokenId}` : name
+
+  return (
+    <PGCard>
+      <PGCardBody>
+        <Header alignItems="center" justifyContent="space-between">
+          <Heading size="lg">{displayedName}</Heading>
+        </Header>
+      </PGCardBody>
+      <Preview nft={nft} />
+      <Footer p="16px 0 0">
+        <DetailsButton endIcon={<Icon width="32px" color="primary" />} onClick={handleClick}>
+          Details
+        </DetailsButton>
+        {isOpen && (
+          <InfoBlock flexDirection="column" alignItems="center">
+            {nft.rarity > 0 && (
+              <Text as="p" color="textSubtle" mb="8px" mt="4px">
+                {`1 / ${nft.rarity}`}
+              </Text>
+            )}
+            <Text as="p" color="textSubtle">
+              {description}
+            </Text>
+            {/* <Button mt="16px">Coming Soon</Button> */}
+          </InfoBlock>
+        )}
+      </Footer>
+    </PGCard>
+  )
+}
+
+const Header = styled(Flex)`
   min-height: 28px;
 `
 
@@ -51,7 +84,7 @@ const DetailsButton = styled(Button).attrs({ variant: 'text', fullWidth: true })
 `
 
 const InfoBlock = styled(Flex)`
-  padding: 0px 24px 24px;
+  padding: 0px 0px 24px;
 
   p {
     text-align: center;
@@ -94,73 +127,9 @@ const PGCard = styled(Card)`
 
 const PGCardBody = styled(CardBody)`
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
   padding: 8px 0 12px;
 `
-
-const NftCard: React.FC<NftCardProps> = ({ nft, onSuccess, canClaim = false, tokenIds = [] }) => {
-  const [isOpen, setIsOpen] = useState(false)
-  const TranslateString = useI18n()
-  const { profile } = useProfile()
-  const { bunnyId, name, description } = nft
-  const walletOwnsNft = tokenIds.length > 0
-  const Icon = isOpen ? ChevronUpIcon : ChevronDownIcon
-
-  const handleClick = async () => {
-    setIsOpen(!isOpen)
-  }
-
-  const [onPresentTransferModal] = useModal(<TransferNftModal nft={nft} tokenIds={tokenIds} onSuccess={onSuccess} />)
-  const [onPresentClaimModal] = useModal(<ClaimNftModal nft={nft} onSuccess={onSuccess} />)
-
-  return (
-    <PGCard isActive={walletOwnsNft || canClaim}>
-      <PGCardBody>
-        <Header>
-          <Heading size="lg">{name}</Heading>
-          {walletOwnsNft && (
-            <Tag outline variant="secondary">
-              {TranslateString(999, 'In Wallet')}
-            </Tag>
-          )}
-          {profile?.nft?.bunnyId === bunnyId && (
-            <Tag outline variant="success">
-              {TranslateString(999, 'Profile Pic')}
-            </Tag>
-          )}
-        </Header>
-        {canClaim && (
-          <Button scale="md" mt="24px" onClick={onPresentClaimModal}>
-            {TranslateString(999, 'Claim this NFT')}
-          </Button>
-        )}
-        {walletOwnsNft && (
-          <Button scale="md" variant="secondary" mt="24px" onClick={onPresentTransferModal}>
-            {TranslateString(999, 'Transfer')}
-          </Button>
-        )}
-      </PGCardBody>
-      <Preview nft={nft} isOwned={walletOwnsNft} />
-      <Footer p="16px 0 0">
-        <DetailsButton endIcon={<Icon width="32px" color="primary" />} onClick={handleClick}>
-          {TranslateString(658, 'Details')}
-        </DetailsButton>
-        {isOpen && (
-          <InfoBlock flexDirection="column" alignItems="center">
-            {nft.rarity > 0 && (
-              <Text as="p" color="textSubtle" mb="8px" mt="4px">
-                {`1 / ${nft.rarity}`}
-              </Text>
-            )}
-            <Text as="p" color="textSubtle">
-              {description}
-            </Text>
-            <Button mt="16px">Coming Soon</Button>
-          </InfoBlock>
-        )}
-      </Footer>
-    </PGCard>
-  )
-}
 
 export default NftCard

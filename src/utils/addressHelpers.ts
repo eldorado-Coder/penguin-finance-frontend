@@ -1,6 +1,7 @@
 import addresses from 'config/constants/contracts'
 import { Address } from 'config/constants/types'
 import compounderFarms from 'config/constants/compounderFarms'
+import nftDistributors from 'config/constants/nftDistributors'
 
 export const getAddress = (address: Address): string => {
   const mainNetChainId = 43114
@@ -135,4 +136,17 @@ export const getV2NestAddress = () => {
 // v2 farms
 export const getV2MasterChefAddress = () => {
   return getAddress(addresses.v2MasterChef)
+}
+
+// nft collectibles
+export const getNftDistributorAddress = (type) => {
+  let _nftDistributor = nftDistributors.find((row) => row.collection === type)
+  if (!_nftDistributor) {
+    _nftDistributor = nftDistributors[0]
+  }
+  return getAddress(_nftDistributor.address)
+}
+
+export const getClubPenguinMasterChefAddress = () => {
+  return getAddress(addresses.clubPenguinMasterChef)
 }

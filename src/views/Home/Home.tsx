@@ -7,6 +7,7 @@ import useTheme from 'hooks/useTheme'
 import Page from 'components/layout/Page'
 import ArtworkCard from 'views/Home/components/ArtworkCard'
 import FarmStakingCard from 'views/Home/components/FarmStakingCard'
+import HarvestFarmCard from 'views/Home/components/HarvestFarmCard'
 import PefiStats from 'views/Home/components/PefiStats'
 import IglooCard from 'views/Home/components/IglooCard'
 import EarnAPYCard from 'views/Home/components/EarnAPYCard'
@@ -160,7 +161,8 @@ const Home: React.FC = () => {
           <Cards>
             <FarmStakingCardWrapper>
               <ArtworkCard />
-              <FarmStakingCard />
+              {/* <FarmStakingCard /> */}
+              <HarvestFarmCard />
             </FarmStakingCardWrapper>
             <PefiStatsCardWrapper>
               <IglooCard />

@@ -26,6 +26,9 @@ export { fetchDonations } from './donations'
 export { fetchLaunchpadUserDataAsync, updateLaunchpadTierHurdles } from './launchpad'
 export { fetchBoosterRocketUserDataAsync } from './boosterRocket'
 
+// collectibles
+export { fetchUserCollectiblesDataAsync } from './collectibles'
+
 // launchpad - boofi
 export { fetchLaunchpadBoofiUserDataAsync, updateLaunchpadBoofiTierHurdles } from './launchpadBoofi'
 export { fetchBoosterRocketUserDataAsync as fetchBoofiBoosterRocketUserDataAsync } from './boofiBoosterRocket'
@@ -49,3 +52,9 @@ export {
   fetchFarmsPublicDataAsync as fetchV2FarmsPublicDataAsync,
   fetchFarmUserDataAsync as fetchV2FarmUserDataAsync,
 } from './v2Farms'
+
+// club penguins
+export {
+  fetchFarmsPublicDataAsync as fetchClubPenguinFarmsPublicDataAsync,
+  fetchFarmUserDataAsync as fetchClubPenguinFarmUserDataAsync,
+} from './clubPenguin'

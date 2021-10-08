@@ -28,11 +28,12 @@ import {
   getBoofiLaunchpadAddress,
   getBoofiBoosterRocketAddress,
   getBoofiBoosterRocketPayTokenAddress,
-
   // v2
   getNestMigratorAddress,
   getV2NestAddress,
   getV2MasterChefAddress,
+  getNftDistributorAddress, // nft collectibles
+  getClubPenguinMasterChefAddress, // club penguin
 } from 'utils/addressHelpers'
 import getFarmMasterChefAddress from 'utils/getFarmMasterChefAddress'
 import getFarmMasterChefAbi from 'utils/getFarmMasterChefAbi'
@@ -67,6 +68,9 @@ import v2NestAbi from 'config/abi/v2_nest.json'
 import v2MasterChef from 'config/abi/v2Masterchef.json'
 import getV2FarmMasterChefAddress from 'utils/getV2FarmMasterChefAddress'
 import getV2FarmMasterChefAbi from 'utils/getV2FarmMasterChefAbi'
+// nft collectibles
+import nftDistributor from 'config/abi/nftDistributor.json'
+import clubPenguin from 'config/abi/clubPenguin.json'
 
 const useContract = (abi: AbiItem, address: string, contractOptions?: ContractOptions) => {
   const web3 = useWeb3()
@@ -250,6 +254,19 @@ export const useV2MasterChef = (type?: string) => {
     v2MasterChefAddress = getV2FarmMasterChefAddress(type)
   }
   return useContract(abi, v2MasterChefAddress)
+}
+
+// nft collectibles
+export const useNftDistributor = (type) => {
+  const abi = (nftDistributor as unknown) as AbiItem
+
+  return useContract(abi, getNftDistributorAddress(type))
+}
+
+// club penguin
+export const useClubPenguinMasterChef = () => {
+  const abi = (clubPenguin as unknown) as AbiItem
+  return useContract(abi, getClubPenguinMasterChefAddress())
 }
 
 export default useContract

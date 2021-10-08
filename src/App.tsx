@@ -8,13 +8,13 @@ import Menu from 'components/Menu'
 import ToastListener from 'components/ToastListener'
 import PageLoader from 'components/PageLoader'
 import CurrentBlockWrapper from 'components/CurrentBlockWrapper'
-import GlobalCheckBullHiccupClaimStatus from 'views/Collectibles/components/GlobalCheckBullHiccupClaimStatus'
 import history from './routerHistory'
 import LaunchpadVideo from './views/LaunchpadVideo'
 
 // Route-based code splitting
 // Only pool is included in the main bundle because of it's the most visited page'
-const Home = lazy(() => import('./views/Home'))
+const HomeV1 = lazy(() => import('./views/Home'))
+const HomeV2 = lazy(() => import('./views/HomeV2'))
 const Farms = lazy(() => import('./views/Farms'))
 const FarmsV2 = lazy(() => import('./views/FarmsV2'))
 const Arena = lazy(() => import('./views/Arena'))
@@ -30,6 +30,7 @@ const NotFound = lazy(() => import('./views/NotFound'))
 // const Nests = lazy(() => import('./views/Nests'))
 // const Lottery = lazy(() => import('./views/Lottery'))
 const Info = lazy(() => import('./views/Info'))
+const ClubPenguin = lazy(() => import('./views/ClubPenguin'))
 const Collectibles = lazy(() => import('./views/Collectibles'))
 const CompounderIgloos = lazy(() => import('./views/CompounderIgloos'))
 const IPefi = lazy(() => import('./views/IPefi'))
@@ -56,7 +57,8 @@ const App: React.FC = () => {
               <CompounderIgloos />
             </Route>
             <Route path="/" exact>
-              <Home />
+              {/* <HomeV2 /> */}
+              <HomeV1 />
             </Route>
             <Route path="/farms">
               <FarmsV2 />
@@ -82,6 +84,12 @@ const App: React.FC = () => {
             <Route path="/info">
               <Info />
             </Route>
+            <Route path="/club">
+              <ClubPenguin />
+            </Route>
+            <Route path="/club-old">
+              <Club />
+            </Route>
             <Route path="/launchpad">
               {/* <LaunchpadVideo /> */}
               <LaunchpadBoofi />
@@ -92,10 +100,6 @@ const App: React.FC = () => {
             <Route path="/sherpa-launchpad">
               <LaunchpadDistribution />
             </Route>
-            <Route path="/club">
-              <Club />
-            </Route>
-            {/* <Route path="/emperor"> */}
             <Route path="/emperor">
               <Emperor />
             </Route>
@@ -119,7 +123,6 @@ const App: React.FC = () => {
         </Suspense>
       </Menu>
       <ToastListener />
-      <GlobalCheckBullHiccupClaimStatus />
       <CurrentBlockWrapper />
     </Router>
   )

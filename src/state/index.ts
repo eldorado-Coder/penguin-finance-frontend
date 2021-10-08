@@ -27,6 +27,11 @@ import nestMigratorReducer from './nestMigrator'
 import v2PoolsReducer from './v2pools'
 import v2FarmsReducer from './v2Farms'
 
+// collectibles
+import userCollectiblesReducer from './collectibles'
+// collectibles
+import clubPenguinFarmsReducer from './clubPenguin'
+
 const store = configureStore({
   devTools: process.env.NODE_ENV !== 'production',
   reducer: {
@@ -55,6 +60,12 @@ const store = configureStore({
     nestMigrator: nestMigratorReducer,
     v2Pools: v2PoolsReducer,
     v2Farms: v2FarmsReducer,
+
+    // collectibles
+    userCollectibles: userCollectiblesReducer,
+
+    // club penguin
+    clubPenguinFarms: clubPenguinFarmsReducer,
   },
 })
 
