@@ -120,7 +120,7 @@ const UnstakeForm: React.FC<UnStakeFormProps> = ({
         )}
       </Flex>
       <Flex mt="8px">
-        <ClubButton scale="md" onClick={handleClubPenguin}>
+        <ClubButton scale="md" disabled onClick={handleClubPenguin}>
           Experience Club Penguin
         </ClubButton>
       </Flex>
