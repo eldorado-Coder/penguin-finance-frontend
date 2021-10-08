@@ -41,7 +41,7 @@ const YourNfts = () => {
       {account && sortedNfts.length > 0 && (
         <>
           <StyledHeader flexWrap="wrap">
-            <Text bold fontSize="24px" color="primary" mr="16px">
+            <Text bold fontSize="40px" color="secondary" mr="16px">
               My NFTs
             </Text>
             {renderSort()}
