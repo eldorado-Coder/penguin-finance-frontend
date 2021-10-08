@@ -103,7 +103,7 @@ const Nfts: Nft[] = [
     bunnyId: 1,
     rarity: 2,
     collection: 'Penguins without Borders',
-    address: '0x42F80C76c0f19cbEEea24eAAAf351E077Aa80781',
+    address: '0xA6DcF9651F5A08231790dA4F1918799A91d15BF4',
   },
   {
     name: 'Aukee the Nurse',
@@ -117,7 +117,7 @@ const Nfts: Nft[] = [
     bunnyId: 2,
     rarity: 37,
     collection: 'Penguins without Borders',
-    address: '0x3A96c8976697335B3c3cD073eF2739A0Ea47420C',
+    address: '0x0ADFEb081657A140D2eEF996C8FaD88931920099',
   },
 ]
 

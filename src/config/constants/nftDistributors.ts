@@ -6,7 +6,7 @@ const NftDistributors: NftDistributor[] = [
     description: 'NFT Distributor for Penguin Without Borders',
     address: {
       43113: '',
-      43114: '0x559EBD8f2476488d033a6691a0807f66092fe5B1',
+      43114: '0xa9b1Ada032194e61Ae1BC1d8f3B878B67Ea62d52',
     },
   },
   {
