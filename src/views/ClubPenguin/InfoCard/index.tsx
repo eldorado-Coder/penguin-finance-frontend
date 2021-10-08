@@ -65,7 +65,7 @@ const StyledCard = styled(Card)`
   box-shadow: 0px 1px 6px rgb(0 0 0 / 16%);
   background-color: ${({ theme }) => theme.colors.red};
 
-  ${({ theme }) => theme.mediaQueries.lg} {
+  ${({ theme }) => theme.mediaQueries.xl} {
     width: 49%;
   }
 `
@@ -91,6 +91,16 @@ const ButtonActions = styled(Flex)`
     flex-direction: column;
     margin-top: 0;
   }
+
+  @media (min-width: 1080px) {
+    margin-top: 16px;
+    flex-direction: row;
+  }
+
+  @media (min-width: 1200px) {
+    flex-direction: column;
+    margin-top: 0;
+  }
 `
 
 const StyledButton = styled(Button)`
@@ -111,6 +121,14 @@ const StyledButton = styled(Button)`
 
     @media (min-width: 640px) {
       margin-bottom: 8px;
+      margin-right: 0;
+    }
+
+    @media (min-width: 1080px) {
+      margin-right: 8px;
+    }
+
+    @media (min-width: 1200px) {
       margin-right: 0;
     }
   }

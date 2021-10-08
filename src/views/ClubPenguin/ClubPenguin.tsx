@@ -70,7 +70,7 @@ const ClubPenguinContent = styled.div``
 
 const CardWrapper = styled(Flex)`
   width: 100%;
-  ${({ theme }) => theme.mediaQueries.lg} {
+  ${({ theme }) => theme.mediaQueries.xl} {
     width: 49%;
   }
 `
