@@ -1,11 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Flex } from 'penguinfinance-uikit2'
+import { Flex, Text } from 'penguinfinance-uikit2'
 import useTheme from 'hooks/useTheme'
 import Page from 'components/layout/Page'
 import InfoCard from './InfoCard'
 import RewardCard from './RewardCard'
 import StakeCard from './StakeCard/StakeCard'
+import UpcomingIcebergs from './UpcomingIcebergs'
+import SherpaCard from './SherpaCard';
+import SherpaStakeCard from './SherpaStakeCard/StakeCard'
 
 const ClubPenguin: React.FC = () => {
   const { isDark } = useTheme()
@@ -24,13 +27,17 @@ const ClubPenguin: React.FC = () => {
         />
       </ClubPenguinBannerContainer>
       <ClubPenguinContent>
+        <Text fontSize='24px' color='textSubtle' fontWeight={500}>Current Iceberg</Text>
         <Flex justifyContent="space-between" flexWrap="wrap">
-          <InfoCard />
+          {/* <InfoCard /> */}
+          <SherpaCard />
           <CardWrapper flexDirection="column">
-            <RewardCard />
-            <StakeCard />
+            {/* <RewardCard /> */}
+            {/* <StakeCard /> */}
+            <SherpaStakeCard />
           </CardWrapper>
         </Flex>
+        <UpcomingIcebergs />
       </ClubPenguinContent>
     </ClubPenguinPage>
   )
