@@ -68,7 +68,6 @@ const SherpaCardWrapper = styled.div`
   position: relative;
   padding: 24px;
   margin-top: 8px;
-  margin-bottom: 32px;
 `
 
 const SherpaContainer = styled(Flex)`
