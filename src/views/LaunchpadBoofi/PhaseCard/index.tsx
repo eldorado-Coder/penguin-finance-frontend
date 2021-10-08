@@ -69,7 +69,7 @@ const PhaseCard = ({ launchStage }: { launchStage: number }) => {
       {isMobile ? (
         <Flex flexDirection="column">
           <MobileProgressWrapper>
-            <Progress primaryStep={86} />
+            <Progress primaryStep={100} />
             <MobileProgressMarks flexDirection="column" justifyContent="space-between">
               {marks.map((mark) => {
                 return (
@@ -110,7 +110,7 @@ const PhaseCard = ({ launchStage }: { launchStage: number }) => {
       ) : (
         <Flex>
           <ProgressWrapper>
-            <Progress primaryStep={95} />
+            <Progress primaryStep={100} />
             <Flex justifyContent="space-between">
               {marks.map((mark) => {
                 return (
