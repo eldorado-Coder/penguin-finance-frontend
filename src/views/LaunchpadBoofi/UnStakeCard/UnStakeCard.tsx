@@ -75,6 +75,9 @@ const TabButton = styled(Button)`
   color: white;
   font-size: 14px;
   background-color: #38db93;
+  &:hover {
+    opacity: 1 !important;
+  }
 `
 
 const StyledLabel = styled(Text)`
