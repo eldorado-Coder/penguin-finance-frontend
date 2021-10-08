@@ -12,7 +12,7 @@ import {
 import { LaunchpadBoofiState } from '../types'
 
 const initialState: LaunchpadBoofiState = {
-  stakedBalance: 0,
+  stakedBalance: '0',
   allowance: 0,
   yourPenguinTier: 0,
   allocation: 0,
