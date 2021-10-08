@@ -44,12 +44,13 @@ const Menu = (props) => {
   //   ...links[collectiblesIndex],
   //   badge: isCollectiblesNew ? 'NEW' : '',
   // }
-  links[launchpadIndex] = {
-    ...links[launchpadIndex],
-    badge: 'LIVE',
-    badgeLightColor: '#37DB94',
-    badgeDarkColor: '#37DB94',
-  }
+
+  // links[launchpadIndex] = {
+  //   ...links[launchpadIndex],
+  //   badge: 'LIVE',
+  //   badgeLightColor: '#37DB94',
+  //   badgeDarkColor: '#37DB94',
+  // }
 
   // links[emperorIndex] = {
   //   ...links[emperorIndex],
