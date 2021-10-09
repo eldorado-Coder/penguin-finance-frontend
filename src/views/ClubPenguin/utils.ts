@@ -18,3 +18,13 @@ export const getXPefiToPefiRatio = (pool) => {
     ? new BigNumber(pool.totalStaked).div(new BigNumber(pool.totalSupply)).toJSON()
     : 1
 }
+
+export const getCutdownType = (now, start) => {
+  if (now < start) {
+    return 'start'
+  }
+  if (now >= start) {
+    return 'end'
+  }
+  return 'start'
+}

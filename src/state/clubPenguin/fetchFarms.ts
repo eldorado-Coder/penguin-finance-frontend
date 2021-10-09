@@ -13,10 +13,15 @@ export const fetchFarms = async () => {
 
   const data = await Promise.all(
     clubPenguinFarms.map(async (farmConfig) => {
-      const [info] = await multicall(clubPenguinMasterChefAbi, [
+      const [info, poolTimeRemaining] = await multicall(clubPenguinMasterChefAbi, [
         {
           address: masterchefAddress,
           name: 'poolInfo',
+          params: [farmConfig.pid],
+        },
+        {
+          address: masterchefAddress,
+          name: 'poolTimeRemaining',
           params: [farmConfig.pid],
         },
       ])
@@ -34,10 +39,12 @@ export const fetchFarms = async () => {
         ...farmConfig,
         rewardToken,
         rewardStartTimestamp: new BigNumber(rewardStartTimestamp._hex).toNumber(),
+        rewardEndTimestamp: Date.now() + 1000 * new BigNumber(poolTimeRemaining).toNumber(),
         tokensPerSecond: new BigNumber(tokensPerSecond._hex).toJSON(),
         totalIPEFIInPool: new BigNumber(totalIPEFIInPool._hex).toJSON(),
         totalRewardAmount: new BigNumber(totalRewardAmount._hex).toJSON(),
         rewardDistributed: new BigNumber(rewardDistributed._hex).toJSON(),
+        poolTimeRemaining: new BigNumber(poolTimeRemaining).toNumber(),
       }
     }),
   )

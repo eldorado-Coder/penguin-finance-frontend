@@ -20,11 +20,21 @@ interface StakeFormProps {
   account?: string
   onApprove: () => void
   onConfirm: (amount: string) => void
-  stakedBalance: BigNumber,
-  date: number
+  stakedBalance: BigNumber
+  cutdownType: string
+  cutdownDate: number
 }
 
-const StakeForm: React.FC<StakeFormProps> = ({ max, onConfirm, tokenName = '', account, stakedBalance, date, onApprove }) => {
+const StakeForm: React.FC<StakeFormProps> = ({
+  max,
+  onConfirm,
+  tokenName = '',
+  account,
+  stakedBalance,
+  cutdownType,
+  cutdownDate,
+  onApprove,
+}) => {
   const [val, setVal] = useState('')
   const [pendingTx, setPendingTx] = useState(false)
   const iPefiContract = useIPefi()
@@ -125,10 +135,12 @@ const StakeForm: React.FC<StakeFormProps> = ({ max, onConfirm, tokenName = '', a
         )}
       </Flex>
       <CountDownButton>
-        <div>STARTS IN</div>
-        <div className='countdown'>
-          <CountDown date={date} />
-        </div>
+        <div>{cutdownType === 'start' ? 'STARTS IN' : 'END IN'}</div>
+        {cutdownDate > 0 && (
+          <div className="countdown">
+            <CountDown date={cutdownDate} />
+          </div>
+        )}
       </CountDownButton>
     </>
   )
@@ -153,7 +165,7 @@ const StyledButton2 = styled(Button)`
   width: 100%;
   border-radius: 8px;
   color: white;
-  background: ${({ theme }) => theme.isDark ? '#d4444c' : '#f24e4d'};
+  background: ${({ theme }) => (theme.isDark ? '#d4444c' : '#f24e4d')};
 `
 
 const StyledUnlockButton = styled(UnlockButton)`
@@ -162,8 +174,8 @@ const StyledUnlockButton = styled(UnlockButton)`
 `
 
 const CountDownButton = styled(Button)`
-  color: ${({ theme }) => theme.isDark ? 'white' : '#00283f'};
-  background: ${({ theme }) => theme.isDark ? '#d4444c' : '#f24e4d'};
+  color: ${({ theme }) => (theme.isDark ? 'white' : '#00283f')};
+  background: ${({ theme }) => (theme.isDark ? '#d4444c' : '#f24e4d')};
   width: 100%;
   border-radius: 8px;
   margin-top: 16px;
@@ -173,6 +185,6 @@ const CountDownButton = styled(Button)`
     margin-left: 6px;
     text-align: left;
   }
-`;
+`
 
 export default StakeForm
