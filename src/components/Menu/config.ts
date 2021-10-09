@@ -32,6 +32,11 @@ export const config: MenuEntry[] = [
     href: '/nests',
   },
   {
+    label: 'Club Penguin',
+    icon: 'ClubIcon',
+    href: '/club',
+  },
+  {
     label: 'Emperor',
     icon: 'CrownIcon',
     href: '/emperor',
@@ -46,11 +51,6 @@ export const config: MenuEntry[] = [
     icon: 'LaunchpadIcon',
     href: '/launchpad',
   },
-  // {
-  //   label: 'Club Penguin',
-  //   icon: 'BattleIcon',
-  //   href: '/club',
-  // },
   // {
   //   label: 'Penguin lottery',
   //   icon: 'NftIcon',
