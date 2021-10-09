@@ -10,6 +10,7 @@ import roundDown from 'utils/roundDown'
 import { getClubPenguinMasterChefAddress } from 'utils/addressHelpers'
 import escapeRegExp from 'utils/escapeRegExp'
 import TokenInput from './TokenInput'
+import CountDown from '../CountDown'
 
 const inputRegex = RegExp(`^\\d*(?:\\\\[.])?\\d*$`)
 
@@ -19,10 +20,11 @@ interface StakeFormProps {
   account?: string
   onApprove: () => void
   onConfirm: (amount: string) => void
-  stakedBalance: BigNumber
+  stakedBalance: BigNumber,
+  date: number
 }
 
-const StakeForm: React.FC<StakeFormProps> = ({ max, onConfirm, tokenName = '', account, stakedBalance, onApprove }) => {
+const StakeForm: React.FC<StakeFormProps> = ({ max, onConfirm, tokenName = '', account, stakedBalance, date, onApprove }) => {
   const [val, setVal] = useState('')
   const [pendingTx, setPendingTx] = useState(false)
   const iPefiContract = useIPefi()
@@ -51,7 +53,7 @@ const StakeForm: React.FC<StakeFormProps> = ({ max, onConfirm, tokenName = '', a
   const renderText = () => {
     if (Number(val) > Number(fullBalance) || Number(fullBalance) === 0) return 'Get more iPEFI'
     if (pendingTx) return 'Pending Confirmation'
-    if (val) return 'Confirm Staking'
+    if (val) return 'Stake'
     return 'Enter Amount'
   }
 
@@ -122,6 +124,12 @@ const StakeForm: React.FC<StakeFormProps> = ({ max, onConfirm, tokenName = '', a
           </>
         )}
       </Flex>
+      <CountDownButton>
+        <div>STARTS IN</div>
+        <div className='countdown'>
+          <CountDown date={date} />
+        </div>
+      </CountDownButton>
     </>
   )
 }
@@ -135,7 +143,7 @@ const StyledButton1 = styled(Button)`
   width: 100%;
   border-radius: 8px;
   background: ${({ theme }) => (theme.isDark ? '#604E84' : '#ECE8F2')};
-  color: ${({ theme }) => (theme.isDark ? 'white' : '#372871')};
+  color: ${({ theme }) => (theme.isDark ? 'white' : '#372b70')};
   box-shadow: none;
 `
 
@@ -143,12 +151,26 @@ const StyledButton2 = styled(Button)`
   width: 100%;
   border-radius: 8px;
   color: white;
-  background-color: ${({ theme }) => theme.colors.red};
+  background-color: #f24e4d;
 `
 
 const StyledUnlockButton = styled(UnlockButton)`
   width: 100%;
   border-radius: 8px;
 `
+
+const CountDownButton = styled(Button)`
+  color: #00283f;
+  background: #f24e4d;
+  width: 100%;
+  border-radius: 8px;
+  margin-top: 16px;
+
+  .countdown {
+    min-width: 72px;
+    margin-left: 6px;
+    text-align: left;
+  }
+`;
 
 export default StakeForm

@@ -4,8 +4,9 @@ import { Text, Flex, Button } from 'penguinfinance-uikit2'
 import SvgIcon from 'components/SvgIcon'
 import CardValue from 'components/CardValue'
 import Card from '../Card'
+import CountDown from '../CountDown';
 
-const InfoCard = () => {
+const InfoCard = ({ date }) => {
   const handleLearnMore = () => {
     window.open(
       'https://penguin-finance.medium.com/penguin-launchpad-allocation-staking-for-boofi-is-live-728f17ceea6c',
@@ -20,16 +21,16 @@ const InfoCard = () => {
   return (
     <StyledCard>
       <CardHeader>
-        <Flex alignItems="center" flexWrap="wrap">
-          <LogoWrapper mr='16px' alignItems="center">
+        <Flex alignItems="flex-start" flexWrap="wrap" justifyContent='space-between'>
+          <LogoWrapper mt='16px' mr='16px' alignItems="center">
             <img src="/images/club/sherpa_iceberg.svg" alt="sherpa" />
           </LogoWrapper>
-          <div>
-            <Text fontSize='40px' color='white' bold>SHERPA ICEBERG</Text>
-            <Flex>
-              <div>
-                <Text color='white'>SHERPA EARNED</Text>
-                <Text color='white'>2358.38</Text>
+          <SherpaIceberg>
+            <Text fontSize='40px' color='white' fontWeight={600} lineHeight={1}>SHERPA ICEBERG</Text>
+            <FlexContainer mt='32px' justifyContent='space-between'>
+              <Flex className='col' flexDirection='column' alignItems='flex-start'>
+                <Text fontSize='20px' color='white' fontWeight={700} lineHeight={1}>SHERPA EARNED</Text>
+                <Text fontSize='22px' color='#00283f' fontWeight={600}>2358.38</Text>
                 <BalanceTextSmall>
                   <CardValue
                     className="balance"
@@ -40,27 +41,49 @@ const InfoCard = () => {
                     prefix="≈ $"
                   />
                 </BalanceTextSmall>
-              </div>
-              <div>
-                <Text color='white'>SHERPA EARNED</Text>
-              </div>
-            </Flex>
-          </div>
-          {/* <Flex flexDirection="column">
-            <ButtonActions flexDirection="column">
-              <StyledButton onClick={handleLearnMore}>Learn More</StyledButton>
-              <StyledButton onClick={handleViewWebsite}>View Website</StyledButton>
-            </ButtonActions>
-          </Flex> */}
+              </Flex>
+              <Flex className='col' flexDirection='column' alignItems='flex-start'>
+                <Text fontSize='20px' color='white' fontWeight={700} lineHeight={1}>CURRENT APR</Text>
+                <Text fontSize='22px' color='#00283f' fontWeight={600}>483.38%</Text>
+                <BalanceTextSmall>
+                  <CardValue
+                    className="balance"
+                    fontSize="12px"
+                    value={10.06}
+                    decimals={2}
+                    lineHeight="1.2"
+                    suffix='% per week'
+                  />
+                </BalanceTextSmall>
+              </Flex>
+            </FlexContainer>
+            <FlexContainer mt='24px' justifyContent='space-between'>
+              <Flex className='col'>
+                <StyledButton
+                  id="harvest-all"
+                  endIcon={<img src="/images/farms/harvest-coin.svg" alt="harvest" width={16} />}
+                  scale="md"
+                >
+                  Harvest All
+                </StyledButton>
+              </Flex>
+              <Flex className='col' flexDirection='column' alignItems='flex-start'>
+                <Text fontSize='20px' color='white' fontWeight={700} lineHeight={1}>STARTS IN</Text>
+                <Text fontSize='22px' color='#00283f' fontWeight={400}>
+                  <CountDown date={date} />
+                </Text>
+              </Flex>
+            </FlexContainer>
+          </SherpaIceberg>
         </Flex>
       </CardHeader>
       <CardContent>
-        <Text fontSize="18px" color="white">
+        <Text fontWeight={400} fontSize="18px" color="white">
           Sherpa Cash is the first fully decentralized protocol for private transactions on Avalanche. The SHERPA token is the governance token for Sherpa Cash.
         </Text>
       </CardContent>
       <CardFooter justifyContent='space-between' alignItems='center'>
-        <StyledButton onClick={handleViewWebsite}>View Website</StyledButton>
+        <StyledButton onClick={handleViewWebsite}>Visit Website</StyledButton>
         <SocialIconsWrapper>
           <a href="https://t.me/sherpa_cash" target="_blank" rel="noreferrer">
             <SvgIcon src={`${process.env.PUBLIC_URL}/images/telegram.svg`} width="100%" height="32px" />
@@ -85,9 +108,9 @@ const StyledCard = styled(Card)`
   margin-top: 16px;
   width: 100%;
   height: 100%;
-  padding: 24px;
+  padding: 32px 24px 34px;
   box-shadow: 0px 1px 6px rgb(0 0 0 / 16%);
-  background-color: ${({ theme }) => theme.colors.red};
+  background-color: #f24e4d;
 
   ${({ theme }) => theme.mediaQueries.xl} {
     width: 49%;
@@ -103,7 +126,7 @@ const LogoWrapper = styled(Flex)`
 `
 
 const CardContent = styled.div`
-  margin-top: 24px;
+  margin-top: 16px;
   margin-bottom: 16px;
 `
 
@@ -128,33 +151,16 @@ const ButtonActions = styled(Flex)`
 `
 
 const StyledButton = styled(Button)`
-  height: 32px;
-  background: white;
-  color: ${({ theme }) => theme.colors.red};
-  border-radius: 6px;
-  font-weight: 500;
+  height: 44px;
+  background: #00283f;
+  color: white;
+  border-radius: 10px;
+  font-weight: 700;
   white-space: nowrap;
-  font-size: 14px;
+  font-size: 16px;
 
-  @media (min-width: 640px) {
-    font-size: 16px;
-  }
-
-  &:first-child {
-    margin-right: 8px;
-
-    @media (min-width: 640px) {
-      margin-bottom: 8px;
-      margin-right: 0;
-    }
-
-    @media (min-width: 1080px) {
-      margin-right: 8px;
-    }
-
-    @media (min-width: 1200px) {
-      margin-right: 0;
-    }
+  img {
+    margin-left: 8px;
   }
 `
 
@@ -180,5 +186,15 @@ const BalanceTextSmall = styled.div`
     font-weight: 400;
   }
 `
+
+const FlexContainer = styled(Flex)`
+  .col {
+    min-width: 140px;
+  }
+`;
+
+const SherpaIceberg = styled.div`
+  width: calc(100% - 170px);
+`;
 
 export default InfoCard

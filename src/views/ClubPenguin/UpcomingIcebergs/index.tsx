@@ -17,18 +17,19 @@ const FCard = styled.div`
   text-align: center;
 `
 
-const IcebergTag = styled(Tag)`
+const IcebergTag = styled(Tag)<{ outline?: boolean }>`
   margin-left: 4px;
   border-radius: 8px;
   font-size: 14px;
   font-weight: 300;
   height: 32px;
   line-height: 1;
+  background: ${({ outline }) => !outline && '#f24e4d'};
 `
 
 const StyledButton = styled(Button)`
   border-radius: 8px;
-  background-color: ${({ theme }) => theme.colors.red};
+  background-color: #f24e4d;
   color: white;
   height: 44px;
 `;
@@ -46,7 +47,7 @@ const StyledFlexLayout = styled(FlexLayout)`
 const UpcomingIcebergs = () => {
   return (
     <>
-      <Text fontSize='24px' color='red' mt='16px' mb='16px' fontWeight={500}>Upcoming Icebergs</Text>
+      <Text fontSize='24px' color='red' mt='32px' mb='16px' fontWeight={500}>Upcoming Icebergs</Text>
       <StyledFlexLayout>
         {Icebergs.map(iceberg => {
           return (

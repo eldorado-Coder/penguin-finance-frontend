@@ -7,6 +7,7 @@ import roundDown from 'utils/roundDown'
 import escapeRegExp from 'utils/escapeRegExp'
 import { getFullDisplayBalance } from 'utils/formatBalance'
 import TokenInput from './TokenInput'
+import CountDown from '../CountDown';
 
 const inputRegex = RegExp(`^\\d*(?:\\\\[.])?\\d*$`)
 
@@ -14,10 +15,11 @@ interface UnStakeFormProps {
   max: BigNumber
   tokenName?: string
   account?: string
+  date: number
   onConfirm: (amount: string) => void
 }
 
-const UnstakeForm: React.FC<UnStakeFormProps> = ({ max, tokenName = '', account, onConfirm }) => {
+const UnstakeForm: React.FC<UnStakeFormProps> = ({ max, tokenName = '', account, date, onConfirm }) => {
   const [val, setVal] = useState('')
   const [pendingTx, setPendingTx] = useState(false)
 
@@ -79,6 +81,12 @@ const UnstakeForm: React.FC<UnStakeFormProps> = ({ max, tokenName = '', account,
           </StyledButton>
         )}
       </Flex>
+      <CountDownButton>
+        <div>STARTS IN</div>
+        <div className='countdown'>
+          <CountDown date={date} />
+        </div>
+      </CountDownButton>
     </>
   )
 }
@@ -87,13 +95,27 @@ const StyledButton = styled(Button)`
   width: 100%;
   border-radius: 8px;
   color: white;
-  background-color: ${({ theme }) => theme.colors.red};
+  background-color: #f24e4d;
 `
 
 const StyledUnlockButton = styled(UnlockButton)`
   width: 100%;
   border-radius: 8px;
-  background-color: ${({ theme }) => theme.colors.red};
+  background-color: #f24e4d;
 `
+
+const CountDownButton = styled(Button)`
+  color: #00283f;
+  background: #f24e4d;
+  width: 100%;
+  border-radius: 8px;
+  margin-top: 16px;
+
+  .countdown {
+    min-width: 72px;
+    margin-left: 6px;
+    text-align: left;
+  }
+`;
 
 export default UnstakeForm

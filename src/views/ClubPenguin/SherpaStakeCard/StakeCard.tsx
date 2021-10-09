@@ -11,7 +11,7 @@ import StakeForm from './StakeForm'
 import UnstakeForm from './UnstakeForm'
 import Card from '../Card'
 
-const StakeCard = () => {
+const StakeCard = ({ date }) => {
   const [activeTab, setActiveTab] = useState(0)
   const { account } = useWeb3React()
   const { onStake } = useClubPenguinStake(0)
@@ -46,12 +46,13 @@ const StakeCard = () => {
             max={iPEFIBalance}
             tokenName="iPEFI"
             account={account}
+            date={date}
             stakedBalance={stakedBalance}
             onApprove={onApproveIPefi}
             onConfirm={onStake}
           />
         ) : (
-          <UnstakeForm max={stakedBalance} tokenName="iPEFI" account={account} onConfirm={onUnstake} />
+          <UnstakeForm max={stakedBalance} tokenName="iPEFI" account={account} date={date} onConfirm={onUnstake} />
         )}
       </CardContent>
     </StyledCard>
@@ -93,14 +94,14 @@ const OptionItem = styled(ButtonMenuItem)<{ active: boolean }>`
   min-width: 100px;
   font-weight: 500;
   box-shadow: none;
-  background-color: ${({ active, theme }) => active && theme.colors.red};
-  color: ${({ active }) => (active ? 'white' : '#A79FBC')};
+  background-color: ${({ active }) => active && '#f24e4d'};
+  color: ${({ active }) => (active ? 'white' : '#372b70')};
   color: ${({ active, theme }) => theme.isDark && !active && '#BBA6DD'};
 `
 
 const StakeLabel = styled(Text)`
   font-size: 18px;
-  color: ${({ theme }) => (theme.isDark ? 'white' : '#372871')};
+  color: ${({ theme }) => (theme.isDark ? 'white' : '#372b70')};
 
   ${({ theme }) => theme.mediaQueries.sm} {
     font-size: 20px;

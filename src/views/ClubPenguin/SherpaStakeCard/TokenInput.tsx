@@ -68,7 +68,7 @@ const TokenValueWrapper = styled(Flex)`
 
 const TokenValue = styled.div`
   font-size: 18px;
-  color: ${({ theme }) => (theme.isDark ? 'white' : '#372871')};
+  color: ${({ theme }) => (theme.isDark ? 'white' : '#372b70')};
 `
 
 const StyledTokenInput = styled.div`
@@ -78,21 +78,21 @@ const StyledTokenInput = styled.div`
     background: ${({ theme }) => (theme.isDark ? '#604E84' : '#ECE8F2')};
 
     .tokenInput {
-      caret-color: ${({ theme }) => (theme.isDark ? 'white' : '#372871')};
+      caret-color: ${({ theme }) => (theme.isDark ? 'white' : '#372b70')};
       color: transparent;
       z-index: 1;
       margin-right: 80px;
 
       ::placeholder {
-        color: ${({ theme }) => (theme.isDark ? 'white' : '#372871')};
+        color: ${({ theme }) => (theme.isDark ? 'white' : '#372b70')};
       }
 
       :-ms-input-placeholder {
-        color: ${({ theme }) => (theme.isDark ? 'white' : '#372871')};
+        color: ${({ theme }) => (theme.isDark ? 'white' : '#372b70')};
       }
 
       ::-ms-input-placeholder {
-        color: ${({ theme }) => (theme.isDark ? 'white' : '#372871')};
+        color: ${({ theme }) => (theme.isDark ? 'white' : '#372b70')};
       }
     }
   }
@@ -100,7 +100,7 @@ const StyledTokenInput = styled.div`
 
 const StyledMaxText = styled(Text)`
   align-items: center;
-  // color: #604e84;
+  color: ${({ theme }) => theme.isDark ? 'white' : '#372b70'};
   display: flex;
   font-weight: 300;
   font-size: 16px;
