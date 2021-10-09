@@ -1,8 +1,8 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Text, Flex, Image, Tag, VerifiedIcon, Button } from 'penguinfinance-uikit2';
+import React from 'react'
+import styled from 'styled-components'
+import { Text, Flex, Image, Tag, VerifiedIcon, Button } from 'penguinfinance-uikit2'
 import FlexLayout from 'components/layout/Flex'
-import { Icebergs } from './Icebergs';
+import { Icebergs } from './Icebergs'
 
 const FCard = styled.div`
   align-self: baseline;
@@ -32,12 +32,12 @@ const IcebergTag = styled(Tag)<{ outline?: boolean }>`
 
 const StyledButton = styled(Button)`
   border-radius: 8px;
-  background-color: ${({ theme }) => theme.isDark ? '#614e83' : '#f24e4d'};
+  background-color: ${({ theme }) => (theme.isDark ? '#614e83' : '#f24e4d')};
   color: white;
   height: 44px;
   font-weight: 700;
   box-shadow: none;
-`;
+`
 
 const StyledFlexLayout = styled(FlexLayout)`
   margin-left: -8px;
@@ -47,55 +47,72 @@ const StyledFlexLayout = styled(FlexLayout)`
     margin-left: -16px;
     margin-right: -16px;
   }
-`;
+`
 
 const Label = styled(Text)`
-  color: ${({ theme }) => theme.isDark ? 'white' : theme.colors.red};
-`;
+  color: ${({ theme }) => (theme.isDark ? 'white' : theme.colors.red)};
+`
 
 const UpcomingIcebergs = () => {
+  const handleLearnMore = (url: string) => {
+    window.open(url, '_blank')
+  }
+
   return (
     <>
-      <Label fontSize='24px' mt='32px' mb='16px' fontWeight={600}>Upcoming Icebergs</Label>
+      <Label fontSize="24px" mt="32px" mb="16px" fontWeight={600}>
+        Upcoming Icebergs
+      </Label>
       <StyledFlexLayout>
-        {Icebergs.map(iceberg => {
+        {Icebergs.map((iceberg) => {
           return (
-            <FCard
-              key={iceberg.title}>
-              <Flex justifyContent='space-between' alignItems='center' mb='16px'>
+            <FCard key={iceberg.title}>
+              <Flex justifyContent="space-between" alignItems="center" mb="16px">
                 <Image src={`/images/club/${iceberg.logo}`} alt={iceberg.title} width={96} height={96} />
-                <Flex flexDirection='column' alignItems='flex-end'>
-                  <Text fontSize='22px' bold>{iceberg.title}</Text>
+                <Flex flexDirection="column" alignItems="flex-end">
+                  <Text fontSize="22px" bold>
+                    {iceberg.title}
+                  </Text>
                   <Flex>
-                    {iceberg.coreTag &&
+                    {iceberg.coreTag && (
                       <IcebergTag variant="primary" outline startIcon={<VerifiedIcon />}>
                         {iceberg.coreTag}
                       </IcebergTag>
-                    }
-                    <IcebergTag variant='primary'>
-                      {iceberg.tag}
-                    </IcebergTag>
+                    )}
+                    <IcebergTag variant="primary">{iceberg.tag}</IcebergTag>
                   </Flex>
                 </Flex>
               </Flex>
-              <Flex justifyContent='space-between'>
-                <Text fontSize='18px' fontWeight={400}>To Distribute:</Text>
-                <Text fontSize='18px' fontWeight={400}>{iceberg.toDistribute}</Text>
+              <Flex justifyContent="space-between">
+                <Text fontSize="18px" fontWeight={400}>
+                  To Distribute:
+                </Text>
+                <Text fontSize="18px" fontWeight={400}>
+                  {iceberg.toDistribute}
+                </Text>
               </Flex>
-              <Flex justifyContent='space-between'>
-                <Text fontSize='18px' fontWeight={400}>Earn:</Text>
-                <Text fontSize='18px' fontWeight={400}>{iceberg.earn}</Text>
+              <Flex justifyContent="space-between">
+                <Text fontSize="18px" fontWeight={400}>
+                  Earn:
+                </Text>
+                <Text fontSize="18px" fontWeight={400}>
+                  {iceberg.earn}
+                </Text>
               </Flex>
-              <Text mt='16px' mb='16px' textAlign='left' fontWeight={400}>{iceberg.description}</Text>
+              <Text mt="16px" mb="16px" textAlign="left" fontWeight={400}>
+                {iceberg.description}
+              </Text>
               <Flex>
-                <StyledButton color='red'>Learn More</StyledButton>
+                <StyledButton color="red" onClick={() => handleLearnMore(iceberg.url)}>
+                  Learn More
+                </StyledButton>
               </Flex>
             </FCard>
           )
         })}
       </StyledFlexLayout>
     </>
-  );
-};
+  )
+}
 
-export default UpcomingIcebergs;
+export default UpcomingIcebergs
