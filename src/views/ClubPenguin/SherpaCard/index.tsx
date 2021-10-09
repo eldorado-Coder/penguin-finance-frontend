@@ -22,7 +22,9 @@ const SherpaCard = () => {
   const activeFarm = clubFarms[0]
   const { userData, rewardStartTimestamp, rewardEndTimestamp } = activeFarm
 
+  const sherpaPrice = 1
   const earningBalance = userData ? getBalanceNumber(new BigNumber(userData.earnings)) : 0
+  const earningBalanceInUsd = sherpaPrice * earningBalance
   const currentTimestamp = Date.now()
   const rewardStartTime = rewardStartTimestamp ? 1000 * rewardStartTimestamp : 0
   const cutdownType = getCutdownType(currentTimestamp, rewardStartTime)
@@ -60,7 +62,14 @@ const SherpaCard = () => {
             </SherpaLabel>
             <EarningBalance fontSize="22px" fontWeight="600" value={earningBalance} decimals={2} />
             <BalanceTextSmall>
-              <CardValue className="balance" fontSize="12px" value={57.58} decimals={2} lineHeight="1.2" prefix="≈ $" />
+              <CardValue
+                className="balance"
+                fontSize="12px"
+                value={earningBalanceInUsd}
+                decimals={2}
+                lineHeight="1.2"
+                prefix="≈ $"
+              />
             </BalanceTextSmall>
           </Flex>
           <Flex className="col" flexDirection="column" alignItems="flex-start">
@@ -166,16 +175,16 @@ const SherpaCard = () => {
         </StyledButton>
         <SocialIconsWrapper>
           <a href="https://t.me/sherpa_cash" target="_blank" rel="noreferrer">
-            <SvgIcon src={`${process.env.PUBLIC_URL}/images/telegram.svg`} width="100%" height="32px" />
+            <SvgIcon src={`${process.env.PUBLIC_URL}/images/club/social/telegram.svg`} width="32px" height="32px" />
           </a>
           <a href="https://discord.gg/MGftjGKD" target="_blank" rel="noreferrer">
-            <SvgIcon src={`${process.env.PUBLIC_URL}/images/discord.svg`} width="100%" height="32px" />
+            <SvgIcon src={`${process.env.PUBLIC_URL}/images/club/social/discord.svg`} width="32px" height="32px" />
           </a>
           <a href="https://twitter.com/sherpa_cash" target="_blank" rel="noreferrer">
-            <SvgIcon src={`${process.env.PUBLIC_URL}/images/twitter.svg`} width="100%" height="32px" />
+            <SvgIcon src={`${process.env.PUBLIC_URL}/images/club/social/twitter.svg`} width="32px" height="32px" />
           </a>
           <a href="https://medium.com/sherpa-cash" target="_blank" rel="noreferrer">
-            <SvgIcon src={`${process.env.PUBLIC_URL}/images/medium.svg`} width="100%" height="32px" />
+            <SvgIcon src={`${process.env.PUBLIC_URL}/images/club/social/medium.svg`} width="32px" height="32px" />
           </a>
         </SocialIconsWrapper>
       </CardFooter>
@@ -249,7 +258,8 @@ const SocialIconsWrapper = styled(Flex)`
   }
   svg {
     fill: white;
-    height: 40px;
+    height: 32px;
+    width: 32px;
     &:hover {
       opacity: 0.65;
     }
