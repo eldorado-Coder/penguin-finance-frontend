@@ -3,11 +3,13 @@ import styled from 'styled-components'
 import { Text, Flex, Button, useMatchBreakpoints } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import BigNumber from 'bignumber.js'
-import { useClubPenguinFarms } from 'state/hooks'
+import { useClubPenguinFarms, usePricePefiUsdt, useV2Pools } from 'state/hooks'
 import SvgIcon from 'components/SvgIcon'
 import CardValue from 'components/CardValue'
 import Balance from 'components/Balance'
 import { getBalanceNumber } from 'utils/formatBalance'
+import { getApr } from 'utils/apyHelpers'
+import { SECONDS_PER_DAY } from 'config'
 import Card from '../Card'
 import CountDown from '../CountDown'
 import { getCutdownType } from '../utils'
@@ -18,9 +20,15 @@ const SherpaCard = () => {
   const { isXl } = useMatchBreakpoints()
   const { account } = useWeb3React()
   const { onHarvest } = useClubPenguinHarvest(0)
+  const pefiPriceUsd = usePricePefiUsdt().toNumber()
+  const v2Pools = useV2Pools(account)
+  const iPefiPool = v2Pools.length > 0 ? v2Pools[0] : null
+  const iPefiToPefiRatio = iPefiPool.currentExchangeRate || 1
+  const iPefiPriceUsd = iPefiToPefiRatio * pefiPriceUsd
+
   const clubFarms = useClubPenguinFarms(account)
   const activeFarm = clubFarms[0]
-  const { userData, rewardStartTimestamp, rewardEndTimestamp } = activeFarm
+  const { userData, rewardStartTimestamp, rewardEndTimestamp, tokensPerSecond, totalIPEFIInPool } = activeFarm
 
   const sherpaPrice = 1
   const earningBalance = userData ? getBalanceNumber(new BigNumber(userData.earnings)) : 0
@@ -29,6 +37,13 @@ const SherpaCard = () => {
   const rewardStartTime = rewardStartTimestamp ? 1000 * rewardStartTimestamp : 0
   const cutdownType = getCutdownType(currentTimestamp, rewardStartTime)
   const cutdownDate = cutdownType === 'start' ? rewardStartTime : rewardEndTimestamp
+
+  // apr
+  const totalLiquidityInUsd = iPefiPriceUsd * getBalanceNumber(new BigNumber(totalIPEFIInPool))
+  const rewardPerSec = getBalanceNumber(new BigNumber(tokensPerSecond))
+  const rewardPerSecInUsd = sherpaPrice * rewardPerSec
+  const sherpaDailyApr = (SECONDS_PER_DAY * rewardPerSecInUsd) / totalLiquidityInUsd
+  const sherpaApr = getApr(sherpaDailyApr)
 
   const isMobile = !isXl
   const canHarvest = account && earningBalance > 0 && !pendingTx
@@ -76,14 +91,12 @@ const SherpaCard = () => {
             <SherpaLabel fontSize={isMobile ? '16px' : '20px'} fontWeight={700} lineHeight={1}>
               CURRENT APR
             </SherpaLabel>
-            <SherpaBalance fontSize="22px" fontWeight={600}>
-              483.38%
-            </SherpaBalance>
+            <AprBalance fontSize="22px" fontWeight="600" suffix="%" value={sherpaApr} decimals={2} />
             <BalanceTextSmall>
               <CardValue
                 className="balance"
                 fontSize="12px"
-                value={10.06}
+                value={sherpaApr / 48}
                 decimals={2}
                 lineHeight="1.2"
                 suffix="% per week"
@@ -177,7 +190,7 @@ const SherpaCard = () => {
           <a href="https://t.me/sherpa_cash" target="_blank" rel="noreferrer">
             <SvgIcon src={`${process.env.PUBLIC_URL}/images/club/social/telegram.svg`} width="32px" height="32px" />
           </a>
-          <a href="https://discord.gg/MGftjGKD" target="_blank" rel="noreferrer">
+          <a href="https://discord.com/invite/8bWeGSB4Zx" target="_blank" rel="noreferrer">
             <SvgIcon src={`${process.env.PUBLIC_URL}/images/club/social/discord.svg`} width="32px" height="32px" />
           </a>
           <a href="https://twitter.com/sherpa_cash" target="_blank" rel="noreferrer">
@@ -307,6 +320,10 @@ const SherpaBalance = styled(Text)`
 `
 
 const EarningBalance = styled(Balance)`
+  color: ${({ theme }) => (theme.isDark ? 'white' : '#00283f')};
+`
+
+const AprBalance = styled(Balance)`
   color: ${({ theme }) => (theme.isDark ? 'white' : '#00283f')};
 `
 
