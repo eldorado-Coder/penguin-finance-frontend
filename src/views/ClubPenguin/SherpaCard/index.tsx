@@ -1,19 +1,44 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Text, Flex, Button, useMatchBreakpoints } from 'penguinfinance-uikit2'
+import { useWeb3React } from '@web3-react/core'
+import BigNumber from 'bignumber.js'
+import { useClubPenguinFarms } from 'state/hooks'
 import SvgIcon from 'components/SvgIcon'
 import CardValue from 'components/CardValue'
+import Balance from 'components/Balance'
+import { getBalanceNumber } from 'utils/formatBalance'
 import Card from '../Card'
-import CountDown from '../CountDown';
+import CountDown from '../CountDown'
+import { getCutdownType } from '../utils'
+import { useClubPenguinHarvest } from '../hooks'
 
-const InfoCard = ({ date }) => {
-  const { isXl } = useMatchBreakpoints();
-  const isMobile = !isXl;
-  const handleLearnMore = () => {
-    window.open(
-      'https://penguin-finance.medium.com/penguin-launchpad-allocation-staking-for-boofi-is-live-728f17ceea6c',
-      '_blank',
-    )
+const SherpaCard = () => {
+  const [pendingTx, setPendingTx] = useState(false)
+  const { isXl } = useMatchBreakpoints()
+  const { account } = useWeb3React()
+  const { onHarvest } = useClubPenguinHarvest(0)
+  const clubFarms = useClubPenguinFarms(account)
+  const activeFarm = clubFarms[0]
+  const { userData, rewardStartTimestamp, rewardEndTimestamp } = activeFarm
+
+  const earningBalance = userData ? getBalanceNumber(new BigNumber(userData.earnings)) : 0
+  const currentTimestamp = Date.now()
+  const rewardStartTime = rewardStartTimestamp ? 1000 * rewardStartTimestamp : 0
+  const cutdownType = getCutdownType(currentTimestamp, rewardStartTime)
+  const cutdownDate = cutdownType === 'start' ? rewardStartTime : rewardEndTimestamp
+
+  const isMobile = !isXl
+  const canHarvest = account && earningBalance > 0 && !pendingTx
+
+  const handleHarvest = async () => {
+    setPendingTx(true)
+    try {
+      await onHarvest()
+      setPendingTx(false)
+    } catch {
+      setPendingTx(false)
+    }
   }
 
   const handleViewWebsite = () => {
@@ -23,24 +48,28 @@ const InfoCard = ({ date }) => {
   const renderSherpaBalances = () => {
     return (
       <>
-        <FlexContainer isMobile={isMobile} mt='32px' justifyContent='space-between' flexWrap={!isMobile ? 'wrap' : 'nowrap'}>
-          <Flex className='col' flexDirection='column' alignItems='flex-start'>
-            <SherpaLabel fontSize={isMobile ? '16px' : '20px'} fontWeight={700} lineHeight={1}>SHERPA EARNED</SherpaLabel>
-            <SherpaBalance fontSize='22px' fontWeight={600}>2358.38</SherpaBalance>
+        <FlexContainer
+          isMobile={isMobile}
+          mt="32px"
+          justifyContent="space-between"
+          flexWrap={!isMobile ? 'wrap' : 'nowrap'}
+        >
+          <Flex className="col" flexDirection="column" alignItems="flex-start">
+            <SherpaLabel fontSize={isMobile ? '16px' : '20px'} fontWeight={700} lineHeight={1}>
+              SHERPA EARNED
+            </SherpaLabel>
+            <EarningBalance fontSize="22px" fontWeight="600" value={earningBalance} decimals={2} />
             <BalanceTextSmall>
-              <CardValue
-                className="balance"
-                fontSize="12px"
-                value={57.58}
-                decimals={2}
-                lineHeight="1.2"
-                prefix="≈ $"
-              />
+              <CardValue className="balance" fontSize="12px" value={57.58} decimals={2} lineHeight="1.2" prefix="≈ $" />
             </BalanceTextSmall>
           </Flex>
-          <Flex className='col' flexDirection='column' alignItems='flex-start'>
-            <SherpaLabel fontSize={isMobile ? '16px' : '20px'} fontWeight={700} lineHeight={1}>CURRENT APR</SherpaLabel>
-            <SherpaBalance fontSize='22px' fontWeight={600}>483.38%</SherpaBalance>
+          <Flex className="col" flexDirection="column" alignItems="flex-start">
+            <SherpaLabel fontSize={isMobile ? '16px' : '20px'} fontWeight={700} lineHeight={1}>
+              CURRENT APR
+            </SherpaLabel>
+            <SherpaBalance fontSize="22px" fontWeight={600}>
+              483.38%
+            </SherpaBalance>
             <BalanceTextSmall>
               <CardValue
                 className="balance"
@@ -48,65 +77,93 @@ const InfoCard = ({ date }) => {
                 value={10.06}
                 decimals={2}
                 lineHeight="1.2"
-                suffix='% per week'
+                suffix="% per week"
               />
             </BalanceTextSmall>
           </Flex>
         </FlexContainer>
-        <FlexContainer isMobile={isMobile} mt='24px' justifyContent='space-between' flexWrap={!isMobile ? 'wrap' : 'nowrap'}>
-          <Flex className='col'>
+        <FlexContainer
+          isMobile={isMobile}
+          mt="24px"
+          justifyContent="space-between"
+          flexWrap={!isMobile ? 'wrap' : 'nowrap'}
+        >
+          <Flex className="col">
             <HarvestButton
               isMobile={isMobile}
               id="harvest-all"
               endIcon={<img src="/images/farms/harvest-coin.svg" alt="harvest" width={16} />}
               scale="md"
+              disabled={!canHarvest}
+              onClick={handleHarvest}
             >
               Harvest All
             </HarvestButton>
           </Flex>
-          <Flex className='col' flexDirection='column' alignItems='flex-start'>
-            <SherpaLabel fontSize={isMobile ? '16px' : '20px'} fontWeight={700} lineHeight={1}>STARTS IN</SherpaLabel>
-            <SherpaBalance fontSize='22px' fontWeight={400}>
-              <CountDown date={date} />
+          <Flex className="col" flexDirection="column" alignItems="flex-start">
+            <SherpaLabel fontSize={isMobile ? '16px' : '20px'} fontWeight={700} lineHeight={1}>
+              {cutdownType === 'start' ? 'STARTS IN' : 'END IN'}
+            </SherpaLabel>
+            <SherpaBalance fontSize="22px" fontWeight={400}>
+              {cutdownDate > 0 && (
+                <div className="countdown">
+                  <CountDown date={cutdownDate} />
+                </div>
+              )}
             </SherpaBalance>
           </Flex>
         </FlexContainer>
       </>
     )
   }
+
   return (
     <StyledCard>
       <CardHeader>
-        {isMobile ? 
+        {isMobile ? (
           <div>
-            <Flex alignItems="center" flexWrap="wrap" justifyContent='flex-start'>
-              <LogoWrapper isMobile mr='32px' alignItems="center">
+            <Flex alignItems="center" flexWrap="wrap" justifyContent="flex-start">
+              <LogoWrapper isMobile mr="32px" alignItems="center">
                 <img src="/images/club/sherpa_iceberg.svg" alt="sherpa" />
               </LogoWrapper>
               <SherpaIceberg>
-                <SherpaLabel whiteSpace='wrap' textAlign='center' fontSize={isMobile ? '36px' : '40px'} fontWeight={600} lineHeight={1}>SHERPA ICEBERG</SherpaLabel>
+                <SherpaLabel
+                  whiteSpace="wrap"
+                  textAlign="center"
+                  fontSize={isMobile ? '36px' : '40px'}
+                  fontWeight={600}
+                  lineHeight={1}
+                >
+                  SHERPA ICEBERG
+                </SherpaLabel>
               </SherpaIceberg>
             </Flex>
             {renderSherpaBalances()}
           </div>
-          : <Flex alignItems="flex-start" flexWrap="wrap" justifyContent='space-between'>
-            <LogoWrapper mt='16px' mr='16px' alignItems="center">
+        ) : (
+          <Flex alignItems="flex-start" flexWrap="wrap" justifyContent="space-between">
+            <LogoWrapper mt="16px" mr="16px" alignItems="center">
               <img src="/images/club/sherpa_iceberg.svg" alt="sherpa" />
             </LogoWrapper>
             <SherpaIceberg>
-              <SherpaLabel whiteSpace='wrap' fontSize='40px' fontWeight={600} lineHeight={1}>SHERPA ICEBERG</SherpaLabel>
+              <SherpaLabel whiteSpace="wrap" fontSize="40px" fontWeight={600} lineHeight={1}>
+                SHERPA ICEBERG
+              </SherpaLabel>
               {renderSherpaBalances()}
             </SherpaIceberg>
           </Flex>
-        }
+        )}
       </CardHeader>
       <CardContent>
         <Text fontWeight={400} fontSize="18px" color="white">
-          Sherpa Cash is the first fully decentralized protocol for private transactions on Avalanche. The SHERPA token is the governance token for Sherpa Cash.
+          Sherpa Cash is the first fully decentralized protocol for private transactions on Avalanche. The SHERPA token
+          is the governance token for Sherpa Cash.
         </Text>
       </CardContent>
-      <CardFooter flexDirection={isMobile ? 'column' : 'row'} justifyContent='space-between' alignItems='center'>
-        <StyledButton mb={isMobile && '16px'} visitSite onClick={handleViewWebsite}>Visit Website</StyledButton>
+      <CardFooter flexDirection={isMobile ? 'column' : 'row'} justifyContent="space-between" alignItems="center">
+        <StyledButton mb={isMobile && '16px'} visitSite onClick={handleViewWebsite}>
+          Visit Website
+        </StyledButton>
         <SocialIconsWrapper>
           <a href="https://t.me/sherpa_cash" target="_blank" rel="noreferrer">
             <SvgIcon src={`${process.env.PUBLIC_URL}/images/telegram.svg`} width="100%" height="32px" />
@@ -133,7 +190,7 @@ const StyledCard = styled(Card)`
   height: 100%;
   padding: 32px 24px 34px;
   box-shadow: 0px 1px 6px rgb(0 0 0 / 16%);
-  background-color: ${({ theme }) => theme.isDark ? '#30264f' : '#f24e4d'};
+  background-color: ${({ theme }) => (theme.isDark ? '#30264f' : '#f24e4d')};
 
   ${({ theme }) => theme.mediaQueries.xl} {
     width: 49%;
@@ -142,9 +199,9 @@ const StyledCard = styled(Card)`
 
 const CardHeader = styled.div``
 
-const LogoWrapper = styled(Flex)<{ isMobile?: boolean}>`
+const LogoWrapper = styled(Flex)<{ isMobile?: boolean }>`
   img {
-    height: ${({ isMobile }) => isMobile ? '96px' : '140px'};
+    height: ${({ isMobile }) => (isMobile ? '96px' : '140px')};
   }
 `
 
@@ -153,29 +210,9 @@ const CardContent = styled.div`
   margin-bottom: 16px;
 `
 
-const ButtonActions = styled(Flex)`
-  flex-direction: row;
-  margin-top: 16px;
-
-  @media (min-width: 640px) {
-    flex-direction: column;
-    margin-top: 0;
-  }
-
-  @media (min-width: 1080px) {
-    margin-top: 16px;
-    flex-direction: row;
-  }
-
-  @media (min-width: 1200px) {
-    flex-direction: column;
-    margin-top: 0;
-  }
-`
-
 const StyledButton = styled(Button)`
   height: 44px;
-  background: ${({ theme }) => theme.isDark ? '#614e83' : '#00283f'};
+  background: ${({ theme }) => (theme.isDark ? '#614e83' : '#00283f')};
   color: white;
   border-radius: 10px;
   font-weight: 700;
@@ -189,10 +226,10 @@ const StyledButton = styled(Button)`
 
 const HarvestButton = styled(Button)<{ isMobile?: boolean }>`
   height: 44px;
-  background: ${({ theme }) => theme.isDark ? '#d4444c' : '#00283f'};
+  background: ${({ theme }) => (theme.isDark ? '#d4444c' : '#00283f')};
   color: white;
   border-radius: 10px;
-  font-weight: ${({ isMobile }) => isMobile ? 500 : 700};
+  font-weight: ${({ isMobile }) => (isMobile ? 500 : 700)};
   white-space: nowrap;
   font-size: 16px;
 
@@ -229,34 +266,38 @@ const BalanceTextSmall = styled.div`
 const FlexContainer = styled(Flex)<{ isMobile?: boolean }>`
   .col {
     width: 48%;
-    min-width: ${({ isMobile }) => isMobile ? '160px': '140px'};
+    min-width: ${({ isMobile }) => (isMobile ? '160px' : '140px')};
 
     &:first-child {
       margin-right: 8px;
       margin-bottom: 0;
-      
+
       @media (min-width: 1080px) {
         margin-bottom: 16px;
       }
-    
+
       @media (min-width: 1450px) {
         margin-bottom: 0;
       }
     }
   }
-`;
+`
 
 const SherpaIceberg = styled.div`
   width: calc(100% - 170px);
-`;
+`
 
 const SherpaLabel = styled(Text)<{ whiteSpace?: string }>`
   white-space: ${({ whiteSpace }) => whiteSpace || 'nowrap'};
-  color: ${({ theme }) => theme.isDark ? '#bba6dd' : 'white'};
-`;
+  color: ${({ theme }) => (theme.isDark ? '#bba6dd' : 'white')};
+`
 
 const SherpaBalance = styled(Text)`
-  color: ${({ theme }) => theme.isDark ? 'white' : '#00283f'};
-`;
+  color: ${({ theme }) => (theme.isDark ? 'white' : '#00283f')};
+`
 
-export default InfoCard
+const EarningBalance = styled(Balance)`
+  color: ${({ theme }) => (theme.isDark ? 'white' : '#00283f')};
+`
+
+export default SherpaCard

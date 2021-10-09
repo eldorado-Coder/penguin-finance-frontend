@@ -373,10 +373,12 @@ export interface ClubPenguinFarm extends ClubPenguinFarmConfig {
   }
   rewardToken?: string
   rewardStartTimestamp?: number
+  rewardEndTimestamp?: number
   tokensPerSecond?: BigNumber
   totalIPEFIInPool?: BigNumber
   totalRewardAmount?: BigNumber
   rewardDistributed?: BigNumber
+  poolTimeRemaining?: number
 }
 
 export interface ClubPenguinFarmsState {

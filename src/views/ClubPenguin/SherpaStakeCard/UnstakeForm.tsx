@@ -7,7 +7,7 @@ import roundDown from 'utils/roundDown'
 import escapeRegExp from 'utils/escapeRegExp'
 import { getFullDisplayBalance } from 'utils/formatBalance'
 import TokenInput from './TokenInput'
-import CountDown from '../CountDown';
+import CountDown from '../CountDown'
 
 const inputRegex = RegExp(`^\\d*(?:\\\\[.])?\\d*$`)
 
@@ -15,11 +15,19 @@ interface UnStakeFormProps {
   max: BigNumber
   tokenName?: string
   account?: string
-  date: number
+  cutdownType
+  cutdownDate
   onConfirm: (amount: string) => void
 }
 
-const UnstakeForm: React.FC<UnStakeFormProps> = ({ max, tokenName = '', account, date, onConfirm }) => {
+const UnstakeForm: React.FC<UnStakeFormProps> = ({
+  max,
+  tokenName = '',
+  account,
+  cutdownType,
+  cutdownDate,
+  onConfirm,
+}) => {
   const [val, setVal] = useState('')
   const [pendingTx, setPendingTx] = useState(false)
 
@@ -82,10 +90,12 @@ const UnstakeForm: React.FC<UnStakeFormProps> = ({ max, tokenName = '', account,
         )}
       </Flex>
       <CountDownButton>
-        <div>STARTS IN</div>
-        <div className='countdown'>
-          <CountDown date={date} />
-        </div>
+        <div>{cutdownType === 'start' ? 'STARTS IN' : 'END IN'}</div>
+        {cutdownDate > 0 && (
+          <div className="countdown">
+            <CountDown date={cutdownDate} />
+          </div>
+        )}
       </CountDownButton>
     </>
   )
@@ -95,18 +105,18 @@ const StyledButton = styled(Button)`
   width: 100%;
   border-radius: 8px;
   color: white;
-  background: ${({ theme }) => theme.isDark ? '#d4444c' : '#f24e4d'};
+  background: ${({ theme }) => (theme.isDark ? '#d4444c' : '#f24e4d')};
 `
 
 const StyledUnlockButton = styled(UnlockButton)`
   width: 100%;
   border-radius: 8px;
-  background: ${({ theme }) => theme.isDark ? '#d4444c' : '#f24e4d'};
+  background: ${({ theme }) => (theme.isDark ? '#d4444c' : '#f24e4d')};
 `
 
 const CountDownButton = styled(Button)`
-  color: ${({ theme }) => theme.isDark ? 'white' : '#00283f'};
-  background: ${({ theme }) => theme.isDark ? '#d4444c' : '#f24e4d'};
+  color: ${({ theme }) => (theme.isDark ? 'white' : '#00283f')};
+  background: ${({ theme }) => (theme.isDark ? '#d4444c' : '#f24e4d')};
   width: 100%;
   border-radius: 8px;
   margin-top: 16px;
@@ -116,6 +126,6 @@ const CountDownButton = styled(Button)`
     margin-left: 6px;
     text-align: left;
   }
-`;
+`
 
 export default UnstakeForm

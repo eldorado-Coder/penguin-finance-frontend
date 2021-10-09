@@ -4,14 +4,14 @@ import styled from 'styled-components'
 import { Text, Flex, ButtonMenu, ButtonMenuItem } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import { useClubPenguinFarms } from 'state/hooks'
-import { useClubPenguinStake } from 'hooks/useStake'
-import { useClubPenguinUnstake } from 'hooks/useUnstake'
 import { useClubPenguinApprove } from 'hooks/useApprove'
+import { useClubPenguinStake, useClubPenguinUnstake } from '../hooks'
 import StakeForm from './StakeForm'
 import UnstakeForm from './UnstakeForm'
 import Card from '../Card'
+import { getCutdownType } from '../utils'
 
-const StakeCard = ({ date }) => {
+const StakeCard = () => {
   const [activeTab, setActiveTab] = useState(0)
   const { account } = useWeb3React()
   const { onStake } = useClubPenguinStake(0)
@@ -19,9 +19,14 @@ const StakeCard = ({ date }) => {
   const { onApproveIPefi } = useClubPenguinApprove()
   const clubFarms = useClubPenguinFarms(account)
   const activeFarm = clubFarms[0]
-  const { userData } = activeFarm
+  const { userData, rewardStartTimestamp, rewardEndTimestamp } = activeFarm
   const iPEFIBalance = userData ? new BigNumber(userData.tokenBalance) : new BigNumber(0)
   const stakedBalance = userData ? new BigNumber(userData.stakedBalance) : new BigNumber(0)
+
+  const currentTimestamp = Date.now()
+  const rewardStartTime = rewardStartTimestamp ? 1000 * rewardStartTimestamp : 0
+  const cutdownType = getCutdownType(currentTimestamp, rewardStartTime)
+  const cutdownDate = cutdownType === 'start' ? rewardStartTime : rewardEndTimestamp
 
   const handleSwitchTab = (tab) => {
     setActiveTab(tab)
@@ -46,13 +51,21 @@ const StakeCard = ({ date }) => {
             max={iPEFIBalance}
             tokenName="iPEFI"
             account={account}
-            date={date}
+            cutdownType={cutdownType}
+            cutdownDate={cutdownDate}
             stakedBalance={stakedBalance}
             onApprove={onApproveIPefi}
             onConfirm={onStake}
           />
         ) : (
-          <UnstakeForm max={stakedBalance} tokenName="iPEFI" account={account} date={date} onConfirm={onUnstake} />
+          <UnstakeForm
+            max={stakedBalance}
+            tokenName="iPEFI"
+            account={account}
+            cutdownType={cutdownType}
+            cutdownDate={cutdownDate}
+            onConfirm={onUnstake}
+          />
         )}
       </CardContent>
     </StyledCard>
