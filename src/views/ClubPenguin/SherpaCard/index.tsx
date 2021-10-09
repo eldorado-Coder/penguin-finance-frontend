@@ -22,7 +22,9 @@ const SherpaCard = () => {
   const activeFarm = clubFarms[0]
   const { userData, rewardStartTimestamp, rewardEndTimestamp } = activeFarm
 
+  const sherpaPrice = 1
   const earningBalance = userData ? getBalanceNumber(new BigNumber(userData.earnings)) : 0
+  const earningBalanceInUsd = sherpaPrice * earningBalance
   const currentTimestamp = Date.now()
   const rewardStartTime = rewardStartTimestamp ? 1000 * rewardStartTimestamp : 0
   const cutdownType = getCutdownType(currentTimestamp, rewardStartTime)
@@ -60,7 +62,14 @@ const SherpaCard = () => {
             </SherpaLabel>
             <EarningBalance fontSize="22px" fontWeight="600" value={earningBalance} decimals={2} />
             <BalanceTextSmall>
-              <CardValue className="balance" fontSize="12px" value={57.58} decimals={2} lineHeight="1.2" prefix="≈ $" />
+              <CardValue
+                className="balance"
+                fontSize="12px"
+                value={earningBalanceInUsd}
+                decimals={2}
+                lineHeight="1.2"
+                prefix="≈ $"
+              />
             </BalanceTextSmall>
           </Flex>
           <Flex className="col" flexDirection="column" alignItems="flex-start">
