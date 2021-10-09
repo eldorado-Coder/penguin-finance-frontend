@@ -175,16 +175,16 @@ const SherpaCard = () => {
         </StyledButton>
         <SocialIconsWrapper>
           <a href="https://t.me/sherpa_cash" target="_blank" rel="noreferrer">
-            <SvgIcon src={`${process.env.PUBLIC_URL}/images/telegram.svg`} width="100%" height="32px" />
+            <SvgIcon src={`${process.env.PUBLIC_URL}/images/club/social/telegram.svg`} width="32px" height="32px" />
           </a>
           <a href="https://discord.gg/MGftjGKD" target="_blank" rel="noreferrer">
-            <SvgIcon src={`${process.env.PUBLIC_URL}/images/discord.svg`} width="100%" height="32px" />
+            <SvgIcon src={`${process.env.PUBLIC_URL}/images/club/social/discord.svg`} width="32px" height="32px" />
           </a>
           <a href="https://twitter.com/sherpa_cash" target="_blank" rel="noreferrer">
-            <SvgIcon src={`${process.env.PUBLIC_URL}/images/twitter.svg`} width="100%" height="32px" />
+            <SvgIcon src={`${process.env.PUBLIC_URL}/images/club/social/twitter.svg`} width="32px" height="32px" />
           </a>
           <a href="https://medium.com/sherpa-cash" target="_blank" rel="noreferrer">
-            <SvgIcon src={`${process.env.PUBLIC_URL}/images/medium.svg`} width="100%" height="32px" />
+            <SvgIcon src={`${process.env.PUBLIC_URL}/images/club/social/medium.svg`} width="32px" height="32px" />
           </a>
         </SocialIconsWrapper>
       </CardFooter>
@@ -258,7 +258,8 @@ const SocialIconsWrapper = styled(Flex)`
   }
   svg {
     fill: white;
-    height: 40px;
+    height: 32px;
+    width: 32px;
     &:hover {
       opacity: 0.65;
     }
