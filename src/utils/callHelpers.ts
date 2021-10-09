@@ -382,3 +382,12 @@ export const clubPenguinUnstake = async (masterChefContract, pid, amount, accoun
       return tx.transactionHash
     })
 }
+
+export const clubPenguinHarvest = async (masterChefContract, pid, account) => {
+  return masterChefContract.methods
+    .harvest(pid)
+    .send({ from: account })
+    .on('transactionHash', (tx) => {
+      return tx.transactionHash
+    })
+}

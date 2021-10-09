@@ -1,27 +1,45 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Text, Flex, Button, useMatchBreakpoints } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
+import BigNumber from 'bignumber.js'
 import { useClubPenguinFarms } from 'state/hooks'
 import SvgIcon from 'components/SvgIcon'
 import CardValue from 'components/CardValue'
+import Balance from 'components/Balance'
+import { getBalanceNumber } from 'utils/formatBalance'
 import Card from '../Card'
 import CountDown from '../CountDown'
 import { getCutdownType } from '../utils'
+import { useClubPenguinHarvest } from '../hooks'
 
 const SherpaCard = () => {
+  const [pendingTx, setPendingTx] = useState(false)
   const { isXl } = useMatchBreakpoints()
   const { account } = useWeb3React()
+  const { onHarvest } = useClubPenguinHarvest(0)
   const clubFarms = useClubPenguinFarms(account)
   const activeFarm = clubFarms[0]
-  const { rewardStartTimestamp, rewardEndTimestamp } = activeFarm
+  const { userData, rewardStartTimestamp, rewardEndTimestamp } = activeFarm
 
+  const earningBalance = userData ? getBalanceNumber(new BigNumber(userData.earnings)) : 0
   const currentTimestamp = Date.now()
   const rewardStartTime = rewardStartTimestamp ? 1000 * rewardStartTimestamp : 0
   const cutdownType = getCutdownType(currentTimestamp, rewardStartTime)
   const cutdownDate = cutdownType === 'start' ? rewardStartTime : rewardEndTimestamp
 
   const isMobile = !isXl
+  const canHarvest = account && earningBalance > 0 && !pendingTx
+
+  const handleHarvest = async () => {
+    setPendingTx(true)
+    try {
+      await onHarvest()
+      setPendingTx(false)
+    } catch {
+      setPendingTx(false)
+    }
+  }
 
   const handleViewWebsite = () => {
     window.open('https://app.sherpa.cash/', '_blank')
@@ -40,9 +58,7 @@ const SherpaCard = () => {
             <SherpaLabel fontSize={isMobile ? '16px' : '20px'} fontWeight={700} lineHeight={1}>
               SHERPA EARNED
             </SherpaLabel>
-            <SherpaBalance fontSize="22px" fontWeight={600}>
-              2358.38
-            </SherpaBalance>
+            <EarningBalance fontSize="22px" fontWeight="600" value={earningBalance} decimals={2} />
             <BalanceTextSmall>
               <CardValue className="balance" fontSize="12px" value={57.58} decimals={2} lineHeight="1.2" prefix="≈ $" />
             </BalanceTextSmall>
@@ -78,6 +94,8 @@ const SherpaCard = () => {
               id="harvest-all"
               endIcon={<img src="/images/farms/harvest-coin.svg" alt="harvest" width={16} />}
               scale="md"
+              disabled={!canHarvest}
+              onClick={handleHarvest}
             >
               Harvest All
             </HarvestButton>
@@ -98,6 +116,7 @@ const SherpaCard = () => {
       </>
     )
   }
+
   return (
     <StyledCard>
       <CardHeader>
@@ -191,26 +210,6 @@ const CardContent = styled.div`
   margin-bottom: 16px;
 `
 
-const ButtonActions = styled(Flex)`
-  flex-direction: row;
-  margin-top: 16px;
-
-  @media (min-width: 640px) {
-    flex-direction: column;
-    margin-top: 0;
-  }
-
-  @media (min-width: 1080px) {
-    margin-top: 16px;
-    flex-direction: row;
-  }
-
-  @media (min-width: 1200px) {
-    flex-direction: column;
-    margin-top: 0;
-  }
-`
-
 const StyledButton = styled(Button)`
   height: 44px;
   background: ${({ theme }) => (theme.isDark ? '#614e83' : '#00283f')};
@@ -294,6 +293,10 @@ const SherpaLabel = styled(Text)<{ whiteSpace?: string }>`
 `
 
 const SherpaBalance = styled(Text)`
+  color: ${({ theme }) => (theme.isDark ? 'white' : '#00283f')};
+`
+
+const EarningBalance = styled(Balance)`
   color: ${({ theme }) => (theme.isDark ? 'white' : '#00283f')};
 `
 
