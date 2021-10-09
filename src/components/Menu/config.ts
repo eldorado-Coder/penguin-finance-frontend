@@ -35,6 +35,7 @@ export const config: MenuEntry[] = [
     label: 'Club Penguin',
     icon: 'ClubIcon',
     href: '/club',
+    badge: 'NEW',
   },
   {
     label: 'Emperor',
