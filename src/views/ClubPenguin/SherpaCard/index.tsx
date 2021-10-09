@@ -13,7 +13,7 @@ import { SECONDS_PER_DAY } from 'config'
 import Card from '../Card'
 import CountDown from '../CountDown'
 import { getCutdownType } from '../utils'
-import { useClubPenguinHarvest } from '../hooks'
+import { useClubPenguinHarvest, usePriceSherpa } from '../hooks'
 
 const SherpaCard = () => {
   const [pendingTx, setPendingTx] = useState(false)
@@ -30,7 +30,7 @@ const SherpaCard = () => {
   const activeFarm = clubFarms[0]
   const { userData, rewardStartTimestamp, rewardEndTimestamp, tokensPerSecond, totalIPEFIInPool } = activeFarm
 
-  const sherpaPrice = 1
+  const sherpaPrice = usePriceSherpa()
   const earningBalance = userData ? getBalanceNumber(new BigNumber(userData.earnings)) : 0
   const earningBalanceInUsd = sherpaPrice * earningBalance
   const currentTimestamp = Date.now()
