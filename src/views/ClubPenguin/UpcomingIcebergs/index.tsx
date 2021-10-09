@@ -25,13 +25,18 @@ const IcebergTag = styled(Tag)<{ outline?: boolean }>`
   height: 32px;
   line-height: 1;
   background: ${({ outline }) => !outline && '#f24e4d'};
+  background: ${({ theme, outline }) => theme.isDark && !outline && '#d4444c'};
+  color: ${({ theme }) => theme.isDark && 'white'};
+  border-color: ${({ theme }) => theme.isDark && '#d4444c'};
 `
 
 const StyledButton = styled(Button)`
   border-radius: 8px;
-  background-color: #f24e4d;
+  background-color: ${({ theme }) => theme.isDark ? '#614e83' : '#f24e4d'};
   color: white;
   height: 44px;
+  font-weight: 700;
+  box-shadow: none;
 `;
 
 const StyledFlexLayout = styled(FlexLayout)`
@@ -44,10 +49,14 @@ const StyledFlexLayout = styled(FlexLayout)`
   }
 `;
 
+const Label = styled(Text)`
+  color: ${({ theme }) => theme.isDark ? 'white' : theme.colors.red};
+`;
+
 const UpcomingIcebergs = () => {
   return (
     <>
-      <Text fontSize='24px' color='red' mt='32px' mb='16px' fontWeight={500}>Upcoming Icebergs</Text>
+      <Label fontSize='24px' mt='32px' mb='16px' fontWeight={600}>Upcoming Icebergs</Label>
       <StyledFlexLayout>
         {Icebergs.map(iceberg => {
           return (
@@ -70,14 +79,14 @@ const UpcomingIcebergs = () => {
                 </Flex>
               </Flex>
               <Flex justifyContent='space-between'>
-                <Text fontSize='18px'>To Distribute:</Text>
-                <Text fontSize='18px' fontWeight={500}>{iceberg.toDistribute}</Text>
+                <Text fontSize='18px' fontWeight={400}>To Distribute:</Text>
+                <Text fontSize='18px' fontWeight={400}>{iceberg.toDistribute}</Text>
               </Flex>
               <Flex justifyContent='space-between'>
-                <Text fontSize='18px'>Earn:</Text>
-                <Text fontSize='18px' fontWeight={500}>{iceberg.earn}</Text>
+                <Text fontSize='18px' fontWeight={400}>Earn:</Text>
+                <Text fontSize='18px' fontWeight={400}>{iceberg.earn}</Text>
               </Flex>
-              <Text mt='16px' mb='16px' textAlign='left'>{iceberg.description}</Text>
+              <Text mt='16px' mb='16px' textAlign='left' fontWeight={400}>{iceberg.description}</Text>
               <Flex>
                 <StyledButton color='red'>Learn More</StyledButton>
               </Flex>

@@ -142,16 +142,18 @@ const StyledFlex = styled(Flex)`
 const StyledButton1 = styled(Button)`
   width: 100%;
   border-radius: 8px;
-  background: ${({ theme }) => (theme.isDark ? '#604E84' : '#ECE8F2')};
-  color: ${({ theme }) => (theme.isDark ? 'white' : '#372b70')};
+  background: ${({ theme }) => (theme.isDark ? '#614e83' : '#ECE8F2')};
+  color: ${({ theme }) => (theme.isDark ? '#d1caf2' : '#372b70')};
   box-shadow: none;
+  font-size: 18px;
+  font-weight: 500;
 `
 
 const StyledButton2 = styled(Button)`
   width: 100%;
   border-radius: 8px;
   color: white;
-  background-color: #f24e4d;
+  background: ${({ theme }) => theme.isDark ? '#d4444c' : '#f24e4d'};
 `
 
 const StyledUnlockButton = styled(UnlockButton)`
@@ -160,8 +162,8 @@ const StyledUnlockButton = styled(UnlockButton)`
 `
 
 const CountDownButton = styled(Button)`
-  color: #00283f;
-  background: #f24e4d;
+  color: ${({ theme }) => theme.isDark ? 'white' : '#00283f'};
+  background: ${({ theme }) => theme.isDark ? '#d4444c' : '#f24e4d'};
   width: 100%;
   border-radius: 8px;
   margin-top: 16px;

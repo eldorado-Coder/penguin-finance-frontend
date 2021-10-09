@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Button, Flex, Text } from 'penguinfinance-uikit2'
+import { Button, Flex, Text, useMatchBreakpoints } from 'penguinfinance-uikit2'
 import useI18n from 'hooks/useI18n'
 import roundDown from 'utils/roundDown'
 import Input, { InputProps } from 'components/Input'
@@ -25,6 +25,9 @@ const TokenInput: React.FC<TokenInputProps> = ({
   onSelectMax,
 }) => {
   const TranslateString = useI18n()
+  const { isXl } = useMatchBreakpoints();
+  const isMobile = !isXl;
+
   return (
     <StyledTokenInput>
       <Input className="input" inputClassName="tokenInput" onChange={onChange} placeholder="" value={value} />
@@ -39,12 +42,12 @@ const TokenInput: React.FC<TokenInputProps> = ({
       <Flex justifyContent={stakeMode ? 'space-between' : 'flex-end'} alignItems='center'>
         {stakeMode && 
           <StyledMaxText>
-            {TranslateString(526, `${symbol} Staked:`)} {roundDown(stakedBalance, 2)} {symbol}
+            {`${isMobile ? 'Staked' : `${symbol} Staked`}: ${roundDown(stakedBalance, 2)} ${symbol}`}
           </StyledMaxText>
         }
         {maxBalanceShow && (
           <StyledMaxText>
-            {TranslateString(526, `${symbol} Available:`)} {roundDown(max, 2)} {symbol}
+            {`${isMobile ? 'Available' : `${symbol} Available`}: ${roundDown(max, 2)} ${symbol}`} 
             {Number(max) < 0.1 && <Warning src="/images/launchpad/warning.png" alt="warning" width={16} height={16} />}
           </StyledMaxText>
         )}

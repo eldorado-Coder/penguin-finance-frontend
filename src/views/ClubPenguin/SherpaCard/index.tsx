@@ -1,12 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Text, Flex, Button } from 'penguinfinance-uikit2'
+import { Text, Flex, Button, useMatchBreakpoints } from 'penguinfinance-uikit2'
 import SvgIcon from 'components/SvgIcon'
 import CardValue from 'components/CardValue'
 import Card from '../Card'
 import CountDown from '../CountDown';
 
 const InfoCard = ({ date }) => {
+  const { isXl } = useMatchBreakpoints();
+  const isMobile = !isXl;
   const handleLearnMore = () => {
     window.open(
       'https://penguin-finance.medium.com/penguin-launchpad-allocation-staking-for-boofi-is-live-728f17ceea6c',
@@ -18,72 +20,93 @@ const InfoCard = ({ date }) => {
     window.open('https://app.sherpa.cash/', '_blank')
   }
 
+  const renderSherpaBalances = () => {
+    return (
+      <>
+        <FlexContainer isMobile={isMobile} mt='32px' justifyContent='space-between' flexWrap={!isMobile ? 'wrap' : 'nowrap'}>
+          <Flex className='col' flexDirection='column' alignItems='flex-start'>
+            <SherpaLabel fontSize={isMobile ? '16px' : '20px'} fontWeight={700} lineHeight={1}>SHERPA EARNED</SherpaLabel>
+            <SherpaBalance fontSize='22px' fontWeight={600}>2358.38</SherpaBalance>
+            <BalanceTextSmall>
+              <CardValue
+                className="balance"
+                fontSize="12px"
+                value={57.58}
+                decimals={2}
+                lineHeight="1.2"
+                prefix="≈ $"
+              />
+            </BalanceTextSmall>
+          </Flex>
+          <Flex className='col' flexDirection='column' alignItems='flex-start'>
+            <SherpaLabel fontSize={isMobile ? '16px' : '20px'} fontWeight={700} lineHeight={1}>CURRENT APR</SherpaLabel>
+            <SherpaBalance fontSize='22px' fontWeight={600}>483.38%</SherpaBalance>
+            <BalanceTextSmall>
+              <CardValue
+                className="balance"
+                fontSize="12px"
+                value={10.06}
+                decimals={2}
+                lineHeight="1.2"
+                suffix='% per week'
+              />
+            </BalanceTextSmall>
+          </Flex>
+        </FlexContainer>
+        <FlexContainer isMobile={isMobile} mt='24px' justifyContent='space-between' flexWrap={!isMobile ? 'wrap' : 'nowrap'}>
+          <Flex className='col'>
+            <HarvestButton
+              isMobile={isMobile}
+              id="harvest-all"
+              endIcon={<img src="/images/farms/harvest-coin.svg" alt="harvest" width={16} />}
+              scale="md"
+            >
+              Harvest All
+            </HarvestButton>
+          </Flex>
+          <Flex className='col' flexDirection='column' alignItems='flex-start'>
+            <SherpaLabel fontSize={isMobile ? '16px' : '20px'} fontWeight={700} lineHeight={1}>STARTS IN</SherpaLabel>
+            <SherpaBalance fontSize='22px' fontWeight={400}>
+              <CountDown date={date} />
+            </SherpaBalance>
+          </Flex>
+        </FlexContainer>
+      </>
+    )
+  }
   return (
     <StyledCard>
       <CardHeader>
-        <Flex alignItems="flex-start" flexWrap="wrap" justifyContent='space-between'>
-          <LogoWrapper mt='16px' mr='16px' alignItems="center">
-            <img src="/images/club/sherpa_iceberg.svg" alt="sherpa" />
-          </LogoWrapper>
-          <SherpaIceberg>
-            <Text fontSize='40px' color='white' fontWeight={600} lineHeight={1}>SHERPA ICEBERG</Text>
-            <FlexContainer mt='32px' justifyContent='space-between'>
-              <Flex className='col' flexDirection='column' alignItems='flex-start'>
-                <Text fontSize='20px' color='white' fontWeight={700} lineHeight={1}>SHERPA EARNED</Text>
-                <Text fontSize='22px' color='#00283f' fontWeight={600}>2358.38</Text>
-                <BalanceTextSmall>
-                  <CardValue
-                    className="balance"
-                    fontSize="12px"
-                    value={57.58}
-                    decimals={2}
-                    lineHeight="1.2"
-                    prefix="≈ $"
-                  />
-                </BalanceTextSmall>
-              </Flex>
-              <Flex className='col' flexDirection='column' alignItems='flex-start'>
-                <Text fontSize='20px' color='white' fontWeight={700} lineHeight={1}>CURRENT APR</Text>
-                <Text fontSize='22px' color='#00283f' fontWeight={600}>483.38%</Text>
-                <BalanceTextSmall>
-                  <CardValue
-                    className="balance"
-                    fontSize="12px"
-                    value={10.06}
-                    decimals={2}
-                    lineHeight="1.2"
-                    suffix='% per week'
-                  />
-                </BalanceTextSmall>
-              </Flex>
-            </FlexContainer>
-            <FlexContainer mt='24px' justifyContent='space-between'>
-              <Flex className='col'>
-                <StyledButton
-                  id="harvest-all"
-                  endIcon={<img src="/images/farms/harvest-coin.svg" alt="harvest" width={16} />}
-                  scale="md"
-                >
-                  Harvest All
-                </StyledButton>
-              </Flex>
-              <Flex className='col' flexDirection='column' alignItems='flex-start'>
-                <Text fontSize='20px' color='white' fontWeight={700} lineHeight={1}>STARTS IN</Text>
-                <Text fontSize='22px' color='#00283f' fontWeight={400}>
-                  <CountDown date={date} />
-                </Text>
-              </Flex>
-            </FlexContainer>
-          </SherpaIceberg>
-        </Flex>
+        {isMobile ? 
+          <div>
+            <Flex alignItems="center" flexWrap="wrap" justifyContent='flex-start'>
+              <LogoWrapper isMobile mr='32px' alignItems="center">
+                <img src="/images/club/sherpa_iceberg.svg" alt="sherpa" />
+              </LogoWrapper>
+              <SherpaIceberg>
+                <SherpaLabel whiteSpace='wrap' textAlign='center' fontSize={isMobile ? '36px' : '40px'} fontWeight={600} lineHeight={1}>SHERPA ICEBERG</SherpaLabel>
+              </SherpaIceberg>
+            </Flex>
+            {renderSherpaBalances()}
+          </div>
+          : <Flex alignItems="flex-start" flexWrap="wrap" justifyContent='space-between'>
+            <LogoWrapper mt='16px' mr='16px' alignItems="center">
+              <img src="/images/club/sherpa_iceberg.svg" alt="sherpa" />
+            </LogoWrapper>
+            <SherpaIceberg>
+              <SherpaLabel whiteSpace='wrap' fontSize='40px' fontWeight={600} lineHeight={1}>SHERPA ICEBERG</SherpaLabel>
+              {renderSherpaBalances()}
+            </SherpaIceberg>
+          </Flex>
+        }
       </CardHeader>
       <CardContent>
         <Text fontWeight={400} fontSize="18px" color="white">
           Sherpa Cash is the first fully decentralized protocol for private transactions on Avalanche. The SHERPA token is the governance token for Sherpa Cash.
         </Text>
       </CardContent>
-      <CardFooter justifyContent='space-between' alignItems='center'>
-        <StyledButton onClick={handleViewWebsite}>Visit Website</StyledButton>
+      <CardFooter flexDirection={isMobile ? 'column' : 'row'} justifyContent='space-between' alignItems='center'>
+        <StyledButton mb={isMobile && '16px'} visitSite onClick={handleViewWebsite}>Visit Website</StyledButton>
         <SocialIconsWrapper>
           <a href="https://t.me/sherpa_cash" target="_blank" rel="noreferrer">
             <SvgIcon src={`${process.env.PUBLIC_URL}/images/telegram.svg`} width="100%" height="32px" />
@@ -110,7 +133,7 @@ const StyledCard = styled(Card)`
   height: 100%;
   padding: 32px 24px 34px;
   box-shadow: 0px 1px 6px rgb(0 0 0 / 16%);
-  background-color: #f24e4d;
+  background-color: ${({ theme }) => theme.isDark ? '#30264f' : '#f24e4d'};
 
   ${({ theme }) => theme.mediaQueries.xl} {
     width: 49%;
@@ -119,9 +142,9 @@ const StyledCard = styled(Card)`
 
 const CardHeader = styled.div``
 
-const LogoWrapper = styled(Flex)`
+const LogoWrapper = styled(Flex)<{ isMobile?: boolean}>`
   img {
-    height: 140px;
+    height: ${({ isMobile }) => isMobile ? '96px' : '140px'};
   }
 `
 
@@ -152,12 +175,28 @@ const ButtonActions = styled(Flex)`
 
 const StyledButton = styled(Button)`
   height: 44px;
-  background: #00283f;
+  background: ${({ theme }) => theme.isDark ? '#614e83' : '#00283f'};
   color: white;
   border-radius: 10px;
   font-weight: 700;
   white-space: nowrap;
   font-size: 16px;
+
+  img {
+    margin-left: 8px;
+  }
+`
+
+const HarvestButton = styled(Button)<{ isMobile?: boolean }>`
+  height: 44px;
+  background: ${({ theme }) => theme.isDark ? '#d4444c' : '#00283f'};
+  color: white;
+  border-radius: 10px;
+  font-weight: ${({ isMobile }) => isMobile ? 500 : 700};
+  white-space: nowrap;
+  font-size: 16px;
+
+  padding: ${({ isMobile }) => isMobile && '0 16px'};
 
   img {
     margin-left: 8px;
@@ -187,14 +226,37 @@ const BalanceTextSmall = styled.div`
   }
 `
 
-const FlexContainer = styled(Flex)`
+const FlexContainer = styled(Flex)<{ isMobile?: boolean }>`
   .col {
-    min-width: 140px;
+    width: 48%;
+    min-width: ${({ isMobile }) => isMobile ? '160px': '140px'};
+
+    &:first-child {
+      margin-right: 8px;
+      margin-bottom: 0;
+      
+      @media (min-width: 1080px) {
+        margin-bottom: 16px;
+      }
+    
+      @media (min-width: 1450px) {
+        margin-bottom: 0;
+      }
+    }
   }
 `;
 
 const SherpaIceberg = styled.div`
   width: calc(100% - 170px);
+`;
+
+const SherpaLabel = styled(Text)<{ whiteSpace?: string }>`
+  white-space: ${({ whiteSpace }) => whiteSpace || 'nowrap'};
+  color: ${({ theme }) => theme.isDark ? '#bba6dd' : 'white'};
+`;
+
+const SherpaBalance = styled(Text)`
+  color: ${({ theme }) => theme.isDark ? 'white' : '#00283f'};
 `;
 
 export default InfoCard

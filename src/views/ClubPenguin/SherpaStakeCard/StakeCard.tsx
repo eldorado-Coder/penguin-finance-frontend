@@ -80,7 +80,7 @@ const TabWrapper = styled.div`
   width: 100%;
   div {
     width: 100%;
-    background-color: ${({ theme }) => (theme.isDark ? '#604e84' : '#ece8f2')};
+    background-color: ${({ theme }) => (theme.isDark ? '#614e83' : '#ece8f2')};
     border-radius: 8px;
 
     button {
@@ -94,14 +94,15 @@ const OptionItem = styled(ButtonMenuItem)<{ active: boolean }>`
   min-width: 100px;
   font-weight: 500;
   box-shadow: none;
-  background-color: ${({ active }) => active && '#f24e4d'};
+  background-color: ${({ active, theme }) => active && !theme.isDark && '#f24e4d'};
+  background-color: ${({ active, theme }) => active && theme.isDark && '#d4444c'};
   color: ${({ active }) => (active ? 'white' : '#372b70')};
-  color: ${({ active, theme }) => theme.isDark && !active && '#BBA6DD'};
+  color: ${({ active, theme }) => theme.isDark && !active && '#d1caf2'};
 `
 
 const StakeLabel = styled(Text)`
   font-size: 18px;
-  color: ${({ theme }) => (theme.isDark ? 'white' : '#372b70')};
+  color: ${({ theme }) => (theme.isDark ? '#d1caf2' : '#372b70')};
 
   ${({ theme }) => theme.mediaQueries.sm} {
     font-size: 20px;

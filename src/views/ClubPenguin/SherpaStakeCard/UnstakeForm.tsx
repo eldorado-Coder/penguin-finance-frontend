@@ -95,18 +95,18 @@ const StyledButton = styled(Button)`
   width: 100%;
   border-radius: 8px;
   color: white;
-  background-color: #f24e4d;
+  background: ${({ theme }) => theme.isDark ? '#d4444c' : '#f24e4d'};
 `
 
 const StyledUnlockButton = styled(UnlockButton)`
   width: 100%;
   border-radius: 8px;
-  background-color: #f24e4d;
+  background: ${({ theme }) => theme.isDark ? '#d4444c' : '#f24e4d'};
 `
 
 const CountDownButton = styled(Button)`
-  color: #00283f;
-  background: #f24e4d;
+  color: ${({ theme }) => theme.isDark ? 'white' : '#00283f'};
+  background: ${({ theme }) => theme.isDark ? '#d4444c' : '#f24e4d'};
   width: 100%;
   border-radius: 8px;
   margin-top: 16px;
