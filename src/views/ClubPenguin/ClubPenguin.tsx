@@ -1,14 +1,15 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Flex } from 'penguinfinance-uikit2'
+import { Flex, Text } from 'penguinfinance-uikit2'
 import useTheme from 'hooks/useTheme'
 import Page from 'components/layout/Page'
-import InfoCard from './InfoCard'
-import RewardCard from './RewardCard'
-import StakeCard from './StakeCard/StakeCard'
+import UpcomingIcebergs from './UpcomingIcebergs'
+import SherpaCard from './SherpaCard';
+import SherpaStakeCard from './SherpaStakeCard/StakeCard'
 
 const ClubPenguin: React.FC = () => {
   const { isDark } = useTheme()
+  const date = 1634869359000;
 
   return (
     <ClubPenguinPage>
@@ -24,17 +25,22 @@ const ClubPenguin: React.FC = () => {
         />
       </ClubPenguinBannerContainer>
       <ClubPenguinContent>
+        <StyledText fontSize='24px' fontWeight={500}>Current Iceberg</StyledText>
         <Flex justifyContent="space-between" flexWrap="wrap">
-          <InfoCard />
+          <SherpaCard date={date}/>
           <CardWrapper flexDirection="column">
-            <RewardCard />
-            <StakeCard />
+            <SherpaStakeCard date={date} />
           </CardWrapper>
         </Flex>
+        <UpcomingIcebergs />
       </ClubPenguinContent>
     </ClubPenguinPage>
   )
 }
+
+const StyledText = styled(Text)`
+  color: ${({ theme }) => theme.isDark ? theme.colors.textSubtle : '#372b70'};
+`;
 
 const ClubPenguinPage = styled(Page)`
   max-width: 1200px;
