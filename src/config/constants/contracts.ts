@@ -190,5 +190,7 @@ export default {
     // 43114: '0x4accCfF8b8e104B61D2A5fEA507641D610e475d4',
     // 43114: '0x0115B9E65Dd39380Ed177b6B751B0B7f36513F59',
     43114: '0xa4bD0896786f793Ae7dA76C7Fd646baE560946ab',
+    // TODO: should be replaced with final version of "Club penguin" contract
+    // 43114: '0xa4bD0896786f793Ae7dA76C7Fd646baE560946ab',
   },
 }
