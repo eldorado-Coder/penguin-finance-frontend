@@ -8,11 +8,11 @@ const ArtworkCard = () => {
   const { isXl } = useMatchBreakpoints()
   const isMobile = !isXl
   const onClickArtworkV2Card = () => {
-    // history.push('/farms')
-    window.open(
-      'https://penguin-finance.medium.com/club-penguin-is-coming-to-avalanche-earn-free-tokens-by-staking-ipefi-78ef794ca0d5',
-      '_blank',
-    )
+    history.push('/club')
+    // window.open(
+    //   'https://penguin-finance.medium.com/the-club-penguin-initiative-is-live-on-avalanche-9cd08a133f2',
+    //   '_blank',
+    // )
   }
 
   return (
@@ -32,7 +32,7 @@ const StyledArtworkCardBg = styled.div`
   height: 100%;
   background-size: cover;
   background-position: center center;
-  background-image: url('/images/launchpad/club_penguin_coming.png');
+  background-image: url('/images/launchpad/club_penguin_live.png');
   cursor: pointer;
 `
 
