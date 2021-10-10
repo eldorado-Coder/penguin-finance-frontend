@@ -14,6 +14,7 @@ import {
   fetchV2PoolsPublicDataAsync,
   fetchV2FarmsPublicDataAsync,
   fetchV2FarmUserDataAsync,
+  fetchClubPenguinFarmUserDataAsync,
 } from 'state/actions'
 import {
   stake,
@@ -165,8 +166,7 @@ export const useClubPenguinStake = (pid: number) => {
   const handleStake = useCallback(
     async (amount: string) => {
       const txHash = await clubPenguinStake(clubPenguinMasterChefContract, pid, amount, account)
-      // TODO: should be changed
-      dispatch(fetchLaunchpadBoofiUserDataAsync(account))
+      dispatch(fetchClubPenguinFarmUserDataAsync(account))
       console.info(txHash)
     },
     [account, pid, dispatch, clubPenguinMasterChefContract],

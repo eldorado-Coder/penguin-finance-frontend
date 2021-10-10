@@ -152,6 +152,10 @@ export default {
     43113: '',
     43114: '0xa5e59761ebd4436fa4d20e1a27cba29fb2471fc6',
   },
+  sherpa: {
+    43113: '',
+    43114: '0xa5E59761eBD4436fa4d20E1A27cBa29FB2471Fc6',
+  },
 
   // launchpad - Boofi
   launchPadBoofi: {
@@ -187,8 +191,6 @@ export default {
   // club penguin
   clubPenguinMasterChef: {
     43113: '',
-    // 43114: '0x4accCfF8b8e104B61D2A5fEA507641D610e475d4',
-    //43114: '0x0115B9E65Dd39380Ed177b6B751B0B7f36513F59',
-    43114: '0x43aD982446A1a609F725ab9a5ae1CC881152B2Aa',
+    43114: '0xc96D1131B40b95c75d0336574e8e4256a0A074A1',
   },
 }
