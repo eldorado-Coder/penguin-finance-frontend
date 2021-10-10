@@ -124,7 +124,7 @@ const SherpaCard = () => {
           </Flex>
           <Flex className="col" flexDirection="column" alignItems="flex-start">
             <SherpaLabel fontSize={isMobile ? '16px' : '20px'} fontWeight={700} lineHeight={1}>
-              {cutdownType === 'start' ? 'STARTS IN' : 'END IN'}
+              {cutdownType === 'start' ? 'STARTS IN' : 'ENDS IN'}
             </SherpaLabel>
             <SherpaBalance fontSize="22px" fontWeight={400}>
               {cutdownDate > 0 && (

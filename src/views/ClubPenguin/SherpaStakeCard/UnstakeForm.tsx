@@ -90,7 +90,7 @@ const UnstakeForm: React.FC<UnStakeFormProps> = ({
         )}
       </Flex>
       <CountDownButton>
-        <div>{cutdownType === 'start' ? 'STARTS IN' : 'END IN'}</div>
+        <div>{cutdownType === 'start' ? 'STARTS IN' : 'ENDS IN'}</div>
         {cutdownDate > 0 && (
           <div className="countdown">
             <CountDown date={cutdownDate} />
