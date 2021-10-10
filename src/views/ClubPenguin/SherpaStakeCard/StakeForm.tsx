@@ -7,8 +7,9 @@ import UnlockButton from 'components/UnlockButton'
 import { useIPefi } from 'hooks/useContract'
 import { getFullDisplayBalance } from 'utils/formatBalance'
 import roundDown from 'utils/roundDown'
-import { getClubPenguinMasterChefAddress } from 'utils/addressHelpers'
+import { getClubPenguinMasterChefAddress, getSherpaAddress } from 'utils/addressHelpers'
 import escapeRegExp from 'utils/escapeRegExp'
+import { addTokenToMetamask } from 'utils/token'
 import TokenInput from './TokenInput'
 import CountDown from '../CountDown'
 
@@ -92,6 +93,10 @@ const StakeForm: React.FC<StakeFormProps> = ({
     console.log('view tutorial--->')
   }
 
+  const handleAddSherpaToken = async () => {
+    await addTokenToMetamask(getSherpaAddress(), 'iPEFI', 18)
+  }
+
   const canStake = !pendingTx && Number(val) > 0
   const userStakedBalance = useMemo(() => {
     return getFullDisplayBalance(stakedBalance)
@@ -134,14 +139,20 @@ const StakeForm: React.FC<StakeFormProps> = ({
           </>
         )}
       </Flex>
-      <CountDownButton>
-        <div>{cutdownType === 'start' ? 'STARTS IN' : 'END IN'}</div>
-        {cutdownDate > 0 && (
-          <div className="countdown">
-            <CountDown date={cutdownDate} />
-          </div>
-        )}
-      </CountDownButton>
+      {cutdownType === 'start' ? (
+        <CountDownButton>
+          <div>{cutdownType === 'start' ? 'STARTS IN' : 'ENDS IN'}</div>
+          {cutdownDate > 0 && (
+            <div className="countdown">
+              <CountDown date={cutdownDate} />
+            </div>
+          )}
+        </CountDownButton>
+      ) : (
+        <AddTokenButton scale="md" onClick={handleAddSherpaToken}>
+          Add SHERPA to Metamask
+        </AddTokenButton>
+      )}
     </>
   )
 }
@@ -185,6 +196,17 @@ const CountDownButton = styled(Button)`
     margin-left: 6px;
     text-align: left;
   }
+  &:hover {
+    opacity: 1 !important;
+  }
+`
+
+const AddTokenButton = styled(Button)`
+  color: ${({ theme }) => (theme.isDark ? 'white' : '#00283f')};
+  background: ${({ theme }) => (theme.isDark ? '#d4444c' : '#f24e4d')};
+  width: 100%;
+  border-radius: 8px;
+  margin-top: 16px;
 `
 
 export default StakeForm

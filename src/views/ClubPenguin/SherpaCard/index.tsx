@@ -43,7 +43,7 @@ const SherpaCard = () => {
   const rewardPerSec = getBalanceNumber(new BigNumber(tokensPerSecond))
   const rewardPerSecInUsd = sherpaPrice * rewardPerSec
   const sherpaDailyApr = (SECONDS_PER_DAY * rewardPerSecInUsd) / totalLiquidityInUsd
-  const sherpaApr = getApr(sherpaDailyApr)
+  const sherpaApr = 100 * getApr(sherpaDailyApr)
 
   const isMobile = !isXl
   const canHarvest = account && earningBalance > 0 && !pendingTx
@@ -124,7 +124,7 @@ const SherpaCard = () => {
           </Flex>
           <Flex className="col" flexDirection="column" alignItems="flex-start">
             <SherpaLabel fontSize={isMobile ? '16px' : '20px'} fontWeight={700} lineHeight={1}>
-              {cutdownType === 'start' ? 'STARTS IN' : 'END IN'}
+              {cutdownType === 'start' ? 'STARTS IN' : 'ENDS IN'}
             </SherpaLabel>
             <SherpaBalance fontSize="22px" fontWeight={400}>
               {cutdownDate > 0 && (

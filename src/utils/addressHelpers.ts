@@ -33,6 +33,9 @@ export const getXPefiAddress = () => {
 export const getIPefiAddress = () => {
   return getAddress(addresses.iPefi)
 }
+export const getSherpaAddress = () => {
+  return getAddress(addresses.sherpa)
+}
 export const getTestXPefiAddress = () => {
   return getAddress(addresses.testXPefi)
 }

@@ -6,6 +6,8 @@ import UnlockButton from 'components/UnlockButton'
 import roundDown from 'utils/roundDown'
 import escapeRegExp from 'utils/escapeRegExp'
 import { getFullDisplayBalance } from 'utils/formatBalance'
+import { addTokenToMetamask } from 'utils/token'
+import { getSherpaAddress } from 'utils/addressHelpers'
 import TokenInput from './TokenInput'
 import CountDown from '../CountDown'
 
@@ -45,6 +47,10 @@ const UnstakeForm: React.FC<UnStakeFormProps> = ({
       setPendingTx(false)
       setVal('')
     }
+  }
+
+  const handleAddSherpaToken = async () => {
+    await addTokenToMetamask(getSherpaAddress(), 'iPEFI', 18)
   }
 
   const handleChange = useCallback(
@@ -89,14 +95,20 @@ const UnstakeForm: React.FC<UnStakeFormProps> = ({
           </StyledButton>
         )}
       </Flex>
-      <CountDownButton>
-        <div>{cutdownType === 'start' ? 'STARTS IN' : 'END IN'}</div>
-        {cutdownDate > 0 && (
-          <div className="countdown">
-            <CountDown date={cutdownDate} />
-          </div>
-        )}
-      </CountDownButton>
+      {cutdownType === 'start' ? (
+        <CountDownButton>
+          <div>{cutdownType === 'start' ? 'STARTS IN' : 'ENDS IN'}</div>
+          {cutdownDate > 0 && (
+            <div className="countdown">
+              <CountDown date={cutdownDate} />
+            </div>
+          )}
+        </CountDownButton>
+      ) : (
+        <AddTokenButton scale="md" onClick={handleAddSherpaToken}>
+          Add SHERPA to Metamask
+        </AddTokenButton>
+      )}
     </>
   )
 }
@@ -126,6 +138,14 @@ const CountDownButton = styled(Button)`
     margin-left: 6px;
     text-align: left;
   }
+`
+
+const AddTokenButton = styled(Button)`
+  color: ${({ theme }) => (theme.isDark ? 'white' : '#00283f')};
+  background: ${({ theme }) => (theme.isDark ? '#d4444c' : '#f24e4d')};
+  width: 100%;
+  border-radius: 8px;
+  margin-top: 16px;
 `
 
 export default UnstakeForm

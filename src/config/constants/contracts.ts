@@ -152,6 +152,10 @@ export default {
     43113: '',
     43114: '0xa5e59761ebd4436fa4d20e1a27cba29fb2471fc6',
   },
+  sherpa: {
+    43113: '',
+    43114: '0xa5E59761eBD4436fa4d20E1A27cBa29FB2471Fc6',
+  },
 
   // launchpad - Boofi
   launchPadBoofi: {
