@@ -185,6 +185,9 @@ const CountDownButton = styled(Button)`
     margin-left: 6px;
     text-align: left;
   }
+  &:hover {
+    opacity: 1 !important;
+  }
 `
 
 export default StakeForm
