@@ -90,11 +90,14 @@ const StakeForm: React.FC<StakeFormProps> = ({
   }
 
   const handleViewTutorial = () => {
-    console.log('view tutorial--->')
+    window.open(
+      'https://penguin-finance.medium.com/the-club-penguin-initiative-is-live-on-avalanche-9cd08a133f2',
+      '_blank',
+    )
   }
 
   const handleAddSherpaToken = async () => {
-    await addTokenToMetamask(getSherpaAddress(), 'iPEFI', 18)
+    await addTokenToMetamask(getSherpaAddress(), 'SHERPA', 18)
   }
 
   const canStake = !pendingTx && Number(val) > 0
