@@ -191,7 +191,6 @@ export default {
   // club penguin
   clubPenguinMasterChef: {
     43113: '',
-    // TODO: should be replaced with final version of "Club penguin" contract
-    43114: '0xa4bD0896786f793Ae7dA76C7Fd646baE560946ab',
+    43114: '0xc96D1131B40b95c75d0336574e8e4256a0A074A1',
   },
 }
