@@ -43,7 +43,7 @@ const SherpaCard = () => {
   const rewardPerSec = getBalanceNumber(new BigNumber(tokensPerSecond))
   const rewardPerSecInUsd = sherpaPrice * rewardPerSec
   const sherpaDailyApr = (SECONDS_PER_DAY * rewardPerSecInUsd) / totalLiquidityInUsd
-  const sherpaApr = getApr(sherpaDailyApr)
+  const sherpaApr = 100 * getApr(sherpaDailyApr)
 
   const isMobile = !isXl
   const canHarvest = account && earningBalance > 0 && !pendingTx
