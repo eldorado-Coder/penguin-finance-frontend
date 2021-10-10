@@ -94,7 +94,7 @@ const StakeForm: React.FC<StakeFormProps> = ({
   }
 
   const handleAddSherpaToken = async () => {
-    await addTokenToMetamask(getSherpaAddress(), 'iPEFI', 18)
+    await addTokenToMetamask(getSherpaAddress(), 'SHERPA', 18)
   }
 
   const canStake = !pendingTx && Number(val) > 0
