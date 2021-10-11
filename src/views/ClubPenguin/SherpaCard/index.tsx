@@ -9,6 +9,7 @@ import CardValue from 'components/CardValue'
 import Balance from 'components/Balance'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { getApr } from 'utils/apyHelpers'
+import useTheme from 'hooks/useTheme';
 import { SECONDS_PER_DAY } from 'config'
 import Card from '../Card'
 import CountDown from '../CountDown'
@@ -22,6 +23,7 @@ const SherpaCard = () => {
   const { onHarvest } = useClubPenguinHarvest(0)
   const pefiPriceUsd = usePricePefiUsdt().toNumber()
   const v2Pools = useV2Pools(account)
+  const { isDark } = useTheme();
   const iPefiPool = v2Pools.length > 0 ? v2Pools[0] : null
   const iPefiToPefiRatio = iPefiPool.currentExchangeRate || 1
   const iPefiPriceUsd = iPefiToPefiRatio * pefiPriceUsd
@@ -75,7 +77,7 @@ const SherpaCard = () => {
             <SherpaLabel fontSize={isMobile ? '16px' : '20px'} fontWeight={700} lineHeight={1}>
               SHERPA EARNED
             </SherpaLabel>
-            <EarningBalance fontSize="22px" fontWeight="600" value={earningBalance} decimals={2} />
+            <Balance color={isDark ? 'white' : '#00283f'} fontSize="22px" fontWeight="600" value={earningBalance} decimals={2} />
             <BalanceTextSmall>
               <CardValue
                 className="balance"
@@ -91,7 +93,7 @@ const SherpaCard = () => {
             <SherpaLabel fontSize={isMobile ? '16px' : '20px'} fontWeight={700} lineHeight={1}>
               CURRENT APR
             </SherpaLabel>
-            <AprBalance fontSize="22px" fontWeight="600" suffix="%" value={sherpaApr} decimals={2} />
+            <Balance color={isDark ? 'white' : '#00283f'} fontSize="22px" fontWeight="600" suffix="%" value={sherpaApr} decimals={2} />
             <BalanceTextSmall>
               <CardValue
                 className="balance"
@@ -316,14 +318,6 @@ const SherpaLabel = styled(Text)<{ whiteSpace?: string }>`
 `
 
 const SherpaBalance = styled(Text)`
-  color: ${({ theme }) => (theme.isDark ? 'white' : '#00283f')};
-`
-
-const EarningBalance = styled(Balance)`
-  color: ${({ theme }) => (theme.isDark ? 'white' : '#00283f')};
-`
-
-const AprBalance = styled(Balance)`
   color: ${({ theme }) => (theme.isDark ? 'white' : '#00283f')};
 `
 
