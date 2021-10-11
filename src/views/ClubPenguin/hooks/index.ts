@@ -6,6 +6,7 @@ import { fetchClubPenguinFarmUserDataAsync } from 'state/actions'
 import { clubPenguinStake, clubPenguinUnstake, clubPenguinHarvest } from 'utils/callHelpers'
 import { getPair } from 'subgraph/utils/joe'
 import { usePriceAvaxUsdt } from 'state/hooks'
+import useRefresh from 'hooks/useRefresh'
 
 export const useClubPenguinStake = (pid: number) => {
   const dispatch = useDispatch()
@@ -43,6 +44,7 @@ export const useClubPenguinUnstake = (pid: number) => {
 
 export const useClubPenguinHarvest = (pid: number) => {
   const dispatch = useDispatch()
+  const { fastRefresh } = useRefresh();
   const { account } = useWeb3React()
   const clubPenguinMasterChefContract = useClubPenguinMasterChef()
 
@@ -58,25 +60,22 @@ export const useClubPenguinHarvest = (pid: number) => {
 export const usePriceSherpa = (): number => {
   const [price, setPrice] = useState(1)
   const avaxPrice = usePriceAvaxUsdt()
-
-  const fetchPrice = async () => {
-    const sherpaAvaxPairAddress = '0xf0d7ec33147ec3befd24b880472307bf3a01bb8a'
-    try {
-      const sherpaAvaxPair = await getPair(sherpaAvaxPairAddress)
-      const sherpaPrice = (avaxPrice.toNumber() * Number(sherpaAvaxPair.reserve1)) / Number(sherpaAvaxPair.reserve0)
-      setPrice(sherpaPrice)
-    } catch (error) {
-      console.log('sherpa price fetch issue')
-    }
-  }
+  const { fastRefresh } = useRefresh()
 
   useEffect(() => {
-    fetchPrice()
+    const fetchPrice = async () => {
+        const sherpaAvaxPairAddress = '0xf0d7ec33147ec3befd24b880472307bf3a01bb8a'
+        try {
+          const sherpaAvaxPair = await getPair(sherpaAvaxPairAddress)
+          const sherpaPrice = (avaxPrice.toNumber() * Number(sherpaAvaxPair.reserve1)) / Number(sherpaAvaxPair.reserve0)
+          setPrice(sherpaPrice)
+        } catch (error) {
+          console.log('sherpa price fetch issue')
+        }
+    }
 
-    setInterval(() => {
-      fetchPrice()
-    }, 10000)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    fetchPrice();
+  }, [avaxPrice, fastRefresh])
+  
   return price
 }
