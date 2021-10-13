@@ -57,8 +57,10 @@ const App: React.FC = () => {
               <CompounderIgloos />
             </Route>
             <Route path="/" exact>
-              {/* <HomeV2 /> */}
               <HomeV1 />
+            </Route>
+            <Route path="/home-v2" exact>
+              <HomeV2 />
             </Route>
             <Route path="/farms">
               <FarmsV2 />
