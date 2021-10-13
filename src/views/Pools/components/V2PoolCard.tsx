@@ -15,7 +15,7 @@ const StyledCard = styled(Card)<{ isNestPage?: boolean; isMobile?: boolean }>`
   min-width: ${({ isMobile }) => (isMobile ? '100%' : '350px')};
   border-radius: 26px;
   box-shadow: 0px 1px 8px rgb(0 0 0 / 24%);
-  background: ${({ theme }) => theme.isDark ? '#272044' : '#fff' };
+  background: ${({ theme }) => (theme.isDark ? '#272044' : '#fff')};
   @media (min-width: 640px) {
     transform: ${(props) => props.isNestPage && 'scale(1.3)'};
     margin-top: ${(props) => props.isNestPage && '60px'};
@@ -25,7 +25,7 @@ const StyledCard = styled(Card)<{ isNestPage?: boolean; isMobile?: boolean }>`
 
 const StyledHeading = styled(Heading)`
   font-weight: 800;
-  color: ${({ theme }) => theme.isDark ? '#fff' : '#342C6D'};
+  color: ${({ theme }) => (theme.isDark ? '#fff' : '#342C6D')};
 
   @font-face {
     font-family: 'GothamUltra Font';
@@ -33,7 +33,7 @@ const StyledHeading = styled(Heading)`
     font-display: swap;
   }
   font-family: 'GothamUltra Font';
-  
+
   @media (min-width: 1200px) {
     font-size: 50px;
     line-height: 60px;
@@ -42,7 +42,7 @@ const StyledHeading = styled(Heading)`
 
 const CardContent = styled.div`
   padding: 24px;
-  background: ${({ theme }) => theme.isDark ? '#272044' : '#fff' } !important;
+  background: ${({ theme }) => (theme.isDark ? '#272044' : '#fff')} !important;
   border-radius: 32px;
 
   @media (min-width: 1200px) {
@@ -113,7 +113,11 @@ const V2PoolCard: React.FC<Props> = ({ pool }) => {
             {`i${tokenName}`} {TranslateString(348, 'Nest')}
           </StyledHeading>
           <InfoIconWrapper onClick={handleViewNestsGitbook}>
-            <SvgIcon src={`${process.env.PUBLIC_URL}/images/home/info.svg`} width={isMobile ? '25px' : "31px"} height={isMobile ? '25px' : "31px"} />
+            <SvgIcon
+              src={`${process.env.PUBLIC_URL}/images/home/info.svg`}
+              width={isMobile ? '25px' : '31px'}
+              height={isMobile ? '25px' : '31px'}
+            />
           </InfoIconWrapper>
         </Flex>
         <Flex mt="12px" mb="32px" alignItems={isMobile ? 'flex-start' : 'center'}>
@@ -157,7 +161,6 @@ const V2PoolCard: React.FC<Props> = ({ pool }) => {
                 <SvgIcon src={`${process.env.PUBLIC_URL}/images/home/arrow-right.svg`} width="25px" height="25px" />
               </StyledNavLink>
             </StyledButton>
-            {/* <StyledButton onClick={handleMigrationGuide}>Migration Guide</StyledButton> */}
           </Flex>
         ) : (
           <StyledUnlockButton fullWidth isHomeButton />
@@ -169,7 +172,7 @@ const V2PoolCard: React.FC<Props> = ({ pool }) => {
 
 const Label = styled(Text).attrs({ color: 'red' })`
   font-size: 14px;
-  color: ${({ theme }) => theme.isDark ? '#9A97C4' : '#EC3B40'};
+  color: ${({ theme }) => (theme.isDark ? '#9A97C4' : '#EC3B40')};
   line-height: 1;
   font-weight: 300;
 
@@ -209,13 +212,14 @@ const InfoIconWrapper = styled.div`
 `
 
 const StyledButton = styled(Button)`
-  background-color: ${({ theme }) => theme.isDark ? '#483692' : '#EC3B40'};
+  background-color: ${({ theme }) => (theme.isDark ? '#483692' : '#EC3B40')};
   color: white;
   width: 100%;
   border-radius: 100px;
   white-space: nowrap;
   margin-bottom: 8px;
   font-weight: 300;
+  padding: 0px 16px;
 
   @font-face {
     font-family: 'Telegraf UltraBold Font';
@@ -239,7 +243,7 @@ const StyledButton = styled(Button)`
 `
 
 const BalanceText = styled(Text)`
-  color: ${({ theme }) => theme.isDark ? '#fff' : '#342C6D'};
+  color: ${({ theme }) => (theme.isDark ? '#fff' : '#342C6D')};
   font-weight: 300;
 
   @font-face {
@@ -253,12 +257,12 @@ const BalanceText = styled(Text)`
     font-size: 30px;
     line-height: 35px;
   }
-`;
+`
 
 const StyledUnlockButton = styled(UnlockButton)`
   border-radius: 100px;
   white-space: nowrap;
-  
+
   @font-face {
     font-family: 'Telegraf UltraBold Font';
     src: url(${process.env.PUBLIC_URL}/fonts/Telegraf-UltraBold.ttf) format('truetype');
@@ -278,6 +282,6 @@ const StyledUnlockButton = styled(UnlockButton)`
     height: 64px;
     font-size: 24px;
   }
-`;
+`
 
 export default V2PoolCard

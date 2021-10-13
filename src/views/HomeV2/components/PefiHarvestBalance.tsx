@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text } from 'penguinfinance-uikit2'
+import { Text, useMatchBreakpoints } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import styled from 'styled-components'
 import useI18n from 'hooks/useI18n'
@@ -13,6 +13,8 @@ interface PefiHarvestBalanceProps {
 const PefiHarvestBalance: React.FC<PefiHarvestBalanceProps> = ({ value, detailedValue }) => {
   const TranslateString = useI18n()
   const { account } = useWeb3React()
+  const { isXl } = useMatchBreakpoints()
+  const isMobile = !isXl
 
   if (!account) {
     return (
@@ -24,7 +26,7 @@ const PefiHarvestBalance: React.FC<PefiHarvestBalanceProps> = ({ value, detailed
 
   return (
     <Block>
-      <CardValue fontSize="32px" value={value} lineHeight="1.2" decimals={2} prefix="$" />
+      <CardValue fontSize={isMobile ? '30px' : '44px'} value={value} lineHeight="1.2" decimals={2} prefix="$" />
       <DetailedValue fontSize="12px" style={{ lineHeight: '12px' }}>
         {detailedValue}
       </DetailedValue>
