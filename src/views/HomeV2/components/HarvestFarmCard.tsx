@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import styled from 'styled-components'
-import { Heading, Card, CardBody, Button, Text, Flex } from 'penguinfinance-uikit2'
+import { Heading, Card, CardBody, Button, Text, Flex, useMatchBreakpoints } from 'penguinfinance-uikit2'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { useWeb3React } from '@web3-react/core'
@@ -33,6 +33,8 @@ const HarvestFarmCard = () => {
   const joePriceUsd = useJoePrice()
   const { lydPrice: lydPriceUsd, sushiPrice: sushiPriceUsd } = useTokenPrice()
   const v2FarmsWithRewards = v2Farms.filter((row) => row.userData && Number(row.userData.stakedBalance) > 0)
+  const { isXl } = useMatchBreakpoints()
+  const isMobile = !isXl
 
   const { onReward } = useAllV2FarmHarvest(v2FarmsWithRewards.map((farmWithBalance) => farmWithBalance.pid))
 
@@ -128,11 +130,15 @@ const HarvestFarmCard = () => {
             Igloos (Farming)
           </StyledHeading>
           <InfoIconWrapper onClick={handleInfoIconClick}>
-            <SvgIcon src={`${process.env.PUBLIC_URL}/images/home/info.svg`} width="25px" height="25px" />
+            <SvgIcon
+              src={`${process.env.PUBLIC_URL}/images/home/info.svg`}
+              width={isMobile ? '25px' : '31px'}
+              height={isMobile ? '25px' : '31px'}
+            />
           </InfoIconWrapper>
         </Flex>
         <StyledFlex mt="12px" mb="20px" ml="-16px">
-          <CardImage src="/images/penguin-finance-logo.svg" alt="penguin logo" width={64} height={64} />
+          <CardImage src="/images/penguin-finance-logo.svg" alt="penguin logo" width={90} height={90} />
           <Block>
             <Label>{`Rewards to Harvest: `}</Label>
             <PefiHarvestBalance value={totalRewardInUsd} detailedValue={rewardString} />
@@ -147,10 +153,10 @@ const HarvestFarmCard = () => {
               onClick={harvestAllFarms}
               scale="md"
             >
-              {pendingTx ? 'Collecting Rewards' : 'Harvest All'}
+              {pendingTx ? 'Harvesting' : 'Harvest All'}
             </StyledButton>
           ) : (
-            <UnlockButton fullWidth isHomeButton />
+            <StyledUnlockButton fullWidth isHomeButton />
           )}
         </Actions>
       </StyledCardBody>
@@ -190,11 +196,33 @@ const Block = styled.div`
 
 const CardImage = styled.img`
   margin-right: 20px;
+  width: 70px;
+  height: 70px;
+
+  @media (min-width: 1200px) {
+    margin-right: 24px;
+    width: 90px;
+    height: 90px;
+  }
 `
 
 const Label = styled(Text).attrs({ color: 'red' })`
-  line-height: 1;
   font-size: 14px;
+  color: ${({ theme }) => (theme.isDark ? '#9A97C4' : '#EC3B40')};
+  line-height: 1;
+  font-weight: 300;
+
+  @font-face {
+    font-family: 'Telegraf Bold Font';
+    src: url(${process.env.PUBLIC_URL}/fonts/Telegraf-Bold.ttf) format('truetype');
+    font-display: swap;
+  }
+  font-family: 'Telegraf Bold Font';
+
+  @media (min-width: 1200px) {
+    font-size: 19px;
+    line-height: 24px;
+  }
 `
 
 const Actions = styled.div`
@@ -202,12 +230,19 @@ const Actions = styled.div`
 `
 
 const StyledHeading = styled(Heading)`
-  color: white;
-  font-weight: 300;
+  font-weight: 800;
+  color: ${({ theme }) => (theme.isDark ? '#fff' : '#342C6D')};
+
+  @font-face {
+    font-family: 'GothamUltra Font';
+    src: url(${process.env.PUBLIC_URL}/fonts/GothamUltra.otf) format('truetype');
+    font-display: swap;
+  }
+  font-family: 'GothamUltra Font';
 
   @media (min-width: 1200px) {
     font-size: 50px;
-    line-height: 70px;
+    line-height: 60px;
   }
 `
 
@@ -216,8 +251,61 @@ const StyledFlex = styled(Flex)`
 `
 
 const StyledButton = styled(Button)`
+  background-color: ${({ theme }) => (theme.isDark ? '#483692' : '#EC3B40')};
+  color: white;
+  width: 100%;
+  border-radius: 100px;
+  white-space: nowrap;
+  margin-bottom: 8px;
+  font-weight: 300;
+
   img {
     margin-left: 8px;
+  }
+
+  @font-face {
+    font-family: 'Telegraf UltraBold Font';
+    src: url(${process.env.PUBLIC_URL}/fonts/Telegraf-UltraBold.ttf) format('truetype');
+    font-display: swap;
+  }
+  font-family: 'Telegraf UltraBold Font';
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  @media (min-width: 640px) {
+    width: 48%;
+    margin-bottom: 0;
+  }
+  @media (min-width: 1200px) {
+    height: 64px;
+    font-size: 24px;
+  }
+`
+
+const StyledUnlockButton = styled(UnlockButton)`
+  border-radius: 100px;
+  white-space: nowrap;
+
+  @font-face {
+    font-family: 'Telegraf UltraBold Font';
+    src: url(${process.env.PUBLIC_URL}/fonts/Telegraf-UltraBold.ttf) format('truetype');
+    font-display: swap;
+  }
+  font-family: 'Telegraf UltraBold Font';
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  @media (min-width: 640px) {
+    width: 48%;
+    margin-bottom: 0;
+  }
+  @media (min-width: 1200px) {
+    height: 64px;
+    font-size: 24px;
   }
 `
 
