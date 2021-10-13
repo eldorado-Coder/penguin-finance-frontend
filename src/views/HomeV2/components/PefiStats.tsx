@@ -36,6 +36,13 @@ const StyledHeading = styled(Heading)`
   color: white;
   font-weight: 800;
 
+  @font-face {
+    font-family: 'GothamUltra Font';
+    src: url(${process.env.PUBLIC_URL}/fonts/GothamUltra.otf) format('truetype');
+    font-display: swap;
+  }
+  font-family: 'GothamUltra Font';
+
   @media (min-width: 1200px) {
     font-size: 58px;
     line-height: 70px;
@@ -55,6 +62,13 @@ const StyledCardValue = styled(CardValue)`
   font-weight: 300;
   font-size: 14px;
 
+  @font-face {
+    font-family: 'Telegraf Regular Font';
+    src: url(${process.env.PUBLIC_URL}/fonts/Telegraf-Regular.ttf) format('truetype');
+    font-display: swap;
+  }
+  font-family: 'Telegraf Regular Font';
+
   @media (min-width: 1200px) {
     font-size: 20px;
     line-height: 25px;
@@ -70,6 +84,13 @@ const StyledCardBody = styled(CardBody)`
 const StyledText = styled(Text)`
   font-weight: 300;
   font-size: 14px;
+
+  @font-face {
+    font-family: 'Telegraf Regular Font';
+    src: url(${process.env.PUBLIC_URL}/fonts/Telegraf-Regular.ttf) format('truetype');
+    font-display: swap;
+  }
+  font-family: 'Telegraf Regular Font';
 
   @media (min-width: 1200px) {
     font-size: 20px;

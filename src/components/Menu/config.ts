@@ -64,57 +64,62 @@ export const config: MenuEntry[] = [
     badge: 'NEW',
   },
   {
-    label: 'Compounder',
+    label: 'More',
     icon: 'CompounderIcon',
-    href: '/compounder',
+    href: '/more',
   },
+  // {
+  //   label: 'Compounder',
+  //   icon: 'CompounderIcon',
+  //   href: '/compounder',
+  // },
   // {
   //   label: 'Penguin teams',
   //   icon: 'NftIcon',
   //   href: '/teams',
   // },
-  {
-    label: 'Learn More',
-    icon: 'MoreIcon',
-    items: [
-      {
-        label: 'Github',
-        href: 'https://github.com/Penguin-Finance',
-      },
-      {
-        label: 'Docs',
-        href: 'https://docs.penguinfinance.io/',
-      },
-      {
-        label: 'Medium Articles',
-        href: 'https://penguin-finance.medium.com/',
-      },
-      {
-        label: 'Roadmap',
-        href: 'https://penguin-finance.medium.com/penguin-finance-2021-roadmap-81d261aa62d0',
-      },
-    ],
-  },
-  {
-    label: 'Audited by CertiK',
-    icon: 'AuditIcon',
-    href: 'https://www.certik.org/projects/penguinfinance',
-  },
-  {
-    label: 'Official Discord',
-    icon: 'DiscordIcon',
-    href: 'https://discord.gg/R5Rv68GXXc',
-  },
-  {
-    label: 'Official Telegram',
-    icon: 'TelegramIcon',
-    href: 'https://t.me/penguin_defi',
-  },
-  {
-    label: 'Official Twitter',
-    icon: 'TwitterIcon',
-    href: 'https://twitter.com/penguin_defi',
-  },
+  // {
+  //   label: 'Learn More',
+  //   icon: 'MoreIcon',
+  //   items: [
+  //     {
+  //       label: 'Github',
+  //       href: 'https://github.com/Penguin-Finance',
+  //     },
+  //     {
+  //       label: 'Docs',
+  //       href: 'https://docs.penguinfinance.io/',
+  //     },
+  //     {
+  //       label: 'Medium Articles',
+  //       href: 'https://penguin-finance.medium.com/',
+  //     },
+  //     {
+  //       label: 'Roadmap',
+  //       href: 'https://penguin-finance.medium.com/penguin-finance-2021-roadmap-81d261aa62d0',
+  //     },
+  //   ],
+  // },
+  // {
+  //   label: 'Audited by CertiK',
+  //   icon: 'AuditIcon',
+  //   href: 'https://www.certik.org/projects/penguinfinance',
+  // },
+  // {
+  //   label: 'Official Discord',
+  //   icon: 'DiscordIcon',
+  //   href: 'https://discord.gg/R5Rv68GXXc',
+  // },
+  // {
+  //   label: 'Official Telegram',
+  //   icon: 'TelegramIcon',
+  //   href: 'https://t.me/penguin_defi',
+  // },
+  // {
+  //   label: 'Official Twitter',
+  //   icon: 'TwitterIcon',
+  //   href: 'https://twitter.com/penguin_defi',
+  // },
 ]
 
 export const socials = [
