@@ -51,6 +51,9 @@ const CardContainer = styled(Card)`
   background: ${({ theme }) => (theme.isDark ? '#272044' : '#342C6D')};
   border-radius: 26px;
   box-shadow: 0px 1px 8px rgb(0 0 0 / 24%);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `
 
 const StyledHeading = styled(Heading)`
