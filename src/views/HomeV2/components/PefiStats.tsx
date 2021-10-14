@@ -55,12 +55,16 @@ const Row = styled.div`
   font-size: 14px;
   justify-content: space-between;
   margin-bottom: 8px;
+  &:last-child {
+    margin-bottom: 0px;
+  }
 `
 
 const StyledCardValue = styled(CardValue)`
   color: white;
   font-weight: 300;
   font-size: 14px;
+  text-align: right;
 
   @font-face {
     font-family: 'Telegraf Bold Font';
