@@ -9,7 +9,7 @@ const StyledCard = styled(Card)`
   margin-right: auto;
   position: relative;
   width: 100%;
-  background: ${({ theme }) => theme.isDark ? '#272044' : '#fff' };
+  background: ${({ theme }) => (theme.isDark ? '#272044' : '#fff')};
   border-radius: 26px;
   box-shadow: 0px 1px 8px rgb(0 0 0 / 24%);
 
@@ -56,7 +56,7 @@ const CardMidContent = styled(Heading).attrs({ size: 'xl' })`
 `
 
 const Text = styled(Heading)`
-  color: ${({ theme }) => theme.isDark ? '#ffffff' : '#342C6D'};
+  color: ${({ theme }) => (theme.isDark ? '#ffffff' : '#342C6D')};
   font-weight: 300;
   font-size: 18px;
 
@@ -80,7 +80,7 @@ const Text = styled(Heading)`
 const StyledNavLink = styled(NavLink)`
   svg {
     path {
-      fill: ${({ theme }) => theme.isDark ? '#fff' : '#EC3B40'};
+      fill: ${({ theme }) => (theme.isDark ? '#fff' : '#EC3B40')};
     }
   }
 `
@@ -92,12 +92,16 @@ const IglooCard = () => {
   return (
     <StyledCard>
       <StyledCardBody>
-        <Text size='md'>Experience the Penguin Rush</Text>
-        <CardMidContent>PEFI, AVAX & MORE</CardMidContent>
-        <Flex justifyContent="space-between" alignItems='center'>
-          <Text size='md'>in Penguin Igloos</Text>
+        <Text size="md">Earn</Text>
+        <CardMidContent>PEFI, JOE & MORE</CardMidContent>
+        <Flex justifyContent="space-between" alignItems="center">
+          <Text size="md">in Penguin Igloos</Text>
           <StyledNavLink exact activeClassName="active" to="/farms" id="farm-apy-cta">
-            <SvgIcon src={`${process.env.PUBLIC_URL}/images/home/arrow-right.svg`} width={isMobile ? '25px' : "31px"} height={isMobile ? '25px' : "31px"} />
+            <SvgIcon
+              src={`${process.env.PUBLIC_URL}/images/home/arrow-right.svg`}
+              width={isMobile ? '25px' : '31px'}
+              height={isMobile ? '25px' : '31px'}
+            />
           </StyledNavLink>
         </Flex>
       </StyledCardBody>
