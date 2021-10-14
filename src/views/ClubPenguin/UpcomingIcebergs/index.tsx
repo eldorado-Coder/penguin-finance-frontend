@@ -74,11 +74,11 @@ const UpcomingIcebergs = () => {
                     {iceberg.title}
                   </Text>
                   <Flex>
-                    {iceberg.coreTag && (
+                    {/* {iceberg.coreTag && (
                       <IcebergTag variant="primary" outline startIcon={<VerifiedIcon />}>
                         {iceberg.coreTag}
                       </IcebergTag>
-                    )}
+                    )} */}
                     <IcebergTag variant="primary">{iceberg.tag}</IcebergTag>
                   </Flex>
                 </Flex>
