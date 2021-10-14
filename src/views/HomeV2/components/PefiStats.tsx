@@ -61,6 +61,7 @@ const StyledCardValue = styled(CardValue)`
   color: white;
   font-weight: 300;
   font-size: 14px;
+  text-align: right;
 
   @font-face {
     font-family: 'Telegraf Bold Font';
