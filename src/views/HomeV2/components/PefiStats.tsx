@@ -63,11 +63,11 @@ const StyledCardValue = styled(CardValue)`
   font-size: 14px;
 
   @font-face {
-    font-family: 'Telegraf Regular Font';
-    src: url(${process.env.PUBLIC_URL}/fonts/Telegraf-Regular.ttf) format('truetype');
+    font-family: 'Telegraf Bold Font';
+    src: url(${process.env.PUBLIC_URL}/fonts/Telegraf-Bold.ttf) format('truetype');
     font-display: swap;
   }
-  font-family: 'Telegraf Regular Font';
+  font-family: 'Telegraf Bold Font';
 
   @media (min-width: 1200px) {
     font-size: 20px;
