@@ -27,7 +27,7 @@ import CardValue from './CardValue'
 const StyledPefiStats = styled(Card)`
   margin-left: auto;
   margin-right: auto;
-  background: ${({ theme }) => theme.isDark ? '#272044' : '#342C6D'};
+  background: ${({ theme }) => (theme.isDark ? '#272044' : '#342C6D')};
   border-radius: 26px;
   box-shadow: 0px 1px 8px rgb(0 0 0 / 24%);
 `
@@ -73,13 +73,13 @@ const StyledCardValue = styled(CardValue)`
     font-size: 20px;
     line-height: 25px;
   }
-`;
+`
 
 const StyledCardBody = styled(CardBody)`
   @media (min-width: 1200px) {
     padding: 24px 40px;
   }
-`;
+`
 
 const StyledText = styled(Text)`
   font-weight: 300;
@@ -96,7 +96,7 @@ const StyledText = styled(Text)`
     font-size: 20px;
     line-height: 25px;
   }
-`;
+`
 
 interface PoolWithApy extends Pool {
   apy?: BigNumber
@@ -226,23 +226,13 @@ const PefiStats: React.FC<HarvestProps> = ({ v1Pool, v2Pool }) => {
           {TranslateString(534, 'PEFI Stats')}
         </StyledHeading>
         <Row>
-          <StyledText color='white'>
-            {TranslateString(538, 'PEFI Market Capitalization:')}
-          </StyledText>
+          <StyledText color="white">{TranslateString(538, 'PEFI Market Capitalization:')}</StyledText>
           {pefiMarketcap && (
-            <StyledCardValue
-              fontSize="20px"
-              prefix="$"
-              bold={false}
-              value={pefiMarketcap}
-              updateInterval={30000}
-            />
+            <StyledCardValue fontSize="20px" prefix="$" bold={false} value={pefiMarketcap} updateInterval={30000} />
           )}
         </Row>
         <Row>
-          <StyledText color='white'>
-            {TranslateString(536, 'Circulating PEFI Supply:')}
-          </StyledText>
+          <StyledText color="white">{TranslateString(536, 'Circulating PEFI Supply:')}</StyledText>
           {totalSupply && (
             <StyledCardValue
               fontSize="20px"
@@ -254,9 +244,7 @@ const PefiStats: React.FC<HarvestProps> = ({ v1Pool, v2Pool }) => {
           )}
         </Row>
         <Row>
-          <StyledText color='white' >
-            {TranslateString(538, 'Total Value Locked:')}
-          </StyledText>
+          <StyledText color="white">{TranslateString(538, 'Total Value Locked:')}</StyledText>
           {tvl && (
             <StyledCardValue
               fontSize="20px"
@@ -269,9 +257,7 @@ const PefiStats: React.FC<HarvestProps> = ({ v1Pool, v2Pool }) => {
           )}
         </Row>
         <Row>
-          <StyledText color='white'>
-            {TranslateString(538, 'Total PEFI Burned:')}
-          </StyledText>
+          <StyledText color="white">{TranslateString(538, 'Total PEFI Burned:')}</StyledText>
           {burnedBalance && (
             <StyledCardValue
               fontSize="20px"
@@ -283,14 +269,11 @@ const PefiStats: React.FC<HarvestProps> = ({ v1Pool, v2Pool }) => {
             />
           )}
         </Row>
-        {/* <Row>
-          <Text bold color={isDark ? 'red' : 'textSubtle'} fontSize="14px">
-            {TranslateString(538, 'Total PEFI Staked (iPEFI):')}
-          </Text>
-          {burnedBalance && (
-            <CardValue
-              color="textSubtle"
-              fontSize="14px"
+        <Row>
+          <StyledText color="white">{TranslateString(538, 'Total PEFI Staked (iPEFI):')}</StyledText>
+          {totalStakedBalance && (
+            <StyledCardValue
+              fontSize="20px"
               suffix={` PEFI (${totalStakedBalanceRatio.toFixed(0)}%)`}
               bold={false}
               decimals={0}
@@ -298,7 +281,7 @@ const PefiStats: React.FC<HarvestProps> = ({ v1Pool, v2Pool }) => {
               updateInterval={30000}
             />
           )}
-        </Row> */}
+        </Row>
         {/* <Row>
           <Text color="primary" fontSize="14px">
             {TranslateString(540, 'XPEFI to PEFI ratio:')}
@@ -306,9 +289,7 @@ const PefiStats: React.FC<HarvestProps> = ({ v1Pool, v2Pool }) => {
           <CardValue color="textSubtle" fontSize="14px" decimals={3} value={xPefiToPefiRatio} updateInterval={30000} />
         </Row> */}
         <Row>
-          <StyledText color='white'>
-            {TranslateString(540, 'PEFI Emission Rate:')}
-          </StyledText>
+          <StyledText color="white">{TranslateString(540, 'PEFI Emission Rate:')}</StyledText>
           <StyledCardValue
             fontSize="20px"
             decimals={2}
@@ -325,9 +306,7 @@ const PefiStats: React.FC<HarvestProps> = ({ v1Pool, v2Pool }) => {
           <CardValue color="textSubtle" fontSize="14px" decimals={2} suffix=" %" value={Number(handsOnPenalty)} updateInterval={30000} />
         </Row> */}
         <Row>
-          <StyledText color='white'>
-            {TranslateString(538, 'Max PEFI Supply:')}
-          </StyledText>
+          <StyledText color="white">{TranslateString(538, 'Max PEFI Supply:')}</StyledText>
           <StyledCardValue fontSize="20px" suffix=" PEFI" bold={false} value={PEFI_MAX_SUPPLY} />
         </Row>
       </StyledCardBody>
