@@ -24,6 +24,9 @@ export const getLydiaMasterChefAddress = () => {
 export const getJoeMasterChefAddress = () => {
   return getAddress(addresses.joeMasterChef)
 }
+export const getBenqiMasterChefAddress = () => {
+  return getAddress(addresses.benqiMasterChef)
+}
 export const getPangolinAddress = () => {
   return getAddress(addresses.pangolinManager)
 }

@@ -4,6 +4,7 @@ import {
   getLydiaMasterChefAddress,
   getJoeMasterChefAddress,
   getPangolinAddress,
+  getBenqiMasterChefAddress,
 } from 'utils/addressHelpers'
 
 const getFarmMasterChefAddress = (farmType: string) => {
@@ -18,6 +19,8 @@ const getFarmMasterChefAddress = (farmType: string) => {
       return getGondolaMasterChefAddress()
     case 'Pangolin':
       return getPangolinAddress()
+    case 'Benqi':
+      return getBenqiMasterChefAddress()
     default:
       return getMasterChefAddress()
   }

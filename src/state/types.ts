@@ -85,6 +85,8 @@ export interface V2Farm extends FarmConfig {
   joePoolAllocPoint?: number
   joePoolLpBalance?: number
   swapDailyReward?: number
+  isBenqi?: boolean
+  benqiStakingApr?: number
 }
 
 export interface Lp extends LPConfig {
@@ -159,6 +161,12 @@ export interface JoeFarmsState {
   treasuryPercent?: number
   totalAllocPoint?: number
   data: Farm[]
+}
+
+export interface BenqiFarmsState {
+  avaxPerSec?: number
+  benqiPerSec?: number
+  totalSupply?: number
 }
 
 export interface CompounderFarmsState {
@@ -317,6 +325,7 @@ export interface State {
   farms: FarmsState
   lydiaFarms: LydiaFarmsState
   joeFarms: JoeFarmsState
+  benqiFarms: BenqiFarmsState
   compounderFarms: CompounderFarmsState
   toasts: ToastsState
   pools: PoolsState
