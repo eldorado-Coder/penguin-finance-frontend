@@ -108,6 +108,7 @@ export interface V2FarmConfig {
   displayedDecimals?: number
   infoLink?: string
   guideLink?: string
+  isBenqi?: boolean
 }
 
 export interface LPConfig {

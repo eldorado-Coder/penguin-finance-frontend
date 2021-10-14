@@ -98,7 +98,7 @@ const Farm: React.FunctionComponent<FarmCardProps> = ({ farm }) => {
         <Flex mt="4px">
           <MultiplierTag variant="primary">{`${farm.multiplier || 1}X`}</MultiplierTag>
           <LpTag type={farm.type}>{farmType}</LpTag>
-          {farm.pid === 29 && <LpTag type="Benqi">Benqi</LpTag>}
+          {farm.isBenqi && <LpTag type="Benqi">Benqi</LpTag>}
         </Flex>
       </FarmLabelWrapper>
     </Container>

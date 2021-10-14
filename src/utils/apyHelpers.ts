@@ -87,6 +87,12 @@ export const getJoeFarmApr = (poolWeight, rewardTokenPrice, poolLiquidityUsd, re
   return apr || 0
 }
 
+export const getBenqiFarmApr = (rewardTokenPrice, poolLiquidityUsd, rewardRatePerSec): number => {
+  const yearlyLydRewardAllocation = rewardRatePerSec * SECONDS_PER_YEAR
+  const apr = (yearlyLydRewardAllocation * rewardTokenPrice) / poolLiquidityUsd
+  return apr || 0
+}
+
 export const getApy = (dailyApr = 0) => {
   const staticFee = 0
   return (1 + dailyApr) ** DAYS_PER_YEAR - 1 + staticFee

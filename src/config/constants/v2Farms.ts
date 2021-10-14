@@ -855,7 +855,8 @@ const v2Farms: V2FarmConfig[] = [
     hardApy: '896.65%',
     type: 'Pangolin',
     name: 'pendingPEFI',
-    displayedDecimals: 2,
+    displayedDecimals: 14,
+    isBenqi: true,
   },
 ]
 
