@@ -846,7 +846,7 @@ const v2Farms: V2FarmConfig[] = [
     },
     pangolinRewardPoolAddresses: {
       43113: '',
-      43114: '0x0000000000000000000000000000000000000000',
+      43114: '0xeD472431e02Ea9EF8cC99B9812c335ac0873bba2',
     },
     quoteTokenSymbol: QuoteToken.AVAX,
     quoteTokenAddresses: contracts.wavax,
