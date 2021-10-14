@@ -116,6 +116,14 @@ export default {
     43113: '',
     43114: '0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664',
   },
+  'usdt.e': {
+    43113: '',
+    43114: '0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664',
+  },
+  joe: {
+    43113: '',
+    43114: '0x6e84a6216eA6dACC71eE8E6b0a5B7322EEbC0fDd',
+  },
   // emperor
   emperor: {
     43113: '',
