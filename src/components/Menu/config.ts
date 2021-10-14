@@ -64,10 +64,23 @@ export const config: MenuEntry[] = [
     badge: 'NEW',
   },
   {
-    label: 'More',
-    icon: 'CompounderIcon',
-    href: '/more',
-  },
+    label: "More",
+    icon: "MoreIcon",
+    items: [
+      {
+        label: "Compounder",
+        href: "/compounder",
+      },
+      {
+        label: "iPEFI Migration Page",
+        href: "/ipefi",
+      },
+      {
+        label: "Sherpa Launchpad",
+        href: "/sherpa-launchpad",
+      },
+    ]
+  }
   // {
   //   label: 'Compounder',
   //   icon: 'CompounderIcon',
