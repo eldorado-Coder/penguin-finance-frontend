@@ -26,12 +26,12 @@ const ComingSoonCard: React.FC = () => {
         <Row>
           <StyledText color="white">Penguin Arena</StyledText>
         </Row>
-        <Row>
-          <StyledText color="white">Read our Roadmap</StyledText>
-        </Row>
       </StyledCardBody>
       <StyledFooter>
-        <Flex justifyContent="flex-end" alignItems="center">
+        <Flex justifyContent="space-between" alignItems="center">
+          <StyledText color="white" isBold>
+            Read our Roadmap
+          </StyledText>
           <StyledNavLink exact activeClassName="active" to="/">
             <SvgIcon
               src={`${process.env.PUBLIC_URL}/images/home/arrow-right.svg`}
@@ -88,12 +88,12 @@ const StyledFooter = styled(CardBody)`
   padding: 24px;
 
   @media (min-width: 1200px) {
-    padding: 24px 30px 20px;
+    padding: 24px 30px 20px 40px;
   }
 `
 
-const StyledText = styled(Text)`
-  font-weight: 300;
+const StyledText = styled(Text)<{ isBold?: boolean }>`
+  font-weight: ${({ isBold }) => (isBold ? 600 : 300)};
   font-size: 14px;
 
   @font-face {
