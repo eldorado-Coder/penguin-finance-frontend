@@ -43,6 +43,21 @@ const tokens: Token[] = [
       43114: '0x37B608519F91f70F2EeB0e5Ed9AF4061722e4F76',
     },
   },
+  {
+    symbol: 'QI',
+    address: {
+      43113: '',
+      43114: '0x8729438EB15e2C8B576fCc6AeCdA6A148776C0F5',
+    },
+  },
+
+  {
+    symbol: 'AVAX',
+    address: {
+      43113: '',
+      43114: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
+    },
+  },
 ]
 
 export default tokens

@@ -828,6 +828,7 @@ const v2Farms: V2FarmConfig[] = [
     displayedDecimals: 2,
   },
 
+  // benqi pangolin lp igloo
   {
     pid: 29,
     lpSymbol: 'QI-AVAX LP',
