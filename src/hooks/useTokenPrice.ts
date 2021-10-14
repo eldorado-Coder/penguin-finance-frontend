@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 const useTokenPrice = () => {
   const [lydPrice, setLydPrice] = useState(1)
   const [sushiPrice, setSushiPrice] = useState(1)
+  const [qiPrice, setQiPrice] = useState(1)
 
   const fetchPrice = async () => {
     const url = 'https://api.lydia.finance/api/v1/price'
@@ -12,6 +13,7 @@ const useTokenPrice = () => {
       const { prices } = res.data
       setLydPrice(prices.LYD)
       setSushiPrice(prices['SUSHI.e'])
+      setQiPrice(prices.QI)
     }
   }
 
@@ -22,7 +24,7 @@ const useTokenPrice = () => {
     }, 5000)
   }, [])
 
-  return { lydPrice, sushiPrice }
+  return { lydPrice, sushiPrice, qiPrice }
 }
 
 export default useTokenPrice
