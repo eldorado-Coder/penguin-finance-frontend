@@ -830,7 +830,7 @@ const v2Farms: V2FarmConfig[] = [
 
   {
     pid: 29,
-    lpSymbol: 'AVAX-QI LP',
+    lpSymbol: 'QI-AVAX LP',
     lpAddresses: {
       43113: '',
       43114: '0xe530dc2095ef5653205cf5ea79f8979a7028065c',
