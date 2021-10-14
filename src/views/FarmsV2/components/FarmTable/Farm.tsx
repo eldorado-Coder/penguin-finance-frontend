@@ -43,12 +43,14 @@ const LpTag = styled(Tag)<{ type?: string }>`
   background-color: ${({ type }) => type === 'Joe' && '#e3796f'};
   background-color: ${({ type }) => type === 'Sushi' && '#fca4a4'};
   background-color: ${({ type }) => type === 'Lydia' && '#FBB040'};
+  background-color: ${({ type }) => type === 'Benqi' && '#3AB0E7'};
 
   border-color: ${({ type }) => type === 'Pangolin' && '#f97316'};
   border-color: ${({ type }) => type === 'Penguin' && '#FF4100'};
   border-color: ${({ type }) => type === 'Joe' && '#e3796f'};
   border-color: ${({ type }) => type === 'Sushi' && '#fca4a4'};
   border-color: ${({ type }) => type === 'Lydia' && '#FBB040'};
+  border-color: ${({ type }) => type === 'Benqi' && '#3AB0E7'};
 
   color: white;
   font-size: 12px;
@@ -96,6 +98,7 @@ const Farm: React.FunctionComponent<FarmCardProps> = ({ farm }) => {
         <Flex mt="4px">
           <MultiplierTag variant="primary">{`${farm.multiplier || 1}X`}</MultiplierTag>
           <LpTag type={farm.type}>{farmType}</LpTag>
+          {farm.pid === 29 && <LpTag type="Benqi">Benqi</LpTag>}
         </Flex>
       </FarmLabelWrapper>
     </Container>

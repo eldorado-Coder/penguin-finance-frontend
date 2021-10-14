@@ -22,6 +22,7 @@ const useAssets = () => {
     if (asset) return asset.logoURI
     if (tokenAddress === '0xe896CDeaAC9615145c0cA09C8Cd5C25bced6384c') return '/images/tokens/PEFI.svg'
     if (tokenAddress === '0xE9476e16FE488B90ada9Ab5C7c2ADa81014Ba9Ee') return '/images/tokens/ipefi.svg'
+    if (tokenAddress === '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE') return '/images/tokens/avax.svg'
     return undefined
   }
 
