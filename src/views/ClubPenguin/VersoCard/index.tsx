@@ -166,7 +166,7 @@ const VersoCard = () => {
           <div>
             <Flex alignItems="center" flexWrap="wrap" justifyContent="flex-start">
               <LogoWrapper isMobile mr="32px" alignItems="center">
-                <img src="/images/club/sherpa_iceberg.svg" alt="sherpa" />
+                <img src="/images/club/verso_iceberg.svg" alt="vso" />
               </LogoWrapper>
               <SherpaIceberg>
                 <SherpaLabel
@@ -185,7 +185,7 @@ const VersoCard = () => {
         ) : (
           <Flex alignItems="flex-start" flexWrap="wrap" justifyContent="space-between">
             <LogoWrapper mt="16px" mr="16px" alignItems="center">
-              <img src="/images/club/sherpa_iceberg.svg" alt="sherpa" />
+              <img src="/images/club/verso_iceberg.svg" alt="sherpa" />
             </LogoWrapper>
             <SherpaIceberg>
               <SherpaLabel whiteSpace="wrap" fontSize="40px" fontWeight={600} lineHeight={1}>

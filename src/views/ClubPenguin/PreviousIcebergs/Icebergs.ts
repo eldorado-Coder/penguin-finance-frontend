@@ -5,7 +5,7 @@ export const Icebergs = [
     toDistribute: '60,000',
     tokenSymbol: 'SHERPA',
     endDate: 'October 15',
-    logo: 'avax_iceberg.svg',
+    logo: 'sherpa_iceberg.svg',
     description: 'Sherpa Cash is the first fully decentralized protocol for private transactions on Avalanche. ',
     url: 'https://sherpa.cash/',
   },
