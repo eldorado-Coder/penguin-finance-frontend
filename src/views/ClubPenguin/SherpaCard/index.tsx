@@ -9,7 +9,7 @@ import CardValue from 'components/CardValue'
 import Balance from 'components/Balance'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { getApr } from 'utils/apyHelpers'
-import useTheme from 'hooks/useTheme';
+import useTheme from 'hooks/useTheme'
 import { SECONDS_PER_DAY } from 'config'
 import Card from '../Card'
 import CountDown from '../CountDown'
@@ -18,12 +18,13 @@ import { useClubPenguinHarvest, usePriceSherpa } from '../hooks'
 
 const SherpaCard = () => {
   const [pendingTx, setPendingTx] = useState(false)
+  const [timerEnded, setTimerEnded] = useState(false)
   const { isXl } = useMatchBreakpoints()
   const { account } = useWeb3React()
   const { onHarvest } = useClubPenguinHarvest(0)
   const pefiPriceUsd = usePricePefiUsdt().toNumber()
   const v2Pools = useV2Pools(account)
-  const { isDark } = useTheme();
+  const { isDark } = useTheme()
   const iPefiPool = v2Pools.length > 0 ? v2Pools[0] : null
   const iPefiToPefiRatio = iPefiPool.currentExchangeRate || 1
   const iPefiPriceUsd = iPefiToPefiRatio * pefiPriceUsd
@@ -60,6 +61,10 @@ const SherpaCard = () => {
     }
   }
 
+  const handleTimerCompleted = async () => {
+    setTimerEnded(true)
+  }
+
   const handleViewWebsite = () => {
     window.open('https://app.sherpa.cash/', '_blank')
   }
@@ -77,7 +82,13 @@ const SherpaCard = () => {
             <SherpaLabel fontSize={isMobile ? '16px' : '20px'} fontWeight={700} lineHeight={1}>
               SHERPA EARNED
             </SherpaLabel>
-            <Balance color={isDark ? 'white' : '#00283f'} fontSize="22px" fontWeight="600" value={earningBalance} decimals={2} />
+            <Balance
+              color={isDark ? 'white' : '#00283f'}
+              fontSize="22px"
+              fontWeight="600"
+              value={earningBalance}
+              decimals={2}
+            />
             <BalanceTextSmall>
               <CardValue
                 className="balance"
@@ -93,7 +104,14 @@ const SherpaCard = () => {
             <SherpaLabel fontSize={isMobile ? '16px' : '20px'} fontWeight={700} lineHeight={1}>
               CURRENT APR
             </SherpaLabel>
-            <Balance color={isDark ? 'white' : '#00283f'} fontSize="22px" fontWeight="600" suffix="%" value={sherpaApr} decimals={2} />
+            <Balance
+              color={isDark ? 'white' : '#00283f'}
+              fontSize="22px"
+              fontWeight="600"
+              suffix="%"
+              value={sherpaApr}
+              decimals={2}
+            />
             <BalanceTextSmall>
               <CardValue
                 className="balance"
@@ -126,12 +144,12 @@ const SherpaCard = () => {
           </Flex>
           <Flex className="col" flexDirection="column" alignItems="flex-start">
             <SherpaLabel fontSize={isMobile ? '16px' : '20px'} fontWeight={700} lineHeight={1}>
-              {cutdownType === 'start' ? 'STARTS IN' : 'ENDS IN'}
+              {timerEnded ? 'ENDED' : <>{cutdownType === 'start' ? 'STARTS IN' : 'ENDS IN'}</>}
             </SherpaLabel>
             <SherpaBalance fontSize="22px" fontWeight={400}>
               {cutdownDate > 0 && (
                 <div className="countdown">
-                  <CountDown date={cutdownDate} />
+                  <CountDown date={timerEnded ? currentTimestamp : cutdownDate} handleComplete={handleTimerCompleted} />
                 </div>
               )}
             </SherpaBalance>
