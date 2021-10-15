@@ -710,7 +710,7 @@ const v2Farms: V2FarmConfig[] = [
     hardApy: '896.65%',
     type: 'Joe',
     name: 'pendingPEFI',
-    displayedDecimals: 2,
+    displayedDecimals: 7,
   },
 
   {
