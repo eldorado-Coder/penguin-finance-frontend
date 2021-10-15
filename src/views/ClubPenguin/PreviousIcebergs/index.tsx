@@ -76,9 +76,9 @@ const PreviousIcebergs = () => {
                   {iceberg.endDate}
                 </Text>
               </Flex>
-              <Text mt="16px" mb="16px" textAlign="left" fontWeight={400}>
+              <Description mt="16px" mb="16px" textAlign="left" fontWeight={400}>
                 {iceberg.description}
-              </Text>
+              </Description>
               <StyledFlex justifyContent="space-between">
                 {account ? (
                   <StyledButton color="red" disabled={!canUnStake} onClick={handleUnstake}>
@@ -162,5 +162,12 @@ const StyledFlex = styled(Flex)`
 const Label = styled(Text)`
   color: ${({ theme }) => (theme.isDark ? 'white' : theme.colors.red)};
 `
+
+const Description = styled(Text)`
+  min-height: 96px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+`;
 
 export default PreviousIcebergs
