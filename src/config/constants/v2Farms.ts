@@ -681,7 +681,7 @@ const v2Farms: V2FarmConfig[] = [
     hardApy: '896.65%',
     type: 'Joe',
     name: 'pendingPEFI',
-    displayedDecimals: 2,
+    displayedDecimals: 7,
   },
 
   {
@@ -739,7 +739,7 @@ const v2Farms: V2FarmConfig[] = [
     hardApy: '896.65%',
     type: 'Joe',
     name: 'pendingPEFI',
-    displayedDecimals: 2,
+    displayedDecimals: 7,
   },
 
   {
@@ -768,7 +768,7 @@ const v2Farms: V2FarmConfig[] = [
     hardApy: '896.65%',
     type: 'Joe',
     name: 'pendingPEFI',
-    displayedDecimals: 2,
+    displayedDecimals: 8,
   },
 
   {
@@ -797,7 +797,7 @@ const v2Farms: V2FarmConfig[] = [
     hardApy: '896.65%',
     type: 'Joe',
     name: 'pendingPEFI',
-    displayedDecimals: 2,
+    displayedDecimals: 7,
   },
   {
     pid: 28,
@@ -825,7 +825,7 @@ const v2Farms: V2FarmConfig[] = [
     hardApy: '896.65%',
     type: 'Joe',
     name: 'pendingPEFI',
-    displayedDecimals: 2,
+    displayedDecimals: 7,
   },
 
   // benqi pangolin lp igloo
