@@ -45,6 +45,11 @@ const CardMidContent = styled(Heading).attrs({ size: 'xl' })`
   }
 
   @media (min-width: 968px) {
+    line-height: 48px;
+    font-size: 40px;
+  }
+
+  @media (min-width: 1080px) {
     line-height: 56px;
     font-size: 44px;
   }

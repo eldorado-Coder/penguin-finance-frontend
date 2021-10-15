@@ -23,9 +23,24 @@ const ArtworkCard = () => {
 }
 
 const StyledArtworkCard = styled(Card)<{ isMobile?: boolean }>`
-  height: ${({ isMobile }) => (isMobile ? 'calc(50vw - 16px)' : '380px')};
-  /* margin-bottom: 24px; */
+  // height: ${({ isMobile }) => (isMobile ? 'calc(50vw - 16px)' : '380px')};
+  // /* margin-bottom: 24px; */
+  // background: ${({ theme }) => theme.isDark && '#30264F'};
+
+  height: calc(50vw - 16px);
   background: ${({ theme }) => theme.isDark && '#30264F'};
+
+  @media (min-width: 968px) {
+    height: 320px;
+  }
+
+  @media (min-width: 1080px) {
+    height: 330px;
+  }
+
+  @media (min-width: 1200px) {
+    height: 380px;
+  }
 `
 
 const StyledArtworkCardBg = styled.div`

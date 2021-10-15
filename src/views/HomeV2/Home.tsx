@@ -123,7 +123,7 @@ const HeroBgImage = styled.img<{ isMobile?: boolean }>`
 const Cards = styled(BaseLayout)`
   align-items: stretch;
   justify-content: stretch;
-  margin-bottom: 32px;
+  margin-bottom: 24px;
   grid-gap: 24px;
 
   @media (min-width: 1200px) {
