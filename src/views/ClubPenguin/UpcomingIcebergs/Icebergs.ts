@@ -27,7 +27,7 @@ export const Icebergs = [
     // toDistribute: '43,000 BOOFI',
     toDistribute: 'TBD',
     tokenSymbol: 'PNG',
-    logo: 'boofi_iceberg.svg',
+    logo: 'pangolin_iceberg.svg',
     description: `A community-driven decentralized exchange for Avalanche. They've truly helped better the Avalanche Ecosystem by helping new native projects.`,
     url: 'https://docs.pangolin.exchange/',
   },
