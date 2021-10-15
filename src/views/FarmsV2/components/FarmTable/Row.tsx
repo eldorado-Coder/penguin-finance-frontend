@@ -128,7 +128,7 @@ const CustomToolTipOrigin = styled.div``
 
 const CustomAprToolTip = styled(ReactTooltip)<{ index: number }>`
   width: 100% !important;
-  max-width: 285px !important;
+  max-width: 310px !important;
   background: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#322C59!important')};
   box-shadow: ${(props) => `${props.theme.card.boxShadow}!important`};
   color: ${({ theme }) => (theme.isDark ? '#322C59!important' : '#ffffff!important')};
@@ -199,18 +199,26 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
   const columnNames = tableSchema.map((column) => column.name)
 
   const getAPRTooltip = () => {
-    let additionalAprLabel = ''
+    let additionalStakingAprLabel = ''
+    let additionalSwapAprLabel = ''
     if (farm.type === 'Pangolin') {
-      additionalAprLabel = 'Pangolin'
+      additionalStakingAprLabel = 'Pangolin'
+      additionalSwapAprLabel = 'Pangolin'
+      if (farm.isBenqi) {
+        additionalStakingAprLabel = 'Benqi'
+      }
     }
     if (farm.type === 'Joe') {
-      additionalAprLabel = 'Trader Joe'
+      additionalStakingAprLabel = 'Trader Joe'
+      additionalSwapAprLabel = 'Trader Joe'
     }
     if (farm.type === 'Sushi') {
-      additionalAprLabel = 'Sushiswap'
+      additionalStakingAprLabel = 'Sushiswap'
+      additionalSwapAprLabel = 'Sushiswap'
     }
     if (farm.type === 'Lydia') {
-      additionalAprLabel = 'Lydia Finance'
+      additionalStakingAprLabel = 'Lydia Finance'
+      additionalSwapAprLabel = 'Lydia Finance'
     }
     const mainApr = farm.pefiApr || 0
     const additionalStakingApr = farm.stakingApr || 0
@@ -221,8 +229,8 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
       <div style="display: flex; width: 100%; align-items: center;">
         <div style="width: 60%; text-align: center;">
           <p>Penguin Finance</p>
-          <p>${additionalAprLabel} Staking</p>
-          <p>${additionalAprLabel} Swap</p>
+          <p>${additionalStakingAprLabel} Staking</p>
+          <p>${additionalSwapAprLabel} Swap</p>
           <p>Total APR</p>
         </div>
         <div style="margin-left: 5px; padding-right: 5px; ">

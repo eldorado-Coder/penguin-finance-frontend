@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import BigNumber from 'bignumber.js'
 import styled, { keyframes, css } from 'styled-components'
 import { useWeb3React } from '@web3-react/core'
-import { Card, Text, Button, Flex, useMatchBreakpoints } from 'penguinfinance-uikit2'
+import { Card, Text, Button, Flex } from 'penguinfinance-uikit2'
 import { WEEKS_PER_YEAR } from 'config'
 import useAssets from 'hooks/useAssets'
 import { useV2Harvest } from 'hooks/useV2Farm'
@@ -11,7 +11,7 @@ import Balance from 'components/Balance'
 import tokens from 'config/constants/tokens'
 import { getAddress } from 'utils/addressHelpers'
 import roundDown from 'utils/roundDown'
-import { usePricePefiUsdt, usePricePngUsdt, useV2Pools } from 'state/hooks'
+import { usePricePefiUsdt, usePricePngUsdt, usePriceAvaxUsdt, useV2Pools } from 'state/hooks'
 import useJoePrice from 'hooks/useJoePrice'
 import useTokenPrice from 'hooks/useTokenPrice'
 
@@ -210,14 +210,15 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
   const { account } = useWeb3React()
   const v2Pools = useV2Pools(account)
   const v2Nest = v2Pools.length > 0 ? v2Pools[0] : null
+
   const pefiPriceUsd = usePricePefiUsdt().toNumber()
   const pngPriceUsd = usePricePngUsdt().toNumber()
   const joePriceUsd = useJoePrice()
-  const { lydPrice: lydPriceUsd, sushiPrice: sushiPriceUsd } = useTokenPrice()
+  const avaxPriceUsd = usePriceAvaxUsdt().toNumber()
+  const { lydPrice: lydPriceUsd, sushiPrice: sushiPriceUsd, qiPrice: qiPriceUsd } = useTokenPrice()
   const iPefiToPefiRatio = v2Nest.currentExchangeRate || 1
   const iPefiPriceUsd = iPefiToPefiRatio * pefiPriceUsd
 
-  const { isXl } = useMatchBreakpoints()
   const { pendingTokens, userData, maxBips: maxAutoNestAllocation } = farm
   const userPendingTokens = userData ? userData.userPendingTokens : []
   const userShares = userData ? getBalanceNumber(userData.userShares) : 0
@@ -255,6 +256,8 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
     if (rewardToken && rewardToken.symbol === 'JOE') return joePriceUsd
     if (rewardToken && rewardToken.symbol === 'LYD') return lydPriceUsd
     if (rewardToken && rewardToken.symbol === 'Sushi.e') return sushiPriceUsd
+    if (rewardToken && rewardToken.symbol === 'QI') return qiPriceUsd
+    if (rewardToken && rewardToken.symbol === 'AVAX') return avaxPriceUsd
     return 1
   }
 
@@ -279,8 +282,8 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
               suffix={`${lpSymbol}`}
               isFlexWrap
               decimals={lpDecimals}
-              value={roundDown(Number(Number(userStakedBalance).toFixed(lpDecimals + 1)), lpDecimals)}
-              // value={Number(Number(userStakedBalance).toFixed(lpDecimals))}
+              // value={roundDown(Number(Number(userStakedBalance).toFixed(lpDecimals + 1)), lpDecimals)}
+              value={roundDown(Number(userStakedBalance), lpDecimals)}
             />
             <UsdBalanceWrapper>
               <Balance fontSize="10px" fontWeight="400" prefix="$" value={Number(userStakedBalanceInUsd)} />

@@ -38,6 +38,7 @@ import {
   fetchMasterChefLydPerSec, // lydia
   fetchLydiaFarmsPublicDataAsync, // lydia
   fetchJoeMasterChefGlobalData, // joe
+  fetchBenqiMasterChefGlobalData, // benqi
   fetchUserCollectiblesDataAsync, // collectibles
 
   /*
@@ -104,6 +105,8 @@ export const useFetchPublicData = () => {
     dispatch(fetchLydiaFarmsPublicDataAsync())
     // joe farms
     dispatch(fetchJoeMasterChefGlobalData())
+    // benqi farms
+    dispatch(fetchBenqiMasterChefGlobalData())
     // club penguin
     dispatch(fetchClubPenguinFarmsPublicDataAsync())
   }, [dispatch, slowRefresh])
@@ -644,6 +647,21 @@ export const useJoeFarmsGlobalData = (): {
     joePerSec,
     rewardPercentToFarm: (1000 - devPercent - investorPercent - treasuryPercent) / 1000,
     totalAllocPoint,
+  }
+}
+
+// Benqi Farms
+export const useBenqiFarmsGlobalData = (): {
+  avaxPerSec: number
+  benqiPerSec: number
+  totalSupply: number
+} => {
+  const data = useSelector((state: State) => state.benqiFarms)
+  const { avaxPerSec, benqiPerSec, totalSupply } = data
+  return {
+    avaxPerSec,
+    benqiPerSec,
+    totalSupply,
   }
 }
 

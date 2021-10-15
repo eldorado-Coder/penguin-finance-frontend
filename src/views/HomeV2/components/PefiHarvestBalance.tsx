@@ -1,26 +1,22 @@
 import React from 'react'
-import { Text } from 'penguinfinance-uikit2'
+import { Text, useMatchBreakpoints } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
-import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
 import useI18n from 'hooks/useI18n'
-import useAllEarnings from 'hooks/useAllEarnings'
-import { usePricePefiUsdt } from 'state/hooks'
+import useTheme from 'hooks/useTheme'
 import CardValue from './CardValue'
-import CardBusdValue from './CardBusdValue'
 
-const Block = styled.div`
-  margin-bottom: 0px;
-`
+interface PefiHarvestBalanceProps {
+  value?: number
+  detailedValue?: string
+}
 
-const PefiHarvestBalance = () => {
+const PefiHarvestBalance: React.FC<PefiHarvestBalanceProps> = ({ value, detailedValue }) => {
   const TranslateString = useI18n()
   const { account } = useWeb3React()
-  const allEarnings = useAllEarnings()
-  const earningsSum = allEarnings.reduce((accum, earning) => {
-    return accum + new BigNumber(earning).div(new BigNumber(10).pow(18)).toNumber()
-  }, 0)
-  const earningsBusd = new BigNumber(earningsSum).multipliedBy(usePricePefiUsdt()).toNumber()
+  const { isDark } = useTheme()
+  const { isXl } = useMatchBreakpoints()
+  const isMobile = !isXl
 
   if (!account) {
     return (
@@ -32,10 +28,27 @@ const PefiHarvestBalance = () => {
 
   return (
     <Block>
-      <CardValue fontSize="32px" value={earningsSum} lineHeight="1.2" decimals={2} />
-      <CardBusdValue value={earningsBusd} />
+      <CardValue
+        color={isDark ? '#fff' : '#342C6D'}
+        fontSize={isMobile ? '30px' : '44px'}
+        value={value}
+        lineHeight="1.2"
+        decimals={2}
+        prefix="$"
+      />
+      <DetailedValue fontSize="12px" style={{ lineHeight: '12px' }}>
+        {detailedValue}
+      </DetailedValue>
     </Block>
   )
 }
+
+const Block = styled.div`
+  margin-bottom: 0px;
+`
+
+const DetailedValue = styled(Text)`
+  color: ${({ theme }) => (theme.isDark ? 'white' : theme.colors.secondary)};
+`
 
 export default PefiHarvestBalance

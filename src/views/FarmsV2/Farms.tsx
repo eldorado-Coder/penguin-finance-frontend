@@ -6,7 +6,15 @@ import styled from 'styled-components'
 import Page from 'components/layout/Page'
 import Select from 'components/Select/Select'
 import Balance from 'components/Balance'
-import { useV2Farms, useLydiaFarms, useLydiaFarmRewardRate, useJoeFarmsGlobalData, usePricePefiUsdt } from 'state/hooks'
+import {
+  useV2Farms,
+  useLydiaFarms,
+  useLydiaFarmRewardRate,
+  useJoeFarmsGlobalData,
+  useBenqiFarmsGlobalData,
+  usePricePefiUsdt,
+  usePriceAvaxUsdt,
+} from 'state/hooks'
 import { fetchV2FarmUserDataAsync } from 'state/actions'
 import useRefresh from 'hooks/useRefresh'
 import useTheme from 'hooks/useTheme'
@@ -14,7 +22,7 @@ import useTokenPrice from 'hooks/useTokenPrice'
 import useJoePrice from 'hooks/useJoePrice'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { DAYS_PER_YEAR } from 'config'
-import { getApr, getLydiaFarmApr, getJoeFarmApr } from 'utils/apyHelpers'
+import { getApr, getLydiaFarmApr, getJoeFarmApr, getBenqiFarmApr } from 'utils/apyHelpers'
 import V1Farms from './V1'
 import V2Farms from './V2'
 
@@ -203,8 +211,10 @@ const Farms: React.FC = () => {
   const { isXl, isSm } = useMatchBreakpoints()
   const lydPerSec = useLydiaFarmRewardRate()
   const joeGlobalData = useJoeFarmsGlobalData()
+  const benqiGlobalData = useBenqiFarmsGlobalData()
   const pefiPriceUsd = usePricePefiUsdt().toNumber()
-  const { lydPrice: lydPriceUsd } = useTokenPrice()
+  const avaxPriceUsd = usePriceAvaxUsdt().toNumber()
+  const { lydPrice: lydPriceUsd, qiPrice: qiPriceUsd } = useTokenPrice()
   const joePriceUsd = useJoePrice()
 
   const isMobile = !isXl
@@ -256,6 +266,13 @@ const Farms: React.FC = () => {
           joeGlobalData.rewardPercentToFarm,
         ) * 0.9
       swapFeeApr = getApr(farm.swapDailyReward / poolLiquidityUsd)
+    }
+    if (farm.isBenqi) {
+      const { avaxPerSec: benqiAvaxRewardPerSec, benqiPerSec: benqiRewardPerSec, totalSupply } = benqiGlobalData
+      const benqiPoolLiquidityUsd = farm.lpPrice * totalSupply
+      const avaxStakingApr = getBenqiFarmApr(avaxPriceUsd, benqiPoolLiquidityUsd, benqiAvaxRewardPerSec)
+      const qiStakingApr = getBenqiFarmApr(qiPriceUsd, benqiPoolLiquidityUsd, benqiRewardPerSec)
+      stakingApr = avaxStakingApr + qiStakingApr
     }
 
     return {

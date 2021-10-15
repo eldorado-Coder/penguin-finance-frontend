@@ -38,6 +38,7 @@ export enum QuoteToken {
   'LYD' = 'LYD',
   'GDL' = 'GDL',
   'USDC' = 'USDC',
+  'JOE' = 'JOE',
 }
 
 export enum PoolCategory {
@@ -107,6 +108,7 @@ export interface V2FarmConfig {
   displayedDecimals?: number
   infoLink?: string
   guideLink?: string
+  isBenqi?: boolean
 }
 
 export interface LPConfig {

@@ -13,9 +13,7 @@ import Card from './Card'
 
 const StyledCard = styled(Card)<{ isNestPage?: boolean; isMobile?: boolean }>`
   min-width: ${({ isMobile }) => (isMobile ? '100%' : '350px')};
-  border-radius: 26px;
-  box-shadow: 0px 1px 8px rgb(0 0 0 / 24%);
-  background: ${({ theme }) => (theme.isDark ? '#272044' : '#fff')};
+  border-radius: 32px;
   @media (min-width: 640px) {
     transform: ${(props) => props.isNestPage && 'scale(1.3)'};
     margin-top: ${(props) => props.isNestPage && '60px'};
@@ -25,29 +23,12 @@ const StyledCard = styled(Card)<{ isNestPage?: boolean; isMobile?: boolean }>`
 
 const StyledHeading = styled(Heading)`
   font-weight: 800;
-  color: ${({ theme }) => (theme.isDark ? '#fff' : '#342C6D')};
-
-  @font-face {
-    font-family: 'GothamUltra Font';
-    src: url(${process.env.PUBLIC_URL}/fonts/GothamUltra.otf) format('truetype');
-    font-display: swap;
-  }
-  font-family: 'GothamUltra Font';
-
-  @media (min-width: 1200px) {
-    font-size: 50px;
-    line-height: 60px;
-  }
 `
 
 const CardContent = styled.div`
   padding: 24px;
-  background: ${({ theme }) => (theme.isDark ? '#272044' : '#fff')} !important;
+  background: ${(props) => props.theme.card.background};
   border-radius: 32px;
-
-  @media (min-width: 1200px) {
-    padding: 16px 30px 32px 44px;
-  }
 `
 
 const Block = styled.div`
@@ -58,12 +39,6 @@ const CardImage = styled.img`
   margin-right: 20px;
   width: 64px;
   height: 64px;
-
-  @media (min-width: 1200px) {
-    margin-right: 24px;
-    width: 85px;
-    height: 76px;
-  }
 `
 
 interface Props {
@@ -113,42 +88,38 @@ const V2PoolCard: React.FC<Props> = ({ pool }) => {
             {`i${tokenName}`} {TranslateString(348, 'Nest')}
           </StyledHeading>
           <InfoIconWrapper onClick={handleViewNestsGitbook}>
-            <SvgIcon
-              src={`${process.env.PUBLIC_URL}/images/home/info.svg`}
-              width={isMobile ? '25px' : '31px'}
-              height={isMobile ? '25px' : '31px'}
-            />
+            <SvgIcon src={`${process.env.PUBLIC_URL}/images/home/info.svg`} width="25px" height="25px" />
           </InfoIconWrapper>
         </Flex>
-        <Flex mt="12px" mb="32px" alignItems={isMobile ? 'flex-start' : 'center'}>
-          <CardImage src="/images/pools/iPefi.svg" alt="iPefi logo" width={76} height={76} />
+        <Flex mt="12px" mb="32px">
+          <CardImage src="/images/pools/iPefi.svg" alt="iPefi logo" width={64} height={64} />
           <Content>
             <Flex mb="24px">
               <Block>
                 <Label>{TranslateString(544, 'iPEFI in Wallet')}:</Label>
-                <BalanceText color="textSubtle" bold fontSize="24px">
+                <Text color="textSubtle" bold fontSize="24px">
                   {`${getBalanceNumber(stakedBalance).toFixed(2)}`}
-                </BalanceText>
+                </Text>
               </Block>
               <Block>
                 <Label>{TranslateString(546, `Yesterday's APY: `)}</Label>
-                <BalanceText color="textSubtle" bold fontSize="24px">
+                <Text color="textSubtle" bold fontSize="24px">
                   {`${getNumberWithCommas(displayedNestApy)}%`}
-                </BalanceText>
+                </Text>
               </Block>
             </Flex>
             <Flex ml={isMobile && '-84px'}>
               <Block>
                 <Label>{TranslateString(544, 'Paper Hands Penalty')}:</Label>
-                <BalanceText color="textSubtle" bold fontSize="24px">
+                <Text color="textSubtle" bold fontSize="24px">
                   {`${Number(paperHandsPenalty).toFixed(2)}% PHP`}
-                </BalanceText>
+                </Text>
               </Block>
               <Block>
                 <Label>{TranslateString(546, 'iPEFI/PEFI Ratio')}:</Label>
-                <BalanceText color="textSubtle" bold fontSize="24px">
+                <Text color="textSubtle" bold fontSize="24px">
                   {`${Number(iPefiToPefiRatio.toFixed(2))} PEFI`}
-                </BalanceText>
+                </Text>
               </Block>
             </Flex>
           </Content>
@@ -161,9 +132,10 @@ const V2PoolCard: React.FC<Props> = ({ pool }) => {
                 <SvgIcon src={`${process.env.PUBLIC_URL}/images/home/arrow-right.svg`} width="25px" height="25px" />
               </StyledNavLink>
             </StyledButton>
+            <StyledButton onClick={handleMigrationGuide}>Migration Guide</StyledButton>
           </Flex>
         ) : (
-          <StyledUnlockButton fullWidth isHomeButton />
+          <UnlockButton fullWidth isHomeButton />
         )}
       </CardContent>
     </StyledCard>
@@ -171,22 +143,8 @@ const V2PoolCard: React.FC<Props> = ({ pool }) => {
 }
 
 const Label = styled(Text).attrs({ color: 'red' })`
-  font-size: 14px;
-  color: ${({ theme }) => (theme.isDark ? '#9A97C4' : '#EC3B40')};
   line-height: 1;
-  font-weight: 300;
-
-  @font-face {
-    font-family: 'Telegraf Bold Font';
-    src: url(${process.env.PUBLIC_URL}/fonts/Telegraf-Bold.ttf) format('truetype');
-    font-display: swap;
-  }
-  font-family: 'Telegraf Bold Font';
-
-  @media (min-width: 1200px) {
-    font-size: 19px;
-    line-height: 24px;
-  }
+  font-size: 14px;
 `
 
 const Content = styled.div`
@@ -212,76 +170,10 @@ const InfoIconWrapper = styled.div`
 `
 
 const StyledButton = styled(Button)`
-  background-color: ${({ theme }) => (theme.isDark ? '#483692' : '#EC3B40')};
+  background-color: ${({ theme }) => theme.colors.red};
   color: white;
-  width: 100%;
-  border-radius: 100px;
+  width: 48%;
   white-space: nowrap;
-  margin-bottom: 8px;
-  font-weight: 300;
-  padding: 0px 16px;
-
-  @font-face {
-    font-family: 'Telegraf UltraBold Font';
-    src: url(${process.env.PUBLIC_URL}/fonts/Telegraf-UltraBold.ttf) format('truetype');
-    font-display: swap;
-  }
-  font-family: 'Telegraf UltraBold Font';
-
-  &:last-child {
-    margin-bottom: 0;
-  }
-
-  @media (min-width: 640px) {
-    width: 48%;
-    margin-bottom: 0;
-  }
-  @media (min-width: 1200px) {
-    height: 64px;
-    font-size: 24px;
-  }
-`
-
-const BalanceText = styled(Text)`
-  color: ${({ theme }) => (theme.isDark ? '#fff' : '#342C6D')};
-  font-weight: 300;
-
-  @font-face {
-    font-family: 'Telegraf UltraBold Font';
-    src: url(${process.env.PUBLIC_URL}/fonts/Telegraf-UltraBold.ttf) format('truetype');
-    font-display: swap;
-  }
-  font-family: 'Telegraf UltraBold Font';
-
-  @media (min-width: 1200px) {
-    font-size: 30px;
-    line-height: 35px;
-  }
-`
-
-const StyledUnlockButton = styled(UnlockButton)`
-  border-radius: 100px;
-  white-space: nowrap;
-
-  @font-face {
-    font-family: 'Telegraf UltraBold Font';
-    src: url(${process.env.PUBLIC_URL}/fonts/Telegraf-UltraBold.ttf) format('truetype');
-    font-display: swap;
-  }
-  font-family: 'Telegraf UltraBold Font';
-
-  &:last-child {
-    margin-bottom: 0;
-  }
-
-  @media (min-width: 640px) {
-    width: 48%;
-    margin-bottom: 0;
-  }
-  @media (min-width: 1200px) {
-    height: 64px;
-    font-size: 24px;
-  }
 `
 
 export default V2PoolCard

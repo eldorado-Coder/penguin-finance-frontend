@@ -6,15 +6,68 @@ import { useWeb3React } from '@web3-react/core'
 import useTheme from 'hooks/useTheme'
 import Page from 'components/layout/Page'
 import ArtworkCard from 'views/HomeV2/components/ArtworkCard'
-import FarmStakingCard from 'views/HomeV2/components/FarmStakingCard'
+import HarvestFarmCard from 'views/HomeV2/components/HarvestFarmCard'
 import IglooCard from 'views/HomeV2/components/IglooCard'
 import EarnAPYCard from 'views/HomeV2/components/EarnAPYCard'
-import EmperorInfoCard from 'views/HomeV2/components/EmperorInfoCard'
-import PercentagePefiStakedNestV2 from 'views/HomeV2/components/PercentagePefiStakedNestV2'
 import V2PoolCard from 'views/Pools/components/V2PoolCard'
 import PefiStats from 'views/HomeV2/components/PefiStats'
 import ComingSoonCard from 'views/HomeV2/components/ComingSoonCard'
-import { usePools, useV2Pools, usePricePefiUsdt } from 'state/hooks'
+import { usePools, useV2Pools } from 'state/hooks'
+
+const Home: React.FC = () => {
+  const { account } = useWeb3React()
+  const v1Pools = usePools(account)
+  const v2Pools = useV2Pools(account)
+  const { isXl } = useMatchBreakpoints()
+  const isMobile = !isXl
+
+  const v1PoolsWithApy = v1Pools.map((pool) => {
+    return {
+      ...pool,
+      apy: new BigNumber(0),
+    }
+  })
+
+  const v2PoolsWithApy = v2Pools.map((pool) => {
+    return {
+      ...pool,
+    }
+  })
+  const xPefiPool = v1PoolsWithApy.length > 0 ? v1PoolsWithApy[0] : null
+  const iPefiPool = v2PoolsWithApy.length > 0 ? v2PoolsWithApy[0] : null
+
+  return (
+    <>
+      <StyledPage>
+        <div>
+          <Cards>
+            <FarmStakingCardWrapper>
+              <ArtworkCard />
+            </FarmStakingCardWrapper>
+            <PefiStatsCardWrapper>
+              <IglooCard />
+              <SpacingWrapper />
+              <EarnAPYCard apy={iPefiPool.apy} />
+            </PefiStatsCardWrapper>
+          </Cards>
+          <Cards>
+            <HarvestFarmCard />
+            {iPefiPool && (
+              <PoolCardWrapper>
+                <V2PoolCard pool={iPefiPool} isMainPool={false} isHomePage />
+              </PoolCardWrapper>
+            )}
+          </Cards>
+          <Cards>
+            <PefiStats v1Pool={xPefiPool} v2Pool={iPefiPool} />
+            <ComingSoonCard />
+          </Cards>
+          <SpacingWrapper />
+        </div>
+      </StyledPage>
+    </>
+  )
+}
 
 const StyledPage = styled(Page)`
   max-width: 1380px;
@@ -70,7 +123,7 @@ const HeroBgImage = styled.img<{ isMobile?: boolean }>`
 const Cards = styled(BaseLayout)`
   align-items: stretch;
   justify-content: stretch;
-  margin-bottom: 32px;
+  margin-bottom: 24px;
   grid-gap: 24px;
 
   @media (min-width: 1200px) {
@@ -131,76 +184,5 @@ const HomeBgContainer = styled.div`
   left: 0px;
   z-index: -1;
 `
-
-const Home: React.FC = () => {
-  const { account } = useWeb3React()
-  const v1Pools = usePools(account)
-  const v2Pools = useV2Pools(account)
-  const { isXl } = useMatchBreakpoints()
-  const isMobile = !isXl
-
-  const v1PoolsWithApy = v1Pools.map((pool) => {
-    return {
-      ...pool,
-      apy: new BigNumber(0),
-    }
-  })
-
-  const v2PoolsWithApy = v2Pools.map((pool) => {
-    return {
-      ...pool,
-    }
-  })
-  const xPefiPool = v1PoolsWithApy.length > 0 ? v1PoolsWithApy[0] : null
-  const iPefiPool = v2PoolsWithApy.length > 0 ? v2PoolsWithApy[0] : null
-  const iPefiToPefiRatio = iPefiPool.currentExchangeRate || 1
-  const pefiPriceUsd = usePricePefiUsdt().toNumber()
-  const iPefiPriceUsd = iPefiToPefiRatio * pefiPriceUsd
-  const { isDark } = useTheme()
-
-  return (
-    <>
-      <StyledPage>
-        {/* <Hero isMobile={isMobile}>
-          <HeroBgImageContainer>
-            <HeroBgImage
-              isMobile={isMobile}
-              src={`${process.env.PUBLIC_URL}/images/home/${isDark ? 'banner_dark.svg' : 'banner_light.svg'}`}
-              alt="astronaut"
-            />
-          </HeroBgImageContainer>
-        </Hero> */}
-        {/* <HomeBgContainer /> */}
-        <div>
-          <Cards>
-            <FarmStakingCardWrapper>
-              <ArtworkCard />
-            </FarmStakingCardWrapper>
-            <PefiStatsCardWrapper>
-              <IglooCard />
-              <SpacingWrapper />
-              <EarnAPYCard apy={iPefiPool.apy} />
-              {/* <EmperorInfoCard iPefiPrice={iPefiPriceUsd} /> */}
-              {/* <PercentagePefiStakedNestV2 pool={iPefiPool} /> */}
-            </PefiStatsCardWrapper>
-          </Cards>
-          <Cards>
-            <FarmStakingCard />
-            {iPefiPool && (
-              <PoolCardWrapper>
-                <V2PoolCard pool={iPefiPool} isMainPool={false} isHomePage />
-              </PoolCardWrapper>
-            )}
-          </Cards>
-          <Cards>
-            <PefiStats v1Pool={xPefiPool} v2Pool={iPefiPool} />
-            <ComingSoonCard />
-          </Cards>
-          <SpacingWrapper />
-        </div>
-      </StyledPage>
-    </>
-  )
-}
 
 export default Home

@@ -19,6 +19,10 @@ export default {
     43113: '',
     43114: '0xd6a4F121CA35509aF06A0Be99093d08462f53052',
   },
+  benqiMasterChef: {
+    43113: '',
+    43114: '0x784DA19e61cf348a8c54547531795ECfee2AfFd1',
+  },
   // v2
   v2MasterChef: {
     43113: '',
@@ -115,6 +119,14 @@ export default {
   usdc: {
     43113: '',
     43114: '0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664',
+  },
+  'usdt.e': {
+    43113: '',
+    43114: '0xc7198437980c041c805A1EDcbA50c1Ce5db95118',
+  },
+  joe: {
+    43113: '',
+    43114: '0x6e84a6216eA6dACC71eE8E6b0a5B7322EEbC0fDd',
   },
   // emperor
   emperor: {
