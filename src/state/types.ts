@@ -86,7 +86,6 @@ export interface V2Farm extends FarmConfig {
   joePoolLpBalance?: number
   swapDailyReward?: number
   isBenqi?: boolean
-  benqiStakingApr?: number
 }
 
 export interface Lp extends LPConfig {

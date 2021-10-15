@@ -246,7 +246,6 @@ const Farms: React.FC = () => {
     const pefiApr = getApr(pefiDailyApr)
 
     let { stakingApr, swapFeeApr } = farm
-    let benqiStakingApr
 
     if (farm.type === 'Lydia') {
       const lydiaFarm = lydiaFarms.find((row) => row.lpSymbol === farm.lpSymbol)
@@ -271,10 +270,9 @@ const Farms: React.FC = () => {
     if (farm.isBenqi) {
       const { avaxPerSec: benqiAvaxRewardPerSec, benqiPerSec: benqiRewardPerSec, totalSupply } = benqiGlobalData
       const benqiPoolLiquidityUsd = farm.lpPrice * totalSupply
-
       const avaxStakingApr = getBenqiFarmApr(avaxPriceUsd, benqiPoolLiquidityUsd, benqiAvaxRewardPerSec)
       const qiStakingApr = getBenqiFarmApr(qiPriceUsd, benqiPoolLiquidityUsd, benqiRewardPerSec)
-      benqiStakingApr = avaxStakingApr + qiStakingApr
+      stakingApr = avaxStakingApr + qiStakingApr
     }
 
     return {
@@ -283,9 +281,8 @@ const Farms: React.FC = () => {
       pefiApr,
       stakingApr,
       swapFeeApr,
-      benqiStakingApr,
-      apr: farm.isBenqi ? stakingApr + swapFeeApr + benqiStakingApr + pefiApr : stakingApr + swapFeeApr + pefiApr,
-      apy: farm.isBenqi ? stakingApr + swapFeeApr + benqiStakingApr + pefiApr : stakingApr + swapFeeApr + pefiApr,
+      apr: stakingApr + swapFeeApr + pefiApr,
+      apy: stakingApr + swapFeeApr + pefiApr,
     }
   })
 
