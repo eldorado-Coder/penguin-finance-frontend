@@ -282,8 +282,8 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
               suffix={`${lpSymbol}`}
               isFlexWrap
               decimals={lpDecimals}
-              value={roundDown(Number(Number(userStakedBalance).toFixed(lpDecimals + 1)), lpDecimals)}
-              // value={Number(Number(userStakedBalance).toFixed(lpDecimals))}
+              // value={roundDown(Number(Number(userStakedBalance).toFixed(lpDecimals + 1)), lpDecimals)}
+              value={roundDown(Number(userStakedBalance), lpDecimals)}
             />
             <UsdBalanceWrapper>
               <Balance fontSize="10px" fontWeight="400" prefix="$" value={Number(userStakedBalanceInUsd)} />
