@@ -16,7 +16,7 @@ import CountDown from '../CountDown'
 import { getCutdownType } from '../utils'
 import { useClubPenguinHarvest, usePriceSherpa } from '../hooks'
 
-const SherpaCard = () => {
+const VersoCard = () => {
   const [pendingTx, setPendingTx] = useState(false)
   const [timerEnded, setTimerEnded] = useState(false)
   const { isXl } = useMatchBreakpoints()
@@ -66,7 +66,7 @@ const SherpaCard = () => {
   }
 
   const handleViewWebsite = () => {
-    window.open('https://app.sherpa.cash/', '_blank')
+    window.open('https://verso.finance/', '_blank')
   }
 
   const renderSherpaBalances = () => {
@@ -80,7 +80,7 @@ const SherpaCard = () => {
         >
           <Flex className="col" flexDirection="column" alignItems="flex-start">
             <SherpaLabel fontSize={isMobile ? '16px' : '20px'} fontWeight={700} lineHeight={1}>
-              SHERPA EARNED
+              VSO EARNED
             </SherpaLabel>
             <Balance
               color={isDark ? 'white' : '#00283f'}
@@ -100,7 +100,7 @@ const SherpaCard = () => {
               />
             </BalanceTextSmall>
           </Flex>
-          <Flex className="col" flexDirection="column" alignItems="flex-start">
+          {/* <Flex className="col" flexDirection="column" alignItems="flex-start">
             <SherpaLabel fontSize={isMobile ? '16px' : '20px'} fontWeight={700} lineHeight={1}>
               CURRENT APR
             </SherpaLabel>
@@ -122,7 +122,7 @@ const SherpaCard = () => {
                 suffix="% per week"
               />
             </BalanceTextSmall>
-          </Flex>
+          </Flex> */}
         </FlexContainer>
         <FlexContainer
           isMobile={isMobile}
@@ -170,7 +170,7 @@ const SherpaCard = () => {
           <div>
             <Flex alignItems="center" flexWrap="wrap" justifyContent="flex-start">
               <LogoWrapper isMobile mr="32px" alignItems="center">
-                <img src="/images/club/sherpa_iceberg.svg" alt="sherpa" />
+                <img src="/images/club/verso_iceberg.svg" alt="vso" />
               </LogoWrapper>
               <SherpaIceberg>
                 <SherpaLabel
@@ -180,7 +180,7 @@ const SherpaCard = () => {
                   fontWeight={600}
                   lineHeight={1}
                 >
-                  SHERPA ICEBERG
+                  VSO ICEBERG
                 </SherpaLabel>
               </SherpaIceberg>
             </Flex>
@@ -189,11 +189,11 @@ const SherpaCard = () => {
         ) : (
           <Flex alignItems="flex-start" flexWrap="wrap" justifyContent="space-between">
             <LogoWrapper mt="16px" mr="16px" alignItems="center">
-              <img src="/images/club/sherpa_iceberg.svg" alt="sherpa" />
+              <img src="/images/club/verso_iceberg.svg" alt="sherpa" />
             </LogoWrapper>
             <SherpaIceberg>
               <SherpaLabel whiteSpace="wrap" fontSize="40px" fontWeight={600} lineHeight={1}>
-                SHERPA ICEBERG
+                VSO ICEBERG
               </SherpaLabel>
               {renderSherpaBalances()}
             </SherpaIceberg>
@@ -202,8 +202,7 @@ const SherpaCard = () => {
       </CardHeader>
       <CardContent>
         <Text fontWeight={400} fontSize="18px" color="white">
-          Sherpa Cash is the first fully decentralized protocol for private transactions on Avalanche. The SHERPA token
-          is the governance token for Sherpa Cash.
+          A decentralized marketplace for financial products and DeFi mass adoption via regulated e-wallets.
         </Text>
       </CardContent>
       <CardFooter flexDirection={isMobile ? 'column' : 'row'} justifyContent="space-between" alignItems="center">
@@ -211,16 +210,16 @@ const SherpaCard = () => {
           Visit Website
         </StyledButton>
         <SocialIconsWrapper>
-          <a href="https://t.me/sherpa_cash" target="_blank" rel="noreferrer">
+          <a href="https://t.me/versofinance" target="_blank" rel="noreferrer">
             <SvgIcon src={`${process.env.PUBLIC_URL}/images/club/social/telegram.svg`} width="32px" height="32px" />
           </a>
-          <a href="https://discord.com/invite/8bWeGSB4Zx" target="_blank" rel="noreferrer">
+          {/* <a href="https://discord.com/invite/8bWeGSB4Zx" target="_blank" rel="noreferrer">
             <SvgIcon src={`${process.env.PUBLIC_URL}/images/club/social/discord.svg`} width="32px" height="32px" />
-          </a>
-          <a href="https://twitter.com/sherpa_cash" target="_blank" rel="noreferrer">
+          </a> */}
+          <a href="https://twitter.com/versofinance" target="_blank" rel="noreferrer">
             <SvgIcon src={`${process.env.PUBLIC_URL}/images/club/social/twitter.svg`} width="32px" height="32px" />
           </a>
-          <a href="https://medium.com/sherpa-cash" target="_blank" rel="noreferrer">
+          <a href="https://medium.com/verso-finance" target="_blank" rel="noreferrer">
             <SvgIcon src={`${process.env.PUBLIC_URL}/images/club/social/medium.svg`} width="32px" height="32px" />
           </a>
         </SocialIconsWrapper>
@@ -236,7 +235,7 @@ const StyledCard = styled(Card)`
   height: 100%;
   padding: 32px 24px 34px;
   box-shadow: 0px 1px 6px rgb(0 0 0 / 16%);
-  background-color: ${({ theme }) => (theme.isDark ? '#30264f' : '#f24e4d')};
+  background-color: ${({ theme }) => (theme.isDark ? '#30264f' : '#3B88E7')};
 
   ${({ theme }) => theme.mediaQueries.xl} {
     width: 49%;
@@ -343,4 +342,4 @@ const SherpaBalance = styled(Text)`
   color: ${({ theme }) => (theme.isDark ? 'white' : '#00283f')};
 `
 
-export default SherpaCard
+export default VersoCard

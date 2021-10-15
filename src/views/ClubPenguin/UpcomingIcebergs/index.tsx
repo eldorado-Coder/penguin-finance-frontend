@@ -96,7 +96,7 @@ const UpcomingIcebergs = () => {
                   Earn:
                 </Text>
                 <Text fontSize="18px" fontWeight={400}>
-                  {iceberg.earn}
+                  {iceberg.tokenSymbol}
                 </Text>
               </Flex>
               <Text mt="16px" mb="16px" textAlign="left" fontWeight={400}>

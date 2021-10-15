@@ -4,6 +4,8 @@ import { Flex, Text } from 'penguinfinance-uikit2'
 import useTheme from 'hooks/useTheme'
 import Page from 'components/layout/Page'
 import UpcomingIcebergs from './UpcomingIcebergs'
+import PreviousIcebergs from './PreviousIcebergs'
+import VersoCard from './VersoCard'
 import SherpaCard from './SherpaCard'
 import SherpaStakeCard from './SherpaStakeCard/StakeCard'
 
@@ -28,12 +30,18 @@ const ClubPenguin: React.FC = () => {
           Current Iceberg
         </StyledText>
         <Flex justifyContent="space-between" flexWrap="wrap">
+          <VersoCard />
           <SherpaCard />
-          <CardWrapper flexDirection="column">
+          <CardWrapper>
+            {/* banner section */}
+            <div style={{ marginTop: '16px' }} />
+          </CardWrapper>
+          <CardWrapper>
             <SherpaStakeCard />
           </CardWrapper>
         </Flex>
         <UpcomingIcebergs />
+        <PreviousIcebergs />
       </ClubPenguinContent>
     </ClubPenguinPage>
   )
