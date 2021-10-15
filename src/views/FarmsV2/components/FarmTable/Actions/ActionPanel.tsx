@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import BigNumber from 'bignumber.js'
 import styled, { keyframes, css } from 'styled-components'
 import { useWeb3React } from '@web3-react/core'
-import { Card, Text, Button, Flex, useMatchBreakpoints } from 'penguinfinance-uikit2'
+import { Card, Text, Button, Flex } from 'penguinfinance-uikit2'
 import { WEEKS_PER_YEAR } from 'config'
 import useAssets from 'hooks/useAssets'
 import { useV2Harvest } from 'hooks/useV2Farm'
@@ -210,6 +210,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
   const { account } = useWeb3React()
   const v2Pools = useV2Pools(account)
   const v2Nest = v2Pools.length > 0 ? v2Pools[0] : null
+
   const pefiPriceUsd = usePricePefiUsdt().toNumber()
   const pngPriceUsd = usePricePngUsdt().toNumber()
   const joePriceUsd = useJoePrice()
@@ -218,7 +219,6 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
   const iPefiToPefiRatio = v2Nest.currentExchangeRate || 1
   const iPefiPriceUsd = iPefiToPefiRatio * pefiPriceUsd
 
-  const { isXl } = useMatchBreakpoints()
   const { pendingTokens, userData, maxBips: maxAutoNestAllocation } = farm
   const userPendingTokens = userData ? userData.userPendingTokens : []
   const userShares = userData ? getBalanceNumber(userData.userShares) : 0
