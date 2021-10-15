@@ -44,7 +44,7 @@ export const useClubPenguinUnstake = (pid: number) => {
 
 export const useClubPenguinHarvest = (pid: number) => {
   const dispatch = useDispatch()
-  const { fastRefresh } = useRefresh();
+  const { fastRefresh } = useRefresh()
   const { account } = useWeb3React()
   const clubPenguinMasterChefContract = useClubPenguinMasterChef()
 
@@ -64,18 +64,18 @@ export const usePriceSherpa = (): number => {
 
   useEffect(() => {
     const fetchPrice = async () => {
-        const sherpaAvaxPairAddress = '0xf0d7ec33147ec3befd24b880472307bf3a01bb8a'
-        try {
-          const sherpaAvaxPair = await getPair(sherpaAvaxPairAddress)
-          const sherpaPrice = (avaxPrice.toNumber() * Number(sherpaAvaxPair.reserve1)) / Number(sherpaAvaxPair.reserve0)
-          setPrice(sherpaPrice)
-        } catch (error) {
-          console.log('sherpa price fetch issue')
-        }
+      const sherpaAvaxPairAddress = '0xf0d7ec33147ec3befd24b880472307bf3a01bb8a'
+      try {
+        const sherpaAvaxPair = await getPair(sherpaAvaxPairAddress)
+        const sherpaPrice = (avaxPrice.toNumber() * Number(sherpaAvaxPair.reserve1)) / Number(sherpaAvaxPair.reserve0)
+        setPrice(sherpaPrice)
+      } catch (error) {
+        console.log('sherpa price fetch issue')
+      }
     }
 
-    fetchPrice();
+    fetchPrice()
   }, [avaxPrice, fastRefresh])
-  
+
   return price
 }

@@ -4,6 +4,7 @@ import { Flex, Text } from 'penguinfinance-uikit2'
 import useTheme from 'hooks/useTheme'
 import Page from 'components/layout/Page'
 import UpcomingIcebergs from './UpcomingIcebergs'
+import PreviousIcebergs from './PreviousIcebergs'
 import SherpaCard from './SherpaCard'
 import SherpaStakeCard from './SherpaStakeCard/StakeCard'
 
@@ -34,6 +35,7 @@ const ClubPenguin: React.FC = () => {
           </CardWrapper>
         </Flex>
         <UpcomingIcebergs />
+        <PreviousIcebergs />
       </ClubPenguinContent>
     </ClubPenguinPage>
   )
