@@ -28,7 +28,7 @@ export const Icebergs = [
     toDistribute: 'TBD',
     tokenSymbol: 'PNG',
     logo: 'pangolin_iceberg.svg',
-    description: `A community-driven decentralized exchange for Avalanche. They've truly helped better the Avalanche Ecosystem by helping new native projects.`,
+    description: `A community-driven decentralized exchanged on Avalanche. They've vastly improved the state of the Avalanche Ecosystem by helping new native projects.`,
     url: 'https://docs.pangolin.exchange/',
   },
   {
