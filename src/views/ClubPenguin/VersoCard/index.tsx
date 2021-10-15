@@ -126,7 +126,7 @@ const VersoCard = () => {
         </FlexContainer>
         <FlexContainer
           isMobile={isMobile}
-          mt="24px"
+          mt="16px"
           justifyContent="space-between"
           flexWrap={!isMobile ? 'wrap' : 'nowrap'}
         >
@@ -164,82 +164,94 @@ const VersoCard = () => {
   }
 
   return (
-    <StyledCard>
-      <CardHeader>
-        {isMobile ? (
-          <div>
-            <Flex alignItems="center" flexWrap="wrap" justifyContent="flex-start">
-              <LogoWrapper isMobile mr="32px" alignItems="center">
-                <img src="/images/club/verso_iceberg.svg" alt="vso" />
+    <Wrapper>
+      <StyledText fontSize="24px" fontWeight={500} mb='4px'>
+        Next Iceberg
+      </StyledText>
+      <StyledCard>
+        <CardHeader>
+          {isMobile ? (
+            <div>
+              <Flex alignItems="center" flexWrap="wrap" justifyContent="flex-start">
+                <LogoWrapper isMobile mr="32px" alignItems="center">
+                  <img src="/images/club/verso_iceberg.svg" alt="vso" />
+                </LogoWrapper>
+                <SherpaIceberg>
+                  <SherpaLabel
+                    whiteSpace="wrap"
+                    textAlign="center"
+                    fontSize={isMobile ? '36px' : '40px'}
+                    fontWeight={600}
+                    lineHeight={1}
+                  >
+                    VSO ICEBERG
+                  </SherpaLabel>
+                </SherpaIceberg>
+              </Flex>
+              {renderSherpaBalances()}
+            </div>
+          ) : (
+            <Flex alignItems="flex-start" flexWrap="wrap" justifyContent="space-between">
+              <LogoWrapper mt="16px" mr="16px" alignItems="center">
+                <img src="/images/club/verso_iceberg.svg" alt="sherpa" />
               </LogoWrapper>
               <SherpaIceberg>
-                <SherpaLabel
-                  whiteSpace="wrap"
-                  textAlign="center"
-                  fontSize={isMobile ? '36px' : '40px'}
-                  fontWeight={600}
-                  lineHeight={1}
-                >
+                <SherpaLabel whiteSpace="wrap" fontSize="40px" fontWeight={600} lineHeight={1}>
                   VSO ICEBERG
                 </SherpaLabel>
+                {renderSherpaBalances()}
               </SherpaIceberg>
             </Flex>
-            {renderSherpaBalances()}
-          </div>
-        ) : (
-          <Flex alignItems="flex-start" flexWrap="wrap" justifyContent="space-between">
-            <LogoWrapper mt="16px" mr="16px" alignItems="center">
-              <img src="/images/club/verso_iceberg.svg" alt="sherpa" />
-            </LogoWrapper>
-            <SherpaIceberg>
-              <SherpaLabel whiteSpace="wrap" fontSize="40px" fontWeight={600} lineHeight={1}>
-                VSO ICEBERG
-              </SherpaLabel>
-              {renderSherpaBalances()}
-            </SherpaIceberg>
-          </Flex>
-        )}
-      </CardHeader>
-      <CardContent>
-        <Text fontWeight={400} fontSize="18px" color="white">
-          A decentralized marketplace for financial products and DeFi mass adoption via regulated e-wallets.
-        </Text>
-      </CardContent>
-      <CardFooter flexDirection={isMobile ? 'column' : 'row'} justifyContent="space-between" alignItems="center">
-        <StyledButton mb={isMobile && '16px'} visitSite onClick={handleViewWebsite}>
-          Visit Website
-        </StyledButton>
-        <SocialIconsWrapper>
-          <a href="https://t.me/versofinance" target="_blank" rel="noreferrer">
-            <SvgIcon src={`${process.env.PUBLIC_URL}/images/club/social/telegram.svg`} width="32px" height="32px" />
-          </a>
-          {/* <a href="https://discord.com/invite/8bWeGSB4Zx" target="_blank" rel="noreferrer">
-            <SvgIcon src={`${process.env.PUBLIC_URL}/images/club/social/discord.svg`} width="32px" height="32px" />
-          </a> */}
-          <a href="https://twitter.com/versofinance" target="_blank" rel="noreferrer">
-            <SvgIcon src={`${process.env.PUBLIC_URL}/images/club/social/twitter.svg`} width="32px" height="32px" />
-          </a>
-          <a href="https://medium.com/verso-finance" target="_blank" rel="noreferrer">
-            <SvgIcon src={`${process.env.PUBLIC_URL}/images/club/social/medium.svg`} width="32px" height="32px" />
-          </a>
-        </SocialIconsWrapper>
-      </CardFooter>
-    </StyledCard>
+          )}
+        </CardHeader>
+        <CardContent>
+          <Text fontWeight={400} fontSize="18px" color="white" mt='18px'>
+            A decentralized marketplace for financial products and DeFi mass adoption via regulated e-wallets.
+          </Text>
+        </CardContent>
+        <CardFooter flexDirection={isMobile ? 'column' : 'row'} justifyContent="space-between" alignItems="center">
+          <StyledButton mb={isMobile && '16px'} visitSite onClick={handleViewWebsite}>
+            Visit Website
+          </StyledButton>
+          <SocialIconsWrapper>
+            <a href="https://t.me/versofinance" target="_blank" rel="noreferrer">
+              <SvgIcon src={`${process.env.PUBLIC_URL}/images/club/social/telegram.svg`} width="32px" height="32px" />
+            </a>
+            {/* <a href="https://discord.com/invite/8bWeGSB4Zx" target="_blank" rel="noreferrer">
+              <SvgIcon src={`${process.env.PUBLIC_URL}/images/club/social/discord.svg`} width="32px" height="32px" />
+            </a> */}
+            <a href="https://twitter.com/versofinance" target="_blank" rel="noreferrer">
+              <SvgIcon src={`${process.env.PUBLIC_URL}/images/club/social/twitter.svg`} width="32px" height="32px" />
+            </a>
+            <a href="https://medium.com/verso-finance" target="_blank" rel="noreferrer">
+              <SvgIcon src={`${process.env.PUBLIC_URL}/images/club/social/medium.svg`} width="32px" height="32px" />
+            </a>
+          </SocialIconsWrapper>
+        </CardFooter>
+      </StyledCard>
+    </Wrapper>
   )
 }
 
-const StyledCard = styled(Card)`
-  border-radius: 8px;
+const Wrapper = styled.div`
   margin-top: 16px;
   width: 100%;
   height: 100%;
-  padding: 32px 24px 34px;
-  box-shadow: 0px 1px 6px rgb(0 0 0 / 16%);
-  background-color: ${({ theme }) => (theme.isDark ? '#30264f' : '#3B88E7')};
 
   ${({ theme }) => theme.mediaQueries.xl} {
     width: 49%;
   }
+`;
+
+const StyledCard = styled(Card)`
+  border-radius: 8px;
+  padding: 32px 24px 34px;
+  box-shadow: 0px 1px 6px rgb(0 0 0 / 16%);
+  background-color: ${({ theme }) => (theme.isDark ? '#30264f' : '#3B88E7')};
+`
+
+const StyledText = styled(Text)`
+  color: ${({ theme }) => (theme.isDark ? theme.colors.textSubtle : '#372b70')};
 `
 
 const CardHeader = styled.div``

@@ -102,6 +102,12 @@ const SherpaCard = () => {
           </Flex>
           <Flex className="col" flexDirection="column" alignItems="flex-start">
             <SherpaLabel fontSize={isMobile ? '16px' : '20px'} fontWeight={700} lineHeight={1}>
+              END DATE
+            </SherpaLabel>
+            <SherpaBalance fontSize="22px" fontWeight="600">
+              October 15
+            </SherpaBalance>
+            {/* <SherpaLabel fontSize={isMobile ? '16px' : '20px'} fontWeight={700} lineHeight={1}>
               CURRENT APR
             </SherpaLabel>
             <Balance
@@ -121,12 +127,12 @@ const SherpaCard = () => {
                 lineHeight="1.2"
                 suffix="% per week"
               />
-            </BalanceTextSmall>
+            </BalanceTextSmall> */}
           </Flex>
         </FlexContainer>
         <FlexContainer
           isMobile={isMobile}
-          mt="24px"
+          mt="16px"
           justifyContent="space-between"
           flexWrap={!isMobile ? 'wrap' : 'nowrap'}
         >
@@ -142,7 +148,7 @@ const SherpaCard = () => {
               Harvest All
             </HarvestButton>
           </Flex>
-          <Flex className="col" flexDirection="column" alignItems="flex-start">
+          {/* <Flex className="col" flexDirection="column" alignItems="flex-start">
             <SherpaLabel fontSize={isMobile ? '16px' : '20px'} fontWeight={700} lineHeight={1}>
               {timerEnded || currentTimestamp > cutdownDate ? (
                 'ENDED'
@@ -157,90 +163,102 @@ const SherpaCard = () => {
                 </div>
               )}
             </SherpaBalance>
-          </Flex>
+          </Flex> */}
         </FlexContainer>
       </>
     )
   }
 
   return (
-    <StyledCard>
-      <CardHeader>
-        {isMobile ? (
-          <div>
-            <Flex alignItems="center" flexWrap="wrap" justifyContent="flex-start">
-              <LogoWrapper isMobile mr="32px" alignItems="center">
+    <Wrapper>
+      <StyledText fontSize="24px" fontWeight={500} mb='4px'>
+        Previous Iceberg
+      </StyledText>
+      <StyledCard>
+        <CardHeader>
+          {isMobile ? (
+            <div>
+              <Flex alignItems="center" flexWrap="wrap" justifyContent="flex-start">
+                <LogoWrapper isMobile mr="32px" alignItems="center">
+                  <img src="/images/club/sherpa_iceberg.svg" alt="sherpa" />
+                </LogoWrapper>
+                <SherpaIceberg>
+                  <SherpaLabel
+                    whiteSpace="wrap"
+                    textAlign="center"
+                    fontSize={isMobile ? '36px' : '40px'}
+                    fontWeight={600}
+                    lineHeight={1}
+                  >
+                    SHERPA ICEBERG
+                  </SherpaLabel>
+                </SherpaIceberg>
+              </Flex>
+              {renderSherpaBalances()}
+            </div>
+          ) : (
+            <Flex alignItems="flex-start" flexWrap="wrap" justifyContent="space-between">
+              <LogoWrapper mt="16px" mr="16px" alignItems="center">
                 <img src="/images/club/sherpa_iceberg.svg" alt="sherpa" />
               </LogoWrapper>
               <SherpaIceberg>
-                <SherpaLabel
-                  whiteSpace="wrap"
-                  textAlign="center"
-                  fontSize={isMobile ? '36px' : '40px'}
-                  fontWeight={600}
-                  lineHeight={1}
-                >
+                <SherpaLabel whiteSpace="wrap" fontSize="40px" fontWeight={600} lineHeight={1}>
                   SHERPA ICEBERG
                 </SherpaLabel>
+                {renderSherpaBalances()}
               </SherpaIceberg>
             </Flex>
-            {renderSherpaBalances()}
-          </div>
-        ) : (
-          <Flex alignItems="flex-start" flexWrap="wrap" justifyContent="space-between">
-            <LogoWrapper mt="16px" mr="16px" alignItems="center">
-              <img src="/images/club/sherpa_iceberg.svg" alt="sherpa" />
-            </LogoWrapper>
-            <SherpaIceberg>
-              <SherpaLabel whiteSpace="wrap" fontSize="40px" fontWeight={600} lineHeight={1}>
-                SHERPA ICEBERG
-              </SherpaLabel>
-              {renderSherpaBalances()}
-            </SherpaIceberg>
-          </Flex>
-        )}
-      </CardHeader>
-      <CardContent>
-        <Text fontWeight={400} fontSize="18px" color="white">
-          Sherpa Cash is the first fully decentralized protocol for private transactions on Avalanche. The SHERPA token
-          is the governance token for Sherpa Cash.
-        </Text>
-      </CardContent>
-      <CardFooter flexDirection={isMobile ? 'column' : 'row'} justifyContent="space-between" alignItems="center">
-        <StyledButton mb={isMobile && '16px'} visitSite onClick={handleViewWebsite}>
-          Visit Website
-        </StyledButton>
-        <SocialIconsWrapper>
-          <a href="https://t.me/sherpa_cash" target="_blank" rel="noreferrer">
-            <SvgIcon src={`${process.env.PUBLIC_URL}/images/club/social/telegram.svg`} width="32px" height="32px" />
-          </a>
-          <a href="https://discord.com/invite/8bWeGSB4Zx" target="_blank" rel="noreferrer">
-            <SvgIcon src={`${process.env.PUBLIC_URL}/images/club/social/discord.svg`} width="32px" height="32px" />
-          </a>
-          <a href="https://twitter.com/sherpa_cash" target="_blank" rel="noreferrer">
-            <SvgIcon src={`${process.env.PUBLIC_URL}/images/club/social/twitter.svg`} width="32px" height="32px" />
-          </a>
-          <a href="https://medium.com/sherpa-cash" target="_blank" rel="noreferrer">
-            <SvgIcon src={`${process.env.PUBLIC_URL}/images/club/social/medium.svg`} width="32px" height="32px" />
-          </a>
-        </SocialIconsWrapper>
-      </CardFooter>
-    </StyledCard>
+          )}
+        </CardHeader>
+        <CardContent>
+          <Text fontWeight={400} fontSize="18px" color="white">
+            Sherpa Cash is the first fully decentralized protocol for private transactions on Avalanche. The SHERPA token
+            is the governance token for Sherpa Cash.
+          </Text>
+        </CardContent>
+        <CardFooter flexDirection={isMobile ? 'column' : 'row'} justifyContent="space-between" alignItems="center">
+          <StyledButton mb={isMobile && '16px'} visitSite onClick={handleViewWebsite}>
+            Visit Website
+          </StyledButton>
+          <SocialIconsWrapper>
+            <a href="https://t.me/sherpa_cash" target="_blank" rel="noreferrer">
+              <SvgIcon src={`${process.env.PUBLIC_URL}/images/club/social/telegram.svg`} width="32px" height="32px" />
+            </a>
+            <a href="https://discord.com/invite/8bWeGSB4Zx" target="_blank" rel="noreferrer">
+              <SvgIcon src={`${process.env.PUBLIC_URL}/images/club/social/discord.svg`} width="32px" height="32px" />
+            </a>
+            <a href="https://twitter.com/sherpa_cash" target="_blank" rel="noreferrer">
+              <SvgIcon src={`${process.env.PUBLIC_URL}/images/club/social/twitter.svg`} width="32px" height="32px" />
+            </a>
+            <a href="https://medium.com/sherpa-cash" target="_blank" rel="noreferrer">
+              <SvgIcon src={`${process.env.PUBLIC_URL}/images/club/social/medium.svg`} width="32px" height="32px" />
+            </a>
+          </SocialIconsWrapper>
+        </CardFooter>
+      </StyledCard>
+    </Wrapper>
   )
 }
 
-const StyledCard = styled(Card)`
-  border-radius: 8px;
+const Wrapper = styled.div`
   margin-top: 16px;
   width: 100%;
   height: 100%;
-  padding: 32px 24px 34px;
-  box-shadow: 0px 1px 6px rgb(0 0 0 / 16%);
-  background-color: ${({ theme }) => (theme.isDark ? '#30264f' : '#f24e4d')};
 
   ${({ theme }) => theme.mediaQueries.xl} {
     width: 49%;
   }
+`;
+
+const StyledCard = styled(Card)`
+  border-radius: 8px;
+  padding: 32px 24px 34px;
+  box-shadow: 0px 1px 6px rgb(0 0 0 / 16%);
+  background-color: ${({ theme }) => (theme.isDark ? '#30264f' : '#f24e4d')};
+`
+
+const StyledText = styled(Text)`
+  color: ${({ theme }) => (theme.isDark ? theme.colors.textSubtle : '#372b70')};
 `
 
 const CardHeader = styled.div``

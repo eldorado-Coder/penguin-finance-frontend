@@ -53,6 +53,13 @@ const Label = styled(Text)`
   color: ${({ theme }) => (theme.isDark ? 'white' : theme.colors.red)};
 `
 
+const Description = styled(Text)`
+  min-height: 96px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+`;
+
 const UpcomingIcebergs = () => {
   const handleLearnMore = (url: string) => {
     window.open(url, '_blank')
@@ -99,9 +106,9 @@ const UpcomingIcebergs = () => {
                   {iceberg.tokenSymbol}
                 </Text>
               </Flex>
-              <Text mt="16px" mb="16px" textAlign="left" fontWeight={400}>
+              <Description mt="16px" mb="16px" textAlign="left" fontWeight={400}>
                 {iceberg.description}
-              </Text>
+              </Description>
               <Flex>
                 <StyledButton color="red" onClick={() => handleLearnMore(iceberg.url)}>
                   Learn More
