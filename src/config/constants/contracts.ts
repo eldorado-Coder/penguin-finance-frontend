@@ -122,7 +122,7 @@ export default {
   },
   'usdt.e': {
     43113: '',
-    43114: '0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664',
+    43114: '0xc7198437980c041c805A1EDcbA50c1Ce5db95118',
   },
   joe: {
     43113: '',
