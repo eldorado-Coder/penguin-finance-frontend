@@ -1,6 +1,5 @@
 import React from 'react'
 import { Svg, SvgProps } from 'penguinfinance-uikit2'
-
 import styled from 'styled-components'
 
 const CustomSvg = styled(Svg)`
