@@ -84,6 +84,7 @@ export interface V2Farm extends FarmConfig {
   displayedDecimals?: number
   joePoolAllocPoint?: number
   joePoolLpBalance?: number
+  joeSwapPoolUsdBalance?: number
   swapDailyReward?: number
   isBenqi?: boolean
 }
