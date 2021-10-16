@@ -26,6 +26,7 @@ const Row = styled.div<FlexProps>`
   justify-content: ${({ justifyContent }) => justifyContent || 'flex-start'};
   align-items: ${({ alignItems }) => alignItems || 'stretch'};
 `
+
 const FooterBody = styled.div<FooterBodyProps>`
   max-width: 1200px; //1200px
   display: flex;
