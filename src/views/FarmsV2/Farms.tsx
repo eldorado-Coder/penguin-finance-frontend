@@ -265,7 +265,7 @@ const Farms: React.FC = () => {
           joeGlobalData.joePerSec,
           joeGlobalData.rewardPercentToFarm,
         ) * 0.9
-      swapFeeApr = getApr(farm.swapDailyReward / poolLiquidityUsd)
+      swapFeeApr = getApr(farm.swapDailyReward / (farm.joeSwapPoolUsdBalance || 1))
     }
     if (farm.isBenqi) {
       const { avaxPerSec: benqiAvaxRewardPerSec, benqiPerSec: benqiRewardPerSec, totalSupply } = benqiGlobalData

@@ -1,10 +1,10 @@
 import dayjs from 'dayjs'
 import { getAvaxPrice } from 'utils/price'
 import { HOURS_PER_DAY, SECONDS_PER_HOUR } from 'config'
-import { getPairDailyVolume as getPangolinPairDailyVolume } from './pangolin'
-import { getPairDailyVolume as getJoePairDailyVolume } from './joe'
-import { getPairDailyVolume as getLydiaPairDailyVolume } from './lydia'
-import { getPairDailyVolume as getSushiPairDailyVolume } from './sushi'
+import { getPairDailyVolume as getPangolinPairDailyVolume, getPair as getPangolinPair } from './pangolin'
+import { getPairDailyVolume as getJoePairDailyVolume, getPair as getJoePair } from './joe'
+import { getPairDailyVolume as getLydiaPairDailyVolume, getPair as getLydiaPair } from './lydia'
+import { getPairDailyVolume as getSushiPairDailyVolume, getPair as getSushiPair } from './sushi'
 
 export * from './nest'
 export * from './penguin'
@@ -44,4 +44,22 @@ export const getPairSwapDailyReward = async (address: string, type: string) => {
   }
 
   return swapDailyReward
+}
+
+export const getPairInfo = async (address: string, type: string) => {
+  let pairInfo = { reserveUSD: 1 }
+  if (type === 'Pangolin') {
+    pairInfo = await getPangolinPair(address)
+  }
+  if (type === 'Joe') {
+    pairInfo = await getJoePair(address)
+  }
+  if (type === 'Lydia') {
+    pairInfo = await getLydiaPair(address)
+  }
+  if (type === 'Sushi') {
+    pairInfo = await getSushiPair(address)
+  }
+
+  return pairInfo
 }

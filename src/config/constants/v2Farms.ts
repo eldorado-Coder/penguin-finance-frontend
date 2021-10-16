@@ -742,34 +742,34 @@ const v2Farms: V2FarmConfig[] = [
   //   displayedDecimals: 7,
   // },
 
-  // {
-  //   pid: 26,
-  //   lpSymbol: 'Joe AVAX-TIME LP',
-  //   lpAddresses: {
-  //     43113: '',
-  //     43114: '0xf64e1c5b6e17031f5504481ac8145f4c3eab4917',
-  //   },
-  //   strategyAddresses: {
-  //     43113: '',
-  //     43114: '0x56fed7fb87e5c7ae421ccb1eae19f3545db5e3ed',
-  //   },
-  //   tokenSymbol: 'TIME',
-  //   tokenAddresses: {
-  //     43113: '',
-  //     43114: '0xb54f16fB19478766A268F172C9480f8da1a7c9C3',
-  //   },
-  //   pangolinRewardPoolAddresses: {
-  //     43113: '',
-  //     43114: '0x0000000000000000000000000000000000000000',
-  //   },
-  //   quoteTokenSymbol: QuoteToken.AVAX,
-  //   quoteTokenAddresses: contracts.wavax,
-  //   withdrawalFee: '0',
-  //   hardApy: '896.65%',
-  //   type: 'Joe',
-  //   name: 'pendingPEFI',
-  //   displayedDecimals: 8,
-  // },
+  {
+    pid: 26,
+    lpSymbol: 'Joe AVAX-TIME LP',
+    lpAddresses: {
+      43113: '',
+      43114: '0xf64e1c5b6e17031f5504481ac8145f4c3eab4917',
+    },
+    strategyAddresses: {
+      43113: '',
+      43114: '0x56fed7fb87e5c7ae421ccb1eae19f3545db5e3ed',
+    },
+    tokenSymbol: 'TIME',
+    tokenAddresses: {
+      43113: '',
+      43114: '0xb54f16fB19478766A268F172C9480f8da1a7c9C3',
+    },
+    pangolinRewardPoolAddresses: {
+      43113: '',
+      43114: '0x0000000000000000000000000000000000000000',
+    },
+    quoteTokenSymbol: QuoteToken.AVAX,
+    quoteTokenAddresses: contracts.wavax,
+    withdrawalFee: '0',
+    hardApy: '896.65%',
+    type: 'Joe',
+    name: 'pendingPEFI',
+    displayedDecimals: 8,
+  },
 
   // {
   //   pid: 27,

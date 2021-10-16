@@ -9,7 +9,7 @@ import getV2FarmMasterChefAddress from 'utils/getV2FarmMasterChefAddress'
 import { getPangolinLpPrice, getJoeLpPrice, getSushiLpPrice, getLydiaLpPrice } from 'utils/price'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { getPangolinRewardPoolApr, getApr } from 'utils/apyHelpers'
-import { getPairSwapDailyReward } from 'subgraph/utils'
+import { getPairSwapDailyReward, getPairInfo } from 'subgraph/utils'
 import { getPoolInfo as getJoePoolInfo } from 'subgraph/utils/joe'
 import { getPair as getSushiPair } from 'subgraph/utils/sushi'
 import { NON_ADDRESS } from 'config'
@@ -102,6 +102,7 @@ export const fetchFarms = async () => {
         let totalLiquidityInUsd = getBalanceNumber(new BigNumber(totalLP))
         let joePoolAllocPoint = 0
         let joePoolLpBalance = 1
+        let joeSwapPoolUsdBalance = 1
 
         if (farmConfig.type === 'Pangolin') {
           lpPrice = await getPangolinLpPrice(lpAddress)
@@ -112,6 +113,9 @@ export const fetchFarms = async () => {
           const joePoolInfo = await getJoePoolInfo(lpAddress)
           joePoolAllocPoint = joePoolInfo ? joePoolInfo.allocPoint : 0
           joePoolLpBalance = joePoolInfo ? joePoolInfo.jlpBalance : 0
+          joeSwapPoolUsdBalance = 1
+          const pairInfo = await getPairInfo(lpAddress, farmConfig.type)
+          joeSwapPoolUsdBalance = pairInfo && pairInfo.reserveUSD ? pairInfo.reserveUSD : 1
         } else if (farmConfig.type === 'Sushi') {
           lpPrice = await getSushiLpPrice(lpAddress)
           totalLiquidityInUsd = lpPrice * getBalanceNumber(new BigNumber(totalLP))
@@ -156,6 +160,7 @@ export const fetchFarms = async () => {
           swapDailyReward,
           joePoolAllocPoint,
           joePoolLpBalance,
+          joeSwapPoolUsdBalance,
         }
       } catch (error) {
         return {
