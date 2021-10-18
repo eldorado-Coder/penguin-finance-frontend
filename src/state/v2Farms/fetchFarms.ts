@@ -12,6 +12,7 @@ import { getPangolinRewardPoolApr, getApr } from 'utils/apyHelpers'
 import { getPairSwapDailyReward, getPairInfo } from 'subgraph/utils'
 import { getPoolInfo as getJoePoolInfo } from 'subgraph/utils/joe'
 import { getPair as getSushiPair } from 'subgraph/utils/sushi'
+import { getPair as getPangolinPair } from 'subgraph/utils/pangolin'
 import { NON_ADDRESS } from 'config'
 
 export const fetchMasterChefGlobalData = async () => {
@@ -130,14 +131,21 @@ export const fetchFarms = async () => {
 
         if (farmConfig.type === 'Pangolin') {
           const res = await getPangolinRewardPoolApr(getAddress(farmConfig.pangolinRewardPoolAddresses))
-          swapFeeApr = res.swapFeeApr
           stakingApr = res.stakingApr
+          swapFeeApr = res.swapFeeApr
+          if (swapFeeApr === 0) {
+            swapDailyReward = await getPairSwapDailyReward(lpAddress, farmConfig.type)
+            const pangolinPair = await getPangolinPair(lpAddress)
+            if (pangolinPair.reserveUSD > 0) {
+              swapFeeApr = getApr(swapDailyReward / pangolinPair.reserveUSD)
+            }
+          }
         } else {
           swapDailyReward = await getPairSwapDailyReward(lpAddress, farmConfig.type)
           if (farmConfig.type === 'Sushi') {
-            const pair = await getSushiPair(lpAddress)
-            if (pair.reserveUSD > 0) {
-              swapFeeApr = getApr(swapDailyReward / pair.reserveUSD)
+            const sushiPair = await getSushiPair(lpAddress)
+            if (sushiPair.reserveUSD > 0) {
+              swapFeeApr = getApr(swapDailyReward / sushiPair.reserveUSD)
             }
           }
         }
