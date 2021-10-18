@@ -22,7 +22,7 @@ const VersoCard = () => {
   const [timerEnded, setTimerEnded] = useState(false)
   const { isXl } = useMatchBreakpoints()
   const { account } = useWeb3React()
-  const { onHarvest } = useClubPenguinHarvest(0)
+  const { onHarvest } = useClubPenguinHarvest(1)
   const pefiPriceUsd = usePricePefiUsdt().toNumber()
   const v2Pools = useV2Pools(account)
   const { isDark } = useTheme()

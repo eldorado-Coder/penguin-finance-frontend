@@ -14,8 +14,8 @@ import { useClubPenguinStake, useClubPenguinUnstake } from '../../../hooks'
 const StakeCard = () => {
   const [activeTab, setActiveTab] = useState(0)
   const { account } = useWeb3React()
-  const { onStake } = useClubPenguinStake(0)
-  const { onUnstake } = useClubPenguinUnstake(0)
+  const { onStake } = useClubPenguinStake(1)
+  const { onUnstake } = useClubPenguinUnstake(1)
   const { onApproveIPefi } = useClubPenguinApprove()
   const clubFarms = useClubPenguinFarms(account)
   const activeFarm = clubFarms[1]
