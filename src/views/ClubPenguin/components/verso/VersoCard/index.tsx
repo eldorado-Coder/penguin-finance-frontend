@@ -203,7 +203,7 @@ const VersoCard = () => {
           )}
         </CardHeader>
         <CardContent>
-          <Text fontWeight={400} fontSize="18px" color="white" mt="18px">
+          <Text fontWeight={400} fontSize="18px" color="white" mt="24px" mb="16px">
             A decentralized marketplace for financial products and DeFi mass adoption via regulated e-wallets.
           </Text>
         </CardContent>
