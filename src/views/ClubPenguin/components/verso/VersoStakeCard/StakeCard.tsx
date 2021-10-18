@@ -5,11 +5,11 @@ import { Text, Flex, ButtonMenu, ButtonMenuItem } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import { useClubPenguinFarms } from 'state/hooks'
 import { useClubPenguinApprove } from 'hooks/useApprove'
-import { useClubPenguinStake, useClubPenguinUnstake } from '../hooks'
 import StakeForm from './StakeForm'
 import UnstakeForm from './UnstakeForm'
-import Card from '../Card'
-import { getCutdownType } from '../utils'
+import Card from '../../Card'
+import { getCutdownType } from '../../../utils'
+import { useClubPenguinStake, useClubPenguinUnstake } from '../../../hooks'
 
 const StakeCard = () => {
   const [activeTab, setActiveTab] = useState(0)
@@ -18,7 +18,7 @@ const StakeCard = () => {
   const { onUnstake } = useClubPenguinUnstake(0)
   const { onApproveIPefi } = useClubPenguinApprove()
   const clubFarms = useClubPenguinFarms(account)
-  const activeFarm = clubFarms[0]
+  const activeFarm = clubFarms[1]
   const { userData, rewardStartTimestamp, rewardEndTimestamp } = activeFarm
   const iPEFIBalance = userData ? new BigNumber(userData.tokenBalance) : new BigNumber(0)
   const stakedBalance = userData ? new BigNumber(userData.stakedBalance) : new BigNumber(0)
@@ -43,7 +43,7 @@ const StakeCard = () => {
         </TabWrapper>
         <Flex mt="24px" mb="8px" justifyContent="space-between" alignItems="center">
           <StakeLabel color="primary" fontWeight="500">
-            {activeTab === 0 ? 'Stake iPEFI, Get SHERPA' : 'Unstake'}
+            {activeTab === 0 ? 'Stake iPEFI, Get VERSO' : 'Unstake'}
           </StakeLabel>
         </Flex>
         {activeTab === 0 ? (
@@ -107,8 +107,9 @@ const OptionItem = styled(ButtonMenuItem)<{ active: boolean }>`
   min-width: 100px;
   font-weight: 500;
   box-shadow: none;
-  background-color: ${({ active, theme }) => active && !theme.isDark && '#f24e4d'};
+  background-color: ${({ active, theme }) => active && !theme.isDark && '#3B88E7'};
   background-color: ${({ active, theme }) => active && theme.isDark && '#d4444c'};
+
   color: ${({ active }) => (active ? 'white' : '#372b70')};
   color: ${({ active, theme }) => theme.isDark && !active && '#d1caf2'};
 `

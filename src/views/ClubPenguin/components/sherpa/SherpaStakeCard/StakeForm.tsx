@@ -11,7 +11,7 @@ import { getClubPenguinMasterChefAddress, getSherpaAddress } from 'utils/address
 import escapeRegExp from 'utils/escapeRegExp'
 import { addTokenToMetamask } from 'utils/token'
 import TokenInput from './TokenInput'
-import CountDown from '../CountDown'
+import CountDown from '../../CountDown'
 
 const inputRegex = RegExp(`^\\d*(?:\\\\[.])?\\d*$`)
 

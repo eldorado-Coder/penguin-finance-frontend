@@ -11,10 +11,10 @@ import { getBalanceNumber } from 'utils/formatBalance'
 import { getApr } from 'utils/apyHelpers'
 import useTheme from 'hooks/useTheme'
 import { SECONDS_PER_DAY } from 'config'
-import Card from '../Card'
-import CountDown from '../CountDown'
-import { getCutdownType } from '../utils'
-import { useClubPenguinHarvest, usePriceSherpa } from '../hooks'
+import Card from '../../Card'
+import CountDown from '../../CountDown'
+import { getCutdownType } from '../../../utils'
+import { useClubPenguinHarvest, usePriceSherpa } from '../../../hooks'
 
 const SherpaCard = () => {
   const [pendingTx, setPendingTx] = useState(false)
@@ -171,9 +171,6 @@ const SherpaCard = () => {
 
   return (
     <Wrapper>
-      <StyledText fontSize="24px" fontWeight={500} mb='4px'>
-        Previous Iceberg
-      </StyledText>
       <StyledCard>
         <CardHeader>
           {isMobile ? (
@@ -212,8 +209,8 @@ const SherpaCard = () => {
         </CardHeader>
         <CardContent>
           <Text fontWeight={400} fontSize="18px" color="white">
-            Sherpa Cash is the first fully decentralized protocol for private transactions on Avalanche. The SHERPA token
-            is the governance token for Sherpa Cash.
+            Sherpa Cash is the first fully decentralized protocol for private transactions on Avalanche. The SHERPA
+            token is the governance token for Sherpa Cash.
           </Text>
         </CardContent>
         <CardFooter flexDirection={isMobile ? 'column' : 'row'} justifyContent="space-between" alignItems="center">
@@ -248,17 +245,13 @@ const Wrapper = styled.div`
   ${({ theme }) => theme.mediaQueries.xl} {
     width: 49%;
   }
-`;
+`
 
 const StyledCard = styled(Card)`
   border-radius: 8px;
   padding: 32px 24px 34px;
   box-shadow: 0px 1px 6px rgb(0 0 0 / 16%);
   background-color: ${({ theme }) => (theme.isDark ? '#30264f' : '#f24e4d')};
-`
-
-const StyledText = styled(Text)`
-  color: ${({ theme }) => (theme.isDark ? theme.colors.textSubtle : '#372b70')};
 `
 
 const CardHeader = styled.div``
@@ -270,8 +263,8 @@ const LogoWrapper = styled(Flex)<{ isMobile?: boolean }>`
 `
 
 const CardContent = styled.div`
-  margin-top: 16px;
-  margin-bottom: 16px;
+  margin-top: 32px;
+  margin-bottom: 24px;
 `
 
 const StyledButton = styled(Button)`
