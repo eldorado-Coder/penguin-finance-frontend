@@ -13,7 +13,7 @@ import IglooCard from 'views/Home/components/IglooCard'
 import EarnAPYCard from 'views/Home/components/EarnAPYCard'
 import EmperorInfoCard from 'views/Home/components/EmperorInfoCard'
 import PercentagePefiStakedNestV2 from 'views/Home/components/PercentagePefiStakedNestV2'
-import V2PoolCard from 'views/Pools/components/V2PoolCard'
+import V2PoolCard from 'views/Pools/components/OldV2PoolCard'
 import { usePools, useV2Pools, usePricePefiUsdt } from 'state/hooks'
 
 const Hero = styled.div<{ isMobile?: boolean }>`
