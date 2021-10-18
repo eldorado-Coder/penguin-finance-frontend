@@ -11,17 +11,18 @@ import { getBalanceNumber } from 'utils/formatBalance'
 import { getApr } from 'utils/apyHelpers'
 import useTheme from 'hooks/useTheme'
 import { SECONDS_PER_DAY } from 'config'
-import Card from '../Card'
-import CountDown from '../CountDown'
-import { getCutdownType } from '../utils'
-import { useClubPenguinHarvest, usePriceSherpa } from '../hooks'
+import useTokenPrice from 'hooks/useTokenPrice'
+import Card from '../../Card'
+import CountDown from '../../CountDown'
+import { getCutdownType } from '../../../utils'
+import { useClubPenguinHarvest } from '../../../hooks'
 
-const SherpaCard = () => {
+const VersoCard = () => {
   const [pendingTx, setPendingTx] = useState(false)
   const [timerEnded, setTimerEnded] = useState(false)
   const { isXl } = useMatchBreakpoints()
   const { account } = useWeb3React()
-  const { onHarvest } = useClubPenguinHarvest(0)
+  const { onHarvest } = useClubPenguinHarvest(1)
   const pefiPriceUsd = usePricePefiUsdt().toNumber()
   const v2Pools = useV2Pools(account)
   const { isDark } = useTheme()
@@ -30,12 +31,12 @@ const SherpaCard = () => {
   const iPefiPriceUsd = iPefiToPefiRatio * pefiPriceUsd
 
   const clubFarms = useClubPenguinFarms(account)
-  const activeFarm = clubFarms[0]
+  const activeFarm = clubFarms[1]
   const { userData, rewardStartTimestamp, rewardEndTimestamp, tokensPerSecond, totalIPEFIInPool } = activeFarm
 
-  const sherpaPrice = usePriceSherpa()
+  const { vsoPrice: vsoPriceUsd } = useTokenPrice()
   const earningBalance = userData ? getBalanceNumber(new BigNumber(userData.earnings)) : 0
-  const earningBalanceInUsd = sherpaPrice * earningBalance
+  const earningBalanceInUsd = vsoPriceUsd * earningBalance
   const currentTimestamp = Date.now()
   const rewardStartTime = rewardStartTimestamp ? 1000 * rewardStartTimestamp : 0
   const cutdownType = getCutdownType(currentTimestamp, rewardStartTime)
@@ -44,9 +45,9 @@ const SherpaCard = () => {
   // apr
   const totalLiquidityInUsd = iPefiPriceUsd * getBalanceNumber(new BigNumber(totalIPEFIInPool))
   const rewardPerSec = getBalanceNumber(new BigNumber(tokensPerSecond))
-  const rewardPerSecInUsd = sherpaPrice * rewardPerSec
-  const sherpaDailyApr = (SECONDS_PER_DAY * rewardPerSecInUsd) / totalLiquidityInUsd
-  const sherpaApr = 100 * getApr(sherpaDailyApr)
+  const rewardPerSecInUsd = vsoPriceUsd * rewardPerSec
+  const dailyApr = (SECONDS_PER_DAY * rewardPerSecInUsd) / totalLiquidityInUsd
+  const apr = 100 * getApr(dailyApr)
 
   const isMobile = !isXl
   const canHarvest = account && earningBalance > 0 && !pendingTx
@@ -66,10 +67,10 @@ const SherpaCard = () => {
   }
 
   const handleViewWebsite = () => {
-    window.open('https://app.sherpa.cash/', '_blank')
+    window.open('https://verso.finance/', '_blank')
   }
 
-  const renderSherpaBalances = () => {
+  const renderIcebergInfos = () => {
     return (
       <>
         <FlexContainer
@@ -79,9 +80,9 @@ const SherpaCard = () => {
           flexWrap={!isMobile ? 'wrap' : 'nowrap'}
         >
           <Flex className="col" flexDirection="column" alignItems="flex-start">
-            <SherpaLabel fontSize={isMobile ? '16px' : '20px'} fontWeight={700} lineHeight={1}>
-              SHERPA EARNED
-            </SherpaLabel>
+            <Label fontSize={isMobile ? '16px' : '20px'} fontWeight={700} lineHeight={1}>
+              VSO EARNED
+            </Label>
             <Balance
               color={isDark ? 'white' : '#00283f'}
               fontSize="22px"
@@ -101,33 +102,27 @@ const SherpaCard = () => {
             </BalanceTextSmall>
           </Flex>
           <Flex className="col" flexDirection="column" alignItems="flex-start">
-            <SherpaLabel fontSize={isMobile ? '16px' : '20px'} fontWeight={700} lineHeight={1}>
-              END DATE
-            </SherpaLabel>
-            <SherpaBalance fontSize="22px" fontWeight="600">
-              October 15
-            </SherpaBalance>
-            {/* <SherpaLabel fontSize={isMobile ? '16px' : '20px'} fontWeight={700} lineHeight={1}>
+            <Label fontSize={isMobile ? '16px' : '20px'} fontWeight={700} lineHeight={1}>
               CURRENT APR
-            </SherpaLabel>
+            </Label>
             <Balance
               color={isDark ? 'white' : '#00283f'}
               fontSize="22px"
               fontWeight="600"
               suffix="%"
-              value={sherpaApr}
+              value={apr}
               decimals={2}
             />
             <BalanceTextSmall>
               <CardValue
                 className="balance"
                 fontSize="12px"
-                value={sherpaApr / 48}
+                value={apr / 48}
                 decimals={2}
                 lineHeight="1.2"
                 suffix="% per week"
               />
-            </BalanceTextSmall> */}
+            </BalanceTextSmall>
           </Flex>
         </FlexContainer>
         <FlexContainer
@@ -148,22 +143,22 @@ const SherpaCard = () => {
               Harvest All
             </HarvestButton>
           </Flex>
-          {/* <Flex className="col" flexDirection="column" alignItems="flex-start">
-            <SherpaLabel fontSize={isMobile ? '16px' : '20px'} fontWeight={700} lineHeight={1}>
+          <Flex className="col" flexDirection="column" alignItems="flex-start">
+            <Label fontSize={isMobile ? '16px' : '20px'} fontWeight={700} lineHeight={1}>
               {timerEnded || currentTimestamp > cutdownDate ? (
                 'ENDED'
               ) : (
                 <>{cutdownType === 'start' ? 'STARTS IN' : 'ENDS IN'}</>
               )}
-            </SherpaLabel>
-            <SherpaBalance fontSize="22px" fontWeight={400}>
+            </Label>
+            <CutdownBalance fontSize="22px" fontWeight={400}>
               {cutdownDate > 0 && (
                 <div className="countdown">
                   <CountDown date={timerEnded ? currentTimestamp : cutdownDate} handleComplete={handleTimerCompleted} />
                 </div>
               )}
-            </SherpaBalance>
-          </Flex> */}
+            </CutdownBalance>
+          </Flex>
         </FlexContainer>
       </>
     )
@@ -171,49 +166,45 @@ const SherpaCard = () => {
 
   return (
     <Wrapper>
-      <StyledText fontSize="24px" fontWeight={500} mb='4px'>
-        Previous Iceberg
-      </StyledText>
       <StyledCard>
         <CardHeader>
           {isMobile ? (
             <div>
               <Flex alignItems="center" flexWrap="wrap" justifyContent="flex-start">
                 <LogoWrapper isMobile mr="32px" alignItems="center">
-                  <img src="/images/club/sherpa_iceberg.svg" alt="sherpa" />
+                  <img src="/images/club/verso_iceberg.svg" alt="vso" />
                 </LogoWrapper>
-                <SherpaIceberg>
-                  <SherpaLabel
+                <StyledTitle>
+                  <Label
                     whiteSpace="wrap"
                     textAlign="center"
                     fontSize={isMobile ? '36px' : '40px'}
                     fontWeight={600}
                     lineHeight={1}
                   >
-                    SHERPA ICEBERG
-                  </SherpaLabel>
-                </SherpaIceberg>
+                    VSO ICEBERG
+                  </Label>
+                </StyledTitle>
               </Flex>
-              {renderSherpaBalances()}
+              {renderIcebergInfos()}
             </div>
           ) : (
             <Flex alignItems="flex-start" flexWrap="wrap" justifyContent="space-between">
               <LogoWrapper mt="16px" mr="16px" alignItems="center">
-                <img src="/images/club/sherpa_iceberg.svg" alt="sherpa" />
+                <img src="/images/club/verso_iceberg.svg" alt="verso" />
               </LogoWrapper>
-              <SherpaIceberg>
-                <SherpaLabel whiteSpace="wrap" fontSize="40px" fontWeight={600} lineHeight={1}>
-                  SHERPA ICEBERG
-                </SherpaLabel>
-                {renderSherpaBalances()}
-              </SherpaIceberg>
+              <StyledTitle>
+                <Label whiteSpace="wrap" fontSize="40px" fontWeight={600} lineHeight={1}>
+                  VSO ICEBERG
+                </Label>
+                {renderIcebergInfos()}
+              </StyledTitle>
             </Flex>
           )}
         </CardHeader>
         <CardContent>
-          <Text fontWeight={400} fontSize="18px" color="white">
-            Sherpa Cash is the first fully decentralized protocol for private transactions on Avalanche. The SHERPA token
-            is the governance token for Sherpa Cash.
+          <Text fontWeight={400} fontSize="18px" color="white" mt="24px" mb="16px">
+            A decentralized marketplace for financial products and DeFi mass adoption via regulated e-wallets.
           </Text>
         </CardContent>
         <CardFooter flexDirection={isMobile ? 'column' : 'row'} justifyContent="space-between" alignItems="center">
@@ -221,16 +212,16 @@ const SherpaCard = () => {
             Visit Website
           </StyledButton>
           <SocialIconsWrapper>
-            <a href="https://t.me/sherpa_cash" target="_blank" rel="noreferrer">
+            <a href="https://t.me/versofinance" target="_blank" rel="noreferrer">
               <SvgIcon src={`${process.env.PUBLIC_URL}/images/club/social/telegram.svg`} width="32px" height="32px" />
             </a>
-            <a href="https://discord.com/invite/8bWeGSB4Zx" target="_blank" rel="noreferrer">
+            {/* <a href="https://discord.com/invite/8bWeGSB4Zx" target="_blank" rel="noreferrer">
               <SvgIcon src={`${process.env.PUBLIC_URL}/images/club/social/discord.svg`} width="32px" height="32px" />
-            </a>
-            <a href="https://twitter.com/sherpa_cash" target="_blank" rel="noreferrer">
+            </a> */}
+            <a href="https://twitter.com/versofinance" target="_blank" rel="noreferrer">
               <SvgIcon src={`${process.env.PUBLIC_URL}/images/club/social/twitter.svg`} width="32px" height="32px" />
             </a>
-            <a href="https://medium.com/sherpa-cash" target="_blank" rel="noreferrer">
+            <a href="https://medium.com/verso-finance" target="_blank" rel="noreferrer">
               <SvgIcon src={`${process.env.PUBLIC_URL}/images/club/social/medium.svg`} width="32px" height="32px" />
             </a>
           </SocialIconsWrapper>
@@ -248,13 +239,13 @@ const Wrapper = styled.div`
   ${({ theme }) => theme.mediaQueries.xl} {
     width: 49%;
   }
-`;
+`
 
 const StyledCard = styled(Card)`
   border-radius: 8px;
   padding: 32px 24px 34px;
   box-shadow: 0px 1px 6px rgb(0 0 0 / 16%);
-  background-color: ${({ theme }) => (theme.isDark ? '#30264f' : '#f24e4d')};
+  background-color: ${({ theme }) => (theme.isDark ? '#30264f' : '#3B88E7')};
 `
 
 const StyledText = styled(Text)`
@@ -348,17 +339,17 @@ const FlexContainer = styled(Flex)<{ isMobile?: boolean }>`
   }
 `
 
-const SherpaIceberg = styled.div`
+const StyledTitle = styled.div`
   width: calc(100% - 170px);
 `
 
-const SherpaLabel = styled(Text)<{ whiteSpace?: string }>`
+const Label = styled(Text)<{ whiteSpace?: string }>`
   white-space: ${({ whiteSpace }) => whiteSpace || 'nowrap'};
   color: ${({ theme }) => (theme.isDark ? '#bba6dd' : 'white')};
 `
 
-const SherpaBalance = styled(Text)`
+const CutdownBalance = styled(Text)`
   color: ${({ theme }) => (theme.isDark ? 'white' : '#00283f')};
 `
 
-export default SherpaCard
+export default VersoCard

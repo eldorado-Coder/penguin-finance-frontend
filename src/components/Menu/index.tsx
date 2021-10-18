@@ -39,6 +39,7 @@ const Menu = (props) => {
   const emperorIndex = links.findIndex((link) => link.label === 'Emperor')
   const launchpadIndex = links.findIndex((link) => link.label === 'Launchpad')
   const collectiblesIndex = links.findIndex((link) => link.label === 'Collectibles')
+  const clubIndex = links.findIndex((link) => link.label === 'Club Penguin')
 
   // links[collectiblesIndex] = {
   //   ...links[collectiblesIndex],
@@ -57,6 +58,12 @@ const Menu = (props) => {
   //   badgeLightColor: '#EC3E3F',
   //   badgeDarkColor: '#ffffff',
   // }
+  links[clubIndex] = {
+    ...links[clubIndex],
+    badge: 'LIVE',
+    badgeLightColor: '#3B88E7',
+    badgeDarkColor: '#ffffff',
+  }
 
   return (
     <>

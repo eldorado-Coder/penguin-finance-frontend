@@ -8,6 +8,13 @@ const clubPenguinFarms: ClubPenguinFarmConfig[] = [
       43114: '0xE9476e16FE488B90ada9Ab5C7c2ADa81014Ba9Ee',
     },
   },
+  {
+    pid: 1,
+    stakingTokenAddresses: {
+      43113: '',
+      43114: '0xE9476e16FE488B90ada9Ab5C7c2ADa81014Ba9Ee',
+    },
+  },
 ]
 
 export default clubPenguinFarms
