@@ -5,6 +5,7 @@ const useTokenPrice = () => {
   const [lydPrice, setLydPrice] = useState(1)
   const [sushiPrice, setSushiPrice] = useState(1)
   const [qiPrice, setQiPrice] = useState(1)
+  const [vsoPrice, setVsoPrice] = useState(0)
 
   const fetchPrice = async () => {
     const url = 'https://api.lydia.finance/api/v1/price'
@@ -14,6 +15,7 @@ const useTokenPrice = () => {
       setLydPrice(prices.LYD)
       setSushiPrice(prices['SUSHI.e'])
       setQiPrice(prices.QI)
+      setVsoPrice(prices.VSO)
     }
   }
 
@@ -24,7 +26,7 @@ const useTokenPrice = () => {
     }, 5000)
   }, [])
 
-  return { lydPrice, sushiPrice, qiPrice }
+  return { lydPrice, sushiPrice, qiPrice, vsoPrice }
 }
 
 export default useTokenPrice

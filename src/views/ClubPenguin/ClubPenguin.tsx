@@ -3,11 +3,9 @@ import styled from 'styled-components'
 import { Flex } from 'penguinfinance-uikit2'
 import useTheme from 'hooks/useTheme'
 import Page from 'components/layout/Page'
-import UpcomingIcebergs from './UpcomingIcebergs'
-import PreviousIcebergs from './PreviousIcebergs'
-import VersoCard from './VersoCard'
-import SherpaCard from './SherpaCard'
-import SherpaStakeCard from './SherpaStakeCard/StakeCard'
+import CurrentIcebergs from './components/CurrentIcebergs'
+import UpcomingIcebergs from './components/UpcomingIcebergs'
+import PreviousIcebergs from './components/PreviousIcebergs'
 
 const ClubPenguin: React.FC = () => {
   const { isDark } = useTheme()
@@ -26,34 +24,17 @@ const ClubPenguin: React.FC = () => {
         />
       </ClubPenguinBannerContainer>
       <ClubPenguinContent>
-        <Flex justifyContent="space-between" flexWrap="wrap">
-          <VersoCard />
-          <SherpaCard />
-          <CardWrapper>
-            {/* banner section */}
-            <StyledImage src={`${process.env.PUBLIC_URL}/images/club/banners/club_penguin.jpg`} alt='club' />
-          </CardWrapper>
-          <CardWrapper>
-            <SherpaStakeCard />
-          </CardWrapper>
-        </Flex>
+        <CurrentIcebergs />
         <UpcomingIcebergs />
         <PreviousIcebergs />
       </ClubPenguinContent>
     </ClubPenguinPage>
   )
-};
+}
 
 const ClubPenguinPage = styled(Page)`
   max-width: 1200px;
 `
-
-const StyledImage = styled.img`
-  margin-top: 16px;
-  border-radius: 8px;
-  object-fit: cover;
-  box-shadow: 0px 1px 6px rgb(0 0 0 / 16%);
-`;
 
 const ClubPenguinBgContainer = styled.div`
   background-image: url(/images/launchpad/launchpad_background.png);

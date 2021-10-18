@@ -7,9 +7,9 @@ import roundDown from 'utils/roundDown'
 import escapeRegExp from 'utils/escapeRegExp'
 import { getFullDisplayBalance } from 'utils/formatBalance'
 import { addTokenToMetamask } from 'utils/token'
-import { getSherpaAddress } from 'utils/addressHelpers'
+import { getVsoAddress } from 'utils/addressHelpers'
 import TokenInput from './TokenInput'
-import CountDown from '../CountDown'
+import CountDown from '../../CountDown'
 
 const inputRegex = RegExp(`^\\d*(?:\\\\[.])?\\d*$`)
 
@@ -49,8 +49,8 @@ const UnstakeForm: React.FC<UnStakeFormProps> = ({
     }
   }
 
-  const handleAddSherpaToken = async () => {
-    await addTokenToMetamask(getSherpaAddress(), 'SHERPA', 18)
+  const handleAddToken = async () => {
+    await addTokenToMetamask(getVsoAddress(), 'VSO', 18)
   }
 
   const handleChange = useCallback(
@@ -105,8 +105,8 @@ const UnstakeForm: React.FC<UnStakeFormProps> = ({
           )}
         </CountDownButton>
       ) : (
-        <AddTokenButton scale="md" onClick={handleAddSherpaToken}>
-          Add SHERPA to Metamask
+        <AddTokenButton scale="md" onClick={handleAddToken}>
+          Add VSO to Metamask
         </AddTokenButton>
       )}
     </>
@@ -117,18 +117,18 @@ const StyledButton = styled(Button)`
   width: 100%;
   border-radius: 8px;
   color: white;
-  background: ${({ theme }) => (theme.isDark ? '#d4444c' : '#f24e4d')};
+  background: ${({ theme }) => (theme.isDark ? '#d4444c' : '#3B88E7')};
 `
 
 const StyledUnlockButton = styled(UnlockButton)`
   width: 100%;
   border-radius: 8px;
-  background: ${({ theme }) => (theme.isDark ? '#d4444c' : '#f24e4d')};
+  background: ${({ theme }) => (theme.isDark ? '#d4444c' : '#3B88E7')};
 `
 
 const CountDownButton = styled(Button)`
   color: ${({ theme }) => (theme.isDark ? 'white' : '#00283f')};
-  background: ${({ theme }) => (theme.isDark ? '#d4444c' : '#f24e4d')};
+  background: ${({ theme }) => (theme.isDark ? '#d4444c' : '#3B88E7')};
   width: 100%;
   border-radius: 8px;
   margin-top: 16px;
@@ -141,8 +141,8 @@ const CountDownButton = styled(Button)`
 `
 
 const AddTokenButton = styled(Button)`
-  color: ${({ theme }) => (theme.isDark ? 'white' : '#00283f')};
-  background: ${({ theme }) => (theme.isDark ? '#d4444c' : '#f24e4d')};
+  color: white;
+  background: ${({ theme }) => (theme.isDark ? '#d4444c' : '#3B88E7')};
   width: 100%;
   border-radius: 8px;
   margin-top: 16px;

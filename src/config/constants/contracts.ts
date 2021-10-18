@@ -122,7 +122,7 @@ export default {
   },
   'usdt.e': {
     43113: '',
-    43114: '0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664',
+    43114: '0xc7198437980c041c805A1EDcbA50c1Ce5db95118',
   },
   joe: {
     43113: '',
@@ -168,6 +168,10 @@ export default {
     43113: '',
     43114: '0xa5E59761eBD4436fa4d20E1A27cBa29FB2471Fc6',
   },
+  vso: {
+    43113: '',
+    43114: '0x846D50248BAf8b7ceAA9d9B53BFd12d7D7FBB25a',
+  },
 
   // launchpad - Boofi
   launchPadBoofi: {
@@ -204,5 +208,11 @@ export default {
   clubPenguinMasterChef: {
     43113: '',
     43114: '0xc96D1131B40b95c75d0336574e8e4256a0A074A1',
+  },
+
+  // avax token
+  avax: {
+    43113: '',
+    43114: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
   },
 }
