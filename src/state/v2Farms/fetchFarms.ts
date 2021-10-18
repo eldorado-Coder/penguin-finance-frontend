@@ -3,7 +3,7 @@ import erc20 from 'config/abi/erc20.json'
 import v2MasterchefABI from 'config/abi/v2Masterchef.json'
 import multicall from 'utils/multicall'
 import v2FarmsConfig from 'config/constants/v2Farms'
-import { getAddress, getV2MasterChefAddress } from 'utils/addressHelpers'
+import { getAddress, getV2MasterChefAddress, getAvaxAddress } from 'utils/addressHelpers'
 import getV2FarmMasterChefAbi from 'utils/getV2FarmMasterChefAbi'
 import getV2FarmMasterChefAddress from 'utils/getV2FarmMasterChefAddress'
 import { getPangolinLpPrice, getJoeLpPrice, getSushiLpPrice, getLydiaLpPrice } from 'utils/price'
@@ -12,6 +12,7 @@ import { getPangolinRewardPoolApr, getApr } from 'utils/apyHelpers'
 import { getPairSwapDailyReward, getPairInfo } from 'subgraph/utils'
 import { getPoolInfo as getJoePoolInfo } from 'subgraph/utils/joe'
 import { getPair as getSushiPair } from 'subgraph/utils/sushi'
+import { getPair as getPangolinPair } from 'subgraph/utils/pangolin'
 import { NON_ADDRESS } from 'config'
 
 export const fetchMasterChefGlobalData = async () => {
@@ -130,17 +131,27 @@ export const fetchFarms = async () => {
 
         if (farmConfig.type === 'Pangolin') {
           const res = await getPangolinRewardPoolApr(getAddress(farmConfig.pangolinRewardPoolAddresses))
-          swapFeeApr = res.swapFeeApr
           stakingApr = res.stakingApr
+          swapFeeApr = res.swapFeeApr
+          if (swapFeeApr === 0) {
+            swapDailyReward = await getPairSwapDailyReward(lpAddress, farmConfig.type)
+            const pangolinPair = await getPangolinPair(lpAddress)
+            if (pangolinPair.reserveUSD > 0) {
+              swapFeeApr = getApr(swapDailyReward / pangolinPair.reserveUSD)
+            }
+          }
         } else {
           swapDailyReward = await getPairSwapDailyReward(lpAddress, farmConfig.type)
           if (farmConfig.type === 'Sushi') {
-            const pair = await getSushiPair(lpAddress)
-            if (pair.reserveUSD > 0) {
-              swapFeeApr = getApr(swapDailyReward / pair.reserveUSD)
+            const sushiPair = await getSushiPair(lpAddress)
+            if (sushiPair.reserveUSD > 0) {
+              swapFeeApr = getApr(swapDailyReward / sushiPair.reserveUSD)
             }
           }
         }
+
+        const _pendingTokens =
+          pendingTokens[0] && pendingTokens[0].filter((row) => row.toLowerCase() !== getAvaxAddress().toLowerCase())
 
         return {
           ...farmConfig,
@@ -148,7 +159,7 @@ export const fetchFarms = async () => {
           poolWeight: poolWeight.toJSON(),
           multiplier: allocPoint.div(100).toNumber(),
           withdrawFee,
-          pendingTokens: pendingTokens[0],
+          pendingTokens: _pendingTokens,
           totalLp: new BigNumber(totalLP).toJSON(),
           totalLiquidityInUsd,
           totalShares: new BigNumber(totalShares).toJSON(),
