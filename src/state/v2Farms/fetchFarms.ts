@@ -3,7 +3,7 @@ import erc20 from 'config/abi/erc20.json'
 import v2MasterchefABI from 'config/abi/v2Masterchef.json'
 import multicall from 'utils/multicall'
 import v2FarmsConfig from 'config/constants/v2Farms'
-import { getAddress, getV2MasterChefAddress } from 'utils/addressHelpers'
+import { getAddress, getV2MasterChefAddress, getAvaxAddress } from 'utils/addressHelpers'
 import getV2FarmMasterChefAbi from 'utils/getV2FarmMasterChefAbi'
 import getV2FarmMasterChefAddress from 'utils/getV2FarmMasterChefAddress'
 import { getPangolinLpPrice, getJoeLpPrice, getSushiLpPrice, getLydiaLpPrice } from 'utils/price'
@@ -142,13 +142,16 @@ export const fetchFarms = async () => {
           }
         }
 
+        const _pendingTokens =
+          pendingTokens[0] && pendingTokens[0].filter((row) => row.toLowerCase() !== getAvaxAddress().toLowerCase())
+
         return {
           ...farmConfig,
           tokenAmount: tokenAmount.toJSON(),
           poolWeight: poolWeight.toJSON(),
           multiplier: allocPoint.div(100).toNumber(),
           withdrawFee,
-          pendingTokens: pendingTokens[0],
+          pendingTokens: _pendingTokens,
           totalLp: new BigNumber(totalLP).toJSON(),
           totalLiquidityInUsd,
           totalShares: new BigNumber(totalShares).toJSON(),

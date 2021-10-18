@@ -156,3 +156,7 @@ export const getNftDistributorAddress = (type) => {
 export const getClubPenguinMasterChefAddress = () => {
   return getAddress(addresses.clubPenguinMasterChef)
 }
+
+export const getAvaxAddress = () => {
+  return getAddress(addresses.avax)
+}

@@ -205,4 +205,10 @@ export default {
     43113: '',
     43114: '0xc96D1131B40b95c75d0336574e8e4256a0A074A1',
   },
+
+  // avax token
+  avax: {
+    43113: '',
+    43114: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
+  },
 }
