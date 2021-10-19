@@ -1,5 +1,5 @@
-import React, { Suspense, lazy } from 'react'
-import { Router, Route, Switch } from 'react-router-dom'
+import React, { Suspense, lazy, useEffect } from 'react'
+import { Router, Route, Switch, useLocation } from 'react-router-dom'
 import { ResetCSS } from 'penguinfinance-uikit2'
 import BigNumber from 'bignumber.js'
 import { useFetchProfile, useFetchPublicData } from 'state/hooks'
@@ -42,6 +42,16 @@ BigNumber.config({
   DECIMAL_PLACES: 80,
 })
 
+const ScrollToTop = () => {
+  const { pathname } = useLocation()
+
+  useEffect(() => {
+    document.getElementById('root').scrollTo(0, 0)
+  }, [pathname])
+
+  return null
+}
+
 const App: React.FC = () => {
   useFetchPublicData()
   useFetchProfile()
@@ -50,6 +60,7 @@ const App: React.FC = () => {
     <Router history={history}>
       <ResetCSS />
       <GlobalStyle />
+      <ScrollToTop />
       <Menu>
         <Suspense fallback={<PageLoader />}>
           <Switch>
