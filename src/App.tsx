@@ -8,6 +8,7 @@ import Menu from 'components/Menu'
 import ToastListener from 'components/ToastListener'
 import PageLoader from 'components/PageLoader'
 import CurrentBlockWrapper from 'components/CurrentBlockWrapper'
+import Footer from 'components/Footer/Footer'
 import history from './routerHistory'
 import LaunchpadVideo from './views/LaunchpadVideo'
 
@@ -134,6 +135,7 @@ const App: React.FC = () => {
             {/* 404 */}
             <Route component={NotFound} />
           </Switch>
+          <Footer />
         </Suspense>
       </Menu>
       <ToastListener />
