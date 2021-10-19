@@ -58,37 +58,49 @@ export const FooterIconLinks = [
     {
       name: 'TelegramIcon',
       url: 'https://t.me/penguin_defi',
+      lightUrl: 'images/footer/telegramLight.svg',
+      darkUrl: 'images/footer/telegramDark.svg',
     },
     {
       name: 'DiscordIcon',
       url: 'https://discord.gg/WyFT54acU5',
+      lightUrl: 'images/footer/discordLight.svg',
+      darkUrl: 'images/footer/discordDark.svg',
     },
     {
       name: 'TwittweIcon',
       url: 'https://twitter.com/penguin_defi',
+      lightUrl: 'images/footer/twitterLight.svg',
+      darkUrl: 'images/footer/twitterDark.svg',
     },
     {
       name: 'MIcon',
       url: 'https://penguin-finance.medium.com/',
+      lightUrl: 'images/footer/mediumLight.svg',
+      darkUrl: 'images/footer/mediumDark.svg',
     },
   ],
-  //  second row FooterIconLinks[1]
-  [
-    {
-      name: 'AdidasIcon',
-      url: '/test',
-    },
-    {
-      name: 'FrogIcon',
-      url: '/test',
-    },
-    {
-      name: 'FoxIcon',
-      url: '/test',
-    },
-    {
-      name: 'BlueIcon',
-      url: '/test',
-    },
-  ],
+]
+
+export const FooterIconsSponsor = [
+  {
+    name: 'AdidasIcon',
+    url: '/',
+    lightUrl: 'images/footer/icon_adidas.svg',
+  },
+  {
+    name: 'FrogIcon',
+    url: '/',
+    lightUrl: 'images/footer/icon_frog.svg',
+  },
+  {
+    name: 'FoxIcon',
+    url: '/',
+    lightUrl: 'images/footer/icon_fox.svg',
+  },
+  {
+    name: 'BlueIcon',
+    url: '/',
+    lightUrl: 'images/footer/icon_blue.svg',
+  },
 ]

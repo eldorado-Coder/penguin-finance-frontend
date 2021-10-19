@@ -1,13 +1,8 @@
 import React from 'react'
-import styled from 'styled-components'
-import { SvgProps, Text, ResetCSS, Link, useMatchBreakpoints } from 'penguinfinance-uikit2'
-import * as IconModule from './icons'
+import styled, { useTheme } from 'styled-components'
+import { SvgProps, Text, ResetCSS, Link, useMatchBreakpoints, Image } from 'penguinfinance-uikit2'
 import { FooterProps, FooterBodyProps, FlexProps } from './types'
-import { FooterLinks, FooterIconLinks } from './config'
-
-const Icons = (IconModule as unknown) as { [key: string]: React.FC<SvgProps> }
-const Logo = Icons.FooterIcon
-const Shield = Icons.ShieldIcon
+import { FooterLinks, FooterIconLinks, FooterIconsSponsor } from './config'
 
 const Column = styled.div<FlexProps>`
   display: flex;
@@ -75,7 +70,19 @@ const FooterParagraph = styled(Text)`
   font-family: 'Telegraf UltraLight';
 `
 
+// testing div
+
+const Div = styled.div<{ width: string; height: string; mb?: string; mt?: string }>`
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
+  margin-bottom: ${(props) => props.mb || 0};
+  margin-top: ${(props) => props.mt || 0};
+  /* background-color: red; */
+`
+
 const Footer: React.FC<FooterProps> = (props) => {
+  // current theme
+  const theme = useTheme()
   // check if screen is in medium size or below
   const bPoints = useMatchBreakpoints()
   const isStacked = !bPoints.isLg && !bPoints.isXl
@@ -85,15 +92,25 @@ const Footer: React.FC<FooterProps> = (props) => {
       <FooterWrapper>
         <FooterBody isStacked={isStacked}>
           <Column isStacked={isStacked} maxWidth="260px" mb={isStacked ? '2rem' : '0'}>
-            <Logo width="100%" />
+            <Div width="100%" height="35px" mb="5px" mt="-8px">
+              <Image
+                src={theme.isDark ? 'images/footer/logoDark.svg' : 'images/footer/logoLight.svg'}
+                width={400}
+                height={35}
+              />
+            </Div>
             <FooterParagraph as="p" textAlign={isStacked ? 'center' : 'left'} fontSize=".8rem" color="#B7B5DE" mb="6px">
               The Penguin Finance protocol is bringing yield-farming, staking and more functionalities to the Avalanche
               Network.
             </FooterParagraph>
-            <Row isStacked={isStacked} alignItems="flex-end">
-              <div>
-                <Shield width="16px" />
-              </div>
+            <Row isStacked={isStacked} alignItems="center">
+              <Div width="16px" height="16px">
+                <Image
+                  src={theme.isDark ? 'images/footer/shieldDark.svg' : 'images/footer/shieldLight.svg'}
+                  width={20}
+                  height={20}
+                />
+              </Div>
               <TitleText ml="10px" color="#fff">
                 Audited by Certik
               </TitleText>
@@ -116,11 +133,12 @@ const Footer: React.FC<FooterProps> = (props) => {
             </TitleText>
             <Row isStacked={isStacked} justifyContent="space-around" alignItems="center" width="200px">
               {FooterIconLinks[0].map((item) => {
-                const Icon = Icons[`${item.name}`]
                 return (
-                  <Link href={item.url}>
-                    <Icon width="24px" height="24px" />
-                  </Link>
+                  <Div width="24px" height="24px">
+                    <a href={item.url}>
+                      <Image src={theme.isDark ? item.darkUrl : item.lightUrl} width={24} height={24} />
+                    </a>
+                  </Div>
                 )
               })}
             </Row>
@@ -128,12 +146,13 @@ const Footer: React.FC<FooterProps> = (props) => {
               Powered by
             </TitleText>
             <Row isStacked={isStacked} justifyContent="space-around" alignItems="center" width="100%">
-              {FooterIconLinks[1].map((item) => {
-                const Icon = Icons[`${item.name}`]
+              {FooterIconsSponsor.map((item) => {
                 return (
-                  <Link href={item.url}>
-                    <Icon width="30px" height="30px" />
-                  </Link>
+                  <Div width="30px" height="30px">
+                    <a href={item.url}>
+                      <Image src={item.lightUrl} width={30} height={30} />
+                    </a>
+                  </Div>
                 )
               })}
             </Row>
