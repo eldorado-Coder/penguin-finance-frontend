@@ -13,7 +13,6 @@ import V2PoolCard from 'views/Pools/components/V2PoolCard'
 import PefiStats from 'views/HomeV2/components/PefiStats'
 import ComingSoonCard from 'views/HomeV2/components/ComingSoonCard'
 import { usePools, useV2Pools } from 'state/hooks'
-import Footer from 'components/Footer/Footer'
 
 const Home: React.FC = () => {
   const { account } = useWeb3React()
@@ -66,7 +65,6 @@ const Home: React.FC = () => {
           <SpacingWrapper />
         </div>
       </StyledPage>
-      <Footer />
     </>
   )
 }
