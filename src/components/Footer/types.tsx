@@ -1,15 +1,14 @@
-export interface FooterProps {
-}
+export interface FooterProps {}
 
 export interface FooterBodyProps {
-    isStacked:boolean;
+  isStacked: boolean
 }
 
 export interface FlexProps {
-    maxWidth?:string;
-    width?:string;
-    alignItems?:string;
-    justifyContent?:string;
-    isStacked:boolean;
-    mb?:string;
+  maxWidth?: string
+  width?: string
+  alignItems?: string
+  justifyContent?: string
+  isStacked: boolean
+  mb?: string
 }
