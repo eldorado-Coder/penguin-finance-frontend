@@ -31,7 +31,7 @@ const HarvestFarmCard = () => {
   const iPefiPriceUsd = iPefiToPefiRatio * pefiPriceUsd
   const pngPriceUsd = usePricePngUsdt().toNumber()
   const joePriceUsd = useJoePrice()
-  const { lydPrice: lydPriceUsd, sushiPrice: sushiPriceUsd } = useTokenPrice()
+  const { lydPrice: lydPriceUsd, sushiPrice: sushiPriceUsd, qiPrice: qiPriceUsd } = useTokenPrice()
   const v2FarmsWithRewards = v2Farms.filter((row) => row.userData && Number(row.userData.stakedBalance) > 0)
   const { isXl } = useMatchBreakpoints()
   const isMobile = !isXl
@@ -66,6 +66,7 @@ const HarvestFarmCard = () => {
     if (rewardToken && rewardToken.symbol === 'PNG') return pngPriceUsd
     if (rewardToken && rewardToken.symbol === 'JOE') return joePriceUsd
     if (rewardToken && rewardToken.symbol === 'LYD') return lydPriceUsd
+    if (rewardToken && rewardToken.symbol === 'QI') return qiPriceUsd
     if (rewardToken && rewardToken.symbol === 'Sushi.e') return sushiPriceUsd
     return 1
   }
