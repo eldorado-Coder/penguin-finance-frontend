@@ -221,9 +221,9 @@ const VersoCard = () => {
             <a href="https://twitter.com/versofinance" target="_blank" rel="noreferrer">
               <SvgIcon src={`${process.env.PUBLIC_URL}/images/club/social/twitter.svg`} width="32px" height="32px" />
             </a>
-            <a href="https://medium.com/verso-finance" target="_blank" rel="noreferrer">
+            {/* <a href="https://medium.com/verso-finance" target="_blank" rel="noreferrer">
               <SvgIcon src={`${process.env.PUBLIC_URL}/images/club/social/medium.svg`} width="32px" height="32px" />
-            </a>
+            </a> */}
           </SocialIconsWrapper>
         </CardFooter>
       </StyledCard>
