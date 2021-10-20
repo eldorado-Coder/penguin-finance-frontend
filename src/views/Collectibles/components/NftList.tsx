@@ -64,11 +64,11 @@ const NftList = () => {
   return (
     <>
       <YourNfts />
-      <CardGrid>
+      <Header>
         <StyledText bold fontSize="36px" color="secondary">
           All NFTs
         </StyledText>
-      </CardGrid>
+      </Header>
       {nftCollections.map((nftCollection, index) => {
         const canClaim = nftClaimStatus[index]?.canClaim || false
         return <NftCollection key={`${nftCollection.name}`} nftCollection={nftCollection} canClaim={canClaim} />
@@ -100,9 +100,17 @@ const CollectionHead = styled(Flex)`
   padding: 12px 24px 0px;
 
   @media (min-width: 768px) {
-    padding: 0 40px 24px;
+    padding: 0 40px 16px;
   }
 `
+
+const Header = styled.div`
+  padding: 16px;
+
+  @media (min-width: 768px) {
+    padding: 0 40px 16px;
+  }
+`;
 
 const CardGrid = styled.div`
   padding: 24px;
@@ -119,7 +127,7 @@ const CardGrid = styled.div`
   }
 
   @media (min-width: 768px) {
-    padding: 0 40px 24px;
+    padding: 0 40px 40px;
   }
 `
 
