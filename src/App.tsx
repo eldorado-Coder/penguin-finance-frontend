@@ -72,8 +72,8 @@ const App: React.FC = () => {
               <HomeV1 />
             </Route>
             <Route path="/" exact>
-              <HomeV1 />
-              {/* <HomeV2 /> */}
+              {/* <HomeV1 /> */}
+              <HomeV2 />
             </Route>
             <Route path="/farms">
               <FarmsV2 />
