@@ -9,6 +9,7 @@ import ToastListener from 'components/ToastListener'
 import PageLoader from 'components/PageLoader'
 import CurrentBlockWrapper from 'components/CurrentBlockWrapper'
 import Footer from 'components/Footer/Footer'
+import useEagerConnect from 'hooks/useEagerConnect'
 import history from './routerHistory'
 import LaunchpadVideo from './views/LaunchpadVideo'
 
@@ -56,6 +57,7 @@ const ScrollToTop = () => {
 const App: React.FC = () => {
   useFetchPublicData()
   useFetchProfile()
+  useEagerConnect()
 
   return (
     <Router history={history}>
