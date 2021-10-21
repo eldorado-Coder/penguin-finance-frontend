@@ -15,16 +15,36 @@ const ComingSoonCard: React.FC = () => {
           Coming Soon
         </StyledHeading>
         <Row>
-          <StyledText color="white">CryptoPuffies</StyledText>
+          <StyledText color="white">
+            <a href="https://twitter.com/CryptoPuffies/status/1438176283935092736" target="_blank" rel="noreferrer">
+              CryptoPuffies
+            </a>
+          </StyledText>
         </Row>
         <Row>
-          <StyledText color="white">Pangolin vs Joe Emperor Game</StyledText>
+          <StyledText color="white">
+            <a href="https://penguinfinance.org/emperor" target="_blank" rel="noreferrer">
+              Pangolin vs Joe Emperor Game
+            </a>
+          </StyledText>
         </Row>
         <Row>
-          <StyledText color="white">Make Igloos, Not War</StyledText>
+          <StyledText color="white">
+            <a
+              href="https://penguin-finance.medium.com/make-igloos-not-war-new-joe-png-yield-farming-strategies-b70fac00807f"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Make Igloos, Not War
+            </a>
+          </StyledText>
         </Row>
         <Row>
-          <StyledText color="white">Penguin Arena</StyledText>
+          <StyledText color="white">
+            <a href="https://penguinfinance.org/arena" target="_blank" rel="noreferrer">
+              Penguin Arena
+            </a>
+          </StyledText>
         </Row>
       </StyledCardBody>
       <StyledFooter>
@@ -98,6 +118,12 @@ const StyledFooter = styled(CardBody)`
 const StyledText = styled(Text)<{ isBold?: boolean }>`
   font-weight: ${({ isBold }) => (isBold ? 600 : 300)};
   font-size: 14px;
+
+  a {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 
   @font-face {
     font-family: 'Telegraf Regular Font';
