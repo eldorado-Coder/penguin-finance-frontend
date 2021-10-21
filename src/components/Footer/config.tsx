@@ -84,23 +84,23 @@ export const FooterIconLinks = [
 
 export const FooterIconsSponsor = [
   {
-    name: 'AdidasIcon',
-    url: '/',
-    lightUrl: 'images/footer/icon_adidas.svg',
+    name: 'AvalancheIcon',
+    url: 'https://www.avax.network/',
+    lightUrl: 'images/footer/icon_avalanche.svg',
   },
   {
-    name: 'FrogIcon',
-    url: '/',
-    lightUrl: 'images/footer/icon_frog.svg',
+    name: 'CoingeckoIcon',
+    url: 'https://www.coingecko.com/en/coins/penguin-finance',
+    lightUrl: 'images/footer/icon_coingecko.svg',
   },
   {
-    name: 'FoxIcon',
-    url: '/',
-    lightUrl: 'images/footer/icon_fox.svg',
+    name: 'MetamaskIcon',
+    url: 'https://metamask.io/download',
+    lightUrl: 'images/footer/icon_metamask.svg',
   },
   {
-    name: 'BlueIcon',
-    url: '/',
-    lightUrl: 'images/footer/icon_blue.svg',
+    name: 'ChainlinkIcon',
+    url: 'https://chain.link/',
+    lightUrl: 'images/footer/icon_chainlink.svg',
   },
 ]
