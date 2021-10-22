@@ -12,6 +12,7 @@ import { getApr } from 'utils/apyHelpers'
 import useTheme from 'hooks/useTheme'
 import { SECONDS_PER_DAY } from 'config'
 import useTokenPrice from 'hooks/useTokenPrice'
+import { getMonthAndDate } from 'utils/time'
 import Card from '../../Card'
 import CountDown from '../../CountDown'
 import { getCutdownType } from '../../../utils'
@@ -41,13 +42,14 @@ const VersoCard = () => {
   const rewardStartTime = rewardStartTimestamp ? 1000 * rewardStartTimestamp : 0
   const cutdownType = getCutdownType(currentTimestamp, rewardStartTime)
   const cutdownDate = cutdownType === 'start' ? rewardStartTime : rewardEndTimestamp
+  const endDate = getMonthAndDate(rewardEndTimestamp)
 
   // apr
   const totalLiquidityInUsd = iPefiPriceUsd * getBalanceNumber(new BigNumber(totalIPEFIInPool))
   const rewardPerSec = getBalanceNumber(new BigNumber(tokensPerSecond))
   const rewardPerSecInUsd = vsoPriceUsd * rewardPerSec
   const dailyApr = (SECONDS_PER_DAY * rewardPerSecInUsd) / totalLiquidityInUsd
-  const apr = 100 * getApr(dailyApr)
+  const apr = cutdownType === 'start' ? 100 * getApr(dailyApr) : 0
 
   const isMobile = !isXl
   const canHarvest = account && earningBalance > 0 && !pendingTx
@@ -144,20 +146,36 @@ const VersoCard = () => {
             </HarvestButton>
           </Flex>
           <Flex className="col" flexDirection="column" alignItems="flex-start">
-            <Label fontSize={isMobile ? '16px' : '20px'} fontWeight={700} lineHeight={1}>
-              {timerEnded || currentTimestamp > cutdownDate ? (
-                'ENDED'
-              ) : (
-                <>{cutdownType === 'start' ? 'STARTS IN' : 'ENDS IN'}</>
-              )}
-            </Label>
-            <CutdownBalance fontSize="22px" fontWeight={400}>
-              {cutdownDate > 0 && (
-                <div className="countdown">
-                  <CountDown date={timerEnded ? currentTimestamp : cutdownDate} handleComplete={handleTimerCompleted} />
-                </div>
-              )}
-            </CutdownBalance>
+            {timerEnded || currentTimestamp > cutdownDate ? (
+              <>
+                <Label fontSize={isMobile ? '16px' : '20px'} fontWeight={700} lineHeight={1}>
+                  ENDED
+                </Label>
+                <CutdownBalance fontSize="22px" fontWeight={400}>
+                  {endDate}
+                </CutdownBalance>
+              </>
+            ) : (
+              <>
+                <Label fontSize={isMobile ? '16px' : '20px'} fontWeight={700} lineHeight={1}>
+                  {timerEnded || currentTimestamp > cutdownDate ? (
+                    'ENDED'
+                  ) : (
+                    <>{cutdownType === 'start' ? 'STARTS IN' : 'ENDS IN'}</>
+                  )}
+                </Label>
+                <CutdownBalance fontSize="22px" fontWeight={400}>
+                  {cutdownDate > 0 && (
+                    <div className="countdown">
+                      <CountDown
+                        date={timerEnded ? currentTimestamp : cutdownDate}
+                        handleComplete={handleTimerCompleted}
+                      />
+                    </div>
+                  )}
+                </CutdownBalance>
+              </>
+            )}
           </Flex>
         </FlexContainer>
       </>
