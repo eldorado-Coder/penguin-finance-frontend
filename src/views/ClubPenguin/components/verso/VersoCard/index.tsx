@@ -42,7 +42,8 @@ const VersoCard = () => {
   const rewardStartTime = rewardStartTimestamp ? 1000 * rewardStartTimestamp : 0
   const cutdownType = getCutdownType(currentTimestamp, rewardStartTime)
   const cutdownDate = cutdownType === 'start' ? rewardStartTime : rewardEndTimestamp
-  const endDate = getMonthAndDate(rewardEndTimestamp)
+  // const endDate = getMonthAndDate(rewardEndTimestamp)
+  const endDate = 'October 20'
 
   // apr
   const totalLiquidityInUsd = iPefiPriceUsd * getBalanceNumber(new BigNumber(totalIPEFIInPool))
