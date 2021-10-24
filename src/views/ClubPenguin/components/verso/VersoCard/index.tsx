@@ -12,6 +12,7 @@ import { getApr } from 'utils/apyHelpers'
 import useTheme from 'hooks/useTheme'
 import { SECONDS_PER_DAY } from 'config'
 import useTokenPrice from 'hooks/useTokenPrice'
+import { getMonthAndDate } from 'utils/time'
 import Card from '../../Card'
 import CountDown from '../../CountDown'
 import { getCutdownType } from '../../../utils'
@@ -41,13 +42,15 @@ const VersoCard = () => {
   const rewardStartTime = rewardStartTimestamp ? 1000 * rewardStartTimestamp : 0
   const cutdownType = getCutdownType(currentTimestamp, rewardStartTime)
   const cutdownDate = cutdownType === 'start' ? rewardStartTime : rewardEndTimestamp
+  // const endDate = getMonthAndDate(rewardEndTimestamp)
+  const endDate = 'October 20'
 
   // apr
   const totalLiquidityInUsd = iPefiPriceUsd * getBalanceNumber(new BigNumber(totalIPEFIInPool))
   const rewardPerSec = getBalanceNumber(new BigNumber(tokensPerSecond))
   const rewardPerSecInUsd = vsoPriceUsd * rewardPerSec
   const dailyApr = (SECONDS_PER_DAY * rewardPerSecInUsd) / totalLiquidityInUsd
-  const apr = 100 * getApr(dailyApr)
+  const apr = cutdownType === 'start' ? 100 * getApr(dailyApr) : 0
 
   const isMobile = !isXl
   const canHarvest = account && earningBalance > 0 && !pendingTx
@@ -103,6 +106,14 @@ const VersoCard = () => {
           </Flex>
           <Flex className="col" flexDirection="column" alignItems="flex-start">
             <Label fontSize={isMobile ? '16px' : '20px'} fontWeight={700} lineHeight={1}>
+              END Date
+            </Label>
+            <CutdownBalance fontSize="22px" fontWeight={600}>
+              October 20
+            </CutdownBalance>
+          </Flex>
+          {/* <Flex className="col" flexDirection="column" alignItems="flex-start">
+            <Label fontSize={isMobile ? '16px' : '20px'} fontWeight={700} lineHeight={1}>
               CURRENT APR
             </Label>
             <Balance
@@ -123,7 +134,7 @@ const VersoCard = () => {
                 suffix="% per week"
               />
             </BalanceTextSmall>
-          </Flex>
+          </Flex> */}
         </FlexContainer>
         <FlexContainer
           isMobile={isMobile}
@@ -142,22 +153,6 @@ const VersoCard = () => {
             >
               Harvest All
             </HarvestButton>
-          </Flex>
-          <Flex className="col" flexDirection="column" alignItems="flex-start">
-            <Label fontSize={isMobile ? '16px' : '20px'} fontWeight={700} lineHeight={1}>
-              {timerEnded || currentTimestamp > cutdownDate ? (
-                'ENDED'
-              ) : (
-                <>{cutdownType === 'start' ? 'STARTS IN' : 'ENDS IN'}</>
-              )}
-            </Label>
-            <CutdownBalance fontSize="22px" fontWeight={400}>
-              {cutdownDate > 0 && (
-                <div className="countdown">
-                  <CountDown date={timerEnded ? currentTimestamp : cutdownDate} handleComplete={handleTimerCompleted} />
-                </div>
-              )}
-            </CutdownBalance>
           </Flex>
         </FlexContainer>
       </>
@@ -245,7 +240,7 @@ const StyledCard = styled(Card)`
   border-radius: 8px;
   padding: 32px 24px 34px;
   box-shadow: 0px 1px 6px rgb(0 0 0 / 16%);
-  background-color: ${({ theme }) => (theme.isDark ? '#30264f' : '#3B88E7')};
+  background-color: ${({ theme }) => (theme.isDark ? '#30264f' : '#f24e4d')};
 `
 
 const StyledText = styled(Text)`

@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useState } from 'react'
 import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
-import { Button, Flex } from 'penguinfinance-uikit2'
+import { Button, Flex, Text } from 'penguinfinance-uikit2'
 import UnlockButton from 'components/UnlockButton'
 import roundDown from 'utils/roundDown'
 import escapeRegExp from 'utils/escapeRegExp'
@@ -9,7 +9,6 @@ import { getFullDisplayBalance } from 'utils/formatBalance'
 import { addTokenToMetamask } from 'utils/token'
 import { getVsoAddress } from 'utils/addressHelpers'
 import TokenInput from './TokenInput'
-import CountDown from '../../CountDown'
 
 const inputRegex = RegExp(`^\\d*(?:\\\\[.])?\\d*$`)
 
@@ -47,10 +46,6 @@ const UnstakeForm: React.FC<UnStakeFormProps> = ({
       setPendingTx(false)
       setVal('')
     }
-  }
-
-  const handleAddToken = async () => {
-    await addTokenToMetamask(getVsoAddress(), 'VSO', 18)
   }
 
   const handleChange = useCallback(
@@ -95,20 +90,12 @@ const UnstakeForm: React.FC<UnStakeFormProps> = ({
           </StyledButton>
         )}
       </Flex>
-      {cutdownType === 'start' ? (
-        <CountDownButton>
-          <div>{cutdownType === 'start' ? 'STARTS IN' : 'ENDS IN'}</div>
-          {cutdownDate > 0 && (
-            <div className="countdown">
-              <CountDown date={cutdownDate} />
-            </div>
-          )}
-        </CountDownButton>
-      ) : (
-        <AddTokenButton scale="md" onClick={handleAddToken}>
-          Add VSO to Metamask
-        </AddTokenButton>
-      )}
+      <Flex mt="24px">
+        <StyledText fontWeight={400} fontSize="18px" textAlign="center">
+          This Iceberg has melted and no longer provides rewards. Unstake and re-stake into the Current Iceberg to earn
+          more free tokens. Your iPEFI will continue to grow in value even when staked inside of an Iceberg.
+        </StyledText>
+      </Flex>
     </>
   )
 }
@@ -117,35 +104,17 @@ const StyledButton = styled(Button)`
   width: 100%;
   border-radius: 8px;
   color: white;
-  background: ${({ theme }) => (theme.isDark ? '#d4444c' : '#3B88E7')};
+  background: ${({ theme }) => (theme.isDark ? '#d4444c' : '#f24e4d')};
 `
 
 const StyledUnlockButton = styled(UnlockButton)`
   width: 100%;
   border-radius: 8px;
-  background: ${({ theme }) => (theme.isDark ? '#d4444c' : '#3B88E7')};
+  background: ${({ theme }) => (theme.isDark ? '#d4444c' : '#f24e4d')};
 `
 
-const CountDownButton = styled(Button)`
-  color: ${({ theme }) => (theme.isDark ? 'white' : '#00283f')};
-  background: ${({ theme }) => (theme.isDark ? '#d4444c' : '#3B88E7')};
-  width: 100%;
-  border-radius: 8px;
-  margin-top: 16px;
-
-  .countdown {
-    min-width: 72px;
-    margin-left: 6px;
-    text-align: left;
-  }
-`
-
-const AddTokenButton = styled(Button)`
-  color: white;
-  background: ${({ theme }) => (theme.isDark ? '#d4444c' : '#3B88E7')};
-  width: 100%;
-  border-radius: 8px;
-  margin-top: 16px;
+const StyledText = styled(Text)`
+  color: ${({ theme }) => (theme.isDark ? 'white' : '#372b70')};
 `
 
 export default UnstakeForm

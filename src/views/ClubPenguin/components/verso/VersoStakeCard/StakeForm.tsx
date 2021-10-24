@@ -179,18 +179,18 @@ const StyledButton2 = styled(Button)`
   width: 100%;
   border-radius: 8px;
   color: white;
-  background: ${({ theme }) => (theme.isDark ? '#d4444c' : '#3B88E7')};
+  background: ${({ theme }) => (theme.isDark ? '#d4444c' : '#f24e4d')};
 `
 
 const StyledUnlockButton = styled(UnlockButton)`
   width: 100%;
   border-radius: 8px;
-  background: ${({ theme }) => (theme.isDark ? '#d4444c' : '#3B88E7')};
+  background: ${({ theme }) => (theme.isDark ? '#d4444c' : '#f24e4d')};
 `
 
 const CountDownButton = styled(Button)`
   color: ${({ theme }) => (theme.isDark ? 'white' : '#00283f')};
-  background: ${({ theme }) => (theme.isDark ? '#d4444c' : '#3B88E7')};
+  background: ${({ theme }) => (theme.isDark ? '#d4444c' : '#f24e4d')};
   width: 100%;
   border-radius: 8px;
   margin-top: 16px;
@@ -207,7 +207,7 @@ const CountDownButton = styled(Button)`
 
 const AddTokenButton = styled(Button)`
   color: white;
-  background: ${({ theme }) => (theme.isDark ? '#d4444c' : '#3B88E7')};
+  background: ${({ theme }) => (theme.isDark ? '#d4444c' : '#f24e4d')};
   width: 100%;
   border-radius: 8px;
   margin-top: 16px;

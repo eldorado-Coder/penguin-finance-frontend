@@ -60,7 +60,7 @@ const Menu = (props) => {
   // }
   links[clubIndex] = {
     ...links[clubIndex],
-    badge: 'LIVE',
+    badge: 'SOON',
     badgeLightColor: '#3B88E7',
     badgeDarkColor: '#ffffff',
   }

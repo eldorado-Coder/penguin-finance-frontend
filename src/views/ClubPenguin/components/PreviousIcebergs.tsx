@@ -1,7 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Text, Flex } from 'penguinfinance-uikit2'
+import VersoCard from './verso/VersoCard'
 import SherpaCard from './sherpa/SherpaCard'
+import VersoStakeCard from './verso/VersoStakeCard/StakeCard'
 import SherpaStakeCard from './sherpa/SherpaStakeCard/StakeCard'
 
 const PreviousIcebergs = () => {
@@ -10,6 +12,12 @@ const PreviousIcebergs = () => {
       <Label fontSize="24px" mt="32px" mb="16px" fontWeight={600}>
         Previous Icebergs
       </Label>
+      <Flex justifyContent="space-between" flexWrap="wrap">
+        <VersoCard />
+        <CardWrapper>
+          <VersoStakeCard />
+        </CardWrapper>
+      </Flex>
       <Flex justifyContent="space-between" flexWrap="wrap">
         <SherpaCard />
         <CardWrapper>
