@@ -12,15 +12,12 @@ import { getApr } from 'utils/apyHelpers'
 import useTheme from 'hooks/useTheme'
 import { SECONDS_PER_DAY } from 'config'
 import useTokenPrice from 'hooks/useTokenPrice'
-import { getMonthAndDate } from 'utils/time'
 import Card from '../../Card'
-import CountDown from '../../CountDown'
 import { getCutdownType } from '../../../utils'
 import { useClubPenguinHarvest } from '../../../hooks'
 
 const VersoCard = () => {
   const [pendingTx, setPendingTx] = useState(false)
-  const [timerEnded, setTimerEnded] = useState(false)
   const { isXl } = useMatchBreakpoints()
   const { account } = useWeb3React()
   const { onHarvest } = useClubPenguinHarvest(1)
@@ -42,8 +39,6 @@ const VersoCard = () => {
   const rewardStartTime = rewardStartTimestamp ? 1000 * rewardStartTimestamp : 0
   const cutdownType = getCutdownType(currentTimestamp, rewardStartTime)
   const cutdownDate = cutdownType === 'start' ? rewardStartTime : rewardEndTimestamp
-  // const endDate = getMonthAndDate(rewardEndTimestamp)
-  const endDate = 'October 20'
 
   // apr
   const totalLiquidityInUsd = iPefiPriceUsd * getBalanceNumber(new BigNumber(totalIPEFIInPool))
@@ -63,10 +58,6 @@ const VersoCard = () => {
     } catch {
       setPendingTx(false)
     }
-  }
-
-  const handleTimerCompleted = async () => {
-    setTimerEnded(true)
   }
 
   const handleViewWebsite = () => {
@@ -241,10 +232,6 @@ const StyledCard = styled(Card)`
   padding: 32px 24px 34px;
   box-shadow: 0px 1px 6px rgb(0 0 0 / 16%);
   background-color: ${({ theme }) => (theme.isDark ? '#30264f' : '#3B88E7')};
-`
-
-const StyledText = styled(Text)`
-  color: ${({ theme }) => (theme.isDark ? theme.colors.textSubtle : '#372b70')};
 `
 
 const CardHeader = styled.div``
