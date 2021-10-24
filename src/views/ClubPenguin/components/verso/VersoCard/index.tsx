@@ -106,6 +106,14 @@ const VersoCard = () => {
           </Flex>
           <Flex className="col" flexDirection="column" alignItems="flex-start">
             <Label fontSize={isMobile ? '16px' : '20px'} fontWeight={700} lineHeight={1}>
+              END Date
+            </Label>
+            <CutdownBalance fontSize="22px" fontWeight={600}>
+              October 20
+            </CutdownBalance>
+          </Flex>
+          {/* <Flex className="col" flexDirection="column" alignItems="flex-start">
+            <Label fontSize={isMobile ? '16px' : '20px'} fontWeight={700} lineHeight={1}>
               CURRENT APR
             </Label>
             <Balance
@@ -126,7 +134,7 @@ const VersoCard = () => {
                 suffix="% per week"
               />
             </BalanceTextSmall>
-          </Flex>
+          </Flex> */}
         </FlexContainer>
         <FlexContainer
           isMobile={isMobile}
@@ -145,38 +153,6 @@ const VersoCard = () => {
             >
               Harvest All
             </HarvestButton>
-          </Flex>
-          <Flex className="col" flexDirection="column" alignItems="flex-start">
-            {timerEnded || currentTimestamp > cutdownDate ? (
-              <>
-                <Label fontSize={isMobile ? '16px' : '20px'} fontWeight={700} lineHeight={1}>
-                  ENDED
-                </Label>
-                <CutdownBalance fontSize="22px" fontWeight={400}>
-                  {endDate}
-                </CutdownBalance>
-              </>
-            ) : (
-              <>
-                <Label fontSize={isMobile ? '16px' : '20px'} fontWeight={700} lineHeight={1}>
-                  {timerEnded || currentTimestamp > cutdownDate ? (
-                    'ENDED'
-                  ) : (
-                    <>{cutdownType === 'start' ? 'STARTS IN' : 'ENDS IN'}</>
-                  )}
-                </Label>
-                <CutdownBalance fontSize="22px" fontWeight={400}>
-                  {cutdownDate > 0 && (
-                    <div className="countdown">
-                      <CountDown
-                        date={timerEnded ? currentTimestamp : cutdownDate}
-                        handleComplete={handleTimerCompleted}
-                      />
-                    </div>
-                  )}
-                </CutdownBalance>
-              </>
-            )}
           </Flex>
         </FlexContainer>
       </>
@@ -264,7 +240,7 @@ const StyledCard = styled(Card)`
   border-radius: 8px;
   padding: 32px 24px 34px;
   box-shadow: 0px 1px 6px rgb(0 0 0 / 16%);
-  background-color: ${({ theme }) => (theme.isDark ? '#30264f' : '#3B88E7')};
+  background-color: ${({ theme }) => (theme.isDark ? '#30264f' : '#f24e4d')};
 `
 
 const StyledText = styled(Text)`
