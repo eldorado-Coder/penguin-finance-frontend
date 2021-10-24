@@ -240,7 +240,7 @@ const StyledCard = styled(Card)`
   border-radius: 8px;
   padding: 32px 24px 34px;
   box-shadow: 0px 1px 6px rgb(0 0 0 / 16%);
-  background-color: ${({ theme }) => (theme.isDark ? '#30264f' : '#f24e4d')};
+  background-color: ${({ theme }) => (theme.isDark ? '#30264f' : '#3B88E7')};
 `
 
 const StyledText = styled(Text)`
