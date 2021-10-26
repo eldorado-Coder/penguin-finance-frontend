@@ -85,6 +85,7 @@ export interface V2FarmConfig {
   lpSymbol: string
   lpAddresses: Address
   strategyAddresses: Address
+  rewarderAddresses: Address
   tokenSymbol: string
   tokenAddresses: Address
   quoteTokenSymbol: QuoteToken
