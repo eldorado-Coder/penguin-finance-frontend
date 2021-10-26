@@ -151,8 +151,11 @@ export const fetchFarms = async () => {
           }
         }
 
-        const _pendingTokens =
-          pendingTokens[0] && pendingTokens[0].filter((row) => row.toLowerCase() !== getAvaxAddress().toLowerCase())
+        let _pendingTokens = pendingTokens[0]
+        if (farmConfig.isBenqi) {
+          _pendingTokens =
+            pendingTokens[0] && pendingTokens[0].filter((row) => row.toLowerCase() !== getAvaxAddress().toLowerCase())
+        }
 
         // rewarder contract call
         let minwRewardToken = '0x0000000000000000000000000000000000000000'
