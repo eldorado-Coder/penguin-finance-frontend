@@ -87,6 +87,8 @@ export interface V2Farm extends FarmConfig {
   joeSwapPoolUsdBalance?: number
   swapDailyReward?: number
   isBenqi?: boolean
+  isMINW?: boolean
+  isJoeRush?: boolean
 }
 
 export interface Lp extends LPConfig {

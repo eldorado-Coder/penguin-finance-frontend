@@ -40,6 +40,14 @@ const CellInner = styled.div<{ justifyContent?: string; minWidth?: number; smMin
   }
 `
 
+const DetailsCellInner = styled(CellInner)`
+  justify-content: flex-end;
+  padding-right: 24px;
+  @media (max-width: 480px) {
+    padding-right: 8px;
+  }
+`
+
 const StyledTr = styled.tr<{ shouldRenderChild?: boolean }>`
   cursor: pointer;
   border-bottom: ${({ theme, shouldRenderChild }) =>
@@ -98,19 +106,19 @@ const StyledTable = styled.table<{ index?: number }>`
     width: 32%;
   }
   .your-stake {
-    width: 14%;
+    width: 16%;
   }
   .apr {
     width: 12%;
   }
   .liquidity {
-    width: 14%;
+    width: 15%;
   }
   .rewards {
-    width: 14%;
+    width: 18%;
   }
   .actions {
-    width: 14%;
+    width: 7%;
   }
 `
 
@@ -373,11 +381,11 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
           </tr>
         </td>
         <td>
-          <CellInner>
+          <DetailsCellInner>
             <CellLayout>
               <Details actionPanelToggled={actionPanelExpanded} />
             </CellLayout>
-          </CellInner>
+          </DetailsCellInner>
         </td>
       </StyledTr>
     )
