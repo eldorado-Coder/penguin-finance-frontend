@@ -28,15 +28,15 @@ const StyledArtworkCard = styled(Card)<{ isMobile?: boolean }>`
   background: ${({ theme }) => theme.isDark && '#30264F'};
 
   @media (min-width: 968px) {
-    height: 320px;
+    height: 300px;
   }
 
   @media (min-width: 1080px) {
-    height: 330px;
+    height: 310px;
   }
 
   @media (min-width: 1200px) {
-    height: 380px;
+    height: 344px;
   }
 `
 

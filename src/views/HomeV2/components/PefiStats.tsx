@@ -44,8 +44,8 @@ const StyledHeading = styled(Heading)`
   font-family: 'GothamUltra Font';
 
   @media (min-width: 1200px) {
-    font-size: 58px;
-    line-height: 70px;
+    font-size: 48px;
+    line-height: 60px;
   }
 `
 
@@ -74,8 +74,8 @@ const StyledCardValue = styled(CardValue)`
   font-family: 'Telegraf Bold Font';
 
   @media (min-width: 1200px) {
-    font-size: 20px;
-    line-height: 25px;
+    font-size: 18px;
+    line-height: 20px;
   }
 `
 
@@ -97,8 +97,8 @@ const StyledText = styled(Text)`
   font-family: 'Telegraf Regular Font';
 
   @media (min-width: 1200px) {
-    font-size: 20px;
-    line-height: 25px;
+    font-size: 18px;
+    line-height: 20px;
   }
 `
 
