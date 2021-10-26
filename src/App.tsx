@@ -1,5 +1,5 @@
-import React, { Suspense, lazy } from 'react'
-import { Router, Route, Switch } from 'react-router-dom'
+import React, { Suspense, lazy, useEffect } from 'react'
+import { Router, Route, Switch, useLocation } from 'react-router-dom'
 import { ResetCSS } from 'penguinfinance-uikit2'
 import BigNumber from 'bignumber.js'
 import { useFetchProfile, useFetchPublicData } from 'state/hooks'
@@ -8,6 +8,8 @@ import Menu from 'components/Menu'
 import ToastListener from 'components/ToastListener'
 import PageLoader from 'components/PageLoader'
 import CurrentBlockWrapper from 'components/CurrentBlockWrapper'
+import Footer from 'components/Footer/Footer'
+import usePersistConnect from 'hooks/usePersistConnect'
 import history from './routerHistory'
 import LaunchpadVideo from './views/LaunchpadVideo'
 
@@ -42,14 +44,26 @@ BigNumber.config({
   DECIMAL_PLACES: 80,
 })
 
+const ScrollToTop = () => {
+  const { pathname } = useLocation()
+
+  useEffect(() => {
+    document.getElementById('root').scrollTo(0, 0)
+  }, [pathname])
+
+  return null
+}
+
 const App: React.FC = () => {
   useFetchPublicData()
   useFetchProfile()
+  usePersistConnect()
 
   return (
     <Router history={history}>
       <ResetCSS />
       <GlobalStyle />
+      <ScrollToTop />
       <Menu>
         <Suspense fallback={<PageLoader />}>
           <Switch>
@@ -60,8 +74,8 @@ const App: React.FC = () => {
               <HomeV1 />
             </Route>
             <Route path="/" exact>
-              <HomeV1 />
-              {/* <HomeV2 /> */}
+              {/* <HomeV1 /> */}
+              <HomeV2 />
             </Route>
             <Route path="/farms">
               <FarmsV2 />
@@ -123,6 +137,7 @@ const App: React.FC = () => {
             {/* 404 */}
             <Route component={NotFound} />
           </Switch>
+          <Footer />
         </Suspense>
       </Menu>
       <ToastListener />

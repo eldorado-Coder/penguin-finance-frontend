@@ -104,13 +104,13 @@ const StyledButton = styled(Button)`
   width: 100%;
   border-radius: 8px;
   color: white;
-  background: ${({ theme }) => (theme.isDark ? '#d4444c' : '#f24e4d')};
+  background: ${({ theme }) => (theme.isDark ? '#d4444c' : '#3B88E7')};
 `
 
 const StyledUnlockButton = styled(UnlockButton)`
   width: 100%;
   border-radius: 8px;
-  background: ${({ theme }) => (theme.isDark ? '#d4444c' : '#f24e4d')};
+  background: ${({ theme }) => (theme.isDark ? '#d4444c' : '#3B88E7')};
 `
 
 const StyledText = styled(Text)`

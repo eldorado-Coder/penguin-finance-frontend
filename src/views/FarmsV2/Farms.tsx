@@ -14,6 +14,7 @@ import {
   useBenqiFarmsGlobalData,
   usePricePefiUsdt,
   usePriceAvaxUsdt,
+  usePricePngUsdt,
 } from 'state/hooks'
 import { fetchV2FarmUserDataAsync } from 'state/actions'
 import useRefresh from 'hooks/useRefresh'
@@ -21,7 +22,9 @@ import useTheme from 'hooks/useTheme'
 import useTokenPrice from 'hooks/useTokenPrice'
 import useJoePrice from 'hooks/useJoePrice'
 import { getBalanceNumber } from 'utils/formatBalance'
-import { DAYS_PER_YEAR } from 'config'
+import { DAYS_PER_YEAR, SECONDS_PER_DAY } from 'config'
+import tokens from 'config/constants/tokens'
+import { getAddress } from 'utils/addressHelpers'
 import { getApr, getLydiaFarmApr, getJoeFarmApr, getBenqiFarmApr } from 'utils/apyHelpers'
 import V1Farms from './V1'
 import V2Farms from './V2'
@@ -73,11 +76,27 @@ const TvlContainer = styled(Flex)`
   align-items: center;
   flex-wrap: wrap;
   justify-content: center;
+  margin-bottom: 40px;
+  min-width: 220px;
 
-  ${({ theme }) => theme.mediaQueries.md} {
+  @media (min-width: 968px) {
     justify-content: flex-start;
+    margin-bottom: 0px;
   }
 `
+
+const HeaderLabel = styled(Text)`
+  color: ${({ theme }) => (theme.isDark ? '#bba6dd' : '#372871')};
+`;
+
+const Description = styled(Text)`
+  color: ${({ theme }) => (theme.isDark ? '#bba6dd' : '#372871')};
+
+  div {
+    display: inline;
+    cursor: pointer;
+  }
+`;
 
 // slider
 const TabWrapper = styled.div`
@@ -216,6 +235,7 @@ const Farms: React.FC = () => {
   const avaxPriceUsd = usePriceAvaxUsdt().toNumber()
   const { lydPrice: lydPriceUsd, qiPrice: qiPriceUsd } = useTokenPrice()
   const joePriceUsd = useJoePrice()
+  const pngPriceUsd = usePricePngUsdt().toNumber()
 
   const isMobile = !isXl
   const theme = useTheme()
@@ -238,12 +258,27 @@ const Farms: React.FC = () => {
     return v2FarmTvl
   }
 
+  const getTokenPrice = (address) => {
+    if (!address) return 1
+    const rewardToken = tokens.find((row) => getAddress(row.address).toLowerCase() === address.toLowerCase())
+
+    if (rewardToken && rewardToken.symbol === 'PNG') return pngPriceUsd
+    if (rewardToken && rewardToken.symbol === 'JOE') return joePriceUsd
+    return 1
+  }
+
   const activeFarmsWithApy = activeFarms.map((farm) => {
     const pefiPerYear = getBalanceNumber(farm.pefiPerYear)
     const pefiPerDay = pefiPerYear / DAYS_PER_YEAR
     const pefiRewardPerDayInUsd = pefiPriceUsd * pefiPerDay * (1 - 0.15 - 0.1)
     const pefiDailyApr = farm.totalLiquidityInUsd > 0 ? pefiRewardPerDayInUsd / farm.totalLiquidityInUsd : 0
     const pefiApr = getApr(pefiDailyApr)
+
+    // minw
+    const minwRewardPerDay = SECONDS_PER_DAY * Number(farm.minwRewardPerSec)
+    const minwRewardPerDayInUsd = getTokenPrice(farm.minwRewardToken) * minwRewardPerDay
+    const minwDailyApr = farm.totalLiquidityInUsd > 0 ? minwRewardPerDayInUsd / farm.totalLiquidityInUsd : 0
+    const minwApr = getApr(minwDailyApr)
 
     let { stakingApr, swapFeeApr } = farm
 
@@ -281,8 +316,9 @@ const Farms: React.FC = () => {
       pefiApr,
       stakingApr,
       swapFeeApr,
-      apr: stakingApr + swapFeeApr + pefiApr,
-      apy: stakingApr + swapFeeApr + pefiApr,
+      minwApr,
+      apr: stakingApr + swapFeeApr + pefiApr + minwApr,
+      apy: stakingApr + swapFeeApr + pefiApr + minwApr,
     }
   })
 
@@ -410,6 +446,10 @@ const Farms: React.FC = () => {
     </Flex>
   )
 
+  const handleViewMINW = () => {
+    window.open('https://penguin-finance.medium.com/make-igloos-not-war-new-joe-png-yield-farming-strategies-b70fac00807f', '_blank');
+  };
+
   const tvl = getV2FarmsTVL()
 
   return (
@@ -425,17 +465,45 @@ const Farms: React.FC = () => {
           alt="v2 farm banner"
         />
       </IgloosBannerContainer>
-      <TvlContainer marginBottom={isMobile ? '30px' : '70px'}>
-        <span>{`Total Value Locked (TVL): `}</span>
-        <Balance
-          fontSize="28px"
-          color={theme.isDark ? '#bba6dd' : '#372871'}
-          fontWeight="600"
-          prefix="$"
-          decimals={0}
-          value={Number(tvl)}
-        />
-      </TvlContainer>
+      {isMobile ? 
+        <>
+          <HeaderLabel fontSize='28px' fontWeight={500} lineHeight={1.2} textAlign='center' mb='8px'>Make Igloos, Not War (MINW), and #JOERUSH are live!</HeaderLabel>
+          <Description fontWeight={400} marginBottom={isMobile ? '20px' : '70px'} textAlign='center'>
+            New farming strategies! Earn up to 5 tokens (including AVAX incentives) and +10% rewards on MINW Igloos. <Text color='red' onClick={handleViewMINW}>Learn more.</Text>
+          </Description>
+          <TvlContainer>
+            <span>{`TVL: `}</span>
+            <Balance
+              fontSize="28px"
+              color={theme.isDark ? '#bba6dd' : '#372871'}
+              fontWeight="600"
+              prefix="$"
+              decimals={0}
+              value={Number(tvl)} 
+            />
+          </TvlContainer>
+        </>
+        :
+        <>
+          <Flex justifyContent='space-between'>
+            <HeaderLabel fontSize='28px' fontWeight={500}>Make Igloos, Not War (MINW), and #JOERUSH are live!</HeaderLabel>
+            <TvlContainer>
+              <span>{`TVL: `}</span>
+              <Balance
+                fontSize="28px"
+                color={theme.isDark ? '#bba6dd' : '#372871'}
+                fontWeight="600"
+                prefix="$"
+                decimals={0}
+                value={Number(tvl)}
+              />
+            </TvlContainer>
+          </Flex>
+          <Description fontWeight={400} marginBottom={isMobile ? '30px' : '70px'}>
+            New farming strategies! Earn up to 5 tokens (including AVAX incentives) and +10% rewards on MINW Igloos. <Text color='red' onClick={handleViewMINW}>Learn more.</Text>
+          </Description>
+        </>  
+      }
       {isMobile ? (
         <FilterWrapper justifyContent="space-between" alignItems="center" flexWrap="wrap">
           <Flex mt="8px" justifyContent="center" mb="8px" flexWrap="wrap">

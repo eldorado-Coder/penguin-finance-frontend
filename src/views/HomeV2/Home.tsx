@@ -70,7 +70,7 @@ const Home: React.FC = () => {
 }
 
 const StyledPage = styled(Page)`
-  max-width: 1380px;
+  max-width: 1200px;
 `
 
 const Hero = styled.div<{ isMobile?: boolean }>`
@@ -128,7 +128,7 @@ const Cards = styled(BaseLayout)`
 
   @media (min-width: 1200px) {
     margin-bottom: 30px;
-    grid-gap: 56px;
+    grid-gap: 36px;
   }
 
   & > div {

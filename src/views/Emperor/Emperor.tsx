@@ -18,11 +18,171 @@ const JACKPOTS = {
   UNLOCK: `${process.env.PUBLIC_URL}/images/emperor/jackpot/jackpot_unlock.gif`,
 }
 
+const Emperor: React.FC = () => {
+  const [jackpot, setJackpot] = useState(JACKPOTS.LOCK)
+  const { currentEmperor } = useEmperor()
+  const { account } = useWeb3React()
+  const [jackpotOpenSound, setJackpotOpenSound] = useState(false)
+  const [showJackpot, setShowJackpot] = useState(false)
+  const jackpotRef = useRef(jackpot)
+  const { isMusic } = useUserSetting()
+  const { isSm, isXs } = useMatchBreakpoints()
+  const isMobile = isSm || isXs
+
+  jackpotRef.current = jackpot
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(fetchEmperor(account))
+
+    const refreshInterval = setInterval(() => {
+      dispatch(fetchEmperor(account))
+    }, 5000)
+
+    return () => clearInterval(refreshInterval)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, account])
+
+  const handleOpenJackpot = () => {
+    if (jackpotRef.current === JACKPOTS.LOCK) {
+      setJackpotOpenSound(true)
+      setJackpot(JACKPOTS.OPEN)
+      setTimeout(() => {
+        setJackpot(JACKPOTS.UNLOCK)
+        setJackpotOpenSound(false)
+      }, 800)
+    } else if (jackpotRef.current === JACKPOTS.UNLOCK) {
+      setJackpot(JACKPOTS.LOCK)
+    }
+  }
+
+  const onJackpotLoaded = () => {
+    setShowJackpot(true)
+  }
+
+  const renderEmperorStatsPage = () => {
+    return (
+      <>
+        {account && (
+          <Wrapper isMobile={isMobile}>
+            <ChestWrapper isMobile={isMobile} jackpot={jackpot} onClick={handleOpenJackpot}>
+              <PaperWrapper isOpen={jackpot === JACKPOTS.UNLOCK}>
+                <JackpotPaper
+                  isMobile={isMobile}
+                  onLoad={onJackpotLoaded}
+                  src={`${process.env.PUBLIC_URL}/images/emperor/jackpot/Mapefi.svg`}
+                  alt="jackpot_paper"
+                />
+                {showJackpot && (
+                  <Text className="price" fontSize="24px">
+                    {currentEmperor.jackpot} <span>i</span>PEFI
+                  </Text>
+                )}
+              </PaperWrapper>
+              <img className="jackpot-lock" src={JACKPOTS.LOCK} alt="jackpot_lock" />
+              <img className="jackpot-open" src={JACKPOTS.OPEN} alt="jackpot_open" />
+              <img className="jackpot-unlock" src={JACKPOTS.UNLOCK} alt="jackpot_unlock" />
+            </ChestWrapper>
+          </Wrapper>
+        )}
+        {isMobile ? (
+          <>
+            <Flex flexDirection="column" alignItems="center" padding="40px 32px">
+              {account && (
+                <Flex width="100%" flexDirection="column" px="10px">
+                  <YourScoreBlock />
+                  <TopPenguinsBlock />
+                </Flex>
+              )}
+            </Flex>
+          </>
+        ) : (
+          <>
+            <Grid align="center" marginTop={{ xs: 80, sm: 100 }}>
+              <GridItem>
+                <EmperorBlock />
+              </GridItem>
+            </Grid>
+            {account && (
+              <PGGRid align="between" marginTop={{ xs: -40, sm: -90, md: -200, lg: -200 }}>
+                <GridItem>
+                  <TopPenguinsBlock />
+                </GridItem>
+                <GridItem>
+                  <YourScoreBlock />
+                </GridItem>
+              </PGGRid>
+            )}
+          </>
+        )}
+      </>
+    )
+  }
+
+  const renderEmperorEndPage = () => {
+    return (
+      <>
+        <EmperorEndBgContainer>
+          <BlitzImage
+            src={isSm ? '/images/emperor/blitz_end2_mobile.png' : '/images/emperor/blitz_end2.png'}
+            alt="blitz-img"
+          />
+        </EmperorEndBgContainer>
+      </>
+    )
+  }
+
+  const emperorEnded = false
+  const emperorDefaultVideo = 'https://res.cloudinary.com/dbyunrpzq/video/upload/v1624544908/penguin_emperor_ldeorc.mp4'
+  // to change the video of emperor winner page background video, please change this video path
+  const emperorWinnerVideo = '/videos/penguin_emperor_winner.mp4'
+
+  return (
+    <EmperorPage>
+      <Sound
+        url={`${emperorEnded ? '/sounds/penguin_emperor_winner.mp3' : '/sounds/emperor_blitz1.mp3'} `}
+        playStatus={Sound.status.PLAYING}
+        volume={isMusic ? 20 : 0}
+        loop
+      />
+      <Sound
+        url="/sounds/jackpot_open.mp3"
+        playStatus={jackpotOpenSound ? Sound.status.PLAYING : Sound.status.STOPPED}
+        volume={isMusic ? 100 : 0}
+      />
+
+      {/* background video on large screen and background image on small screen */}
+      <EmperorWrapper isSm={isSm}>
+        {isSm ? (
+          <EmperorSmWrapper>
+            <ThroneSmBgContainer>
+              <EmperorSmBgImage src="/images/emperor/emperor-bg-sm.png" alt="emperor background" />
+            </ThroneSmBgContainer>
+            <Flex flexDirection="column" alignItems="center" padding="40px 32px">
+              <EmperorBlock />
+            </Flex>
+          </EmperorSmWrapper>
+        ) : (
+          <EmperorBgContainer width="100%" height="100%" autoPlay loop muted>
+            <source src={emperorEnded ? emperorWinnerVideo : emperorDefaultVideo} />
+          </EmperorBgContainer>
+        )}
+
+        {!emperorEnded ? <>{renderEmperorStatsPage()}</> : <>{renderEmperorEndPage()}</>}
+      </EmperorWrapper>
+    </EmperorPage>
+  )
+}
+
 const EmperorPage = styled(Page)`
   max-width: 100%; //1120px;
   overflow: hidden;
   padding: 0px;
   background: #231631;
+  @media (min-width: 576px) {
+    height: 100%;
+  }
   @media (min-width: 768px) {
     padding: 40px 30px;
   }
@@ -33,13 +193,13 @@ const Wrapper = styled.div<{ isMobile?: boolean }>`
   width: 100%;
   top: 0;
   left: 0;
-  height: ${({ isMobile }) => isMobile ? '440px' : '100%'};
+  height: ${({ isMobile }) => (isMobile ? '440px' : '100%')};
 `
 
-const ChestWrapper = styled.div<{ jackpot: string, isMobile?: boolean }>`
+const ChestWrapper = styled.div<{ jackpot: string; isMobile?: boolean }>`
   position: absolute;
-  width: ${({ isMobile }) => isMobile ? '28%' : '9.5%'};
-  left: ${({ isMobile }) => isMobile ? '1%' : '26%'};
+  width: ${({ isMobile }) => (isMobile ? '28%' : '9.5%')};
+  left: ${({ isMobile }) => (isMobile ? '1%' : '26%')};
   bottom: 18%;
   z-index: 11;
 
@@ -110,7 +270,7 @@ const PaperWrapper = styled.div<{ isOpen: boolean }>`
 const JackpotPaper = styled.img<{ isMobile?: boolean }>`
   object-fit: cover;
   position: absolute;
-  min-width: ${({ isMobile }) => isMobile ? '110px' : '120px'};
+  min-width: ${({ isMobile }) => (isMobile ? '110px' : '120px')};
 
   @media (min-width: 1200px) {
     min-width: 180px;
@@ -145,27 +305,27 @@ const Grid = styled.div<{ align: string; marginTop?: { xs?: number; sm?: number;
   padding: 0 3%;
   @media (min-width: 640px) {
     ${({ marginTop }) =>
-    marginTop.xs && {
-      marginTop: `${marginTop.xs}px`,
-    }}
+      marginTop.xs && {
+        marginTop: `${marginTop.xs}px`,
+      }}
   }
   @media (min-width: 768px) {
     ${({ marginTop }) =>
-    marginTop.sm && {
-      marginTop: `${marginTop.sm}px`,
-    }}
+      marginTop.sm && {
+        marginTop: `${marginTop.sm}px`,
+      }}
   }
   @media (min-width: 1200px) {
     ${({ marginTop }) =>
-    marginTop.md && {
-      marginTop: `${marginTop.md}px`,
-    }}
+      marginTop.md && {
+        marginTop: `${marginTop.md}px`,
+      }}
   }
   @media (min-width: 1450px) {
     ${({ marginTop }) =>
-    marginTop.lg && {
-      marginTop: `${marginTop.lg}px`,
-    }}
+      marginTop.lg && {
+        marginTop: `${marginTop.lg}px`,
+      }}
   }
   @media (max-width: 1600px) {
     font-size: 24px;
@@ -189,7 +349,7 @@ const PGGRid = styled(Grid)`
 `
 
 const EmperorBgContainer = styled.video<{ isMobile?: boolean }>`
-  object-fit: ${({ isMobile }) => isMobile ? 'cover' : 'fill'};
+  object-fit: ${({ isMobile }) => (isMobile ? 'cover' : 'fill')};
   position: absolute;
   top: 0px;
   bottom: 0px;
@@ -208,7 +368,7 @@ const BlitzImage = styled.img`
 `
 
 const EmperorWrapper = styled.div<{ isSm: boolean }>`
-  background: ${({ isSm }) => isSm ? "#231631" : "transparent"};
+  background: ${({ isSm }) => (isSm ? '#231631' : 'transparent')};
   z-index: -1;
   padding-bottom: 8px;
 `
@@ -235,161 +395,5 @@ const EmperorSmBgImage = styled.img`
   width: 100%;
   height: 100%;
 `
-
-const Emperor: React.FC = () => {
-  const [jackpot, setJackpot] = useState(JACKPOTS.LOCK)
-  const { currentEmperor } = useEmperor()
-  const { account } = useWeb3React()
-  const [jackpotOpenSound, setJackpotOpenSound] = useState(false)
-  const [showJackpot, setShowJackpot] = useState(false)
-  const jackpotRef = useRef(jackpot)
-  const { isMusic } = useUserSetting()
-  const { isSm, isXs } = useMatchBreakpoints()
-  const isMobile = isSm || isXs;
-
-  jackpotRef.current = jackpot
-
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    dispatch(fetchEmperor(account))
-
-    const refreshInterval = setInterval(() => {
-      dispatch(fetchEmperor(account))
-    }, 5000)
-
-    return () => clearInterval(refreshInterval)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, account])
-
-  const handleOpenJackpot = () => {
-    if (jackpotRef.current === JACKPOTS.LOCK) {
-      setJackpotOpenSound(true)
-      setJackpot(JACKPOTS.OPEN)
-      setTimeout(() => {
-        setJackpot(JACKPOTS.UNLOCK)
-        setJackpotOpenSound(false)
-      }, 800)
-    } else if (jackpotRef.current === JACKPOTS.UNLOCK) {
-      setJackpot(JACKPOTS.LOCK)
-    }
-  }
-
-  const onJackpotLoaded = () => {
-    setShowJackpot(true)
-  }
-
-  const renderEmperorStatsPage = () => {
-    return (
-      <>
-        {account && (
-          <Wrapper isMobile={isMobile}>
-            <ChestWrapper isMobile={isMobile} jackpot={jackpot} onClick={handleOpenJackpot}>
-              <PaperWrapper isOpen={jackpot === JACKPOTS.UNLOCK}>
-                <JackpotPaper
-                  isMobile={isMobile}
-                  onLoad={onJackpotLoaded}
-                  src={`${process.env.PUBLIC_URL}/images/emperor/jackpot/Mapefi.svg`}
-                  alt="jackpot_paper"
-                />
-                {showJackpot && (
-                  <Text className="price" fontSize="24px">
-                    {currentEmperor.jackpot} <span>i</span>PEFI
-                  </Text>
-                )}
-              </PaperWrapper>
-              <img className="jackpot-lock" src={JACKPOTS.LOCK} alt="jackpot_lock" />
-              <img className="jackpot-open" src={JACKPOTS.OPEN} alt="jackpot_open" />
-              <img className="jackpot-unlock" src={JACKPOTS.UNLOCK} alt="jackpot_unlock" />
-            </ChestWrapper>
-          </Wrapper>
-        )}
-        {isMobile ?
-          <>
-            <Flex flexDirection='column' alignItems='center' padding='40px 32px'>
-              {account &&
-                <Flex width='100%' flexDirection='column' px="10px">
-                  <YourScoreBlock />
-                  <TopPenguinsBlock />
-                </Flex>
-              }
-            </Flex>
-          </>
-          : <>
-            <Grid align="center" marginTop={{ xs: 80, sm: 100 }}>
-              <GridItem>
-                <EmperorBlock />
-              </GridItem>
-            </Grid>
-            {account && (
-              <PGGRid align="between" marginTop={{ xs: -40, sm: -90, md: -200, lg: -200 }}>
-                <GridItem>
-                  <TopPenguinsBlock />
-                </GridItem>
-                <GridItem>
-                  <YourScoreBlock />
-                </GridItem>
-              </PGGRid>
-            )}
-          </>
-        }
-      </>
-    )
-  }
-
-  const renderEmperorEndPage = () => {
-    return (
-      <>
-        <EmperorEndBgContainer>
-          <BlitzImage
-            src={isSm ? '/images/emperor/blitz_end2_mobile.png' : '/images/emperor/blitz_end2.png'}
-            alt="blitz-img"
-          />
-        </EmperorEndBgContainer>
-      </>
-    )
-  }
-
-  const emperorEnded = false
-  const emperorDefaultVideo = 'https://res.cloudinary.com/dbyunrpzq/video/upload/v1624544908/penguin_emperor_ldeorc.mp4'
-  // to change the video of emperor winner page background video, please change this video path
-  const emperorWinnerVideo = '/videos/penguin_emperor_winner.mp4'
-
-  return (
-    <EmperorPage>
-      <Sound
-        url={`${emperorEnded ? '/sounds/penguin_emperor_winner.mp3' : '/sounds/emperor_blitz1.mp3'} `}
-        playStatus={Sound.status.PLAYING}
-        volume={isMusic ? 20 : 0}
-        loop
-      />
-      <Sound
-        url="/sounds/jackpot_open.mp3"
-        playStatus={jackpotOpenSound ? Sound.status.PLAYING : Sound.status.STOPPED}
-        volume={isMusic ? 100 : 0}
-      />
-
-      {/* background video on larg screen and background image on small screen */}
-      <EmperorWrapper isSm={isSm}>
-        {isSm ? (
-          <EmperorSmWrapper>
-            <ThroneSmBgContainer>
-              <EmperorSmBgImage src='/images/emperor/emperor-bg-sm.png' alt="emperor background" />
-            </ThroneSmBgContainer>
-            <Flex flexDirection='column' alignItems='center' padding='40px 32px'>
-              <EmperorBlock />
-            </Flex>
-          </EmperorSmWrapper>
-        ) : (
-          <EmperorBgContainer width="100%" height="100%" autoPlay loop muted>
-            <source src={emperorEnded ? emperorWinnerVideo : emperorDefaultVideo} />
-          </EmperorBgContainer>
-        )}
-
-        {!emperorEnded ? <>{renderEmperorStatsPage()}</> : <>{renderEmperorEndPage()}</>}
-      </EmperorWrapper>
-    </EmperorPage>
-  )
-}
 
 export default Emperor

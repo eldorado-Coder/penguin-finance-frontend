@@ -64,6 +64,11 @@ export const config: MenuEntry[] = [
     badge: 'NEW',
   },
   {
+    label: 'Learn More',
+    icon: 'MoreIcon',
+    href: 'https://docs.penguinfinance.io/',
+  },
+  {
     label: "More",
     icon: "MoreIcon",
     items: [

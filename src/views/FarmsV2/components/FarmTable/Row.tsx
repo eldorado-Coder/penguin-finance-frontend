@@ -40,6 +40,14 @@ const CellInner = styled.div<{ justifyContent?: string; minWidth?: number; smMin
   }
 `
 
+const DetailsCellInner = styled(CellInner)`
+  justify-content: flex-end;
+  padding-right: 24px;
+  @media (max-width: 480px) {
+    padding-right: 8px;
+  }
+`
+
 const StyledTr = styled.tr<{ shouldRenderChild?: boolean }>`
   cursor: pointer;
   border-bottom: ${({ theme, shouldRenderChild }) =>
@@ -98,19 +106,19 @@ const StyledTable = styled.table<{ index?: number }>`
     width: 32%;
   }
   .your-stake {
-    width: 14%;
+    width: 16%;
   }
   .apr {
     width: 12%;
   }
   .liquidity {
-    width: 14%;
+    width: 15%;
   }
   .rewards {
-    width: 14%;
+    width: 18%;
   }
   .actions {
-    width: 14%;
+    width: 7%;
   }
 `
 
@@ -188,7 +196,15 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
     })
   const liquidity = farm.totalLiquidityInUsd
   const stakedBalanceInUsd = stakedBalance ? getBalanceNumber(stakedBalance) * farm.lpPrice : 0
-  const farmApr = farm.apr >= 0 ? (100 * Number(farm.apr)).toFixed(2) : 0
+  // const farmApr = farm.apr >= 0 ? (100 * Number(farm.apr)).toFixed(2) : 0
+  let farmApr = '';
+  if (farm.apr >= 0) {
+    if (farm.joeStakingApy) {
+      farmApr = (100 * Number(farm.apr + farm.joeStakingApy)).toFixed(2) 
+    } else {
+      farmApr = (100 * Number(farm.apr)).toFixed(2);
+    }
+  }
 
   const toggleActionPanel = () => {
     setActionPanelExpanded(!actionPanelExpanded)
@@ -221,9 +237,35 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
       additionalSwapAprLabel = 'Lydia Finance'
     }
     const mainApr = farm.pefiApr || 0
-    const additionalStakingApr = farm.stakingApr || 0
+    const additionalStakingApr = farm.joeStakingApy || farm.stakingApr || 0
     const additionalSwapFeeApr = farm.swapFeeApr || 0
-    const totalApr = farm.apr || 0
+    const minwApr = farm.minwApr || 0
+    let totalApr = farm.apr || 0
+    
+    if (farm.joeStakingApy) {
+      totalApr += additionalStakingApr
+    }
+
+    if (minwApr > 0) {
+      return `
+        <div style="display: flex; width: 100%; align-items: center;">
+          <div style="width: 60%; text-align: center;">
+            <p>Penguin Finance</p>
+            <p>${additionalStakingAprLabel} Staking</p>
+            <p>${additionalSwapAprLabel} Swap</p>
+            <p>MINW Campaign</p>
+            <p>Total APR</p>
+          </div>
+          <div style="margin-left: 5px; padding-right: 5px; ">
+            <p style="font-weight: 500">${(mainApr * 100).toFixed(2)}% APR</p>
+            <p style="font-weight: 500">${(additionalStakingApr * 100).toFixed(2)}% APR</p>
+            <p style="font-weight: 500">${(additionalSwapFeeApr * 100).toFixed(2)}% APR</p>
+            <p style="font-weight: 500">${(minwApr * 100).toFixed(2)}% APR</p>
+            <p style="color: ${theme.colors.red}; font-weight: 500">${(totalApr * 100).toFixed(2)}% APR</p>
+          </div>
+        </div>
+      `
+    }
 
     return `
       <div style="display: flex; width: 100%; align-items: center;">
@@ -373,11 +415,11 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
           </tr>
         </td>
         <td>
-          <CellInner>
+          <DetailsCellInner>
             <CellLayout>
               <Details actionPanelToggled={actionPanelExpanded} />
             </CellLayout>
-          </CellInner>
+          </DetailsCellInner>
         </td>
       </StyledTr>
     )

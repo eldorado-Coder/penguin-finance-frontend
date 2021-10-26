@@ -85,6 +85,7 @@ export interface V2FarmConfig {
   lpSymbol: string
   lpAddresses: Address
   strategyAddresses: Address
+  rewarderAddresses: Address
   tokenSymbol: string
   tokenAddresses: Address
   quoteTokenSymbol: QuoteToken
@@ -98,6 +99,7 @@ export interface V2FarmConfig {
   }
   withdrawalFee?: string
   hardApy?: string
+  joeStakingApy?: number
   type?: string
   name?: string
   strategyAddress?: string
@@ -109,6 +111,8 @@ export interface V2FarmConfig {
   infoLink?: string
   guideLink?: string
   isBenqi?: boolean
+  isMINW?: boolean
+  isJoeRush?: boolean
 }
 
 export interface LPConfig {

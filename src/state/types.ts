@@ -79,6 +79,7 @@ export interface V2Farm extends FarmConfig {
   stakingApr?: number
   swapFeeApr?: number
   pefiApr?: number
+  minwApr?: number
   apr?: number
   apy?: number
   displayedDecimals?: number
@@ -87,6 +88,12 @@ export interface V2Farm extends FarmConfig {
   joeSwapPoolUsdBalance?: number
   swapDailyReward?: number
   isBenqi?: boolean
+  isMINW?: boolean
+  isJoeRush?: boolean
+  // minw
+  minwRewardToken?: string
+  minwRewardPerSec?: string
+  joeStakingApy?: number
 }
 
 export interface Lp extends LPConfig {
@@ -147,6 +154,12 @@ export interface FarmsState {
   pefiPerBlock?: number
   pefiPerSecond?: number
   data: Farm[]
+}
+
+export interface V2FarmsState {
+  pefiPerBlock?: number
+  pefiPerSecond?: number
+  data: V2Farm[]
 }
 
 export interface LydiaFarmsState {

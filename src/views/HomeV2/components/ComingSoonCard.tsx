@@ -15,16 +15,36 @@ const ComingSoonCard: React.FC = () => {
           Coming Soon
         </StyledHeading>
         <Row>
-          <StyledText color="white">CryptoPuffies</StyledText>
+          <StyledText color="white">
+            <a href="https://twitter.com/CryptoPuffies/status/1438176283935092736" target="_blank" rel="noreferrer">
+              CryptoPuffies
+            </a>
+          </StyledText>
         </Row>
         <Row>
-          <StyledText color="white">Pangolin vs Joe Emperor Game</StyledText>
+          <StyledText color="white">
+            <a href="https://penguinfinance.org/emperor" target="_blank" rel="noreferrer">
+              Pangolin vs Joe Emperor Game
+            </a>
+          </StyledText>
         </Row>
         <Row>
-          <StyledText color="white">Make Igloos, Not War</StyledText>
+          <StyledText color="white">
+            <a
+              href="https://penguin-finance.medium.com/make-igloos-not-war-new-joe-png-yield-farming-strategies-b70fac00807f"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Make Igloos, Not War
+            </a>
+          </StyledText>
         </Row>
         <Row>
-          <StyledText color="white">Penguin Arena</StyledText>
+          <StyledText color="white">
+            <a href="https://penguinfinance.org/arena" target="_blank" rel="noreferrer">
+              Penguin Arena
+            </a>
+          </StyledText>
         </Row>
       </StyledCardBody>
       <StyledFooter>
@@ -35,8 +55,8 @@ const ComingSoonCard: React.FC = () => {
           <StyledNavLink exact activeClassName="active" to="/">
             <SvgIcon
               src={`${process.env.PUBLIC_URL}/images/home/arrow-right.svg`}
-              width={isMobile ? '25px' : '31px'}
-              height={isMobile ? '25px' : '31px'}
+              width={isMobile ? '25px' : '28px'}
+              height={isMobile ? '25px' : '28px'}
             />
           </StyledNavLink>
         </Flex>
@@ -68,8 +88,8 @@ const StyledHeading = styled(Heading)`
   font-family: 'GothamUltra Font';
 
   @media (min-width: 1200px) {
-    font-size: 58px;
-    line-height: 70px;
+    font-size: 48px;
+    line-height: 60px;
   }
 `
 
@@ -99,6 +119,12 @@ const StyledText = styled(Text)<{ isBold?: boolean }>`
   font-weight: ${({ isBold }) => (isBold ? 600 : 300)};
   font-size: 14px;
 
+  a {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
   @font-face {
     font-family: 'Telegraf Regular Font';
     src: url(${process.env.PUBLIC_URL}/fonts/Telegraf-Regular.ttf) format('truetype');
@@ -107,8 +133,8 @@ const StyledText = styled(Text)<{ isBold?: boolean }>`
   font-family: 'Telegraf Regular Font';
 
   @media (min-width: 1200px) {
-    font-size: 20px;
-    line-height: 25px;
+    font-size: 18px;
+    line-height: 20px;
   }
 `
 

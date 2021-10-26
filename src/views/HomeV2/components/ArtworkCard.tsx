@@ -1,18 +1,15 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Card, useMatchBreakpoints } from 'penguinfinance-uikit2'
-import { useHistory } from 'react-router-dom'
 
 const ArtworkCard = () => {
-  const history = useHistory()
   const { isXl } = useMatchBreakpoints()
   const isMobile = !isXl
   const onClickArtworkV2Card = () => {
-    history.push('/club')
-    // window.open(
-    //   'https://penguin-finance.medium.com/penguin-launchpad-boofinance-ido-tiers-are-here-29ba4cd90053',
-    //   '_blank',
-    // )
+    window.open(
+      'https://penguin-finance.medium.com/make-igloos-not-war-new-joe-png-yield-farming-strategies-b70fac00807f',
+      '_blank',
+    )
   }
 
   return (
@@ -31,15 +28,15 @@ const StyledArtworkCard = styled(Card)<{ isMobile?: boolean }>`
   background: ${({ theme }) => theme.isDark && '#30264F'};
 
   @media (min-width: 968px) {
-    height: 320px;
+    height: 300px;
   }
 
   @media (min-width: 1080px) {
-    height: 330px;
+    height: 310px;
   }
 
   @media (min-width: 1200px) {
-    height: 380px;
+    height: 344px;
   }
 `
 
@@ -47,7 +44,7 @@ const StyledArtworkCardBg = styled.div`
   height: 100%;
   background-size: cover;
   background-position: center center;
-  background-image: url('/images/launchpad/club_penguin_live.png');
+  background-image: url('/images/home/minwui.png');
   cursor: pointer;
 `
 

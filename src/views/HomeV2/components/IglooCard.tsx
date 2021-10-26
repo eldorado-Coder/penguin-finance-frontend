@@ -45,18 +45,18 @@ const CardMidContent = styled(Heading).attrs({ size: 'xl' })`
   }
 
   @media (min-width: 968px) {
+    line-height: 40px;
+    font-size: 36px;
+  }
+
+  @media (min-width: 1080px) {
     line-height: 48px;
     font-size: 40px;
   }
 
-  @media (min-width: 1080px) {
-    line-height: 56px;
-    font-size: 44px;
-  }
-
   @media (min-width: 1300px) {
-    line-height: 62px;
-    font-size: 52px;
+    line-height: 54px;
+    font-size: 44px;
   }
 `
 
@@ -73,12 +73,12 @@ const Text = styled(Heading)`
   font-family: 'Telegraf UltraBold Font';
 
   @media (min-width: 640px) {
-    font-size: 20px;
+    font-size: 18px;
   }
 
   @media (min-width: 1200px) {
-    font-size: 25px;
-    line-height: 30px;
+    font-size: 20px;
+    line-height: 24px;
   }
 `
 
@@ -104,8 +104,8 @@ const IglooCard = () => {
           <StyledNavLink exact activeClassName="active" to="/farms" id="farm-apy-cta">
             <SvgIcon
               src={`${process.env.PUBLIC_URL}/images/home/arrow-right.svg`}
-              width={isMobile ? '25px' : '31px'}
-              height={isMobile ? '25px' : '31px'}
+              width={isMobile ? '25px' : '28px'}
+              height={isMobile ? '25px' : '28px'}
             />
           </StyledNavLink>
         </Flex>
