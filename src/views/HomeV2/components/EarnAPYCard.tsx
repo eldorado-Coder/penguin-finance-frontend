@@ -42,8 +42,8 @@ const CardMidContent = styled(Heading).attrs({ size: 'xl' })`
   font-family: 'GothamUltra Font';
 
   @media (min-width: 1200px) {
-    line-height: 70px;
-    font-size: 58px;
+    line-height: 60px;
+    font-size: 48px;
   }
 `
 
@@ -60,12 +60,12 @@ const Text = styled(Heading)`
   font-family: 'Telegraf UltraBold Font';
   
   @media (min-width: 640px) {
-    font-size: 20px;
+    font-size: 18px;
   }
 
   @media (min-width: 1200px) {
-    font-size: 25px;
-    line-height: 30px;
+    font-size: 20px;
+    line-height: 24px;
   }
 `
 
@@ -92,7 +92,7 @@ const EarnAPYCard = ({ apy }: { apy: BigNumber }) => {
         <Flex justifyContent="space-between" alignItems='center'>
           <Text size="md">with no IL by holding iPEFI</Text>
           <StyledNavLink exact activeClassName="active" to="/nests" id="farm-apy-cta">
-            <SvgIcon src={`${process.env.PUBLIC_URL}/images/home/arrow-right.svg`} width={isMobile ? '25px' : "31px"} height={isMobile ? '25px' : "31px"} />
+            <SvgIcon src={`${process.env.PUBLIC_URL}/images/home/arrow-right.svg`} width={isMobile ? '25px' : "28px"} height={isMobile ? '25px' : "28px"} />
           </StyledNavLink>
         </Flex>
       </StyledCardBody>

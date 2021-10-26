@@ -133,8 +133,8 @@ const HarvestFarmCard = () => {
           <InfoIconWrapper onClick={handleInfoIconClick}>
             <SvgIcon
               src={`${process.env.PUBLIC_URL}/images/home/info.svg`}
-              width={isMobile ? '25px' : '31px'}
-              height={isMobile ? '25px' : '31px'}
+              width={isMobile ? '25px' : '28px'}
+              height={isMobile ? '25px' : '28px'}
             />
           </InfoIconWrapper>
         </Flex>
@@ -185,9 +185,10 @@ const StyledCardBody = styled(CardBody)`
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+  padding: 24px;
 
   @media (min-width: 1200px) {
-    padding: 24px 40px 40px;
+    padding: 24px 32px;
   }
 `
 
@@ -202,8 +203,8 @@ const CardImage = styled.img`
 
   @media (min-width: 1200px) {
     margin-right: 24px;
-    width: 90px;
-    height: 90px;
+    width: 80px;
+    height: 80px;
   }
 `
 
@@ -221,8 +222,8 @@ const Label = styled(Text).attrs({ color: 'red' })`
   font-family: 'Telegraf Bold Font';
 
   @media (min-width: 1200px) {
-    font-size: 19px;
-    line-height: 24px;
+    font-size: 16px;
+    line-height: 20px;
   }
 `
 
@@ -242,8 +243,8 @@ const StyledHeading = styled(Heading)`
   font-family: 'GothamUltra Font';
 
   @media (min-width: 1200px) {
-    font-size: 50px;
-    line-height: 60px;
+    font-size: 44px;
+    line-height: 54px;
   }
 `
 
@@ -280,8 +281,8 @@ const StyledButton = styled(Button)`
     margin-bottom: 0;
   }
   @media (min-width: 1200px) {
-    height: 64px;
-    font-size: 24px;
+    height: 48px;
+    font-size: 20px;
   }
 `
 
@@ -305,8 +306,8 @@ const StyledUnlockButton = styled(UnlockButton)`
     margin-bottom: 0;
   }
   @media (min-width: 1200px) {
-    height: 64px;
-    font-size: 24px;
+    height: 48px;
+    font-size: 20px;
   }
 `
 

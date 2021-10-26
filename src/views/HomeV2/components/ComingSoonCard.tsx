@@ -55,8 +55,8 @@ const ComingSoonCard: React.FC = () => {
           <StyledNavLink exact activeClassName="active" to="/">
             <SvgIcon
               src={`${process.env.PUBLIC_URL}/images/home/arrow-right.svg`}
-              width={isMobile ? '25px' : '31px'}
-              height={isMobile ? '25px' : '31px'}
+              width={isMobile ? '25px' : '28px'}
+              height={isMobile ? '25px' : '28px'}
             />
           </StyledNavLink>
         </Flex>
@@ -88,8 +88,8 @@ const StyledHeading = styled(Heading)`
   font-family: 'GothamUltra Font';
 
   @media (min-width: 1200px) {
-    font-size: 58px;
-    line-height: 70px;
+    font-size: 48px;
+    line-height: 60px;
   }
 `
 
@@ -133,8 +133,8 @@ const StyledText = styled(Text)<{ isBold?: boolean }>`
   font-family: 'Telegraf Regular Font';
 
   @media (min-width: 1200px) {
-    font-size: 20px;
-    line-height: 25px;
+    font-size: 18px;
+    line-height: 20px;
   }
 `
 

@@ -8,13 +8,14 @@ const Footer: React.FC<FooterProps> = () => {
   const theme = useTheme()
   const { isLg, isXl } = useMatchBreakpoints()
   const isStacked = !isLg && !isXl
+  const isMobile = !isXl;
 
   return (
     <>
       <ResetCSS />
       <FooterWrapper>
         <FooterBody isStacked={isStacked}>
-          <Column isStacked={isStacked} maxWidth="260px" mb={isStacked ? '2rem' : '0'}>
+          <Column isStacked={isStacked} maxWidth="260px">
             <Div width="100%" height="35px" mb="5px" mt="-8px">
               <Image
                 src={theme.isDark ? 'images/footer/logoDark.svg' : 'images/footer/logoLight.svg'}
@@ -41,7 +42,7 @@ const Footer: React.FC<FooterProps> = () => {
           </Column>
           {FooterLinks.map((data) => (
             <Column isStacked={isStacked}>
-              <TitleText color="#fff" mb="6px">
+              <TitleText color="#fff" mb="6px" mt={isStacked && '2.5rem'}>
                 {data.title}
               </TitleText>
               {data.links.map((link) => (
@@ -53,7 +54,7 @@ const Footer: React.FC<FooterProps> = () => {
             </Column>
           ))}
           <Column isStacked={isStacked} alignItems="center" maxWidth="350px">
-            <TitleText color="#fff" mb="10px">
+            <TitleText color="#fff" mt={isStacked && '2.5rem'}>
               Official Social Media
             </TitleText>
             <Row isStacked={isStacked} justifyContent="space-around" alignItems="center" width="200px">
@@ -67,7 +68,7 @@ const Footer: React.FC<FooterProps> = () => {
                 )
               })}
             </Row>
-            <TitleText color="#fff" mt="1.5rem" mb="10px">
+            <TitleText color="#fff" mt="2.5rem">
               Powered by
             </TitleText>
             <Row isStacked={isStacked} justifyContent="space-around" alignItems="center" width="100%">
@@ -104,15 +105,16 @@ const Row = styled.div<FlexProps>`
   width: ${({ width }) => width || 'auto'};
   justify-content: ${({ justifyContent }) => justifyContent || 'flex-start'};
   align-items: ${({ alignItems }) => alignItems || 'stretch'};
+  margin-top: 16px;
 `
 
 const FooterBody = styled.div<FooterBodyProps>`
   max-width: 1200px; //1200px
   display: flex;
   flex-direction: ${(props) => (props.isStacked ? 'column' : 'row')};
-  justify-content: ${({ isStacked }) => (isStacked ? 'center' : 'space-around')};
+  justify-content: ${({ isStacked }) => (isStacked ? 'center' : 'space-between')};
   align-items: ${({ isStacked }) => (isStacked ? 'center' : 'stretch')};
-  padding: 2rem 2rem 4rem 2rem;
+  padding: 3rem 2rem 3rem 2rem;
   margin: auto;
 `
 
@@ -134,6 +136,12 @@ const CustomLink = styled(Link).attrs((props) => ({
   }
   font-family: 'Telegraf UltraLight';
   font-weight: 200;
+  font-size: 16px;
+  line-height: 1.2;
+
+  @media (min-width: 968px) {
+    font-size: 18px;
+  }
 `
 
 const TitleText = styled(Text)`
@@ -143,6 +151,12 @@ const TitleText = styled(Text)`
     font-display: swap;
   }
   font-family: 'Telegraf Bold';
+  font-size: 16px;
+  line-height: 1.2;
+
+  @media (min-width: 968px) {
+    font-size: 22px;
+  }
 `
 
 const FooterParagraph = styled(Text)`
@@ -152,6 +166,12 @@ const FooterParagraph = styled(Text)`
     font-display: swap;
   }
   font-family: 'Telegraf UltraLight';
+
+  font-size: 16px;
+
+  @media (min-width: 968px) {
+    font-size: 18px;
+  }
 `
 
 const Div = styled.div<{ width: string; height: string; mb?: string; mt?: string }>`
