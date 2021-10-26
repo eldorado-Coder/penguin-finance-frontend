@@ -99,6 +99,7 @@ export interface V2FarmConfig {
   }
   withdrawalFee?: string
   hardApy?: string
+  joeStakingApy?: number
   type?: string
   name?: string
   strategyAddress?: string
