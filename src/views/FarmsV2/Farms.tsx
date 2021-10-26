@@ -14,6 +14,7 @@ import {
   useBenqiFarmsGlobalData,
   usePricePefiUsdt,
   usePriceAvaxUsdt,
+  usePricePngUsdt,
 } from 'state/hooks'
 import { fetchV2FarmUserDataAsync } from 'state/actions'
 import useRefresh from 'hooks/useRefresh'
@@ -21,7 +22,9 @@ import useTheme from 'hooks/useTheme'
 import useTokenPrice from 'hooks/useTokenPrice'
 import useJoePrice from 'hooks/useJoePrice'
 import { getBalanceNumber } from 'utils/formatBalance'
-import { DAYS_PER_YEAR } from 'config'
+import { DAYS_PER_YEAR, SECONDS_PER_DAY } from 'config'
+import tokens from 'config/constants/tokens'
+import { getAddress } from 'utils/addressHelpers'
 import { getApr, getLydiaFarmApr, getJoeFarmApr, getBenqiFarmApr } from 'utils/apyHelpers'
 import V1Farms from './V1'
 import V2Farms from './V2'
@@ -216,6 +219,7 @@ const Farms: React.FC = () => {
   const avaxPriceUsd = usePriceAvaxUsdt().toNumber()
   const { lydPrice: lydPriceUsd, qiPrice: qiPriceUsd } = useTokenPrice()
   const joePriceUsd = useJoePrice()
+  const pngPriceUsd = usePricePngUsdt().toNumber()
 
   const isMobile = !isXl
   const theme = useTheme()
@@ -238,12 +242,27 @@ const Farms: React.FC = () => {
     return v2FarmTvl
   }
 
+  const getTokenPrice = (address) => {
+    if (!address) return 1
+    const rewardToken = tokens.find((row) => getAddress(row.address).toLowerCase() === address.toLowerCase())
+
+    if (rewardToken && rewardToken.symbol === 'PNG') return pngPriceUsd
+    if (rewardToken && rewardToken.symbol === 'JOE') return joePriceUsd
+    return 1
+  }
+
   const activeFarmsWithApy = activeFarms.map((farm) => {
     const pefiPerYear = getBalanceNumber(farm.pefiPerYear)
     const pefiPerDay = pefiPerYear / DAYS_PER_YEAR
     const pefiRewardPerDayInUsd = pefiPriceUsd * pefiPerDay * (1 - 0.15 - 0.1)
     const pefiDailyApr = farm.totalLiquidityInUsd > 0 ? pefiRewardPerDayInUsd / farm.totalLiquidityInUsd : 0
     const pefiApr = getApr(pefiDailyApr)
+
+    // minw
+    const minwRewardPerDay = SECONDS_PER_DAY * Number(farm.minwRewardPerSec)
+    const minwRewardPerDayInUsd = getTokenPrice(farm.minwRewardToken) * minwRewardPerDay
+    const minwDailyApr = farm.totalLiquidityInUsd > 0 ? minwRewardPerDayInUsd / farm.totalLiquidityInUsd : 0
+    const minwApr = getApr(minwDailyApr)
 
     let { stakingApr, swapFeeApr } = farm
 
@@ -281,8 +300,9 @@ const Farms: React.FC = () => {
       pefiApr,
       stakingApr,
       swapFeeApr,
-      apr: stakingApr + swapFeeApr + pefiApr,
-      apy: stakingApr + swapFeeApr + pefiApr,
+      minwApr,
+      apr: stakingApr + swapFeeApr + pefiApr + minwApr,
+      apy: stakingApr + swapFeeApr + pefiApr + minwApr,
     }
   })
 

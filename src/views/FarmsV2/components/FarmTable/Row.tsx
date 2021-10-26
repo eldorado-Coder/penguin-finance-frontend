@@ -231,7 +231,29 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
     const mainApr = farm.pefiApr || 0
     const additionalStakingApr = farm.stakingApr || 0
     const additionalSwapFeeApr = farm.swapFeeApr || 0
+    const minwApr = farm.minwApr || 0
     const totalApr = farm.apr || 0
+
+    if (minwApr > 0) {
+      return `
+        <div style="display: flex; width: 100%; align-items: center;">
+          <div style="width: 60%; text-align: center;">
+            <p>Penguin Finance</p>
+            <p>${additionalStakingAprLabel} Staking</p>
+            <p>${additionalSwapAprLabel} Swap</p>
+            <p>MINW Campaign</p>
+            <p>Total APR</p>
+          </div>
+          <div style="margin-left: 5px; padding-right: 5px; ">
+            <p style="font-weight: 500">${(mainApr * 100).toFixed(2)}% APR</p>
+            <p style="font-weight: 500">${(additionalStakingApr * 100).toFixed(2)}% APR</p>
+            <p style="font-weight: 500">${(additionalSwapFeeApr * 100).toFixed(2)}% APR</p>
+            <p style="font-weight: 500">${(minwApr * 100).toFixed(2)}% APR</p>
+            <p style="color: ${theme.colors.red}; font-weight: 500">${(totalApr * 100).toFixed(2)}% APR</p>
+          </div>
+        </div>
+      `
+    }
 
     return `
       <div style="display: flex; width: 100%; align-items: center;">

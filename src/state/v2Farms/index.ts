@@ -9,9 +9,9 @@ import {
   // fetchFarmUserStakedBalances,
   fetchFarmUserData,
 } from './fetchFarmUser'
-import { FarmsState, Farm } from '../types'
+import { V2FarmsState, V2Farm } from '../types'
 
-const initialState: FarmsState = { pefiPerSecond: 0, data: [...v2FarmsConfig] }
+const initialState: V2FarmsState = { pefiPerSecond: 0, data: [...v2FarmsConfig] }
 
 export const farmsSlice = createSlice({
   name: 'V2Farms',
@@ -21,7 +21,7 @@ export const farmsSlice = createSlice({
       state.pefiPerSecond = action.payload
     },
     setFarmsPublicData: (state, action) => {
-      const liveFarmsData: Farm[] = action.payload
+      const liveFarmsData: V2Farm[] = action.payload
       state.data = state.data.map((farm) => {
         const liveFarmData = liveFarmsData.find((f) => f.pid === farm.pid && f.type === farm.type)
         return { ...farm, ...liveFarmData }
