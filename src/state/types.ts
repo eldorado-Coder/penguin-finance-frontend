@@ -93,6 +93,7 @@ export interface V2Farm extends FarmConfig {
   // minw
   minwRewardToken?: string
   minwRewardPerSec?: string
+  joeStakingApy?: number
 }
 
 export interface Lp extends LPConfig {
