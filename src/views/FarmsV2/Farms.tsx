@@ -73,11 +73,27 @@ const TvlContainer = styled(Flex)`
   align-items: center;
   flex-wrap: wrap;
   justify-content: center;
+  margin-bottom: 40px;
+  min-width: 220px;
 
-  ${({ theme }) => theme.mediaQueries.md} {
+  @media (min-width: 968px) {
     justify-content: flex-start;
+    margin-bottom: 0px;
   }
 `
+
+const HeaderLabel = styled(Text)`
+  color: ${({ theme }) => (theme.isDark ? '#bba6dd' : '#372871')};
+`;
+
+const Description = styled(Text)`
+  color: ${({ theme }) => (theme.isDark ? '#bba6dd' : '#372871')};
+
+  div {
+    display: inline;
+    cursor: pointer;
+  }
+`;
 
 // slider
 const TabWrapper = styled.div`
@@ -410,6 +426,10 @@ const Farms: React.FC = () => {
     </Flex>
   )
 
+  const handleViewMINW = () => {
+    window.open('https://penguin-finance.medium.com/make-igloos-not-war-new-joe-png-yield-farming-strategies-b70fac00807f', '_blank');
+  };
+
   const tvl = getV2FarmsTVL()
 
   return (
@@ -425,17 +445,45 @@ const Farms: React.FC = () => {
           alt="v2 farm banner"
         />
       </IgloosBannerContainer>
-      <TvlContainer marginBottom={isMobile ? '30px' : '70px'}>
-        <span>{`Total Value Locked (TVL): `}</span>
-        <Balance
-          fontSize="28px"
-          color={theme.isDark ? '#bba6dd' : '#372871'}
-          fontWeight="600"
-          prefix="$"
-          decimals={0}
-          value={Number(tvl)}
-        />
-      </TvlContainer>
+      {isMobile ? 
+        <>
+          <HeaderLabel fontSize='28px' fontWeight={500} lineHeight={1.2} textAlign='center' mb='8px'>Make Igloos, Not War (MINW), and #JOERUSH are live!</HeaderLabel>
+          <Description fontWeight={400} marginBottom={isMobile ? '20px' : '70px'} textAlign='center'>
+            New farming strategies! Earn up to 5 tokens (including AVAX incentives) and +10% rewards on MINW Igloos. <Text color='red' onClick={handleViewMINW}>Learn more.</Text>
+          </Description>
+          <TvlContainer>
+            <span>{`TVL: `}</span>
+            <Balance
+              fontSize="28px"
+              color={theme.isDark ? '#bba6dd' : '#372871'}
+              fontWeight="600"
+              prefix="$"
+              decimals={0}
+              value={Number(tvl)} 
+            />
+          </TvlContainer>
+        </>
+        :
+        <>
+          <Flex justifyContent='space-between'>
+            <HeaderLabel fontSize='28px' fontWeight={500}>Make Igloos, Not War (MINW), and #JOERUSH are live!</HeaderLabel>
+            <TvlContainer>
+              <span>{`TVL: `}</span>
+              <Balance
+                fontSize="28px"
+                color={theme.isDark ? '#bba6dd' : '#372871'}
+                fontWeight="600"
+                prefix="$"
+                decimals={0}
+                value={Number(tvl)}
+              />
+            </TvlContainer>
+          </Flex>
+          <Description fontWeight={400} marginBottom={isMobile ? '30px' : '70px'}>
+            New farming strategies! Earn up to 5 tokens (including AVAX incentives) and +10% rewards on MINW Igloos. <Text color='red' onClick={handleViewMINW}>Learn more.</Text>
+          </Description>
+        </>  
+      }
       {isMobile ? (
         <FilterWrapper justifyContent="space-between" alignItems="center" flexWrap="wrap">
           <Flex mt="8px" justifyContent="center" mb="8px" flexWrap="wrap">
