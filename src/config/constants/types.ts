@@ -109,6 +109,8 @@ export interface V2FarmConfig {
   infoLink?: string
   guideLink?: string
   isBenqi?: boolean
+  isMINW?: boolean
+  isJoeRush?: boolean
 }
 
 export interface LPConfig {
