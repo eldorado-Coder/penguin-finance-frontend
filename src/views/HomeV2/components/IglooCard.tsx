@@ -33,11 +33,11 @@ const CardMidContent = styled(Heading).attrs({ size: 'xl' })`
   font-weight: 800;
 
   @font-face {
-    font-family: 'GothamUltra Font';
-    src: url(${process.env.PUBLIC_URL}/fonts/GothamUltra.otf) format('truetype');
+    font-family: 'GothamBold Font';
+    src: url(${process.env.PUBLIC_URL}/fonts/GothamBold.ttf) format('truetype');
     font-display: swap;
   }
-  font-family: 'GothamUltra Font';
+  font-family: 'GothamBold Font';
 
   @media (min-width: 640px) {
     line-height: 44px;

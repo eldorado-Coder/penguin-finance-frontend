@@ -37,11 +37,11 @@ const StyledHeading = styled(Heading)`
   font-weight: 800;
 
   @font-face {
-    font-family: 'GothamUltra Font';
-    src: url(${process.env.PUBLIC_URL}/fonts/GothamUltra.otf) format('truetype');
+    font-family: 'GothamBold Font';
+    src: url(${process.env.PUBLIC_URL}/fonts/GothamBold.otf) format('truetype');
     font-display: swap;
   }
-  font-family: 'GothamUltra Font';
+  font-family: 'GothamBold Font';
 
   @media (min-width: 1200px) {
     font-size: 48px;

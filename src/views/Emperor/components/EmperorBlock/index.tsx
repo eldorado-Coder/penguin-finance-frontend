@@ -148,13 +148,18 @@ const ShieldContainer = styled.div`
 const KingPenguinImageWrapper = styled.div<{ penguin: string; color: string; isMobile?: boolean }>`
   z-index: 12;
   position: absolute;
-  width: ${({ isMobile }) => (isMobile ? '23%' : '11.5%')};
-  left: ${({ isMobile }) => (isMobile ? '38%' : '44%')};
+  width: ${({ isMobile }) => (isMobile ? '20%' : '11.5%')};
+  left: 50%;
+  transform: translate(-50%, 0);
   bottom: 33%;
   svg {
     ${({ penguin, color }) => `.${penguin}-st0 {
           fill: #${color};
         }`}
+  }
+
+  @media (min-width: 1450px) {
+    width: 9%;
   }
 `
 
@@ -168,16 +173,21 @@ const Wrapper = styled.div<{ isMobile?: boolean }>`
 
 const MyPenguinImageWrapper = styled.div<{ penguin: string; color: string; isMobile?: boolean }>`
   position: absolute;
-  width: ${({ isMobile }) => (isMobile ? '23%' : '9.5%')};
-  right: ${({ isMobile }) => (isMobile ? '1%' : '26%')};
+  width: ${({ isMobile }) => (isMobile ? '20%' : '9.5%')};
+  right: ${({ isMobile }) => (isMobile ? '1.5%' : '26%')};
   bottom: 17%;
   z-index: 11;
 
   svg {
     transform: scaleX(-1);
     ${({ penguin, color }) => `.${penguin}-st0 {
-          fill: #${color};
-        }`}
+      fill: #${color};
+    }`}
+  }
+
+  @media (min-width: 1450px) {
+    width: 8%;
+    right: 27%;
   }
 `
 
