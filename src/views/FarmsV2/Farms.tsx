@@ -482,6 +482,7 @@ const Farms: React.FC = () => {
               value={Number(tvl)} 
             />
           </TvlContainer>
+          <Text color='#165DC4' fontSize='18px' fontWeight={500} lineHeight={1.2} textAlign='center' mb='30px'>Please harvest each participating MINW Igloo once, to start earning extra PNG and JOE rewards.</Text>
         </>
         :
         <>
@@ -499,9 +500,10 @@ const Farms: React.FC = () => {
               />
             </TvlContainer>
           </Flex>
-          <Description fontWeight={400} marginBottom={isMobile ? '30px' : '70px'}>
+          <Description fontWeight={400} marginBottom={isMobile ? '30px' : '20px'}>
             New farming strategies! Earn up to 5 tokens (including AVAX incentives) and +10% rewards on MINW Igloos. <Text color='red' onClick={handleViewMINW}>Learn more.</Text>
           </Description>
+          <Text color='#165DC4' fontSize='20px' fontWeight={500} lineHeight={1.2} mb='50px'>Please harvest each participating MINW Igloo once, to start earning extra PNG and JOE rewards.</Text>
         </>  
       }
       {isMobile ? (
