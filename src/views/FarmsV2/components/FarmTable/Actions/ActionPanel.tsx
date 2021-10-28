@@ -234,15 +234,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
   const pefiPerYear = getBalanceNumber(farm.pefiPerYear)
   const pefiPerWeek = pefiPerYear / WEEKS_PER_YEAR
 
-  // const farmApr = farm.apr ? (100 * Number(farm.apr)).toFixed(2) : 0
-  let farmApr = '';
-  if (farm.apr >= 0) {
-    if (farm.joeStakingApy) {
-      farmApr = (100 * Number(farm.apr + farm.joeStakingApy)).toFixed(2) 
-    } else {
-      farmApr = (100 * Number(farm.apr)).toFixed(2);
-    }
-  }
+  const farmApr = farm.apr ? (100 * Number(farm.apr)).toFixed(2) : 0
   const lpSymbol = farm.lpSymbol.replaceAll(' LP', '')
   const coinImg = getCoinImage(Number(userStakedBalanceInUsd))
 

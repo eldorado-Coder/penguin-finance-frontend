@@ -24,6 +24,9 @@ export const getLydiaMasterChefAddress = () => {
 export const getJoeMasterChefAddress = () => {
   return getAddress(addresses.joeMasterChef)
 }
+export const getJoeMasterChefV3Address = () => {
+  return getAddress(addresses.joeMasterChefV3)
+}
 export const getBenqiMasterChefAddress = () => {
   return getAddress(addresses.benqiMasterChef)
 }

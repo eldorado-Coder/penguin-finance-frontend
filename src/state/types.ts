@@ -176,6 +176,12 @@ export interface JoeFarmsState {
   data: Farm[]
 }
 
+export interface JoeV3FarmsState {
+  joePerSec?: number
+  totalAllocPoint?: number
+  data?: any[]
+}
+
 export interface BenqiFarmsState {
   avaxPerSec?: number
   benqiPerSec?: number
@@ -338,6 +344,7 @@ export interface State {
   farms: FarmsState
   lydiaFarms: LydiaFarmsState
   joeFarms: JoeFarmsState
+  joeV3Farms: JoeV3FarmsState
   benqiFarms: BenqiFarmsState
   compounderFarms: CompounderFarmsState
   toasts: ToastsState
