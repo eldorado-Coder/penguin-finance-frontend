@@ -196,15 +196,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
     })
   const liquidity = farm.totalLiquidityInUsd
   const stakedBalanceInUsd = stakedBalance ? getBalanceNumber(stakedBalance) * farm.lpPrice : 0
-  // const farmApr = farm.apr >= 0 ? (100 * Number(farm.apr)).toFixed(2) : 0
-  let farmApr = '';
-  if (farm.apr >= 0) {
-    if (farm.joeStakingApy) {
-      farmApr = (100 * Number(farm.apr + farm.joeStakingApy)).toFixed(2) 
-    } else {
-      farmApr = (100 * Number(farm.apr)).toFixed(2);
-    }
-  }
+  const farmApr = farm.apr >= 0 ? (100 * Number(farm.apr)).toFixed(2) : 0
 
   const toggleActionPanel = () => {
     setActionPanelExpanded(!actionPanelExpanded)
@@ -237,14 +229,10 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
       additionalSwapAprLabel = 'Lydia Finance'
     }
     const mainApr = farm.pefiApr || 0
-    const additionalStakingApr = farm.joeStakingApy || farm.stakingApr || 0
+    const additionalStakingApr = farm.stakingApr || 0
     const additionalSwapFeeApr = farm.swapFeeApr || 0
     const minwApr = farm.minwApr || 0
-    let totalApr = farm.apr || 0
-    
-    if (farm.joeStakingApy) {
-      totalApr += additionalStakingApr
-    }
+    const totalApr = farm.apr || 0
 
     if (minwApr > 0) {
       return `

@@ -11,7 +11,7 @@ import { getPangolinLpPrice, getJoeLpPrice, getSushiLpPrice, getLydiaLpPrice } f
 import { getBalanceNumber } from 'utils/formatBalance'
 import { getPangolinRewardPoolApr, getApr } from 'utils/apyHelpers'
 import { getPairSwapDailyReward, getPairInfo } from 'subgraph/utils'
-import { getPoolInfo as getJoePoolInfo } from 'subgraph/utils/joe'
+import { getPoolInfo as getJoePoolInfo, getV3PoolInfo as getJoeV3PoolInfo } from 'subgraph/utils/joe'
 import { getPair as getSushiPair } from 'subgraph/utils/sushi'
 import { getPair as getPangolinPair } from 'subgraph/utils/pangolin'
 import { NON_ADDRESS } from 'config'
@@ -112,7 +112,8 @@ export const fetchFarms = async () => {
         } else if (farmConfig.type === 'Joe') {
           lpPrice = await getJoeLpPrice(lpAddress)
           totalLiquidityInUsd = lpPrice * getBalanceNumber(new BigNumber(totalLP))
-          const joePoolInfo = await getJoePoolInfo(lpAddress)
+          const joePoolInfo = farmConfig.isJoeRush ? await getJoeV3PoolInfo(lpAddress) : await getJoePoolInfo(lpAddress)
+
           joePoolAllocPoint = joePoolInfo ? joePoolInfo.allocPoint : 0
           joePoolLpBalance = joePoolInfo ? joePoolInfo.jlpBalance : 0
           joeSwapPoolUsdBalance = 1

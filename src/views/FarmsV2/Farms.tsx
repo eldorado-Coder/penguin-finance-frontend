@@ -11,6 +11,8 @@ import {
   useLydiaFarms,
   useLydiaFarmRewardRate,
   useJoeFarmsGlobalData,
+  useJoeV3FarmsGlobalData,
+  useJoeV3Farms,
   useBenqiFarmsGlobalData,
   usePricePefiUsdt,
   usePriceAvaxUsdt,
@@ -87,7 +89,7 @@ const TvlContainer = styled(Flex)`
 
 const HeaderLabel = styled(Text)`
   color: ${({ theme }) => (theme.isDark ? '#bba6dd' : '#372871')};
-`;
+`
 
 const Description = styled(Text)`
   color: ${({ theme }) => (theme.isDark ? '#bba6dd' : '#372871')};
@@ -96,7 +98,7 @@ const Description = styled(Text)`
     display: inline;
     cursor: pointer;
   }
-`;
+`
 
 // slider
 const TabWrapper = styled.div`
@@ -227,9 +229,11 @@ const Farms: React.FC = () => {
   const { account } = useWeb3React()
   const v2Farms = useV2Farms()
   const lydiaFarms = useLydiaFarms()
+  const joeV3Farms = useJoeV3Farms()
   const { isXl, isSm } = useMatchBreakpoints()
   const lydPerSec = useLydiaFarmRewardRate()
   const joeGlobalData = useJoeFarmsGlobalData()
+  const joeV3GlobalData = useJoeV3FarmsGlobalData()
   const benqiGlobalData = useBenqiFarmsGlobalData()
   const pefiPriceUsd = usePricePefiUsdt().toNumber()
   const avaxPriceUsd = usePriceAvaxUsdt().toNumber()
@@ -291,14 +295,25 @@ const Farms: React.FC = () => {
 
     if (farm.type === 'Joe') {
       const poolLiquidityUsd = farm.lpPrice * Number(farm.joePoolLpBalance)
-      const poolWeight = farm.joePoolAllocPoint / joeGlobalData.totalAllocPoint
+      let farmAllocPoint = farm.joePoolAllocPoint
+      if (farm.isJoeRush) {
+        const joeV3Farm = joeV3Farms.find(
+          (row) => getAddress(row.lpAddresses).toLowerCase() === getAddress(farm.lpAddresses).toLowerCase(),
+        )
+        if (joeV3Farm) {
+          farmAllocPoint = joeV3Farm.allocPoint
+        }
+      }
+      const poolWeight = farm.isJoeRush
+        ? farmAllocPoint / joeV3GlobalData.totalAllocPoint
+        : farmAllocPoint / joeGlobalData.totalAllocPoint
       stakingApr =
         getJoeFarmApr(
           poolWeight,
           joePriceUsd,
           poolLiquidityUsd,
-          joeGlobalData.joePerSec,
-          joeGlobalData.rewardPercentToFarm,
+          farm.isJoeRush ? joeV3GlobalData.joePerSec : joeGlobalData.joePerSec,
+          farm.isJoeRush ? 1 : joeGlobalData.rewardPercentToFarm,
         ) * 0.9
       swapFeeApr = getApr(farm.swapDailyReward / (farm.joeSwapPoolUsdBalance || 1))
     }
@@ -447,8 +462,11 @@ const Farms: React.FC = () => {
   )
 
   const handleViewMINW = () => {
-    window.open('https://penguin-finance.medium.com/make-igloos-not-war-new-joe-png-yield-farming-strategies-b70fac00807f', '_blank');
-  };
+    window.open(
+      'https://penguin-finance.medium.com/make-igloos-not-war-new-joe-png-yield-farming-strategies-b70fac00807f',
+      '_blank',
+    )
+  }
 
   const tvl = getV2FarmsTVL()
 
@@ -465,11 +483,16 @@ const Farms: React.FC = () => {
           alt="v2 farm banner"
         />
       </IgloosBannerContainer>
-      {isMobile ? 
+      {isMobile ? (
         <>
-          <HeaderLabel fontSize='28px' fontWeight={500} lineHeight={1.2} textAlign='center' mb='8px'>Make Igloos, Not War (MINW), and #JOERUSH are live!</HeaderLabel>
-          <Description fontWeight={400} marginBottom={isMobile ? '20px' : '70px'} textAlign='center'>
-            New farming strategies! Earn up to 5 tokens (including AVAX incentives) and +10% rewards on MINW Igloos. <Text color='red' onClick={handleViewMINW}>Learn more.</Text>
+          <HeaderLabel fontSize="28px" fontWeight={500} lineHeight={1.2} textAlign="center" mb="8px">
+            Make Igloos, Not War (MINW), and #JOERUSH are live!
+          </HeaderLabel>
+          <Description fontWeight={400} marginBottom={isMobile ? '20px' : '70px'} textAlign="center">
+            New farming strategies! Earn up to 5 tokens (including AVAX incentives) and +10% rewards on MINW Igloos.{' '}
+            <Text color="red" onClick={handleViewMINW}>
+              Learn more.
+            </Text>
           </Description>
           <TvlContainer>
             <span>{`TVL: `}</span>
@@ -479,15 +502,19 @@ const Farms: React.FC = () => {
               fontWeight="600"
               prefix="$"
               decimals={0}
-              value={Number(tvl)} 
+              value={Number(tvl)}
             />
           </TvlContainer>
-          <Text color='#165DC4' fontSize='18px' fontWeight={500} lineHeight={1.2} textAlign='center' mb='30px'>Please harvest each participating MINW Igloo once, to start earning extra PNG and JOE rewards.</Text>
+          <Text color="#165DC4" fontSize="18px" fontWeight={500} lineHeight={1.2} textAlign="center" mb="30px">
+            Please harvest each participating MINW Igloo once, to start earning extra PNG and JOE rewards.
+          </Text>
         </>
-        :
+      ) : (
         <>
-          <Flex justifyContent='space-between'>
-            <HeaderLabel fontSize='28px' fontWeight={500}>Make Igloos, Not War (MINW), and #JOERUSH are live!</HeaderLabel>
+          <Flex justifyContent="space-between">
+            <HeaderLabel fontSize="28px" fontWeight={500}>
+              Make Igloos, Not War (MINW), and #JOERUSH are live!
+            </HeaderLabel>
             <TvlContainer>
               <span>{`TVL: `}</span>
               <Balance
@@ -501,11 +528,16 @@ const Farms: React.FC = () => {
             </TvlContainer>
           </Flex>
           <Description fontWeight={400} marginBottom={isMobile ? '30px' : '20px'}>
-            New farming strategies! Earn up to 5 tokens (including AVAX incentives) and +10% rewards on MINW Igloos. <Text color='red' onClick={handleViewMINW}>Learn more.</Text>
+            New farming strategies! Earn up to 5 tokens (including AVAX incentives) and +10% rewards on MINW Igloos.{' '}
+            <Text color="red" onClick={handleViewMINW}>
+              Learn more.
+            </Text>
           </Description>
-          <Text color='#165DC4' fontSize='20px' fontWeight={500} lineHeight={1.2} mb='50px'>Please harvest each participating MINW Igloo once, to start earning extra PNG and JOE rewards.</Text>
-        </>  
-      }
+          <Text color="#165DC4" fontSize="20px" fontWeight={500} lineHeight={1.2} mb="50px">
+            Please harvest each participating MINW Igloo once, to start earning extra PNG and JOE rewards.
+          </Text>
+        </>
+      )}
       {isMobile ? (
         <FilterWrapper justifyContent="space-between" alignItems="center" flexWrap="wrap">
           <Flex mt="8px" justifyContent="center" mb="8px" flexWrap="wrap">
