@@ -9,7 +9,20 @@ export const config: MenuEntry[] = [
   {
     label: 'Buy $PEFI',
     icon: 'TradeIcon',
-    href: 'https://app.pangolin.exchange/#/swap?outputCurrency=0xe896CDeaAC9615145c0cA09C8Cd5C25bced6384c',
+    items: [
+      {
+        label: "Trader Joe",
+        href: "https://www.traderjoseph.com/#/trade?outputCurrency=0xe896CDeaAC9615145c0cA09C8Cd5C25bced6384c",
+      },
+      {
+        label: "Pangolin Exchange",
+        href: "https://app.pangolin.exchange/#/swap?outputCurrency=0xe896CDeaAC9615145c0cA09C8Cd5C25bced6384c",
+      },
+      {
+        label: "Lydia Exchange",
+        href: "https://exchange.lydia.finance/#/swap?inputCurrency=0xe896cdeaac9615145c0ca09c8cd5c25bced6384c",
+      }
+    ]
   },
   {
     label: 'Farms',
@@ -66,10 +79,23 @@ export const config: MenuEntry[] = [
   {
     label: 'Learn More',
     icon: 'MoreIcon',
-    href: 'https://docs.penguinfinance.io/',
+    items: [
+      {
+        label: "English",
+        href: "https://docs.penguinfinance.io/",
+      },
+      {
+        label: "Turkish",
+        href: "https://penguin-finance.gitbook.io/penguin-finance-tuerkce/",
+      },
+      {
+        label: "French",
+        href: "https://penguin-finance.gitbook.io/penguin-finance-francais/",
+      }
+    ]
   },
   {
-    label: "More",
+    label: "Other",
     icon: "MoreIcon",
     items: [
       {

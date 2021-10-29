@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import farmsReducer from './farms'
 import lydiaFarmsReducer from './lydiaFarms'
 import joeFarmsReducer from './joeFarms'
+import joeV3FarmsReducer from './joeV3Farms'
 import benqiFarmsReducer from './benqiFarms'
 import compounderFarmsReducer from './compounderFarms'
 import lpsReducer from './lps'
@@ -40,6 +41,7 @@ const store = configureStore({
     farms: farmsReducer,
     lydiaFarms: lydiaFarmsReducer,
     joeFarms: joeFarmsReducer,
+    joeV3Farms: joeV3FarmsReducer,
     benqiFarms: benqiFarmsReducer,
     compounderFarms: compounderFarmsReducer,
     toasts: toastsReducer,

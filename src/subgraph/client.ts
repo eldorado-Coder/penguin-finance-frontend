@@ -7,6 +7,9 @@ export const joeExchangeClient = new GraphQLClient('https://api.thegraph.com/sub
 export const joeMasterChefClient = new GraphQLClient(
   'https://api.thegraph.com/subgraphs/name/traderjoe-xyz/masterchefv2',
 )
+export const joeMasterChefV3Client = new GraphQLClient(
+  'https://api.thegraph.com/subgraphs/name/traderjoe-xyz/masterchefv3',
+)
 export const sushiClient = new GraphQLClient('https://api.thegraph.com/subgraphs/name/sushiswap/avalanche-exchange')
 export const lydiaClient = new GraphQLClient('https://api.thegraph.com/subgraphs/name/lydiafinance/lydia')
 

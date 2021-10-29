@@ -8,6 +8,10 @@ const ComingSoonCard: React.FC = () => {
   const { isXl } = useMatchBreakpoints()
   const isMobile = !isXl
 
+  const handleViewRoadMap = () => {
+    window.open('https://docs.penguinfinance.io/roadmap', '_blank');
+  };
+
   return (
     <CardContainer>
       <StyledCardBody>
@@ -52,13 +56,13 @@ const ComingSoonCard: React.FC = () => {
           <StyledText color="white" isBold>
             Read our Roadmap
           </StyledText>
-          <StyledNavLink exact activeClassName="active" to="/">
+          <RoadMapLink onClick={handleViewRoadMap}>
             <SvgIcon
               src={`${process.env.PUBLIC_URL}/images/home/arrow-right.svg`}
               width={isMobile ? '25px' : '28px'}
               height={isMobile ? '25px' : '28px'}
             />
-          </StyledNavLink>
+          </RoadMapLink>
         </Flex>
       </StyledFooter>
     </CardContainer>
@@ -81,11 +85,11 @@ const StyledHeading = styled(Heading)`
   color: white;
 
   @font-face {
-    font-family: 'GothamUltra Font';
-    src: url(${process.env.PUBLIC_URL}/fonts/GothamUltra.otf) format('truetype');
+    font-family: 'GothamBold Font';
+    src: url(${process.env.PUBLIC_URL}/fonts/GothamBold.ttf) format('truetype');
     font-display: swap;
   }
-  font-family: 'GothamUltra Font';
+  font-family: 'GothamBold Font';
 
   @media (min-width: 1200px) {
     font-size: 48px;
@@ -138,8 +142,9 @@ const StyledText = styled(Text)<{ isBold?: boolean }>`
   }
 `
 
-const StyledNavLink = styled(NavLink)`
+const RoadMapLink = styled.div`
   svg {
+    cursor: pointer;
     path {
       fill: white;
     }

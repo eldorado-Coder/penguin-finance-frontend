@@ -196,15 +196,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
     })
   const liquidity = farm.totalLiquidityInUsd
   const stakedBalanceInUsd = stakedBalance ? getBalanceNumber(stakedBalance) * farm.lpPrice : 0
-  // const farmApr = farm.apr >= 0 ? (100 * Number(farm.apr)).toFixed(2) : 0
-  let farmApr = '';
-  if (farm.apr >= 0) {
-    if (farm.joeStakingApy) {
-      farmApr = (100 * Number(farm.apr + farm.joeStakingApy)).toFixed(2) 
-    } else {
-      farmApr = (100 * Number(farm.apr)).toFixed(2);
-    }
-  }
+  const farmApr = farm.apr >= 0 ? (100 * Number(farm.apr)).toFixed(2) : 0
 
   const toggleActionPanel = () => {
     setActionPanelExpanded(!actionPanelExpanded)
@@ -237,52 +229,48 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
       additionalSwapAprLabel = 'Lydia Finance'
     }
     const mainApr = farm.pefiApr || 0
-    const additionalStakingApr = farm.joeStakingApy || farm.stakingApr || 0
+    const additionalStakingApr = farm.stakingApr || 0
     const additionalSwapFeeApr = farm.swapFeeApr || 0
     const minwApr = farm.minwApr || 0
-    let totalApr = farm.apr || 0
-    
-    if (farm.joeStakingApy) {
-      totalApr += additionalStakingApr
-    }
+    const joeRushRewardApr = farm.joeRushRewardApr || 0
+    const totalApr = farm.apr || 0
 
-    if (minwApr > 0) {
-      return `
+    return `
         <div style="display: flex; width: 100%; align-items: center;">
           <div style="width: 60%; text-align: center;">
             <p>Penguin Finance</p>
             <p>${additionalStakingAprLabel} Staking</p>
             <p>${additionalSwapAprLabel} Swap</p>
-            <p>MINW Campaign</p>
+            ${
+              minwApr > 0
+                ? '<p>MINW Campaign</p>'
+                : '<p style="line-height: 0px; height: 0px; margin-bottom: -30px !important;"></p>'
+            }
+            ${
+              joeRushRewardApr > 0
+                ? '<p>Joe Rush</p>'
+                : '<p style="line-height: 0px; height: 0px; margin-bottom: -30px !important;"></p>'
+            }
             <p>Total APR</p>
           </div>
           <div style="margin-left: 5px; padding-right: 5px; ">
             <p style="font-weight: 500">${(mainApr * 100).toFixed(2)}% APR</p>
             <p style="font-weight: 500">${(additionalStakingApr * 100).toFixed(2)}% APR</p>
             <p style="font-weight: 500">${(additionalSwapFeeApr * 100).toFixed(2)}% APR</p>
-            <p style="font-weight: 500">${(minwApr * 100).toFixed(2)}% APR</p>
+            ${
+              minwApr > 0
+                ? `<p style="font-weight: 500">${(minwApr * 100).toFixed(2)}% APR</p>`
+                : '<p style="line-height: 0px; height: 0px; margin-bottom: -30px !important;"></p>'
+            }
+            ${
+              joeRushRewardApr > 0
+                ? `<p style="font-weight: 500">${(joeRushRewardApr * 100).toFixed(2)}% APR</p>`
+                : '<p style="line-height: 0px; height: 0px; margin-bottom: -30px !important;"></p>'
+            }
             <p style="color: ${theme.colors.red}; font-weight: 500">${(totalApr * 100).toFixed(2)}% APR</p>
           </div>
         </div>
       `
-    }
-
-    return `
-      <div style="display: flex; width: 100%; align-items: center;">
-        <div style="width: 60%; text-align: center;">
-          <p>Penguin Finance</p>
-          <p>${additionalStakingAprLabel} Staking</p>
-          <p>${additionalSwapAprLabel} Swap</p>
-          <p>Total APR</p>
-        </div>
-        <div style="margin-left: 5px; padding-right: 5px; ">
-          <p style="font-weight: 500">${(mainApr * 100).toFixed(2)}% APR</p>
-          <p style="font-weight: 500">${(additionalStakingApr * 100).toFixed(2)}% APR</p>
-          <p style="font-weight: 500">${(additionalSwapFeeApr * 100).toFixed(2)}% APR</p>
-          <p style="color: ${theme.colors.red}; font-weight: 500">${(totalApr * 100).toFixed(2)}% APR</p>
-        </div>
-      </div>
-    `
   }
 
   const handleRenderRow = () => {

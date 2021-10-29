@@ -105,7 +105,7 @@ const Emperor: React.FC = () => {
               </GridItem>
             </Grid>
             {account && (
-              <PGGRid align="between" marginTop={{ xs: -40, sm: -90, md: -200, lg: -200 }}>
+              <PGGRid align="between" marginTop={{ xs: -40, sm: -100, md: -200, lg: -200 }}>
                 <GridItem>
                   <TopPenguinsBlock />
                 </GridItem>
@@ -180,8 +180,12 @@ const EmperorPage = styled(Page)`
   overflow: hidden;
   padding: 0px;
   background: #231631;
+  position: relative;
+
   @media (min-width: 576px) {
-    height: 100%;
+    // height: 100%;
+    height: calc(100vh - 170px);
+    min-height: calc(100vh - 170px);
   }
   @media (min-width: 768px) {
     padding: 40px 30px;
@@ -198,11 +202,15 @@ const Wrapper = styled.div<{ isMobile?: boolean }>`
 
 const ChestWrapper = styled.div<{ jackpot: string; isMobile?: boolean }>`
   position: absolute;
-  width: ${({ isMobile }) => (isMobile ? '28%' : '9.5%')};
-  left: ${({ isMobile }) => (isMobile ? '1%' : '26%')};
+  width: ${({ isMobile }) => (isMobile ? '25%' : '9.5%')};
+  left: ${({ isMobile }) => (isMobile ? '1.5%' : '26%')};
   bottom: 18%;
   z-index: 11;
 
+  @media (min-width: 1450px) {
+    width: 8%;
+    left: 27%;
+  }
   img {
     cursor: pointer;
   }

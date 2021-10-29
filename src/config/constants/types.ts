@@ -115,6 +115,14 @@ export interface V2FarmConfig {
   isJoeRush?: boolean
 }
 
+export interface JoeV3FarmConfig {
+  pid?: number
+  lpSymbol: string
+  lpAddresses: Address
+  rewarderAddresses: Address
+  allocPoint?: 0
+}
+
 export interface LPConfig {
   lpSymbol: string
   lpAddresses: Address

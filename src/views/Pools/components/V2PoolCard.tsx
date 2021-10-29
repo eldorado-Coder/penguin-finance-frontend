@@ -28,11 +28,11 @@ const StyledHeading = styled(Heading)`
   color: ${({ theme }) => (theme.isDark ? '#fff' : '#342C6D')};
 
   @font-face {
-    font-family: 'GothamUltra Font';
-    src: url(${process.env.PUBLIC_URL}/fonts/GothamUltra.otf) format('truetype');
+    font-family: 'GothamBold Font';
+    src: url(${process.env.PUBLIC_URL}/fonts/GothamBold.ttf) format('truetype');
     font-display: swap;
   }
-  font-family: 'GothamUltra Font';
+  font-family: 'GothamBold Font';
 
   @media (min-width: 1200px) {
     font-size: 44px;

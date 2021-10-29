@@ -1,4 +1,4 @@
-import { joeExchangeClient, joeMasterChefClient } from '../client'
+import { joeExchangeClient, joeMasterChefClient, joeMasterChefV3Client } from '../client'
 import { JOE_PAIRS_SEARCH, PAIR_DAY_DATA_SEARCH1, TOKENS_SEARCH, POOL_SEARCH } from '../queries'
 
 export const getPair = async (address: string) => {
@@ -24,6 +24,12 @@ export const getToken = async (address: string, symbol: string) => {
 export const getPoolInfo = async (address: string) => {
   if (!address) return null
   const { pools } = await joeMasterChefClient.request(POOL_SEARCH({ address: address.toLowerCase() }))
+  return pools[0]
+}
+
+export const getV3PoolInfo = async (address: string) => {
+  if (!address) return null
+  const { pools } = await joeMasterChefV3Client.request(POOL_SEARCH({ address: address.toLowerCase() }))
   return pools[0]
 }
 

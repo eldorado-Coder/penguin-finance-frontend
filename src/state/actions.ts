@@ -1,6 +1,10 @@
 export { fetchMasterChefPefiPerBlock, fetchFarmsPublicDataAsync, fetchFarmUserDataAsync } from './farms'
 export { fetchMasterChefLydPerSec, fetchFarmsPublicDataAsync as fetchLydiaFarmsPublicDataAsync } from './lydiaFarms'
 export { fetchMasterChefGlobalData as fetchJoeMasterChefGlobalData } from './joeFarms'
+export {
+  fetchMasterChefGlobalData as fetchJoeMasterChefV3GlobalData,
+  fetchFarmsPublicDataAsync as fetchJoeV3FarmsPublicDataAsync,
+} from './joeV3Farms'
 export { fetchMasterChefGlobalData as fetchBenqiMasterChefGlobalData } from './benqiFarms'
 export {
   fetchMasterChefRewards,

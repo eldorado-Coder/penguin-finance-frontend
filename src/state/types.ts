@@ -80,6 +80,7 @@ export interface V2Farm extends FarmConfig {
   swapFeeApr?: number
   pefiApr?: number
   minwApr?: number
+  joeRushRewardApr?: number
   apr?: number
   apy?: number
   displayedDecimals?: number
@@ -174,6 +175,12 @@ export interface JoeFarmsState {
   treasuryPercent?: number
   totalAllocPoint?: number
   data: Farm[]
+}
+
+export interface JoeV3FarmsState {
+  joePerSec?: number
+  totalAllocPoint?: number
+  data?: any[]
 }
 
 export interface BenqiFarmsState {
@@ -338,6 +345,7 @@ export interface State {
   farms: FarmsState
   lydiaFarms: LydiaFarmsState
   joeFarms: JoeFarmsState
+  joeV3Farms: JoeV3FarmsState
   benqiFarms: BenqiFarmsState
   compounderFarms: CompounderFarmsState
   toasts: ToastsState
