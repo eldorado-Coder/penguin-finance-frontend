@@ -9,8 +9,8 @@ const ComingSoonCard: React.FC = () => {
   const isMobile = !isXl
 
   const handleViewRoadMap = () => {
-    window.open('https://docs.penguinfinance.io/roadmap', '_blank');
-  };
+    window.open('https://docs.penguinfinance.io/roadmap', '_blank')
+  }
 
   return (
     <CardContainer>
@@ -83,12 +83,6 @@ const CardContainer = styled(Card)`
 const StyledHeading = styled(Heading)`
   font-weight: 800;
   color: white;
-
-  @font-face {
-    font-family: 'GothamBold Font';
-    src: url(${process.env.PUBLIC_URL}/fonts/GothamBold.ttf) format('truetype');
-    font-display: swap;
-  }
   font-family: 'GothamBold Font';
 
   @media (min-width: 1200px) {

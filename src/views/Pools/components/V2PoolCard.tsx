@@ -26,12 +26,6 @@ const StyledCard = styled(Card)<{ isNestPage?: boolean; isMobile?: boolean }>`
 const StyledHeading = styled(Heading)`
   font-weight: 800;
   color: ${({ theme }) => (theme.isDark ? '#fff' : '#342C6D')};
-
-  @font-face {
-    font-family: 'GothamBold Font';
-    src: url(${process.env.PUBLIC_URL}/fonts/GothamBold.ttf) format('truetype');
-    font-display: swap;
-  }
   font-family: 'GothamBold Font';
 
   @media (min-width: 1200px) {
