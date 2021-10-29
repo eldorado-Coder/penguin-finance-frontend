@@ -46,11 +46,6 @@ const ChestWrapper = styled.div<{ aidKit: string }>`
 `
 
 const PaperWrapper = styled.div`
-  @font-face {
-    font-family: 'GothamBold Font';
-    src: url(${process.env.PUBLIC_URL}/fonts/GothamBold.ttf) format('truetype');
-  }
-
   position: relative;
   display: flex;
   align-items: center;

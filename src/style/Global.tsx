@@ -29,6 +29,12 @@ const GlobalStyle = createGlobalStyle`
     }
     overflow: hidden;
   }
+  // custom fonts
+  @font-face {
+    font-family: 'GothamBold Font';
+    src: url(${process.env.PUBLIC_URL}/fonts/GothamBold.ttf) format('truetype');
+    font-display: swap;
+  }
 `
 
 export default GlobalStyle

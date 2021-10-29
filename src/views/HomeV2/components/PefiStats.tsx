@@ -35,12 +35,6 @@ const StyledPefiStats = styled(Card)`
 const StyledHeading = styled(Heading)`
   color: white;
   font-weight: 800;
-
-  @font-face {
-    font-family: 'GothamBold Font';
-    src: url(${process.env.PUBLIC_URL}/fonts/GothamBold.otf) format('truetype');
-    font-display: swap;
-  }
   font-family: 'GothamBold Font';
 
   @media (min-width: 1200px) {

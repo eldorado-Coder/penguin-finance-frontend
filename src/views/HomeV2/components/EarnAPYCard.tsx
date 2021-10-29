@@ -33,12 +33,6 @@ const CardMidContent = styled(Heading).attrs({ size: 'xl' })`
   line-height: 44px;
   color: ${({ theme }) => (theme.isDark ? '#d4444c' : '#ffffff')};
   font-weight: 800;
-  
-  @font-face {
-    font-family: 'GothamBold Font';
-    src: url(${process.env.PUBLIC_URL}/fonts/GothamBold.ttf) format('truetype');
-    font-display: swap;
-  }
   font-family: 'GothamBold Font';
 
   @media (min-width: 1200px) {
@@ -58,7 +52,7 @@ const Text = styled(Heading)`
     font-display: swap;
   }
   font-family: 'Telegraf UltraBold Font';
-  
+
   @media (min-width: 640px) {
     font-size: 18px;
   }
@@ -89,10 +83,14 @@ const EarnAPYCard = ({ apy }: { apy: BigNumber }) => {
         <CardMidContent color="primary">
           {apy ? `${displayedApy}% APY` : <Skeleton animation="pulse" variant="rect" height="44px" />}
         </CardMidContent>
-        <Flex justifyContent="space-between" alignItems='center'>
+        <Flex justifyContent="space-between" alignItems="center">
           <Text size="md">with no IL by holding iPEFI</Text>
           <StyledNavLink exact activeClassName="active" to="/nests" id="farm-apy-cta">
-            <SvgIcon src={`${process.env.PUBLIC_URL}/images/home/arrow-right.svg`} width={isMobile ? '25px' : "28px"} height={isMobile ? '25px' : "28px"} />
+            <SvgIcon
+              src={`${process.env.PUBLIC_URL}/images/home/arrow-right.svg`}
+              width={isMobile ? '25px' : '28px'}
+              height={isMobile ? '25px' : '28px'}
+            />
           </StyledNavLink>
         </Flex>
       </StyledCardBody>

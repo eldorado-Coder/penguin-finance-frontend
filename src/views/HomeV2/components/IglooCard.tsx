@@ -31,12 +31,6 @@ const CardMidContent = styled(Heading).attrs({ size: 'xl' })`
   font-size: 28px;
   color: ${({ theme }) => (theme.isDark ? '#d4444c' : '#EC3B40')};
   font-weight: 800;
-
-  @font-face {
-    font-family: 'GothamBold Font';
-    src: url(${process.env.PUBLIC_URL}/fonts/GothamBold.ttf) format('truetype');
-    font-display: swap;
-  }
   font-family: 'GothamBold Font';
 
   @media (min-width: 640px) {
