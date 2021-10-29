@@ -80,6 +80,7 @@ export interface V2Farm extends FarmConfig {
   swapFeeApr?: number
   pefiApr?: number
   minwApr?: number
+  joeRushRewardApr?: number
   apr?: number
   apy?: number
   displayedDecimals?: number
