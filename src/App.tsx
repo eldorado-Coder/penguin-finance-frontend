@@ -83,7 +83,7 @@ const App: React.FC = () => {
             <Route path="/old-farms">
               <Farms />
             </Route>
-            <Route path="/nests">
+            <Route path="/stake">
               <Nest />
             </Route>
             <Route path="/ipefi">
