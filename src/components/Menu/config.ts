@@ -25,7 +25,7 @@ export const config: MenuEntry[] = [
     ],
   },
   {
-    label: 'Farms',
+    label: 'Farm',
     icon: 'IglooIcon',
     href: '/farms',
   },
