@@ -7,22 +7,22 @@ export const config: MenuEntry[] = [
     href: '/',
   },
   {
-    label: 'Buy $PEFI',
+    label: 'Buy PEFI',
     icon: 'TradeIcon',
     items: [
       {
-        label: "Trader Joe",
-        href: "https://www.traderjoseph.com/#/trade?outputCurrency=0xe896CDeaAC9615145c0cA09C8Cd5C25bced6384c",
+        label: 'Trader Joe',
+        href: 'https://www.traderjoseph.com/#/trade?outputCurrency=0xe896CDeaAC9615145c0cA09C8Cd5C25bced6384c',
       },
       {
-        label: "Pangolin Exchange",
-        href: "https://app.pangolin.exchange/#/swap?outputCurrency=0xe896CDeaAC9615145c0cA09C8Cd5C25bced6384c",
+        label: 'Pangolin Exchange',
+        href: 'https://app.pangolin.exchange/#/swap?outputCurrency=0xe896CDeaAC9615145c0cA09C8Cd5C25bced6384c',
       },
       {
-        label: "Lydia Exchange",
-        href: "https://exchange.lydia.finance/#/swap?inputCurrency=0xe896cdeaac9615145c0ca09c8cd5c25bced6384c",
-      }
-    ]
+        label: 'Lydia Exchange',
+        href: 'https://exchange.lydia.finance/#/swap?inputCurrency=0xe896cdeaac9615145c0ca09c8cd5c25bced6384c',
+      },
+    ],
   },
   {
     label: 'Farms',
@@ -40,9 +40,9 @@ export const config: MenuEntry[] = [
   //   href: '/info',
   // },
   {
-    label: 'Nest',
+    label: 'Stake',
     icon: 'NestIcon',
-    href: '/nests',
+    href: '/stake',
   },
   {
     label: 'Club Penguin',
@@ -81,37 +81,37 @@ export const config: MenuEntry[] = [
     icon: 'MoreIcon',
     items: [
       {
-        label: "English",
-        href: "https://docs.penguinfinance.io/",
+        label: 'English',
+        href: 'https://docs.penguinfinance.io/',
       },
       {
-        label: "Turkish",
-        href: "https://penguin-finance.gitbook.io/penguin-finance-tuerkce/",
+        label: 'Turkish',
+        href: 'https://penguin-finance.gitbook.io/penguin-finance-tuerkce/',
       },
       {
-        label: "French",
-        href: "https://penguin-finance.gitbook.io/penguin-finance-francais/",
-      }
-    ]
+        label: 'French',
+        href: 'https://penguin-finance.gitbook.io/penguin-finance-francais/',
+      },
+    ],
   },
   {
-    label: "Other",
-    icon: "MoreIcon",
+    label: 'Other',
+    icon: 'MoreIcon',
     items: [
       {
-        label: "Compounder",
-        href: "/compounder",
+        label: 'Compounder',
+        href: '/compounder',
       },
       {
-        label: "iPEFI Migration Page",
-        href: "/ipefi",
+        label: 'iPEFI Migration Page',
+        href: '/ipefi',
       },
       {
-        label: "Sherpa Launchpad",
-        href: "/sherpa-launchpad",
+        label: 'Sherpa Launchpad',
+        href: '/sherpa-launchpad',
       },
-    ]
-  }
+    ],
+  },
   // {
   //   label: 'Compounder',
   //   icon: 'CompounderIcon',
