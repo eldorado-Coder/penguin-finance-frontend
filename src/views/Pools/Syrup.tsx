@@ -302,8 +302,8 @@ const IgloosBgContainer = styled.div`
   background-repeat: repeat;
   background-size: contain;
   position: absolute;
-  top: -8px;
-  bottom: -8px;
+  top: 0;
+  bottom: 0
   right: 0px;
   left: 0px;
   z-index: -1;
