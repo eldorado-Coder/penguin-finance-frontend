@@ -119,6 +119,7 @@ export interface JoeV3FarmConfig {
   pid?: number
   lpSymbol: string
   lpAddresses: Address
+  rewarderAddresses: Address
   allocPoint?: 0
 }
 

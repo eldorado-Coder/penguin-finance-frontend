@@ -27,7 +27,7 @@ import { getBalanceNumber } from 'utils/formatBalance'
 import { DAYS_PER_YEAR, SECONDS_PER_DAY } from 'config'
 import tokens from 'config/constants/tokens'
 import { getAddress } from 'utils/addressHelpers'
-import { getApr, getLydiaFarmApr, getJoeFarmApr, getBenqiFarmApr } from 'utils/apyHelpers'
+import { getApr, getFarmApr, getLydiaFarmApr, getJoeFarmApr, getBenqiFarmApr } from 'utils/apyHelpers'
 import V1Farms from './V1'
 import V2Farms from './V2'
 
@@ -285,6 +285,7 @@ const Farms: React.FC = () => {
     const minwApr = getApr(minwDailyApr)
 
     let { stakingApr, swapFeeApr } = farm
+    let joeRushRewardApr = 0
 
     if (farm.type === 'Lydia') {
       const lydiaFarm = lydiaFarms.find((row) => row.lpSymbol === farm.lpSymbol)
@@ -302,6 +303,7 @@ const Farms: React.FC = () => {
         )
         if (joeV3Farm) {
           farmAllocPoint = joeV3Farm.allocPoint
+          joeRushRewardApr = getFarmApr(avaxPriceUsd, poolLiquidityUsd, joeV3Farm.joeRushRewardPerSec)
         }
       }
       const poolWeight = farm.isJoeRush
@@ -332,8 +334,9 @@ const Farms: React.FC = () => {
       stakingApr,
       swapFeeApr,
       minwApr,
-      apr: stakingApr + swapFeeApr + pefiApr + minwApr,
-      apy: stakingApr + swapFeeApr + pefiApr + minwApr,
+      joeRushRewardApr,
+      apr: stakingApr + swapFeeApr + pefiApr + minwApr + joeRushRewardApr,
+      apy: stakingApr + swapFeeApr + pefiApr + minwApr + joeRushRewardApr,
     }
   })
 
