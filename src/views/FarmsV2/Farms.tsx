@@ -303,7 +303,7 @@ const Farms: React.FC = () => {
         )
         if (joeV3Farm) {
           farmAllocPoint = joeV3Farm.allocPoint
-          joeRushRewardApr = getFarmApr(avaxPriceUsd, poolLiquidityUsd, joeV3Farm.joeRushRewardPerSec)
+          joeRushRewardApr = getFarmApr(avaxPriceUsd, poolLiquidityUsd, joeV3Farm.joeRushRewardPerSec) * 0.9
         }
       }
       const poolWeight = farm.isJoeRush
