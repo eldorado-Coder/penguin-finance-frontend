@@ -48,6 +48,10 @@ const DetailsCellInner = styled(CellInner)`
   }
 `
 
+const MobileActions = styled.td`
+  width: 100px;
+`;
+
 const StyledTr = styled.tr<{ shouldRenderChild?: boolean }>`
   cursor: pointer;
   border-bottom: ${({ theme, shouldRenderChild }) =>
@@ -55,7 +59,7 @@ const StyledTr = styled.tr<{ shouldRenderChild?: boolean }>`
 `
 
 const EarnedMobileCell = styled.td`
-  padding: 16px 0 24px 16px;
+  width: 60%;
 `
 
 const AprBalanceWrapper = styled.div`
@@ -65,8 +69,7 @@ const AprBalanceWrapper = styled.div`
 `
 
 const AprMobileCell = styled.td`
-  padding-top: 16px;
-  padding-bottom: 24px;
+  width: 40%;
 `
 
 const FarmMobileCell = styled.td`
@@ -380,35 +383,33 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
     return (
       <StyledTr shouldRenderChild={shouldRenderChild} onClick={toggleActionPanel}>
         <td>
-          <tr>
-            <Flex flexDirection="column">
-              <FarmMobileCell>
-                <CellLayout>
-                  <Farm {...props} />
+          <Flex flexDirection="column">
+            <FarmMobileCell>
+              <CellLayout>
+                <Farm {...props} />
+              </CellLayout>
+            </FarmMobileCell>
+            <Flex margin='16px 0 24px 16px' justifyContent="space-between">
+              <EarnedMobileCell>
+                <CellLayout label="Your Stake">
+                  <Balance fontSize="16px" fontWeight="400" prefix="$" value={Number(stakedBalanceInUsd)} />
                 </CellLayout>
-              </FarmMobileCell>
-              <Flex justifyContent="space-between">
-                <EarnedMobileCell>
-                  <CellLayout label="Your Stake">
-                    <Balance fontSize="16px" fontWeight="400" prefix="$" value={Number(stakedBalanceInUsd)} />
-                  </CellLayout>
-                </EarnedMobileCell>
-                <AprMobileCell>
-                  <CellLayout label="APR">
-                    <Amount>{`${farmApr || '--'}%`}</Amount>
-                  </CellLayout>
-                </AprMobileCell>
-              </Flex>
+              </EarnedMobileCell>
+              <AprMobileCell>
+                <CellLayout label="APR">
+                  <Amount>{`${farmApr || '--'}%`}</Amount>
+                </CellLayout>
+              </AprMobileCell>
             </Flex>
-          </tr>
+          </Flex>
         </td>
-        <td>
+        <MobileActions>
           <DetailsCellInner>
             <CellLayout>
               <Details actionPanelToggled={actionPanelExpanded} />
             </CellLayout>
           </DetailsCellInner>
-        </td>
+        </MobileActions>
       </StyledTr>
     )
   }

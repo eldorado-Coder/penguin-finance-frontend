@@ -226,11 +226,6 @@ const ChestWrapper = styled.div<{ jackpot: string; isMobile?: boolean }>`
 `
 
 const PaperWrapper = styled.div<{ isOpen: boolean }>`
-  @font-face {
-    font-family: 'GothamBold Font';
-    src: url(${process.env.PUBLIC_URL}/fonts/GothamBold.ttf) format('truetype');
-  }
-
   opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
   position: relative;
   display: flex;

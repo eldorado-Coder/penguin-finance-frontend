@@ -89,10 +89,6 @@ const StyledText = styled(Text)`
 
 const StyledHeading = styled(Heading)`
   color: ${({ theme }) => (theme.isDark ? 'white' : theme.colors.secondary)};
-  @font-face {
-    font-family: 'GothamBold Font';
-    src: url(${process.env.PUBLIC_URL}/fonts/GothamBold.ttf) format('truetype');
-  }
   font-family: 'GothamBold Font';
 `
 
@@ -110,7 +106,7 @@ const Header = styled.div`
   @media (min-width: 768px) {
     padding: 0 40px 16px;
   }
-`;
+`
 
 const CardGrid = styled.div`
   padding: 24px;

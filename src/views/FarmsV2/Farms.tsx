@@ -40,8 +40,8 @@ const IgloosBgContainer = styled.div`
   background-repeat: repeat;
   background-size: contain;
   position: absolute;
-  top: -8px;
-  bottom: -8px;
+  top: 0;
+  bottom: 0
   right: 0px;
   left: 0px;
   z-index: -1;
@@ -303,7 +303,7 @@ const Farms: React.FC = () => {
         )
         if (joeV3Farm) {
           farmAllocPoint = joeV3Farm.allocPoint
-          joeRushRewardApr = getFarmApr(avaxPriceUsd, poolLiquidityUsd, joeV3Farm.joeRushRewardPerSec)
+          joeRushRewardApr = getFarmApr(avaxPriceUsd, poolLiquidityUsd, joeV3Farm.joeRushRewardPerSec) * 0.9
         }
       }
       const poolWeight = farm.isJoeRush
@@ -376,6 +376,8 @@ const Farms: React.FC = () => {
     setActiveTab(tab)
     if (tab === 1) {
       setShowStakedOnly(true)
+    } else {
+      setShowStakedOnly(false)
     }
   }
 
@@ -456,7 +458,9 @@ const Farms: React.FC = () => {
   const renderStakedOnlyFilter = (
     <Flex alignItems="center" mr={isMobile ? '8px' : '16px'}>
       <ToggleWrapper checked={showStakedOnly}>
-        <Toggle checked={showStakedOnly} disabled={activeTab === 1} onChange={handleChangeStakedOnly} />
+        <Toggle 
+          checked={showStakedOnly} 
+          onChange={handleChangeStakedOnly} />
       </ToggleWrapper>
       <FilterText ml="8px" color="textSubtle">
         Staked Only
