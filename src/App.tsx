@@ -1,5 +1,5 @@
 import React, { Suspense, lazy, useEffect } from 'react'
-import { Router, Route, Switch, useLocation } from 'react-router-dom'
+import { Router, Route, Switch, Redirect, useLocation } from 'react-router-dom'
 import { ResetCSS } from 'penguinfinance-uikit2'
 import BigNumber from 'bignumber.js'
 import { useFetchProfile, useFetchPublicData } from 'state/hooks'
@@ -86,6 +86,8 @@ const App: React.FC = () => {
             <Route path="/stake">
               <Nest />
             </Route>
+            <Route exact path="/nests" render={() => <Redirect to="/stake" />} />
+            <Route exact path="/nest" render={() => <Redirect to="/stake" />} />
             <Route path="/ipefi">
               <IPefi />
             </Route>
