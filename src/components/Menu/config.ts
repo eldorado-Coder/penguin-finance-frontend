@@ -45,7 +45,7 @@ export const config: MenuEntry[] = [
     href: '/stake',
   },
   {
-    label: 'Club Penguin',
+    label: 'The Club',
     icon: 'ClubIcon',
     href: '/club',
     badge: 'NEW',

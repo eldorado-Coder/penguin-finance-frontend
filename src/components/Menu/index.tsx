@@ -39,7 +39,7 @@ const Menu = (props) => {
   const emperorIndex = links.findIndex((link) => link.label === 'Emperor')
   const launchpadIndex = links.findIndex((link) => link.label === 'Launchpad')
   const collectiblesIndex = links.findIndex((link) => link.label === 'Collectibles')
-  const clubIndex = links.findIndex((link) => link.label === 'Club Penguin')
+  const clubIndex = links.findIndex((link) => link.label === 'The Club')
 
   // links[collectiblesIndex] = {
   //   ...links[collectiblesIndex],
