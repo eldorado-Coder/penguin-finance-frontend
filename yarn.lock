@@ -12509,10 +12509,10 @@ pbkdf2@^3.0.17, pbkdf2@^3.0.3:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-penguinfinance-uikit2@2.0.12:
-  version "2.0.12"
-  resolved "https://registry.yarnpkg.com/penguinfinance-uikit2/-/penguinfinance-uikit2-2.0.12.tgz#402ef61fbbfc1a765da388911c0055a023257ea6"
-  integrity sha512-bV/kj8vKeN+jX6lhgKGeBOoawwV/1ZFeoFQ156e8YVi/cuoXVlHNjXSPnZSBswT8gERhk1XIYdu3m2JorNImPQ==
+penguinfinance-uikit2@2.0.13:
+  version "2.0.13"
+  resolved "https://registry.yarnpkg.com/penguinfinance-uikit2/-/penguinfinance-uikit2-2.0.13.tgz#467da1d6aeeaa91a4b5aed9278039d354e326b65"
+  integrity sha512-MgF7xnqwm14/6QJ9la0mF2t7PXaPHv6fvq8mPQP3mp/FV1JlyEVnWsm+F04Wi5qvJb9vNTMoBfwyyFjKq5BBAg==
   dependencies:
     "@types/lodash" "^4.14.162"
     "@types/styled-system" "^5.1.10"
