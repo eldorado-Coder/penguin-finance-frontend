@@ -40,6 +40,11 @@ export const UnlockButton = styled(Button)`
     padding: 0 24px;
     height: 48px;
   }
+  @media (min-width: 4000px) {
+    font-size: 22px;
+    padding: 0 24px;
+    height: 64px;
+  }
 `
 
 export const PGButton = styled(NormalButton)<{ colorType?: string }>`
@@ -58,10 +63,10 @@ export const PGButton = styled(NormalButton)<{ colorType?: string }>`
     padding: 0 24px;
     height: 48px;
   }
-  @media (min-width: 1200px) {
-    font-size: 16px;
+  @media (min-width: 4000px) {
+    font-size: 22px;
     padding: 0 24px;
-    height: 48px;
+    height: 64px;
   }
 `
 
@@ -80,6 +85,9 @@ export const Title = styled(Text)`
     font-size: 22px;
     line-height: 1.5;
   }
+  @media (min-width: 4000px) {
+    font-size: 32px;
+  }
 `
 
 export const SubTitle = styled(Text)`
@@ -93,6 +101,9 @@ export const SubTitle = styled(Text)`
   @media (min-width: 1200px) {
     font-size: 18px;
   }
+  @media (min-width: 4000px) {
+    font-size: 24px;
+  }
 `
 
 export const Caption = styled(Text)`
@@ -105,5 +116,8 @@ export const Caption = styled(Text)`
   }
   @media (min-width: 1200px) {
     font-size: 14px;
+  }
+  @media (min-width: 4000px) {
+    font-size: 20px;
   }
 `

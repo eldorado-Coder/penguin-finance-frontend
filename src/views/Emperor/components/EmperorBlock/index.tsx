@@ -15,6 +15,10 @@ const CardBlock = styled(Block)<{ isMobile?: boolean }>`
   @media (min-width: 1200px) and (max-height: 800px) {
     margin-top: -120px;
   }
+
+  @media (min-width: 4000px) {
+    margin-top: -40px;
+  }
 `
 
 const TitleBgWrapper = styled.div<{ color: string; account: string; isMobile?: boolean }>`
@@ -46,6 +50,10 @@ const TitleBgWrapper = styled.div<{ color: string; account: string; isMobile?: b
   @media (min-width: 1200px) and (max-height: 800px) {
     transform: scale(1.5);
     margin-top: 16px;
+  }
+
+  @media (min-width: 4000px) {
+    transform: scale(1.5);
   }
 `
 
@@ -95,6 +103,12 @@ const CardBlockContent = styled.div<{ account?: string }>`
     min-width: 200px;
     padding: 32px 24px 16px;
   }
+
+  @media (min-width: 4000px) {
+    min-width: 400px;
+    max-width: 400px;
+    padding: 40px 24px 40px;
+  }
 `
 
 const WalletContainer = styled(Flex)`
@@ -127,6 +141,12 @@ const WalletContainer = styled(Flex)`
       padding: 0 24px;
       height: 48px;
     }
+    @media (min-width: 4000px) {
+      margin-top: 8px;
+      font-size: 22px;
+      padding: 0 24px;
+      height: 64px;
+    }
   }
 `
 
@@ -142,6 +162,10 @@ const ShieldContainer = styled.div`
   svg {
     fill: ${({ theme }) => theme.colors.secondary};
     height: 22px;
+
+    @media (min-width: 4000px) {
+      height: 32px;
+    }
   }
 `
 
@@ -201,6 +225,10 @@ const StyledText = styled(Text)`
   @media (max-width: 1080px) {
     font-size: 11px;
   }
+  @media (min-width: 4000px) {
+    font-size: 24px;
+    line-height: 1.3;
+  }
 `
 
 const NicName = styled(Text)`
@@ -210,6 +238,10 @@ const NicName = styled(Text)`
 
   @media (min-width: 1200px) {
     font-size: 22px;
+  }
+
+  @media (min-width: 4000px) {
+    font-size: 36px;
   }
 `;
 
