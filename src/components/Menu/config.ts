@@ -99,6 +99,10 @@ export const config: MenuEntry[] = [
     icon: 'MoreIcon',
     items: [
       {
+        label: 'V1 Farms',
+        href: '/v1-farms',
+      },
+      {
         label: 'Compounder',
         href: '/compounder',
       },
