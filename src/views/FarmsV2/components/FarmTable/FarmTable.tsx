@@ -9,6 +9,37 @@ export interface ITableProps {
   sortColumn?: string
 }
 
+const FarmTable: React.FC<ITableProps> = (props) => {
+  const tableWrapperEl = useRef<HTMLDivElement>(null)
+  const { data } = props
+
+  const scrollToTop = (): void => {
+    tableWrapperEl.current.scrollIntoView({
+      behavior: 'smooth',
+    })
+  }
+
+  return (
+    <Container>
+      <TableContainer>
+        <TableWrapper ref={tableWrapperEl}>
+          {data.map((row, index) => {
+            return <Row {...row} index={index} key={`table-row-${row.farm.type}-${row.farm.pid}`} />
+          })}
+        </TableWrapper>
+        <ScrollWrapper>
+          <ScrollButtonContainer>
+            <Button variant="text" onClick={scrollToTop}>
+              To Top
+              <ChevronUpIcon color="primary" />
+            </Button>
+          </ScrollButtonContainer>
+        </ScrollWrapper>
+      </TableContainer>
+    </Container>
+  )
+}
+
 const Container = styled.div`
   width: 100%;
   border-radius: 16px;
@@ -41,36 +72,5 @@ const ScrollButtonContainer = styled.div`
   border-radius: 0 0 16px 16px;
   background: ${({ theme }) => theme.card.background};
 `
-
-const FarmTable: React.FC<ITableProps> = (props) => {
-  const tableWrapperEl = useRef<HTMLDivElement>(null)
-  const { data } = props
-
-  const scrollToTop = (): void => {
-    tableWrapperEl.current.scrollIntoView({
-      behavior: 'smooth',
-    })
-  }
-
-  return (
-    <Container>
-      <TableContainer>
-        <TableWrapper ref={tableWrapperEl}>
-          {data.map((row, index) => {
-            return <Row {...row} index={index} key={`table-row-${row.farm.type}-${row.farm.pid}`} />
-          })}
-        </TableWrapper>
-        <ScrollWrapper>
-          <ScrollButtonContainer>
-            <Button variant="text" onClick={scrollToTop}>
-              To Top
-              <ChevronUpIcon color="primary" />
-            </Button>
-          </ScrollButtonContainer>
-        </ScrollWrapper>
-      </TableContainer>
-    </Container>
-  )
-}
 
 export default FarmTable

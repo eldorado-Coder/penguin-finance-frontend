@@ -14,173 +14,9 @@ import roundDown from 'utils/roundDown'
 import { usePricePefiUsdt, usePricePngUsdt, usePriceAvaxUsdt, useV2Pools } from 'state/hooks'
 import useJoePrice from 'hooks/useJoePrice'
 import useTokenPrice from 'hooks/useTokenPrice'
-
 import { FarmCardProps } from '../../types'
 import StakePanel from './StakePanel'
 import AutoNesting from './AutoNesting'
-
-const expandAnimation = keyframes`
-  from {
-    max-height: 0px;
-  }
-  to {
-    max-height: 1000px;
-  }
-`
-
-const collapseAnimation = keyframes`
-  from {
-    max-height: 1000px;
-  }
-  to {
-    max-height: 0px;
-  }
-`
-
-const Container = styled.div<{ expanded }>`
-  animation: ${({ expanded }) =>
-    expanded
-      ? css`
-          ${expandAnimation} 300ms linear forwards
-        `
-      : css`
-          ${collapseAnimation} 300ms linear forwards
-        `};
-  overflow: hidden;
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 8px 8px 0;
-  overflow: auto;
-
-  ${({ theme }) => theme.mediaQueries.xl} {
-    flex-direction: row;
-    padding: 8px 8px 0;
-  }
-`
-
-const ActionCard = styled(Card)<{ minWidth?: number }>`
-  border-radius: 16px;
-  overflow: unset;
-  min-width: ${({ minWidth }) => minWidth && `${minWidth}px`};
-  box-shadow: 0px 2px 8px rgb(0 0 0 / 16%);
-`
-
-const EarningsCard = styled(ActionCard)`
-  min-width: 240px;
-  margin-right: 0;
-
-  img {
-    display: block;
-  }
-
-  ${({ theme }) => theme.mediaQueries.xl} {
-    margin-right: 16px;
-
-    img {
-      display: none;
-    }
-  }
-
-  @media (min-width: 1410px) {
-    min-width: 300px;
-
-    img {
-      display: block;
-    }
-  }
-`
-
-const StakeCard = styled(ActionCard)`
-  margin-right: 0;
-  ${({ theme }) => theme.mediaQueries.xl} {
-    margin-right: 16px;
-  }
-`
-
-const PendingRewardsCard = styled(ActionCard)`
-  @media (min-width: 1350px) {
-    min-width: 460px;
-  }
-`
-
-const PendingRewardsContent = styled(Flex)`
-  flex-wrap: wrap;
-  justify-content: space-around;
-`
-
-const RewardImage = styled.img<{ size: number; ml?: number; borderRadius?: string; mt?: number }>`
-  height: ${({ size }) => size}px;
-  width: ${({ size }) => size}px;
-  margin: 0px 12px;
-  margin-left: ${({ ml }) => ml && `${ml}px`};
-  margin-top: ${({ mt }) => mt && `${mt}px`};
-  border-radius: ${({ borderRadius }) => borderRadius};
-`
-const CoinImage = styled.img<{ size: number; ml?: number; mt?: number }>`
-  height: ${({ size }) => size}px;
-  width: ${({ size }) => size}px;
-  margin: 0px 12px;
-  margin-left: ${({ ml }) => ml && `${ml}px`};
-  margin-top: ${({ mt }) => mt && `${mt}px`};
-`
-
-const StyledButton = styled(Button)`
-  font-weight: 500;
-  font-size: 14px;
-  border-radius: 10px;
-  height: 38px;
-  margin-top: 8px;
-  background-color: ${({ theme }) => theme.colors.red};
-  color: white;
-
-  img {
-    margin-left: 8px;
-  }
-`
-
-const EarningsWrapper = styled(Flex)`
-  height: 49%;
-`
-
-const EarningsContainer = styled.div`
-  min-width: 160px;
-`
-
-const Divider = styled.div`
-  background-color: ${({ theme }) => (theme.isDark ? theme.colors.background : '#e8e4ef')};
-  height: 3px;
-  width: 100%;
-`
-
-const Label = styled(Text)`
-  white-space: nowrap;
-`
-
-const StyledBalance = styled(Balance)`
-  margin: auto !important;
-  white-space: nowrap;
-`
-
-const UsdBalanceWrapper = styled.div`
-  div {
-    color: ${({ theme }) => (theme.isDark ? '#b2b2ce' : theme.colors.textDisabled)};
-  }
-`
-
-const BalanceWrapper = styled.div`
-  div {
-    white-space: nowrap;
-    span {
-      margin-right: 2px;
-    }
-  }
-`
-
-const Title = styled(Text)`
-  color: ${({ theme }) => theme.colors.red};
-`
 
 const COIN_LIST = [
   { src: '/images/farms-v2/coins/coin1.svg', min: 0 },
@@ -397,5 +233,168 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
     </Container>
   )
 }
+
+const expandAnimation = keyframes`
+  from {
+    max-height: 0px;
+  }
+  to {
+    max-height: 1000px;
+  }
+`
+
+const collapseAnimation = keyframes`
+  from {
+    max-height: 1000px;
+  }
+  to {
+    max-height: 0px;
+  }
+`
+
+const Container = styled.div<{ expanded }>`
+  animation: ${({ expanded }) =>
+    expanded
+      ? css`
+          ${expandAnimation} 300ms linear forwards
+        `
+      : css`
+          ${collapseAnimation} 300ms linear forwards
+        `};
+  overflow: hidden;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 8px 8px 0;
+  overflow: auto;
+
+  ${({ theme }) => theme.mediaQueries.xl} {
+    flex-direction: row;
+    padding: 8px 8px 0;
+  }
+`
+
+const ActionCard = styled(Card)<{ minWidth?: number }>`
+  border-radius: 16px;
+  overflow: unset;
+  min-width: ${({ minWidth }) => minWidth && `${minWidth}px`};
+  box-shadow: 0px 2px 8px rgb(0 0 0 / 16%);
+`
+
+const EarningsCard = styled(ActionCard)`
+  min-width: 240px;
+  margin-right: 0;
+
+  img {
+    display: block;
+  }
+
+  ${({ theme }) => theme.mediaQueries.xl} {
+    margin-right: 16px;
+
+    img {
+      display: none;
+    }
+  }
+
+  @media (min-width: 1410px) {
+    min-width: 300px;
+
+    img {
+      display: block;
+    }
+  }
+`
+
+const StakeCard = styled(ActionCard)`
+  margin-right: 0;
+  ${({ theme }) => theme.mediaQueries.xl} {
+    margin-right: 16px;
+  }
+`
+
+const PendingRewardsCard = styled(ActionCard)`
+  @media (min-width: 1350px) {
+    min-width: 460px;
+  }
+`
+
+const PendingRewardsContent = styled(Flex)`
+  flex-wrap: wrap;
+  justify-content: space-around;
+`
+
+const RewardImage = styled.img<{ size: number; ml?: number; borderRadius?: string; mt?: number }>`
+  height: ${({ size }) => size}px;
+  width: ${({ size }) => size}px;
+  margin: 0px 12px;
+  margin-left: ${({ ml }) => ml && `${ml}px`};
+  margin-top: ${({ mt }) => mt && `${mt}px`};
+  border-radius: ${({ borderRadius }) => borderRadius};
+`
+const CoinImage = styled.img<{ size: number; ml?: number; mt?: number }>`
+  height: ${({ size }) => size}px;
+  width: ${({ size }) => size}px;
+  margin: 0px 12px;
+  margin-left: ${({ ml }) => ml && `${ml}px`};
+  margin-top: ${({ mt }) => mt && `${mt}px`};
+`
+
+const StyledButton = styled(Button)`
+  font-weight: 500;
+  font-size: 14px;
+  border-radius: 10px;
+  height: 38px;
+  margin-top: 8px;
+  background-color: ${({ theme }) => theme.colors.red};
+  color: white;
+
+  img {
+    margin-left: 8px;
+  }
+`
+
+const EarningsWrapper = styled(Flex)`
+  height: 49%;
+`
+
+const EarningsContainer = styled.div`
+  min-width: 160px;
+`
+
+const Divider = styled.div`
+  background-color: ${({ theme }) => (theme.isDark ? theme.colors.background : '#e8e4ef')};
+  height: 3px;
+  width: 100%;
+`
+
+const Label = styled(Text)`
+  white-space: nowrap;
+`
+
+const StyledBalance = styled(Balance)`
+  margin: auto !important;
+  white-space: nowrap;
+`
+
+const UsdBalanceWrapper = styled.div`
+  div {
+    color: ${({ theme }) => (theme.isDark ? '#b2b2ce' : theme.colors.textDisabled)};
+  }
+`
+
+const BalanceWrapper = styled.div`
+  div {
+    white-space: nowrap;
+    span {
+      margin-right: 2px;
+    }
+  }
+`
+
+const Title = styled(Text)`
+  color: ${({ theme }) => theme.colors.red};
+`
 
 export default ActionPanel

@@ -31,184 +31,6 @@ import { getApr, getFarmApr, getLydiaFarmApr, getJoeFarmApr, getBenqiFarmApr } f
 import V1Farms from './V1'
 import V2Farms from './V2'
 
-const FarmPage = styled(Page)`
-  max-width: 1200px;
-`
-
-// bg
-const IgloosBgContainer = styled.div`
-  background-repeat: repeat;
-  background-size: contain;
-  position: absolute;
-  top: 0;
-  bottom: 0
-  right: 0px;
-  left: 0px;
-  z-index: -1;
-`
-
-const BgWrapper = styled.div`
-  position: absolute;
-  top: 0px;
-  bottom: 0px;
-  right: 0px;
-  left: 0px;
-  z-index: -1;
-`
-
-// banner
-const IgloosBannerContainer = styled.div`
-  margin-bottom: 24px;
-
-  @media (min-width: 640px) {
-    margin-bottom: 0px;
-  }
-`
-const BannerImage = styled.img`
-  z-index: -1;
-`
-
-// tvl container
-const TvlContainer = styled(Flex)`
-  color: ${({ theme }) => (theme.isDark ? '#bba6dd' : '#372871')};
-  font-size: 28px;
-  font-weight: 600;
-  font-family: 'Kanit';
-  white-space: break-spaces;
-  align-items: center;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-bottom: 40px;
-  min-width: 220px;
-
-  @media (min-width: 968px) {
-    justify-content: flex-start;
-    margin-bottom: 0px;
-  }
-`
-
-const HeaderLabel = styled(Text)`
-  color: ${({ theme }) => (theme.isDark ? '#bba6dd' : '#372871')};
-`
-
-const Description = styled(Text)`
-  color: ${({ theme }) => (theme.isDark ? '#bba6dd' : '#372871')};
-
-  div {
-    display: inline;
-    cursor: pointer;
-  }
-`
-
-// slider
-const TabWrapper = styled.div`
-  div {
-    border: 2px solid ${({ theme }) => (theme.isDark ? '#221b38' : '#b2b2ce')};
-    background-color: ${({ theme }) => (theme.isDark ? '#332654' : '#e8e4ef')};
-    border-radius: 18px;
-  }
-`
-const OptionItem = styled(ButtonMenuItem)<{ active: boolean }>`
-  min-width: 70px;
-  background-color: ${({ active, theme }) => active && theme.colors.red};
-  color: ${({ active }) => (active ? 'white' : '#b2b2ce')};
-  margin: 0px !important;
-`
-
-const SelectWrapper = styled.div`
-  div {
-    color: ${({ theme }) => theme.isDark && '#372871'};
-    > div:first-child {
-      > div {
-        background: ${({ theme }) => theme.isDark && '#bba6dd'};
-      }
-    }
-    > div:last-child {
-      background: ${({ theme }) => theme.isDark && '#bba6dd'};
-    }
-  }
-`
-
-const StyledInput = styled(Input)`
-  border: 1px solid transparent;
-  color: ${({ theme }) => theme.isDark && '#372871'};
-  background: ${({ theme }) => theme.isDark && '#bba6dd'};
-  ::placeholder {
-    color: ${({ theme }) => theme.isDark && '#927fbc'};
-  }
-
-  &:focus {
-    box-shadow: none !important;
-    border: ${({ theme }) => (theme.isDark ? '1px solid #66578d' : '1px solid #d7caec')};
-  }
-`
-
-const ProjectLogo = styled.img<{ isActive?: boolean }>`
-  width: 40px;
-  height: 40px;
-  margin-left: 8px;
-  margin-right: 8px;
-  cursor: pointer;
-  opacity: ${({ isActive }) => (isActive ? 1 : 0.3)};
-`
-
-const FilterText = styled(Text)`
-  white-space: nowrap;
-`
-
-const FilterWrapper = styled(Flex)`
-  flex-direction: column;
-  align-items: center;
-  margin-top: -16px;
-
-  ${({ theme }) => theme.mediaQueries.sm} {
-    margin-top: -40px;
-  }
-
-  ${({ theme }) => theme.mediaQueries.lg} {
-    flex-direction: row;
-    padding: 8px 8px 0;
-    margin-top: -64px;
-  }
-`
-
-const LeftFilters = styled(Flex)`
-  flex-direction: column;
-  align-items: center;
-
-  ${({ theme }) => theme.mediaQueries.xs} {
-    flex-direction: row;
-  }
-  ${({ theme }) => theme.mediaQueries.sm} {
-    flex-direction: row;
-  }
-  ${({ theme }) => theme.mediaQueries.md} {
-    flex-direction: row;
-  }
-`
-
-const ToggleWrapper = styled.div<{ checked?: boolean }>`
-  div {
-    height: 32px;
-    width: 56px;
-    background: ${({ checked, theme }) => theme.isDark && !checked && '#bba6dd'};
-    background: ${({ checked, theme }) => theme.isDark && checked && '#d4444c'};
-    background: ${({ checked, theme }) => !theme.isDark && checked && '#ec3e3f'};
-
-    div {
-      height: 24px;
-      width: 24px;
-      left: ${({ checked }) => checked && 'calc(100% - 28px) !important'};
-      background: white;
-    }
-  }
-`
-
-// content
-const IgloosContentContainer = styled.div`
-  position: relative;
-`
-
 const PROJECT_LIST = [
   { src: '/images/farms-v2/penguin.svg', name: 'Penguin' },
   { src: '/images/farms-v2/joe.svg', name: 'Joe' },
@@ -491,61 +313,17 @@ const Farms: React.FC = () => {
           alt="v2 farm banner"
         />
       </IgloosBannerContainer>
-      {isMobile ? (
-        <>
-          <HeaderLabel fontSize="28px" fontWeight={500} lineHeight={1.2} textAlign="center" mb="8px">
-            Make Igloos, Not War (MINW), and #JOERUSH are live!
-          </HeaderLabel>
-          <Description fontWeight={400} marginBottom={isMobile ? '20px' : '70px'} textAlign="center">
-            New farming strategies! Earn up to 5 tokens (including AVAX incentives) and +10% rewards on MINW Igloos.{' '}
-            <Text color="red" onClick={handleViewMINW}>
-              Learn more.
-            </Text>
-          </Description>
-          <TvlContainer>
-            <span>{`TVL: `}</span>
-            <Balance
-              fontSize="28px"
-              color={theme.isDark ? '#bba6dd' : '#372871'}
-              fontWeight="600"
-              prefix="$"
-              decimals={0}
-              value={Number(tvl)}
-            />
-          </TvlContainer>
-          <Text color="#165DC4" fontSize="18px" fontWeight={500} lineHeight={1.2} textAlign="center" mb="30px">
-            Please harvest each participating MINW Igloo once, to start earning extra PNG and JOE rewards.
-          </Text>
-        </>
-      ) : (
-        <>
-          <Flex justifyContent="space-between">
-            <HeaderLabel fontSize="28px" fontWeight={500}>
-              Make Igloos, Not War (MINW), and #JOERUSH are live!
-            </HeaderLabel>
-            <TvlContainer>
-              <span>{`TVL: `}</span>
-              <Balance
-                fontSize="28px"
-                color={theme.isDark ? '#bba6dd' : '#372871'}
-                fontWeight="600"
-                prefix="$"
-                decimals={0}
-                value={Number(tvl)}
-              />
-            </TvlContainer>
-          </Flex>
-          <Description fontWeight={400} marginBottom={isMobile ? '30px' : '20px'}>
-            New farming strategies! Earn up to 5 tokens (including AVAX incentives) and +10% rewards on MINW Igloos.{' '}
-            <Text color="red" onClick={handleViewMINW}>
-              Learn more.
-            </Text>
-          </Description>
-          <Text color="#165DC4" fontSize="20px" fontWeight={500} lineHeight={1.2} mb="50px">
-            Please harvest each participating MINW Igloo once, to start earning extra PNG and JOE rewards.
-          </Text>
-        </>
-      )}
+      <TvlContainer marginBottom={isMobile ? '30px' : '70px'}>
+        <span>{`Total Value Locked (TVL): `}</span>
+        <Balance
+          fontSize="28px"
+          color={theme.isDark ? '#bba6dd' : '#372871'}
+          fontWeight="600"
+          prefix="$"
+          decimals={0}
+          value={Number(tvl)}
+        />
+      </TvlContainer>
       {isMobile ? (
         <FilterWrapper justifyContent="space-between" alignItems="center" flexWrap="wrap">
           <Flex mt="8px" justifyContent="center" mb="8px" flexWrap="wrap">
@@ -581,5 +359,167 @@ const Farms: React.FC = () => {
     </FarmPage>
   )
 }
+
+const FarmPage = styled(Page)`
+  max-width: 1200px;
+`
+
+// bg
+const IgloosBgContainer = styled.div`
+  background-repeat: repeat;
+  background-size: contain;
+  position: absolute;
+  top: 0;
+  bottom: 0
+  right: 0px;
+  left: 0px;
+  z-index: -1;
+`
+
+const BgWrapper = styled.div`
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  right: 0px;
+  left: 0px;
+  z-index: -1;
+`
+
+// banner
+const IgloosBannerContainer = styled.div`
+  margin-bottom: 24px;
+
+  @media (min-width: 640px) {
+    margin-bottom: 0px;
+  }
+`
+const BannerImage = styled.img`
+  z-index: -1;
+`
+
+// tvl container
+const TvlContainer = styled(Flex)`
+  color: ${({ theme }) => (theme.isDark ? '#bba6dd' : '#372871')};
+  font-size: 28px;
+  font-weight: 600;
+  font-family: 'Kanit';
+  white-space: break-spaces;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    justify-content: flex-start;
+  }
+`
+
+// slider
+const TabWrapper = styled.div`
+  div {
+    border: 2px solid ${({ theme }) => (theme.isDark ? '#221b38' : '#b2b2ce')};
+    background-color: ${({ theme }) => (theme.isDark ? '#332654' : '#e8e4ef')};
+    border-radius: 18px;
+  }
+`
+const OptionItem = styled(ButtonMenuItem)<{ active: boolean }>`
+  min-width: 70px;
+  background-color: ${({ active, theme }) => active && theme.colors.red};
+  color: ${({ active }) => (active ? 'white' : '#b2b2ce')};
+  margin: 0px !important;
+`
+
+const SelectWrapper = styled.div`
+  div {
+    color: ${({ theme }) => theme.isDark && '#372871'};
+    > div:first-child {
+      > div {
+        background: ${({ theme }) => theme.isDark && '#bba6dd'};
+      }
+    }
+    > div:last-child {
+      background: ${({ theme }) => theme.isDark && '#bba6dd'};
+    }
+  }
+`
+
+const StyledInput = styled(Input)`
+  border: 1px solid transparent;
+  color: ${({ theme }) => theme.isDark && '#372871'};
+  background: ${({ theme }) => theme.isDark && '#bba6dd'};
+  ::placeholder {
+    color: ${({ theme }) => theme.isDark && '#927fbc'};
+  }
+
+  &:focus {
+    box-shadow: none !important;
+    border: ${({ theme }) => (theme.isDark ? '1px solid #66578d' : '1px solid #d7caec')};
+  }
+`
+
+const ProjectLogo = styled.img<{ isActive?: boolean }>`
+  width: 40px;
+  height: 40px;
+  margin-left: 8px;
+  margin-right: 8px;
+  cursor: pointer;
+  opacity: ${({ isActive }) => (isActive ? 1 : 0.3)};
+`
+
+const FilterText = styled(Text)`
+  white-space: nowrap;
+`
+
+const FilterWrapper = styled(Flex)`
+  flex-direction: column;
+  align-items: center;
+  margin-top: -16px;
+
+  ${({ theme }) => theme.mediaQueries.sm} {
+    margin-top: -40px;
+  }
+
+  ${({ theme }) => theme.mediaQueries.lg} {
+    flex-direction: row;
+    padding: 8px 8px 0;
+    margin-top: -64px;
+  }
+`
+
+const LeftFilters = styled(Flex)`
+  flex-direction: column;
+  align-items: center;
+
+  ${({ theme }) => theme.mediaQueries.xs} {
+    flex-direction: row;
+  }
+  ${({ theme }) => theme.mediaQueries.sm} {
+    flex-direction: row;
+  }
+  ${({ theme }) => theme.mediaQueries.md} {
+    flex-direction: row;
+  }
+`
+
+const ToggleWrapper = styled.div<{ checked?: boolean }>`
+  div {
+    height: 32px;
+    width: 56px;
+    background: ${({ checked, theme }) => theme.isDark && !checked && '#bba6dd'};
+    background: ${({ checked, theme }) => theme.isDark && checked && '#d4444c'};
+    background: ${({ checked, theme }) => !theme.isDark && checked && '#ec3e3f'};
+
+    div {
+      height: 24px;
+      width: 24px;
+      left: ${({ checked }) => checked && 'calc(100% - 28px) !important'};
+      background: white;
+    }
+  }
+`
+
+// content
+const IgloosContentContainer = styled.div`
+  position: relative;
+`
 
 export default Farms

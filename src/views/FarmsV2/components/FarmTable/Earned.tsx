@@ -13,12 +13,6 @@ interface EarnedPropsWithLoading extends EarnedProps {
   userDataReady: boolean
 }
 
-const Amount = styled.span<{ earned: number }>`
-  color: ${({ earned, theme }) => (earned ? theme.colors.textSubtle : theme.colors.textDisabled)};
-  display: flex;
-  align-items: center;
-`
-
 const Earned: React.FunctionComponent<EarnedPropsWithLoading> = ({ earnings, userDataReady }) => {
   const rawEarningsBalance = getBalanceNumber(earnings)
   const displayBalance = rawEarningsBalance.toLocaleString()
@@ -32,5 +26,11 @@ const Earned: React.FunctionComponent<EarnedPropsWithLoading> = ({ earnings, use
     </Amount>
   )
 }
+
+const Amount = styled.span<{ earned: number }>`
+  color: ${({ earned, theme }) => (earned ? theme.colors.textSubtle : theme.colors.textDisabled)};
+  display: flex;
+  align-items: center;
+`
 
 export default Earned
