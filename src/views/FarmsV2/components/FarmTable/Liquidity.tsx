@@ -7,23 +7,6 @@ export interface LiquidityProps {
   liquidity: BigNumber
 }
 
-const LiquidityWrapper = styled.div`
-  min-width: 110px;
-  font-weight: 600;
-  text-align: right;
-  margin-right: 14px;
-
-  ${({ theme }) => theme.mediaQueries.lg} {
-    text-align: left;
-    margin-right: 0;
-  }
-`
-
-const Container = styled.div`
-  display: flex;
-  align-items: center;
-`
-
 const Liquidity: React.FunctionComponent<LiquidityProps> = ({ liquidity }) => {
   const displayLiquidity =
     liquidity && liquidity.gt(0) ? (
@@ -40,5 +23,22 @@ const Liquidity: React.FunctionComponent<LiquidityProps> = ({ liquidity }) => {
     </Container>
   )
 }
+
+const LiquidityWrapper = styled.div`
+  min-width: 110px;
+  font-weight: 600;
+  text-align: right;
+  margin-right: 14px;
+
+  ${({ theme }) => theme.mediaQueries.lg} {
+    text-align: left;
+    margin-right: 0;
+  }
+`
+
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+`
 
 export default Liquidity

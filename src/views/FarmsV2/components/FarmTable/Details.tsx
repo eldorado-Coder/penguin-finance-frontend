@@ -6,6 +6,16 @@ interface DetailsProps {
   actionPanelToggled: boolean
 }
 
+const Details: React.FC<DetailsProps> = ({ actionPanelToggled }) => {
+  return (
+    <Container>
+      <Flex alignItems="center">
+        <ArrowIcon toggled={actionPanelToggled} />
+      </Flex>
+    </Container>
+  )
+}
+
 const Container = styled.div`
   display: flex;
   width: 100%;
@@ -22,14 +32,4 @@ const ArrowIcon = styled(ChevronDownIcon)<{ toggled: boolean }>`
   fill: ${({ theme }) => theme.colors.red};
   height: 20px;
 `
-const Details: React.FC<DetailsProps> = ({ actionPanelToggled }) => {
-  return (
-    <Container>
-      <Flex alignItems="center">
-        <ArrowIcon toggled={actionPanelToggled} />
-      </Flex>
-    </Container>
-  )
-}
-
 export default Details

@@ -16,169 +16,6 @@ import CellLayout from './CellLayout'
 import ActionPanel from './Actions/ActionPanel'
 import { DesktopColumnSchema, MobileColumnSchema, FarmCardProps } from '../types'
 
-const CellInner = styled.div<{ justifyContent?: string; minWidth?: number; smMinWidth?: number }>`
-  padding: 12px 0px;
-  display: flex;
-  width: 100%;
-  align-items: center;
-  padding-right: 8px;
-  justify-content: ${({ justifyContent }) => justifyContent};
-  min-width: ${({ smMinWidth }) => `${smMinWidth}px`};
-
-  @media (min-width: 1136px) {
-    min-width: ${({ minWidth }) => `${minWidth}px`};
-  }
-
-  ${({ theme }) => theme.mediaQueries.xl} {
-    padding-right: 16px;
-  }
-
-  ${({ theme }) => theme.mediaQueries.xl} {
-    padding-right: 16px;
-  }
-
-  ${({ theme }) => theme.mediaQueries.xl} {
-    padding-right: 16px;
-  }
-`
-
-const DetailsCellInner = styled(CellInner)`
-  justify-content: flex-end;
-  padding-right: 24px;
-  @media (max-width: 480px) {
-    padding-right: 8px;
-  }
-`
-
-const MobileActions = styled.td`
-  width: 100px;
-`
-
-const StyledTr = styled.tr<{ shouldRenderChild?: boolean }>`
-  cursor: pointer;
-  border-bottom: ${({ theme, shouldRenderChild }) =>
-    !shouldRenderChild && `3px solid ${theme.isDark ? theme.colors.background : 'rgb(231, 227, 235)'}`};
-`
-
-const EarnedMobileCell = styled.td`
-  width: 60%;
-`
-
-const AprBalanceWrapper = styled.div`
-  > div {
-    font-family: 'Kanit';
-  }
-`
-
-const AprMobileCell = styled.td`
-  width: 40%;
-`
-
-const FarmMobileCell = styled.td`
-  padding-top: 24px;
-`
-
-const Amount = styled.span`
-  color: ${({ theme }) => theme.colors.textSubtle};
-  display: flex;
-  align-items: center;
-`
-
-const TokensWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  margin-top: 4px;
-`
-
-const PendingTokenLogo = styled.img`
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  margin: 2px 2px;
-`
-
-const StyledTable = styled.table<{ index?: number }>`
-  border-collapse: collapse;
-  font-size: 14px;
-  margin-left: auto;
-  margin-right: auto;
-  width: 100%;
-  background: ${({ theme }) => theme.card.background};
-  border-radius: ${({ index }) => index === 0 && '16px 16px 0 0'};
-  box-shadow: 0px 1px 4px rgb(0 0 0 / 16%);
-
-  .name {
-    width: 32%;
-  }
-  .your-stake {
-    width: 16%;
-  }
-  .apr {
-    width: 12%;
-  }
-  .liquidity {
-    width: 15%;
-  }
-  .rewards {
-    width: 18%;
-  }
-  .actions {
-    width: 7%;
-  }
-`
-
-const TableBody = styled.tbody`
-  & tr {
-    td {
-      font-size: 16px;
-      vertical-align: middle;
-    }
-  }
-`
-
-// tooltip
-const CustomToolTipOrigin = styled.div``
-
-const CustomAprToolTip = styled(ReactTooltip)<{ index: number }>`
-  width: 100% !important;
-  max-width: 310px !important;
-  background: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#322C59!important')};
-  box-shadow: ${(props) => `${props.theme.card.boxShadow}!important`};
-  color: ${({ theme }) => (theme.isDark ? '#322C59!important' : '#ffffff!important')};
-  opacity: 1 !important;
-  padding: 0px 8px !important;
-  font-size: 16px !important;
-  border: 2px solid #fff !important;
-  border-radius: 16px !important;
-  margin-top: 0px !important;
-  > div {
-    width: 100%;
-    white-space: pre-wrap !important;
-  }
-  p {
-    margin-bottom: -20px !important;
-    &:first-child {
-      margin-top: -20px !important;
-    }
-    &:last-child {
-      margin-bottom: -20px !important;
-    }
-  }
-  &:before {
-    border-top-color: #ffffff !important;
-    border-bottom-color: #ffffff !important;
-  }
-  &:after {
-    border-top-color: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#322C59')};
-    border-bottom-color: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#322C59')};
-  }
-`
-
-const TableWrapper = styled.div<{ shouldRenderChild?: boolean }>`
-  padding: 0 8px;
-  margin-bottom: ${({ shouldRenderChild }) => shouldRenderChild && '8px'};
-`
-
 interface RowProps extends FarmCardProps {
   index: number
 }
@@ -444,5 +281,168 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
     </>
   )
 }
+
+const CellInner = styled.div<{ justifyContent?: string; minWidth?: number; smMinWidth?: number }>`
+  padding: 12px 0px;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  padding-right: 8px;
+  justify-content: ${({ justifyContent }) => justifyContent};
+  min-width: ${({ smMinWidth }) => `${smMinWidth}px`};
+
+  @media (min-width: 1136px) {
+    min-width: ${({ minWidth }) => `${minWidth}px`};
+  }
+
+  ${({ theme }) => theme.mediaQueries.xl} {
+    padding-right: 16px;
+  }
+
+  ${({ theme }) => theme.mediaQueries.xl} {
+    padding-right: 16px;
+  }
+
+  ${({ theme }) => theme.mediaQueries.xl} {
+    padding-right: 16px;
+  }
+`
+
+const DetailsCellInner = styled(CellInner)`
+  justify-content: flex-end;
+  padding-right: 24px;
+  @media (max-width: 480px) {
+    padding-right: 8px;
+  }
+`
+
+const MobileActions = styled.td`
+  width: 100px;
+`
+
+const StyledTr = styled.tr<{ shouldRenderChild?: boolean }>`
+  cursor: pointer;
+  border-bottom: ${({ theme, shouldRenderChild }) =>
+    !shouldRenderChild && `3px solid ${theme.isDark ? theme.colors.background : 'rgb(231, 227, 235)'}`};
+`
+
+const EarnedMobileCell = styled.td`
+  width: 60%;
+`
+
+const AprBalanceWrapper = styled.div`
+  > div {
+    font-family: 'Kanit';
+  }
+`
+
+const AprMobileCell = styled.td`
+  width: 40%;
+`
+
+const FarmMobileCell = styled.td`
+  padding-top: 24px;
+`
+
+const Amount = styled.span`
+  color: ${({ theme }) => theme.colors.textSubtle};
+  display: flex;
+  align-items: center;
+`
+
+const TokensWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 4px;
+`
+
+const PendingTokenLogo = styled.img`
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  margin: 2px 2px;
+`
+
+const StyledTable = styled.table<{ index?: number }>`
+  border-collapse: collapse;
+  font-size: 14px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  background: ${({ theme }) => theme.card.background};
+  border-radius: ${({ index }) => index === 0 && '16px 16px 0 0'};
+  box-shadow: 0px 1px 4px rgb(0 0 0 / 16%);
+
+  .name {
+    width: 32%;
+  }
+  .your-stake {
+    width: 16%;
+  }
+  .apr {
+    width: 12%;
+  }
+  .liquidity {
+    width: 15%;
+  }
+  .rewards {
+    width: 18%;
+  }
+  .actions {
+    width: 7%;
+  }
+`
+
+const TableBody = styled.tbody`
+  & tr {
+    td {
+      font-size: 16px;
+      vertical-align: middle;
+    }
+  }
+`
+
+// tooltip
+const CustomToolTipOrigin = styled.div``
+
+const CustomAprToolTip = styled(ReactTooltip)<{ index: number }>`
+  width: 100% !important;
+  max-width: 310px !important;
+  background: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#322C59!important')};
+  box-shadow: ${(props) => `${props.theme.card.boxShadow}!important`};
+  color: ${({ theme }) => (theme.isDark ? '#322C59!important' : '#ffffff!important')};
+  opacity: 1 !important;
+  padding: 0px 8px !important;
+  font-size: 16px !important;
+  border: 2px solid #fff !important;
+  border-radius: 16px !important;
+  margin-top: 0px !important;
+  > div {
+    width: 100%;
+    white-space: pre-wrap !important;
+  }
+  p {
+    margin-bottom: -20px !important;
+    &:first-child {
+      margin-top: -20px !important;
+    }
+    &:last-child {
+      margin-bottom: -20px !important;
+    }
+  }
+  &:before {
+    border-top-color: #ffffff !important;
+    border-bottom-color: #ffffff !important;
+  }
+  &:after {
+    border-top-color: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#322C59')};
+    border-bottom-color: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#322C59')};
+  }
+`
+
+const TableWrapper = styled.div<{ shouldRenderChild?: boolean }>`
+  padding: 0 8px;
+  margin-bottom: ${({ shouldRenderChild }) => shouldRenderChild && '8px'};
+`
 
 export default Row
