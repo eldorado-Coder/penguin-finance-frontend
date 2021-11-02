@@ -79,11 +79,6 @@ const NftList = () => {
 
 const StyledText = styled(Text)`
   color: #a893ca;
-  @font-face {
-    font-family: 'GothamUltra Font';
-    src: url(${process.env.PUBLIC_URL}/fonts/GothamUltra.otf) format('truetype');
-    font-display: swap;
-  }
   font-family: 'GothamUltra Font';
 `
 
