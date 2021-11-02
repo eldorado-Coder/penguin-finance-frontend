@@ -94,6 +94,9 @@ const CardBlockBody = styled.div<{ account: string }>`
     padding-top: ${(props) => !props.account && '24px'};
     margin-top: 32%;
   }
+  @media (min-width: 4000px) {
+    padding: 60px 24px 16px;
+  }
   @media (min-width: 1200px) and (max-height: 800px) {
     padding-top: 16px;
   }
@@ -129,6 +132,12 @@ const RegisterButtonContainer = styled.div`
     @media only screen and (min-width: 1200px) and (max-width: 1450px) {
       width: 140px;
     }
+    @media (min-width: 4000px) {
+      font-size: 22px;
+      padding: 0 24px;
+      height: 64px;
+      width: 320px;
+    }
   }
 `
 
@@ -138,6 +147,12 @@ const StealButtonContainer = styled.div`
     border-radius: 30px;
     @media only screen and (min-width: 1200px) and (max-width: 1450px) {
       width: 140px;
+    }  
+    @media (min-width: 4000px) {
+      font-size: 22px;
+      padding: 0 24px;
+      height: 64px;
+      width: 320px;
     }
   }
 `
@@ -149,6 +164,12 @@ const StealAndPoisonButtonContainer = styled.div`
     background: #f5c83b;
     @media only screen and (min-width: 1200px) and (max-width: 1450px) {
       width: 140px;
+    }
+    @media (min-width: 4000px) {
+      font-size: 22px;
+      padding: 0 24px;
+      height: 64px;
+      width: 320px;
     }
   }
 `
@@ -173,6 +194,12 @@ const CustomizeStyleButtonContainer = styled.div`
     border-radius: 30px;
     @media only screen and (min-width: 1200px) and (max-width: 1450px) {
       width: 140px;
+    }
+    @media (min-width: 4000px) {
+      font-size: 22px;
+      padding: 0 24px;
+      height: 64px;
+      width: 320px;
     }
   }
 `
@@ -217,6 +244,9 @@ const StyledText = styled(Text)<{ smFontSize?: string; lgFontSize?: string }>`
   }
   @media (min-width: 1200px) {
     font-size: ${({ lgFontSize }) => lgFontSize};
+  }
+  @media (min-width: 4000px) {
+    font-size: 28px;
   }
 `
 

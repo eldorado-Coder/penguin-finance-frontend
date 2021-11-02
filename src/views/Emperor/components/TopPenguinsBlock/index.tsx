@@ -91,6 +91,9 @@ const CardBlockBody = styled.div<{ account: string }>`
     padding-top: ${(props) => !props.account && '40px'};
     margin-top: 36%;
   }
+  @media (min-width: 4000px) {
+    padding: 80px 24px 16px;
+  }
   @media (min-width: 1200px) and (max-height: 800px) {
     padding-top: 36px;
   }
@@ -180,6 +183,10 @@ const UnlockButton = styled(Button)`
 
 const StyledText = styled(Text)`
   color: ${({ theme }) => (theme.isDark ? theme.colors.primary : theme.colors.secondary)};
+
+  @media (min-width: 4000px) {
+    font-size: 20px;
+  }
 `
 
 const TopPenguinsBlock: React.FC = () => {
