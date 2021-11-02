@@ -16,20 +16,318 @@ import {
   useBenqiFarmsGlobalData,
   usePricePefiUsdt,
   usePriceAvaxUsdt,
-  usePricePngUsdt,
 } from 'state/hooks'
 import { fetchV2FarmUserDataAsync } from 'state/actions'
 import useRefresh from 'hooks/useRefresh'
 import useTheme from 'hooks/useTheme'
 import useTokenPrice from 'hooks/useTokenPrice'
 import useJoePrice from 'hooks/useJoePrice'
+import useUserSetting from 'hooks/useUserSetting'
 import { getBalanceNumber } from 'utils/formatBalance'
-import { DAYS_PER_YEAR, SECONDS_PER_DAY } from 'config'
-import tokens from 'config/constants/tokens'
+import { DAYS_PER_YEAR } from 'config'
 import { getAddress } from 'utils/addressHelpers'
-import { getApr, getFarmApr, getLydiaFarmApr, getJoeFarmApr, getBenqiFarmApr } from 'utils/apyHelpers'
-import V1Farms from './V1'
+import { getApr, getApy, getFarmApr, getLydiaFarmApr, getJoeFarmApr, getBenqiFarmApr } from 'utils/apyHelpers'
 import V2Farms from './V2'
+
+const PROJECT_LIST = [
+  { src: '/images/farms-v2/penguin.svg', name: 'Penguin' },
+  { src: '/images/farms-v2/joe.svg', name: 'Joe' },
+  { src: '/images/farms-v2/pangolin.svg', name: 'Pangolin' },
+  { src: '/images/farms-v2/sushi.svg', name: 'Sushi' },
+  { src: '/images/farms-v2/lydia.svg', name: 'Lydia' },
+]
+
+const Farms: React.FC = () => {
+  const [sortType, setSortType] = useState('liquidity')
+  const [showStakedOnly, setShowStakedOnly] = useState(false)
+  const [searchTerm, setSearchTerm] = useState('')
+  const [activeProjects, setActiveProjects] = useState(PROJECT_LIST.map((row) => row.name))
+
+  const dispatch = useDispatch()
+  const { fastRefresh } = useRefresh()
+  const { account } = useWeb3React()
+  const { isIglooAprMode, toggleIglooAprMode } = useUserSetting()
+  const v2Farms = useV2Farms()
+  const lydiaFarms = useLydiaFarms()
+  const joeV3Farms = useJoeV3Farms()
+  const { isXl, isSm } = useMatchBreakpoints()
+  const lydPerSec = useLydiaFarmRewardRate()
+  const joeGlobalData = useJoeFarmsGlobalData()
+  const joeV3GlobalData = useJoeV3FarmsGlobalData()
+  const benqiGlobalData = useBenqiFarmsGlobalData()
+  const pefiPriceUsd = usePricePefiUsdt().toNumber()
+  const avaxPriceUsd = usePriceAvaxUsdt().toNumber()
+  const { lydPrice: lydPriceUsd, qiPrice: qiPriceUsd } = useTokenPrice()
+  const joePriceUsd = useJoePrice()
+  const theme = useTheme()
+  const isMobile = !isXl
+
+  useEffect(() => {
+    if (account) {
+      dispatch(fetchV2FarmUserDataAsync(account))
+    }
+  }, [account, dispatch, fastRefresh])
+
+  // const activeFarms = v2Farms.filter((farm) => Number(farm.multiplier) > 0)
+  const activeFarms = v2Farms
+
+  const getV2FarmsTVL = () => {
+    let v2FarmTvl = 0
+    activeFarms.map((farm) => {
+      v2FarmTvl += farm.totalLiquidityInUsd || 0
+      return farm
+    })
+    return v2FarmTvl
+  }
+
+  const activeFarmsWithApy = activeFarms.map((farm) => {
+    const pefiPerYear = getBalanceNumber(farm.pefiPerYear)
+    const pefiPerDay = pefiPerYear / DAYS_PER_YEAR
+    const pefiRewardPerDayInUsd = pefiPriceUsd * pefiPerDay * (1 - 0.15 - 0.1)
+    const pefiDailyApr = farm.totalLiquidityInUsd > 0 ? pefiRewardPerDayInUsd / farm.totalLiquidityInUsd : 0
+    const pefiApr = getApr(pefiDailyApr)
+
+    // minw apr
+    const minwApr = 0
+    let { stakingApr, swapFeeApr } = farm
+    let joeRushRewardApr = 0
+
+    if (farm.type === 'Lydia') {
+      const lydiaFarm = lydiaFarms.find((row) => row.lpSymbol === farm.lpSymbol)
+      const poolLiquidityUsd = farm.lpPrice * getBalanceNumber(lydiaFarm.lpTokenBalanceMC)
+      stakingApr = getLydiaFarmApr(lydiaFarm.poolWeight, lydPriceUsd, poolLiquidityUsd, lydPerSec) * 0.9
+      swapFeeApr = getApr(farm.swapDailyReward / poolLiquidityUsd)
+    }
+
+    if (farm.type === 'Joe') {
+      const poolLiquidityUsd = farm.lpPrice * Number(farm.joePoolLpBalance)
+      let farmAllocPoint = farm.joePoolAllocPoint
+      if (farm.isJoeRush) {
+        const joeV3Farm = joeV3Farms.find(
+          (row) => getAddress(row.lpAddresses).toLowerCase() === getAddress(farm.lpAddresses).toLowerCase(),
+        )
+        if (joeV3Farm) {
+          farmAllocPoint = joeV3Farm.allocPoint
+          joeRushRewardApr = getFarmApr(avaxPriceUsd, poolLiquidityUsd, joeV3Farm.joeRushRewardPerSec) * 0.9
+        }
+      }
+      const poolWeight = farm.isJoeRush
+        ? farmAllocPoint / joeV3GlobalData.totalAllocPoint
+        : farmAllocPoint / joeGlobalData.totalAllocPoint
+      stakingApr =
+        getJoeFarmApr(
+          poolWeight,
+          joePriceUsd,
+          poolLiquidityUsd,
+          farm.isJoeRush ? joeV3GlobalData.joePerSec : joeGlobalData.joePerSec,
+          farm.isJoeRush ? 1 : joeGlobalData.rewardPercentToFarm,
+        ) * 0.9
+      swapFeeApr = getApr(farm.swapDailyReward / (farm.joeSwapPoolUsdBalance || 1))
+    }
+    if (farm.isBenqi) {
+      const { avaxPerSec: benqiAvaxRewardPerSec, benqiPerSec: benqiRewardPerSec, totalSupply } = benqiGlobalData
+      const benqiPoolLiquidityUsd = farm.lpPrice * totalSupply
+      const avaxStakingApr = getBenqiFarmApr(avaxPriceUsd, benqiPoolLiquidityUsd, benqiAvaxRewardPerSec)
+      const qiStakingApr = getBenqiFarmApr(qiPriceUsd, benqiPoolLiquidityUsd, benqiRewardPerSec)
+      stakingApr = avaxStakingApr + qiStakingApr
+    }
+
+    const pefiApy = getApy(pefiApr / DAYS_PER_YEAR)
+    const stakingApy = getApy(stakingApr / DAYS_PER_YEAR)
+    const swapFeeApy = getApy(swapFeeApr / DAYS_PER_YEAR)
+    const minwApy = getApy(minwApr / DAYS_PER_YEAR)
+    const joeRushRewardApy = getApy(joeRushRewardApr / DAYS_PER_YEAR)
+
+    return {
+      ...farm,
+      pefiDailyApr,
+      pefiApr,
+      pefiApy,
+      stakingApr,
+      stakingApy,
+      swapFeeApr,
+      swapFeeApy,
+      minwApr,
+      minwApy,
+      joeRushRewardApr,
+      joeRushRewardApy,
+      apr: stakingApr + swapFeeApr + pefiApr + minwApr + joeRushRewardApr,
+      apy: stakingApy + swapFeeApy + pefiApy + minwApy + joeRushRewardApy,
+    }
+  })
+
+  const filteredFarms = useMemo(() => {
+    let farms = [...activeFarmsWithApy]
+    // filter
+    if (searchTerm) {
+      farms = farms.filter((farm) => farm.lpSymbol.toLowerCase().includes(searchTerm.toLowerCase()))
+    }
+    if (account && showStakedOnly) {
+      farms = farms.filter((farm) => farm.userData && getBalanceNumber(farm.userData.stakedBalance) > 0)
+    }
+    farms = farms.filter((farm) => farm.type && activeProjects.includes(farm.type))
+
+    // sort
+    if (sortType === 'liquidity') {
+      farms = farms.sort((a, b) => b.totalLiquidityInUsd - a.totalLiquidityInUsd)
+    }
+    if (sortType === 'multiplier') {
+      farms = farms.sort((a, b) => Number(b.multiplier) - Number(a.multiplier))
+    }
+    if (sortType === 'earned') {
+      farms = farms.sort(
+        (a, b) =>
+          Number(b.lpPrice) * getBalanceNumber(b.userData?.stakedBalance) -
+          Number(a.lpPrice) * getBalanceNumber(a.userData?.stakedBalance),
+      )
+    }
+    if (sortType === 'apr') {
+      farms = farms.sort((a, b) => b.apr - a.apr)
+    }
+
+    return farms
+  }, [searchTerm, activeFarmsWithApy, showStakedOnly, account, activeProjects, sortType])
+
+  const handleSwitchTab = (tab) => {
+    toggleIglooAprMode(tab === 1)
+  }
+
+  const handleChangeStakedOnly = (event) => {
+    setShowStakedOnly(event.target.checked)
+  }
+
+  const handleChangeSearchTerm = (event) => {
+    setSearchTerm(event.target.value)
+  }
+
+  const handleChangeActiveProject = (project) => {
+    const isExisted = activeProjects.find((row) => row === project)
+    if (isExisted) {
+      setActiveProjects(activeProjects.filter((row) => row !== project))
+    } else {
+      setActiveProjects([...activeProjects, project])
+    }
+  }
+
+  const renderProjectsFilters = (
+    <Flex ml={isSm ? '0px' : '8px'} alignItems="center">
+      {PROJECT_LIST.map((project) => {
+        const isActiveProject = activeProjects.find((row) => row === project.name)
+        return (
+          <ProjectLogo
+            key={project.name}
+            src={project.src}
+            alt={project.name}
+            isActive={!!isActiveProject}
+            onClick={() => handleChangeActiveProject(project.name)}
+          />
+        )
+      })}
+    </Flex>
+  )
+
+  const renderActiveFilter = (
+    <Flex margin={isMobile ? '8px 0' : '8px 16px 8px 0'} justifyContent="center" alignItems="center">
+      <TabWrapper>
+        <ButtonMenu activeIndex={isIglooAprMode ? 1 : 0} onItemClick={handleSwitchTab} scale="sm">
+          <OptionItem active={!isIglooAprMode}>APY</OptionItem>
+          <OptionItem active={isIglooAprMode}>APR</OptionItem>
+        </ButtonMenu>
+      </TabWrapper>
+    </Flex>
+  )
+
+  const renderSearchAndSortFilter = (
+    <Flex mb="16px">
+      <Flex flexDirection="column">
+        <Text fontSize="12px" textTransform="uppercase" color="textSubtle">
+          Sort by
+        </Text>
+        <SelectWrapper>
+          <Select
+            value={sortType}
+            options={[
+              { label: 'Liquidity', value: 'liquidity' },
+              { label: 'Hot', value: 'hot' },
+              { label: 'APR', value: 'apr' },
+              { label: 'Multiplier', value: 'multiplier' },
+              { label: 'Earned', value: 'earned' },
+            ]}
+            onChange={setSortType}
+          />
+        </SelectWrapper>
+      </Flex>
+      <Flex flexDirection="column" ml="16px">
+        <Text fontSize="12px" textTransform="uppercase" color="textSubtle">
+          Search
+        </Text>
+        <StyledInput placeholder="Search Farms" value={searchTerm} onChange={handleChangeSearchTerm} />
+      </Flex>
+    </Flex>
+  )
+
+  const renderStakedOnlyFilter = (
+    <Flex alignItems="center" mr={isMobile ? '8px' : '16px'}>
+      <ToggleWrapper checked={showStakedOnly}>
+        <Toggle checked={showStakedOnly} onChange={handleChangeStakedOnly} />
+      </ToggleWrapper>
+      <FilterText ml="8px" color="textSubtle">
+        Staked Only
+      </FilterText>
+    </Flex>
+  )
+
+  const tvl = getV2FarmsTVL()
+
+  return (
+    <FarmPage>
+      <BgWrapper>
+        <IgloosBgContainer />
+      </BgWrapper>
+      <IgloosBannerContainer>
+        <BannerImage
+          src={`${process.env.PUBLIC_URL}/images/farms-v2/v2_farm_banner_animated_${
+            theme.isDark ? 'dark' : 'light'
+          }.svg`}
+          alt="v2 farm banner"
+        />
+      </IgloosBannerContainer>
+      <TvlContainer marginBottom={isMobile ? '30px' : '70px'}>
+        <span>{`Total Value Locked (TVL): `}</span>
+        <Balance
+          fontSize="28px"
+          color={theme.isDark ? '#bba6dd' : '#372871'}
+          fontWeight="600"
+          prefix="$"
+          decimals={0}
+          value={Number(tvl)}
+        />
+      </TvlContainer>
+      {isMobile ? (
+        <FilterWrapper justifyContent="space-between" alignItems="center" flexWrap="wrap">
+          <Flex mt="8px" justifyContent="center" mb="8px" flexWrap="wrap">
+            {renderStakedOnlyFilter}
+            {renderActiveFilter}
+          </Flex>
+          {renderSearchAndSortFilter}
+          <Flex mt="16px">{renderProjectsFilters}</Flex>
+        </FilterWrapper>
+      ) : (
+        <FilterWrapper justifyContent="space-between" alignItems="center" flexWrap="wrap" mt="-24px">
+          <LeftFilters alignItems="center" mt="16px" justifyContent="space-between" flexWrap={isSm ? 'nowrap' : 'wrap'}>
+            {renderStakedOnlyFilter}
+            {renderProjectsFilters}
+          </LeftFilters>
+          <Flex display={isSm ? 'block !important' : 'flex'} mt="16px">
+            {renderActiveFilter}
+            {renderSearchAndSortFilter}
+          </Flex>
+        </FilterWrapper>
+      )}
+      <IgloosContentContainer>{filteredFarms.length > 0 && <V2Farms farms={filteredFarms} />}</IgloosContentContainer>
+    </FarmPage>
+  )
+}
 
 const FarmPage = styled(Page)`
   max-width: 1200px;
@@ -41,7 +339,7 @@ const IgloosBgContainer = styled.div`
   background-size: contain;
   position: absolute;
   top: 0;
-  bottom: 0
+  bottom: 0;
   right: 0px;
   left: 0px;
   z-index: -1;
@@ -78,29 +376,13 @@ const TvlContainer = styled(Flex)`
   align-items: center;
   flex-wrap: wrap;
   justify-content: center;
-  margin-bottom: 40px;
-  min-width: 220px;
 
-  @media (min-width: 968px) {
+  ${({ theme }) => theme.mediaQueries.md} {
     justify-content: flex-start;
-    margin-bottom: 0px;
   }
 `
 
-const HeaderLabel = styled(Text)`
-  color: ${({ theme }) => (theme.isDark ? '#bba6dd' : '#372871')};
-`
-
-const Description = styled(Text)`
-  color: ${({ theme }) => (theme.isDark ? '#bba6dd' : '#372871')};
-
-  div {
-    display: inline;
-    cursor: pointer;
-  }
-`
-
-// slider
+// apr/apy slider
 const TabWrapper = styled.div`
   div {
     border: 2px solid ${({ theme }) => (theme.isDark ? '#221b38' : '#b2b2ce')};
@@ -208,377 +490,5 @@ const ToggleWrapper = styled.div<{ checked?: boolean }>`
 const IgloosContentContainer = styled.div`
   position: relative;
 `
-
-const PROJECT_LIST = [
-  { src: '/images/farms-v2/penguin.svg', name: 'Penguin' },
-  { src: '/images/farms-v2/joe.svg', name: 'Joe' },
-  { src: '/images/farms-v2/pangolin.svg', name: 'Pangolin' },
-  { src: '/images/farms-v2/sushi.svg', name: 'Sushi' },
-  { src: '/images/farms-v2/lydia.svg', name: 'Lydia' },
-]
-
-const Farms: React.FC = () => {
-  const [sortType, setSortType] = useState('liquidity')
-  const [showStakedOnly, setShowStakedOnly] = useState(false)
-  const [searchTerm, setSearchTerm] = useState('')
-  const [activeProjects, setActiveProjects] = useState(PROJECT_LIST.map((row) => row.name))
-  const [activeTab, setActiveTab] = useState(0) // 0: v2, 1: v1
-
-  const dispatch = useDispatch()
-  const { fastRefresh } = useRefresh()
-  const { account } = useWeb3React()
-  const v2Farms = useV2Farms()
-  const lydiaFarms = useLydiaFarms()
-  const joeV3Farms = useJoeV3Farms()
-  const { isXl, isSm } = useMatchBreakpoints()
-  const lydPerSec = useLydiaFarmRewardRate()
-  const joeGlobalData = useJoeFarmsGlobalData()
-  const joeV3GlobalData = useJoeV3FarmsGlobalData()
-  const benqiGlobalData = useBenqiFarmsGlobalData()
-  const pefiPriceUsd = usePricePefiUsdt().toNumber()
-  const avaxPriceUsd = usePriceAvaxUsdt().toNumber()
-  const { lydPrice: lydPriceUsd, qiPrice: qiPriceUsd } = useTokenPrice()
-  const joePriceUsd = useJoePrice()
-  const pngPriceUsd = usePricePngUsdt().toNumber()
-
-  const isMobile = !isXl
-  const theme = useTheme()
-
-  useEffect(() => {
-    if (account) {
-      dispatch(fetchV2FarmUserDataAsync(account))
-    }
-  }, [account, dispatch, fastRefresh])
-
-  // const activeFarms = v2Farms.filter((farm) => Number(farm.multiplier) > 0)
-  const activeFarms = v2Farms
-
-  const getV2FarmsTVL = () => {
-    let v2FarmTvl = 0
-    activeFarms.map((farm) => {
-      v2FarmTvl += farm.totalLiquidityInUsd || 0
-      return farm
-    })
-    return v2FarmTvl
-  }
-
-  const getTokenPrice = (address) => {
-    if (!address) return 1
-    const rewardToken = tokens.find((row) => getAddress(row.address).toLowerCase() === address.toLowerCase())
-
-    if (rewardToken && rewardToken.symbol === 'PNG') return pngPriceUsd
-    if (rewardToken && rewardToken.symbol === 'JOE') return joePriceUsd
-    return 1
-  }
-
-  const activeFarmsWithApy = activeFarms.map((farm) => {
-    const pefiPerYear = getBalanceNumber(farm.pefiPerYear)
-    const pefiPerDay = pefiPerYear / DAYS_PER_YEAR
-    const pefiRewardPerDayInUsd = pefiPriceUsd * pefiPerDay * (1 - 0.15 - 0.1)
-    const pefiDailyApr = farm.totalLiquidityInUsd > 0 ? pefiRewardPerDayInUsd / farm.totalLiquidityInUsd : 0
-    const pefiApr = getApr(pefiDailyApr)
-
-    // minw
-    const minwRewardPerDay = SECONDS_PER_DAY * Number(farm.minwRewardPerSec)
-    const minwRewardPerDayInUsd = getTokenPrice(farm.minwRewardToken) * minwRewardPerDay
-    const minwDailyApr = farm.totalLiquidityInUsd > 0 ? minwRewardPerDayInUsd / farm.totalLiquidityInUsd : 0
-    const minwApr = getApr(minwDailyApr)
-
-    let { stakingApr, swapFeeApr } = farm
-    let joeRushRewardApr = 0
-
-    if (farm.type === 'Lydia') {
-      const lydiaFarm = lydiaFarms.find((row) => row.lpSymbol === farm.lpSymbol)
-      const poolLiquidityUsd = farm.lpPrice * getBalanceNumber(lydiaFarm.lpTokenBalanceMC)
-      stakingApr = getLydiaFarmApr(lydiaFarm.poolWeight, lydPriceUsd, poolLiquidityUsd, lydPerSec) * 0.9
-      swapFeeApr = getApr(farm.swapDailyReward / poolLiquidityUsd)
-    }
-
-    if (farm.type === 'Joe') {
-      const poolLiquidityUsd = farm.lpPrice * Number(farm.joePoolLpBalance)
-      let farmAllocPoint = farm.joePoolAllocPoint
-      if (farm.isJoeRush) {
-        const joeV3Farm = joeV3Farms.find(
-          (row) => getAddress(row.lpAddresses).toLowerCase() === getAddress(farm.lpAddresses).toLowerCase(),
-        )
-        if (joeV3Farm) {
-          farmAllocPoint = joeV3Farm.allocPoint
-          joeRushRewardApr = getFarmApr(avaxPriceUsd, poolLiquidityUsd, joeV3Farm.joeRushRewardPerSec) * 0.9
-        }
-      }
-      const poolWeight = farm.isJoeRush
-        ? farmAllocPoint / joeV3GlobalData.totalAllocPoint
-        : farmAllocPoint / joeGlobalData.totalAllocPoint
-      stakingApr =
-        getJoeFarmApr(
-          poolWeight,
-          joePriceUsd,
-          poolLiquidityUsd,
-          farm.isJoeRush ? joeV3GlobalData.joePerSec : joeGlobalData.joePerSec,
-          farm.isJoeRush ? 1 : joeGlobalData.rewardPercentToFarm,
-        ) * 0.9
-      swapFeeApr = getApr(farm.swapDailyReward / (farm.joeSwapPoolUsdBalance || 1))
-    }
-    if (farm.isBenqi) {
-      const { avaxPerSec: benqiAvaxRewardPerSec, benqiPerSec: benqiRewardPerSec, totalSupply } = benqiGlobalData
-      const benqiPoolLiquidityUsd = farm.lpPrice * totalSupply
-      const avaxStakingApr = getBenqiFarmApr(avaxPriceUsd, benqiPoolLiquidityUsd, benqiAvaxRewardPerSec)
-      const qiStakingApr = getBenqiFarmApr(qiPriceUsd, benqiPoolLiquidityUsd, benqiRewardPerSec)
-      stakingApr = avaxStakingApr + qiStakingApr
-    }
-
-    return {
-      ...farm,
-      pefiDailyApr,
-      pefiApr,
-      stakingApr,
-      swapFeeApr,
-      minwApr,
-      joeRushRewardApr,
-      apr: stakingApr + swapFeeApr + pefiApr + minwApr + joeRushRewardApr,
-      apy: stakingApr + swapFeeApr + pefiApr + minwApr + joeRushRewardApr,
-    }
-  })
-
-  const filteredFarms = useMemo(() => {
-    let farms = [...activeFarmsWithApy]
-    // filter
-    if (searchTerm) {
-      farms = farms.filter((farm) => farm.lpSymbol.toLowerCase().includes(searchTerm.toLowerCase()))
-    }
-    if (account && showStakedOnly) {
-      farms = farms.filter((farm) => farm.userData && getBalanceNumber(farm.userData.stakedBalance) > 0)
-    }
-    farms = farms.filter((farm) => farm.type && activeProjects.includes(farm.type))
-
-    // sort
-    if (sortType === 'liquidity') {
-      farms = farms.sort((a, b) => b.totalLiquidityInUsd - a.totalLiquidityInUsd)
-    }
-    if (sortType === 'multiplier') {
-      farms = farms.sort((a, b) => Number(b.multiplier) - Number(a.multiplier))
-    }
-    if (sortType === 'earned') {
-      farms = farms.sort(
-        (a, b) =>
-          Number(b.lpPrice) * getBalanceNumber(b.userData?.stakedBalance) -
-          Number(a.lpPrice) * getBalanceNumber(a.userData?.stakedBalance),
-      )
-    }
-    if (sortType === 'apr') {
-      farms = farms.sort((a, b) => b.apr - a.apr)
-    }
-
-    return farms
-  }, [searchTerm, activeFarmsWithApy, showStakedOnly, account, activeProjects, sortType])
-
-  const handleSwitchTab = (tab) => {
-    setActiveTab(tab)
-    if (tab === 1) {
-      setShowStakedOnly(true)
-    } else {
-      setShowStakedOnly(false)
-    }
-  }
-
-  const handleChangeStakedOnly = (event) => {
-    setShowStakedOnly(event.target.checked)
-  }
-
-  const handleChangeSearchTerm = (event) => {
-    setSearchTerm(event.target.value)
-  }
-
-  const handleChangeActiveProject = (project) => {
-    const isExisted = activeProjects.find((row) => row === project)
-    if (isExisted) {
-      setActiveProjects(activeProjects.filter((row) => row !== project))
-    } else {
-      setActiveProjects([...activeProjects, project])
-    }
-  }
-
-  const renderProjectsFilters = (
-    <Flex ml={isSm ? '0px' : '8px'} alignItems="center">
-      {PROJECT_LIST.map((project) => {
-        const isActiveProject = activeProjects.find((row) => row === project.name)
-        return (
-          <ProjectLogo
-            key={project.name}
-            src={project.src}
-            alt={project.name}
-            isActive={!!isActiveProject}
-            onClick={() => handleChangeActiveProject(project.name)}
-          />
-        )
-      })}
-    </Flex>
-  )
-
-  const renderActiveFilter = (
-    <Flex margin={isMobile ? '8px 0' : '8px 16px 8px 0'} justifyContent="center" alignItems="center">
-      <TabWrapper>
-        <ButtonMenu activeIndex={activeTab} onItemClick={handleSwitchTab} scale="sm">
-          <OptionItem active={activeTab === 0}>New (V2)</OptionItem>
-          <OptionItem active={activeTab === 1}>Old (V1)</OptionItem>
-        </ButtonMenu>
-      </TabWrapper>
-    </Flex>
-  )
-
-  const renderSearchAndSortFilter = (
-    <Flex mb="16px">
-      <Flex flexDirection="column">
-        <Text fontSize="12px" textTransform="uppercase" color="textSubtle">
-          Sort by
-        </Text>
-        <SelectWrapper>
-          <Select
-            value={sortType}
-            options={[
-              { label: 'Liquidity', value: 'liquidity' },
-              { label: 'Hot', value: 'hot' },
-              { label: 'APR', value: 'apr' },
-              { label: 'Multiplier', value: 'multiplier' },
-              { label: 'Earned', value: 'earned' },
-            ]}
-            onChange={setSortType}
-          />
-        </SelectWrapper>
-      </Flex>
-      <Flex flexDirection="column" ml="16px">
-        <Text fontSize="12px" textTransform="uppercase" color="textSubtle">
-          Search
-        </Text>
-        <StyledInput placeholder="Search Farms" value={searchTerm} onChange={handleChangeSearchTerm} />
-      </Flex>
-    </Flex>
-  )
-
-  const renderStakedOnlyFilter = (
-    <Flex alignItems="center" mr={isMobile ? '8px' : '16px'}>
-      <ToggleWrapper checked={showStakedOnly}>
-        <Toggle 
-          checked={showStakedOnly} 
-          onChange={handleChangeStakedOnly} />
-      </ToggleWrapper>
-      <FilterText ml="8px" color="textSubtle">
-        Staked Only
-      </FilterText>
-    </Flex>
-  )
-
-  const handleViewMINW = () => {
-    window.open(
-      'https://penguin-finance.medium.com/make-igloos-not-war-new-joe-png-yield-farming-strategies-b70fac00807f',
-      '_blank',
-    )
-  }
-
-  const tvl = getV2FarmsTVL()
-
-  return (
-    <FarmPage>
-      <BgWrapper>
-        <IgloosBgContainer />
-      </BgWrapper>
-      <IgloosBannerContainer>
-        <BannerImage
-          src={`${process.env.PUBLIC_URL}/images/farms-v2/v2_farm_banner_animated_${
-            theme.isDark ? 'dark' : 'light'
-          }.svg`}
-          alt="v2 farm banner"
-        />
-      </IgloosBannerContainer>
-      {isMobile ? (
-        <>
-          <HeaderLabel fontSize="28px" fontWeight={500} lineHeight={1.2} textAlign="center" mb="8px">
-            Make Igloos, Not War (MINW), and #JOERUSH are live!
-          </HeaderLabel>
-          <Description fontWeight={400} marginBottom={isMobile ? '20px' : '70px'} textAlign="center">
-            New farming strategies! Earn up to 5 tokens (including AVAX incentives) and +10% rewards on MINW Igloos.{' '}
-            <Text color="red" onClick={handleViewMINW}>
-              Learn more.
-            </Text>
-          </Description>
-          <TvlContainer>
-            <span>{`TVL: `}</span>
-            <Balance
-              fontSize="28px"
-              color={theme.isDark ? '#bba6dd' : '#372871'}
-              fontWeight="600"
-              prefix="$"
-              decimals={0}
-              value={Number(tvl)}
-            />
-          </TvlContainer>
-          <Text color="#165DC4" fontSize="18px" fontWeight={500} lineHeight={1.2} textAlign="center" mb="30px">
-            Please harvest each participating MINW Igloo once, to start earning extra PNG and JOE rewards.
-          </Text>
-        </>
-      ) : (
-        <>
-          <Flex justifyContent="space-between">
-            <HeaderLabel fontSize="28px" fontWeight={500}>
-              Make Igloos, Not War (MINW), and #JOERUSH are live!
-            </HeaderLabel>
-            <TvlContainer>
-              <span>{`TVL: `}</span>
-              <Balance
-                fontSize="28px"
-                color={theme.isDark ? '#bba6dd' : '#372871'}
-                fontWeight="600"
-                prefix="$"
-                decimals={0}
-                value={Number(tvl)}
-              />
-            </TvlContainer>
-          </Flex>
-          <Description fontWeight={400} marginBottom={isMobile ? '30px' : '20px'}>
-            New farming strategies! Earn up to 5 tokens (including AVAX incentives) and +10% rewards on MINW Igloos.{' '}
-            <Text color="red" onClick={handleViewMINW}>
-              Learn more.
-            </Text>
-          </Description>
-          <Text color="#165DC4" fontSize="20px" fontWeight={500} lineHeight={1.2} mb="50px">
-            Please harvest each participating MINW Igloo once, to start earning extra PNG and JOE rewards.
-          </Text>
-        </>
-      )}
-      {isMobile ? (
-        <FilterWrapper justifyContent="space-between" alignItems="center" flexWrap="wrap">
-          <Flex mt="8px" justifyContent="center" mb="8px" flexWrap="wrap">
-            {renderStakedOnlyFilter}
-            {renderActiveFilter}
-          </Flex>
-          {renderSearchAndSortFilter}
-          <Flex mt="16px">{renderProjectsFilters}</Flex>
-        </FilterWrapper>
-      ) : (
-        <FilterWrapper justifyContent="space-between" alignItems="center" flexWrap="wrap" mt="-24px">
-          <LeftFilters alignItems="center" mt="16px" justifyContent="space-between" flexWrap={isSm ? 'nowrap' : 'wrap'}>
-            {renderStakedOnlyFilter}
-            {renderProjectsFilters}
-          </LeftFilters>
-          <Flex display={isSm ? 'block !important' : 'flex'} mt="16px">
-            {renderActiveFilter}
-            {renderSearchAndSortFilter}
-          </Flex>
-        </FilterWrapper>
-      )}
-      <IgloosContentContainer>
-        {activeTab === 0 && filteredFarms.length > 0 && <V2Farms farms={filteredFarms} />}
-        {activeTab === 1 && (
-          <V1Farms
-            searchTerm={searchTerm}
-            showStakedOnly={showStakedOnly}
-            activeProjects={activeProjects}
-            sortType={sortType}
-          />
-        )}
-      </IgloosContentContainer>
-    </FarmPage>
-  )
-}
 
 export default Farms

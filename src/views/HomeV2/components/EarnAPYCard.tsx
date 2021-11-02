@@ -33,7 +33,7 @@ const CardMidContent = styled(Heading).attrs({ size: 'xl' })`
   line-height: 44px;
   color: ${({ theme }) => (theme.isDark ? '#d4444c' : '#ffffff')};
   font-weight: 800;
-  font-family: 'GothamBold Font';
+  font-family: 'GothamBlack Font';
 
   @media (min-width: 1200px) {
     line-height: 60px;
@@ -45,12 +45,6 @@ const Text = styled(Heading)`
   color: #ffffff;
   font-weight: 300;
   font-size: 18px;
-
-  @font-face {
-    font-family: 'Telegraf UltraBold Font';
-    src: url(${process.env.PUBLIC_URL}/fonts/Telegraf-UltraBold.ttf) format('truetype');
-    font-display: swap;
-  }
   font-family: 'Telegraf UltraBold Font';
 
   @media (min-width: 640px) {

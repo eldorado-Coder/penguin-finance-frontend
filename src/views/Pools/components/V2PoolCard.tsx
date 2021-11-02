@@ -26,7 +26,7 @@ const StyledCard = styled(Card)<{ isNestPage?: boolean; isMobile?: boolean }>`
 const StyledHeading = styled(Heading)`
   font-weight: 800;
   color: ${({ theme }) => (theme.isDark ? '#fff' : '#342C6D')};
-  font-family: 'GothamBold Font';
+  font-family: 'GothamBlack Font';
 
   @media (min-width: 1200px) {
     font-size: 44px;
@@ -169,12 +169,6 @@ const Label = styled(Text).attrs({ color: 'red' })`
   color: ${({ theme }) => (theme.isDark ? '#9A97C4' : '#EC3B40')};
   line-height: 1;
   font-weight: 300;
-
-  @font-face {
-    font-family: 'Telegraf Bold Font';
-    src: url(${process.env.PUBLIC_URL}/fonts/Telegraf-Bold.ttf) format('truetype');
-    font-display: swap;
-  }
   font-family: 'Telegraf Bold Font';
 
   @media (min-width: 1200px) {
@@ -214,12 +208,6 @@ const StyledButton = styled(Button)`
   margin-bottom: 8px;
   font-weight: 300;
   padding: 0px 16px;
-
-  @font-face {
-    font-family: 'Telegraf UltraBold Font';
-    src: url(${process.env.PUBLIC_URL}/fonts/Telegraf-UltraBold.ttf) format('truetype');
-    font-display: swap;
-  }
   font-family: 'Telegraf UltraBold Font';
 
   &:last-child {
@@ -239,12 +227,6 @@ const StyledButton = styled(Button)`
 const BalanceText = styled(Text)`
   color: ${({ theme }) => (theme.isDark ? '#fff' : '#342C6D')};
   font-weight: 300;
-
-  @font-face {
-    font-family: 'Telegraf UltraBold Font';
-    src: url(${process.env.PUBLIC_URL}/fonts/Telegraf-UltraBold.ttf) format('truetype');
-    font-display: swap;
-  }
   font-family: 'Telegraf UltraBold Font';
 
   @media (min-width: 1200px) {
@@ -256,12 +238,6 @@ const BalanceText = styled(Text)`
 const StyledUnlockButton = styled(UnlockButton)`
   border-radius: 100px;
   white-space: nowrap;
-
-  @font-face {
-    font-family: 'Telegraf UltraBold Font';
-    src: url(${process.env.PUBLIC_URL}/fonts/Telegraf-UltraBold.ttf) format('truetype');
-    font-display: swap;
-  }
   font-family: 'Telegraf UltraBold Font';
 
   &:last-child {

@@ -100,8 +100,13 @@ export const getFarmApr = (rewardTokenPrice, poolLiquidityUsd, rewardRatePerSec)
 }
 
 export const getApy = (dailyApr = 0) => {
+  if (Number.isNaN(dailyApr)) return 0
+  if (dailyApr === Infinity) return 0
+
   const staticFee = 0
-  return (1 + dailyApr) ** DAYS_PER_YEAR - 1 + staticFee
+
+  const apy = (1 + dailyApr) ** DAYS_PER_YEAR - 1 + staticFee
+  return apy === Infinity ? 999999 : apy
 }
 
 export const getApr = (dailyApr = 0) => {

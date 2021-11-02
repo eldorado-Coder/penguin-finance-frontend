@@ -35,7 +35,7 @@ const StyledPefiStats = styled(Card)`
 const StyledHeading = styled(Heading)`
   color: white;
   font-weight: 800;
-  font-family: 'GothamBold Font';
+  font-family: 'GothamBlack Font';
 
   @media (min-width: 1200px) {
     font-size: 48px;
@@ -59,12 +59,6 @@ const StyledCardValue = styled(CardValue)`
   font-weight: 300;
   font-size: 14px;
   text-align: right;
-
-  @font-face {
-    font-family: 'Telegraf Bold Font';
-    src: url(${process.env.PUBLIC_URL}/fonts/Telegraf-Bold.ttf) format('truetype');
-    font-display: swap;
-  }
   font-family: 'Telegraf Bold Font';
 
   @media (min-width: 1200px) {
@@ -82,12 +76,6 @@ const StyledCardBody = styled(CardBody)`
 const StyledText = styled(Text)`
   font-weight: 300;
   font-size: 14px;
-
-  @font-face {
-    font-family: 'Telegraf Regular Font';
-    src: url(${process.env.PUBLIC_URL}/fonts/Telegraf-Regular.ttf) format('truetype');
-    font-display: swap;
-  }
   font-family: 'Telegraf Regular Font';
 
   @media (min-width: 1200px) {

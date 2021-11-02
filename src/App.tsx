@@ -74,13 +74,12 @@ const App: React.FC = () => {
               <HomeV1 />
             </Route>
             <Route path="/" exact>
-              {/* <HomeV1 /> */}
               <HomeV2 />
             </Route>
             <Route path="/farms">
               <FarmsV2 />
             </Route>
-            <Route path="/old-farms">
+            <Route path="/v1-farms">
               <Farms />
             </Route>
             <Route path="/stake">
@@ -122,21 +121,9 @@ const App: React.FC = () => {
             <Route path="/emperor">
               <Emperor />
             </Route>
-            {/* temporary covid penguin emperor page */}
-            {/* <Route path="/emperor">
-              <CovidEmperor />
-            </Route> */}
-            {/* Redirect */}
-            {/* <Route path="/staking">
-              <Redirect to="/pools" />
-            </Route>
-            <Route path="/syrup">
-              <Redirect to="/pools" />
-            </Route> */}
             <Route path="/collectibles">
               <Collectibles />
             </Route>
-            {/* 404 */}
             <Route component={NotFound} />
           </Switch>
           <Footer />

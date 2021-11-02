@@ -83,7 +83,7 @@ const CardContainer = styled(Card)`
 const StyledHeading = styled(Heading)`
   font-weight: 800;
   color: white;
-  font-family: 'GothamBold Font';
+  font-family: 'GothamBlack Font';
 
   @media (min-width: 1200px) {
     font-size: 48px;
@@ -116,19 +116,13 @@ const StyledFooter = styled(CardBody)`
 const StyledText = styled(Text)<{ isBold?: boolean }>`
   font-weight: ${({ isBold }) => (isBold ? 600 : 300)};
   font-size: 14px;
+  font-family: 'Telegraf Regular Font';
 
   a {
     &:hover {
       text-decoration: underline;
     }
   }
-
-  @font-face {
-    font-family: 'Telegraf Regular Font';
-    src: url(${process.env.PUBLIC_URL}/fonts/Telegraf-Regular.ttf) format('truetype');
-    font-display: swap;
-  }
-  font-family: 'Telegraf Regular Font';
 
   @media (min-width: 1200px) {
     font-size: 18px;

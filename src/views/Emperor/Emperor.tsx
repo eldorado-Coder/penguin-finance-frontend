@@ -297,6 +297,10 @@ const GridItem = styled.div`
     width: 280px;
     max-width: 280px;
   }
+  @media (min-width: 4000px) {
+    width: 420px;
+    max-width: 420px;
+  }
 `
 
 const Grid = styled.div<{ align: string; marginTop?: { xs?: number; sm?: number; md?: number; lg?: number } }>`

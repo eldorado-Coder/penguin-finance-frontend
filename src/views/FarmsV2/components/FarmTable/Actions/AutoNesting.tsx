@@ -5,27 +5,6 @@ import { useWeb3React } from '@web3-react/core'
 import Slider from 'components/Slider'
 import { useV2FarmSetAutoNestAllocation } from 'hooks/useV2Farm'
 
-const StyledButton = styled(Button)`
-  font-weight: 600;
-  height: 24px;
-  font-size: 14px;
-  border-radius: 10px;
-  background: ${({ theme }) => theme.colors.red};
-  color: white;
-  padding: 0 14px;
-`
-
-const Label = styled(Text)`
-  white-space: nowrap;
-`
-
-const AllocationText = styled(Text)`
-  min-width: 160px;
-  text-align: center;
-  margin-right: 4px;
-  color: ${({ theme }) => (theme.isDark ? '#b2b2ce' : theme.colors.textSubtle)};
-`
-
 const AutoNesting = ({ currentAllocation, maxAllocation }) => {
   const [pendingTx, setPendingTx] = useState(false)
   const [allocation, setAllocation] = useState(currentAllocation)
@@ -75,5 +54,26 @@ const AutoNesting = ({ currentAllocation, maxAllocation }) => {
     </>
   )
 }
+
+const StyledButton = styled(Button)`
+  font-weight: 600;
+  height: 24px;
+  font-size: 14px;
+  border-radius: 10px;
+  background: ${({ theme }) => theme.colors.red};
+  color: white;
+  padding: 0 14px;
+`
+
+const Label = styled(Text)`
+  white-space: nowrap;
+`
+
+const AllocationText = styled(Text)`
+  min-width: 160px;
+  text-align: center;
+  margin-right: 4px;
+  color: ${({ theme }) => (theme.isDark ? '#b2b2ce' : theme.colors.textSubtle)};
+`
 
 export default AutoNesting
