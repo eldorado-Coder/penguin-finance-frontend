@@ -8,6 +8,7 @@ import useAssets from 'hooks/useAssets'
 import { getBalanceNumber } from 'utils/formatBalance'
 import Balance from 'components/Balance'
 import useTheme from 'hooks/useTheme'
+import useUserSetting from 'hooks/useUserSetting'
 import tokens from 'config/constants/tokens'
 import { getAddress } from 'utils/addressHelpers'
 import Farm from './Farm'
@@ -24,6 +25,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
   const [actionPanelExpanded, setActionPanelExpanded] = useState(false)
 
   const { farm, index } = props
+  const { isIglooAprMode } = useUserSetting()
   const { stakedBalance } = useV2FarmUser(farm.pid, farm.type)
   const shouldRenderChild = useDelayedUnmount(actionPanelExpanded, 300)
   const { isXl } = useMatchBreakpoints()
@@ -55,6 +57,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
   const liquidity = farm.totalLiquidityInUsd
   const stakedBalanceInUsd = stakedBalance ? getBalanceNumber(stakedBalance) * farm.lpPrice : 0
   const farmApr = farm.apr >= 0 ? (100 * Number(farm.apr)).toFixed(2) : 0
+  const farmApy = farm.apy >= 0 ? (100 * Number(farm.apy)).toFixed(2) : 0
   const pendingTokensWithLogo = getPendingTokensWithLogo()
 
   const isMobile = !isXl
@@ -87,14 +90,24 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
       additionalStakingAprLabel = 'Lydia Finance'
       additionalSwapAprLabel = 'Lydia Finance'
     }
-    const mainApr = farm.pefiApr || 0
-    const additionalStakingApr = farm.stakingApr || 0
-    const additionalSwapFeeApr = farm.swapFeeApr || 0
-    const minwApr = farm.minwApr || 0
-    const joeRushRewardApr = farm.joeRushRewardApr || 0
-    const totalApr = farm.apr || 0
+    const mainApr = 100 * (farm.pefiApr || 0)
+    const additionalStakingApr = 100 * (farm.stakingApr || 0)
+    const additionalSwapFeeApr = 100 * (farm.swapFeeApr || 0)
+    const minwApr = 100 * (farm.minwApr || 0)
+    const joeRushRewardApr = 100 * (farm.joeRushRewardApr || 0)
+    const totalApr = 100 * (farm.apr || 0)
 
-    return `
+    const mainApy = 100 * (farm.pefiApy || 0)
+    const additionalStakingApy = 100 * (farm.stakingApy || 0)
+    const additionalSwapFeeApy = 100 * (farm.swapFeeApy || 0)
+    const minwApy = 100 * (farm.minwApy || 0)
+    const joeRushRewardApy = 100 * (farm.joeRushRewardApy || 0)
+    const totalApy = 100 * (farm.apy || 0)
+
+    // isIglooAprMode
+
+    if (isIglooAprMode) {
+      return `
         <div style="display: flex; width: 100%; align-items: center;">
           <div style="width: 60%; text-align: center;">
             <p>Penguin Finance</p>
@@ -113,20 +126,58 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
             <p>Total APR</p>
           </div>
           <div style="margin-left: 5px; padding-right: 5px; ">
-            <p style="font-weight: 500">${(mainApr * 100).toFixed(2)}% APR</p>
-            <p style="font-weight: 500">${(additionalStakingApr * 100).toFixed(2)}% APR</p>
-            <p style="font-weight: 500">${(additionalSwapFeeApr * 100).toFixed(2)}% APR</p>
+            <p style="font-weight: 500">${mainApr.toFixed(2)}% APR</p>
+            <p style="font-weight: 500">${additionalStakingApr.toFixed(2)}% APR</p>
+            <p style="font-weight: 500">${additionalSwapFeeApr.toFixed(2)}% APR</p>
             ${
               minwApr > 0
-                ? `<p style="font-weight: 500">${(minwApr * 100).toFixed(2)}% APR</p>`
+                ? `<p style="font-weight: 500">${minwApr.toFixed(2)}% APR</p>`
                 : '<p style="line-height: 0px; height: 0px; margin-bottom: -30px !important;"></p>'
             }
             ${
               joeRushRewardApr > 0
-                ? `<p style="font-weight: 500">${(joeRushRewardApr * 100).toFixed(2)}% APR</p>`
+                ? `<p style="font-weight: 500">${joeRushRewardApr.toFixed(2)}% APR</p>`
                 : '<p style="line-height: 0px; height: 0px; margin-bottom: -30px !important;"></p>'
             }
-            <p style="color: ${theme.colors.red}; font-weight: 500">${(totalApr * 100).toFixed(2)}% APR</p>
+            <p style="color: ${theme.colors.red}; font-weight: 500">${totalApr.toFixed(2)}% APR</p>
+          </div>
+        </div>
+      `
+    }
+
+    return `
+        <div style="display: flex; width: 100%; align-items: center;">
+          <div style="width: 60%; text-align: center;">
+            <p>Penguin Finance</p>
+            <p>${additionalStakingAprLabel} Staking</p>
+            <p>${additionalSwapAprLabel} Swap</p>
+            ${
+              minwApy > 0
+                ? '<p>MINW Campaign</p>'
+                : '<p style="line-height: 0px; height: 0px; margin-bottom: -30px !important;"></p>'
+            }
+            ${
+              joeRushRewardApy > 0
+                ? '<p>Joe Rush</p>'
+                : '<p style="line-height: 0px; height: 0px; margin-bottom: -30px !important;"></p>'
+            }
+            <p>Total APY</p>
+          </div>
+          <div style="margin-left: 5px; padding-right: 5px; ">
+            <p style="font-weight: 500">${mainApy.toFixed(2)}% APY</p>
+            <p style="font-weight: 500">${additionalStakingApy.toFixed(2)}% APY</p>
+            <p style="font-weight: 500">${additionalSwapFeeApy.toFixed(2)}% APY</p>
+            ${
+              minwApy > 0
+                ? `<p style="font-weight: 500">${minwApy.toFixed(2)}% APY</p>`
+                : '<p style="line-height: 0px; height: 0px; margin-bottom: -30px !important;"></p>'
+            }
+            ${
+              joeRushRewardApy > 0
+                ? `<p style="font-weight: 500">${joeRushRewardApy.toFixed(2)}% APY</p>`
+                : '<p style="line-height: 0px; height: 0px; margin-bottom: -30px !important;"></p>'
+            }
+            <p style="color: ${theme.colors.red}; font-weight: 500">${totalApy.toFixed(2)}% APY</p>
           </div>
         </div>
       `
@@ -162,7 +213,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
                 return (
                   <td className="apr" key={key}>
                     <CellInner>
-                      <CellLayout label="APR">
+                      <CellLayout label={isIglooAprMode ? 'APR' : 'APY'}>
                         <CustomToolTipOrigin data-for={`apr-tooltip-${index}`} data-tip={getAPRTooltip()}>
                           <AprBalanceWrapper>
                             <Balance
@@ -171,7 +222,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
                               color={isDark ? '#C74F51' : 'red'}
                               suffix="%"
                               decimals={2}
-                              value={Number(farmApr) || 0}
+                              value={isIglooAprMode ? Number(farmApr) : Number(farmApy)}
                             />
                           </AprBalanceWrapper>
                         </CustomToolTipOrigin>
@@ -252,8 +303,8 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
                 </CellLayout>
               </EarnedMobileCell>
               <AprMobileCell>
-                <CellLayout label="APR">
-                  <Amount>{`${farmApr || '--'}%`}</Amount>
+                <CellLayout label={isIglooAprMode ? 'APR' : 'APY'}>
+                  <Amount>{`${isIglooAprMode ? farmApr || '--' : farmApy || '--'}%`}</Amount>
                 </CellLayout>
               </AprMobileCell>
             </Flex>

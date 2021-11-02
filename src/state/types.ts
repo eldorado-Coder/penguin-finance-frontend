@@ -82,6 +82,11 @@ export interface V2Farm extends FarmConfig {
   minwApr?: number
   joeRushRewardApr?: number
   apr?: number
+  stakingApy?: number
+  swapFeeApy?: number
+  pefiApy?: number
+  minwApy?: number
+  joeRushRewardApy?: number
   apy?: number
   displayedDecimals?: number
   joePoolAllocPoint?: number

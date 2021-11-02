@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react'
 import { useDispatch } from 'react-redux'
-import { Flex, Text, Toggle, Input, useMatchBreakpoints } from 'penguinfinance-uikit2'
+import { Flex, Text, Toggle, Input, useMatchBreakpoints, ButtonMenu, ButtonMenuItem } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import styled from 'styled-components'
 import Page from 'components/layout/Page'
@@ -22,10 +22,11 @@ import useRefresh from 'hooks/useRefresh'
 import useTheme from 'hooks/useTheme'
 import useTokenPrice from 'hooks/useTokenPrice'
 import useJoePrice from 'hooks/useJoePrice'
+import useUserSetting from 'hooks/useUserSetting'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { DAYS_PER_YEAR } from 'config'
 import { getAddress } from 'utils/addressHelpers'
-import { getApr, getFarmApr, getLydiaFarmApr, getJoeFarmApr, getBenqiFarmApr } from 'utils/apyHelpers'
+import { getApr, getApy, getFarmApr, getLydiaFarmApr, getJoeFarmApr, getBenqiFarmApr } from 'utils/apyHelpers'
 import V2Farms from './V2'
 
 const PROJECT_LIST = [
@@ -45,6 +46,7 @@ const Farms: React.FC = () => {
   const dispatch = useDispatch()
   const { fastRefresh } = useRefresh()
   const { account } = useWeb3React()
+  const { isIglooAprMode, toggleIglooAprMode } = useUserSetting()
   const v2Farms = useV2Farms()
   const lydiaFarms = useLydiaFarms()
   const joeV3Farms = useJoeV3Farms()
@@ -130,16 +132,27 @@ const Farms: React.FC = () => {
       stakingApr = avaxStakingApr + qiStakingApr
     }
 
+    const pefiApy = getApy(pefiApr / DAYS_PER_YEAR)
+    const stakingApy = getApy(stakingApr / DAYS_PER_YEAR)
+    const swapFeeApy = getApy(swapFeeApr / DAYS_PER_YEAR)
+    const minwApy = getApy(minwApr / DAYS_PER_YEAR)
+    const joeRushRewardApy = getApy(joeRushRewardApr / DAYS_PER_YEAR)
+
     return {
       ...farm,
       pefiDailyApr,
       pefiApr,
+      pefiApy,
       stakingApr,
+      stakingApy,
       swapFeeApr,
+      swapFeeApy,
       minwApr,
+      minwApy,
       joeRushRewardApr,
+      joeRushRewardApy,
       apr: stakingApr + swapFeeApr + pefiApr + minwApr + joeRushRewardApr,
-      apy: stakingApr + swapFeeApr + pefiApr + minwApr + joeRushRewardApr,
+      apy: stakingApy + swapFeeApy + pefiApy + minwApy + joeRushRewardApy,
     }
   })
 
@@ -175,6 +188,10 @@ const Farms: React.FC = () => {
     return farms
   }, [searchTerm, activeFarmsWithApy, showStakedOnly, account, activeProjects, sortType])
 
+  const handleSwitchTab = (tab) => {
+    toggleIglooAprMode(tab === 1)
+  }
+
   const handleChangeStakedOnly = (event) => {
     setShowStakedOnly(event.target.checked)
   }
@@ -206,6 +223,17 @@ const Farms: React.FC = () => {
           />
         )
       })}
+    </Flex>
+  )
+
+  const renderActiveFilter = (
+    <Flex margin={isMobile ? '8px 0' : '8px 16px 8px 0'} justifyContent="center" alignItems="center">
+      <TabWrapper>
+        <ButtonMenu activeIndex={isIglooAprMode ? 1 : 0} onItemClick={handleSwitchTab} scale="sm">
+          <OptionItem active={!isIglooAprMode}>APY</OptionItem>
+          <OptionItem active={isIglooAprMode}>APR</OptionItem>
+        </ButtonMenu>
+      </TabWrapper>
     </Flex>
   )
 
@@ -279,6 +307,7 @@ const Farms: React.FC = () => {
         <FilterWrapper justifyContent="space-between" alignItems="center" flexWrap="wrap">
           <Flex mt="8px" justifyContent="center" mb="8px" flexWrap="wrap">
             {renderStakedOnlyFilter}
+            {renderActiveFilter}
           </Flex>
           {renderSearchAndSortFilter}
           <Flex mt="16px">{renderProjectsFilters}</Flex>
@@ -290,6 +319,7 @@ const Farms: React.FC = () => {
             {renderProjectsFilters}
           </LeftFilters>
           <Flex display={isSm ? 'block !important' : 'flex'} mt="16px">
+            {renderActiveFilter}
             {renderSearchAndSortFilter}
           </Flex>
         </FilterWrapper>
@@ -350,6 +380,21 @@ const TvlContainer = styled(Flex)`
   ${({ theme }) => theme.mediaQueries.md} {
     justify-content: flex-start;
   }
+`
+
+// apr/apy slider
+const TabWrapper = styled.div`
+  div {
+    border: 2px solid ${({ theme }) => (theme.isDark ? '#221b38' : '#b2b2ce')};
+    background-color: ${({ theme }) => (theme.isDark ? '#332654' : '#e8e4ef')};
+    border-radius: 18px;
+  }
+`
+const OptionItem = styled(ButtonMenuItem)<{ active: boolean }>`
+  min-width: 70px;
+  background-color: ${({ active, theme }) => active && theme.colors.red};
+  color: ${({ active }) => (active ? 'white' : '#b2b2ce')};
+  margin: 0px !important;
 `
 
 const SelectWrapper = styled.div`
