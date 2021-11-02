@@ -32,7 +32,12 @@ const GlobalStyle = createGlobalStyle`
   // custom fonts
   @font-face {
     font-family: 'GothamBold Font';
-    src: url(${process.env.PUBLIC_URL}/fonts/GothamBold.ttf) format('truetype');
+    src: url(${process.env.PUBLIC_URL}/fonts/Gotham-Bold.ttf) format('truetype');
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'GothamBlack Font';
+    src: url(${process.env.PUBLIC_URL}/fonts/Gotham-Black.ttf) format('truetype');
     font-display: swap;
   }
 `

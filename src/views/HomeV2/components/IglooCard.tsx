@@ -31,7 +31,7 @@ const CardMidContent = styled(Heading).attrs({ size: 'xl' })`
   font-size: 28px;
   color: ${({ theme }) => (theme.isDark ? '#d4444c' : '#EC3B40')};
   font-weight: 800;
-  font-family: 'GothamBold Font';
+  font-family: 'GothamBlack Font';
 
   @media (min-width: 640px) {
     line-height: 44px;

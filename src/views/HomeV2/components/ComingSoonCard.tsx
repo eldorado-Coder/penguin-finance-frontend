@@ -83,7 +83,7 @@ const CardContainer = styled(Card)`
 const StyledHeading = styled(Heading)`
   font-weight: 800;
   color: white;
-  font-family: 'GothamBold Font';
+  font-family: 'GothamBlack Font';
 
   @media (min-width: 1200px) {
     font-size: 48px;
