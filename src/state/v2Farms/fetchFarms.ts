@@ -161,7 +161,10 @@ export const fetchFarms = async () => {
         // rewarder contract call
         let minwRewardToken = '0x0000000000000000000000000000000000000000'
         let minwRewardPerSec = 0
-        if (getAddress(farmConfig.rewarderAddresses) !== '0x0000000000000000000000000000000000000000') {
+        if (
+          getAddress(farmConfig.rewarderAddresses) !== '0x0000000000000000000000000000000000000000' &&
+          farmConfig.isMINW
+        ) {
           const [_minwRewardToken, _minwRewardTokenPerSecond] = await multicall(v2IglooRewarderABI, [
             {
               address: getAddress(farmConfig.rewarderAddresses),

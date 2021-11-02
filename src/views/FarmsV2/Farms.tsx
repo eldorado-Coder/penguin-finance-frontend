@@ -278,11 +278,14 @@ const Farms: React.FC = () => {
     const pefiDailyApr = farm.totalLiquidityInUsd > 0 ? pefiRewardPerDayInUsd / farm.totalLiquidityInUsd : 0
     const pefiApr = getApr(pefiDailyApr)
 
-    // minw
-    const minwRewardPerDay = SECONDS_PER_DAY * Number(farm.minwRewardPerSec)
-    const minwRewardPerDayInUsd = getTokenPrice(farm.minwRewardToken) * minwRewardPerDay
-    const minwDailyApr = farm.totalLiquidityInUsd > 0 ? minwRewardPerDayInUsd / farm.totalLiquidityInUsd : 0
-    const minwApr = getApr(minwDailyApr)
+    // minw apr
+    const minwApr = 0
+    // if (isMinwEnabled) {
+    //   const minwRewardPerDay = SECONDS_PER_DAY * Number(farm.minwRewardPerSec)
+    //   const minwRewardPerDayInUsd = getTokenPrice(farm.minwRewardToken) * minwRewardPerDay
+    //   const minwDailyApr = farm.totalLiquidityInUsd > 0 ? minwRewardPerDayInUsd / farm.totalLiquidityInUsd : 0
+    //   minwApr = getApr(minwDailyApr)
+    // }
 
     let { stakingApr, swapFeeApr } = farm
     let joeRushRewardApr = 0
@@ -458,9 +461,7 @@ const Farms: React.FC = () => {
   const renderStakedOnlyFilter = (
     <Flex alignItems="center" mr={isMobile ? '8px' : '16px'}>
       <ToggleWrapper checked={showStakedOnly}>
-        <Toggle 
-          checked={showStakedOnly} 
-          onChange={handleChangeStakedOnly} />
+        <Toggle checked={showStakedOnly} onChange={handleChangeStakedOnly} />
       </ToggleWrapper>
       <FilterText ml="8px" color="textSubtle">
         Staked Only
