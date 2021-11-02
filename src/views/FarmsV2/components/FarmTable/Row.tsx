@@ -8,6 +8,8 @@ import useAssets from 'hooks/useAssets'
 import { getBalanceNumber } from 'utils/formatBalance'
 import Balance from 'components/Balance'
 import useTheme from 'hooks/useTheme'
+import tokens from 'config/constants/tokens'
+import { getAddress } from 'utils/addressHelpers'
 import Farm from './Farm'
 import Details from './Details'
 import CellLayout from './CellLayout'
@@ -50,7 +52,7 @@ const DetailsCellInner = styled(CellInner)`
 
 const MobileActions = styled.td`
   width: 100px;
-`;
+`
 
 const StyledTr = styled.tr<{ shouldRenderChild?: boolean }>`
   cursor: pointer;
@@ -190,24 +192,41 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
   const { isXl } = useMatchBreakpoints()
   const { getTokenLogo } = useAssets()
   const { isDark, theme } = useTheme()
-
+  const joeToken = tokens.find((row) => row.symbol === 'JOE')
+  const pngToken = tokens.find((row) => row.symbol === 'PNG')
   const { pendingTokens } = farm
-  const pendingTokensWithLogo =
-    pendingTokens &&
-    pendingTokens.map((pendingTokenAddress) => {
-      return { address: pendingTokenAddress, logo: getTokenLogo(pendingTokenAddress) }
-    })
+
+  const getPendingTokensWithLogo = () => {
+    let _pendingTokensWithLogo = pendingTokens
+      ? pendingTokens.map((pendingTokenAddress) => {
+          return { address: pendingTokenAddress, logo: getTokenLogo(pendingTokenAddress) }
+        })
+      : []
+    if (farm.type === 'Joe') {
+      _pendingTokensWithLogo = _pendingTokensWithLogo.filter(
+        (row) => row.address.toLowerCase() !== getAddress(pngToken.address).toLowerCase(),
+      )
+    }
+    if (farm.type === 'Pangolin') {
+      _pendingTokensWithLogo = _pendingTokensWithLogo.filter(
+        (row) => row.address.toLowerCase() !== getAddress(joeToken.address).toLowerCase(),
+      )
+    }
+    return _pendingTokensWithLogo
+  }
+
   const liquidity = farm.totalLiquidityInUsd
   const stakedBalanceInUsd = stakedBalance ? getBalanceNumber(stakedBalance) * farm.lpPrice : 0
   const farmApr = farm.apr >= 0 ? (100 * Number(farm.apr)).toFixed(2) : 0
-
-  const toggleActionPanel = () => {
-    setActionPanelExpanded(!actionPanelExpanded)
-  }
+  const pendingTokensWithLogo = getPendingTokensWithLogo()
 
   const isMobile = !isXl
   const tableSchema = isMobile ? MobileColumnSchema : DesktopColumnSchema
   const columnNames = tableSchema.map((column) => column.name)
+
+  const toggleActionPanel = () => {
+    setActionPanelExpanded(!actionPanelExpanded)
+  }
 
   const getAPRTooltip = () => {
     let additionalStakingAprLabel = ''
@@ -389,7 +408,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
                 <Farm {...props} />
               </CellLayout>
             </FarmMobileCell>
-            <Flex margin='16px 0 24px 16px' justifyContent="space-between">
+            <Flex margin="16px 0 24px 16px" justifyContent="space-between">
               <EarnedMobileCell>
                 <CellLayout label="Your Stake">
                   <Balance fontSize="16px" fontWeight="400" prefix="$" value={Number(stakedBalanceInUsd)} />
