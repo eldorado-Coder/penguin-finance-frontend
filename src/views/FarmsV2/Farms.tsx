@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react'
 import { useDispatch } from 'react-redux'
-import { Flex, Text, Toggle, Input, useMatchBreakpoints, ButtonMenu, ButtonMenuItem } from 'penguinfinance-uikit2'
+import { Flex, Text, Toggle, Input, useMatchBreakpoints } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import styled from 'styled-components'
 import Page from 'components/layout/Page'
@@ -16,7 +16,6 @@ import {
   useBenqiFarmsGlobalData,
   usePricePefiUsdt,
   usePriceAvaxUsdt,
-  usePricePngUsdt,
 } from 'state/hooks'
 import { fetchV2FarmUserDataAsync } from 'state/actions'
 import useRefresh from 'hooks/useRefresh'
@@ -24,11 +23,9 @@ import useTheme from 'hooks/useTheme'
 import useTokenPrice from 'hooks/useTokenPrice'
 import useJoePrice from 'hooks/useJoePrice'
 import { getBalanceNumber } from 'utils/formatBalance'
-import { DAYS_PER_YEAR, SECONDS_PER_DAY } from 'config'
-import tokens from 'config/constants/tokens'
+import { DAYS_PER_YEAR } from 'config'
 import { getAddress } from 'utils/addressHelpers'
 import { getApr, getFarmApr, getLydiaFarmApr, getJoeFarmApr, getBenqiFarmApr } from 'utils/apyHelpers'
-import V1Farms from './V1'
 import V2Farms from './V2'
 
 const PROJECT_LIST = [
@@ -44,7 +41,6 @@ const Farms: React.FC = () => {
   const [showStakedOnly, setShowStakedOnly] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const [activeProjects, setActiveProjects] = useState(PROJECT_LIST.map((row) => row.name))
-  const [activeTab, setActiveTab] = useState(0) // 0: v2, 1: v1
 
   const dispatch = useDispatch()
   const { fastRefresh } = useRefresh()
@@ -61,10 +57,8 @@ const Farms: React.FC = () => {
   const avaxPriceUsd = usePriceAvaxUsdt().toNumber()
   const { lydPrice: lydPriceUsd, qiPrice: qiPriceUsd } = useTokenPrice()
   const joePriceUsd = useJoePrice()
-  const pngPriceUsd = usePricePngUsdt().toNumber()
-
-  const isMobile = !isXl
   const theme = useTheme()
+  const isMobile = !isXl
 
   useEffect(() => {
     if (account) {
@@ -84,15 +78,6 @@ const Farms: React.FC = () => {
     return v2FarmTvl
   }
 
-  const getTokenPrice = (address) => {
-    if (!address) return 1
-    const rewardToken = tokens.find((row) => getAddress(row.address).toLowerCase() === address.toLowerCase())
-
-    if (rewardToken && rewardToken.symbol === 'PNG') return pngPriceUsd
-    if (rewardToken && rewardToken.symbol === 'JOE') return joePriceUsd
-    return 1
-  }
-
   const activeFarmsWithApy = activeFarms.map((farm) => {
     const pefiPerYear = getBalanceNumber(farm.pefiPerYear)
     const pefiPerDay = pefiPerYear / DAYS_PER_YEAR
@@ -102,13 +87,6 @@ const Farms: React.FC = () => {
 
     // minw apr
     const minwApr = 0
-    // if (isMinwEnabled) {
-    //   const minwRewardPerDay = SECONDS_PER_DAY * Number(farm.minwRewardPerSec)
-    //   const minwRewardPerDayInUsd = getTokenPrice(farm.minwRewardToken) * minwRewardPerDay
-    //   const minwDailyApr = farm.totalLiquidityInUsd > 0 ? minwRewardPerDayInUsd / farm.totalLiquidityInUsd : 0
-    //   minwApr = getApr(minwDailyApr)
-    // }
-
     let { stakingApr, swapFeeApr } = farm
     let joeRushRewardApr = 0
 
@@ -197,15 +175,6 @@ const Farms: React.FC = () => {
     return farms
   }, [searchTerm, activeFarmsWithApy, showStakedOnly, account, activeProjects, sortType])
 
-  const handleSwitchTab = (tab) => {
-    setActiveTab(tab)
-    if (tab === 1) {
-      setShowStakedOnly(true)
-    } else {
-      setShowStakedOnly(false)
-    }
-  }
-
   const handleChangeStakedOnly = (event) => {
     setShowStakedOnly(event.target.checked)
   }
@@ -237,17 +206,6 @@ const Farms: React.FC = () => {
           />
         )
       })}
-    </Flex>
-  )
-
-  const renderActiveFilter = (
-    <Flex margin={isMobile ? '8px 0' : '8px 16px 8px 0'} justifyContent="center" alignItems="center">
-      <TabWrapper>
-        <ButtonMenu activeIndex={activeTab} onItemClick={handleSwitchTab} scale="sm">
-          <OptionItem active={activeTab === 0}>New (V2)</OptionItem>
-          <OptionItem active={activeTab === 1}>Old (V1)</OptionItem>
-        </ButtonMenu>
-      </TabWrapper>
     </Flex>
   )
 
@@ -291,13 +249,6 @@ const Farms: React.FC = () => {
     </Flex>
   )
 
-  const handleViewMINW = () => {
-    window.open(
-      'https://penguin-finance.medium.com/make-igloos-not-war-new-joe-png-yield-farming-strategies-b70fac00807f',
-      '_blank',
-    )
-  }
-
   const tvl = getV2FarmsTVL()
 
   return (
@@ -328,7 +279,6 @@ const Farms: React.FC = () => {
         <FilterWrapper justifyContent="space-between" alignItems="center" flexWrap="wrap">
           <Flex mt="8px" justifyContent="center" mb="8px" flexWrap="wrap">
             {renderStakedOnlyFilter}
-            {renderActiveFilter}
           </Flex>
           {renderSearchAndSortFilter}
           <Flex mt="16px">{renderProjectsFilters}</Flex>
@@ -340,22 +290,11 @@ const Farms: React.FC = () => {
             {renderProjectsFilters}
           </LeftFilters>
           <Flex display={isSm ? 'block !important' : 'flex'} mt="16px">
-            {renderActiveFilter}
             {renderSearchAndSortFilter}
           </Flex>
         </FilterWrapper>
       )}
-      <IgloosContentContainer>
-        {activeTab === 0 && filteredFarms.length > 0 && <V2Farms farms={filteredFarms} />}
-        {activeTab === 1 && (
-          <V1Farms
-            searchTerm={searchTerm}
-            showStakedOnly={showStakedOnly}
-            activeProjects={activeProjects}
-            sortType={sortType}
-          />
-        )}
-      </IgloosContentContainer>
+      <IgloosContentContainer>{filteredFarms.length > 0 && <V2Farms farms={filteredFarms} />}</IgloosContentContainer>
     </FarmPage>
   )
 }
@@ -370,7 +309,7 @@ const IgloosBgContainer = styled.div`
   background-size: contain;
   position: absolute;
   top: 0;
-  bottom: 0
+  bottom: 0;
   right: 0px;
   left: 0px;
   z-index: -1;
@@ -411,21 +350,6 @@ const TvlContainer = styled(Flex)`
   ${({ theme }) => theme.mediaQueries.md} {
     justify-content: flex-start;
   }
-`
-
-// slider
-const TabWrapper = styled.div`
-  div {
-    border: 2px solid ${({ theme }) => (theme.isDark ? '#221b38' : '#b2b2ce')};
-    background-color: ${({ theme }) => (theme.isDark ? '#332654' : '#e8e4ef')};
-    border-radius: 18px;
-  }
-`
-const OptionItem = styled(ButtonMenuItem)<{ active: boolean }>`
-  min-width: 70px;
-  background-color: ${({ active, theme }) => active && theme.colors.red};
-  color: ${({ active }) => (active ? 'white' : '#b2b2ce')};
-  margin: 0px !important;
 `
 
 const SelectWrapper = styled.div`
