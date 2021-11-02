@@ -40,6 +40,31 @@ const GlobalStyle = createGlobalStyle`
     src: url(${process.env.PUBLIC_URL}/fonts/Gotham-Black.ttf) format('truetype');
     font-display: swap;
   }
+  @font-face {
+    font-family: 'GothamUltra Font';
+    src: url(${process.env.PUBLIC_URL}/fonts/Gotham-Ultra.ttf) format('truetype');
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Telegraf UltraLight';
+    src: url(${process.env.PUBLIC_URL}/fonts/Telegraf-UltraLight.ttf) format('truetype');
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Telegraf Regular Font';
+    src: url(${process.env.PUBLIC_URL}/fonts/Telegraf-Regular.ttf) format('truetype');
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Telegraf Bold';
+    src: url(${process.env.PUBLIC_URL}/fonts/Telegraf-Bold.ttf) format('truetype');
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Telegraf UltraBold Font';
+    src: url(${process.env.PUBLIC_URL}/fonts/Telegraf-UltraBold.ttf) format('truetype');
+    font-display: swap;
+  }
 `
 
 export default GlobalStyle

@@ -100,11 +100,6 @@ const StyledImage = styled(Image)<{ type?: string }>`
 const IglooTitleWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  @font-face {
-    font-family: 'GothamUltra Font';
-    src: url(${process.env.PUBLIC_URL}/fonts/GothamUltra.otf) format('truetype');
-    font-display: swap;
-  }
 
   > div {
     color: #fff;
@@ -263,7 +258,6 @@ const CustomToolTip = styled(ReactTooltip)<{ index: number }>`
   }
 `
 
-
 const MigrateToolTip = styled(ReactTooltip)`
   width: 100% !important;
   max-width: 316px !important;
@@ -273,7 +267,7 @@ const MigrateToolTip = styled(ReactTooltip)`
   opacity: 1 !important;
   padding: 12px 16px !important;
   font-size: 12px !important;
-  border: 1px solid #D3464E !important;
+  border: 1px solid #d3464e !important;
   border-radius: 48px !important;
   margin-top: 0px !important;
   line-height: 16px !important;
@@ -283,14 +277,12 @@ const MigrateToolTip = styled(ReactTooltip)`
     white-space: pre-wrap !important;
   }
   &:before {
-    border-top-color: #D3464E !important;
-    border-bottom-color: #D3464E !important;
+    border-top-color: #d3464e !important;
+    border-bottom-color: #d3464e !important;
   }
   &:after {
-    border-top-color: ${({ theme }) =>
-      theme.isDark ? '#383466!important' : '#fff!important'};
-    border-bottom-color: ${({ theme }) =>
-      theme.isDark ? '#383466!important' : '#fff!important'};
+    border-top-color: ${({ theme }) => (theme.isDark ? '#383466!important' : '#fff!important')};
+    border-bottom-color: ${({ theme }) => (theme.isDark ? '#383466!important' : '#fff!important')};
   }
 `
 
@@ -451,7 +443,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
     return `
       <p>When you click on "Migrate", all of your LP (old bridge tokens) will be withdrawn and your rewards will be harvested automatically. You will then be taken to Pangolin to get the new LP (new bridge tokens). Finally, you can go to the Igloos v2 page (www.penguinfinance.org/farms) and deposit.</p>
     `
-  };
+  }
 
   const handleMigrate = async () => {
     setRequestedAction(true)
@@ -462,7 +454,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
       setRequestedAction(false)
       console.error(e)
     }
-  };
+  }
 
   const renderActionButtons = () => {
     return requestedApproval ? (
@@ -486,14 +478,19 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
           </Button>
         </ActionButtonWrapper> */}
         <ActionButtonWrapper index={index}>
-          <div data-for='migration-tooltip' data-tip={getMigrationTooltip()}>
-            <Button mt="4px" scale="sm" disabled={!account || requestedAction || !rawStakedReceiptBalance} onClick={handleMigrate}>
+          <div data-for="migration-tooltip" data-tip={getMigrationTooltip()}>
+            <Button
+              mt="4px"
+              scale="sm"
+              disabled={!account || requestedAction || !rawStakedReceiptBalance}
+              onClick={handleMigrate}
+            >
               Migrate
             </Button>
           </div>
           {account && (
             <MigrateToolTip
-              id='migration-tooltip'
+              id="migration-tooltip"
               wrapper="div"
               delayHide={0}
               effect="solid"

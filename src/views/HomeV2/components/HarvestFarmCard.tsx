@@ -213,12 +213,6 @@ const Label = styled(Text).attrs({ color: 'red' })`
   color: ${({ theme }) => (theme.isDark ? '#9A97C4' : '#EC3B40')};
   line-height: 1;
   font-weight: 300;
-
-  @font-face {
-    font-family: 'Telegraf Bold Font';
-    src: url(${process.env.PUBLIC_URL}/fonts/Telegraf-Bold.ttf) format('truetype');
-    font-display: swap;
-  }
   font-family: 'Telegraf Bold Font';
 
   @media (min-width: 1200px) {
@@ -254,17 +248,11 @@ const StyledButton = styled(Button)`
   white-space: nowrap;
   margin-bottom: 8px;
   font-weight: 300;
+  font-family: 'Telegraf UltraBold Font';
 
   img {
     margin-left: 8px;
   }
-
-  @font-face {
-    font-family: 'Telegraf UltraBold Font';
-    src: url(${process.env.PUBLIC_URL}/fonts/Telegraf-UltraBold.ttf) format('truetype');
-    font-display: swap;
-  }
-  font-family: 'Telegraf UltraBold Font';
 
   &:last-child {
     margin-bottom: 0;
@@ -283,12 +271,6 @@ const StyledButton = styled(Button)`
 const StyledUnlockButton = styled(UnlockButton)`
   border-radius: 100px;
   white-space: nowrap;
-
-  @font-face {
-    font-family: 'Telegraf UltraBold Font';
-    src: url(${process.env.PUBLIC_URL}/fonts/Telegraf-UltraBold.ttf) format('truetype');
-    font-display: swap;
-  }
   font-family: 'Telegraf UltraBold Font';
 
   &:last-child {

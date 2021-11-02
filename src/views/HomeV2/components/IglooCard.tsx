@@ -58,12 +58,6 @@ const Text = styled(Heading)`
   color: ${({ theme }) => (theme.isDark ? '#ffffff' : '#342C6D')};
   font-weight: 300;
   font-size: 18px;
-
-  @font-face {
-    font-family: 'Telegraf UltraBold Font';
-    src: url(${process.env.PUBLIC_URL}/fonts/Telegraf-UltraBold.ttf) format('truetype');
-    font-display: swap;
-  }
   font-family: 'Telegraf UltraBold Font';
 
   @media (min-width: 640px) {

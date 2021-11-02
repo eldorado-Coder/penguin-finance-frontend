@@ -8,7 +8,7 @@ const Footer: React.FC<FooterProps> = () => {
   const theme = useTheme()
   const { isLg, isXl } = useMatchBreakpoints()
   const isStacked = !isLg && !isXl
-  const isMobile = !isXl;
+  const isMobile = !isXl
 
   return (
     <>
@@ -129,11 +129,6 @@ const CustomLink = styled(Link).attrs((props) => ({
   fontSize: '0.7rem',
   mb: '6px',
 }))`
-  @font-face {
-    font-family: 'Telegraf UltraLight';
-    src: url(${process.env.PUBLIC_URL}/fonts/Telegraf-UltraLight.ttf) format('truetype');
-    font-display: swap;
-  }
   font-family: 'Telegraf UltraLight';
   font-weight: 200;
   font-size: 16px;
@@ -145,11 +140,6 @@ const CustomLink = styled(Link).attrs((props) => ({
 `
 
 const TitleText = styled(Text)`
-  @font-face {
-    font-family: 'Telegraf Bold';
-    src: url(${process.env.PUBLIC_URL}/fonts/Telegraf-Bold.ttf) format('truetype');
-    font-display: swap;
-  }
   font-family: 'Telegraf Bold';
   font-size: 16px;
   line-height: 1.2;
@@ -160,13 +150,7 @@ const TitleText = styled(Text)`
 `
 
 const FooterParagraph = styled(Text)`
-  @font-face {
-    font-family: 'Telegraf UltraLight';
-    src: url(${process.env.PUBLIC_URL}/fonts/Telegraf-UltraLight.ttf) format('truetype');
-    font-display: swap;
-  }
   font-family: 'Telegraf UltraLight';
-
   font-size: 16px;
 
   @media (min-width: 968px) {
