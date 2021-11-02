@@ -32,37 +32,37 @@ const GlobalStyle = createGlobalStyle`
   // custom fonts
   @font-face {
     font-family: 'GothamBold Font';
-    src: url(${process.env.PUBLIC_URL}/fonts/Gotham-Bold.ttf) format('truetype');
+    src: url(${process.env.PUBLIC_URL}/fonts/Gotham-Bold.woff) format('truetype');
     font-display: swap;
   }
   @font-face {
     font-family: 'GothamBlack Font';
-    src: url(${process.env.PUBLIC_URL}/fonts/Gotham-Black.ttf) format('truetype');
+    src: url(${process.env.PUBLIC_URL}/fonts/Gotham-Black.woff) format('truetype');
     font-display: swap;
   }
   @font-face {
     font-family: 'GothamUltra Font';
-    src: url(${process.env.PUBLIC_URL}/fonts/Gotham-Ultra.ttf) format('truetype');
+    src: url(${process.env.PUBLIC_URL}/fonts/Gotham-Ultra.woff) format('truetype');
     font-display: swap;
   }
   @font-face {
     font-family: 'Telegraf UltraLight';
-    src: url(${process.env.PUBLIC_URL}/fonts/Telegraf-UltraLight.ttf) format('truetype');
+    src: url(${process.env.PUBLIC_URL}/fonts/Telegraf-UltraLight.woff) format('truetype');
     font-display: swap;
   }
   @font-face {
     font-family: 'Telegraf Regular Font';
-    src: url(${process.env.PUBLIC_URL}/fonts/Telegraf-Regular.ttf) format('truetype');
+    src: url(${process.env.PUBLIC_URL}/fonts/Telegraf-Regular.woff) format('truetype');
     font-display: swap;
   }
   @font-face {
     font-family: 'Telegraf Bold';
-    src: url(${process.env.PUBLIC_URL}/fonts/Telegraf-Bold.ttf) format('truetype');
+    src: url(${process.env.PUBLIC_URL}/fonts/Telegraf-Bold.woff) format('truetype');
     font-display: swap;
   }
   @font-face {
     font-family: 'Telegraf UltraBold Font';
-    src: url(${process.env.PUBLIC_URL}/fonts/Telegraf-UltraBold.ttf) format('truetype');
+    src: url(${process.env.PUBLIC_URL}/fonts/Telegraf-UltraBold.woff) format('truetype');
     font-display: swap;
   }
 `

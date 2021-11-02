@@ -6,6 +6,7 @@ import { Card, Text, Button, Flex } from 'penguinfinance-uikit2'
 import { WEEKS_PER_YEAR } from 'config'
 import useAssets from 'hooks/useAssets'
 import { useV2Harvest } from 'hooks/useV2Farm'
+import useUserSetting from 'hooks/useUserSetting'
 import { getBalanceNumber } from 'utils/formatBalance'
 import Balance from 'components/Balance'
 import tokens from 'config/constants/tokens'
@@ -44,6 +45,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
   const { getTokenLogo } = useAssets()
   const { onHarvest } = useV2Harvest(farm.pid)
   const { account } = useWeb3React()
+  const { isIglooAprMode } = useUserSetting()
   const v2Pools = useV2Pools(account)
   const v2Nest = v2Pools.length > 0 ? v2Pools[0] : null
 
@@ -71,6 +73,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
   const pefiPerWeek = pefiPerYear / WEEKS_PER_YEAR
 
   const farmApr = farm.apr ? (100 * Number(farm.apr)).toFixed(2) : 0
+  const farmApy = farm.apr ? (100 * Number(farm.apy)).toFixed(2) : 0
   const lpSymbol = farm.lpSymbol.replaceAll(' LP', '')
   const coinImg = getCoinImage(Number(userStakedBalanceInUsd))
 
@@ -147,10 +150,10 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
               fontSize="14px"
               color="textSubtle"
               fontWeight="400"
-              prefix="APR: "
+              prefix={isIglooAprMode ? 'APR: ' : 'APY: '}
               suffix="%"
               decimals={2}
-              value={Number(farmApr)}
+              value={isIglooAprMode ? Number(farmApr) : Number(farmApy)}
             />
             <Balance
               fontSize="14px"
