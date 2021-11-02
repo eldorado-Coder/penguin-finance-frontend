@@ -78,7 +78,7 @@ const Menu = (props) => {
         currentLang={selectedLanguage && selectedLanguage.code}
         langs={allLanguages}
         setLang={setSelectedLanguage}
-        penguinPriceUsd={pefiPriceUsd.toNumber()}
+        penguinPriceUsd={pefiPriceUsd.toNumber() || 1}
         iPefiRatio={Number(iPefiToPefiRatio)}
         links={links}
         socials={socials}
