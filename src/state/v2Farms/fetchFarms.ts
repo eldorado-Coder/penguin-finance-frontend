@@ -110,15 +110,14 @@ export const fetchFarms = async () => {
           lpPrice = await getPangolinLpPrice(lpAddress)
           totalLiquidityInUsd = lpPrice * getBalanceNumber(new BigNumber(totalLP))
         } else if (farmConfig.type === 'Joe') {
-          lpPrice = await getJoeLpPrice(lpAddress)
+          const pairInfo = await getPairInfo(lpAddress, farmConfig.type)
+          lpPrice = pairInfo ? Number(pairInfo.reserveUSD) / Number(pairInfo.totalSupply) : 1
+          joeSwapPoolUsdBalance = pairInfo && pairInfo.reserveUSD ? pairInfo.reserveUSD : 1
           totalLiquidityInUsd = lpPrice * getBalanceNumber(new BigNumber(totalLP))
-          const joePoolInfo = farmConfig.isJoeRush ? await getJoeV3PoolInfo(lpAddress) : await getJoePoolInfo(lpAddress)
 
+          const joePoolInfo = farmConfig.isJoeRush ? await getJoeV3PoolInfo(lpAddress) : await getJoePoolInfo(lpAddress)
           joePoolAllocPoint = joePoolInfo ? joePoolInfo.allocPoint : 0
           joePoolLpBalance = joePoolInfo ? joePoolInfo.jlpBalance : 0
-          joeSwapPoolUsdBalance = 1
-          const pairInfo = await getPairInfo(lpAddress, farmConfig.type)
-          joeSwapPoolUsdBalance = pairInfo && pairInfo.reserveUSD ? pairInfo.reserveUSD : 1
         } else if (farmConfig.type === 'Sushi') {
           lpPrice = await getSushiLpPrice(lpAddress)
           totalLiquidityInUsd = lpPrice * getBalanceNumber(new BigNumber(totalLP))
