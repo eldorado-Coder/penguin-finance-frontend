@@ -7,13 +7,11 @@ import v2FarmsConfig from 'config/constants/v2Farms'
 import { getAddress, getV2MasterChefAddress, getAvaxAddress } from 'utils/addressHelpers'
 import getV2FarmMasterChefAbi from 'utils/getV2FarmMasterChefAbi'
 import getV2FarmMasterChefAddress from 'utils/getV2FarmMasterChefAddress'
-import { getPangolinLpPrice, getJoeLpPrice, getSushiLpPrice, getLydiaLpPrice } from 'utils/price'
+import { getSushiLpPrice, getLydiaLpPrice } from 'utils/price'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { getPangolinRewardPoolApr, getApr } from 'utils/apyHelpers'
 import { getPairSwapDailyReward, getPairInfo } from 'subgraph/utils'
 import { getPoolInfo as getJoePoolInfo, getV3PoolInfo as getJoeV3PoolInfo } from 'subgraph/utils/joe'
-import { getPair as getSushiPair } from 'subgraph/utils/sushi'
-import { getPair as getPangolinPair } from 'subgraph/utils/pangolin'
 import { NON_ADDRESS } from 'config'
 
 export const fetchMasterChefGlobalData = async () => {
@@ -106,9 +104,25 @@ export const fetchFarms = async () => {
         let joePoolLpBalance = 1
         let joeSwapPoolUsdBalance = 1
 
+        let swapFeeApr = 0
+        let stakingApr = 0
+        let swapDailyReward = 0
+
+        swapDailyReward = await getPairSwapDailyReward(lpAddress, farmConfig.type)
+
         if (farmConfig.type === 'Pangolin') {
-          lpPrice = await getPangolinLpPrice(lpAddress)
+          const pairInfo = await getPairInfo(lpAddress, farmConfig.type)
+          lpPrice = pairInfo ? Number(pairInfo.reserveUSD) / Number(pairInfo.totalSupply) : 1
           totalLiquidityInUsd = lpPrice * getBalanceNumber(new BigNumber(totalLP))
+
+          const res = await getPangolinRewardPoolApr(getAddress(farmConfig.pangolinRewardPoolAddresses))
+          stakingApr = res.stakingApr
+          swapFeeApr = res.swapFeeApr
+          if (swapFeeApr === 0) {
+            if (pairInfo.reserveUSD > 0) {
+              swapFeeApr = getApr(swapDailyReward / Number(pairInfo.reserveUSD))
+            }
+          }
         } else if (farmConfig.type === 'Joe') {
           const pairInfo = await getPairInfo(lpAddress, farmConfig.type)
           lpPrice = pairInfo ? Number(pairInfo.reserveUSD) / Number(pairInfo.totalSupply) : 1
@@ -119,36 +133,16 @@ export const fetchFarms = async () => {
           joePoolAllocPoint = joePoolInfo ? joePoolInfo.allocPoint : 0
           joePoolLpBalance = joePoolInfo ? joePoolInfo.jlpBalance : 0
         } else if (farmConfig.type === 'Sushi') {
+          const pairInfo = await getPairInfo(lpAddress, farmConfig.type)
           lpPrice = await getSushiLpPrice(lpAddress)
           totalLiquidityInUsd = lpPrice * getBalanceNumber(new BigNumber(totalLP))
+
+          if (Number(pairInfo.reserveUSD) > 0) {
+            swapFeeApr = getApr(swapDailyReward / Number(pairInfo.reserveUSD))
+          }
         } else if (farmConfig.type === 'Lydia') {
           lpPrice = await getLydiaLpPrice(lpAddress)
           totalLiquidityInUsd = lpPrice * getBalanceNumber(new BigNumber(totalLP))
-        }
-
-        let swapFeeApr = 0
-        let stakingApr = 0
-        let swapDailyReward = 0
-
-        if (farmConfig.type === 'Pangolin') {
-          const res = await getPangolinRewardPoolApr(getAddress(farmConfig.pangolinRewardPoolAddresses))
-          stakingApr = res.stakingApr
-          swapFeeApr = res.swapFeeApr
-          if (swapFeeApr === 0) {
-            swapDailyReward = await getPairSwapDailyReward(lpAddress, farmConfig.type)
-            const pangolinPair = await getPangolinPair(lpAddress)
-            if (pangolinPair.reserveUSD > 0) {
-              swapFeeApr = getApr(swapDailyReward / pangolinPair.reserveUSD)
-            }
-          }
-        } else {
-          swapDailyReward = await getPairSwapDailyReward(lpAddress, farmConfig.type)
-          if (farmConfig.type === 'Sushi') {
-            const sushiPair = await getSushiPair(lpAddress)
-            if (sushiPair.reserveUSD > 0) {
-              swapFeeApr = getApr(swapDailyReward / sushiPair.reserveUSD)
-            }
-          }
         }
 
         let _pendingTokens = pendingTokens[0]
