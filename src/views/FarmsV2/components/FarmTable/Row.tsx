@@ -258,7 +258,11 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
                         <TokensWrapper>
                           {pendingTokensWithLogo &&
                             pendingTokensWithLogo.map((row) => {
-                              return <div>{row.logo && <PendingTokenLogo src={row.logo} alt="logo" />}</div>
+                              return (
+                                <div key={`farm-${farm.pid}-reward-token-${row.address}`}>
+                                  {row.logo && <PendingTokenLogo src={row.logo} alt="logo" />}
+                                </div>
+                              )
                             })}
                         </TokensWrapper>
                       </CellLayout>
