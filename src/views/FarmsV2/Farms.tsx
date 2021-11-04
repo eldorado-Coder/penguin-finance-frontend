@@ -251,7 +251,8 @@ const Farms: React.FC = () => {
           delayHide={0}
           effect="solid"
           multiline
-          place="top"
+          isMobile={isMobile}
+          place='top'
           html
         />
       </Flex>
@@ -515,9 +516,9 @@ const IgloosContentContainer = styled.div`
 // tooltip
 const CustomToolTipOrigin = styled.div``
 
-const CustomAprToolTip = styled(ReactTooltip)`
+const CustomAprToolTip = styled(ReactTooltip)<{ isMobile ?: boolean }>`
   width: 100% !important;
-  max-width: 310px !important;
+  max-width: ${props => props.isMobile ? '280px' : '310px'} !important;
   background: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#322C59!important')};
   box-shadow: ${(props) => `${props.theme.card.boxShadow}!important`};
   color: ${({ theme }) => (theme.isDark ? '#322C59!important' : '#ffffff!important')};
@@ -527,6 +528,7 @@ const CustomAprToolTip = styled(ReactTooltip)`
   border: 2px solid #fff !important;
   border-radius: 16px !important;
   margin-top: 0px !important;
+  margin-left: ${props => props.isMobile && '-60px !important'};
   > div {
     width: 100%;
     min-height: 108px;
@@ -545,10 +547,12 @@ const CustomAprToolTip = styled(ReactTooltip)`
   &:before {
     border-top-color: #ffffff !important;
     border-bottom-color: #ffffff !important;
+    left: ${props => props.isMobile && '72% !important'};
   }
   &:after {
     border-top-color: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#322C59')};
     border-bottom-color: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#322C59')};
+    left: ${props => props.isMobile && '72% !important'};
   }
 `
 
