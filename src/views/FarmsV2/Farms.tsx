@@ -2,6 +2,7 @@ import React, { useEffect, useState, useMemo } from 'react'
 import { useDispatch } from 'react-redux'
 import { Flex, Text, Toggle, Input, useMatchBreakpoints, ButtonMenu, ButtonMenuItem } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
+import ReactTooltip from 'react-tooltip'
 import styled from 'styled-components'
 import Page from 'components/layout/Page'
 import Select from 'components/Select/Select'
@@ -226,15 +227,35 @@ const Farms: React.FC = () => {
     </Flex>
   )
 
+  const getAPRTooltip = () => {
+    return `
+      <div style="display: flex; width: 100%; align-items: center;">
+        <p>APY values represent yield if one manually compounds the rewards every single day. APR refers to profit without any compounding.</p>
+      </div>
+    `
+  }
   const renderActiveFilter = (
-    <Flex margin={isMobile ? '8px 0' : '8px 16px 8px 0'} justifyContent="center" alignItems="center">
-      <TabWrapper>
-        <ButtonMenu activeIndex={isIglooAprMode ? 1 : 0} onItemClick={handleSwitchTab} scale="sm">
-          <OptionItem active={!isIglooAprMode}>APY</OptionItem>
-          <OptionItem active={isIglooAprMode}>APR</OptionItem>
-        </ButtonMenu>
-      </TabWrapper>
-    </Flex>
+    <>
+      <Flex margin={isMobile ? '8px 0' : '8px 16px 8px 0'} justifyContent="center" alignItems="center">
+        <CustomToolTipOrigin data-for='apr-tooltip' data-tip={getAPRTooltip()}>
+          <TabWrapper>
+            <ButtonMenu activeIndex={isIglooAprMode ? 1 : 0} onItemClick={handleSwitchTab} scale="sm">
+              <OptionItem active={!isIglooAprMode}>APY</OptionItem>
+              <OptionItem active={isIglooAprMode}>APR</OptionItem>
+            </ButtonMenu>
+          </TabWrapper>
+        </CustomToolTipOrigin> 
+        <CustomAprToolTip
+          id='apr-tooltip'
+          wrapper="div"
+          delayHide={0}
+          effect="solid"
+          multiline
+          place="top"
+          html
+        />
+      </Flex>
+    </>
   )
 
   const renderSearchAndSortFilter = (
@@ -489,6 +510,46 @@ const ToggleWrapper = styled.div<{ checked?: boolean }>`
 // content
 const IgloosContentContainer = styled.div`
   position: relative;
+`
+
+// tooltip
+const CustomToolTipOrigin = styled.div``
+
+const CustomAprToolTip = styled(ReactTooltip)`
+  width: 100% !important;
+  max-width: 310px !important;
+  background: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#322C59!important')};
+  box-shadow: ${(props) => `${props.theme.card.boxShadow}!important`};
+  color: ${({ theme }) => (theme.isDark ? '#322C59!important' : '#ffffff!important')};
+  opacity: 1 !important;
+  padding: 0px 16px !important;
+  font-size: 16px !important;
+  border: 2px solid #fff !important;
+  border-radius: 16px !important;
+  margin-top: 0px !important;
+  > div {
+    width: 100%;
+    min-height: 108px;
+    white-space: pre-wrap !important;
+  }
+  p {
+    margin-bottom: -20px !important;
+    line-height: 1.3;
+    &:first-child {
+      margin-top: -20px !important;
+    }
+    &:last-child {
+      margin-bottom: -20px !important;
+    }
+  }
+  &:before {
+    border-top-color: #ffffff !important;
+    border-bottom-color: #ffffff !important;
+  }
+  &:after {
+    border-top-color: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#322C59')};
+    border-bottom-color: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#322C59')};
+  }
 `
 
 export default Farms
