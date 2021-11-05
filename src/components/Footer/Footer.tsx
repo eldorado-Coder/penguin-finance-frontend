@@ -16,8 +16,6 @@ const Footer: React.FC<FooterProps> = () => {
   return (
     <>
       <ResetCSS />
-      {/* {console.log('test', isLg)}
-      {console.log('QueryTest', is2k)} */}
       <FooterWrapper>
         <FooterBody isStacked={isStacked}>
           <Column isStacked={isStacked} maxWidth={is2k ? '280px' : '260px'}>
