@@ -4,7 +4,6 @@ const FlexLayout = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* flex-wrap: wrap;
   & > * {
     margin: 0 8px;
     margin-bottom: 32px;
