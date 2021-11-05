@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
 import v2FarmsConfig from 'config/constants/v2Farms'
+import { readFromCache, writeToCache } from 'utils/cache'
 import { fetchMasterChefGlobalData, fetchFarms } from './fetchFarms'
 import {
   // fetchFarmUserEarnings,
@@ -11,7 +12,7 @@ import {
 } from './fetchFarmUser'
 import { V2FarmsState, V2Farm } from '../types'
 
-const initialState: V2FarmsState = { pefiPerSecond: 0, data: [...v2FarmsConfig] }
+const initialState: V2FarmsState = { pefiPerSecond: 0, data: readFromCache('v2farms') ? [...readFromCache('v2farms')] : [...v2FarmsConfig] }
 
 export const farmsSlice = createSlice({
   name: 'V2Farms',
@@ -22,17 +23,23 @@ export const farmsSlice = createSlice({
     },
     setFarmsPublicData: (state, action) => {
       const liveFarmsData: V2Farm[] = action.payload
-      state.data = state.data.map((farm) => {
+      const newFarmsData = state.data.map((farm) => {
         const liveFarmData = liveFarmsData.find((f) => f.pid === farm.pid && f.type === farm.type)
         return { ...farm, ...liveFarmData }
-      })
+      });
+      state.data = [...newFarmsData];
+      writeToCache('v2farms', newFarmsData);
     },
     setFarmUserData: (state, action) => {
       const { arrayOfUserDataObjects } = action.payload
+      const newFarmsData = [...state.data];
+      
       arrayOfUserDataObjects.forEach((userDataEl) => {
         const { index } = userDataEl
-        state.data[index] = { ...state.data[index], userData: userDataEl }
+        newFarmsData[index] = { ...newFarmsData[index], userData: userDataEl }
       })
+      state.data = [...newFarmsData];
+      writeToCache('v2farms', newFarmsData);
     },
   },
 })
