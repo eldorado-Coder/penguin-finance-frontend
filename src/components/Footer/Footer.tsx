@@ -1,5 +1,6 @@
 import React from 'react'
 import styled, { useTheme } from 'styled-components'
+import useMediaQuery from 'hooks/useMediaQuery'
 import { Text, ResetCSS, Link, useMatchBreakpoints, Image } from 'penguinfinance-uikit2'
 import { FooterProps, FooterBodyProps, FlexProps } from './types'
 import { FooterLinks, FooterIconLinks, FooterIconsSponsor } from './config'
@@ -9,18 +10,22 @@ const Footer: React.FC<FooterProps> = () => {
   const { isLg, isXl } = useMatchBreakpoints()
   const isStacked = !isLg && !isXl
   const isMobile = !isXl
+  // custom hook for unhandled Breakpoint test
+  const is2k = useMediaQuery('(min-width: 2000px)')
 
   return (
     <>
       <ResetCSS />
+      {/* {console.log('test', isLg)}
+      {console.log('QueryTest', is2k)} */}
       <FooterWrapper>
         <FooterBody isStacked={isStacked}>
-          <Column isStacked={isStacked} maxWidth="260px">
-            <Div width="100%" height="35px" mb="5px" mt="-8px">
+          <Column isStacked={isStacked} maxWidth={is2k ? '280px' : '260px'}>
+            <Div width="100%" height={is2k ? '45px' : '35px'} mb="5px" mt="-8px">
               <Image
                 src={theme.isDark ? 'images/footer/logoDark.svg' : 'images/footer/logoLight.svg'}
                 width={400}
-                height={35}
+                height={is2k ? 45 : 35}
               />
             </Div>
             <FooterParagraph as="p" textAlign={isStacked ? 'center' : 'left'} fontSize=".8rem" color="#B7B5DE" mb="6px">
@@ -28,11 +33,11 @@ const Footer: React.FC<FooterProps> = () => {
               Network.
             </FooterParagraph>
             <Row isStacked={isStacked} alignItems="center">
-              <Div width="16px" height="16px">
+              <Div width={is2k ? '24px' : '16px'} height={is2k ? '24px' : '16px'}>
                 <Image
                   src={theme.isDark ? 'images/footer/shieldDark.svg' : 'images/footer/shieldLight.svg'}
-                  width={20}
-                  height={20}
+                  width={is2k ? 24 : 20}
+                  height={is2k ? 24 : 20}
                 />
               </Div>
               <TitleText ml="10px" color="#fff">
@@ -60,9 +65,13 @@ const Footer: React.FC<FooterProps> = () => {
             <Row isStacked={isStacked} justifyContent="space-around" alignItems="center" width="200px">
               {FooterIconLinks[0].map((item) => {
                 return (
-                  <Div width="24px" height="24px">
+                  <Div width={is2k ? '29px' : '24px'} height={is2k ? '29px' : '24px'}>
                     <a href={item.url} target="_blank" rel="noreferrer">
-                      <Image src={theme.isDark ? item.darkUrl : item.lightUrl} width={24} height={24} />
+                      <Image
+                        src={theme.isDark ? item.darkUrl : item.lightUrl}
+                        width={is2k ? 29 : 24}
+                        height={is2k ? 29 : 24}
+                      />
                     </a>
                   </Div>
                 )
@@ -74,9 +83,9 @@ const Footer: React.FC<FooterProps> = () => {
             <Row isStacked={isStacked} justifyContent="space-around" alignItems="center" width="100%">
               {FooterIconsSponsor.map((item) => {
                 return (
-                  <Div width="30px" height="30px">
+                  <Div width={is2k ? '35px' : '30px'} height={is2k ? '35px' : '30px'}>
                     <a href={item.url} target="_blank" rel="noreferrer">
-                      <Image src={item.lightUrl} width={30} height={30} />
+                      <Image src={item.lightUrl} width={is2k ? 35 : 30} height={is2k ? 35 : 30} />
                     </a>
                   </Div>
                 )
@@ -116,6 +125,9 @@ const FooterBody = styled.div<FooterBodyProps>`
   align-items: ${({ isStacked }) => (isStacked ? 'center' : 'stretch')};
   padding: 3rem 2rem 3rem 2rem;
   margin: auto;
+  @media (min-width: 2000px) {
+    max-width: 1700px;
+  }
 `
 
 const FooterWrapper = styled.div`
@@ -137,6 +149,9 @@ const CustomLink = styled(Link).attrs((props) => ({
   @media (min-width: 968px) {
     font-size: 18px;
   }
+  @media (min-width: 2000px) {
+    font-size: 23px;
+  }
 `
 
 const TitleText = styled(Text)`
@@ -147,6 +162,9 @@ const TitleText = styled(Text)`
   @media (min-width: 968px) {
     font-size: 22px;
   }
+  @media (min-width: 2000px) {
+    font-size: 27px;
+  }
 `
 
 const FooterParagraph = styled(Text)`
@@ -155,6 +173,9 @@ const FooterParagraph = styled(Text)`
 
   @media (min-width: 968px) {
     font-size: 18px;
+  }
+  @media (min-width: 2000px) {
+    font-size: 20px;
   }
 `
 

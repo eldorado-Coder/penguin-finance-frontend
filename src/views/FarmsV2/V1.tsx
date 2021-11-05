@@ -27,6 +27,29 @@ interface V1FarmProps {
   sortType: string
 }
 
+const CustomLayout = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 32px;
+  /* background-color: green; */
+  & > * {
+    margin: 0 8px;
+    margin-bottom: 32px;
+    width: 100%;
+    @media (min-width: 640px) {
+      min-width: 320px;
+      max-width: 50%;
+      width: unset;
+    }
+    @media (min-width: 768px) {
+      min-width: 320px;
+      max-width: 31.5%;
+      width: 100%;
+    }
+  }
+`
+
 const V1Farms: React.FC<V1FarmProps> = ({ searchTerm, showStakedOnly, activeProjects, sortType }) => {
   const pefiPerBlock = usePefiPerBlock()
   const farmsLP = useFarms()
@@ -145,19 +168,21 @@ const V1Farms: React.FC<V1FarmProps> = ({ searchTerm, showStakedOnly, activeProj
     <FarmsContainer>
       <FlexLayout>
         <MigrationCard />
-        {farms.map((farm) => {
-          return (
-            <FarmCard
-              key={farm.pid}
-              farm={farm}
-              removed={false}
-              avaxPrice={avaxPrice}
-              pefiPrice={pefiPrice}
-              ethPrice={ethPriceUsd}
-              account={account}
-            />
-          )
-        })}
+        <CustomLayout>
+          {farms.map((farm) => {
+            return (
+              <FarmCard
+                key={farm.pid}
+                farm={farm}
+                removed={false}
+                avaxPrice={avaxPrice}
+                pefiPrice={pefiPrice}
+                ethPrice={ethPriceUsd}
+                account={account}
+              />
+            )
+          })}
+        </CustomLayout>
       </FlexLayout>
     </FarmsContainer>
   )
