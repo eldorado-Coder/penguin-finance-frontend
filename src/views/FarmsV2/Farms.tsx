@@ -133,11 +133,15 @@ const Farms: React.FC = () => {
       stakingApr = avaxStakingApr + qiStakingApr
     }
 
+    const totalApr = stakingApr + swapFeeApr + pefiApr + minwApr + joeRushRewardApr
+
+    // apy calculation
     const pefiApy = getApy(pefiApr / DAYS_PER_YEAR)
     const stakingApy = getApy(stakingApr / DAYS_PER_YEAR)
     const swapFeeApy = getApy(swapFeeApr / DAYS_PER_YEAR)
     const minwApy = getApy(minwApr / DAYS_PER_YEAR)
     const joeRushRewardApy = getApy(joeRushRewardApr / DAYS_PER_YEAR)
+    const totalApy = getApy(totalApr / DAYS_PER_YEAR)
 
     return {
       ...farm,
@@ -152,8 +156,8 @@ const Farms: React.FC = () => {
       minwApy,
       joeRushRewardApr,
       joeRushRewardApy,
-      apr: stakingApr + swapFeeApr + pefiApr + minwApr + joeRushRewardApr,
-      apy: stakingApy + swapFeeApy + pefiApy + minwApy + joeRushRewardApy,
+      apr: totalApr,
+      apy: totalApy,
     }
   })
 
