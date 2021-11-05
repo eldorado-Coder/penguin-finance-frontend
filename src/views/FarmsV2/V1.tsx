@@ -32,7 +32,6 @@ const CustomLayout = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   margin-top: 32px;
-  /* background-color: green; */
   & > * {
     margin: 0 8px;
     margin-bottom: 32px;
