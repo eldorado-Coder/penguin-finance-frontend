@@ -50,7 +50,7 @@ export const getPairSwapDailyReward = async (address: string, type: string) => {
 }
 
 export const getPairInfo = async (address: string, type: string) => {
-  let pairInfo = { reserveUSD: 1 }
+  let pairInfo = { reserveUSD: 1, totalSupply: 1 }
   if (type === 'Pangolin') {
     pairInfo = await getPangolinPair(address)
   }

@@ -11,7 +11,9 @@ import useI18n from 'hooks/useI18n'
 import UnlockButton from 'components/UnlockButton'
 import { useApprove } from 'hooks/useApprove'
 import useWeb3 from 'hooks/useWeb3'
-import { getBalanceNumber } from 'utils/formatBalance';
+import { getBalanceNumber, getFullDisplayBalance } from 'utils/formatBalance';
+import { useHarvest } from 'hooks/useHarvest'
+import useUnstake from 'hooks/useUnstake'
 import StakeAction from './StakeAction'
 import HarvestAction from './HarvestAction'
 
@@ -39,6 +41,9 @@ const CardActions: React.FC<FarmCardActionsProps> = ({ farm, account, addLiquidi
   const { pid, lpAddresses, type } = useFarmFromSymbol(farm.lpSymbol)
   const { allowance, tokenBalance, stakedBalance, earnings } = useFarmUser(pid, type)
   const web3 = useWeb3()
+  const { onReward } = useHarvest(pid)
+  const { onUnstake } = useUnstake(pid)
+  const [pendingTx, setPendingTx] = useState(false);
   const lpAddress = getAddress(lpAddresses)
   const lpName = farm.lpSymbol.toUpperCase()
   const isApproved = account && allowance && allowance.isGreaterThan(0)
@@ -59,11 +64,23 @@ const CardActions: React.FC<FarmCardActionsProps> = ({ farm, account, addLiquidi
     }
   }, [onApprove])
 
-  const getMigrationTooltip = () => {
-    return `
-      <p>The Igloo Migration process will start on September 9, 18:00 UTC. Step-by-step instructions will be provided and withdrawal fees will be set to zero. We highly recommend not migrating until then, but if you’d like to withdraw anyways, simply contact one of our team members on Telegram or Discord.</p>
-    `
-  }
+  // const getMigrationTooltip = () => {
+  //   return `
+  //     <p>The Igloo Migration process will start on September 9, 18:00 UTC. Step-by-step instructions will be provided and withdrawal fees will be set to zero. We highly recommend not migrating until then, but if you’d like to withdraw anyways, simply contact one of our team members on Telegram or Discord.</p>
+  //   `
+  // }
+
+  const handleWithdraw = async () => {
+    const fullBalance = getFullDisplayBalance(stakedBalance);
+    setPendingTx(true);
+    try {
+      await onUnstake(fullBalance);
+      await onReward();
+      setPendingTx(false);
+    } catch (error) {
+      setPendingTx(false);
+    }
+  };
 
   const renderApprovalOrStakeButton = () => {
     // return  <StakeAction
@@ -94,12 +111,12 @@ const CardActions: React.FC<FarmCardActionsProps> = ({ farm, account, addLiquidi
         {isApproved && 
           <Heading color={rawStakedBalance === 0 ? 'textDisabled' : 'text'}>{displayBalance}</Heading>
         }
-        <div data-for='migration-tooltip' data-tip={getMigrationTooltip()}>
-          <Button mt="8px" scale="md" disabled>
-            Migrate
+        {/* <div data-for='migration-tooltip' data-tip={getMigrationTooltip()}> */}
+          <Button mt="8px" scale="md" disabled={rawStakedBalance === 0 || pendingTx} onClick={handleWithdraw}>
+            Withdraw
           </Button>
-        </div>
-        {account && (
+        {/* </div> */}
+        {/* {account && (
           <CustomToolTip
             id='migration-tooltip'
             wrapper="div"
@@ -109,7 +126,7 @@ const CardActions: React.FC<FarmCardActionsProps> = ({ farm, account, addLiquidi
             place="bottom"
             html
           />
-        )}
+        )} */}
       </Flex>
     );
   }

@@ -46,13 +46,12 @@ const Footer: React.FC<FooterProps> = () => {
             </Row>
           </Column>
           {FooterLinks.map((data) => (
-            <Column isStacked={isStacked}>
+            <Column key={data.title} isStacked={isStacked}>
               <TitleText color="#fff" mb="6px" mt={isStacked && '2.5rem'}>
                 {data.title}
               </TitleText>
               {data.links.map((link) => (
-                //  we have link.url too "future use"
-                <CustomLink href={link.url} target="_blank" rel="noreferrer">
+                <CustomLink key={`${data.title}-${link.key}`} href={link.url} target="_blank" rel="noreferrer">
                   {link.title}
                 </CustomLink>
               ))}
@@ -65,7 +64,7 @@ const Footer: React.FC<FooterProps> = () => {
             <Row isStacked={isStacked} justifyContent="space-around" alignItems="center" width="200px">
               {FooterIconLinks[0].map((item) => {
                 return (
-                  <Div width={is2k ? '29px' : '24px'} height={is2k ? '29px' : '24px'}>
+                  <Div key={`social-${item.key}`} width={is2k ? '29px' : '24px'} height={is2k ? '29px' : '24px'}>
                     <a href={item.url} target="_blank" rel="noreferrer">
                       <Image
                         src={theme.isDark ? item.darkUrl : item.lightUrl}
@@ -83,7 +82,7 @@ const Footer: React.FC<FooterProps> = () => {
             <Row isStacked={isStacked} justifyContent="space-around" alignItems="center" width="100%">
               {FooterIconsSponsor.map((item) => {
                 return (
-                  <Div width={is2k ? '35px' : '30px'} height={is2k ? '35px' : '30px'}>
+                  <Div key={`sponsor-${item.key}`} width={is2k ? '35px' : '30px'} height={is2k ? '35px' : '30px'}>
                     <a href={item.url} target="_blank" rel="noreferrer">
                       <Image src={item.lightUrl} width={is2k ? 35 : 30} height={is2k ? 35 : 30} />
                     </a>
