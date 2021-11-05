@@ -31,5 +31,9 @@ const ArrowIcon = styled(ChevronDownIcon)<{ toggled: boolean }>`
   transform: ${({ toggled }) => (toggled ? 'rotate(180deg)' : 'rotate(0)')};
   fill: ${({ theme }) => theme.colors.red};
   height: 20px;
+  @media (min-width: 2000px) {
+    height: 30px;
+    width: 30px;
+  }
 `
 export default Details

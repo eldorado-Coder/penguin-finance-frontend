@@ -2,8 +2,8 @@ import styled from 'styled-components'
 
 const FlexLayout = styled.div`
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
   & > * {
     margin: 0 8px;
     margin-bottom: 32px;
@@ -19,7 +19,7 @@ const FlexLayout = styled.div`
       max-width: 31.5%;
       width: 100%;
     }
-  }
+  } */
 `
 
 export default FlexLayout

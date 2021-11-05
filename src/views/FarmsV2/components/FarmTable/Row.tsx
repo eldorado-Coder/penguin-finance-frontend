@@ -414,6 +414,10 @@ const TokensWrapper = styled.div`
 const PendingTokenLogo = styled.img`
   width: 24px;
   height: 24px;
+  @media (min-width: 2000px) {
+    width: 34px;
+    height: 34px;
+  }
   border-radius: 50%;
   margin: 2px 2px;
 `

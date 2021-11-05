@@ -168,10 +168,16 @@ const StyledUnlockButton = styled(UnlockButton)`
   height: 40px;
   font-weight: 400;
   width: 100%;
+  @media (min-width: 2000px) {
+    font-size: 20px;
+  }
 `
 
 const LPTokenBalance = styled(Text)`
   color: ${({ theme }) => (theme.isDark ? '#bba6dd' : '#b2b2ce')};
+  @media (min-width: 2000px) {
+    font-size: 20px;
+  }
 `
 
 const StyledLinkExternal = styled(LinkExternal)`
@@ -182,10 +188,16 @@ const StyledLinkExternal = styled(LinkExternal)`
   align-items: center;
   font-size: 12px;
   margin-top: 2px;
+  @media (min-width: 2000px) {
+    font-size: 17px;
+  }
 
   svg {
     padding-left: 4px;
     height: 14px;
+    @media (min-width: 2000px) {
+      height: 19px;
+    }
     width: auto;
     fill: ${({ theme }) => (theme.isDark ? '#bba6dd' : theme.colors.primary)};
   }
