@@ -44,7 +44,7 @@ const StyledArtworkCardBg = styled.div`
   height: 100%;
   background-size: cover;
   background-position: center center;
-  background-image: url('/images/home/minw.png');
+  background-image: url('/images/home/everest_dao.png');
   cursor: pointer;
 `
 
