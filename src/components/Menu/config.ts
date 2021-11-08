@@ -12,7 +12,7 @@ export const config: MenuEntry[] = [
     items: [
       {
         label: 'Trader Joe',
-        href: 'https://www.traderjoseph.com/#/trade?outputCurrency=0xe896CDeaAC9615145c0cA09C8Cd5C25bced6384c',
+        href: 'https://traderjoexyz.com/#/trade?outputCurrency=0xe896CDeaAC9615145c0cA09C8Cd5C25bced6384c',
       },
       {
         label: 'Pangolin Exchange',
