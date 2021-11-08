@@ -353,38 +353,38 @@ const v2Farms: V2FarmConfig[] = [
     name: 'pendingPEFI',
     displayedDecimals: 2,
   },
-  // {
-  //   pid: 30,
-  //   lpSymbol: 'AVAX-SHERPA LP',
-  //   lpAddresses: {
-  //     43113: '',
-  //     43114: '0xd27688e195b5495a0ea29bb6e9248e535a58511e',
-  //   },
-  //   strategyAddresses: {
-  //     43113: '',
-  //     43114: '0xcc9e587f398f8e1b6a82cfb47fe35b1ffc572f35',
-  //   },
-  //   rewarderAddresses: {
-  //     43113: '',
-  //     43114: '0x0000000000000000000000000000000000000000',
-  //   },
-  //   tokenSymbol: 'SHERPA',
-  //   tokenAddresses: {
-  //     43113: '',
-  //     43114: '0xa5E59761eBD4436fa4d20E1A27cBa29FB2471Fc6',
-  //   },
-  //   pangolinRewardPoolAddresses: {
-  //     43113: '',
-  //     43114: '0x08B9A023e34Bad6Db868B699fa642Bf5f12Ebe76',
-  //   },
-  //   quoteTokenSymbol: QuoteToken.AVAX,
-  //   quoteTokenAddresses: contracts.wavax,
-  //   withdrawalFee: '0',
-  //   hardApy: '896.65%',
-  //   type: 'Pangolin',
-  //   name: 'pendingPEFI',
-  //   displayedDecimals: 5,
-  // },
+  {
+    pid: 30,
+    lpSymbol: 'AVAX-SHERPA LP',
+    lpAddresses: {
+      43113: '',
+      43114: '0xd27688e195b5495a0ea29bb6e9248e535a58511e',
+    },
+    strategyAddresses: {
+      43113: '',
+      43114: '0xcc9e587f398f8e1b6a82cfb47fe35b1ffc572f35',
+    },
+    rewarderAddresses: {
+      43113: '',
+      43114: '0x0000000000000000000000000000000000000000',
+    },
+    tokenSymbol: 'SHERPA',
+    tokenAddresses: {
+      43113: '',
+      43114: '0xa5E59761eBD4436fa4d20E1A27cBa29FB2471Fc6',
+    },
+    pangolinRewardPoolAddresses: {
+      43113: '',
+      43114: '0x08B9A023e34Bad6Db868B699fa642Bf5f12Ebe76',
+    },
+    quoteTokenSymbol: QuoteToken.AVAX,
+    quoteTokenAddresses: contracts.wavax,
+    withdrawalFee: '0',
+    hardApy: '896.65%',
+    type: 'Pangolin',
+    name: 'pendingPEFI',
+    displayedDecimals: 5,
+  },
   // Joe pools
   {
     pid: 4,
