@@ -25,7 +25,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
   const [actionPanelExpanded, setActionPanelExpanded] = useState(false)
 
   const { farm, index } = props
-  const { isIglooApyMode } = useUserSetting()
+  const { isIglooAprMode } = useUserSetting()
   const { stakedBalance } = useV2FarmUser(farm.pid, farm.type)
   const shouldRenderChild = useDelayedUnmount(actionPanelExpanded, 300)
   const { isXl } = useMatchBreakpoints()
@@ -104,7 +104,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
     const joeRushRewardApy = 100 * (farm.joeRushRewardApy || 0)
     const totalApy = 100 * (farm.apy || 0)
 
-    if (!isIglooApyMode) {
+    if (isIglooAprMode) {
       return `
         <div style="display: flex; width: 100%; align-items: center;">
           <div style="width: 60%; text-align: center;">
@@ -211,7 +211,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
                 return (
                   <td className="apr" key={key}>
                     <CellInner>
-                      <CellLayout label={isIglooApyMode ? 'APY' : 'APR'}>
+                      <CellLayout label={!isIglooAprMode ? 'APY' : 'APR'}>
                         <CustomToolTipOrigin data-for={`apr-tooltip-${index}`} data-tip={getAPRTooltip()}>
                           <AprBalanceWrapper>
                             <Balance
@@ -220,7 +220,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
                               color={isDark ? '#C74F51' : 'red'}
                               suffix="%"
                               decimals={2}
-                              value={isIglooApyMode ? Number(farmApy) : Number(farmApr)}
+                              value={!isIglooAprMode ? Number(farmApy) : Number(farmApr)}
                             />
                           </AprBalanceWrapper>
                         </CustomToolTipOrigin>
@@ -305,8 +305,8 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
                 </CellLayout>
               </EarnedMobileCell>
               <AprMobileCell>
-                <CellLayout label={!isIglooApyMode ? 'APR' : 'APY'}>
-                  <Amount>{`${!isIglooApyMode ? farmApr || '--' : farmApy || '--'}%`}</Amount>
+                <CellLayout label={isIglooAprMode ? 'APR' : 'APY'}>
+                  <Amount>{`${isIglooAprMode ? farmApr || '--' : farmApy || '--'}%`}</Amount>
                 </CellLayout>
               </AprMobileCell>
             </Flex>

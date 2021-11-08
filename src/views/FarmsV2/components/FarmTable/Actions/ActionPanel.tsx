@@ -45,7 +45,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
   const { getTokenLogo } = useAssets()
   const { onHarvest } = useV2Harvest(farm.pid)
   const { account } = useWeb3React()
-  const { isIglooApyMode } = useUserSetting()
+  const { isIglooAprMode } = useUserSetting()
   const v2Pools = useV2Pools(account)
   const v2Nest = v2Pools.length > 0 ? v2Pools[0] : null
 
@@ -150,10 +150,10 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
               fontSize="14px"
               color="textSubtle"
               fontWeight="400"
-              prefix={isIglooApyMode ? 'APY: ' : 'APR: '}
+              prefix={!isIglooAprMode ? 'APY: ' : 'APR: '}
               suffix="%"
               decimals={2}
-              value={isIglooApyMode ? Number(farmApy) : Number(farmApr)}
+              value={!isIglooAprMode ? Number(farmApy) : Number(farmApr)}
             />
             <Balance
               fontSize="14px"
