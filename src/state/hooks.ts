@@ -153,14 +153,14 @@ export const useLPFromSymbol = (lpSymbol: string): Lp => {
 }
 
 export const useFarmUser = (pid, type) => {
-  const { account } = useWeb3React();
+  const { account } = useWeb3React()
   const farm = useFarmFromPid(pid, type)
 
   return {
-    allowance: (farm.userData && account) ? new BigNumber(farm.userData.allowance) : new BigNumber(0),
-    tokenBalance: (farm.userData && account) ? new BigNumber(farm.userData.tokenBalance) : new BigNumber(0),
-    stakedBalance: (farm.userData && account) ? new BigNumber(farm.userData.stakedBalance) : new BigNumber(0),
-    earnings: (farm.userData && account) ? new BigNumber(farm.userData.earnings) : new BigNumber(0),
+    allowance: farm.userData && account ? new BigNumber(farm.userData.allowance) : new BigNumber(0),
+    tokenBalance: farm.userData && account ? new BigNumber(farm.userData.tokenBalance) : new BigNumber(0),
+    stakedBalance: farm.userData && account ? new BigNumber(farm.userData.stakedBalance) : new BigNumber(0),
+    earnings: farm.userData && account ? new BigNumber(farm.userData.earnings) : new BigNumber(0),
   }
 }
 
@@ -612,10 +612,10 @@ export const useV2FarmUser = (pid, type) => {
   const farm = useV2FarmFromPid(pid, type)
 
   return {
-    allowance: (farm.userData && account) ? new BigNumber(farm.userData.allowance) : new BigNumber(0),
-    tokenBalance: (farm.userData && account) ? new BigNumber(farm.userData.tokenBalance) : new BigNumber(0),
-    stakedBalance: (farm.userData && account) ? new BigNumber(farm.userData.stakedBalance) : new BigNumber(0),
-    earnings: (farm.userData && account) ? new BigNumber(farm.userData.earnings) : new BigNumber(0),
+    allowance: farm.userData && account ? new BigNumber(farm.userData.allowance) : new BigNumber(0),
+    tokenBalance: farm.userData && account ? new BigNumber(farm.userData.tokenBalance) : new BigNumber(0),
+    stakedBalance: farm.userData && account ? new BigNumber(farm.userData.stakedBalance) : new BigNumber(0),
+    earnings: farm.userData && account ? new BigNumber(farm.userData.earnings) : new BigNumber(0),
   }
 }
 

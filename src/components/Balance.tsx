@@ -72,7 +72,13 @@ const Balance: React.FC<BalanceProps> = ({
       ) : (
         <>
           <BalanceWrapper isFlexWrap={!!isFlexWrap}>
-            <CountUp start={previousValue.current} end={value} decimals={decimals} duration={1} separator="," />
+            <CountUp
+              start={Number(previousValue.current)}
+              end={Number(value)}
+              decimals={decimals}
+              duration={1}
+              separator=","
+            />
           </BalanceWrapper>
           {unit && <span>{` ${unit}`}</span>}
         </>

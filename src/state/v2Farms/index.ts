@@ -12,7 +12,10 @@ import {
 } from './fetchFarmUser'
 import { V2FarmsState, V2Farm } from '../types'
 
-const initialState: V2FarmsState = { pefiPerSecond: 0, data: readFromCache('v2farms') ? [...readFromCache('v2farms')] : [...v2FarmsConfig] }
+const initialState: V2FarmsState = {
+  pefiPerSecond: 0,
+  data: readFromCache('v2farms') ? [...readFromCache('v2farms')] : [...v2FarmsConfig],
+}
 
 export const farmsSlice = createSlice({
   name: 'V2Farms',
@@ -23,23 +26,27 @@ export const farmsSlice = createSlice({
     },
     setFarmsPublicData: (state, action) => {
       const liveFarmsData: V2Farm[] = action.payload
-      const newFarmsData = state.data.map((farm) => {
-        const liveFarmData = liveFarmsData.find((f) => f.pid === farm.pid && f.type === farm.type)
-        return { ...farm, ...liveFarmData }
-      });
-      state.data = [...newFarmsData];
-      writeToCache('v2farms', newFarmsData);
+      // const newFarmsData = state.data.map((farm) => {
+      //   const liveFarmData = liveFarmsData.find((f) => f.pid === farm.pid && f.type === farm.type)
+      //   return { ...farm, ...liveFarmData }
+      // })
+      const newFarmsData = liveFarmsData.map((farm) => {
+        const oldData = state.data.find((f) => f.pid === farm.pid && f.type === farm.type)
+        return { ...farm, ...oldData }
+      })
+      state.data = [...newFarmsData]
+      writeToCache('v2farms', newFarmsData)
     },
     setFarmUserData: (state, action) => {
       const { arrayOfUserDataObjects } = action.payload
-      const newFarmsData = [...state.data];
-      
+      const newFarmsData = [...state.data]
+
       arrayOfUserDataObjects.forEach((userDataEl) => {
         const { index } = userDataEl
         newFarmsData[index] = { ...newFarmsData[index], userData: userDataEl }
       })
-      state.data = [...newFarmsData];
-      writeToCache('v2farms', newFarmsData);
+      state.data = [...newFarmsData]
+      writeToCache('v2farms', newFarmsData)
     },
   },
 })
