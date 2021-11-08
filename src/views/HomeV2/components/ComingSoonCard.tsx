@@ -20,6 +20,13 @@ const ComingSoonCard: React.FC = () => {
         </StyledHeading>
         <Row>
           <StyledText color="white">
+            <a href="/" target="_blank" rel="noreferrer">
+              Penguin Launchpad Rebirth
+            </a>
+          </StyledText>
+        </Row>
+        <Row>
+          <StyledText color="white">
             <a href="https://twitter.com/CryptoPuffies/status/1438176283935092736" target="_blank" rel="noreferrer">
               CryptoPuffies
             </a>
@@ -33,7 +40,7 @@ const ComingSoonCard: React.FC = () => {
           </StyledText>
         </Row>
         <Row>
-          <StyledText color="white">
+          {/* <StyledText color="white">
             <a
               href="https://penguin-finance.medium.com/make-igloos-not-war-new-joe-png-yield-farming-strategies-b70fac00807f"
               target="_blank"
@@ -41,7 +48,7 @@ const ComingSoonCard: React.FC = () => {
             >
               Make Igloos, Not War
             </a>
-          </StyledText>
+          </StyledText> */}
         </Row>
         <Row>
           <StyledText color="white">
