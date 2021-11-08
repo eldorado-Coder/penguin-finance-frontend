@@ -45,7 +45,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
   const { getTokenLogo } = useAssets()
   const { onHarvest } = useV2Harvest(farm.pid)
   const { account } = useWeb3React()
-  const { isIglooApyMode } = useUserSetting()
+  const { isIglooAprMode } = useUserSetting()
   const v2Pools = useV2Pools(account)
   const v2Nest = v2Pools.length > 0 ? v2Pools[0] : null
 
@@ -150,10 +150,10 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
               fontSize="14px"
               color="textSubtle"
               fontWeight="400"
-              prefix={isIglooApyMode ? 'APY: ' : 'APR: '}
+              prefix={isIglooAprMode ? 'APR: ' : 'APY: '}
               suffix="%"
               decimals={2}
-              value={isIglooApyMode ? Number(farmApy) : Number(farmApr)}
+              value={isIglooAprMode ? Number(farmApr) : Number(farmApy)}
             />
             <Balance
               fontSize="14px"
@@ -178,7 +178,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
           />
         </EarningsWrapper>
       </EarningsCard>
-      <PendingCardWrapper className="pending-panel" flexDirection="column" mb="16px" justifyContent="space-between">
+      <Flex className="pending-panel" flexDirection="column" mb="16px">
         <PendingRewardsCard padding="10px 16px">
           <PendingRewardsContent>
             <Flex alignItems="center" justifyContent="space-around" mr="16px">
@@ -232,7 +232,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
             maxAllocation={maxAutoNestAllocation}
           />
         </ActionCard>
-      </PendingCardWrapper>
+      </Flex>
     </Container>
   )
 }
@@ -283,9 +283,6 @@ const ActionCard = styled(Card)<{ minWidth?: number }>`
   overflow: unset;
   min-width: ${({ minWidth }) => minWidth && `${minWidth}px`};
   box-shadow: 0px 2px 8px rgb(0 0 0 / 16%);
-  @media (min-width: 2000px) {
-    min-width: 31%;
-  }
 `
 
 const EarningsCard = styled(ActionCard)`
@@ -310,9 +307,6 @@ const EarningsCard = styled(ActionCard)`
     img {
       display: block;
     }
-  }
-  @media (min-width: 2000px) {
-    min-width: 31%;
   }
 `
 
@@ -370,9 +364,6 @@ const EarningsWrapper = styled(Flex)`
 
 const EarningsContainer = styled.div`
   min-width: 160px;
-  @media (min-width: 2000px) {
-    min-width: 85%;
-  }
 `
 
 const Divider = styled.div`
@@ -407,12 +398,6 @@ const BalanceWrapper = styled.div`
 
 const Title = styled(Text)`
   color: ${({ theme }) => theme.colors.red};
-`
-
-const PendingCardWrapper = styled(Flex)`
-  @media (min-width: 2000px) {
-    min-width: 35%;
-  }
 `
 
 export default ActionPanel

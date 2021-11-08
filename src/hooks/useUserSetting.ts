@@ -11,8 +11,8 @@ const useUserSetting = () => {
     updateRefreshRate,
     visiblePlayer,
     toggleVisiblePlayer,
-    isIglooApyMode,
-    toggleIglooApyMode,
+    isIglooAprMode,
+    toggleIglooAprMode,
   } = useContext(SettingContext)
   return {
     isMusic,
@@ -23,8 +23,8 @@ const useUserSetting = () => {
     updateRefreshRate,
     visiblePlayer,
     toggleVisiblePlayer,
-    isIglooApyMode,
-    toggleIglooApyMode,
+    isIglooAprMode,
+    toggleIglooAprMode,
   }
 }
 
