@@ -47,7 +47,7 @@ const Farms: React.FC = () => {
   const dispatch = useDispatch()
   const { fastRefresh } = useRefresh()
   const { account } = useWeb3React()
-  const { isIglooAprMode, toggleIglooAprMode } = useUserSetting()
+  const { isIglooApyMode, toggleIglooApyMode } = useUserSetting()
   const v2Farms = useV2Farms()
   const lydiaFarms = useLydiaFarms()
   const joeV3Farms = useJoeV3Farms()
@@ -194,7 +194,7 @@ const Farms: React.FC = () => {
   }, [searchTerm, activeFarmsWithApy, showStakedOnly, account, activeProjects, sortType])
 
   const handleSwitchTab = (tab) => {
-    toggleIglooAprMode(tab === 1)
+    toggleIglooApyMode(tab === 0)
   }
 
   const handleChangeStakedOnly = (event) => {
@@ -243,9 +243,9 @@ const Farms: React.FC = () => {
       <Flex margin={isMobile ? '8px 0' : '8px 16px 8px 0'} justifyContent="center" alignItems="center">
         <CustomToolTipOrigin data-for="apr-tooltip" data-tip={getAPRTooltip()}>
           <TabWrapper>
-            <ButtonMenu activeIndex={isIglooAprMode ? 1 : 0} onItemClick={handleSwitchTab} scale="sm">
-              <OptionItem active={!isIglooAprMode}>APY</OptionItem>
-              <OptionItem active={isIglooAprMode}>APR</OptionItem>
+            <ButtonMenu activeIndex={isIglooApyMode ? 0 : 1} onItemClick={handleSwitchTab} scale="sm">
+              <OptionItem active={isIglooApyMode}>APY</OptionItem>
+              <OptionItem active={!isIglooApyMode}>APR</OptionItem>
             </ButtonMenu>
           </TabWrapper>
         </CustomToolTipOrigin>
