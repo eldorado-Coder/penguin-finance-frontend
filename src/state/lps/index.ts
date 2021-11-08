@@ -1,12 +1,11 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
 import lpsConfig from 'config/constants/lps'
-import { readFromCache, writeToCache } from 'utils/cache';
 import fetchLps from './fetchLps'
 import fetchLpUserTokenBalances from './fetchLpsUser'
 import { LpsState, Lp } from '../types'
 
-const initialState: LpsState = { data: readFromCache('lps') ? [...readFromCache('lps')] : [...lpsConfig] }
+const initialState: LpsState = { data: [...lpsConfig] }
 
 export const lpsSlice = createSlice({
   name: 'Lps',
@@ -14,23 +13,17 @@ export const lpsSlice = createSlice({
   reducers: {
     setLpsPublicData: (state, action) => {
       const liveLpsData: Lp[] = action.payload
-      const newLps = state.data.map((lp) => {
+      state.data = state.data.map((lp) => {
         const liveLpData = liveLpsData.find((f) => f.lpSymbol === lp.lpSymbol)
         return { ...lp, ...liveLpData }
       })
-      state.data = [...newLps];
-      writeToCache('lps', newLps);
     },
     setLpUserData: (state, action) => {
       const { arrayOfUserDataObjects } = action.payload
-      const newLps = [...state.data];
-      
       arrayOfUserDataObjects.forEach((userDataEl) => {
         const { index } = userDataEl
-        newLps[index] = { ...newLps[index], userData: userDataEl }
+        state.data[index] = { ...state.data[index], userData: userDataEl }
       })
-      state.data = [...newLps];
-      writeToCache('lps', newLps);
     },
   },
 })

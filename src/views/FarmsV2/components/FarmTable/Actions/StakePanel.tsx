@@ -98,9 +98,6 @@ const OptionItem = styled(ButtonMenuItem)<{ active: boolean }>`
   height: ${({ theme }) => (theme.isDark ? '32px' : '28px')};
   font-weight: 400;
   font-size: 14px;
-  @media (min-width: 2000px) {
-    font-size: 18px;
-  }
 `
 
 export default Staked

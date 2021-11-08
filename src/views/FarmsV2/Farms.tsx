@@ -47,7 +47,7 @@ const Farms: React.FC = () => {
   const dispatch = useDispatch()
   const { fastRefresh } = useRefresh()
   const { account } = useWeb3React()
-  const { isIglooApyMode, toggleIglooApyMode } = useUserSetting()
+  const { isIglooAprMode, toggleIglooAprMode } = useUserSetting()
   const v2Farms = useV2Farms()
   const lydiaFarms = useLydiaFarms()
   const joeV3Farms = useJoeV3Farms()
@@ -194,7 +194,7 @@ const Farms: React.FC = () => {
   }, [searchTerm, activeFarmsWithApy, showStakedOnly, account, activeProjects, sortType])
 
   const handleSwitchTab = (tab) => {
-    toggleIglooApyMode(tab === 0)
+    toggleIglooAprMode(tab === 1)
   }
 
   const handleChangeStakedOnly = (event) => {
@@ -241,22 +241,22 @@ const Farms: React.FC = () => {
   const renderActiveFilter = (
     <>
       <Flex margin={isMobile ? '8px 0' : '8px 16px 8px 0'} justifyContent="center" alignItems="center">
-        <CustomToolTipOrigin data-for="apr-tooltip" data-tip={getAPRTooltip()}>
+        <CustomToolTipOrigin data-for='apr-tooltip' data-tip={getAPRTooltip()}>
           <TabWrapper>
-            <ButtonMenu activeIndex={isIglooApyMode ? 0 : 1} onItemClick={handleSwitchTab} scale="sm">
-              <OptionItem active={isIglooApyMode}>APY</OptionItem>
-              <OptionItem active={!isIglooApyMode}>APR</OptionItem>
+            <ButtonMenu activeIndex={isIglooAprMode ? 1 : 0} onItemClick={handleSwitchTab} scale="sm">
+              <OptionItem active={!isIglooAprMode}>APY</OptionItem>
+              <OptionItem active={isIglooAprMode}>APR</OptionItem>
             </ButtonMenu>
           </TabWrapper>
-        </CustomToolTipOrigin>
+        </CustomToolTipOrigin> 
         <CustomAprToolTip
-          id="apr-tooltip"
+          id='apr-tooltip'
           wrapper="div"
           delayHide={0}
           effect="solid"
           multiline
           isMobile={isMobile}
-          place="top"
+          place='top'
           html
         />
       </Flex>
@@ -266,9 +266,9 @@ const Farms: React.FC = () => {
   const renderSearchAndSortFilter = (
     <Flex mb="16px">
       <Flex flexDirection="column">
-        <SearchTextWrapper fontSize="12px" textTransform="uppercase" color="textSubtle">
+        <Text fontSize="12px" textTransform="uppercase" color="textSubtle">
           Sort by
-        </SearchTextWrapper>
+        </Text>
         <SelectWrapper>
           <Select
             value={sortType}
@@ -284,9 +284,9 @@ const Farms: React.FC = () => {
         </SelectWrapper>
       </Flex>
       <Flex flexDirection="column" ml="16px">
-        <SearchTextWrapper fontSize="12px" textTransform="uppercase" color="textSubtle">
+        <Text fontSize="12px" textTransform="uppercase" color="textSubtle">
           Search
-        </SearchTextWrapper>
+        </Text>
         <StyledInput placeholder="Search Farms" value={searchTerm} onChange={handleChangeSearchTerm} />
       </Flex>
     </Flex>
@@ -357,9 +357,6 @@ const Farms: React.FC = () => {
 
 const FarmPage = styled(Page)`
   max-width: 1200px;
-  @media (min-width: 2000px) {
-    max-width: 3700px;
-  }
 `
 
 // bg
@@ -419,21 +416,11 @@ const TabWrapper = styled.div`
     border-radius: 18px;
   }
 `
-
-const SearchTextWrapper = styled(Text)`
-  @media (min-width: 2000px) {
-    font-size: 17px;
-  }
-`
-
 const OptionItem = styled(ButtonMenuItem)<{ active: boolean }>`
   min-width: 70px;
   background-color: ${({ active, theme }) => active && theme.colors.red};
   color: ${({ active }) => (active ? 'white' : '#b2b2ce')};
   margin: 0px !important;
-  @media (min-width: 2000px) {
-    font-size: 18px;
-  }
 `
 
 const SelectWrapper = styled.div`
@@ -467,10 +454,6 @@ const StyledInput = styled(Input)`
 const ProjectLogo = styled.img<{ isActive?: boolean }>`
   width: 40px;
   height: 40px;
-  @media (min-width: 2000px) {
-    width: 60px;
-    height: 60px;
-  }
   margin-left: 8px;
   margin-right: 8px;
   cursor: pointer;
@@ -479,9 +462,6 @@ const ProjectLogo = styled.img<{ isActive?: boolean }>`
 
 const FilterText = styled(Text)`
   white-space: nowrap;
-  @media (min-width: 2000px) {
-    font-size: 20px;
-  }
 `
 
 const FilterWrapper = styled(Flex)`
@@ -519,10 +499,6 @@ const ToggleWrapper = styled.div<{ checked?: boolean }>`
   div {
     height: 32px;
     width: 56px;
-    @media (min-width: 2000px) {
-      height: 42px;
-      width: 66px;
-    }
     background: ${({ checked, theme }) => theme.isDark && !checked && '#bba6dd'};
     background: ${({ checked, theme }) => theme.isDark && checked && '#d4444c'};
     background: ${({ checked, theme }) => !theme.isDark && checked && '#ec3e3f'};
@@ -531,11 +507,6 @@ const ToggleWrapper = styled.div<{ checked?: boolean }>`
       height: 24px;
       width: 24px;
       left: ${({ checked }) => checked && 'calc(100% - 28px) !important'};
-      @media (min-width: 2000px) {
-        height: 34px;
-        width: 34px;
-        left: ${({ checked }) => checked && 'calc(100% - 38px) !important'};
-      }
       background: white;
     }
   }
@@ -549,9 +520,9 @@ const IgloosContentContainer = styled.div`
 // tooltip
 const CustomToolTipOrigin = styled.div``
 
-const CustomAprToolTip = styled(ReactTooltip)<{ isMobile?: boolean }>`
+const CustomAprToolTip = styled(ReactTooltip)<{ isMobile ?: boolean }>`
   width: 100% !important;
-  max-width: ${(props) => (props.isMobile ? '280px' : '310px')} !important;
+  max-width: ${props => props.isMobile ? '280px' : '310px'} !important;
   background: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#322C59!important')};
   box-shadow: ${(props) => `${props.theme.card.boxShadow}!important`};
   color: ${({ theme }) => (theme.isDark ? '#322C59!important' : '#ffffff!important')};
@@ -561,7 +532,7 @@ const CustomAprToolTip = styled(ReactTooltip)<{ isMobile?: boolean }>`
   border: 2px solid #fff !important;
   border-radius: 16px !important;
   margin-top: 0px !important;
-  margin-left: ${(props) => props.isMobile && '-60px !important'};
+  margin-left: ${props => props.isMobile && '-60px !important'};
   > div {
     width: 100%;
     min-height: 108px;
@@ -580,12 +551,12 @@ const CustomAprToolTip = styled(ReactTooltip)<{ isMobile?: boolean }>`
   &:before {
     border-top-color: #ffffff !important;
     border-bottom-color: #ffffff !important;
-    left: ${(props) => props.isMobile && '72% !important'};
+    left: ${props => props.isMobile && '72% !important'};
   }
   &:after {
     border-top-color: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#322C59')};
     border-bottom-color: ${({ theme }) => (theme.isDark ? '#ffffff!important' : '#322C59')};
-    left: ${(props) => props.isMobile && '72% !important'};
+    left: ${props => props.isMobile && '72% !important'};
   }
 `
 
