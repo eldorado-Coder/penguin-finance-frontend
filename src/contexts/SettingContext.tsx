@@ -4,7 +4,7 @@ const CACHE_MUSIC_KEY = 'IS_MUSIC'
 const CACHE_VISIBLE_BLOCK_KEY = 'VISIBLE_BLOCK'
 const CACHE_REFRESH_RATE = 'REFRESH_RATE'
 const CACHE_VISIBLE_PLAYER = 'VISIBLE_PLAYER'
-const CACHE_IGLOO_APY_KEY = 'IS_IGLOO_APR_MODE'
+const CACHE_IGLOO_APY_KEY = 'IS_IGLOO_APY_MODE'
 
 const SettingContext = React.createContext({
   isMusic: null,
@@ -15,8 +15,8 @@ const SettingContext = React.createContext({
   updateRefreshRate: (refreshRate: any) => null,
   visiblePlayer: null,
   toggleVisiblePlayer: () => null,
-  isIglooAprMode: false,
-  toggleIglooAprMode: (mode: boolean) => null,
+  isIglooApyMode: false,
+  toggleIglooApyMode: (mode: boolean) => null,
 })
 
 const SettingContextProvider = ({ children }) => {
@@ -40,9 +40,9 @@ const SettingContextProvider = ({ children }) => {
     return visiblePlayerUserSetting ? JSON.parse(visiblePlayerUserSetting) : false
   })
 
-  const [isIglooAprMode, setIsIglooAprMode] = useState(() => {
-    const isIglooAprModeSetting = localStorage.getItem(CACHE_IGLOO_APY_KEY)
-    return isIglooAprModeSetting ? JSON.parse(isIglooAprModeSetting) : false
+  const [isIglooApyMode, setIsIglooApyMode] = useState(() => {
+    const isIglooApyModeSetting = localStorage.getItem(CACHE_IGLOO_APY_KEY)
+    return isIglooApyModeSetting ? JSON.parse(isIglooApyModeSetting) : false
   })
 
   const toggleMusic = () => {
@@ -73,10 +73,10 @@ const SettingContextProvider = ({ children }) => {
     })
   }
 
-  const toggleIglooAprMode = (mode) => {
-    setIsIglooAprMode(mode)
+  const toggleIglooApyMode = (mode) => {
+    setIsIglooApyMode(mode)
 
-    setIsIglooAprMode(() => {
+    setIsIglooApyMode(() => {
       localStorage.setItem(CACHE_IGLOO_APY_KEY, mode)
       return mode
     })
@@ -93,8 +93,8 @@ const SettingContextProvider = ({ children }) => {
         updateRefreshRate,
         visiblePlayer,
         toggleVisiblePlayer,
-        isIglooAprMode,
-        toggleIglooAprMode,
+        isIglooApyMode,
+        toggleIglooApyMode,
       }}
     >
       {children}

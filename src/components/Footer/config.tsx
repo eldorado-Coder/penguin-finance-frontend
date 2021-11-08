@@ -4,7 +4,7 @@ export const FooterLinks = [
     links: [
       {
         title: 'Intro to Penguin Finance (Youtube)',
-        url: '#',
+        url: 'https://www.youtube.com/embed/Cg1fGpCmnTQ',
         key: 'youtube',
       },
       {

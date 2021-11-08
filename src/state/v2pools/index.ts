@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
 import v2poolsConfig from 'config/constants/v2pools'
+import { readFromCache, writeToCache } from 'utils/cache';
 import { fetchPoolsTotalStaking, fetchPoolsGeneralInfos } from './fetchPools'
 import {
   fetchPoolsAllowance,
@@ -12,7 +13,7 @@ import {
 } from './fetchPoolsUser'
 import { PoolsState, Pool } from '../types'
 
-const initialState: PoolsState = { data: [...v2poolsConfig] }
+const initialState: PoolsState = { data: readFromCache('v2pools') ? [...readFromCache('v2pools')] : [...v2poolsConfig] }
 
 export const V2PoolsSlice = createSlice({
   name: 'V2Pools',
@@ -20,22 +21,29 @@ export const V2PoolsSlice = createSlice({
   reducers: {
     setPoolsPublicData: (state, action) => {
       const livePoolsData: Pool[] = action.payload
-      state.data = state.data.map((pool) => {
+      const newPools = state.data.map((pool) => {
         const livePoolData = livePoolsData.find((entry) => entry.sousId === pool.sousId)
         return { ...pool, ...livePoolData }
       })
+      state.data = [...newPools];
+      writeToCache('v2pools', newPools);
     },
     setPoolsUserData: (state, action) => {
       const userData = action.payload
-      state.data = state.data.map((pool) => {
+      const newPools = state.data.map((pool) => {
         const userPoolData = userData.find((entry) => entry.sousId === pool.sousId)
         return { ...pool, userData: userPoolData }
       })
+      state.data = [...newPools];
+      writeToCache('v2pools', newPools);
     },
     updatePoolsUserData: (state, action) => {
       const { field, value, sousId } = action.payload
       const index = state.data.findIndex((p) => p.sousId === sousId)
-      state.data[index] = { ...state.data[index], userData: { ...state.data[index].userData, [field]: value } }
+      const newPools = [...state.data];
+      newPools[index] = { ...newPools[index], userData: { ...newPools[index].userData, [field]: value } }
+      state.data = [...newPools];
+      writeToCache('v2pools', newPools);
     },
   },
 })

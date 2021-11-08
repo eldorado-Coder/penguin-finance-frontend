@@ -7,7 +7,7 @@ const ArtworkCard = () => {
   const isMobile = !isXl
   const onClickArtworkV2Card = () => {
     window.open(
-      'https://penguin-finance.medium.com/make-igloos-not-war-new-joe-png-yield-farming-strategies-b70fac00807f',
+      'https://penguin-finance.medium.com/everest-dao-is-joining-the-club-over-3m-evrt-staking-rewards-for-ipefi-holders-cf4c2b14af5d',
       '_blank',
     )
   }
@@ -44,7 +44,7 @@ const StyledArtworkCardBg = styled.div`
   height: 100%;
   background-size: cover;
   background-position: center center;
-  background-image: url('/images/home/minwui.png');
+  background-image: url('/images/home/everest_dao.png');
   cursor: pointer;
 `
 
