@@ -456,6 +456,7 @@ const v2Farms: V2FarmConfig[] = [
     displayedDecimals: 5,
     isMINW: false,
     isMINWFinished: true,
+    isJoeRush: true,
   },
   {
     pid: 7,
