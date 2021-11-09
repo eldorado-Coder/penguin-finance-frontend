@@ -34,6 +34,7 @@ const v2Farms: V2FarmConfig[] = [
     name: 'pendingPEFI',
     displayedDecimals: 2,
     isMINW: false,
+    isMINWFinished: true,
   },
   {
     pid: 1,
@@ -99,6 +100,7 @@ const v2Farms: V2FarmConfig[] = [
     name: 'pendingPEFI',
     displayedDecimals: 2,
     isMINW: false,
+    isMINWFinished: true,
   },
   {
     pid: 3,
@@ -196,6 +198,7 @@ const v2Farms: V2FarmConfig[] = [
     name: 'pendingPEFI',
     displayedDecimals: 2,
     isMINW: false,
+    isMINWFinished: true,
   },
   {
     pid: 12,
@@ -418,6 +421,7 @@ const v2Farms: V2FarmConfig[] = [
     name: 'pendingPEFI',
     displayedDecimals: 5,
     isMINW: false,
+    isMINWFinished: true,
   },
   {
     pid: 5,
@@ -451,6 +455,7 @@ const v2Farms: V2FarmConfig[] = [
     name: 'pendingPEFI',
     displayedDecimals: 5,
     isMINW: false,
+    isMINWFinished: true,
   },
   {
     pid: 7,
@@ -644,6 +649,7 @@ const v2Farms: V2FarmConfig[] = [
     name: 'pendingPEFI',
     displayedDecimals: 6,
     isMINW: false,
+    isMINWFinished: true,
     isJoeRush: true,
   },
   // sushi

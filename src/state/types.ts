@@ -95,6 +95,7 @@ export interface V2Farm extends FarmConfig {
   swapDailyReward?: number
   isBenqi?: boolean
   isMINW?: boolean
+  isMINWFinished?: true
   isJoeRush?: boolean
   isJoeRushFinished?: boolean
   // minw
