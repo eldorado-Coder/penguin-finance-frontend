@@ -432,7 +432,7 @@ const v2Farms: V2FarmConfig[] = [
     },
     strategyAddresses: {
       43113: '',
-      43114: '0x100080bf670aa0afb3c575e718c78e9b426121cd',
+      43114: '0xe90C5A8886049E8AEA7E097225146EEa0289C0CE',
     },
     rewarderAddresses: {
       43113: '',

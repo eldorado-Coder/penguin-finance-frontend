@@ -8,6 +8,7 @@ import {
   fetchFarmUserTokenBalances,
   // fetchFarmUserStakedBalances,
   fetchFarmUserData,
+  fetchJoePefiAvaxPreviousRewardsClaimed,
 } from './fetchFarmUser'
 import { V2FarmsState, V2Farm } from '../types'
 
@@ -53,6 +54,7 @@ export const fetchFarmUserDataAsync = (account) => async (dispatch) => {
   if (!account) return
   const userFarmAllowances = await fetchFarmUserAllowances(account)
   const userFarmTokenBalances = await fetchFarmUserTokenBalances(account)
+  const userJoePefiAvaxPreviousRewardsClaimed = await fetchJoePefiAvaxPreviousRewardsClaimed(account)
   // const userStakedBalances = await fetchFarmUserStakedBalances(account)
   // const userFarmEarnings = await fetchFarmUserEarnings(account)
   const userFarmData = await fetchFarmUserData(account)
@@ -74,6 +76,7 @@ export const fetchFarmUserDataAsync = (account) => async (dispatch) => {
       userShares: userFarmShares[index],
       userPendingTokens: userPendingTokens[index],
       userIpefiDistributionBips: userIpefiDistributionBips[index],
+      previousRewardsClaimed: userJoePefiAvaxPreviousRewardsClaimed
     }
   })
 

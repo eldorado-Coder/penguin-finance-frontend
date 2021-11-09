@@ -68,6 +68,7 @@ export interface V2Farm extends FarmConfig {
     userPendingTokens?: any[]
     userShares: BigNumber
     userIpefiDistributionBips?: BigNumber
+    previousRewardsClaimed?: boolean
   }
   pendingTokens?: any[]
   totalLp?: BigNumber
