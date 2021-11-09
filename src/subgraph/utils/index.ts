@@ -42,8 +42,8 @@ export const getPairSwapDailyReward = async (address: string, type: string) => {
   }
   if (type === 'Sushi') swapDailyReward = 0.003 * pairDailyVolume
   if (type === 'Lydia') {
-    const avaxPrice = await getAvaxPrice()
-    swapDailyReward = 0.003 * avaxPrice * pairDailyVolume
+    // const avaxPrice = await getAvaxPrice()
+    swapDailyReward = 0.003 * pairDailyVolume
   }
 
   return swapDailyReward

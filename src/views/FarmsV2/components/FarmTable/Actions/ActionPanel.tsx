@@ -10,7 +10,7 @@ import useUserSetting from 'hooks/useUserSetting'
 import { getBalanceNumber } from 'utils/formatBalance'
 import Balance from 'components/Balance'
 import tokens from 'config/constants/tokens'
-import { getAddress } from 'utils/addressHelpers'
+import { getAddress, getAvaxAddress, getJoeTokenAddress, getPngTokenAddress } from 'utils/addressHelpers'
 import roundDown from 'utils/roundDown'
 import { usePricePefiUsdt, usePricePngUsdt, usePriceAvaxUsdt, useV2Pools } from 'state/hooks'
 import useJoePrice from 'hooks/useJoePrice'
@@ -187,6 +187,38 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
                   const rewardTokenInfo = userPendingTokens.find((row) => row.address === pendingToken)
                   const amount = rewardTokenInfo ? Number(rewardTokenInfo.amount) : 0
                   const amountInUsd = getTokenPrice(pendingToken) * amount
+
+                  // hide avax token when avax reward is zero
+                  if (
+                    farm.isJoeRushFinished &&
+                    rewardTokenInfo &&
+                    rewardTokenInfo.address.toLowerCase() === getAvaxAddress().toLowerCase() &&
+                    Number(rewardTokenInfo.amount) === 0
+                  ) {
+                    return null
+                  }
+
+                  // hide png token from joe pools that minw is expired when png reward is zero
+                  if (
+                    farm.isMINWFinished &&
+                    farm.type === 'JOE' &&
+                    rewardTokenInfo &&
+                    rewardTokenInfo.address.toLowerCase() === getPngTokenAddress().toLowerCase() &&
+                    Number(rewardTokenInfo.amount) === 0
+                  ) {
+                    return null
+                  }
+
+                  // hide joe token from pangolin pools that minw is expired when joe reward is zero
+                  if (
+                    farm.isMINWFinished &&
+                    farm.type === 'Pangolin' &&
+                    rewardTokenInfo &&
+                    rewardTokenInfo.address.toLowerCase() === getJoeTokenAddress().toLowerCase() &&
+                    Number(rewardTokenInfo.amount) === 0
+                  ) {
+                    return null
+                  }
 
                   return (
                     <Flex flexDirection="column" alignItems="center" mr="4px" ml="4px" key={pendingToken}>
