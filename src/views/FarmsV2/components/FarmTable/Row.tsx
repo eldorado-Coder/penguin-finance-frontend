@@ -33,6 +33,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
   const { isDark, theme } = useTheme()
   const joeToken = tokens.find((row) => row.symbol === 'JOE')
   const pngToken = tokens.find((row) => row.symbol === 'PNG')
+  const avaxToken = tokens.find((row) => row.symbol === 'AVAX')
   const { pendingTokens } = farm
 
   const getPendingTokensWithLogo = () => {
@@ -49,6 +50,11 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
     if (farm.type === 'Pangolin') {
       _pendingTokensWithLogo = _pendingTokensWithLogo.filter(
         (row) => row.address.toLowerCase() !== getAddress(joeToken.address).toLowerCase(),
+      )
+    }
+    if (farm.isJoeRushFinished) {
+      _pendingTokensWithLogo = _pendingTokensWithLogo.filter(
+        (row) => row.address.toLowerCase() !== getAddress(avaxToken.address).toLowerCase(),
       )
     }
     return _pendingTokensWithLogo

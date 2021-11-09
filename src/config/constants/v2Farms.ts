@@ -879,7 +879,8 @@ const v2Farms: V2FarmConfig[] = [
     type: 'Joe',
     name: 'pendingPEFI',
     displayedDecimals: 7,
-    isJoeRush: true,
+    isJoeRush: false,
+    isJoeRushFinished: true,
   },
 
   {
@@ -946,7 +947,8 @@ const v2Farms: V2FarmConfig[] = [
     type: 'Joe',
     name: 'pendingPEFI',
     displayedDecimals: 7,
-    isJoeRush: true,
+    isJoeRush: false,
+    isJoeRushFinished: true,
   },
   {
     pid: 28,

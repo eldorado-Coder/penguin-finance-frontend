@@ -113,6 +113,7 @@ export interface V2FarmConfig {
   isBenqi?: boolean
   isMINW?: boolean
   isJoeRush?: boolean
+  isJoeRushFinished?: boolean
 }
 
 export interface JoeV3FarmConfig {
