@@ -197,7 +197,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
                   let amount = rewardTokenInfo ? Number(rewardTokenInfo.amount) : 0
                   let amountInUsd = getTokenPrice(pendingToken) * amount
 
-                  if (farm.pid === 5 && !farm.userData.previousRewardsClaimed) {
+                  if (farm.pid === 5 && !farm.userData.previousRewardsClaimed && pendingToken === '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE') {
                     amount = 0;
                     amountInUsd = 0;
                   }
