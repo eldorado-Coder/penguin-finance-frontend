@@ -24,6 +24,7 @@ const Launchpad = lazy(() => import('./views/Launchpad'))
 const LaunchpadWithVideo = lazy(() => import('./views/LaunchpadVideo'))
 const LaunchpadDistribution = lazy(() => import('./views/LaunchpadDistribution'))
 const LaunchpadBoofi = lazy(() => import('./views/LaunchpadBoofi'))
+const LaunchpadV2 = lazy(() => import('./views/LaunchpadV2'))
 const Emperor = lazy(() => import('./views/Emperor'))
 // const CovidEmperor = lazy(() => import('./views/CovidEmperor'))
 const Club = lazy(() => import('./views/Club'))
@@ -111,6 +112,9 @@ const App: React.FC = () => {
             <Route path="/launchpad">
               {/* <LaunchpadVideo /> */}
               <LaunchpadBoofi />
+            </Route>
+            <Route path="/launchpad-v2">
+              <LaunchpadV2 />
             </Route>
             <Route path="/launchpad-boofi">
               <LaunchpadBoofi />
