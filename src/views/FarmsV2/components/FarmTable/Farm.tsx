@@ -31,7 +31,7 @@ const Farm: React.FunctionComponent<FarmCardProps> = ({ farm }) => {
           <LpTag type={farm.type}>{farmType}</LpTag>
           {farm.isBenqi && <LpTag type="Benqi">BenQi</LpTag>}
           {farm.isMINW && <LpTag type="MINW">MINW</LpTag>}
-          {farm.isJoeRush && <LpTag type="Joe Rush">JOE Rush</LpTag>}
+          {farm.isJoeRush && !farm.isJoeRushFinished && <LpTag type="Joe Rush">JOE Rush</LpTag>}
         </TagContainer>
       </FarmLabelWrapper>
     </Container>

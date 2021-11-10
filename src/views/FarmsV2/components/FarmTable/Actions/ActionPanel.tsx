@@ -72,19 +72,10 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
   const pefiPerYear = getBalanceNumber(farm.pefiPerYear)
   const pefiPerWeek = pefiPerYear / WEEKS_PER_YEAR
 
-  let farmApr = farm.apr ? (100 * Number(farm.apr)).toFixed(2) : 0
-  let farmApy = farm.apy ? (100 * Number(farm.apy)).toFixed(2) : 0
+  const farmApr = farm.apr ? (100 * Number(farm.apr)).toFixed(2) : 0
+  const farmApy = farm.apy ? (100 * Number(farm.apy)).toFixed(2) : 0
   const lpSymbol = farm.lpSymbol.replaceAll(' LP', '')
   const coinImg = getCoinImage(Number(userStakedBalanceInUsd))
-
-  if (farm.pid === 5) {
-    if (farm.apy >= 0) {
-      farmApy = Number(farmApy) + 70;
-    }
-    if (farm.apr >= 0) {
-      farmApr = Number(farmApr) + 53;
-    }
-  }
 
   const onClickHarvest = async () => {
     setPendingTx(true)
@@ -197,9 +188,14 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
                   let amount = rewardTokenInfo ? Number(rewardTokenInfo.amount) : 0
                   let amountInUsd = getTokenPrice(pendingToken) * amount
 
-                  if (farm.pid === 5 && farm.userData && !farm.userData.previousRewardsClaimed && pendingToken === '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE') {
-                    amount = 0;
-                    amountInUsd = 0;
+                  if (
+                    farm.pid === 5 &&
+                    farm.userData &&
+                    !farm.userData.previousRewardsClaimed &&
+                    pendingToken === '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'
+                  ) {
+                    amount = 0
+                    amountInUsd = 0
                   }
                   // hide avax token when avax reward is zero
                   if (
