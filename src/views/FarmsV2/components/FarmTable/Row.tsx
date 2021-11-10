@@ -68,10 +68,10 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
 
   if (farm.pid === 5) {
     if (farm.apy >= 0) {
-      farmApy = Number(farmApy) + 70;
+      farmApy = Number(farmApy) + 70
     }
     if (farm.apr >= 0) {
-      farmApr = Number(farmApr) + 53;
+      farmApr = Number(farmApr) + 53
     }
   }
 
@@ -109,27 +109,15 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
     const additionalStakingApr = 100 * (farm.stakingApr || 0)
     const additionalSwapFeeApr = 100 * (farm.swapFeeApr || 0)
     const minwApr = 100 * (farm.minwApr || 0)
-    let joeRushRewardApr = 100 * (farm.joeRushRewardApr || 0)
-    let totalApr = 100 * (farm.apr || 0)
-
-    if (farm.pid === 5) {
-      joeRushRewardApr = 53;
-      totalApr += 53;
-    }
+    const joeRushRewardApr = 100 * (farm.joeRushRewardApr || 0)
+    const totalApr = 100 * (farm.apr || 0)
 
     const mainApy = 100 * (farm.pefiApy || 0)
     const additionalStakingApy = 100 * (farm.stakingApy || 0)
     const additionalSwapFeeApy = 100 * (farm.swapFeeApy || 0)
     const minwApy = 100 * (farm.minwApy || 0)
-    let joeRushRewardApy = 100 * (farm.joeRushRewardApy || 0)
-    let totalApy = 100 * (farm.apy || 0)
-
-    if (farm.pid === 5) {
-      joeRushRewardApy = 70;
-      totalApy += 70;
-    }
-
-    // isIglooAprMode
+    const joeRushRewardApy = 100 * (farm.joeRushRewardApy || 0)
+    const totalApy = 100 * (farm.apy || 0)
 
     if (isIglooAprMode) {
       return `

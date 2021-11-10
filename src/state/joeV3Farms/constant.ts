@@ -37,6 +37,18 @@ const joeV3Farms: JoeV3FarmConfig[] = [
       43114: '0x9f509ae4e18d5a14afb51e16519c2936915b896c',
     },
   },
+  {
+    pid: 12,
+    lpSymbol: 'Joe PEFI-AVAX LP',
+    lpAddresses: {
+      43113: '',
+      43114: '0xb78c8238bd907c42be45aebdb4a8c8a5d7b49755',
+    },
+    rewarderAddresses: {
+      43113: '',
+      43114: '0x6bcDdCFa89119B0f3eDE7fa45c627DcB704AC9A8',
+    },
+  },
 ]
 
 export default joeV3Farms
