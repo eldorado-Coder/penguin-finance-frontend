@@ -210,7 +210,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
                   // hide png token from joe pools that minw is expired when png reward is zero
                   if (
                     farm.isMINWFinished &&
-                    farm.type === 'JOE' &&
+                    farm.type === 'Joe' &&
                     rewardTokenInfo &&
                     rewardTokenInfo.address.toLowerCase() === getPngTokenAddress().toLowerCase() &&
                     Number(rewardTokenInfo.amount) === 0
