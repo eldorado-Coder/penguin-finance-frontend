@@ -160,9 +160,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, removed, pefiPrice, avaxPrice
       <ExpandingWrapper expanded={showExpandableSection}>
         <DetailsSection
           removed={removed}
-          avaxScanAddress={`https://cchain.explorer.avax.network/address/${
-            farm.lpAddresses[process.env.REACT_APP_CHAIN_ID]
-          }`}
+          avaxScanAddress={`https://snowtrace.io/address/${farm.lpAddresses[process.env.REACT_APP_CHAIN_ID]}`}
           totalValueFormatted={totalValueFormatted}
           lpLabel={lpLabel}
           addLiquidityUrl={addLiquidityUrl}

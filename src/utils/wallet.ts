@@ -24,7 +24,7 @@ export const setupNetwork = async () => {
               decimals: 18,
             },
             rpcUrls: nodes,
-            blockExplorerUrls: ['https://cchain.explorer.avax.network/'],
+            blockExplorerUrls: ['https://snowtrace.io/'],
           },
         ],
       })
