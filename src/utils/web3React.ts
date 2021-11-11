@@ -23,18 +23,18 @@ const AVALANCHE_MAINNET_PARAMS = {
   chainId: '0xa86a',
   chainName: 'Avalanche Mainnet C-Chain',
   nativeCurrency: {
-      name: 'Avalanche',
-      symbol: 'AVAX',
-      decimals: 18
+    name: 'Avalanche',
+    symbol: 'AVAX',
+    decimals: 18,
   },
   rpcUrls: ['https://api.avax.network/ext/bc/C/rpc'],
-  blockExplorerUrls: ['https://cchain.explorer.avax.network/']
+  blockExplorerUrls: ['https://snowtrace.io/'],
 }
 
 const walletlink = new WalletLinkConnector({
   url: AVALANCHE_MAINNET_PARAMS.rpcUrls[0],
   appName: 'Penguin Finance',
-  appLogoUrl: '/images/penguin-logo.png'
+  appLogoUrl: '/images/penguin-logo.png',
 })
 
 const bscConnector = new BscConnector({ supportedChainIds: [chainId] })
