@@ -62,18 +62,9 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
 
   const liquidity = farm.totalLiquidityInUsd
   const stakedBalanceInUsd = stakedBalance ? getBalanceNumber(stakedBalance) * farm.lpPrice : 0
-  let farmApr = farm.apr >= 0 ? (100 * Number(farm.apr)).toFixed(2) : 0
-  let farmApy = farm.apy >= 0 ? (100 * Number(farm.apy)).toFixed(2) : 0
+  const farmApr = farm.apr >= 0 ? (100 * Number(farm.apr)).toFixed(2) : 0
+  const farmApy = farm.apy >= 0 ? (100 * Number(farm.apy)).toFixed(2) : 0
   const pendingTokensWithLogo = getPendingTokensWithLogo()
-
-  if (farm.pid === 5) {
-    if (farm.apy >= 0) {
-      farmApy = Number(farmApy) + 70
-    }
-    if (farm.apr >= 0) {
-      farmApr = Number(farmApr) + 53
-    }
-  }
 
   const isMobile = !isXl
   const tableSchema = isMobile ? MobileColumnSchema : DesktopColumnSchema
