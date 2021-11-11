@@ -34,12 +34,12 @@ const ComingSoonCard: React.FC = () => {
         </Row>
         <Row>
           <StyledText color="white">
-            <a href="https://penguinfinance.org/emperor" target="_blank" rel="noreferrer">
-              Pangolin vs Joe Emperor Game
+            <a href="https://penguin-finance.medium.com/an-epic-winter-is-coming-to-penguin-finance-%EF%B8%8F-d207a2eab3cd" target="_blank" rel="noreferrer">
+              Time Optimizer Igloo
             </a>
           </StyledText>
         </Row>
-        <Row>
+        {/* <Row> */}
           {/* <StyledText color="white">
             <a
               href="https://penguin-finance.medium.com/make-igloos-not-war-new-joe-png-yield-farming-strategies-b70fac00807f"
@@ -49,7 +49,7 @@ const ComingSoonCard: React.FC = () => {
               Make Igloos, Not War
             </a>
           </StyledText> */}
-        </Row>
+        {/* </Row> */}
         <Row>
           <StyledText color="white">
             <a href="https://penguinfinance.org/arena" target="_blank" rel="noreferrer">
