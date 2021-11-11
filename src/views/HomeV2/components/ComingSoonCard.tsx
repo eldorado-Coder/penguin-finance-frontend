@@ -34,12 +34,15 @@ const ComingSoonCard: React.FC = () => {
         </Row>
         <Row>
           <StyledText color="white">
-            <a
+            {/* <a
               href="https://penguin-finance.medium.com/make-igloos-not-war-new-joe-png-yield-farming-strategies-b70fac00807f"
               target="_blank"
               rel="noreferrer"
             >
               Make Igloos, Not War
+            </a> */}
+            <a href="https://penguin-finance.medium.com/an-epic-winter-is-coming-to-penguin-finance-%EF%B8%8F-d207a2eab3cd" target="_blank" rel="noreferrer">
+              Time Optimizer Igloo
             </a>
           </StyledText>
         </Row>
