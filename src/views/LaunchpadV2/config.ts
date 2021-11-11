@@ -1,4 +1,4 @@
-const upcomingIcebergs = [
+const upcomingIDOs = [
   // {
   //   title: 'VSO ICEBERG',
   //   // tag: 'Marketplace',
@@ -16,7 +16,7 @@ const upcomingIcebergs = [
     // toDistribute: '43,000 BOOFI',
     toDistribute: 'TBD',
     tokenSymbol: 'BOOFI',
-    logo: 'boofi_iceberg.svg',
+    logo: 'boofi-logo.png',
     description:
       'A new Avalanche project developing a unique yield farming dApp, deflationary NFTs, and an all-encompassing DAO.',
     url: 'https://boofinance.gitbook.io/boo-finance/',
@@ -27,7 +27,7 @@ const upcomingIcebergs = [
     // toDistribute: '43,000 BOOFI',
     toDistribute: 'TBD',
     tokenSymbol: 'PNG',
-    logo: 'pangolin_iceberg.svg',
+    logo: 'boofi-logo.png',
     description: `A community-driven decentralized exchanged on Avalanche. They've vastly improved the state of the Avalanche Ecosystem by helping new native projects.`,
     url: 'https://docs.pangolin.exchange/',
   },
@@ -37,14 +37,14 @@ const upcomingIcebergs = [
     coreTag: 'Rush',
     toDistribute: 'TBD',
     tokenSymbol: 'AVAX',
-    logo: 'avax_iceberg.svg',
+    logo: 'boofi-logo.png',
     description:
       'The fastest smart contracts platform for creating custom blockchain networks and decentralized applications (dApps).',
     url: 'https://www.avax.network',
   },
 ]
 
-const previousIcebergs = [
+const completedIDOs = [
   // {
   //   title: 'VSO ICEBERG',
   //   // tag: 'Marketplace',
@@ -62,10 +62,11 @@ const previousIcebergs = [
     // toDistribute: '43,000 BOOFI',
     toDistribute: 'TBD',
     tokenSymbol: 'BOOFI',
-    logo: 'boofi_iceberg.svg',
+    logo: 'boofi-logo.png',
     description:
       'A new Avalanche project developing a unique yield farming dApp, deflationary NFTs, and an all-encompassing DAO.',
     url: 'https://boofinance.gitbook.io/boo-finance/',
+    completed: true
   },
   {
     title: 'PNG ICEBERG',
@@ -73,9 +74,10 @@ const previousIcebergs = [
     // toDistribute: '43,000 BOOFI',
     toDistribute: 'TBD',
     tokenSymbol: 'PNG',
-    logo: 'pangolin_iceberg.svg',
+    logo: 'boofi-logo.png',
     description: `A community-driven decentralized exchanged on Avalanche. They've vastly improved the state of the Avalanche Ecosystem by helping new native projects.`,
     url: 'https://docs.pangolin.exchange/',
+    completed: true
   },
   {
     title: 'AVAX ICEBERG',
@@ -83,11 +85,12 @@ const previousIcebergs = [
     coreTag: 'Rush',
     toDistribute: 'TBD',
     tokenSymbol: 'AVAX',
-    logo: 'avax_iceberg.svg',
+    logo: 'boofi-logo.png',
     description:
       'The fastest smart contracts platform for creating custom blockchain networks and decentralized applications (dApps).',
     url: 'https://www.avax.network',
+    completed: true
   },
 ]
 
-export { upcomingIcebergs, previousIcebergs }
+export { upcomingIDOs, completedIDOs }

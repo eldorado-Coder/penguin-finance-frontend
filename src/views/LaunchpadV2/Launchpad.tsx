@@ -50,7 +50,7 @@ const LaunchpadPage = styled(Page)`
 `
 
 const LaunchpadBgContainer = styled.div`
-  background-image: url(/images/launchpad/launchpad_background.png);
+  background-image: url(/images/launchpad/background.svg);
   background-repeat: repeat;
   background-size: contain;
   position: absolute;
@@ -59,7 +59,7 @@ const LaunchpadBgContainer = styled.div`
   right: 0px;
   left: 0px;
   z-index: -1;
-  background-color: #483692;
+  background-color: ${({ theme }) => theme.isDark ? '#2e2152' : '#483692'};
 `
 
 // banner

@@ -2,8 +2,11 @@ import React from 'react'
 import styled from 'styled-components'
 import { Text, Flex, Tag, Progress } from 'penguinfinance-uikit2'
 import FlexLayout from 'components/layout/Flex'
+import useTheme from 'hooks/useTheme'
 
 const AcoomalatingSteps = () => {
+  const { isDark } = useTheme();
+
   return (
     <>
       <Label fontSize="36px" lineHeight='54px' mt="120px" mb="180px" fontWeight={500} color='white'>
@@ -11,36 +14,42 @@ const AcoomalatingSteps = () => {
       </Label>
       <StyledFlexLayout>
         <FCard>
-          <IdoLogo src='/images/launchpad/acoomalating-steps/pefi.png' alt='pefi' />
-          <Text fontSize='24px' color='#131313' mb='20px'>1. Get PEGI</Text>
-          <Description fontSize='18px' color='#131313'>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+          <IdoLogoContainer>
+            <PefiImg src='/images/penguin-finance-logo.svg' alt='pefi' />
+          </IdoLogoContainer>
+          <Title fontSize='24px' mb='20px'>1. Get PEGI</Title>
+          <Description fontSize='18px'>
+            To participate in the Penguin Launchpad, you’ll need to acquire PEFI first. You can get PEFI from an Avalanche DEX or by yield farming on the Igloos.
           </Description>
-          <Flex justifyContent='flex-end' alignItems='center' ml='auto'>
-            <Text fontSize='18px' color='red'>Buy PEFI</Text>
-            <ArrowRightImg src='/images/launchpad/arrow-right.png' alt='arrow-right' />
+          <Flex justifyContent='flex-end' alignItems='center' ml='auto' mt='16px'>
+            <Title fontSize='18px'>Buy PEFI</Title>
+            <ArrowRightImg src={`/images/launchpad/arrow-${isDark ? 'dark' : 'light'}.png`} alt='arrow-right' />
           </Flex>
         </FCard>
-        <IPefiCard>
-          <IdoLogo src='/images/launchpad/acoomalating-steps/ipefi.png' alt='ipefi' />
-          <Text fontSize='24px' color='white' mb='20px'>2. Stake PEFI for iPEFI</Text>
-          <Description fontSize='18px' color='white'>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
-          </Description>
-          <Flex justifyContent='flex-end' alignItems='center' ml='auto'>
-            <Text fontSize='18px' color='red'>Buy PEFI</Text>
-            <ArrowRightImg src='/images/launchpad/arrow-right.png' alt='arrow-right' />
-          </Flex>
-        </IPefiCard>
         <FCard>
-          <IdoLogo src='/images/launchpad/acoomalating-steps/ido.png' alt='ido' />
-          <Text fontSize='24px' color='#131313' mb='20px'>3. Register for an IDO</Text>
-          <Description fontSize='18px' color='#131313'>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+          <IdoLogoContainer>
+            <img src='/images/launchpad/ipefi.svg' alt='ipefi' />
+          </IdoLogoContainer>
+          <Title fontSize='24px' mb='20px'>2. Stake PEFI for iPEFI</Title>
+          <Description fontSize='18px'>
+            Once you have PEFI in your wallet, you’ll want to stake it in the Nest to receive iPEFI. Our staking token gives you access to IDOs, the Club, and the Penguin Emperor game.  
           </Description>
-          <Flex justifyContent='flex-end' alignItems='center' ml='auto'>
-            <Text fontSize='18px' color='red'>Buy PEFI</Text>
-            <ArrowRightImg src='/images/launchpad/arrow-right.png' alt='arrow-right' />
+          <Flex justifyContent='flex-end' alignItems='center' ml='auto' mt='16px'>
+            <Title fontSize='18px'>Buy PEFI</Title>
+            <ArrowRightImg src={`/images/launchpad/arrow-${isDark ? 'dark' : 'light'}.png`} alt='arrow-right' />
+          </Flex>
+        </FCard>
+        <FCard>
+          <IdoLogoContainer>
+            <img src='/images/launchpad/cyborgpefi.svg' alt='ido' />
+          </IdoLogoContainer>
+          <Title fontSize='24px' mb='20px'>3. Register for an IDO</Title>
+          <Description fontSize='18px'>
+            By holding iPEFI, you can now register for upcoming IDOs and receive allocations based on your iPEFI amount. The more iPEFI you hold, the more allocations you get!
+          </Description>
+          <Flex justifyContent='flex-end' alignItems='center' ml='auto' mt='16px'>
+            <Title fontSize='18px'>Buy PEFI</Title>
+            <ArrowRightImg src={`/images/launchpad/arrow-${isDark ? 'dark' : 'light'}.png`} alt='arrow-right' />
           </Flex>
         </FCard>
       </StyledFlexLayout>
@@ -50,9 +59,10 @@ const AcoomalatingSteps = () => {
 
 const FCard = styled.div`
   align-self: baseline;
-  background: ${(props) => props.theme.card.background};
-  border-radius: 26px;
-  box-shadow: 0px 2px 12px -8px rgba(25, 19, 38, 0.1), 0px 1px 1px rgba(25, 19, 38, 0.05);
+  background: ${(props) => props.theme.isDark ? '#2E264C' : '#fff'};
+  border-radius: 16px;
+  box-shadow: 4px 4px 32px rgba(165, 165, 165, 0.25);
+  backdrop-filter: blur(38px);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -61,15 +71,25 @@ const FCard = styled.div`
   position: relative;
   text-align: center;
   margin-bottom: 120px;
-`
 
-const IPefiCard = styled(FCard)`
-  background: rgba(255, 255, 255, 0.2)
-`;
+  @media (min-width: 968px) {
+    padding-left: 44px;
+    padding-right: 44px;
+  }
+`
 
 const Description = styled(Text)`
   font-family: 'Fira Code';
   text-align: left;
+  color: ${({ theme }) => theme.isDark ? '#fff' : '#474747'};
+  min-height: unset;
+
+  @media (min-width: 768px) {
+    min-height: 220px;
+  }
+  @media (min-width: 1200px) {
+    min-height: 180px;
+  }
 `;
 
 const StyledFlexLayout = styled(FlexLayout)`
@@ -79,6 +99,21 @@ const StyledFlexLayout = styled(FlexLayout)`
   @media (min-width: 640px) {
     margin-left: -16px;
     margin-right: -16px;
+  }
+
+  @media (min-width: 1400px) {
+    margin-left: -64px;
+    margin-right: -64px;
+  }
+
+  & > * {
+    @media (min-width: 1400px) {
+      margin-left: 32px;
+      margin-right: 32px;
+      min-width: 320px;
+      max-width: 27%;
+      width: 100%;
+    }
   }
 `
 
@@ -96,7 +131,7 @@ const Label = styled(Text)`
   }
 `
 
-const IdoLogo = styled.img`
+const IdoLogoContainer = styled.div`
   width: 200px;
   height: 200px;
   border-radius: 50%;
@@ -105,13 +140,29 @@ const IdoLogo = styled.img`
   top: 0;
   transform: translate(-50%, -50%);
   box-shadow: 0px 1px 6px rgb(0 0 0 / 16%);
+  padding: 16;
+  background: white;
+
+  img {
+    width: 90%;
+    margin-top: 10%;
+  }
+`;
+
+const PefiImg = styled.img`
+  width: 96% !important;
+  margin-top: 2% !important;
 `;
 
 const ArrowRightImg = styled.img`
-  width: 32px;
-  height: 32px;
-  margin-left: 2px;
+  width: 24px;
+  height: 24px;
+  margin-left: 8px;
   cursor: pointer;
+`;
+
+const Title = styled(Text)`
+  color: ${({ theme }) => theme.isDark ? 'white' : '#000'};
 `;
 
 export default AcoomalatingSteps
