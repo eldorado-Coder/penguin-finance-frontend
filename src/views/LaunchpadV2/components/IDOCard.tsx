@@ -55,7 +55,7 @@ const IDOCard = ({ idoData }) => {
           </Flex>
         </Flex>
         <Flex>
-          <SvgIcon src={`${process.env.PUBLIC_URL}/images/launchpad/icons/graph1.svg`} width='18px' height='18px' />
+          <SvgIcon src={`${process.env.PUBLIC_URL}/images/launchpad/icons/graph.svg`} width='18px' height='18px' />
           <Flex flexDirection='column' alignItems='flex-start' ml='4px' mt='2px'>
             <Flex>
               <DetailText fontSize='9px'>Tokens Sold:</DetailText>
@@ -91,6 +91,12 @@ const FCard = styled.div`
   padding: 24px;
   position: relative;
   text-align: center;
+
+  svg {
+    path {
+      stroke: ${({ theme }) => theme.isDark ? '#B8A7D9' : '#313131'};
+    }
+  }
 `
 
 const IdoTag = styled(Tag)<{ completed?: boolean }>`

@@ -9,7 +9,7 @@ const AcoomalatingSteps = () => {
 
   return (
     <>
-      <Label fontSize="36px" lineHeight='54px' mt="120px" mb="180px" fontWeight={500} color='white'>
+      <Label fontSize="36px" lineHeight='54px' mb="180px" fontWeight={500} color='white'>
         3 Simle Steps to Start Acoomalating
       </Label>
       <StyledFlexLayout>
@@ -121,13 +121,12 @@ const Label = styled(Text)`
   color: white;
   font-size: 24px;
   line-height: 36px;
-  margin-top: 60px;
 
   @media (min-width: 968px) {
     font-size: 36px;
     line-height: 54px;
     text-align: left;
-    margin-top: 120px;
+    margin-top: 0px;
   }
 `
 
