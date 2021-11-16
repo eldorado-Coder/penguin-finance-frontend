@@ -32,11 +32,7 @@ const CurrentBlockWrapper = () => {
     <CurrentBlockNumberWrapper>
       <CurrentBlockNumber color="primary" bold>
         {currentBlockNumber > 0 && (
-          <Link
-            href={`https://cchain.explorer.avax.network/blocks/${currentBlockNumber}`}
-            target="blank"
-            rel="noopener noreferrer"
-          >
+          <Link href={`https://snowtrace.io/blocks/${currentBlockNumber}`} target="blank" rel="noopener noreferrer">
             {currentBlockNumber}
           </Link>
         )}

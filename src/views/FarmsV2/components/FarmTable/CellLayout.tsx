@@ -18,9 +18,6 @@ const CellLayout: React.FC<CellLayoutProps> = ({ label = '', children, alignItem
 
 const Label = styled.div`
   font-size: 14px;
-  @media (min-width: 2000px) {
-    font-size: 24px;
-  }
   color: ${({ theme }) => (theme.isDark ? '#b2b2ce' : '#8F88A0')};
   text-align: left;
 `

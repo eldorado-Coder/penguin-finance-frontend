@@ -112,7 +112,9 @@ export interface V2FarmConfig {
   guideLink?: string
   isBenqi?: boolean
   isMINW?: boolean
+  isMINWFinished?: true
   isJoeRush?: boolean
+  isJoeRushFinished?: boolean
 }
 
 export interface JoeV3FarmConfig {

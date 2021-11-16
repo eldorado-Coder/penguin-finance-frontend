@@ -10,7 +10,7 @@ import useUserSetting from 'hooks/useUserSetting'
 import { getBalanceNumber } from 'utils/formatBalance'
 import Balance from 'components/Balance'
 import tokens from 'config/constants/tokens'
-import { getAddress } from 'utils/addressHelpers'
+import { getAddress, getAvaxAddress, getJoeTokenAddress, getPngTokenAddress } from 'utils/addressHelpers'
 import roundDown from 'utils/roundDown'
 import { usePricePefiUsdt, usePricePngUsdt, usePriceAvaxUsdt, useV2Pools } from 'state/hooks'
 import useJoePrice from 'hooks/useJoePrice'
@@ -73,7 +73,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
   const pefiPerWeek = pefiPerYear / WEEKS_PER_YEAR
 
   const farmApr = farm.apr ? (100 * Number(farm.apr)).toFixed(2) : 0
-  const farmApy = farm.apr ? (100 * Number(farm.apy)).toFixed(2) : 0
+  const farmApy = farm.apy ? (100 * Number(farm.apy)).toFixed(2) : 0
   const lpSymbol = farm.lpSymbol.replaceAll(' LP', '')
   const coinImg = getCoinImage(Number(userStakedBalanceInUsd))
 
@@ -150,10 +150,10 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
               fontSize="14px"
               color="textSubtle"
               fontWeight="400"
-              prefix={!isIglooAprMode ? 'APY: ' : 'APR: '}
+              prefix={isIglooAprMode ? 'APR: ' : 'APY: '}
               suffix="%"
               decimals={2}
-              value={!isIglooAprMode ? Number(farmApy) : Number(farmApr)}
+              value={isIglooAprMode ? Number(farmApr) : Number(farmApy)}
             />
             <Balance
               fontSize="14px"
@@ -178,15 +178,56 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
           />
         </EarningsWrapper>
       </EarningsCard>
-      <PendingCardWrapper className="pending-panel" flexDirection="column" mb="16px" justifyContent="space-between">
+      <Flex className="pending-panel" flexDirection="column" mb="16px">
         <PendingRewardsCard padding="10px 16px">
           <PendingRewardsContent>
             <Flex alignItems="center" justifyContent="space-around" mr="16px">
               {pendingTokens &&
                 pendingTokens.map((pendingToken) => {
                   const rewardTokenInfo = userPendingTokens.find((row) => row.address === pendingToken)
-                  const amount = rewardTokenInfo ? Number(rewardTokenInfo.amount) : 0
-                  const amountInUsd = getTokenPrice(pendingToken) * amount
+                  let amount = rewardTokenInfo ? Number(rewardTokenInfo.amount) : 0
+                  let amountInUsd = getTokenPrice(pendingToken) * amount
+
+                  if (
+                    farm.pid === 5 &&
+                    farm.userData &&
+                    !farm.userData.previousRewardsClaimed &&
+                    pendingToken === '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'
+                  ) {
+                    amount = 0
+                    amountInUsd = 0
+                  }
+                  // hide avax token when avax reward is zero
+                  if (
+                    farm.isJoeRushFinished &&
+                    rewardTokenInfo &&
+                    rewardTokenInfo.address.toLowerCase() === getAvaxAddress().toLowerCase() &&
+                    Number(rewardTokenInfo.amount) === 0
+                  ) {
+                    return null
+                  }
+
+                  // hide png token from joe pools that minw is expired when png reward is zero
+                  if (
+                    farm.isMINWFinished &&
+                    farm.type === 'Joe' &&
+                    rewardTokenInfo &&
+                    rewardTokenInfo.address.toLowerCase() === getPngTokenAddress().toLowerCase() &&
+                    Number(rewardTokenInfo.amount) === 0
+                  ) {
+                    return null
+                  }
+
+                  // hide joe token from pangolin pools that minw is expired when joe reward is zero
+                  if (
+                    farm.isMINWFinished &&
+                    farm.type === 'Pangolin' &&
+                    rewardTokenInfo &&
+                    rewardTokenInfo.address.toLowerCase() === getJoeTokenAddress().toLowerCase() &&
+                    Number(rewardTokenInfo.amount) === 0
+                  ) {
+                    return null
+                  }
 
                   return (
                     <Flex flexDirection="column" alignItems="center" mr="4px" ml="4px" key={pendingToken}>
@@ -232,7 +273,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
             maxAllocation={maxAutoNestAllocation}
           />
         </ActionCard>
-      </PendingCardWrapper>
+      </Flex>
     </Container>
   )
 }
@@ -283,9 +324,6 @@ const ActionCard = styled(Card)<{ minWidth?: number }>`
   overflow: unset;
   min-width: ${({ minWidth }) => minWidth && `${minWidth}px`};
   box-shadow: 0px 2px 8px rgb(0 0 0 / 16%);
-  @media (min-width: 2000px) {
-    min-width: 31%;
-  }
 `
 
 const EarningsCard = styled(ActionCard)`
@@ -310,9 +348,6 @@ const EarningsCard = styled(ActionCard)`
     img {
       display: block;
     }
-  }
-  @media (min-width: 2000px) {
-    min-width: 31%;
   }
 `
 
@@ -370,9 +405,6 @@ const EarningsWrapper = styled(Flex)`
 
 const EarningsContainer = styled.div`
   min-width: 160px;
-  @media (min-width: 2000px) {
-    min-width: 85%;
-  }
 `
 
 const Divider = styled.div`
@@ -407,12 +439,6 @@ const BalanceWrapper = styled.div`
 
 const Title = styled(Text)`
   color: ${({ theme }) => theme.colors.red};
-`
-
-const PendingCardWrapper = styled(Flex)`
-  @media (min-width: 2000px) {
-    min-width: 35%;
-  }
 `
 
 export default ActionPanel

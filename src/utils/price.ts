@@ -52,9 +52,10 @@ export const getSushiLpPrice = async (address) => {
 
 export const getLydiaLpPrice = async (address) => {
   const pair = await getLydiaPair(address)
-  const avaxPrice = await getAvaxPrice()
+  // const avaxPrice = await getAvaxPrice()
   const price = Number(pair.reserveUSD) / Number(pair.totalSupply)
-  return price ? avaxPrice * price : 1
+  // return price ? avaxPrice * price : 1
+  return price || 1
 }
 
 export const getAvaxPrice = async () => {

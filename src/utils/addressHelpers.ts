@@ -166,3 +166,11 @@ export const getClubPenguinMasterChefAddress = () => {
 export const getAvaxAddress = () => {
   return getAddress(addresses.avax)
 }
+
+export const getJoeTokenAddress = () => {
+  return getAddress(addresses.joe)
+}
+
+export const getPngTokenAddress = () => {
+  return getAddress(addresses.png)
+}

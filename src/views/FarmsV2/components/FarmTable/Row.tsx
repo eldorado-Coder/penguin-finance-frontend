@@ -33,6 +33,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
   const { isDark, theme } = useTheme()
   const joeToken = tokens.find((row) => row.symbol === 'JOE')
   const pngToken = tokens.find((row) => row.symbol === 'PNG')
+  const avaxToken = tokens.find((row) => row.symbol === 'AVAX')
   const { pendingTokens } = farm
 
   const getPendingTokensWithLogo = () => {
@@ -49,6 +50,11 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
     if (farm.type === 'Pangolin') {
       _pendingTokensWithLogo = _pendingTokensWithLogo.filter(
         (row) => row.address.toLowerCase() !== getAddress(joeToken.address).toLowerCase(),
+      )
+    }
+    if (farm.isJoeRushFinished) {
+      _pendingTokensWithLogo = _pendingTokensWithLogo.filter(
+        (row) => row.address.toLowerCase() !== getAddress(avaxToken.address).toLowerCase(),
       )
     }
     return _pendingTokensWithLogo
@@ -211,7 +217,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
                 return (
                   <td className="apr" key={key}>
                     <CellInner>
-                      <CellLayout label={!isIglooAprMode ? 'APY' : 'APR'}>
+                      <CellLayout label={isIglooAprMode ? 'APR' : 'APY'}>
                         <CustomToolTipOrigin data-for={`apr-tooltip-${index}`} data-tip={getAPRTooltip()}>
                           <AprBalanceWrapper>
                             <Balance
@@ -220,7 +226,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
                               color={isDark ? '#C74F51' : 'red'}
                               suffix="%"
                               decimals={2}
-                              value={!isIglooAprMode ? Number(farmApy) : Number(farmApr)}
+                              value={isIglooAprMode ? Number(farmApr) : Number(farmApy)}
                             />
                           </AprBalanceWrapper>
                         </CustomToolTipOrigin>
@@ -412,10 +418,6 @@ const TokensWrapper = styled.div`
 const PendingTokenLogo = styled.img`
   width: 24px;
   height: 24px;
-  @media (min-width: 2000px) {
-    width: 34px;
-    height: 34px;
-  }
   border-radius: 50%;
   margin: 2px 2px;
 `
