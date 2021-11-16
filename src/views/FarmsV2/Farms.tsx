@@ -39,7 +39,7 @@ const PROJECT_LIST = [
 ]
 
 const Farms: React.FC = () => {
-  const [sortType, setSortType] = useState('liquidity')
+  const [sortType, setSortType] = useState('hot')
   const [showStakedOnly, setShowStakedOnly] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const [activeProjects, setActiveProjects] = useState(PROJECT_LIST.map((row) => row.name))
@@ -188,6 +188,14 @@ const Farms: React.FC = () => {
     }
     if (sortType === 'apr') {
       farms = farms.sort((a, b) => b.apr - a.apr)
+    }
+    if (sortType === 'hot') {
+      farms = farms.sort((a, b) => b.totalLiquidityInUsd - a.totalLiquidityInUsd)
+      farms = farms.sort((a, b) => {
+        const aRank = a.hotRank || 0
+        const bRank = b.hotRank || 0
+        return bRank - aRank
+      })
     }
 
     return farms

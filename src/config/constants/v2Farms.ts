@@ -35,6 +35,8 @@ const v2Farms: V2FarmConfig[] = [
     displayedDecimals: 2,
     isMINW: false,
     isMINWFinished: true,
+    isHot: true,
+    hotRank: 3,
   },
   {
     pid: 1,
@@ -459,6 +461,8 @@ const v2Farms: V2FarmConfig[] = [
     isMINWFinished: true,
     isJoeRush: true,
     isJoeRushFinished: false,
+    isHot: true,
+    hotRank: 4,
   },
   {
     pid: 7,
@@ -655,6 +659,8 @@ const v2Farms: V2FarmConfig[] = [
     isMINWFinished: true,
     isJoeRush: true,
     isJoeRushFinished: false,
+    isHot: true,
+    hotRank: 1,
   },
   // sushi
   {
@@ -1057,6 +1063,8 @@ const v2Farms: V2FarmConfig[] = [
     name: 'pendingPEFI',
     displayedDecimals: 14,
     isBenqi: true,
+    isHot: true,
+    hotRank: 2,
   },
 ]
 

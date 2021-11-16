@@ -115,6 +115,8 @@ export interface V2FarmConfig {
   isMINWFinished?: true
   isJoeRush?: boolean
   isJoeRushFinished?: boolean
+  isHot?: boolean
+  hotRank?: number
 }
 
 export interface JoeV3FarmConfig {
