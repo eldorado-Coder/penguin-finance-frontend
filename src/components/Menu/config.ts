@@ -90,7 +90,7 @@ export const config: MenuEntry[] = [
       },
       {
         label: 'French',
-        href: 'https://penguin-finance.gitbook.io/penguin-finance-francais/',
+        href: 'https://penguin-finance.gitbook.io/penguin-finance-francais-1/',
       },
     ],
   },

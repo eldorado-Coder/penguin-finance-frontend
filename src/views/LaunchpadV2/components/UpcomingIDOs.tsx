@@ -2,20 +2,18 @@ import React from 'react'
 import styled from 'styled-components'
 import { Text } from 'penguinfinance-uikit2'
 import FlexLayout from 'components/layout/Flex'
-import IDOCard from './IDOCard';
+import IDOCard from './IDOCard'
 import { upcomingIDOs } from '../config'
 
 const UpcomingIDOs = () => {
   return (
     <>
-      <Label fontSize="36px" lineHeight='54px' mb="16px" fontWeight={500} color='white'>
+      <Label fontSize="36px" lineHeight="54px" mb="16px" fontWeight={500} color="white">
         Upcoming IDOs
       </Label>
       <StyledFlexLayout>
         {upcomingIDOs.map((idoData) => {
-          return (
-            <IDOCard idoData={idoData} />
-          )
+          return <IDOCard idoData={idoData} />
         })}
       </StyledFlexLayout>
     </>
@@ -25,6 +23,7 @@ const UpcomingIDOs = () => {
 const StyledFlexLayout = styled(FlexLayout)`
   margin-left: -8px;
   margin-right: -8px;
+  justify-content: inherit;
 
   @media (min-width: 640px) {
     margin-left: -16px;
