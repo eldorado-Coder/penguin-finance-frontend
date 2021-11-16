@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Text, Flex, Tag, Progress } from 'penguinfinance-uikit2'
-import FlexLayout from 'components/layout/Flex'
 import SvgIcon from 'components/SvgIcon';
 
 const IDOCard = ({ idoData }) => {
@@ -19,21 +18,21 @@ const IDOCard = ({ idoData }) => {
       </Flex>
       <Flex justifyContent='space-between' mb='18px'>
         <Flex>
-          <SvgIcon src={`${process.env.PUBLIC_URL}/images/launchpad/icons/user.svg`} width='18px' height='18px' />
+          <SvgIcon src={`${process.env.PUBLIC_URL}/images/launchpad-v2/icons/user.svg`} width='18px' height='18px' />
           <Flex flexDirection='column' alignItems='flex-start' ml='4px'>
             <DetailText fontSize='11px'>Participants</DetailText>
             <Text fontSize='14px' color='#C0378C' fontWeight={600}>9,974</Text>
           </Flex>
         </Flex>
         <Flex>
-          <SvgIcon src={`${process.env.PUBLIC_URL}/images/launchpad/icons/calendar.svg`} width='18px' height='18px' />
+          <SvgIcon src={`${process.env.PUBLIC_URL}/images/launchpad-v2/icons/calendar.svg`} width='18px' height='18px' />
           <Flex flexDirection='column' alignItems='flex-start' ml='4px'>
             <DetailText fontSize='11px'>Start Date</DetailText>
             <Text fontSize='14px' color='#C0378C' fontWeight={600}>10.21.2021</Text>
           </Flex>
         </Flex>
         <Flex>
-          <SvgIcon src={`${process.env.PUBLIC_URL}/images/launchpad/icons/wallet.svg`} width='18px' height='18px' />
+          <SvgIcon src={`${process.env.PUBLIC_URL}/images/launchpad-v2/icons/wallet.svg`} width='18px' height='18px' />
           <Flex flexDirection='column' alignItems='flex-start' ml='4px'>
             <DetailText fontSize='11px'>Token Price</DetailText>
             <Text fontSize='14px' color='#C0378C' fontWeight={600}>$0.081</Text>
@@ -48,14 +47,14 @@ const IDOCard = ({ idoData }) => {
       </ProgressWrapper>
       <Flex justifyContent='space-between' mt='18px' flexWrap='wrap'>
         <Flex>
-          <SvgIcon src={`${process.env.PUBLIC_URL}/images/launchpad/icons/time-circle.svg`} width='18px' height='18px' />
+          <SvgIcon src={`${process.env.PUBLIC_URL}/images/launchpad-v2/icons/time-circle.svg`} width='18px' height='18px' />
           <Flex flexDirection='column' alignItems='flex-start' ml='4px' mt='2px'>
             <DetailText fontSize='9px'>Time Until Launch</DetailText>
             <Text fontSize='9px' color='#C0378C'>Launched</Text>
           </Flex>
         </Flex>
         <Flex>
-          <SvgIcon src={`${process.env.PUBLIC_URL}/images/launchpad/icons/graph.svg`} width='18px' height='18px' />
+          <SvgIcon src={`${process.env.PUBLIC_URL}/images/launchpad-v2/icons/graph.svg`} width='18px' height='18px' />
           <Flex flexDirection='column' alignItems='flex-start' ml='4px' mt='2px'>
             <Flex>
               <DetailText fontSize='9px'>Tokens Sold:</DetailText>
@@ -68,7 +67,7 @@ const IDOCard = ({ idoData }) => {
           </Flex>
         </Flex>
         <Flex>
-          <SvgIcon src={`${process.env.PUBLIC_URL}/images/launchpad/icons/scan.svg`} width='18px' height='18px' />
+          <SvgIcon src={`${process.env.PUBLIC_URL}/images/launchpad-v2/icons/scan.svg`} width='18px' height='18px' />
           <Flex ml='4px' mt='2px'>
             <DetailText fontSize='9px' color='#6B6B6B'>Sales Progress:</DetailText>
             <Text fontSize='9px' color='#C0378C' ml='4px'>90%</Text>
