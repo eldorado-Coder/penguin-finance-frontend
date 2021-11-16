@@ -6,7 +6,37 @@ import UpcomingIDOs from './components/UpcomingIDOs';
 import CompletedIDOs from './components/CompletedIDOs';
 import AcoomalatingSteps from './components/AcoomalatingSteps';
 
+const TOP_TIER_PROJECTS = [
+  {
+    imgUrl: `${process.env.PUBLIC_URL}/images/launchpad/top-tier-projects/apply-project.png`,
+    name: 'apply-project',
+    link: 'https://docs.google.com/forms/u/2/d/e/1FAIpQLSdgM5oq-3shkNQeEhTGHP-JDiRY6Y3URaGnKCf6QVt4qSJVMA/viewform'
+  },
+  {
+    imgUrl: `${process.env.PUBLIC_URL}/images/launchpad/top-tier-projects/trader-joe.png`,
+    name: 'trader-joe',
+    link: 'https://traderjoexyz.com/#/trade?outputCurrency=0xe896CDeaAC9615145c0cA09C8Cd5C25bced6384c'
+  },
+  {
+    imgUrl: `${process.env.PUBLIC_URL}/images/launchpad/top-tier-projects/apply-project.png`,
+    name: 'pangolin',
+    link: 'https://app.pangolin.exchange/#/swap?outputCurrency=0xe896CDeaAC9615145c0cA09C8Cd5C25bced6384c'
+  },
+  {
+    imgUrl: `${process.env.PUBLIC_URL}/images/launchpad/top-tier-projects/lydia.png`,
+    name: 'lydia',
+    link: 'https://exchange.lydia.finance/#/swap?inputCurrency=0xe896cdeaac9615145c0ca09c8cd5c25bced6384c'
+  }
+]
 const Launchpad: React.FC = () => {
+  const handleLinkProject = projectLink => () => {
+    window.open(projectLink, '_blank');
+  };
+
+  const handleViewTelegramAnnouncements = () => {
+    window.open('https://t.me/pefi_announcements', '_blank');
+  };
+
   return (
     <div>
       <IgloosBannerContainer justifyContent='center'>
@@ -19,18 +49,15 @@ const Launchpad: React.FC = () => {
           <Description fontSize='24px' lineHeight='31px' color='white'>Stake iPEFI and earn allocations to invest in top-tier projects.</Description>
           <Description fontSize='24px' lineHeight='31px' color='white'>No KYC required.</Description>
           <TopTierProjects mt='32px'>
-            <img 
-              src={`${process.env.PUBLIC_URL}/images/launchpad/top-tier-projects/apply-project.png`} 
-              alt='apply-project' />
-            <img 
-              src={`${process.env.PUBLIC_URL}/images/launchpad/top-tier-projects/trader-joe.png`} 
-              alt='trader-joe' />
-            <img 
-              src={`${process.env.PUBLIC_URL}/images/launchpad/top-tier-projects/pangolin.png`} 
-              alt='pangolin' />
-            <img 
-              src={`${process.env.PUBLIC_URL}/images/launchpad/top-tier-projects/lydia.png`} 
-              alt='lydia' />
+            {TOP_TIER_PROJECTS.map(project => {
+              return (
+                <Text key={project.name} onClick={handleLinkProject(project.link)}>
+                  <img 
+                    src={project.imgUrl} 
+                    alt={project.name} />
+                </Text>
+              )
+            })}
           </TopTierProjects>
         </HeaderContainer>
       </IgloosBannerContainer>
@@ -39,6 +66,12 @@ const Launchpad: React.FC = () => {
         <AcoomalatingSteps />
         <UpcomingIDOs />
         <CompletedIDOs />
+        <Flex mt='80px' mb='80px' justifyContent='center'>
+          <AnnouncementText color='white' fontSize='25px'>
+            Subscribe to our <ViewChannel fontSize='25px' color='white' onClick={handleViewTelegramAnnouncements}>Telegram announcements channel</ViewChannel> to learn about new project launches as soon as possible.
+          </AnnouncementText>
+          <TelegramImage src={`${process.env.PUBLIC_URL}/images/launchpad/telegram.png`} alt='telegram' />
+        </Flex>
       </LaunchpadPage>
     </div>
   )
@@ -143,15 +176,10 @@ const HeaderContainer = styled.div`
 const TopTierProjects = styled(Flex)`
   flex-wrap: wrap;
   justify-content: center;
-  img {
-    cursor: pointer;
+  
+  div {
     margin-right: 16px;
     margin-bottom: 16px;
-    height: 40px;
-
-    @media (min-width: 968px) {
-      height: 64px;
-    }
 
     @media (min-width: 1200px) {
       margin-right: 32px;
@@ -162,10 +190,35 @@ const TopTierProjects = styled(Flex)`
       margin-right: 0;
     }
   }
+  img {
+    cursor: pointer;
+    height: 40px;
+
+    @media (min-width: 968px) {
+      height: 64px;
+    }
+  }
 
   @media (min-width: 968px) {
     justify-content: flex-start;
   }
+`;
+
+const AnnouncementText = styled(Text)`
+  max-width: 750px;
+  text-align: center;
+`;
+
+const ViewChannel = styled(Text)`
+  text-decoration: underline;
+  cursor: pointer;
+  display: inline;
+`;
+
+const TelegramImage = styled.img`
+  width: 48px;
+  height: 48px;
+  margin-left: 8px;
 `;
 
 export default Launchpad
