@@ -8,22 +8,22 @@ import AcoomalatingSteps from './components/AcoomalatingSteps';
 
 const TOP_TIER_PROJECTS = [
   {
-    imgUrl: `${process.env.PUBLIC_URL}/images/launchpad/top-tier-projects/apply-project.png`,
+    imgUrl: `${process.env.PUBLIC_URL}/images/launchpad-v2/top-tier-projects/apply-project.png`,
     name: 'apply-project',
     link: 'https://docs.google.com/forms/u/2/d/e/1FAIpQLSdgM5oq-3shkNQeEhTGHP-JDiRY6Y3URaGnKCf6QVt4qSJVMA/viewform'
   },
   {
-    imgUrl: `${process.env.PUBLIC_URL}/images/launchpad/top-tier-projects/trader-joe.png`,
+    imgUrl: `${process.env.PUBLIC_URL}/images/launchpad-v2/top-tier-projects/trader-joe.png`,
     name: 'trader-joe',
     link: 'https://traderjoexyz.com/#/trade?outputCurrency=0xe896CDeaAC9615145c0cA09C8Cd5C25bced6384c'
   },
   {
-    imgUrl: `${process.env.PUBLIC_URL}/images/launchpad/top-tier-projects/apply-project.png`,
+    imgUrl: `${process.env.PUBLIC_URL}/images/launchpad-v2/top-tier-projects/apply-project.png`,
     name: 'pangolin',
     link: 'https://app.pangolin.exchange/#/swap?outputCurrency=0xe896CDeaAC9615145c0cA09C8Cd5C25bced6384c'
   },
   {
-    imgUrl: `${process.env.PUBLIC_URL}/images/launchpad/top-tier-projects/lydia.png`,
+    imgUrl: `${process.env.PUBLIC_URL}/images/launchpad-v2/top-tier-projects/lydia.png`,
     name: 'lydia',
     link: 'https://exchange.lydia.finance/#/swap?inputCurrency=0xe896cdeaac9615145c0ca09c8cd5c25bced6384c'
   }
@@ -41,7 +41,7 @@ const Launchpad: React.FC = () => {
     <div>
       <IgloosBannerContainer justifyContent='center'>
         <BannerImage
-          src={`${process.env.PUBLIC_URL}/images/launchpad/launchpad-banner.png`}
+          src={`${process.env.PUBLIC_URL}/images/launchpad-v2/banner.png`}
           alt="launchpad banner"
         />
         <HeaderContainer>
@@ -70,7 +70,7 @@ const Launchpad: React.FC = () => {
           <AnnouncementText color='white' fontSize='25px'>
             Subscribe to our <ViewChannel fontSize='25px' color='white' onClick={handleViewTelegramAnnouncements}>Telegram announcements channel</ViewChannel> to learn about new project launches as soon as possible.
           </AnnouncementText>
-          <TelegramImage src={`${process.env.PUBLIC_URL}/images/launchpad/telegram.png`} alt='telegram' />
+          <TelegramImage src={`${process.env.PUBLIC_URL}/images/launchpad-v2/telegram.png`} alt='telegram' />
         </Flex>
       </LaunchpadPage>
     </div>
@@ -82,7 +82,7 @@ const LaunchpadPage = styled(Page)`
 `
 
 const LaunchpadBgContainer = styled.div`
-  background-image: url(/images/launchpad/background.svg);
+  background-image: url(/images/launchpad-v2/background.svg);
   background-repeat: repeat;
   background-size: contain;
   position: absolute;
