@@ -25,7 +25,7 @@ const IDOCard = ({ idoData }) => {
             fontWeight="600"
             prefix="$"
             decimals={0}
-            value={Number(idoData.totalRaised)}
+            value={(Number(idoData.totalRaised) * Number(idoData.saleProgress)) / 100}
           />
           <Balance
             fontSize="20px"
@@ -39,7 +39,7 @@ const IDOCard = ({ idoData }) => {
       </Flex>
       <Flex justifyContent="space-between" mb="18px">
         <Flex>
-          <SvgIcon src={`${process.env.PUBLIC_URL}/images/launchpad/icons/user.svg`} width="18px" height="18px" />
+          <SvgIcon src={`${process.env.PUBLIC_URL}/images/launchpad-v2/icons/user.svg`} width="18px" height="18px" />
           <Flex flexDirection="column" alignItems="flex-start" ml="4px">
             <DetailText fontSize="11px">Participants</DetailText>
             <Text fontSize="14px" color="#C0378C" fontWeight={600}>
@@ -48,7 +48,11 @@ const IDOCard = ({ idoData }) => {
           </Flex>
         </Flex>
         <Flex>
-          <SvgIcon src={`${process.env.PUBLIC_URL}/images/launchpad/icons/calendar.svg`} width="18px" height="18px" />
+          <SvgIcon
+            src={`${process.env.PUBLIC_URL}/images/launchpad-v2/icons/calendar.svg`}
+            width="18px"
+            height="18px"
+          />
           <Flex flexDirection="column" alignItems="flex-start" ml="4px">
             <DetailText fontSize="11px">Start Date</DetailText>
             <Text fontSize="14px" color="#C0378C" fontWeight={600}>
@@ -57,7 +61,7 @@ const IDOCard = ({ idoData }) => {
           </Flex>
         </Flex>
         <Flex>
-          <SvgIcon src={`${process.env.PUBLIC_URL}/images/launchpad/icons/wallet.svg`} width="18px" height="18px" />
+          <SvgIcon src={`${process.env.PUBLIC_URL}/images/launchpad-v2/icons/wallet.svg`} width="18px" height="18px" />
           <Flex flexDirection="column" alignItems="flex-start" ml="4px">
             <DetailText fontSize="11px">Token Price</DetailText>
             <Text fontSize="14px" color="#C0378C" fontWeight={600}>
@@ -75,7 +79,7 @@ const IDOCard = ({ idoData }) => {
       <Flex justifyContent="space-between" mt="18px" flexWrap="wrap">
         <Flex>
           <SvgIcon
-            src={`${process.env.PUBLIC_URL}/images/launchpad/icons/time-circle.svg`}
+            src={`${process.env.PUBLIC_URL}/images/launchpad-v2/icons/time-circle.svg`}
             width="18px"
             height="18px"
           />
@@ -87,7 +91,7 @@ const IDOCard = ({ idoData }) => {
           </Flex>
         </Flex>
         <Flex>
-          <SvgIcon src={`${process.env.PUBLIC_URL}/images/launchpad/icons/graph.svg`} width="18px" height="18px" />
+          <SvgIcon src={`${process.env.PUBLIC_URL}/images/launchpad-v2/icons/graph.svg`} width="18px" height="18px" />
           <Flex flexDirection="column" alignItems="flex-start" ml="4px" mt="2px">
             <Flex>
               <DetailText fontSize="9px">Tokens Sold:</DetailText>
@@ -104,7 +108,7 @@ const IDOCard = ({ idoData }) => {
           </Flex>
         </Flex>
         <Flex>
-          <SvgIcon src={`${process.env.PUBLIC_URL}/images/launchpad/icons/scan.svg`} width="18px" height="18px" />
+          <SvgIcon src={`${process.env.PUBLIC_URL}/images/launchpad-v2/icons/scan.svg`} width="18px" height="18px" />
           <Flex ml="4px" mt="2px">
             <DetailText fontSize="9px" color="#6B6B6B">
               Sales Progress:
