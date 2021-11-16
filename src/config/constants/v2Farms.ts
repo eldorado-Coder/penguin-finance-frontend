@@ -34,6 +34,7 @@ const v2Farms: V2FarmConfig[] = [
     name: 'pendingPEFI',
     displayedDecimals: 2,
     isMINW: false,
+    isMINWFinished: true,
   },
   {
     pid: 1,
@@ -99,6 +100,7 @@ const v2Farms: V2FarmConfig[] = [
     name: 'pendingPEFI',
     displayedDecimals: 2,
     isMINW: false,
+    isMINWFinished: true,
   },
   {
     pid: 3,
@@ -196,6 +198,7 @@ const v2Farms: V2FarmConfig[] = [
     name: 'pendingPEFI',
     displayedDecimals: 2,
     isMINW: false,
+    isMINWFinished: true,
   },
   {
     pid: 12,
@@ -353,38 +356,38 @@ const v2Farms: V2FarmConfig[] = [
     name: 'pendingPEFI',
     displayedDecimals: 2,
   },
-  // {
-  //   pid: 30,
-  //   lpSymbol: 'AVAX-SHERPA LP',
-  //   lpAddresses: {
-  //     43113: '',
-  //     43114: '0xd27688e195b5495a0ea29bb6e9248e535a58511e',
-  //   },
-  //   strategyAddresses: {
-  //     43113: '',
-  //     43114: '0xcc9e587f398f8e1b6a82cfb47fe35b1ffc572f35',
-  //   },
-  //   rewarderAddresses: {
-  //     43113: '',
-  //     43114: '0x0000000000000000000000000000000000000000',
-  //   },
-  //   tokenSymbol: 'SHERPA',
-  //   tokenAddresses: {
-  //     43113: '',
-  //     43114: '0xa5E59761eBD4436fa4d20E1A27cBa29FB2471Fc6',
-  //   },
-  //   pangolinRewardPoolAddresses: {
-  //     43113: '',
-  //     43114: '0x08B9A023e34Bad6Db868B699fa642Bf5f12Ebe76',
-  //   },
-  //   quoteTokenSymbol: QuoteToken.AVAX,
-  //   quoteTokenAddresses: contracts.wavax,
-  //   withdrawalFee: '0',
-  //   hardApy: '896.65%',
-  //   type: 'Pangolin',
-  //   name: 'pendingPEFI',
-  //   displayedDecimals: 5,
-  // },
+  {
+    pid: 30,
+    lpSymbol: 'AVAX-SHERPA LP',
+    lpAddresses: {
+      43113: '',
+      43114: '0xd27688e195b5495a0ea29bb6e9248e535a58511e',
+    },
+    strategyAddresses: {
+      43113: '',
+      43114: '0xcc9e587f398f8e1b6a82cfb47fe35b1ffc572f35',
+    },
+    rewarderAddresses: {
+      43113: '',
+      43114: '0x0000000000000000000000000000000000000000',
+    },
+    tokenSymbol: 'SHERPA',
+    tokenAddresses: {
+      43113: '',
+      43114: '0xa5E59761eBD4436fa4d20E1A27cBa29FB2471Fc6',
+    },
+    pangolinRewardPoolAddresses: {
+      43113: '',
+      43114: '0x99918c92655D6f8537588210cD3Ddd52312CB36d',
+    },
+    quoteTokenSymbol: QuoteToken.AVAX,
+    quoteTokenAddresses: contracts.wavax,
+    withdrawalFee: '0',
+    hardApy: '896.65%',
+    type: 'Pangolin',
+    name: 'pendingPEFI',
+    displayedDecimals: 5,
+  },
   // Joe pools
   {
     pid: 4,
@@ -418,6 +421,7 @@ const v2Farms: V2FarmConfig[] = [
     name: 'pendingPEFI',
     displayedDecimals: 5,
     isMINW: false,
+    isMINWFinished: true,
   },
   {
     pid: 5,
@@ -428,7 +432,8 @@ const v2Farms: V2FarmConfig[] = [
     },
     strategyAddresses: {
       43113: '',
-      43114: '0x100080bf670aa0afb3c575e718c78e9b426121cd',
+      // 43114: '0x100080bf670aa0afb3c575e718c78e9b426121cd', // old strategy
+      43114: '0xe90C5A8886049E8AEA7E097225146EEa0289C0CE',
     },
     rewarderAddresses: {
       43113: '',
@@ -451,6 +456,9 @@ const v2Farms: V2FarmConfig[] = [
     name: 'pendingPEFI',
     displayedDecimals: 5,
     isMINW: false,
+    isMINWFinished: true,
+    isJoeRush: true,
+    isJoeRushFinished: false,
   },
   {
     pid: 7,
@@ -644,7 +652,9 @@ const v2Farms: V2FarmConfig[] = [
     name: 'pendingPEFI',
     displayedDecimals: 6,
     isMINW: false,
+    isMINWFinished: true,
     isJoeRush: true,
+    isJoeRushFinished: false,
   },
   // sushi
   {
@@ -880,6 +890,7 @@ const v2Farms: V2FarmConfig[] = [
     name: 'pendingPEFI',
     displayedDecimals: 7,
     isJoeRush: true,
+    isJoeRushFinished: true,
   },
 
   {
@@ -947,6 +958,7 @@ const v2Farms: V2FarmConfig[] = [
     name: 'pendingPEFI',
     displayedDecimals: 7,
     isJoeRush: true,
+    isJoeRushFinished: true,
   },
   {
     pid: 28,
@@ -980,38 +992,38 @@ const v2Farms: V2FarmConfig[] = [
     name: 'pendingPEFI',
     displayedDecimals: 7,
   },
-  // {
-  //   pid: 31,
-  //   lpSymbol: 'Joe PEFI-MIM LP',
-  //   lpAddresses: {
-  //     43113: '',
-  //     43114: '0x1e1565914ac20ceea2f2d98971cecd43d5b4ed64',
-  //   },
-  //   strategyAddresses: {
-  //     43113: '',
-  //     43114: '0x845b8bd0d730d0bfae924622fb56bd09d44236dd',
-  //   },
-  //   rewarderAddresses: {
-  //     43113: '',
-  //     43114: '0x0000000000000000000000000000000000000000',
-  //   },
-  //   tokenSymbol: 'MIM',
-  //   tokenAddresses: {
-  //     43113: '',
-  //     43114: '0x130966628846BFd36ff31a822705796e8cb8C18D',
-  //   },
-  //   pangolinRewardPoolAddresses: {
-  //     43113: '',
-  //     43114: '0x0000000000000000000000000000000000000000',
-  //   },
-  //   quoteTokenSymbol: QuoteToken.PEFI,
-  //   quoteTokenAddresses: contracts.pefi,
-  //   withdrawalFee: '0',
-  //   hardApy: '896.65%',
-  //   type: 'Joe',
-  //   name: 'pendingPEFI',
-  //   displayedDecimals: 7,
-  // },
+  {
+    pid: 31,
+    lpSymbol: 'Joe PEFI-MIM LP',
+    lpAddresses: {
+      43113: '',
+      43114: '0x1e1565914ac20ceea2f2d98971cecd43d5b4ed64',
+    },
+    strategyAddresses: {
+      43113: '',
+      43114: '0x845b8bd0d730d0bfae924622fb56bd09d44236dd',
+    },
+    rewarderAddresses: {
+      43113: '',
+      43114: '0x0000000000000000000000000000000000000000',
+    },
+    tokenSymbol: 'MIM',
+    tokenAddresses: {
+      43113: '',
+      43114: '0x130966628846BFd36ff31a822705796e8cb8C18D',
+    },
+    pangolinRewardPoolAddresses: {
+      43113: '',
+      43114: '0x0000000000000000000000000000000000000000',
+    },
+    quoteTokenSymbol: QuoteToken.PEFI,
+    quoteTokenAddresses: contracts.pefi,
+    withdrawalFee: '0',
+    hardApy: '896.65%',
+    type: 'Joe',
+    name: 'pendingPEFI',
+    displayedDecimals: 7,
+  },
   // benqi pangolin lp igloo
   {
     pid: 29,

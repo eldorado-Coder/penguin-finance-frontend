@@ -4,6 +4,8 @@ import multicall from 'utils/multicall'
 import v2FarmsConfig from 'config/constants/v2Farms'
 import { getAddress } from 'utils/addressHelpers'
 import getV2FarmMasterChefAbi from 'utils/getV2FarmMasterChefAbi'
+import { getContract } from 'utils/web3';
+import v2FarmStrategyAbi from 'config/abi/lpStrategy.json'
 import getV2FarmMasterChefAddress from 'utils/getV2FarmMasterChefAddress'
 
 export const fetchFarmUserAllowances = async (account: string) => {
@@ -37,6 +39,14 @@ export const fetchFarmUserTokenBalances = async (account: string) => {
     return new BigNumber(tokenBalance).toJSON()
   })
   return parsedTokenBalances
+}
+
+export const fetchJoePefiAvaxPreviousRewardsClaimed = async (account: string) => {
+  const joePefiAvaxFarm = v2FarmsConfig.find(farm => farm.pid === 5);
+  const strategyContract = getContract(v2FarmStrategyAbi, getAddress(joePefiAvaxFarm.strategyAddresses));
+
+  const previousRewardsClaimed = await strategyContract.methods.previousRewardsClaimed(account).call();
+  return previousRewardsClaimed
 }
 
 export const fetchFarmUserStakedBalances = async (account: string) => {

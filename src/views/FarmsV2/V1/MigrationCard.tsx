@@ -1,4 +1,4 @@
-import { Flex, Button, Text, useMatchBreakpoints } from 'penguinfinance-uikit2'
+import { Flex, Button, Text, useMatchBreakpoints } from 'penguinfinance-uikit2';
 import React, { useRef } from 'react'
 import styled from 'styled-components'
 
@@ -23,7 +23,7 @@ const FCard = styled.div`
     max-width: 67%;
     width: 100%;
   }
-`
+`;
 
 const StyledButton = styled(Button)`
   width: 100%;
@@ -35,64 +35,54 @@ const StyledButton = styled(Button)`
     width: 200px;
     margin-top: 16px;
   }
-`
+`;
 
 const PangolinButton = styled(StyledButton)`
   background-color: #f97316;
   color: white;
-`
+`;
 
 const MigrationVideo = styled.video`
   width: 100%;
   border-radius: 16px;
-  /* adding max height to prevent video from going out of the visible field */
-  max-height: 500px;
 
   @media (min-width: 640px) {
     width: 100%;
     margin-right: 16px;
   }
-`
+`;
 
 const MigrationCard: React.FC = () => {
-  const videoRef = useRef(null)
+  const videoRef = useRef(null);
   const { isXl } = useMatchBreakpoints()
   const isMobile = !isXl
 
   const handleViewVideoGuide = () => {
     if (videoRef && videoRef.current) {
-      videoRef.current.play()
+      videoRef.current.play();
     }
-  }
+  };
 
   const handleViewTextGuide = () => {
-    window.open('https://docs.penguinfinance.io/summary/igloos-liquidity-staking/igloo-v2-migration-guide', '_blank')
-  }
+    window.open('https://docs.penguinfinance.io/summary/igloos-liquidity-staking/igloo-v2-migration-guide', '_blank');
+  };
 
   const handleGoPangolin = () => {
-    window.open('https://app.pangolin.exchange/#/swap', '_blank')
-  }
+    window.open('https://app.pangolin.exchange/#/swap', '_blank');
+  };
 
   return (
     <FCard>
-      <Flex justifyContent="center">
-        <Text fontSize="20px" color="textSubtle" bold>
-          Migration Guide
-        </Text>
+      <Flex justifyContent='center'>
+        <Text fontSize='20px' color='textSubtle' bold>Migration Guide</Text>
       </Flex>
-      <Flex justifyContent="center" mb="16px" flexWrap="wrap">
-        <PangolinButton scale={isMobile ? 'sm' : 'md'} onClick={handleGoPangolin}>
-          Go to Pangolin
-        </PangolinButton>
-        <StyledButton scale={isMobile ? 'sm' : 'md'} color="primary" onClick={handleViewVideoGuide}>
-          View Video Guide
-        </StyledButton>
-        <StyledButton scale={isMobile ? 'sm' : 'md'} color="primary" onClick={handleViewTextGuide}>
-          View Text Guide
-        </StyledButton>
+      <Flex justifyContent='center' mb='16px' flexWrap='wrap'>
+        <PangolinButton scale={isMobile ? 'sm' : 'md'} onClick={handleGoPangolin}>Go to Pangolin</PangolinButton>
+        <StyledButton scale={isMobile ? 'sm' : 'md'} color='primary' onClick={handleViewVideoGuide}>View Video Guide</StyledButton>
+        <StyledButton scale={isMobile ? 'sm' : 'md'} color='primary' onClick={handleViewTextGuide}>View Text Guide</StyledButton>
       </Flex>
       <MigrationVideo ref={videoRef} controls>
-        <source src="https://res.cloudinary.com/dbyunrpzq/video/upload/v1631220224/Penguin_Tutorial_qhw7b2.mp4" />
+        <source src='https://res.cloudinary.com/dbyunrpzq/video/upload/v1631220224/Penguin_Tutorial_qhw7b2.mp4' />
       </MigrationVideo>
     </FCard>
   )

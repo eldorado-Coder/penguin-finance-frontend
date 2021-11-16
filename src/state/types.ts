@@ -68,6 +68,7 @@ export interface V2Farm extends FarmConfig {
     userPendingTokens?: any[]
     userShares: BigNumber
     userIpefiDistributionBips?: BigNumber
+    previousRewardsClaimed?: boolean
   }
   pendingTokens?: any[]
   totalLp?: BigNumber
@@ -95,7 +96,9 @@ export interface V2Farm extends FarmConfig {
   swapDailyReward?: number
   isBenqi?: boolean
   isMINW?: boolean
+  isMINWFinished?: true
   isJoeRush?: boolean
+  isJoeRushFinished?: boolean
   // minw
   minwRewardToken?: string
   minwRewardPerSec?: string

@@ -243,7 +243,7 @@ const Farms: React.FC = () => {
       <Flex margin={isMobile ? '8px 0' : '8px 16px 8px 0'} justifyContent="center" alignItems="center">
         <CustomToolTipOrigin data-for="apr-tooltip" data-tip={getAPRTooltip()}>
           <TabWrapper>
-            <ButtonMenu activeIndex={!isIglooAprMode ? 0 : 1} onItemClick={handleSwitchTab} scale="sm">
+            <ButtonMenu activeIndex={isIglooAprMode ? 1 : 0} onItemClick={handleSwitchTab} scale="sm">
               <OptionItem active={!isIglooAprMode}>APY</OptionItem>
               <OptionItem active={isIglooAprMode}>APR</OptionItem>
             </ButtonMenu>
@@ -266,9 +266,9 @@ const Farms: React.FC = () => {
   const renderSearchAndSortFilter = (
     <Flex mb="16px">
       <Flex flexDirection="column">
-        <SearchTextWrapper fontSize="12px" textTransform="uppercase" color="textSubtle">
+        <Text fontSize="12px" textTransform="uppercase" color="textSubtle">
           Sort by
-        </SearchTextWrapper>
+        </Text>
         <SelectWrapper>
           <Select
             value={sortType}
@@ -284,9 +284,9 @@ const Farms: React.FC = () => {
         </SelectWrapper>
       </Flex>
       <Flex flexDirection="column" ml="16px">
-        <SearchTextWrapper fontSize="12px" textTransform="uppercase" color="textSubtle">
+        <Text fontSize="12px" textTransform="uppercase" color="textSubtle">
           Search
-        </SearchTextWrapper>
+        </Text>
         <StyledInput placeholder="Search Farms" value={searchTerm} onChange={handleChangeSearchTerm} />
       </Flex>
     </Flex>
@@ -357,9 +357,6 @@ const Farms: React.FC = () => {
 
 const FarmPage = styled(Page)`
   max-width: 1200px;
-  @media (min-width: 2000px) {
-    max-width: 3700px;
-  }
 `
 
 // bg
@@ -419,21 +416,11 @@ const TabWrapper = styled.div`
     border-radius: 18px;
   }
 `
-
-const SearchTextWrapper = styled(Text)`
-  @media (min-width: 2000px) {
-    font-size: 17px;
-  }
-`
-
 const OptionItem = styled(ButtonMenuItem)<{ active: boolean }>`
   min-width: 70px;
   background-color: ${({ active, theme }) => active && theme.colors.red};
   color: ${({ active }) => (active ? 'white' : '#b2b2ce')};
   margin: 0px !important;
-  @media (min-width: 2000px) {
-    font-size: 18px;
-  }
 `
 
 const SelectWrapper = styled.div`
@@ -467,10 +454,6 @@ const StyledInput = styled(Input)`
 const ProjectLogo = styled.img<{ isActive?: boolean }>`
   width: 40px;
   height: 40px;
-  @media (min-width: 2000px) {
-    width: 60px;
-    height: 60px;
-  }
   margin-left: 8px;
   margin-right: 8px;
   cursor: pointer;
@@ -479,9 +462,6 @@ const ProjectLogo = styled.img<{ isActive?: boolean }>`
 
 const FilterText = styled(Text)`
   white-space: nowrap;
-  @media (min-width: 2000px) {
-    font-size: 20px;
-  }
 `
 
 const FilterWrapper = styled(Flex)`
@@ -519,10 +499,6 @@ const ToggleWrapper = styled.div<{ checked?: boolean }>`
   div {
     height: 32px;
     width: 56px;
-    @media (min-width: 2000px) {
-      height: 42px;
-      width: 66px;
-    }
     background: ${({ checked, theme }) => theme.isDark && !checked && '#bba6dd'};
     background: ${({ checked, theme }) => theme.isDark && checked && '#d4444c'};
     background: ${({ checked, theme }) => !theme.isDark && checked && '#ec3e3f'};
@@ -531,11 +507,6 @@ const ToggleWrapper = styled.div<{ checked?: boolean }>`
       height: 24px;
       width: 24px;
       left: ${({ checked }) => checked && 'calc(100% - 28px) !important'};
-      @media (min-width: 2000px) {
-        height: 34px;
-        width: 34px;
-        left: ${({ checked }) => checked && 'calc(100% - 38px) !important'};
-      }
       background: white;
     }
   }

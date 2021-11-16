@@ -31,7 +31,7 @@ const Farm: React.FunctionComponent<FarmCardProps> = ({ farm }) => {
           <LpTag type={farm.type}>{farmType}</LpTag>
           {farm.isBenqi && <LpTag type="Benqi">BenQi</LpTag>}
           {farm.isMINW && <LpTag type="MINW">MINW</LpTag>}
-          {farm.isJoeRush && <LpTag type="Joe Rush">JOE Rush</LpTag>}
+          {farm.isJoeRush && !farm.isJoeRushFinished && <LpTag type="Joe Rush">JOE Rush</LpTag>}
         </TagContainer>
       </FarmLabelWrapper>
     </Container>
@@ -54,9 +54,6 @@ const Container = styled.div`
 const FarmLabel = styled(Text)`
   color: ${({ theme }) => theme.colors.textSubtle};
   white-space: nowrap;
-  @media (min-width: 2000px) {
-    font-size: 22px;
-  }
 `
 
 const FarmLabelWrapper = styled.div`
@@ -85,10 +82,6 @@ const MultiplierTag = styled(Tag)`
   background-color: ${({ theme }) => theme.colors.red};
   border-color: ${({ theme }) => theme.colors.red};
   color: white;
-  @media (min-width: 2000px) {
-    height: 25px;
-    font-size: 17px;
-  }
 `
 const LpTag = styled(Tag)<{ type?: string }>`
   height: 20px;
@@ -115,19 +108,11 @@ const LpTag = styled(Tag)<{ type?: string }>`
   color: white;
   font-size: 12px;
   border-radius: 8px;
-  @media (min-width: 2000px) {
-    height: 25px;
-    font-size: 17px;
-  }
 `
 
 const StyledImage = styled(Image)<{ isMobile?: boolean }>`
   width: 64px;
   height: 64px;
-  @media (min-width: 2000px) {
-    width: 76px;
-    height: 76px;
-  }
 `
 
 const InfoIconWrapper = styled.div`

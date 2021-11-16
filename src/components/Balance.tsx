@@ -27,9 +27,6 @@ const StyledText = styled(Text)<TextProps>`
   align-items: center;
   white-space: break-spaces;
   flex-wrap: ${({ isFlexWrap }) => isFlexWrap && 'wrap'};
-  @media (min-width: 2000px) {
-    font-size: 24px !important;
-  }
 `
 
 const BalanceWrapper = styled.span<{ isFlexWrap?: boolean }>`
