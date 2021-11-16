@@ -47,7 +47,7 @@ const upcomingIDOs = [
 const completedIDOs = [
   {
     tokenSymbol: 'BOOFI',
-    logo: 'boofi-logo.png',
+    logo: 'boofi_logo.png',
     completed: true,
     totalRaised: 250000,
     totalRaised1: 250000,
@@ -61,7 +61,7 @@ const completedIDOs = [
   },
   {
     tokenSymbol: 'SHERPA',
-    logo: 'boofi-logo.png',
+    logo: 'sherpa_logo.png',
     completed: true,
     totalRaised: 80394,
     totalRaised1: 91500,

@@ -42,6 +42,16 @@ const upcomingIcebergs = [
       'The fastest smart contracts platform for creating custom blockchain networks and decentralized applications (dApps).',
     url: 'https://www.avax.network',
   },
+  {
+    title: 'EVRT ICEBERG',
+    tag: 'Exchange',
+    // toDistribute: '43,000 BOOFI',
+    toDistribute: 'TBD',
+    tokenSymbol: 'PNG',
+    logo: 'pangolin_iceberg.svg',
+    description: `A community-driven decentralized exchanged on Avalanche. They've vastly improved the state of the Avalanche Ecosystem by helping new native projects.`,
+    url: 'https://www.everestoptions.net/dashboard',
+  },
 ]
 
 const previousIcebergs = [

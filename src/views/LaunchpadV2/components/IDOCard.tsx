@@ -5,12 +5,10 @@ import SvgIcon from 'components/SvgIcon'
 import Balance from 'components/Balance'
 
 const IDOCard = ({ idoData }) => {
-  const progressStep = 80
-
   return (
     <FCard>
       <Flex justifyContent="space-between" alignItems="center" mb="16px">
-        <IdoLogo src={`/images/launchpad/${idoData.logo}`} alt={idoData.title} height={36} />
+        <IdoLogo src={`/images/launchpad-v2/${idoData.logo}`} alt={idoData.title} height={36} />
         <IdoTag variant="primary" completed={idoData.completed}>
           {idoData.completed ? 'Completed' : 'In Progress'}
         </IdoTag>

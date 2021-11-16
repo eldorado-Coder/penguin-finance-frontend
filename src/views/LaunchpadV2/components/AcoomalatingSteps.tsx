@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Text, Flex, Tag, Progress } from 'penguinfinance-uikit2'
+import { Text, Flex } from 'penguinfinance-uikit2'
 import FlexLayout from 'components/layout/Flex'
 import useTheme from 'hooks/useTheme'
 
