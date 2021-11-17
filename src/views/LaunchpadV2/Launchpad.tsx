@@ -3,38 +3,40 @@ import styled from 'styled-components'
 import { Text, Flex } from 'penguinfinance-uikit2'
 import useTheme from 'hooks/useTheme'
 import Page from 'components/layout/Page'
-import UpcomingIDOs from './components/UpcomingIDOs'
-import CompletedIDOs from './components/CompletedIDOs'
-import AcoomalatingSteps from './components/AcoomalatingSteps'
+import SvgIcon from 'components/SvgIcon'
+import UpcomingIDOs from './components/UpcomingIDOs';
+import CompletedIDOs from './components/CompletedIDOs';
+import AcoomalatingSteps from './components/AcoomalatingSteps';
 
 const TOP_TIER_PROJECTS = [
   {
-    imgUrl: `${process.env.PUBLIC_URL}/images/launchpad-v2/top-tier-projects/apply-project.png`,
     name: 'apply-project',
-    link: 'https://docs.google.com/forms/u/2/d/e/1FAIpQLSdgM5oq-3shkNQeEhTGHP-JDiRY6Y3URaGnKCf6QVt4qSJVMA/viewform',
+    label: 'Apply as a project',
+    link: 'https://docs.google.com/forms/u/2/d/e/1FAIpQLSdgM5oq-3shkNQeEhTGHP-JDiRY6Y3URaGnKCf6QVt4qSJVMA/viewform'
   },
   {
-    imgUrl: `${process.env.PUBLIC_URL}/images/launchpad-v2/top-tier-projects/trader-joe.png`,
     name: 'trader-joe',
-    link: 'https://traderjoexyz.com/#/trade?outputCurrency=0xe896CDeaAC9615145c0cA09C8Cd5C25bced6384c',
+    label: 'Buy on trader joe',
+    link: 'https://traderjoexyz.com/#/trade?outputCurrency=0xe896CDeaAC9615145c0cA09C8Cd5C25bced6384c'
   },
   {
-    imgUrl: `${process.env.PUBLIC_URL}/images/launchpad-v2/top-tier-projects/apply-project.png`,
     name: 'pangolin',
-    link: 'https://app.pangolin.exchange/#/swap?outputCurrency=0xe896CDeaAC9615145c0cA09C8Cd5C25bced6384c',
+    label: 'Buy on pangolin',
+    link: 'https://app.pangolin.exchange/#/swap?outputCurrency=0xe896CDeaAC9615145c0cA09C8Cd5C25bced6384c'
   },
   {
-    imgUrl: `${process.env.PUBLIC_URL}/images/launchpad-v2/top-tier-projects/lydia.png`,
     name: 'lydia',
-    link: 'https://exchange.lydia.finance/#/swap?inputCurrency=0xe896cdeaac9615145c0ca09c8cd5c25bced6384c',
-  },
-]
-const Launchpad: React.FC = () => {
-  const theme = useTheme()
-
-  const handleLinkProject = (projectLink) => () => {
-    window.open(projectLink, '_blank')
+    label: 'Buy on lidia exchange',
+    link: 'https://exchange.lydia.finance/#/swap?inputCurrency=0xe896cdeaac9615145c0ca09c8cd5c25bced6384c'
   }
+]
+
+const Launchpad: React.FC = () => {
+  const { isDark } = useTheme();
+
+  const handleLinkProject = projectLink => () => {
+    window.open(projectLink, '_blank');
+  };
 
   const handleViewTelegramAnnouncements = () => {
     window.open('https://t.me/pefi_announcements', '_blank')
@@ -45,7 +47,7 @@ const Launchpad: React.FC = () => {
       <IgloosBannerContainer justifyContent="center">
         <BannerImage
           src={
-            theme.isDark
+            isDark
               ? `${process.env.PUBLIC_URL}/images/launchpad-v2/banners/dark_banner.png`
               : `${process.env.PUBLIC_URL}/images/launchpad-v2/banners/light_banner.png`
           }
@@ -62,11 +64,16 @@ const Launchpad: React.FC = () => {
             No KYC required.
           </Description>
           <TopTierProjects mt="32px">
-            {TOP_TIER_PROJECTS.map((project) => {
+            {TOP_TIER_PROJECTS.map(project => {
               return (
-                <Text key={project.name} onClick={handleLinkProject(project.link)}>
-                  <img src={project.imgUrl} alt={project.name} />
-                </Text>
+                <Project 
+                  justifyContent='center' 
+                  alignItems='center' 
+                  key={project.name} 
+                  onClick={handleLinkProject(project.link)}>
+                  <SvgIcon width='220px' height='64px' src={`${process.env.PUBLIC_URL}/images/launchpad-v2/button-frame.svg`} />
+                  <Text color='white' fontSize='18px' textTransform='uppercase'>{project.label}</Text>
+                </Project>
               )
             })}
           </TopTierProjects>
@@ -235,5 +242,29 @@ const TelegramImage = styled.img`
   height: 48px;
   margin-left: 8px;
 `
+
+const Project = styled(Flex)`
+  position: relative;
+  width: 220px;
+  height: 64px;
+
+  div {
+    &:first-child {
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    margin-bottom: 0;
+    white-space: nowrap;
+  }
+
+  &:hover {
+    svg {
+      fill: white;
+    }
+    cursor: pointer; 
+  }
+`;
 
 export default Launchpad
