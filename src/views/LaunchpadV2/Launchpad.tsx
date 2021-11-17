@@ -84,7 +84,7 @@ const Launchpad: React.FC = () => {
         <AcoomalatingSteps />
         <UpcomingIDOs />
         <CompletedIDOs />
-        <Flex mt="80px" mb="80px" justifyContent="center">
+        <Announcement mt="80px" mb="80px" justifyContent="center">
           <AnnouncementText color="white" fontSize="25px">
             Subscribe to our{' '}
             <ViewChannel fontSize="25px" color="white" onClick={handleViewTelegramAnnouncements}>
@@ -92,15 +92,17 @@ const Launchpad: React.FC = () => {
             </ViewChannel>{' '}
             to learn about new project launches as soon as possible.
           </AnnouncementText>
-          <TelegramImage src={`${process.env.PUBLIC_URL}/images/launchpad-v2/telegram.png`} alt="telegram" />
-        </Flex>
+          <TelegramImage 
+            onClick={handleViewTelegramAnnouncements} 
+            src={`${process.env.PUBLIC_URL}/images/launchpad-v2/telegram.png`} alt="telegram" />
+        </Announcement>
       </LaunchpadPage>
     </div>
   )
 }
 
 const LaunchpadPage = styled(Page)`
-  max-width: 1300px;
+  max-width: 1200px;
 `
 
 const LaunchpadBgContainer = styled.div`
@@ -243,18 +245,34 @@ const TopTierProjects = styled(Flex)`
 const AnnouncementText = styled(Text)`
   max-width: 750px;
   text-align: center;
+  font-size: 18px;
+
+  @media (min-width: 640px) {
+    font-size: 25px;
+  }
 `
 
 const ViewChannel = styled(Text)`
   text-decoration: underline;
   cursor: pointer;
   display: inline;
+  font-size: 18px;
+
+  @media (min-width: 640px) {
+    font-size: 25px;
+  }
 `
 
 const TelegramImage = styled.img`
   width: 48px;
   height: 48px;
-  margin-left: 8px;
+  margin-top: 8px;
+  cursor: pointer;
+
+  @media (min-width: 640px) {
+    margin-top: 0;
+    margin-left: 8px;
+  }
 `
 
 const ProjectTitle = styled(Text)`
@@ -328,6 +346,15 @@ const Project = styled(Flex)`
       z-index: 1;
       color: black;
     }
+  }
+`;
+
+const Announcement = styled(Flex)`
+  flex-direction: column;
+  align-items: center;
+
+  @media (min-width: 640px) {
+    flex-direction: row;
   }
 `;
 
