@@ -48,8 +48,8 @@ const Launchpad: React.FC = () => {
         <BannerImage
           src={
             isDark
-              ? `${process.env.PUBLIC_URL}/images/launchpad-v2/banners/dark_banner.png`
-              : `${process.env.PUBLIC_URL}/images/launchpad-v2/banners/light_banner.png`
+              ? `${process.env.PUBLIC_URL}/images/launchpad-v2/banners/dark_banner.jpg`
+              : `${process.env.PUBLIC_URL}/images/launchpad-v2/banners/light_banner.jpg`
           }
           alt="launchpad banner"
         />
@@ -72,7 +72,7 @@ const Launchpad: React.FC = () => {
                   key={project.name} 
                   onClick={handleLinkProject(project.link)}>
                   <SvgIcon width='220px' height='64px' src={`${process.env.PUBLIC_URL}/images/launchpad-v2/button-frame.svg`} />
-                  <Text color='white' fontSize='18px' textTransform='uppercase'>{project.label}</Text>
+                  <ProjectTitle color='white' fontSize='18px' textTransform='uppercase'>{project.label}</ProjectTitle>
                 </Project>
               )
             })}
@@ -154,8 +154,14 @@ const Description = styled(Text)`
   font-size: 16px;
   line-height: 24px;
   text-align: center;
+  text-shadow: 2px 2px #000000;
 
   @media (min-width: 968px) {
+    font-size: 20px;
+    line-height: 30px;
+  }
+
+  @media (min-width: 1080px) {
     font-size: 24px;
     line-height: 36px;
     text-align: left;
@@ -167,8 +173,14 @@ const HeaderTitle = styled(Text)`
   line-height: 32px;
   text-align: center;
   max-width: 1040px;
+  text-shadow: 2px 2px #000000;
 
   @media (min-width: 968px) {
+    font-size: 36px;
+    line-height: 48px;
+  }
+
+  @media (min-width: 1080px) {
     font-size: 48px;
     line-height: 72px;
     text-align: left;
@@ -189,8 +201,18 @@ const HeaderContainer = styled.div`
     margin: 60px 32px 0;
   }
 
-  @media (min-width: 1300px) {
-    min-width: 1236px;
+  @media (min-width: 1080px) {
+    min-width: calc(100% - 60px);
+    margin: 100px 24px 0;
+  }
+
+  @media (min-width: 1500px) {
+    min-width: 1450px;
+    margin: 100px 24px 0;
+  }
+
+  @media (min-width: 1720px) {
+    min-width: 1600px;
     margin: 100px 64px 0;
   }
 `
@@ -212,16 +234,8 @@ const TopTierProjects = styled(Flex)`
       margin-right: 0;
     }
   }
-  img {
-    cursor: pointer;
-    height: 40px;
 
-    @media (min-width: 968px) {
-      height: 64px;
-    }
-  }
-
-  @media (min-width: 968px) {
+  @media (min-width: 1080px) {
     justify-content: flex-start;
   }
 `
@@ -243,10 +257,36 @@ const TelegramImage = styled.img`
   margin-left: 8px;
 `
 
+const ProjectTitle = styled(Text)`
+  font-size: 10px;
+
+  @media (min-width: 640px) {
+    font-size: 10px;
+  }
+
+  @media (min-width: 968px) {
+    font-size: 13px;
+  }
+
+  @media (min-width: 1200px) {
+    font-size: 18px;
+  }
+`;
+
 const Project = styled(Flex)`
   position: relative;
-  width: 220px;
-  height: 64px;
+  width: 140px;
+  height: 40px;
+
+  @media (min-width: 968px) {
+    width: 165px;
+    height: 48px;
+  }
+
+  @media (min-width: 1200px) {
+    width: 230px;
+    height: 65px;
+  }
 
   div {
     &:first-child {
@@ -257,13 +297,37 @@ const Project = styled(Flex)`
     }
     margin-bottom: 0;
     white-space: nowrap;
+
+    svg {
+      width: 140px !important;
+      height: 40px;
+
+      @media (min-width: 968px) {
+        width: 165px !important;
+        height: 48px;
+      }
+  
+      @media (min-width: 1200px) {
+        width: 230px !important;
+        height: 65px;
+      }
+    }
   }
 
   &:hover {
     svg {
       fill: white;
+
+      .st1 {
+        fill: white;
+      }
     }
     cursor: pointer; 
+
+    div {
+      z-index: 1;
+      color: black;
+    }
   }
 `;
 
