@@ -386,14 +386,10 @@ const Farms: React.FC = () => {
 }
 
 const FarmPage = styled(Page)`
-<<<<<<< HEAD
-  max-width: 1200px;
-=======
   max-width: 1400px;
   @media (min-width: 2000px) {
     max-width: 3700px;
   }
->>>>>>> 2e6fc24 (feat: added live and finished slider on the farms page)
 `
 
 // bg

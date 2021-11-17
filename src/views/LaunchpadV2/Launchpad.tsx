@@ -30,8 +30,10 @@ const TOP_TIER_PROJECTS = [
     link: 'https://exchange.lydia.finance/#/swap?inputCurrency=0xe896cdeaac9615145c0ca09c8cd5c25bced6384c'
   }
 ]
+
 const Launchpad: React.FC = () => {
   const { isDark } = useTheme();
+
   const handleLinkProject = projectLink => () => {
     window.open(projectLink, '_blank');
   };
