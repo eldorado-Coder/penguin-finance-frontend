@@ -4,9 +4,9 @@ import { Text, Flex } from 'penguinfinance-uikit2'
 import useTheme from 'hooks/useTheme'
 import Page from 'components/layout/Page'
 import SvgIcon from 'components/SvgIcon'
-import UpcomingIDOs from './components/UpcomingIDOs'
-import CompletedIDOs from './components/CompletedIDOs'
-import AcoomalatingSteps from './components/AcoomalatingSteps'
+import UpcomingIDOs from './components/UpcomingIDOs';
+import CompletedIDOs from './components/CompletedIDOs';
+import AcoomalatingSteps from './components/AcoomalatingSteps';
 
 const TOP_TIER_PROJECTS = [
   {
@@ -31,11 +31,10 @@ const TOP_TIER_PROJECTS = [
   }
 ]
 const Launchpad: React.FC = () => {
-  const theme = useTheme()
-
-  const handleLinkProject = (projectLink) => () => {
-    window.open(projectLink, '_blank')
-  }
+  const { isDark } = useTheme();
+  const handleLinkProject = projectLink => () => {
+    window.open(projectLink, '_blank');
+  };
 
   const handleViewTelegramAnnouncements = () => {
     window.open('https://t.me/pefi_announcements', '_blank')
@@ -46,7 +45,7 @@ const Launchpad: React.FC = () => {
       <IgloosBannerContainer justifyContent="center">
         <BannerImage
           src={
-            theme.isDark
+            isDark
               ? `${process.env.PUBLIC_URL}/images/launchpad-v2/banners/dark_banner.png`
               : `${process.env.PUBLIC_URL}/images/launchpad-v2/banners/light_banner.png`
           }
