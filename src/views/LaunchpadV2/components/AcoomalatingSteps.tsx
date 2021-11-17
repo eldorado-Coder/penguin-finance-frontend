@@ -17,7 +17,7 @@ const AcoomalatingSteps = () => {
           <IdoLogoContainer>
             <PefiImg src='/images/penguin-finance-logo.svg' alt='pefi' />
           </IdoLogoContainer>
-          <Title fontSize='24px' mb='20px'>1. Get PEGI</Title>
+          <Title fontSize='24px' mb='20px'>1. Get PEFI</Title>
           <Description fontSize='18px'>
             To participate in the Penguin Launchpad, you’ll need to acquire PEFI first. You can get PEFI from an Avalanche DEX or by yield farming on the Igloos.
           </Description>

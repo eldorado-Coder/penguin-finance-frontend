@@ -26,6 +26,7 @@ const LaunchpadDistribution = lazy(() => import('./views/LaunchpadDistribution')
 const LaunchpadBoofi = lazy(() => import('./views/LaunchpadBoofi'))
 const LaunchpadV2 = lazy(() => import('./views/LaunchpadV2'))
 const Emperor = lazy(() => import('./views/Emperor'))
+const EmperorV2 = lazy(() => import('./views/EmperorV2'))
 // const CovidEmperor = lazy(() => import('./views/CovidEmperor'))
 const Club = lazy(() => import('./views/Club'))
 const NotFound = lazy(() => import('./views/NotFound'))
@@ -124,6 +125,9 @@ const App: React.FC = () => {
             </Route>
             <Route path="/emperor">
               <Emperor />
+            </Route>
+            <Route path="/emperor-v2">
+              <EmperorV2 />
             </Route>
             <Route path="/collectibles">
               <Collectibles />

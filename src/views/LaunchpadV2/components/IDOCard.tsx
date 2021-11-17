@@ -9,33 +9,41 @@ const IDOCard = ({ idoData }) => {
     <FCard>
       <Flex justifyContent="space-between" alignItems="center" mb="16px">
         <IdoLogo src={`/images/launchpad-v2/${idoData.logo}`} alt={idoData.title} height={36} />
-        <IdoTag variant="primary" completed={idoData.completed}>
-          {idoData.completed ? 'Completed' : 'In Progress'}
+        <IdoTag variant="primary" completed={idoData.isCompleted}>
+          {idoData.isCompleted ? 'Completed' : 'Coming Soon'}
         </IdoTag>
       </Flex>
       <Flex flexDirection="column" alignItems="flex-start" mb="12px">
-        <PriceText fontSize="12px" mb="8px">
-          1 {idoData.tokenSymbol} = 0,00113 AVAX
-        </PriceText>
+        {idoData.isCompleted && (
+          <PriceText fontSize="12px" mb="8px">
+            1 {idoData.tokenSymbol} = 0,00113 AVAX
+          </PriceText>
+        )}
         <DetailText fontSize="12px">Total Raised</DetailText>
-        <Flex>
-          <Balance
-            fontSize="20px"
-            color="#C0378C"
-            fontWeight="600"
-            prefix="$"
-            decimals={0}
-            value={(Number(idoData.totalRaised) * Number(idoData.saleProgress)) / 100}
-          />
-          <Balance
-            fontSize="20px"
-            color="#C0378C"
-            fontWeight="600"
-            prefix=" / "
-            decimals={0}
-            value={Number(idoData.totalRaised)}
-          />
-        </Flex>
+        {idoData.isCompleted ? (
+          <Flex>
+            <Balance
+              fontSize="20px"
+              color="#C0378C"
+              fontWeight="600"
+              prefix="$"
+              decimals={0}
+              value={(Number(idoData.totalRaised) * Number(idoData.saleProgress)) / 100}
+            />
+            <Balance
+              fontSize="20px"
+              color="#C0378C"
+              fontWeight="600"
+              prefix=" / "
+              decimals={0}
+              value={Number(idoData.totalRaised)}
+            />
+          </Flex>
+        ) : (
+          <Text fontSize="20px" color="#C0378C" fontWeight={600}>
+            ??? / ???
+          </Text>
+        )}
       </Flex>
       <Flex justifyContent="space-between" mb="18px">
         <Flex>
@@ -65,7 +73,7 @@ const IDOCard = ({ idoData }) => {
           <Flex flexDirection="column" alignItems="flex-start" ml="4px">
             <DetailText fontSize="11px">Token Price</DetailText>
             <Text fontSize="14px" color="#C0378C" fontWeight={600}>
-              {`$ ${idoData.tokenPrice}`}
+              {idoData.tokenPrice > 0 ? `$ ${idoData.tokenPrice}` : '???'}
             </Text>
           </Flex>
         </Flex>
@@ -86,7 +94,7 @@ const IDOCard = ({ idoData }) => {
           <Flex flexDirection="column" alignItems="flex-start" ml="4px" mt="2px">
             <DetailText fontSize="9px">Time Until Launch</DetailText>
             <Text fontSize="9px" color="#C0378C">
-              Launched
+              {idoData.status}
             </Text>
           </Flex>
         </Flex>

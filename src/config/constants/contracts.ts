@@ -151,6 +151,13 @@ export default {
     43113: '',
     43114: '0xaAD41CCf76c035DAF80d662584823215f2e0487D',
   },
+
+  // emperor manager
+  emperorManager: {
+    43113: '',
+    43114: '0x1edbef9bb950942297895b0f4e622df809200818',
+  },
+
   // launchpad Sherpa
   launchPad: {
     43113: '',
