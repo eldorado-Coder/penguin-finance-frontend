@@ -26,7 +26,7 @@ const TOP_TIER_PROJECTS = [
   },
   {
     name: 'lydia',
-    label: 'Buy on lidia exchange',
+    label: 'Buy on lydia exchange',
     link: 'https://exchange.lydia.finance/#/swap?inputCurrency=0xe896cdeaac9615145c0ca09c8cd5c25bced6384c'
   }
 ]
