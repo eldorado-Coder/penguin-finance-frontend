@@ -1,7 +1,8 @@
 const upcomingIDOs = [
   {
     tokenSymbol: 'BOOFI',
-    logo: 'penguin_logo.png',
+    whiteLogo: 'penguin_logo_white.svg',
+    darkLogo: 'penguin_logo_dark.svg',
     isCompleted: false,
     totalRaised: 0,
     returnToATH: 15,
@@ -18,7 +19,8 @@ const upcomingIDOs = [
 const completedIDOs = [
   {
     tokenSymbol: 'BOOFI',
-    logo: 'boofi_logo.png',
+    whiteLogo: 'boofi_logo_white.png',
+    darkLogo: 'boofi_logo_dark.png',
     isCompleted: true,
     totalRaised: 250000,
     returnToATH: 15,
@@ -32,7 +34,8 @@ const completedIDOs = [
   },
   {
     tokenSymbol: 'SHERPA',
-    logo: 'sherpa_logo.png',
+    whiteLogo: 'sherpa_logo_white.png',
+    darkLogo: 'sherpa_logo_dark.png',
     isCompleted: true,
     totalRaised: 91500,
     participants: 595,
