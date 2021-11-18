@@ -1,5 +1,4 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import { Text, Flex } from 'penguinfinance-uikit2'
 import FlexLayout from 'components/layout/Flex'
@@ -7,91 +6,51 @@ import useTheme from 'hooks/useTheme'
 
 const AcoomalatingSteps = () => {
   const { isDark } = useTheme();
-  const history = useHistory();
-
-  const handleStakePefi = () => {
-    history.push('/stake');
-  };
-
-  const handleRegisterIDO = () => {
-    const upcomingIdosElement = document.getElementById('upcoming-idos');
-    if (upcomingIdosElement) {
-      upcomingIdosElement.scrollIntoView({ block: "center", behavior: 'smooth' });
-    }
-  };
-
-  const handleBuyPefi = () => {
-    window.open('https://traderjoexyz.com/#/trade?outputCurrency=0xe896CDeaAC9615145c0cA09C8Cd5C25bced6384c', '_blank');
-  };
 
   return (
     <>
       <Label fontSize="40px" lineHeight='60px' mb="180px" fontWeight={500} color='white'>
-        3 Simple Steps to Start Acoomulating
+        3 Simle Steps to Start Acoomalating
       </Label>
       <StyledFlexLayout>
         <FCard>
           <IdoLogoContainer>
-            <PefiImg src="/images/penguin-finance-logo.svg" alt="pefi" />
+            <PefiImg src='/images/penguin-finance-logo.svg' alt='pefi' />
           </IdoLogoContainer>
-          <Title fontSize="24px" mb="20px">
-            1. Get PEFI
-          </Title>
-          <Description fontSize="16px">
-            To participate in the Penguin Launchpad, you’ll need to acquire PEFI first. You can get PEFI from an
-            Avalanche DEX or by yield farming on the Igloos.
+          <Title fontSize='24px' mb='20px'>1. Get PEFI</Title>
+          <Description fontSize='16px'>
+            To participate in the Penguin Launchpad, you’ll need to acquire PEFI first. You can get PEFI from an Avalanche DEX or by yield farming on the Igloos.
           </Description>
-          <BuyButton 
-            onClick={handleBuyPefi}
-            justifyContent='flex-end' 
-            alignItems='center' 
-            ml='auto' 
-            mt='16px'>
+          <Flex justifyContent='flex-end' alignItems='center' ml='auto' mt='16px'>
             <Title fontSize='18px'>Buy PEFI</Title>
             <ArrowRightImg src={`/images/launchpad/arrow-${isDark ? 'dark' : 'light'}.png`} alt='arrow-right' />
-          </BuyButton>
+          </Flex>
         </FCard>
         <FCard>
           <IdoLogoContainer>
-            <img src="/images/launchpad/ipefi.svg" alt="ipefi" />
+            <img src='/images/launchpad/ipefi.svg' alt='ipefi' />
           </IdoLogoContainer>
-          <Title fontSize="24px" mb="20px">
-            2. Stake PEFI for iPEFI
-          </Title>
-          <Description fontSize="16px">
-            Once you have PEFI in your wallet, you’ll want to stake it in the Nest to receive iPEFI. Our staking token
-            gives you access to IDOs, the Club, and the Penguin Emperor game.
+          <Title fontSize='24px' mb='20px'>2. Stake PEFI for iPEFI</Title>
+          <Description fontSize='16px'>
+            Once you have PEFI in your wallet, you’ll want to stake it in the Nest to receive iPEFI. Our staking token gives you access to IDOs, the Club, and the Penguin Emperor game.  
           </Description>
-          <BuyButton 
-            onClick={handleStakePefi}
-            justifyContent='flex-end' 
-            alignItems='center' 
-            ml='auto' 
-            mt='16px'>
-            <Title fontSize='18px'>Stake PEFI</Title>
+          <Flex justifyContent='flex-end' alignItems='center' ml='auto' mt='16px'>
+            <Title fontSize='18px'>Buy PEFI</Title>
             <ArrowRightImg src={`/images/launchpad/arrow-${isDark ? 'dark' : 'light'}.png`} alt='arrow-right' />
-          </BuyButton>
+          </Flex>
         </FCard>
         <FCard>
           <IdoLogoContainer>
-            <img src="/images/launchpad/cyborgpefi.svg" alt="ido" />
+            <img src='/images/launchpad/cyborgpefi.svg' alt='ido' />
           </IdoLogoContainer>
-          <Title fontSize="24px" mb="20px">
-            3. Register for an IDO
-          </Title>
-          <Description fontSize="16px">
-            By holding iPEFI, you can now register for upcoming IDOs and receive allocations based on your iPEFI amount.
-            The more iPEFI you hold, the more allocations you get!
+          <Title fontSize='24px' mb='20px'>3. Register for an IDO</Title>
+          <Description fontSize='16px'>
+            By holding iPEFI, you can now register for upcoming IDOs and receive allocations based on your iPEFI amount. The more iPEFI you hold, the more allocations you get!
           </Description>
-          <BuyButton 
-            onClick={handleRegisterIDO}
-            justifyContent='flex-end' 
-            alignItems='center' 
-            ml='auto' 
-            mt='16px'>
-            <Title fontSize='18px'>Register for an IDO</Title>
+          <Flex justifyContent='flex-end' alignItems='center' ml='auto' mt='16px'>
+            <Title fontSize='18px'>Buy PEFI</Title>
             <ArrowRightImg src={`/images/launchpad/arrow-${isDark ? 'dark' : 'light'}.png`} alt='arrow-right' />
-          </BuyButton>
+          </Flex>
         </FCard>
       </StyledFlexLayout>
     </>
@@ -100,7 +59,7 @@ const AcoomalatingSteps = () => {
 
 const FCard = styled.div`
   align-self: baseline;
-  background: ${(props) => (props.theme.isDark ? '#2E264C' : '#fff')};
+  background: ${(props) => props.theme.isDark ? '#2E264C' : '#fff'};
   border-radius: 16px;
   box-shadow: 4px 4px 32px rgba(165, 165, 165, 0.25);
   backdrop-filter: blur(38px);
@@ -122,7 +81,7 @@ const FCard = styled.div`
 const Description = styled(Text)`
   font-family: 'Fira Code';
   text-align: left;
-  color: ${({ theme }) => (theme.isDark ? '#fff' : '#474747')};
+  color: ${({ theme }) => theme.isDark ? '#fff' : '#474747'};
   min-height: unset;
 
   @media (min-width: 768px) {
@@ -132,7 +91,7 @@ const Description = styled(Text)`
     min-height: 150px;
     font-size: 16px;
   }
-`
+`;
 
 const StyledFlexLayout = styled(FlexLayout)`
   margin-left: -8px;
@@ -188,26 +147,22 @@ const IdoLogoContainer = styled.div`
     width: 90%;
     margin-top: 10%;
   }
-`
+`;
 
 const PefiImg = styled.img`
   width: 96% !important;
   margin-top: 2% !important;
-`
+`;
 
 const ArrowRightImg = styled.img`
   width: 24px;
   height: 24px;
   margin-left: 8px;
   cursor: pointer;
-`
+`;
 
 const Title = styled(Text)`
-  color: ${({ theme }) => (theme.isDark ? 'white' : '#000')};
-`
-
-const BuyButton = styled(Flex)`
-  cursor: pointer;
+  color: ${({ theme }) => theme.isDark ? 'white' : '#000'};
 `;
 
 export default AcoomalatingSteps

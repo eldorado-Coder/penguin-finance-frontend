@@ -1,33 +1,16 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import { Text, Flex } from 'penguinfinance-uikit2'
 import FlexLayout from 'components/layout/Flex'
 import useTheme from 'hooks/useTheme'
 
 const AcoomalatingSteps = () => {
-  const { isDark } = useTheme();
-  const history = useHistory();
-
-  const handleStakePefi = () => {
-    history.push('/stake');
-  };
-
-  const handleRegisterIDO = () => {
-    const upcomingIdosElement = document.getElementById('upcoming-idos');
-    if (upcomingIdosElement) {
-      upcomingIdosElement.scrollIntoView({ block: "center", behavior: 'smooth' });
-    }
-  };
-
-  const handleBuyPefi = () => {
-    window.open('https://traderjoexyz.com/#/trade?outputCurrency=0xe896CDeaAC9615145c0cA09C8Cd5C25bced6384c', '_blank');
-  };
+  const { isDark } = useTheme()
 
   return (
     <>
-      <Label fontSize="40px" lineHeight='60px' mb="180px" fontWeight={500} color='white'>
-        3 Simple Steps to Start Acoomulating
+      <Label fontSize="40px" lineHeight="60px" mb="180px" fontWeight={500} color="white">
+        3 Simle Steps to Start Acooomulating
       </Label>
       <StyledFlexLayout>
         <FCard>
@@ -41,15 +24,10 @@ const AcoomalatingSteps = () => {
             To participate in the Penguin Launchpad, you’ll need to acquire PEFI first. You can get PEFI from an
             Avalanche DEX or by yield farming on the Igloos.
           </Description>
-          <BuyButton 
-            onClick={handleBuyPefi}
-            justifyContent='flex-end' 
-            alignItems='center' 
-            ml='auto' 
-            mt='16px'>
-            <Title fontSize='18px'>Buy PEFI</Title>
-            <ArrowRightImg src={`/images/launchpad/arrow-${isDark ? 'dark' : 'light'}.png`} alt='arrow-right' />
-          </BuyButton>
+          <Flex justifyContent="flex-end" alignItems="center" ml="auto" mt="16px">
+            <Title fontSize="18px">Buy PEFI</Title>
+            <ArrowRightImg src={`/images/launchpad/arrow-${isDark ? 'dark' : 'light'}.png`} alt="arrow-right" />
+          </Flex>
         </FCard>
         <FCard>
           <IdoLogoContainer>
@@ -62,15 +40,10 @@ const AcoomalatingSteps = () => {
             Once you have PEFI in your wallet, you’ll want to stake it in the Nest to receive iPEFI. Our staking token
             gives you access to IDOs, the Club, and the Penguin Emperor game.
           </Description>
-          <BuyButton 
-            onClick={handleStakePefi}
-            justifyContent='flex-end' 
-            alignItems='center' 
-            ml='auto' 
-            mt='16px'>
-            <Title fontSize='18px'>Stake PEFI</Title>
-            <ArrowRightImg src={`/images/launchpad/arrow-${isDark ? 'dark' : 'light'}.png`} alt='arrow-right' />
-          </BuyButton>
+          <Flex justifyContent="flex-end" alignItems="center" ml="auto" mt="16px">
+            <Title fontSize="18px">Buy PEFI</Title>
+            <ArrowRightImg src={`/images/launchpad/arrow-${isDark ? 'dark' : 'light'}.png`} alt="arrow-right" />
+          </Flex>
         </FCard>
         <FCard>
           <IdoLogoContainer>
@@ -83,15 +56,10 @@ const AcoomalatingSteps = () => {
             By holding iPEFI, you can now register for upcoming IDOs and receive allocations based on your iPEFI amount.
             The more iPEFI you hold, the more allocations you get!
           </Description>
-          <BuyButton 
-            onClick={handleRegisterIDO}
-            justifyContent='flex-end' 
-            alignItems='center' 
-            ml='auto' 
-            mt='16px'>
-            <Title fontSize='18px'>Register for an IDO</Title>
-            <ArrowRightImg src={`/images/launchpad/arrow-${isDark ? 'dark' : 'light'}.png`} alt='arrow-right' />
-          </BuyButton>
+          <Flex justifyContent="flex-end" alignItems="center" ml="auto" mt="16px">
+            <Title fontSize="18px">Buy PEFI</Title>
+            <ArrowRightImg src={`/images/launchpad/arrow-${isDark ? 'dark' : 'light'}.png`} alt="arrow-right" />
+          </Flex>
         </FCard>
       </StyledFlexLayout>
     </>
@@ -205,9 +173,5 @@ const ArrowRightImg = styled.img`
 const Title = styled(Text)`
   color: ${({ theme }) => (theme.isDark ? 'white' : '#000')};
 `
-
-const BuyButton = styled(Flex)`
-  cursor: pointer;
-`;
 
 export default AcoomalatingSteps

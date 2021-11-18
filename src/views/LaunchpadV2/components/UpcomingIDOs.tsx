@@ -8,7 +8,7 @@ import { upcomingIDOs } from '../config'
 const UpcomingIDOs = () => {
   return (
     <>
-      <Label fontSize="40px" lineHeight="60px" mb="16px" fontWeight={500} color="white">
+      <Label id='upcoming-idos' fontSize="40px" lineHeight="60px" mb="16px" fontWeight={500} color="white">
         Upcoming IDOs
       </Label>
       <StyledFlexLayout>
