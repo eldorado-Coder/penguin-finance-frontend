@@ -13,11 +13,13 @@ import useTheme from 'hooks/useTheme'
 import { SECONDS_PER_DAY } from 'config'
 import useTokenPrice from 'hooks/useTokenPrice'
 import Card from '../../Card'
+import CountDown from '../../CountDown'
 import { getCutdownType } from '../../../utils'
 import { useClubPenguinHarvest } from '../../../hooks'
 
 const EvrtCard = () => {
   const [pendingTx, setPendingTx] = useState(false)
+  const [timerEnded, setTimerEnded] = useState(false)
   const { isXl } = useMatchBreakpoints()
   const { account } = useWeb3React()
   const { onHarvest } = useClubPenguinHarvest(1)
@@ -58,6 +60,10 @@ const EvrtCard = () => {
     } catch {
       setPendingTx(false)
     }
+  }
+
+  const handleTimerCompleted = async () => {
+    setTimerEnded(true)
   }
 
   const handleViewWebsite = () => {
@@ -136,6 +142,22 @@ const EvrtCard = () => {
             >
               Harvest All
             </HarvestButton>
+          </Flex>
+          <Flex className="col" flexDirection="column" alignItems="flex-start">
+            <Label fontSize={isMobile ? '16px' : '20px'} fontWeight={700} lineHeight={1}>
+              {timerEnded || currentTimestamp > cutdownDate ? (
+                'ENDED'
+              ) : (
+                <>{cutdownType === 'start' ? 'STARTS IN' : 'ENDS IN'}</>
+              )}
+            </Label>
+            <CutdownBalance fontSize="22px" fontWeight={400}>
+              {cutdownDate > 0 && (
+                <div className="countdown">
+                  <CountDown date={timerEnded ? currentTimestamp : cutdownDate} handleComplete={handleTimerCompleted} />
+                </div>
+              )}
+            </CutdownBalance>
           </Flex>
         </FlexContainer>
       </>
