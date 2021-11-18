@@ -103,6 +103,9 @@ export interface V2Farm extends FarmConfig {
   minwRewardToken?: string
   minwRewardPerSec?: string
   joeStakingApy?: number
+  // hot
+  isHot?: boolean
+  hotRank?: number
 }
 
 export interface Lp extends LPConfig {
