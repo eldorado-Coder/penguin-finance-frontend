@@ -86,11 +86,11 @@ const Launchpad: React.FC = () => {
         <CompletedIDOs />
         <Announcement mt="80px" mb="80px" justifyContent="center">
           <AnnouncementText color="white" fontSize="25px">
-            Subscribe to our{' '}
+            {`Subscribe to our `}
             <ViewChannel fontSize="25px" color="white" onClick={handleViewTelegramAnnouncements}>
               Telegram announcements channel
-            </ViewChannel>{' '}
-            to learn about new project launches as soon as possible.
+            </ViewChannel>
+            {` to learn about new project launches as soon as possible.`}
           </AnnouncementText>
           <TelegramImage 
             onClick={handleViewTelegramAnnouncements} 
