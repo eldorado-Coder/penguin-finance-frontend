@@ -2,11 +2,14 @@ import React from 'react'
 import styled from 'styled-components'
 import { Text, Flex, Tag, Progress } from 'penguinfinance-uikit2'
 import useTheme from 'hooks/useTheme'
+import { usePriceAvaxUsdt } from 'state/hooks'
+
 import SvgIcon from 'components/SvgIcon'
 import Balance from 'components/Balance'
 
 const IDOCard = ({ idoData }) => {
   const { isDark } = useTheme()
+  const avaxPriceInUsd = usePriceAvaxUsdt().toNumber()
 
   return (
     <FCard>
@@ -27,7 +30,7 @@ const IDOCard = ({ idoData }) => {
       <Flex flexDirection="column" alignItems="flex-start" mb="12px">
         {idoData.isCompleted && (
           <PriceText fontSize="12px" mb="8px">
-            1 {idoData.tokenSymbol} = 0,00113 AVAX
+            1 {idoData.tokenSymbol} = {`${(idoData.tokenPrice / avaxPriceInUsd).toFixed(5)} AVAX`}
           </PriceText>
         )}
         <DetailText fontSize="12px">Total Raised</DetailText>
