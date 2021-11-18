@@ -67,7 +67,7 @@ const EvrtCard = () => {
   }
 
   const handleViewWebsite = () => {
-    window.open('https://verso.finance/', '_blank')
+    window.open('https://www.evrt.app/', '_blank')
   }
 
   const renderIcebergInfos = () => {
@@ -172,7 +172,7 @@ const EvrtCard = () => {
             <div>
               <Flex alignItems="center" flexWrap="wrap" justifyContent="flex-start">
                 <LogoWrapper isMobile mr="32px" alignItems="center">
-                  <img src="/images/club/verso_iceberg.svg" alt="vso" />
+                  <img src="/images/club/evrt_iceberg.svg" alt="evrt" />
                 </LogoWrapper>
                 <StyledTitle>
                   <Label
@@ -191,7 +191,7 @@ const EvrtCard = () => {
           ) : (
             <Flex alignItems="flex-start" flexWrap="wrap" justifyContent="space-between">
               <LogoWrapper mt="16px" mr="16px" alignItems="center">
-                <img src="/images/club/verso_iceberg.svg" alt="verso" />
+                <img src="/images/club/evrt_iceberg.svg" alt="evrt" />
               </LogoWrapper>
               <StyledTitle>
                 <Label whiteSpace="wrap" fontSize="40px" fontWeight={600} lineHeight={1}>
