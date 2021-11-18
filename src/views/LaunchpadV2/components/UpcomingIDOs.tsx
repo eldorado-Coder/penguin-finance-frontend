@@ -8,7 +8,7 @@ import { upcomingIDOs } from '../config'
 const UpcomingIDOs = () => {
   return (
     <>
-      <Label fontSize="36px" lineHeight="54px" mb="16px" fontWeight={500} color="white">
+      <Label fontSize="40px" lineHeight="60px" mb="16px" fontWeight={500} color="white">
         Upcoming IDOs
       </Label>
       <StyledFlexLayout>
@@ -21,26 +21,18 @@ const UpcomingIDOs = () => {
 }
 
 const StyledFlexLayout = styled(FlexLayout)`
-  margin-left: -8px;
-  margin-right: -8px;
-  justify-content: inherit;
+  justify-content: center;
 
   @media (min-width: 640px) {
-    margin-left: -16px;
-    margin-right: -16px;
-  }
-
-  @media (min-width: 1400px) {
-    margin-left: -32px;
-    margin-right: -32px;
+    margin-left: -8px;
+    margin-right: -8px;
+    justify-content: inherit;
   }
 
   & > * {
     @media (min-width: 1400px) {
-      margin-left: 16px;
-      margin-right: 16px;
       min-width: 320px;
-      max-width: 30%;
+      max-width: 31.5%;
       width: 100%;
     }
   }
@@ -52,8 +44,8 @@ const Label = styled(Text)`
   line-height: 36px;
 
   @media (min-width: 968px) {
-    font-size: 36px;
-    line-height: 54px;
+    font-size: 40px;
+    line-height: 60px;
     text-align: left;
   }
 `

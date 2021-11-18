@@ -7,7 +7,7 @@ const ArtworkCard = () => {
   const isMobile = !isXl
   const onClickArtworkV2Card = () => {
     window.open(
-      'https://penguin-finance.medium.com/an-epic-winter-is-coming-to-penguin-finance-%EF%B8%8F-d207a2eab3cd',
+      'https://penguin-finance.medium.com/the-penguin-launchpad-is-back-avalanches-first-fairest-fundraising-protocol-e03e18857d83',
       '_blank',
     )
   }
@@ -44,7 +44,7 @@ const StyledArtworkCardBg = styled.div`
   height: 100%;
   background-size: cover;
   background-position: center center;
-  background-image: url('/images/home/winter.jpg');
+  background-image: url('/images/home/launchpad.jpg');
   cursor: pointer;
 `
 

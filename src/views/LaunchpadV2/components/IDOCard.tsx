@@ -48,7 +48,7 @@ const IDOCard = ({ idoData }) => {
       <Flex justifyContent="space-between" mb="18px">
         <Flex>
           <SvgIcon src={`${process.env.PUBLIC_URL}/images/launchpad-v2/icons/user.svg`} width="18px" height="18px" />
-          <Flex flexDirection="column" alignItems="flex-start" ml="4px">
+          <Flex flexDirection="column" alignItems="flex-start" ml="2px">
             <DetailText fontSize="11px">Participants</DetailText>
             <Text fontSize="14px" color="#C0378C" fontWeight={600}>
               {idoData.participants}
@@ -61,7 +61,7 @@ const IDOCard = ({ idoData }) => {
             width="18px"
             height="18px"
           />
-          <Flex flexDirection="column" alignItems="flex-start" ml="4px">
+          <Flex flexDirection="column" alignItems="flex-start" ml="2px">
             <DetailText fontSize="11px">Start Date</DetailText>
             <Text fontSize="14px" color="#C0378C" fontWeight={600}>
               {idoData.startDate}
@@ -70,7 +70,7 @@ const IDOCard = ({ idoData }) => {
         </Flex>
         <Flex>
           <SvgIcon src={`${process.env.PUBLIC_URL}/images/launchpad-v2/icons/wallet.svg`} width="18px" height="18px" />
-          <Flex flexDirection="column" alignItems="flex-start" ml="4px">
+          <Flex flexDirection="column" alignItems="flex-start" ml="2px">
             <DetailText fontSize="11px">Token Price</DetailText>
             <Text fontSize="14px" color="#C0378C" fontWeight={600}>
               {idoData.tokenPrice > 0 ? `$ ${idoData.tokenPrice}` : '???'}
@@ -91,7 +91,7 @@ const IDOCard = ({ idoData }) => {
             width="18px"
             height="18px"
           />
-          <Flex flexDirection="column" alignItems="flex-start" ml="4px" mt="2px">
+          <Flex flexDirection="column" alignItems="flex-start" ml="2px" mt="2px">
             <DetailText fontSize="9px">Time Until Launch</DetailText>
             <Text fontSize="9px" color="#C0378C">
               {idoData.status}
@@ -103,13 +103,13 @@ const IDOCard = ({ idoData }) => {
           <Flex flexDirection="column" alignItems="flex-start" ml="4px" mt="2px">
             <Flex>
               <DetailText fontSize="9px">Tokens Sold:</DetailText>
-              <Text fontSize="9px" color="#C0378C" ml="4px">
+              <Text fontSize="9px" color="#C0378C" ml="2px">
                 {idoData.soldTokenAmount}
               </Text>
             </Flex>
             <Flex>
               <DetailText fontSize="9px">Tokens Distribution:</DetailText>
-              <Text fontSize="9px" color="#C0378C" ml="4px">
+              <Text fontSize="9px" color="#C0378C" ml="2px">
                 {idoData.distributedTokenAmount}
               </Text>
             </Flex>
@@ -121,7 +121,7 @@ const IDOCard = ({ idoData }) => {
             <DetailText fontSize="9px" color="#6B6B6B">
               Sales Progress:
             </DetailText>
-            <Text fontSize="9px" color="#C0378C" ml="4px">
+            <Text fontSize="9px" color="#C0378C" ml="2px">
               {`${idoData.saleProgress}%`}
             </Text>
           </Flex>
@@ -140,7 +140,7 @@ const FCard = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  padding: 24px;
+  padding: 24px 20px;
   position: relative;
   text-align: center;
 
