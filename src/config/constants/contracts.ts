@@ -183,6 +183,10 @@ export default {
     43113: '',
     43114: '0x846D50248BAf8b7ceAA9d9B53BFd12d7D7FBB25a',
   },
+  evrt: {
+    43113: '',
+    43114: '0x3aca5545e76746a3fe13ea66b24bc0ebcc51e6b4',
+  },
 
   // launchpad - Boofi
   launchPadBoofi: {

@@ -1,19 +1,19 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Text, Flex } from 'penguinfinance-uikit2'
-import VersoCard from './verso/VersoCard'
-import VersoStakeCard from './verso/VersoStakeCard/StakeCard'
+import EvrtCard from './evrt/EvrtCard'
+import EvrtStakeCard from './evrt/EvrtStakeCard/StakeCard'
 
 const CurrentIcebergs = () => {
   return (
     <>
       <Label fontSize="24px" mt="32px" mb="16px" fontWeight={600}>
-        Current Icebergs
+        Current Iceberg
       </Label>
       <Flex justifyContent="space-between" flexWrap="wrap">
-        <VersoCard />
+        <EvrtCard />
         <CardWrapper>
-          <VersoStakeCard />
+          <EvrtStakeCard />
         </CardWrapper>
       </Flex>
     </>
