@@ -217,6 +217,11 @@ const HeaderContainer = styled.div`
     min-width: 1600px;
     margin: 100px 64px 0;
   }
+
+  @media (min-width: 2400px) {
+    min-width: 2000px;
+    margin: 100px 64px 0;
+  }
 `
 
 const TopTierProjects = styled(Flex)`

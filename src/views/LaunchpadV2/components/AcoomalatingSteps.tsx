@@ -9,7 +9,7 @@ const AcoomalatingSteps = () => {
 
   return (
     <>
-      <Label fontSize="36px" lineHeight='54px' mb="180px" fontWeight={500} color='white'>
+      <Label fontSize="40px" lineHeight='60px' mb="180px" fontWeight={500} color='white'>
         3 Simle Steps to Start Acoomalating
       </Label>
       <StyledFlexLayout>
@@ -18,7 +18,7 @@ const AcoomalatingSteps = () => {
             <PefiImg src='/images/penguin-finance-logo.svg' alt='pefi' />
           </IdoLogoContainer>
           <Title fontSize='24px' mb='20px'>1. Get PEFI</Title>
-          <Description fontSize='18px'>
+          <Description fontSize='16px'>
             To participate in the Penguin Launchpad, you’ll need to acquire PEFI first. You can get PEFI from an Avalanche DEX or by yield farming on the Igloos.
           </Description>
           <Flex justifyContent='flex-end' alignItems='center' ml='auto' mt='16px'>
@@ -31,7 +31,7 @@ const AcoomalatingSteps = () => {
             <img src='/images/launchpad/ipefi.svg' alt='ipefi' />
           </IdoLogoContainer>
           <Title fontSize='24px' mb='20px'>2. Stake PEFI for iPEFI</Title>
-          <Description fontSize='18px'>
+          <Description fontSize='16px'>
             Once you have PEFI in your wallet, you’ll want to stake it in the Nest to receive iPEFI. Our staking token gives you access to IDOs, the Club, and the Penguin Emperor game.  
           </Description>
           <Flex justifyContent='flex-end' alignItems='center' ml='auto' mt='16px'>
@@ -44,7 +44,7 @@ const AcoomalatingSteps = () => {
             <img src='/images/launchpad/cyborgpefi.svg' alt='ido' />
           </IdoLogoContainer>
           <Title fontSize='24px' mb='20px'>3. Register for an IDO</Title>
-          <Description fontSize='18px'>
+          <Description fontSize='16px'>
             By holding iPEFI, you can now register for upcoming IDOs and receive allocations based on your iPEFI amount. The more iPEFI you hold, the more allocations you get!
           </Description>
           <Flex justifyContent='flex-end' alignItems='center' ml='auto' mt='16px'>
@@ -67,14 +67,14 @@ const FCard = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-around;
-  padding: 120px 24px 25px;
+  padding: 100px 24px 25px;
   position: relative;
   text-align: center;
   margin-bottom: 120px;
 
   @media (min-width: 968px) {
-    padding-left: 44px;
-    padding-right: 44px;
+    padding-left: 32px;
+    padding-right: 32px;
   }
 `
 
@@ -85,10 +85,11 @@ const Description = styled(Text)`
   min-height: unset;
 
   @media (min-width: 768px) {
-    min-height: 220px;
+    min-height: 190px;
   }
   @media (min-width: 1200px) {
-    min-height: 180px;
+    min-height: 150px;
+    font-size: 16px;
   }
 `;
 
@@ -102,16 +103,16 @@ const StyledFlexLayout = styled(FlexLayout)`
   }
 
   @media (min-width: 1400px) {
-    margin-left: -64px;
-    margin-right: -64px;
+    margin-left: -24px;
+    margin-right: -24px;
   }
 
   & > * {
     @media (min-width: 1400px) {
-      margin-left: 32px;
-      margin-right: 32px;
+      margin-left: 16px;
+      margin-right: 16px;
       min-width: 320px;
-      max-width: 27%;
+      max-width: 30%;
       width: 100%;
     }
   }
@@ -123,16 +124,16 @@ const Label = styled(Text)`
   line-height: 36px;
 
   @media (min-width: 968px) {
-    font-size: 36px;
-    line-height: 54px;
+    font-size: 40px;
+    line-height: 60px;
     text-align: left;
     margin-top: 0px;
   }
 `
 
 const IdoLogoContainer = styled.div`
-  width: 200px;
-  height: 200px;
+  width: 180px;
+  height: 180px;
   border-radius: 50%;
   position: absolute;
   left: 50%;
