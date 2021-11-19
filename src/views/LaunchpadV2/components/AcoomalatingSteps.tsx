@@ -131,15 +131,23 @@ const StyledFlexLayout = styled(FlexLayout)`
     margin-right: -24px;
   }
 
+  @media (max-width: 576px) {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+
   & > * {
     height: 360px;
-    /* @media (min-width: 1400px) { */
     margin-left: 40px;
     margin-right: 40px;
     min-width: 305px;
     max-width: 26%;
     width: 100%;
-    /* } */
+    @media (max-width: 576px) {
+      margin-left: 0px;
+      margin-right: 0px;
+      max-width: 100%;
+    }
   }
 `
 
@@ -153,6 +161,9 @@ const Label = styled(Text)`
     line-height: 60px;
     text-align: left;
     margin-top: 0px;
+  }
+  @media (max-width: 576px) {
+    margin-bottom: 120px;
   }
 `
 
