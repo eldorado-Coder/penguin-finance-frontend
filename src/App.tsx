@@ -27,12 +27,10 @@ const LaunchpadBoofi = lazy(() => import('./views/LaunchpadBoofi'))
 const LaunchpadV2 = lazy(() => import('./views/LaunchpadV2'))
 const Emperor = lazy(() => import('./views/Emperor'))
 const EmperorV2 = lazy(() => import('./views/EmperorV2'))
-// const CovidEmperor = lazy(() => import('./views/CovidEmperor'))
 const Club = lazy(() => import('./views/Club'))
 const NotFound = lazy(() => import('./views/NotFound'))
 
 // const Nests = lazy(() => import('./views/Nests'))
-// const Lottery = lazy(() => import('./views/Lottery'))
 const Info = lazy(() => import('./views/Info'))
 const ClubPenguin = lazy(() => import('./views/ClubPenguin'))
 const Collectibles = lazy(() => import('./views/Collectibles'))
@@ -40,7 +38,7 @@ const CompounderIgloos = lazy(() => import('./views/CompounderIgloos'))
 const IPefi = lazy(() => import('./views/IPefi'))
 const Nest = lazy(() => import('./views/Nest'))
 
-// This config is required for number formating
+// This config is required for number formatting
 BigNumber.config({
   EXPONENTIAL_AT: 1000,
   DECIMAL_PLACES: 80,
