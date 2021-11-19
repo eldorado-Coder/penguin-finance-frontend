@@ -27,7 +27,7 @@ const AcoomalatingSteps = () => {
   return (
     <>
       <Label fontSize="40px" lineHeight="60px" mb="180px" fontWeight={500} color="white">
-        3 Simple Steps to Start Acoomulating
+        3 Simple Steps to Start Acooomulating
       </Label>
       <StyledFlexLayout>
         <FCard>
