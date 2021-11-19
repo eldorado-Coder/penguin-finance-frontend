@@ -111,8 +111,8 @@ const App: React.FC = () => {
               <Club />
             </Route>
             <Route path="/launchpad">
-              {/* <LaunchpadVideo /> */}
-              <LaunchpadBoofi />
+              {/* <LaunchpadBoofi /> */}
+              <LaunchpadV2 />
             </Route>
             <Route path="/launchpad-v2">
               <LaunchpadV2 />
