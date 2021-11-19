@@ -43,6 +43,7 @@ const Farms: React.FC = () => {
   const [showStakedOnly, setShowStakedOnly] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const [activeProjects, setActiveProjects] = useState(PROJECT_LIST.map((row) => row.name))
+  const [liveFinished, setLiveFinished] = useState(false)
 
   const dispatch = useDispatch()
   const { fastRefresh } = useRefresh()
@@ -71,6 +72,8 @@ const Farms: React.FC = () => {
 
   // const activeFarms = v2Farms.filter((farm) => Number(farm.multiplier) > 0)
   const activeFarms = v2Farms
+  
+  console.log('ant : activeFarms => ', activeFarms);
 
   const getV2FarmsTVL = () => {
     let v2FarmTvl = 0
@@ -189,6 +192,14 @@ const Farms: React.FC = () => {
     if (sortType === 'apr') {
       farms = farms.sort((a, b) => b.apr - a.apr)
     }
+    if (sortType === 'hot') {
+      farms = farms.sort((a, b) => b.totalLiquidityInUsd - a.totalLiquidityInUsd)
+      farms = farms.sort((a, b) => {
+        const aRank = a.hotRank || 0
+        const bRank = b.hotRank || 0
+        return bRank - aRank
+      })
+    }
 
     if (sortType === 'hot') {
       farms = farms.sort((a, b) => b.totalLiquidityInUsd - a.totalLiquidityInUsd)
@@ -212,6 +223,10 @@ const Farms: React.FC = () => {
 
   const handleChangeSearchTerm = (event) => {
     setSearchTerm(event.target.value)
+  }
+
+  const handleSwitchLiveFinished = tab => {
+    setLiveFinished(tab === 1)
   }
 
   const handleChangeActiveProject = (project) => {
@@ -268,6 +283,19 @@ const Farms: React.FC = () => {
           place="top"
           html
         />
+      </Flex>
+    </>
+  )
+
+  const renderLiveFinishedFilter = (
+    <>
+      <Flex margin={isMobile ? '8px 16px 8px 0' : '8px 0'} justifyContent="center" alignItems="center">
+        <TabWrapper>
+          <ButtonMenu activeIndex={!liveFinished ? 0 : 1} onItemClick={handleSwitchLiveFinished} scale="sm">
+            <OptionItem active={!liveFinished}>Live</OptionItem>
+            <OptionItem active={liveFinished}>Finished</OptionItem>
+          </ButtonMenu>
+        </TabWrapper>
       </Flex>
     </>
   )
@@ -342,6 +370,7 @@ const Farms: React.FC = () => {
         <FilterWrapper justifyContent="space-between" alignItems="center" flexWrap="wrap">
           <Flex mt="8px" justifyContent="center" mb="8px" flexWrap="wrap">
             {renderStakedOnlyFilter}
+            {renderLiveFinishedFilter}
             {renderActiveFilter}
           </Flex>
           {renderSearchAndSortFilter}
@@ -351,6 +380,7 @@ const Farms: React.FC = () => {
         <FilterWrapper justifyContent="space-between" alignItems="center" flexWrap="wrap" mt="-24px">
           <LeftFilters alignItems="center" mt="16px" justifyContent="space-between" flexWrap={isSm ? 'nowrap' : 'wrap'}>
             {renderStakedOnlyFilter}
+            {renderLiveFinishedFilter}
             {renderProjectsFilters}
           </LeftFilters>
           <Flex display={isSm ? 'block !important' : 'flex'} mt="16px">
@@ -365,7 +395,10 @@ const Farms: React.FC = () => {
 }
 
 const FarmPage = styled(Page)`
-  max-width: 1200px;
+  max-width: 1400px;
+  @media (min-width: 2000px) {
+    max-width: 3700px;
+  }
 `
 
 // bg

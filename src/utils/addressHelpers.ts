@@ -45,6 +45,9 @@ export const getSherpaAddress = () => {
 export const getVsoAddress = () => {
   return getAddress(addresses.vso)
 }
+export const getEvrtAddress = () => {
+  return getAddress(addresses.evrt)
+}
 export const getTestXPefiAddress = () => {
   return getAddress(addresses.testXPefi)
 }

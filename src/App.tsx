@@ -24,13 +24,13 @@ const Launchpad = lazy(() => import('./views/Launchpad'))
 const LaunchpadWithVideo = lazy(() => import('./views/LaunchpadVideo'))
 const LaunchpadDistribution = lazy(() => import('./views/LaunchpadDistribution'))
 const LaunchpadBoofi = lazy(() => import('./views/LaunchpadBoofi'))
+const LaunchpadV2 = lazy(() => import('./views/LaunchpadV2'))
 const Emperor = lazy(() => import('./views/Emperor'))
-// const CovidEmperor = lazy(() => import('./views/CovidEmperor'))
+const EmperorV2 = lazy(() => import('./views/EmperorV2'))
 const Club = lazy(() => import('./views/Club'))
 const NotFound = lazy(() => import('./views/NotFound'))
 
 // const Nests = lazy(() => import('./views/Nests'))
-// const Lottery = lazy(() => import('./views/Lottery'))
 const Info = lazy(() => import('./views/Info'))
 const ClubPenguin = lazy(() => import('./views/ClubPenguin'))
 const Collectibles = lazy(() => import('./views/Collectibles'))
@@ -38,7 +38,7 @@ const CompounderIgloos = lazy(() => import('./views/CompounderIgloos'))
 const IPefi = lazy(() => import('./views/IPefi'))
 const Nest = lazy(() => import('./views/Nest'))
 
-// This config is required for number formating
+// This config is required for number formatting
 BigNumber.config({
   EXPONENTIAL_AT: 1000,
   DECIMAL_PLACES: 80,
@@ -109,8 +109,11 @@ const App: React.FC = () => {
               <Club />
             </Route>
             <Route path="/launchpad">
-              {/* <LaunchpadVideo /> */}
-              <LaunchpadBoofi />
+              {/* <LaunchpadBoofi /> */}
+              <LaunchpadV2 />
+            </Route>
+            <Route path="/launchpad-v2">
+              <LaunchpadV2 />
             </Route>
             <Route path="/launchpad-boofi">
               <LaunchpadBoofi />
@@ -120,6 +123,9 @@ const App: React.FC = () => {
             </Route>
             <Route path="/emperor">
               <Emperor />
+            </Route>
+            <Route path="/emperor-v2">
+              <EmperorV2 />
             </Route>
             <Route path="/collectibles">
               <Collectibles />

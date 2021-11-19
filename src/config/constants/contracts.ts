@@ -151,6 +151,13 @@ export default {
     43113: '',
     43114: '0xaAD41CCf76c035DAF80d662584823215f2e0487D',
   },
+
+  // emperor manager
+  emperorManager: {
+    43113: '',
+    43114: '0x1edbef9bb950942297895b0f4e622df809200818',
+  },
+
   // launchpad Sherpa
   launchPad: {
     43113: '',
@@ -175,6 +182,10 @@ export default {
   vso: {
     43113: '',
     43114: '0x846D50248BAf8b7ceAA9d9B53BFd12d7D7FBB25a',
+  },
+  evrt: {
+    43113: '',
+    43114: '0x3aca5545e76746a3fe13ea66b24bc0ebcc51e6b4',
   },
 
   // launchpad - Boofi
