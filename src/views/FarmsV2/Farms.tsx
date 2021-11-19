@@ -201,6 +201,15 @@ const Farms: React.FC = () => {
       })
     }
 
+    if (sortType === 'hot') {
+      farms = farms.sort((a, b) => b.totalLiquidityInUsd - a.totalLiquidityInUsd)
+      farms = farms.sort((a, b) => {
+        const aRank = a.hotRank || 0
+        const bRank = b.hotRank || 0
+        return bRank - aRank
+      })
+    }
+
     return farms
   }, [searchTerm, activeFarmsWithApy, showStakedOnly, account, activeProjects, sortType])
 
