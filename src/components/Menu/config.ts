@@ -114,6 +114,10 @@ export const config: MenuEntry[] = [
         label: 'Sherpa Launchpad',
         href: '/sherpa-launchpad',
       },
+      {
+        label: 'Boofi Launchpad',
+        href: '/boofi-launchpad',
+      },
     ],
   },
   // {
