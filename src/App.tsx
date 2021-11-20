@@ -115,7 +115,7 @@ const App: React.FC = () => {
             <Route path="/launchpad-v2">
               <LaunchpadV2 />
             </Route>
-            <Route path="/launchpad-boofi">
+            <Route path="/boofi-launchpad">
               <LaunchpadBoofi />
             </Route>
             <Route path="/sherpa-launchpad">
