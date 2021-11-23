@@ -34,9 +34,9 @@ const EvrtCard = () => {
   const activeFarm = clubFarms[1]
   const { userData, rewardStartTimestamp, rewardEndTimestamp, tokensPerSecond, totalIPEFIInPool } = activeFarm
 
-  const { vsoPrice: vsoPriceUsd } = useTokenPrice()
+  const { evrtPrice: evrtPriceUsd } = useTokenPrice()
   const earningBalance = userData ? getBalanceNumber(new BigNumber(userData.earnings)) : 0
-  const earningBalanceInUsd = vsoPriceUsd * earningBalance
+  const earningBalanceInUsd = evrtPriceUsd * earningBalance
   const currentTimestamp = Date.now()
   const rewardStartTime = rewardStartTimestamp ? 1000 * rewardStartTimestamp : 0
   const cutdownType = getCutdownType(currentTimestamp, rewardStartTime)
@@ -45,7 +45,7 @@ const EvrtCard = () => {
   // apr
   const totalLiquidityInUsd = iPefiPriceUsd * getBalanceNumber(new BigNumber(totalIPEFIInPool))
   const rewardPerSec = getBalanceNumber(new BigNumber(tokensPerSecond))
-  const rewardPerSecInUsd = vsoPriceUsd * rewardPerSec
+  const rewardPerSecInUsd = evrtPriceUsd * rewardPerSec
   const dailyApr = (SECONDS_PER_DAY * rewardPerSecInUsd) / totalLiquidityInUsd
   const apr = cutdownType === 'start' ? 100 * getApr(dailyApr) : 0
 

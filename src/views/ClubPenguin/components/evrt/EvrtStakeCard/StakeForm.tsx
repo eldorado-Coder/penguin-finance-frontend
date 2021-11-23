@@ -7,7 +7,7 @@ import UnlockButton from 'components/UnlockButton'
 import { useIPefi } from 'hooks/useContract'
 import { getFullDisplayBalance } from 'utils/formatBalance'
 import roundDown from 'utils/roundDown'
-import { getClubPenguinMasterChefAddress, getVsoAddress } from 'utils/addressHelpers'
+import { getClubPenguinMasterChefAddress, getEvrtAddress } from 'utils/addressHelpers'
 import escapeRegExp from 'utils/escapeRegExp'
 import { addTokenToMetamask } from 'utils/token'
 import TokenInput from './TokenInput'
@@ -97,7 +97,7 @@ const StakeForm: React.FC<StakeFormProps> = ({
   }
 
   const handleAddToken = async () => {
-    await addTokenToMetamask(getVsoAddress(), 'EVRT', 18)
+    await addTokenToMetamask(getEvrtAddress(), 'EVRT', 18)
   }
 
   const canStake = !pendingTx && Number(val) > 0
