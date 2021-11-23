@@ -75,6 +75,18 @@ export const getPangolinRewardPoolApr = async (address) => {
   return { apr: 0, dailyApr: 0 }
 }
 
+export const getPangolinRewardV2PoolApr = async (poolId) => {
+  const aprUrl = `${PANGOLIN_REWARD_POOL_API}/apr2/${poolId}`
+  const res = await Axios.get(aprUrl)
+  if (res.status === 200) {
+    const apr = res.data.combinedApr ? res.data.combinedApr / 100 : 0
+    const swapFeeApr = res.data.swapFeeApr ? res.data.swapFeeApr / 100 : 0
+    const stakingApr = res.data.stakingApr ? res.data.stakingApr / 100 : 0
+    return { apr, dailyApr: apr / 365, swapFeeApr, stakingApr }
+  }
+  return { apr: 0, dailyApr: 0 }
+}
+
 export const getLydiaFarmApr = (poolWeight, rewardTokenPrice, poolLiquidityUsd, rewardRatePerSec): number => {
   const yearlyLydRewardAllocation = rewardRatePerSec * SECONDS_PER_YEAR * poolWeight
   const apr = (yearlyLydRewardAllocation * rewardTokenPrice) / poolLiquidityUsd

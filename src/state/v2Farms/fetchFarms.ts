@@ -9,7 +9,7 @@ import getV2FarmMasterChefAbi from 'utils/getV2FarmMasterChefAbi'
 import getV2FarmMasterChefAddress from 'utils/getV2FarmMasterChefAddress'
 import { getSushiLpPrice, getLydiaLpPrice } from 'utils/price'
 import { getBalanceNumber } from 'utils/formatBalance'
-import { getPangolinRewardPoolApr, getApr } from 'utils/apyHelpers'
+import { getPangolinRewardPoolApr, getPangolinRewardV2PoolApr, getApr } from 'utils/apyHelpers'
 import { getPairSwapDailyReward, getPairInfo } from 'subgraph/utils'
 import { getPoolInfo as getJoePoolInfo, getV3PoolInfo as getJoeV3PoolInfo } from 'subgraph/utils/joe'
 import { NON_ADDRESS } from 'config'
@@ -115,7 +115,9 @@ export const fetchFarms = async () => {
           lpPrice = pairInfo ? Number(pairInfo.reserveUSD) / Number(pairInfo.totalSupply) : 1
           totalLiquidityInUsd = lpPrice * getBalanceNumber(new BigNumber(totalLP))
 
-          const res = await getPangolinRewardPoolApr(getAddress(farmConfig.pangolinRewardPoolAddresses))
+          const res = farmConfig.isPangolinV2
+            ? await getPangolinRewardV2PoolApr(farmConfig.pangolinV2PoolId)
+            : await getPangolinRewardPoolApr(getAddress(farmConfig.pangolinRewardPoolAddresses))
           stakingApr = res.stakingApr
           swapFeeApr = res.swapFeeApr
           if (swapFeeApr === 0) {

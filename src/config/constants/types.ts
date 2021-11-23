@@ -117,6 +117,9 @@ export interface V2FarmConfig {
   isJoeRushFinished?: boolean
   isHot?: boolean
   hotRank?: number
+  // pangolin v2
+  isPangolinV2?: boolean
+  pangolinV2PoolId?: number
 }
 
 export interface JoeV3FarmConfig {
