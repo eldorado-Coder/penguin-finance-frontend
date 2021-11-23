@@ -431,10 +431,10 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
   const renderFarmLogo = () => {
     let farmLogo = ''
     if (farm.type === 'Penguin') farmLogo = `${ASSET_CONTENT_URL}/smartchain/${lpAddress}/logo.svg`
-    if (farm.type === 'Lydia') farmLogo = `${process.env.PUBLIC_URL}/images/project/lydia/logo.png`
-    if (farm.type === 'Pangolin') farmLogo = `${process.env.PUBLIC_URL}/images/project/pangolin/logo.png`
-    if (farm.type === 'Olive') farmLogo = `${process.env.PUBLIC_URL}/images/project/olive/logo.png`
-    if (farm.type === 'Gondola') farmLogo = `${process.env.PUBLIC_URL}/images/project/gondola/logo.png`
+    if (farm.type === 'Lydia') farmLogo = `${ASSET_CONTENT_URL}/compounder/lydia/logo.png`
+    if (farm.type === 'Pangolin') farmLogo = `${ASSET_CONTENT_URL}/compounder/pangolin/logo.png`
+    if (farm.type === 'Olive') farmLogo = `${ASSET_CONTENT_URL}/compounder/olive/logo.png`
+    if (farm.type === 'Gondola') farmLogo = `${ASSET_CONTENT_URL}/compounder/gondola/logo.png`
 
     return <StyledImage mt="12px" type={farm.type} src={farmLogo} alt={farm.tokenSymbol} width={108} height={108} />
   }
