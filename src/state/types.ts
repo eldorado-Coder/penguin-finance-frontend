@@ -106,6 +106,9 @@ export interface V2Farm extends FarmConfig {
   // hot
   isHot?: boolean
   hotRank?: number
+  // pangolin v2
+  isPangolinV2?: boolean
+  pangolinV2PoolId?: number
 }
 
 export interface Lp extends LPConfig {

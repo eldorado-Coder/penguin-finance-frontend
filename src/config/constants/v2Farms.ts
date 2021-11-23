@@ -37,6 +37,9 @@ const v2Farms: V2FarmConfig[] = [
     isMINWFinished: true,
     isHot: true,
     hotRank: 3,
+    // pangolin v2
+    isPangolinV2: true,
+    pangolinV2PoolId: 23,
   },
   {
     pid: 1,
@@ -103,6 +106,9 @@ const v2Farms: V2FarmConfig[] = [
     displayedDecimals: 2,
     isMINW: false,
     isMINWFinished: true,
+    // pangolin v2
+    isPangolinV2: true,
+    pangolinV2PoolId: 8,
   },
   {
     pid: 3,
@@ -135,6 +141,9 @@ const v2Farms: V2FarmConfig[] = [
     type: 'Pangolin',
     name: 'pendingPEFI',
     displayedDecimals: 2,
+    // pangolin v2
+    isPangolinV2: true,
+    pangolinV2PoolId: 10,
   },
   {
     pid: 6,
@@ -201,6 +210,9 @@ const v2Farms: V2FarmConfig[] = [
     displayedDecimals: 2,
     isMINW: false,
     isMINWFinished: true,
+    // pangolin v2
+    isPangolinV2: true,
+    pangolinV2PoolId: 0,
   },
   {
     pid: 12,
@@ -293,6 +305,9 @@ const v2Farms: V2FarmConfig[] = [
     type: 'Pangolin',
     name: 'pendingPEFI',
     displayedDecimals: 2,
+    // pangolin v2
+    isPangolinV2: true,
+    pangolinV2PoolId: 6,
   },
   {
     pid: 15,
@@ -325,6 +340,9 @@ const v2Farms: V2FarmConfig[] = [
     type: 'Pangolin',
     name: 'pendingPEFI',
     displayedDecimals: 7,
+    // pangolin v2
+    isPangolinV2: true,
+    pangolinV2PoolId: 7,
   },
   {
     pid: 16,
