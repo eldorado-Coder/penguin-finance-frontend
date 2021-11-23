@@ -10,17 +10,17 @@ const upcomingIcebergs = [
   //   description: 'A decentralized marketplace for financial products and DeFi mass adoption via regulated e-wallets',
   //   url: 'https://verso.finance',
   // },
-  {
-    title: 'BOOFI ICEBERG',
-    tag: 'Yield Farming',
-    // toDistribute: '43,000 BOOFI',
-    toDistribute: 'TBD',
-    tokenSymbol: 'BOOFI',
-    logo: 'boofi_iceberg.svg',
-    description:
-      'A new Avalanche project developing a unique yield farming dApp, deflationary NFTs, and an all-encompassing DAO.',
-    url: 'https://boofinance.gitbook.io/boo-finance/',
-  },
+  // {
+  //   title: 'BOOFI ICEBERG',
+  //   tag: 'Yield Farming',
+  //   // toDistribute: '43,000 BOOFI',
+  //   toDistribute: 'TBD',
+  //   tokenSymbol: 'BOOFI',
+  //   logo: 'boofi_iceberg.svg',
+  //   description:
+  //     'A new Avalanche project developing a unique yield farming dApp, deflationary NFTs, and an all-encompassing DAO.',
+  //   url: 'https://boofinance.gitbook.io/boo-finance/',
+  // },
   {
     title: 'PNG ICEBERG',
     tag: 'Exchange',
