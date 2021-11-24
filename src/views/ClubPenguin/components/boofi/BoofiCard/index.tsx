@@ -17,7 +17,7 @@ import CountDown from '../../CountDown'
 import { getCutdownType } from '../../../utils'
 import { useClubPenguinHarvest } from '../../../hooks'
 
-const EvrtCard = () => {
+const BoofiCard = () => {
   const [pendingTx, setPendingTx] = useState(false)
   const [timerEnded, setTimerEnded] = useState(false)
   const { isXl } = useMatchBreakpoints()
@@ -31,12 +31,13 @@ const EvrtCard = () => {
   const iPefiPriceUsd = iPefiToPefiRatio * pefiPriceUsd
 
   const clubFarms = useClubPenguinFarms(account)
+  // TODO: should change farmId, 1 is for VSO
   const activeFarm = clubFarms[1]
   const { userData, rewardStartTimestamp, rewardEndTimestamp, tokensPerSecond, totalIPEFIInPool } = activeFarm
 
-  const { evrtPrice: evrtPriceUsd } = useTokenPrice()
+  const { boofiPrice: boofiPriceUsd } = useTokenPrice()
   const earningBalance = userData ? getBalanceNumber(new BigNumber(userData.earnings)) : 0
-  const earningBalanceInUsd = evrtPriceUsd * earningBalance
+  const earningBalanceInUsd = boofiPriceUsd * earningBalance
   const currentTimestamp = Date.now()
   const rewardStartTime = rewardStartTimestamp ? 1000 * rewardStartTimestamp : 0
   const cutdownType = getCutdownType(currentTimestamp, rewardStartTime)
@@ -45,7 +46,7 @@ const EvrtCard = () => {
   // apr
   const totalLiquidityInUsd = iPefiPriceUsd * getBalanceNumber(new BigNumber(totalIPEFIInPool))
   const rewardPerSec = getBalanceNumber(new BigNumber(tokensPerSecond))
-  const rewardPerSecInUsd = evrtPriceUsd * rewardPerSec
+  const rewardPerSecInUsd = boofiPriceUsd * rewardPerSec
   const dailyApr = (SECONDS_PER_DAY * rewardPerSecInUsd) / totalLiquidityInUsd
   const apr = cutdownType === 'start' ? 100 * getApr(dailyApr) : 0
 
@@ -67,7 +68,7 @@ const EvrtCard = () => {
   }
 
   const handleViewWebsite = () => {
-    window.open('https://www.evrt.app/', '_blank')
+    window.open('http://www.boofinance.io/', '_blank')
   }
 
   const renderIcebergInfos = () => {
@@ -81,7 +82,7 @@ const EvrtCard = () => {
         >
           <Flex className="col" flexDirection="column" alignItems="flex-start">
             <Label fontSize={isMobile ? '16px' : '20px'} fontWeight={700} lineHeight={1}>
-              EVRT EARNED
+              BOOFI EARNED
             </Label>
             <Balance
               color={isDark ? 'white' : '#00283f'}
@@ -172,7 +173,7 @@ const EvrtCard = () => {
             <div>
               <Flex alignItems="center" flexWrap="wrap" justifyContent="flex-start">
                 <LogoWrapper isMobile mr="32px" alignItems="center">
-                  <img src="/images/club/evrt_iceberg.svg" alt="evrt" />
+                  <img src="/images/club/boofi_iceberg.svg" alt="boofi" />
                 </LogoWrapper>
                 <StyledTitle>
                   <Label
@@ -182,7 +183,7 @@ const EvrtCard = () => {
                     fontWeight={600}
                     lineHeight={1}
                   >
-                    EVRT ICEBERG
+                    BOOFI ICEBERG
                   </Label>
                 </StyledTitle>
               </Flex>
@@ -191,11 +192,11 @@ const EvrtCard = () => {
           ) : (
             <Flex alignItems="flex-start" flexWrap="wrap" justifyContent="space-between">
               <LogoWrapper mt="16px" mr="16px" alignItems="center">
-                <img src="/images/club/evrt_iceberg.svg" alt="evrt" />
+                <img src="/images/club/boofi_iceberg.svg" alt="boofi" />
               </LogoWrapper>
               <StyledTitle>
                 <Label whiteSpace="wrap" fontSize="40px" fontWeight={600} lineHeight={1}>
-                  EVRT ICEBERG
+                  BOOFI ICEBERG
                 </Label>
                 {renderIcebergInfos()}
               </StyledTitle>
@@ -204,8 +205,8 @@ const EvrtCard = () => {
         </CardHeader>
         <CardContent>
           <Text fontWeight={400} fontSize="18px" color="white" mt="24px" mb="16px">
-            Everest DAO is an innovation-driven project focused on tackling new and exciting products that range from
-            DeFi, DAOs, NFTs, and more.
+            A new Avalanche project developing a unique yield farming dApp, deflationary NFTs, and an all-encompassing
+            DAO.
           </Text>
         </CardContent>
         <CardFooter flexDirection={isMobile ? 'column' : 'row'} justifyContent="space-between" alignItems="center">
@@ -213,16 +214,20 @@ const EvrtCard = () => {
             Visit Website
           </StyledButton>
           <SocialIconsWrapper>
-            <a href="https://t.me/EverestDAO" target="_blank" rel="noreferrer">
+            <a href="https://t.me/BooFinance" target="_blank" rel="noreferrer">
               <SvgIcon src={`${process.env.PUBLIC_URL}/images/club/social/telegram.svg`} width="32px" height="32px" />
             </a>
-            <a href="https://discord.com/invite/jdfcZU4XCF" target="_blank" rel="noreferrer">
+            <a href="https://discord.com/invite/A3KbWpsZfE" target="_blank" rel="noreferrer">
               <SvgIcon src={`${process.env.PUBLIC_URL}/images/club/social/discord.svg`} width="32px" height="32px" />
             </a>
-            <a href="https://twitter.com/EverestDAO" target="_blank" rel="noreferrer">
+            <a href="https://twitter.com/Boo_Finance" target="_blank" rel="noreferrer">
               <SvgIcon src={`${process.env.PUBLIC_URL}/images/club/social/twitter.svg`} width="32px" height="32px" />
             </a>
-            <a href="https://everestdao.medium.com" target="_blank" rel="noreferrer">
+            <a
+              href="https://medium.com/@boofinance2021/introducing-boofinance-innovative-yield-farms-deflationary-nfts-on-avalanche-5f285835a317"
+              target="_blank"
+              rel="noreferrer"
+            >
               <SvgIcon src={`${process.env.PUBLIC_URL}/images/club/social/medium.svg`} width="32px" height="32px" />
             </a>
           </SocialIconsWrapper>
@@ -246,7 +251,7 @@ const StyledCard = styled(Card)`
   border-radius: 8px;
   padding: 32px 24px 34px;
   box-shadow: 0px 1px 6px rgb(0 0 0 / 16%);
-  background-color: ${({ theme }) => (theme.isDark ? '#30264f' : '#5970F6')};
+  background-color: ${({ theme }) => (theme.isDark ? '#30264f' : '#37DB92')};
 `
 
 const CardHeader = styled.div``
@@ -349,4 +354,4 @@ const CutdownBalance = styled(Text)`
   color: ${({ theme }) => (theme.isDark ? 'white' : '#00283f')};
 `
 
-export default EvrtCard
+export default BoofiCard

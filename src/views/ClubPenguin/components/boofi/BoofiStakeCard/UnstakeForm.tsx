@@ -7,7 +7,7 @@ import roundDown from 'utils/roundDown'
 import escapeRegExp from 'utils/escapeRegExp'
 import { getFullDisplayBalance } from 'utils/formatBalance'
 import { addTokenToMetamask } from 'utils/token'
-import { getEvrtAddress } from 'utils/addressHelpers'
+import { getBoofiAddress } from 'utils/addressHelpers'
 import TokenInput from './TokenInput'
 
 const inputRegex = RegExp(`^\\d*(?:\\\\[.])?\\d*$`)
@@ -104,13 +104,13 @@ const StyledButton = styled(Button)`
   width: 100%;
   border-radius: 8px;
   color: white;
-  background: ${({ theme }) => (theme.isDark ? '#d4444c' : '#5970F6')};
+  background: ${({ theme }) => (theme.isDark ? '#d4444c' : '#37DB92')};
 `
 
 const StyledUnlockButton = styled(UnlockButton)`
   width: 100%;
   border-radius: 8px;
-  background: ${({ theme }) => (theme.isDark ? '#d4444c' : '#5970F6')};
+  background: ${({ theme }) => (theme.isDark ? '#d4444c' : '#37DB92')};
 `
 
 const StyledText = styled(Text)`

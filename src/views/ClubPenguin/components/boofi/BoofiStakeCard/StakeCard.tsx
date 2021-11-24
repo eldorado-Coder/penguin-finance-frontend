@@ -19,6 +19,7 @@ const StakeCard = () => {
   const { onApproveIPefi } = useClubPenguinApprove()
 
   const clubFarms = useClubPenguinFarms(account)
+  // TODO: should change farmId, 1 is for VSO
   const activeFarm = clubFarms[1]
   const { userData, rewardStartTimestamp, rewardEndTimestamp } = activeFarm
   const iPEFIBalance = userData ? new BigNumber(userData.tokenBalance) : new BigNumber(0)
@@ -44,7 +45,7 @@ const StakeCard = () => {
         </TabWrapper>
         <Flex mt="24px" mb="8px" justifyContent="space-between" alignItems="center">
           <StakeLabel color="primary" fontWeight="500">
-            {activeTab === 0 ? 'Stake iPEFI, Get EVRT' : 'Unstake from Iceberg'}
+            {activeTab === 0 ? 'Stake iPEFI, Get BOOFI' : 'Unstake from Iceberg'}
           </StakeLabel>
         </Flex>
         {activeTab === 0 ? (
@@ -108,7 +109,7 @@ const OptionItem = styled(ButtonMenuItem)<{ active: boolean }>`
   min-width: 100px;
   font-weight: 500;
   box-shadow: none;
-  background-color: ${({ active, theme }) => active && '#5970F6'};
+  background-color: ${({ active, theme }) => active && '#37DB92'};
   color: ${({ active }) => (active ? 'white' : '#A79FBC')};
   color: ${({ active, theme }) => theme.isDark && !active && '#BBA6DD'};
 `

@@ -7,7 +7,7 @@ import UnlockButton from 'components/UnlockButton'
 import { useIPefi } from 'hooks/useContract'
 import { getFullDisplayBalance } from 'utils/formatBalance'
 import roundDown from 'utils/roundDown'
-import { getClubPenguinMasterChefAddress, getEvrtAddress } from 'utils/addressHelpers'
+import { getClubPenguinMasterChefAddress, getBoofiAddress } from 'utils/addressHelpers'
 import escapeRegExp from 'utils/escapeRegExp'
 import { addTokenToMetamask } from 'utils/token'
 import TokenInput from './TokenInput'
@@ -97,7 +97,7 @@ const StakeForm: React.FC<StakeFormProps> = ({
   }
 
   const handleAddToken = async () => {
-    await addTokenToMetamask(getEvrtAddress(), 'EVRT', 18)
+    await addTokenToMetamask(getBoofiAddress(), 'BOOFI', 18)
   }
 
   const canStake = !pendingTx && Number(val) > 0
@@ -153,7 +153,7 @@ const StakeForm: React.FC<StakeFormProps> = ({
         </CountDownButton>
       ) : (
         <AddTokenButton scale="md" onClick={handleAddToken}>
-          Add EVRT to Metamask
+          Add BOOFI to Metamask
         </AddTokenButton>
       )}
     </>
@@ -179,18 +179,18 @@ const StyledButton2 = styled(Button)`
   width: 100%;
   border-radius: 8px;
   color: white;
-  background: ${({ theme }) => (theme.isDark ? '#d4444c' : '#5970F6')};
+  background: ${({ theme }) => (theme.isDark ? '#d4444c' : '#37DB92')};
 `
 
 const StyledUnlockButton = styled(UnlockButton)`
   width: 100%;
   border-radius: 8px;
-  background: ${({ theme }) => (theme.isDark ? '#d4444c' : '#5970F6')};
+  background: ${({ theme }) => (theme.isDark ? '#d4444c' : '#37DB92')};
 `
 
 const CountDownButton = styled(Button)`
   color: ${({ theme }) => (theme.isDark ? 'white' : '#00283f')};
-  background: ${({ theme }) => (theme.isDark ? '#d4444c' : '#5970F6')};
+  background: ${({ theme }) => (theme.isDark ? '#d4444c' : '#37DB92')};
   width: 100%;
   border-radius: 8px;
   margin-top: 16px;
@@ -207,7 +207,7 @@ const CountDownButton = styled(Button)`
 
 const AddTokenButton = styled(Button)`
   color: white;
-  background: ${({ theme }) => (theme.isDark ? '#d4444c' : '#5970F6')};
+  background: ${({ theme }) => (theme.isDark ? '#d4444c' : '#37DB92')};
   width: 100%;
   border-radius: 8px;
   margin-top: 16px;
