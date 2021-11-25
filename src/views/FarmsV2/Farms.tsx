@@ -63,17 +63,14 @@ const Farms: React.FC = () => {
   const joePriceUsd = useJoePrice()
   const theme = useTheme()
   const isMobile = !isXl
+  // const activeFarms = v2Farms.filter((farm) => Number(farm.multiplier) > 0)
+  const activeFarms = v2Farms
 
   useEffect(() => {
     if (account) {
       dispatch(fetchV2FarmUserDataAsync(account))
     }
   }, [account, dispatch, fastRefresh])
-
-  // const activeFarms = v2Farms.filter((farm) => Number(farm.multiplier) > 0)
-  const activeFarms = v2Farms
-  
-  console.log('ant : activeFarms => ', activeFarms);
 
   const getV2FarmsTVL = () => {
     let v2FarmTvl = 0
@@ -225,7 +222,7 @@ const Farms: React.FC = () => {
     setSearchTerm(event.target.value)
   }
 
-  const handleSwitchLiveFinished = tab => {
+  const handleSwitchLiveFinished = (tab) => {
     setLiveFinished(tab === 1)
   }
 
