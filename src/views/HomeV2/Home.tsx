@@ -48,11 +48,11 @@ const Home: React.FC = () => {
               <ArtworkCard />
             </FarmStakingCardWrapper>
             <PefiStatsCardWrapper>
-              {/* <IglooCard /> */}
-              <ArenaCard />
+              <IglooCard />
+              {/* <ArenaCard /> */}
               <SpacingWrapper />
-              {/* <EarnAPYCard apy={iPefiPool.apy} /> */}
-              <GetSmartCard />
+              <EarnAPYCard apy={iPefiPool.apy} />
+              {/* <GetSmartCard /> */}
             </PefiStatsCardWrapper>
           </Cards>
           <Cards>
