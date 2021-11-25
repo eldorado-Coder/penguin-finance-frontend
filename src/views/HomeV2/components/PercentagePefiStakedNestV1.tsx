@@ -70,7 +70,7 @@ const PercentagePefiStakedNestV1: React.FC<HarvestProps> = ({ pool }) => {
           <Flex justifyContent="space-between">
             <Title size="md">{TranslateString(764, 'Staked in Penguin Nests')}</Title>
             <StyledNavLink exact activeClassName="active" to="/nests" id="farm-apy-cta">
-              <SvgIcon src={`${process.env.PUBLIC_URL}/images/home/arrow-right.svg`} width="25px" height="25px" />
+              <SvgIcon src={`${process.env.PUBLIC_URL}/images/home-v2/arrow-right.svg`} width="25px" height="25px" />
             </StyledNavLink>
           </Flex>
         </CardBody>

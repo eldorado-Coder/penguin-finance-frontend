@@ -81,7 +81,7 @@ const EarnAPYCard = ({ apy }: { apy: BigNumber }) => {
           <Text size="md">with no IL by holding iPEFI</Text>
           <StyledNavLink exact activeClassName="active" to="/nests" id="farm-apy-cta">
             <SvgIcon
-              src={`${process.env.PUBLIC_URL}/images/home/arrow-right.svg`}
+              src={`${process.env.PUBLIC_URL}/images/home-v2/arrow-right.svg`}
               width={isMobile ? '25px' : '28px'}
               height={isMobile ? '25px' : '28px'}
             />

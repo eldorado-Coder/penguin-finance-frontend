@@ -43,8 +43,8 @@ const StyledArtworkCard = styled(Card)<{ isMobile?: boolean }>`
 const StyledArtworkCardBg = styled.div`
   height: 100%;
   background-size: cover;
-  background-position: center center;
-  background-image: url('/images/home/launchpad.jpg');
+  background-position: left center;
+  background-image: url('/images/home-v2/launchpad.png');
   cursor: pointer;
 `
 
