@@ -14,9 +14,12 @@ const ArtworkCard = () => {
 
   return (
     <StyledArtworkCard isMobile={isMobile}>
-      <ArtworkImg 
-        onClick={onClickArtworkV2Card} 
-        src={`${process.env.PUBLIC_URL}/images/home/launchpad.jpg`} loading='lazy' alt='hero' />
+      <ArtworkImg
+        onClick={onClickArtworkV2Card}
+        src={`${process.env.PUBLIC_URL}/images/home/launchpad.jpg`}
+        loading="lazy"
+        alt="hero"
+      />
       {/* <StyledArtworkCardBg onClick={onClickArtworkV2Card} /> */}
     </StyledArtworkCard>
   )
@@ -45,10 +48,11 @@ const StyledArtworkCard = styled(Card)<{ isMobile?: boolean }>`
 
 const ArtworkImg = styled.img`
   height: 100%;
-  width: 100%;
-  object-fit: cover;
+  background-size: cover;
+  background-position: left center;
+  background-image: url('/images/home-v2/launchpad.png');
   cursor: pointer;
-`;
+`
 
 // const StyledArtworkCardBg = styled.div`
 //   height: 100%;

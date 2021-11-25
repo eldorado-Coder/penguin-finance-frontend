@@ -132,7 +132,7 @@ const HarvestFarmCard = () => {
           </StyledHeading>
           <InfoIconWrapper onClick={handleInfoIconClick}>
             <SvgIcon
-              src={`${process.env.PUBLIC_URL}/images/home/info.svg`}
+              src={`${process.env.PUBLIC_URL}/images/home-v2/info.svg`}
               width={isMobile ? '25px' : '28px'}
               height={isMobile ? '25px' : '28px'}
             />

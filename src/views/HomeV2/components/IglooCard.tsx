@@ -91,7 +91,7 @@ const IglooCard = () => {
           <Text size="md">in Penguin Igloos</Text>
           <StyledNavLink exact activeClassName="active" to="/farms" id="farm-apy-cta">
             <SvgIcon
-              src={`${process.env.PUBLIC_URL}/images/home/arrow-right.svg`}
+              src={`${process.env.PUBLIC_URL}/images/home-v2/arrow-right.svg`}
               width={isMobile ? '25px' : '28px'}
               height={isMobile ? '25px' : '28px'}
             />

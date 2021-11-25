@@ -65,7 +65,7 @@ const EmperorInfoCard = ({ iPefiPrice }: { iPefiPrice: number }) => {
             <Skeleton animation="pulse" variant="rect" height="22px" />
           )}
           <StyledNavLink exact activeClassName="active" to="/emperor" id="farm-apy-cta">
-            <SvgIcon src={`${process.env.PUBLIC_URL}/images/home/arrow-right.svg`} width="25px" height="25px" />
+            <SvgIcon src={`${process.env.PUBLIC_URL}/images/home-v2/arrow-right.svg`} width="25px" height="25px" />
           </StyledNavLink>
         </Flex>
       </CardBody>
