@@ -16,7 +16,7 @@ const ArtworkCard = () => {
     <StyledArtworkCard isMobile={isMobile}>
       <ArtworkImg
         onClick={onClickArtworkV2Card}
-        src={`${process.env.PUBLIC_URL}/images/home/launchpad.jpg`}
+        src={`${process.env.PUBLIC_URL}/images/home-v2/launchpad.png`}
         loading="lazy"
         alt="hero"
       />
