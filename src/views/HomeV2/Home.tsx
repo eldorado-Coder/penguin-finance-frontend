@@ -16,6 +16,7 @@ import ComingSoonCard from 'views/HomeV2/components/ComingSoonCard'
 //
 import ArenaCard from 'views/HomeV2/components/ArenaCard'
 import GetSmartCard from 'views/HomeV2/components/GetSmartCard'
+import LearnMorePefiCard from 'views/HomeV2/components/LearnMorePefiCard'
 
 const Home: React.FC = () => {
   const { account } = useWeb3React()
@@ -48,11 +49,11 @@ const Home: React.FC = () => {
               <ArtworkCard />
             </FarmStakingCardWrapper>
             <PefiStatsCardWrapper>
-              <IglooCard />
-              {/* <ArenaCard /> */}
+              {/* <IglooCard /> */}
+              <ArenaCard />
               <SpacingWrapper />
-              <EarnAPYCard apy={iPefiPool.apy} />
-              {/* <GetSmartCard /> */}
+              {/* <EarnAPYCard apy={iPefiPool.apy} /> */}
+              <LearnMorePefiCard />
             </PefiStatsCardWrapper>
           </Cards>
           <Cards>

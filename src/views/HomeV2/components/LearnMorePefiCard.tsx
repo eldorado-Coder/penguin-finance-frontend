@@ -1,13 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Card } from 'penguinfinance-uikit2'
-import { useHistory } from 'react-router-dom'
 
-const ArenaCard = () => {
-  const history = useHistory()
-
+const LearnMorePefiCard = () => {
   const onClickCard = () => {
-    history.push('/arena')
+    window.open('https://docs.penguinfinance.io/', '_blank')
   }
 
   return <StyledCard onClick={onClickCard} />
@@ -22,7 +19,7 @@ const StyledCard = styled(Card)`
   width: 100%;
   background-size: cover;
   background-position: left center;
-  background-image: url('/images/home-v2/discover_arena1.png');
+  background-image: url('/images/home-v2/learn_more_pefi.png');
   border-radius: 26px;
   box-shadow: 0px 1px 8px rgb(0 0 0 / 24%);
   min-height: 110px;
@@ -32,10 +29,9 @@ const StyledCard = styled(Card)`
     margin: 0;
     max-width: none;
   }
-
   ${({ theme }) => theme.mediaQueries.sm} {
     min-height: 157px;
   }
 `
 
-export default ArenaCard
+export default LearnMorePefiCard
