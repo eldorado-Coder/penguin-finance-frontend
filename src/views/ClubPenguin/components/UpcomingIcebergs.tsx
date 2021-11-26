@@ -104,6 +104,7 @@ const StyledButton = styled(Button)`
 const StyledFlexLayout = styled(FlexLayout)`
   margin-left: -8px;
   margin-right: -8px;
+  justify-content: start;
 
   @media (min-width: 640px) {
     margin-left: -16px;

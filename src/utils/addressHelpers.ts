@@ -48,6 +48,9 @@ export const getVsoAddress = () => {
 export const getEvrtAddress = () => {
   return getAddress(addresses.evrt)
 }
+export const getBoofiAddress = () => {
+  return getAddress(addresses.boofi)
+}
 export const getTestXPefiAddress = () => {
   return getAddress(addresses.testXPefi)
 }
@@ -133,10 +136,6 @@ export const getBoofiBoosterRocketPayTokenAddress = () => {
 
 export const getBoofiBoosterRocketBuyTokenAddress = () => {
   return getAddress(addresses.booFiBoosterRocketBuyToken)
-}
-
-export const getBoofiAddress = () => {
-  return getAddress(addresses.boofi)
 }
 
 // v2

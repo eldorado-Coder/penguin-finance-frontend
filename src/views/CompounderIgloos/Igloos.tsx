@@ -251,13 +251,12 @@ const Igloos: React.FC = () => {
           <ProjectFiltersWrapper>
             {PROJECTS.map((project) =>
               project === 'Snowball' ? (
-                <div>
+                <div key={project}>
                   <ProjectLabel
                     data-for="custom-class"
                     data-tip={SNOWBALL_TOOLTIP_TEXT}
                     fontSize="18px"
                     active={project === selectedProject}
-                    key={project}
                     onClick={handleSelectProject(project)}
                   >
                     {project}

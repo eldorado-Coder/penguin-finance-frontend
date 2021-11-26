@@ -7,7 +7,7 @@ import roundDown from 'utils/roundDown'
 import escapeRegExp from 'utils/escapeRegExp'
 import { getFullDisplayBalance } from 'utils/formatBalance'
 import { addTokenToMetamask } from 'utils/token'
-import { getVsoAddress } from 'utils/addressHelpers'
+import { getEvrtAddress } from 'utils/addressHelpers'
 import TokenInput from './TokenInput'
 
 const inputRegex = RegExp(`^\\d*(?:\\\\[.])?\\d*$`)

@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { BaseLayout, Flex, useMatchBreakpoints } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import useTheme from 'hooks/useTheme'
+import { usePools, useV2Pools } from 'state/hooks'
 import Page from 'components/layout/Page'
 import ArtworkCard from 'views/HomeV2/components/ArtworkCard'
 import HarvestFarmCard from 'views/HomeV2/components/HarvestFarmCard'
@@ -12,7 +13,9 @@ import EarnAPYCard from 'views/HomeV2/components/EarnAPYCard'
 import V2PoolCard from 'views/Pools/components/V2PoolCard'
 import PefiStats from 'views/HomeV2/components/PefiStats'
 import ComingSoonCard from 'views/HomeV2/components/ComingSoonCard'
-import { usePools, useV2Pools } from 'state/hooks'
+//
+import ArenaCard from 'views/HomeV2/components/ArenaCard'
+import GetSmartCard from 'views/HomeV2/components/GetSmartCard'
 
 const Home: React.FC = () => {
   const { account } = useWeb3React()
@@ -46,8 +49,10 @@ const Home: React.FC = () => {
             </FarmStakingCardWrapper>
             <PefiStatsCardWrapper>
               <IglooCard />
+              {/* <ArenaCard /> */}
               <SpacingWrapper />
               <EarnAPYCard apy={iPefiPool.apy} />
+              {/* <GetSmartCard /> */}
             </PefiStatsCardWrapper>
           </Cards>
           <Cards>
@@ -174,7 +179,9 @@ const PoolCardWrapper = styled.div`
 
 const HomeBgContainer = styled.div`
   background-image: ${({ theme }) =>
-    theme.isDark ? `url('/images/home/home_background_dark.png')` : `url('/images/home/home_background_light.png')`};
+    theme.isDark
+      ? `url('/images/home-v2/home_background_dark.png')`
+      : `url('/images/home-v2/home_background_light.png')`};
   background-repeat: repeat;
   background-size: contain;
   position: absolute;

@@ -14,7 +14,13 @@ const ArtworkCard = () => {
 
   return (
     <StyledArtworkCard isMobile={isMobile}>
-      <StyledArtworkCardBg onClick={onClickArtworkV2Card} />
+      <ArtworkImg
+        onClick={onClickArtworkV2Card}
+        src={`${process.env.PUBLIC_URL}/images/home-v2/launchpad.png`}
+        loading="lazy"
+        alt="hero"
+      />
+      {/* <StyledArtworkCardBg onClick={onClickArtworkV2Card} /> */}
     </StyledArtworkCard>
   )
 }
@@ -40,12 +46,20 @@ const StyledArtworkCard = styled(Card)<{ isMobile?: boolean }>`
   }
 `
 
-const StyledArtworkCardBg = styled.div`
+const ArtworkImg = styled.img`
   height: 100%;
   background-size: cover;
-  background-position: center center;
-  background-image: url('/images/home/launchpad.jpg');
+  background-position: left center;
+  background-image: url('/images/home-v2/launchpad.png');
   cursor: pointer;
 `
+
+// const StyledArtworkCardBg = styled.div`
+//   height: 100%;
+//   background-size: cover;
+//   background-position: center center;
+//   background-image: url('/images/home/launchpad.jpg');
+//   cursor: pointer;
+// `
 
 export default ArtworkCard

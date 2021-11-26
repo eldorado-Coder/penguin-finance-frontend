@@ -44,7 +44,7 @@ const StakeCard = () => {
         </TabWrapper>
         <Flex mt="24px" mb="8px" justifyContent="space-between" alignItems="center">
           <StakeLabel color="primary" fontWeight="500">
-            Unstake from Iceberg
+            {activeTab === 0 ? 'Stake iPEFI, Get EVRT' : 'Unstake from Iceberg'}
           </StakeLabel>
         </Flex>
         {activeTab === 0 ? (
