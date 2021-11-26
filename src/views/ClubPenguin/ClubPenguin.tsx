@@ -24,7 +24,7 @@ const ClubPenguin: React.FC = () => {
         />
       </ClubPenguinBannerContainer>
       <ClubPenguinContent>
-        {/* <CurrentIcebergs /> */}
+        <CurrentIcebergs />
         <UpcomingIcebergs />
         <PreviousIcebergs />
       </ClubPenguinContent>
