@@ -47,11 +47,14 @@ const StyledArtworkCard = styled(Card)<{ isMobile?: boolean }>`
 `
 
 const ArtworkImg = styled.img`
-  height: 100%;
+  width: 100%;
   background-size: cover;
   background-position: left center;
   background-image: url('/images/home-v2/launchpad.png');
   cursor: pointer;
+  ${({ theme }) => theme.mediaQueries.sm} {
+    height: 100%;
+  }
 `
 
 // const StyledArtworkCardBg = styled.div`
