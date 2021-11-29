@@ -30,6 +30,8 @@ import { getAddress } from 'utils/addressHelpers'
 import { getApr, getApy, getFarmApr, getLydiaFarmApr, getJoeFarmApr, getBenqiFarmApr } from 'utils/apyHelpers'
 import V2Farms from './V2'
 
+const isLiveFinishedSliderShown = false
+
 const PROJECT_LIST = [
   { src: '/images/farms-v2/penguin.svg', name: 'Penguin' },
   { src: '/images/farms-v2/joe.svg', name: 'Joe' },
@@ -286,14 +288,16 @@ const Farms: React.FC = () => {
 
   const renderLiveFinishedFilter = (
     <>
-      <Flex margin={isMobile ? '8px 16px 8px 0' : '8px 0'} justifyContent="center" alignItems="center">
-        <TabWrapper>
-          <ButtonMenu activeIndex={!liveFinished ? 0 : 1} onItemClick={handleSwitchLiveFinished} scale="sm">
-            <OptionItem active={!liveFinished}>Live</OptionItem>
-            <OptionItem active={liveFinished}>Finished</OptionItem>
-          </ButtonMenu>
-        </TabWrapper>
-      </Flex>
+      {isLiveFinishedSliderShown && (
+        <Flex margin={isMobile ? '8px 16px 8px 0' : '8px 0'} justifyContent="center" alignItems="center">
+          <TabWrapper>
+            <ButtonMenu activeIndex={!liveFinished ? 0 : 1} onItemClick={handleSwitchLiveFinished} scale="sm">
+              <OptionItem active={!liveFinished}>Live</OptionItem>
+              <OptionItem active={liveFinished}>Finished</OptionItem>
+            </ButtonMenu>
+          </TabWrapper>
+        </Flex>
+      )}
     </>
   )
 

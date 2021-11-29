@@ -43,9 +43,8 @@ const NestV2: React.FC = () => {
   const distributionPhp = nestPool.distributionPhp || 6
   const avgDailyAprPerWeek = nestPool.avgDailyAprPerWeek || 0
   const avgYearlyApr = avgDailyAprPerWeek * 365 * 100
-  const tvl = nestPool.totalSupply
-    ? iPefiToPefiRatio * pefiPrice.toNumber() * getBalanceNumber(nestPool.totalSupply)
-    : 0
+  const nestTotalSupply = nestPool.totalSupply ? getBalanceNumber(nestPool.totalSupply) : 0
+  const tvl = iPefiToPefiRatio * pefiPrice.toNumber() * nestTotalSupply
   const historicalRates =
     (nestPool.historicalRates &&
       nestPool.historicalRates.map((rate) => ({
@@ -56,6 +55,7 @@ const NestV2: React.FC = () => {
   const totalProfitAmount = account ? roundDown(getBalanceNumber(new BigNumber(userData?.profitAmount || 0)), 2) : 0
   const totalDepositAmount = account ? roundDown(getBalanceNumber(new BigNumber(userData?.depositAmount || 0)), 2) : 0
   const totalWithdrawAmount = account ? roundDown(getBalanceNumber(new BigNumber(userData?.withdrawAmount || 0)), 2) : 0
+  const stakedPefiRatioInNest = nestTotalSupply > 0 ? (100 * getBalanceNumber(stakedBalance)) / nestTotalSupply : 0
 
   const handleLearnMore = () => {
     window.open('https://docs.penguinfinance.io/summary/penguin-nests-staking-and-fee-collection', '_blank')
@@ -245,7 +245,7 @@ const NestV2: React.FC = () => {
               <WealthContainer>
                 <WealthCard flexDirection="column" padding="4px 16px 16px">
                   <BalanceLabel>Your Wealth</BalanceLabel>
-                  {Number(totalProfitAmount) > 0 && (
+                  {Number(totalProfitAmount) > 3000 && (
                     <Flex alignItems="flex-end">
                       <BalanceText fontSize="14px" mr="4px">
                         You have generated
@@ -260,21 +260,35 @@ const NestV2: React.FC = () => {
                           suffix=" PEFI"
                         />
                       </Balance>
+                      <BalanceText fontSize="14px" mr="4px">
+                        .
+                      </BalanceText>
                     </Flex>
                   )}
                   <BalanceText fontSize="14px">
-                    {Number(totalProfitAmount) > 0 && (
+                    {stakedPefiRatioInNest > 1 && (
                       <>
-                        {`in `}
-                        <span>{`${diffDays} days`}</span>
-                        {`. `}
+                        {`You control `}
+                        <span>{stakedPefiRatioInNest.toFixed(2)}%</span>
+                        {` of the iPEFI Nest. `}
                       </>
                     )}
-                    {`You've deposited `}
-                    <span>{`${totalDepositAmount} PEFI`}</span>
-                    {' and withdrawn '}
-                    <span>{`${totalWithdrawAmount} PEFI`}</span>
-                    {` from the iPEFI Nest.`}
+                    {Number(diffDays) >= 0 && (
+                      <>
+                        {`Your first deposit was `}
+                        <span>{`${diffDays} days `}</span>
+                        {`ago. `}
+                      </>
+                    )}
+                    {Number(diffDays) >= 0 && (
+                      <>
+                        {`You've deposited `}
+                        <span>{`${totalDepositAmount} PEFI`}</span>
+                        {' and withdrawn '}
+                        <span>{`${totalWithdrawAmount} PEFI`}</span>
+                        {` from the iPEFI Nest.`}
+                      </>
+                    )}
                   </BalanceText>
                 </WealthCard>
                 <Flex flexDirection="column" padding="4px 16px 16px">

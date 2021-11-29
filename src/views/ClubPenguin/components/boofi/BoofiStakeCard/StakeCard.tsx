@@ -14,13 +14,12 @@ import { getCutdownType } from '../../../utils'
 const StakeCard = () => {
   const [activeTab, setActiveTab] = useState(0)
   const { account } = useWeb3React()
-  const { onStake } = useClubPenguinStake(1)
-  const { onUnstake } = useClubPenguinUnstake(1)
+  const { onStake } = useClubPenguinStake(2)
+  const { onUnstake } = useClubPenguinUnstake(2)
   const { onApproveIPefi } = useClubPenguinApprove()
 
   const clubFarms = useClubPenguinFarms(account)
-  // TODO: should change farmId, 1 is for VSO
-  const activeFarm = clubFarms[1]
+  const activeFarm = clubFarms[2]
   const { userData, rewardStartTimestamp, rewardEndTimestamp } = activeFarm
   const iPEFIBalance = userData ? new BigNumber(userData.tokenBalance) : new BigNumber(0)
   const stakedBalance = userData ? new BigNumber(userData.stakedBalance) : new BigNumber(0)

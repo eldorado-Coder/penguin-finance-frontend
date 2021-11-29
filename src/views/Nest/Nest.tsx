@@ -110,7 +110,7 @@ const IgloosBgContainer = styled.div`
   background-size: contain;
   position: absolute;
   top: 0;
-  bottom: 0
+  bottom: 0;
   right: 0px;
   left: 0px;
   z-index: -1;
