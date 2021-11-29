@@ -47,7 +47,8 @@ const BoofiCard = () => {
   const rewardPerSec = getBalanceNumber(new BigNumber(tokensPerSecond))
   const rewardPerSecInUsd = boofiPriceUsd * rewardPerSec
   const dailyApr = (SECONDS_PER_DAY * rewardPerSecInUsd) / totalLiquidityInUsd
-  const apr = cutdownType === 'start' ? 100 * getApr(dailyApr) : 0
+  // const apr = cutdownType === 'start' ? 100 * getApr(dailyApr) : 0
+  const apr = 100 * getApr(dailyApr)
 
   const isMobile = !isXl
   const canHarvest = account && earningBalance > 0 && !pendingTx
@@ -103,7 +104,7 @@ const BoofiCard = () => {
           </Flex>
           <Flex className="col" flexDirection="column" alignItems="flex-start">
             <Label fontSize={isMobile ? '16px' : '20px'} fontWeight={700} lineHeight={1}>
-              Projected APR
+              {cutdownType === 'start' ? 'Projected APR' : 'CURRENT APR'}
             </Label>
             <Balance
               color={isDark ? 'white' : '#00283f'}
