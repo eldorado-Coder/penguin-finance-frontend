@@ -131,7 +131,7 @@ const StakeForm: React.FC<StakeFormProps> = ({
                   {renderText()}
                 </StyledButton2>
               ) : (
-                <StyledButton2 tokenBalance={val} scale="md" disabled onClick={handleGetIPefi}>
+                <StyledButton2 tokenBalance={val} scale="md" onClick={handleGetIPefi}>
                   {renderText()}
                 </StyledButton2>
               )}
