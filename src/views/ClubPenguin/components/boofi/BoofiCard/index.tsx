@@ -22,7 +22,7 @@ const BoofiCard = () => {
   const [timerEnded, setTimerEnded] = useState(false)
   const { isXl } = useMatchBreakpoints()
   const { account } = useWeb3React()
-  const { onHarvest } = useClubPenguinHarvest(1)
+  const { onHarvest } = useClubPenguinHarvest(2)
   const pefiPriceUsd = usePricePefiUsdt().toNumber()
   const v2Pools = useV2Pools(account)
   const { isDark } = useTheme()
@@ -31,8 +31,7 @@ const BoofiCard = () => {
   const iPefiPriceUsd = iPefiToPefiRatio * pefiPriceUsd
 
   const clubFarms = useClubPenguinFarms(account)
-  // TODO: should change farmId, 1 is for VSO
-  const activeFarm = clubFarms[1]
+  const activeFarm = clubFarms[2]
   const { userData, rewardStartTimestamp, rewardEndTimestamp, tokensPerSecond, totalIPEFIInPool } = activeFarm
 
   const { boofiPrice: boofiPriceUsd } = useTokenPrice()
@@ -48,7 +47,8 @@ const BoofiCard = () => {
   const rewardPerSec = getBalanceNumber(new BigNumber(tokensPerSecond))
   const rewardPerSecInUsd = boofiPriceUsd * rewardPerSec
   const dailyApr = (SECONDS_PER_DAY * rewardPerSecInUsd) / totalLiquidityInUsd
-  const apr = cutdownType === 'start' ? 100 * getApr(dailyApr) : 0
+  // const apr = cutdownType === 'start' ? 100 * getApr(dailyApr) : 0
+  const apr = 100 * getApr(dailyApr)
 
   const isMobile = !isXl
   const canHarvest = account && earningBalance > 0 && !pendingTx
@@ -104,7 +104,7 @@ const BoofiCard = () => {
           </Flex>
           <Flex className="col" flexDirection="column" alignItems="flex-start">
             <Label fontSize={isMobile ? '16px' : '20px'} fontWeight={700} lineHeight={1}>
-              CURRENT APR
+              {cutdownType === 'start' ? 'Projected APR' : 'CURRENT APR'}
             </Label>
             <Balance
               color={isDark ? 'white' : '#00283f'}
