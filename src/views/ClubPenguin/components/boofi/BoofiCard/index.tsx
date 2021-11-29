@@ -103,7 +103,7 @@ const BoofiCard = () => {
           </Flex>
           <Flex className="col" flexDirection="column" alignItems="flex-start">
             <Label fontSize={isMobile ? '16px' : '20px'} fontWeight={700} lineHeight={1}>
-              CURRENT APR
+              Projected APR
             </Label>
             <Balance
               color={isDark ? 'white' : '#00283f'}
