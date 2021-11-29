@@ -90,10 +90,7 @@ const StakeForm: React.FC<StakeFormProps> = ({
   }
 
   const handleViewTutorial = () => {
-    window.open(
-      'https://penguin-finance.medium.com/the-club-penguin-initiative-is-live-on-avalanche-9cd08a133f2',
-      '_blank',
-    )
+    window.open('https://docs.penguinfinance.io/summary/club-penguin-pools', '_blank')
   }
 
   const handleAddToken = async () => {
