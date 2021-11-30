@@ -280,7 +280,7 @@ const NestV2: React.FC = () => {
                         {`ago. `}
                       </>
                     )}
-                    {Number(diffDays) >= 0 && (
+                    {/* {Number(diffDays) >= 0 && (
                       <>
                         {`You've deposited `}
                         <span>{`${totalDepositAmount} PEFI`}</span>
@@ -288,7 +288,7 @@ const NestV2: React.FC = () => {
                         <span>{`${totalWithdrawAmount} PEFI`}</span>
                         {` from the iPEFI Nest.`}
                       </>
-                    )}
+                    )} */}
                   </BalanceText>
                 </WealthCard>
                 <Flex flexDirection="column" padding="4px 16px 16px">
