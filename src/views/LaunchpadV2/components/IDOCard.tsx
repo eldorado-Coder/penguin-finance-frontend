@@ -42,7 +42,7 @@ const IDOCard = ({ idoData }) => {
               fontWeight="600"
               prefix="$"
               decimals={0}
-              value={(Number(idoData.totalRaised) * Number(idoData.saleProgress)) / 100}
+              value={Number(idoData.totalRaised)}
             />
             <Balance
               fontSize="24px"
