@@ -16,7 +16,7 @@ const Launchpad: React.FC = () => {
           alt="launchpad banner"
         />
         <HeaderContainer justifyContent='center'>
-          <IDODetail idoData={completedIDOs[0]} />
+          <IDODetail idoData={completedIDOs[1]} />
         </HeaderContainer>
       </IgloosBannerContainer>
       <LaunchpadTimeline />
