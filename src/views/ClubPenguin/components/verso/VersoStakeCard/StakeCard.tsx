@@ -63,9 +63,8 @@ const CardContent = styled.div`
 `
 
 const OptionTitle = styled(Button)`
-  /* color: ${({ theme }) => (theme.isDark ? 'white' : '#00283f')}; */
   color: white;
-  background: ${({ theme }) => (theme.isDark ? '#d4444c' : '#3B88E7')};
+  background: #3B88E7;
   width: 100%;
   border-radius: 8px;
   font-weight: 500;

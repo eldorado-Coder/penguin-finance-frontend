@@ -13,13 +13,11 @@ import useTheme from 'hooks/useTheme'
 import { SECONDS_PER_DAY } from 'config'
 import useTokenPrice from 'hooks/useTokenPrice'
 import Card from '../../Card'
-import CountDown from '../../CountDown'
 import { getCutdownType } from '../../../utils'
 import { useClubPenguinHarvest } from '../../../hooks'
 
 const BoofiCard = () => {
   const [pendingTx, setPendingTx] = useState(false)
-  const [timerEnded, setTimerEnded] = useState(false)
   const { isXl } = useMatchBreakpoints()
   const { account } = useWeb3React()
   const { onHarvest } = useClubPenguinHarvest(2)
@@ -63,10 +61,6 @@ const BoofiCard = () => {
     }
   }
 
-  const handleTimerCompleted = async () => {
-    setTimerEnded(true)
-  }
-
   const handleViewWebsite = () => {
     window.open('http://www.boofinance.io/', '_blank')
   }
@@ -104,26 +98,11 @@ const BoofiCard = () => {
           </Flex>
           <Flex className="col" flexDirection="column" alignItems="flex-start">
             <Label fontSize={isMobile ? '16px' : '20px'} fontWeight={700} lineHeight={1}>
-              {cutdownType === 'start' ? 'Projected APR' : 'CURRENT APR'}
+              END Date
             </Label>
-            <Balance
-              color={isDark ? 'white' : '#00283f'}
-              fontSize="22px"
-              fontWeight="600"
-              suffix="%"
-              value={apr}
-              decimals={2}
-            />
-            <BalanceTextSmall>
-              <CardValue
-                className="balance"
-                fontSize="12px"
-                value={apr / 48}
-                decimals={2}
-                lineHeight="1.2"
-                suffix="% per week"
-              />
-            </BalanceTextSmall>
+            <CutdownBalance fontSize="22px" fontWeight={600}>
+              December 4
+            </CutdownBalance>
           </Flex>
         </FlexContainer>
         <FlexContainer
@@ -143,22 +122,6 @@ const BoofiCard = () => {
             >
               Harvest All
             </HarvestButton>
-          </Flex>
-          <Flex className="col" flexDirection="column" alignItems="flex-start">
-            <Label fontSize={isMobile ? '16px' : '20px'} fontWeight={700} lineHeight={1}>
-              {timerEnded || currentTimestamp > cutdownDate ? (
-                'ENDED'
-              ) : (
-                <>{cutdownType === 'start' ? 'STARTS IN' : 'ENDS IN'}</>
-              )}
-            </Label>
-            <CutdownBalance fontSize="22px" fontWeight={400}>
-              {cutdownDate > 0 && (
-                <div className="countdown">
-                  <CountDown date={timerEnded ? currentTimestamp : cutdownDate} handleComplete={handleTimerCompleted} />
-                </div>
-              )}
-            </CutdownBalance>
           </Flex>
         </FlexContainer>
       </>
