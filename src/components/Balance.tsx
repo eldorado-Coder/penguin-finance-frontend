@@ -18,15 +18,17 @@ interface BalanceProps extends TextProps {
   prefix?: string
   suffix?: string
   isFlexWrap?: boolean
+  lineHeight?: string
 }
 
-const StyledText = styled(Text)<TextProps>`
+const StyledText = styled(Text)<BalanceProps>`
   color: ${({ theme }) => (theme.isDark ? 'white' : theme.colors.secondary)};
   color: ${({ isDisabled, color, theme }) => (isDisabled ? theme.colors.textDisabled : color)};
   display: flex;
   align-items: center;
   white-space: break-spaces;
   flex-wrap: ${({ isFlexWrap }) => isFlexWrap && 'wrap'};
+  lineHeight: ${({ lineHeight }) => lineHeight};
 `
 
 const BalanceWrapper = styled.span<{ isFlexWrap?: boolean }>`
@@ -44,6 +46,7 @@ const Balance: React.FC<BalanceProps> = ({
   prefix,
   suffix,
   isFlexWrap,
+  lineHeight
 }) => {
   const previousValue = useRef(0)
 
@@ -59,6 +62,7 @@ const Balance: React.FC<BalanceProps> = ({
       isDisabled={isDisabled}
       fontWeight={fontWeight}
       isFlexWrap={!!isFlexWrap}
+      lineHeight={lineHeight}
     >
       {prefix}
       {value === 0 ? (
