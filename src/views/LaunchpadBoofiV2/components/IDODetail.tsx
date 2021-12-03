@@ -9,34 +9,34 @@ import Balance from 'components/Balance'
 const SocialLinks = [
   // first row : FooterIconLinks[0]
   [
-    {
-      name: 'TelegramIcon',
-      url: 'https://twitter.com/Boo_Finance',
-      imageUrl: 'images/ido/telegram.svg',
-      key: 'telegram',
-      label: 't.me/BooFinance'
-    },
     // {
-    //   name: 'DiscordIcon',
-    //   url: 'https://discord.gg/WyFT54acU5',
-    //   lightUrl: 'images/footer/discordLight.svg',
-    //   darkUrl: 'images/footer/discordDark.svg',
-    //   key: 'discord',
+    //   name: 'TelegramIcon',
+    //   url: 'https://twitter.com/Boo_Finance',
+    //   imageUrl: 'images/ido/telegram.svg',
+    //   key: 'telegram',
+    //   label: 't.me/BooFinance'
     // },
+    {
+      name: 'DiscordIcon',
+      url: 'https://discord.com/invite/A3KbWpsZfE',
+      imageUrl: 'images/ido/social_icons/discord.png',
+      key: 'discord',
+      label: 'discord.com/Boo_Finance'
+    },
     {
       name: 'TwittweIcon',
       url: 'https://twitter.com/Boo_Finance',
-      imageUrl: 'images/ido/twitter.svg',
+      imageUrl: 'images/ido/social_icons/twitter.png',
       key: 'twitter',
       label: 'twitter.com/Boo_Finance'
     },
-    {
-      name: 'MIcon',
-      url: 'https://twitter.com/Boo_Finance',
-      imageUrl: 'images/ido/medium.svg',
-      key: 'medium',
-      label: 'medium.com/Boo_Finance'
-    },
+    // {
+    //   name: 'MIcon',
+    //   url: 'https://twitter.com/Boo_Finance',
+    //   imageUrl: 'images/ido/medium.svg',
+    //   key: 'medium',
+    //   label: 'medium.com/Boo_Finance'
+    // },
   ],
 ]
 
@@ -204,6 +204,7 @@ const IDODetail = ({ idoData }) => {
                 <Flex className='social-item' key={`social-${item.key}`}>
                   <a href={item.url} target="_blank" rel="noreferrer">
                     <img src={item.imageUrl} alt={item.key} />
+                    {/* <SvgIcon src={item.imageUrl} width='24px' height='24px' /> */}
                   </a>
                 </Flex>
               )
@@ -350,6 +351,10 @@ const Socials = styled(Flex)`
   }
   .social-item {
     margin-right: 32px;
+
+    img {
+      width: 24px;
+    }
 
     @media (min-width: 1080px) {
       margin-left: 32px;

@@ -11,31 +11,31 @@ const SocialLinks = [
   [
     {
       name: 'TelegramIcon',
-      url: 'https://twitter.com/Boo_Finance',
-      imageUrl: 'images/ido/telegram.svg',
+      url: 'https://t.me/sherpa_cash',
+      imageUrl: 'images/ido/social_icons/telegram.png',
       key: 'telegram',
-      label: 't.me/BooFinance'
+      label: 't.me/sherpa_cash'
     },
-    // {
-    //   name: 'DiscordIcon',
-    //   url: 'https://discord.gg/WyFT54acU5',
-    //   lightUrl: 'images/footer/discordLight.svg',
-    //   darkUrl: 'images/footer/discordDark.svg',
-    //   key: 'discord',
-    // },
     {
-      name: 'TwittweIcon',
-      url: 'https://twitter.com/Boo_Finance',
-      imageUrl: 'images/ido/twitter.svg',
+      name: 'TwitterIcon',
+      url: 'https://twitter.com/sherpa_cash',
+      imageUrl: 'images/ido/social_icons/twitter.png',
       key: 'twitter',
-      label: 'twitter.com/Boo_Finance'
+      label: 'twitter.com/sherpa_cash'
     },
     {
       name: 'MIcon',
-      url: 'https://twitter.com/Boo_Finance',
-      imageUrl: 'images/ido/medium.svg',
+      url: 'https://medium.com/sherpa-cash',
+      imageUrl: 'images/ido/social_icons/medium.png',
       key: 'medium',
-      label: 'medium.com/Boo_Finance'
+      label: 'medium.com/sherpa-cash'
+    },
+    {
+      name: 'DiscordIcon',
+      url: 'https://discord.com/invite/8bWeGSB4Zx',
+      imageUrl: 'images/ido/social_icons/discord.png',
+      key: 'discord',
+      label: 'discord.com/sherpa-cash'
     },
   ],
 ]
@@ -78,11 +78,11 @@ const IDODetail = ({ idoData }) => {
           An exciting DeFi project building on Avalanche.
         </HeaderTitle>
         <Description fontSize="14px" lineHeight="18px" color="white" mt='20px'>
-          Boo! BooFinance is bringing innovative DeFi tools to users on the Avalanche network. 
+          Sherpa Cash is the first fully decentralized protocol for private transactions on Avalanche. The SHERPA token is the governance token for Sherpa Cash.
         </Description>
-        <Description fontSize="14px" lineHeight="18px" color="white" mt='20px'>
+        {/* <Description fontSize="14px" lineHeight="18px" color="white" mt='20px'>
           Our main products are The Cauldron, Deflationary NFTs, and the Boo Council (DAO)
-        </Description>
+        </Description> */}
         <Flex mt='40px'>
           <Flex onClick={handleViewSite(idoData.siteLink)} mr='16px'>
             <SiteLinkTag>
@@ -202,7 +202,8 @@ const IDODetail = ({ idoData }) => {
             {SocialLinks[0].map((item) => {
               return (
                 <Flex className='social-item' key={`social-${item.key}`}>
-                  <a href={item.url} target="_blank" rel="noreferrer">
+                  <a href={item.url} target="_blank" rel="noreferrer">                  
+                    {/* <SvgIcon src={item.imageUrl} width='24px' height='24px' /> */}
                     <img src={item.imageUrl} alt={item.key} />
                   </a>
                 </Flex>
@@ -350,6 +351,10 @@ const Socials = styled(Flex)`
   }
   .social-item {
     margin-right: 32px;
+
+    img {
+      width: 24px;
+    }
 
     @media (min-width: 1080px) {
       margin-left: 32px;

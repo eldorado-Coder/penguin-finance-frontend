@@ -3,16 +3,26 @@ import styled from 'styled-components'
 import { Text, Flex } from 'penguinfinance-uikit2'
 import Page from 'components/layout/Page'
 
+// const TOKEN_SALES_ECONOMICS = [
+//   { label: 'Hard Cap', value: 'Hard Cap' },
+//   { label: 'Total Token Supply', value: 'Total Token Supply' },
+//   { label: 'Initial Circulating Supply', value: 'Initial Circulating Supply' },
+//   { label: 'Public Sale Token Price', value: 'Public Sale Token Price' },
+//   { label: 'Tokens Offered', value: 'Tokens Offered' },
+//   { label: 'Hard Cap Per User', value: 'Hard Cap Per User' },
+//   { label: 'Token Sale Vesting Period', value: 'Token Sale Vesting Period' },
+//   { label: 'Token Type', value: 'Token Type' },
+//   { label: 'Token Distribution', value: 'Token Distribution' },
+// ];
+
 const TOKEN_SALES_ECONOMICS = [
-  { label: 'Hard Cap', value: 'Hard Cap' },
-  { label: 'Total Token Supply', value: 'Total Token Supply' },
-  { label: 'Initial Circulating Supply', value: 'Initial Circulating Supply' },
-  { label: 'Public Sale Token Price', value: 'Public Sale Token Price' },
-  { label: 'Tokens Offered', value: 'Tokens Offered' },
-  { label: 'Hard Cap Per User', value: 'Hard Cap Per User' },
-  { label: 'Token Sale Vesting Period', value: 'Token Sale Vesting Period' },
-  { label: 'Token Type', value: 'Token Type' },
-  { label: 'Token Distribution', value: 'Token Distribution' },
+  { label: 'Hard Cap', value: '10,000,000' },
+  { label: 'Farming & Staking Rewards', value: '5,100,000' },
+  { label: 'Initial Token Sale', value: '2,000,000' },
+  { label: 'Strategic Partnerships & Advisors', value: '500,000' },
+  { label: 'Development & Bug Bounties', value: '500,000' },
+  { label: 'Marketing & Community Growth', value: '500,000' },
+  { label: 'Foundation ', value: '1,400,000' }
 ];
 
 const ProjectDescription = () => {
@@ -55,7 +65,7 @@ const TokenEconomic = styled(Flex)<{ index: number }>`
 
 const TokenSalesEconomics = styled.div`
   border: 1px solid #412B5D;
-  max-width: 480px;
+  max-width: 500px;
   border-radius: 6px;
   margin-top: 32px;
 `;

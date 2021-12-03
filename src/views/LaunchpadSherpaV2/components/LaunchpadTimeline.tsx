@@ -34,7 +34,7 @@ const LaunchpadTimeline = () => {
     <Container>
       <LaunchpadPage>
         <Flex justifyContent='space-between' alignItems='center' flexWrap='wrap'>
-          <Label fontSize="40px" lineHeight="60px" mb="16px" fontWeight={500}>
+          <Label fontSize="40px" lineHeight="60px" fontWeight={500}>
             Launchpad Timeline
           </Label>
           <Flex alignItems='center'>
@@ -42,7 +42,7 @@ const LaunchpadTimeline = () => {
             <HistoryText fontSize='14px' ml='4px'>View Launchpad History</HistoryText>
           </Flex>
         </Flex>
-        <Flex justifyContent='space-between' mt='40px' flexDirection={windowSize.width < 900 ? 'column' : 'row'} alignItems='center'>
+        <Flex justifyContent='space-between' mt='56px' flexDirection={windowSize.width < 900 ? 'column' : 'row'} alignItems='center'>
           {TIMELINES.map((timeline, index) => {
             return (
               <Timeline key={timeline.label} completed={timeline.completed} width={windowSize.width} >
@@ -122,7 +122,11 @@ const TimelineDate = styled(Text)<{ completed?: boolean }>`
 
 const SignUpContainer = styled.div`
   position: relative;
-  margin-top: 100px;
+  margin-top: 20px;
+
+  @media (min-width: 900px) {
+    margin-top: 100px;
+  }
 `;
 
 const SignUpImage = styled.img`
