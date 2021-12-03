@@ -115,7 +115,7 @@ const StyledButton = styled(Button)`
   font-size: 16px;
   font-weight: 400;
   color: white;
-  background-color: ${({ theme }) => (theme.isDark ? theme.colors.red : '#3B88E7')};
+  background-color: #3B88E7;
   box-shadow: none;
 `
 const Warning = styled.img`

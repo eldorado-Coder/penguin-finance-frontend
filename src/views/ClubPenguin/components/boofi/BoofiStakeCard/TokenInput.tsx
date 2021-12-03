@@ -47,7 +47,7 @@ const TokenInput: React.FC<TokenInputProps> = ({
         )}
         {maxBalanceShow && (
           <StyledMaxText>
-            {`${isMobile ? 'in Wallet' : `${symbol} in Wallet`}: ${roundDown(max, 2)} ${symbol}`}
+            {`${isMobile ? 'Available' : `${symbol} Available`}: ${roundDown(max, 2)} ${symbol}`}
             {Number(max) < 0.1 && <Warning src="/images/launchpad/warning.png" alt="warning" width={16} height={16} />}
           </StyledMaxText>
         )}
@@ -115,7 +115,7 @@ const StyledButton = styled(Button)`
   font-size: 16px;
   font-weight: 400;
   color: white;
-  background-color: ${({ theme }) => (theme.isDark ? theme.colors.red : '#37DB92')};
+  background-color: #37DB92;
   box-shadow: none;
 `
 const Warning = styled.img`

@@ -1,27 +1,21 @@
-import React, { useState } from 'react'
+import React from 'react'
 import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
-import { Text, Flex, ButtonMenu, ButtonMenuItem } from 'penguinfinance-uikit2'
+import { Text, Flex, Button } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import { useClubPenguinFarms } from 'state/hooks'
-import { useClubPenguinApprove } from 'hooks/useApprove'
-import { useClubPenguinStake, useClubPenguinUnstake } from '../../../hooks'
-import StakeForm from './StakeForm'
+import { useClubPenguinUnstake } from '../../../hooks'
 import UnstakeForm from './UnstakeForm'
 import Card from '../../Card'
 import { getCutdownType } from '../../../utils'
 
 const StakeCard = () => {
-  const [activeTab, setActiveTab] = useState(0)
   const { account } = useWeb3React()
-  const { onStake } = useClubPenguinStake(2)
   const { onUnstake } = useClubPenguinUnstake(2)
-  const { onApproveIPefi } = useClubPenguinApprove()
 
   const clubFarms = useClubPenguinFarms(account)
   const activeFarm = clubFarms[2]
   const { userData, rewardStartTimestamp, rewardEndTimestamp } = activeFarm
-  const iPEFIBalance = userData ? new BigNumber(userData.tokenBalance) : new BigNumber(0)
   const stakedBalance = userData ? new BigNumber(userData.stakedBalance) : new BigNumber(0)
 
   const currentTimestamp = Date.now()
@@ -29,45 +23,23 @@ const StakeCard = () => {
   const cutdownType = getCutdownType(currentTimestamp, rewardStartTime)
   const cutdownDate = cutdownType === 'start' ? rewardStartTime : rewardEndTimestamp
 
-  const handleSwitchTab = (tab) => {
-    setActiveTab(tab)
-  }
-
   return (
     <StyledCard>
       <CardContent>
-        <TabWrapper>
-          <ButtonMenu variant="subtle" activeIndex={activeTab} onItemClick={handleSwitchTab}>
-            <OptionItem active={activeTab === 0}>Stake</OptionItem>
-            <OptionItem active={activeTab === 1}>Unstake</OptionItem>
-          </ButtonMenu>
-        </TabWrapper>
+        <OptionTitle scale="md">Unstake</OptionTitle>
         <Flex mt="24px" mb="8px" justifyContent="space-between" alignItems="center">
           <StakeLabel color="primary" fontWeight="500">
-            {activeTab === 0 ? 'Stake iPEFI, Get BOOFI' : 'Unstake from Iceberg'}
+            Unstake from Iceberg
           </StakeLabel>
         </Flex>
-        {activeTab === 0 ? (
-          <StakeForm
-            max={iPEFIBalance}
-            stakedBalance={stakedBalance}
-            tokenName="iPEFI"
-            account={account}
-            cutdownType={cutdownType}
-            cutdownDate={cutdownDate}
-            onApprove={onApproveIPefi}
-            onConfirm={onStake}
-          />
-        ) : (
-          <UnstakeForm
-            max={stakedBalance}
-            tokenName="iPEFI"
-            account={account}
-            cutdownType={cutdownType}
-            cutdownDate={cutdownDate}
-            onConfirm={onUnstake}
-          />
-        )}
+        <UnstakeForm
+          max={stakedBalance}
+          tokenName="iPEFI"
+          account={account}
+          cutdownType={cutdownType}
+          cutdownDate={cutdownDate}
+          onConfirm={onUnstake}
+        />
       </CardContent>
     </StyledCard>
   )
@@ -90,35 +62,23 @@ const CardContent = styled.div`
   background: ${(props) => props.theme.card.background};
 `
 
-const TabWrapper = styled.div`
-  width: 100%;
-  div {
-    width: 100%;
-    background-color: ${({ theme }) => (theme.isDark ? '#604e84' : '#ece8f2')};
-    border-radius: 8px;
-
-    button {
-      width: 50%;
-      border-radius: 6px;
-    }
-  }
-`
-
-const OptionItem = styled(ButtonMenuItem)<{ active: boolean }>`
-  min-width: 100px;
-  font-weight: 500;
-  box-shadow: none;
-  background-color: ${({ active, theme }) => active && '#37DB92'};
-  color: ${({ active }) => (active ? 'white' : '#A79FBC')};
-  color: ${({ active, theme }) => theme.isDark && !active && '#BBA6DD'};
-`
-
 const StakeLabel = styled(Text)`
   font-size: 18px;
   color: ${({ theme }) => (theme.isDark ? '#d1caf2' : '#372b70')};
 
   ${({ theme }) => theme.mediaQueries.sm} {
     font-size: 20px;
+  }
+`
+
+const OptionTitle = styled(Button)`
+  color: white;
+  background: #37DB92;
+  width: 100%;
+  border-radius: 8px;
+  font-weight: 500;
+  &:hover {
+    opacity: 1 !important;
   }
 `
 
