@@ -1,8 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Text, Flex, Button, useMatchBreakpoints } from 'penguinfinance-uikit2'
+import { Text, Flex, Button } from 'penguinfinance-uikit2'
 import SvgIcon from 'components/SvgIcon'
 import Page from 'components/layout/Page'
+import useWindowSize from 'hooks/useWindowSize';
 
 const TIMELINES = [
   {
@@ -27,9 +28,7 @@ const TIMELINES = [
   },
 ]
 const LaunchpadTimeline = () => {
-  const { isLg, isXl, isXs } = useMatchBreakpoints()
-  const isStacked = !isLg && !isXl
-  const isMobile = !isXl
+  const windowSize = useWindowSize();
 
   return (
     <Container>
@@ -43,16 +42,22 @@ const LaunchpadTimeline = () => {
             <HistoryText fontSize='14px' ml='4px'>View Launchpad History</HistoryText>
           </Flex>
         </Flex>
-        <Flex justifyContent='space-between' mt='40px' flexDirection={isStacked ? 'column' : 'row'} alignItems='center'>
-          {TIMELINES.map(timeline => {
+        <Flex justifyContent='space-between' mt='40px' flexDirection={windowSize.width < 900 ? 'column' : 'row'} alignItems='center'>
+          {TIMELINES.map((timeline, index) => {
             return (
-              <TimelineItem completed={timeline.completed} key={timeline.label}>
-                <Flex flexDirection='column' alignItems='center'>
-                  <img src={`${process.env.PUBLIC_URL}/images/ido/${timeline.completed ? 'completed' : 'inprogress'}.png`} alt={timeline.label} />
-                  <TimelineLabel mt='8px' mb='8px' completed={timeline.completed} fontWeight={500} fontSize='17px' color='#292929'>{timeline.label}</TimelineLabel>
-                  <TimelineDate completed={timeline.completed} fontSize='14px' color='#7f7f7f'>{timeline.date}</TimelineDate>
-                </Flex>
-              </TimelineItem>
+              <Timeline key={timeline.label} completed={timeline.completed} width={windowSize.width} >
+                {index !== 0 && <div className='previous-link' />}
+                <TimelineItem completed={timeline.completed}>
+                  <Flex flexDirection='column' alignItems='center'>
+                    <img src={`${process.env.PUBLIC_URL}/images/ido/${timeline.completed ? 'completed' : 'inprogress'}.png`} alt={timeline.label} />
+                    <TimelineLabel mt='8px' mb='8px' completed={timeline.completed} fontWeight={500} fontSize='17px' color='#292929'>{timeline.label}</TimelineLabel>
+                    <TimelineDate completed={timeline.completed} fontSize='14px' color='#7f7f7f'>{timeline.date}</TimelineDate>
+                  </Flex>
+                </TimelineItem>
+                {index < TIMELINES.length-1 && 
+                  <div className='after-link' />
+                }
+              </Timeline>
             )
           })}
         </Flex>
@@ -100,7 +105,7 @@ const TimelineItem = styled.div<{ completed?: boolean }>`
   padding: 16px;
   width: 184px;
   margin-bottom: 40px;
-  @media (min-width: 968px) {
+  @media (min-width: 900px) {
     margin-bottom: 0;
   }
 `;
@@ -192,6 +197,51 @@ const Label = styled(Text)`
 const HistoryText = styled(Text)`
   font-family: 'Fira Code';
   color: ${({ theme }) => theme.isDark ? 'white' : '#1D5AD1'};
+`;
+
+const Timeline = styled.div<{ completed?: boolean, width: number }>`
+  display: flex;
+  align-items: center;
+  position: relative;
+  .after-link {
+    border: 1px solid ${({ completed }) => completed ? '#DCDCDC' : '#5E4AAF'};
+    position: absolute;
+    height: 21px;
+    left: 92px;
+    top: 153px;
+
+    @media (min-width: 900px) {
+      width: ${({ width }) => (width - 784)/6}px;
+      left: 184px;
+      height: 0px;
+      top: unset;
+    }
+
+    @media (min-width: 1200px) {
+      width: 70px;
+    }
+  };
+  .previous-link {
+    border: 1px solid ${({ completed }) => completed ? '#DCDCDC' : '#5E4AAF'};
+    height: 21px;
+    left: 92px;
+    width: 1px;
+    position: absolute;
+    top: -20px;
+
+    @media (min-width: 900px) {
+      width: ${({ width }) => (width - 784)/6}px;
+      left: -${({ width }) => (width - 784)/6}px;
+      height: 0px;
+      top: unset;
+    }
+
+    @media (min-width: 1200px) {
+      width: 70px;
+      left: -70px;
+      height: 0px;
+    }
+  }
 `;
 
 export default LaunchpadTimeline
