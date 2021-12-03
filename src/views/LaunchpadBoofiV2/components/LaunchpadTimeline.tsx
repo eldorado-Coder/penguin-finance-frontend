@@ -7,26 +7,27 @@ import useWindowSize from 'hooks/useWindowSize';
 
 const TIMELINES = [
   {
-    label: 'Registration Opens',
-    date: 'Nov 2nd 2021 17:00',
+    label: 'Staking Opens',
+    date: 'Sep 24th 2021 00:00',
     completed: true
   },
   {
-    label: 'Registration Closes',
-    date: 'Nov 2nd 2021 17:00',
+    label: 'Staking Closes',
+    date: 'Sep 29th 2021 23:59',
     completed: true
   },
   {
-    label: 'Staking Round',
-    date: 'Nov 2nd 2021 17:00',
+    label: 'Distribution Opens',
+    date: 'Sep 30th 2021 20:00',
     completed: true
   },
   {
-    label: 'Sale Ends',
-    date: 'Nov 2nd 2021 17:00',
-    completed: false
+    label: 'Distribution Ends',
+    date: 'Oct 7th 2021 20:00',
+    completed: true
   },
-]
+];
+
 const LaunchpadTimeline = () => {
   const windowSize = useWindowSize();
 
