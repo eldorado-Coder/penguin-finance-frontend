@@ -1,9 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Flex } from 'penguinfinance-uikit2'
 import useTheme from 'hooks/useTheme'
 import Page from 'components/layout/Page'
-import CurrentIcebergs from './components/CurrentIcebergs'
+// import CurrentIcebergs from './components/CurrentIcebergs'
 import UpcomingIcebergs from './components/UpcomingIcebergs'
 import PreviousIcebergs from './components/PreviousIcebergs'
 
@@ -24,7 +23,7 @@ const ClubPenguin: React.FC = () => {
         />
       </ClubPenguinBannerContainer>
       <ClubPenguinContent>
-        <CurrentIcebergs />
+        {/* <CurrentIcebergs /> */}
         <UpcomingIcebergs />
         <PreviousIcebergs />
       </ClubPenguinContent>
@@ -63,12 +62,5 @@ const BannerImage = styled.img`
 
 // content
 const ClubPenguinContent = styled.div``
-
-const CardWrapper = styled(Flex)`
-  width: 100%;
-  ${({ theme }) => theme.mediaQueries.xl} {
-    width: 49%;
-  }
-`
 
 export default ClubPenguin

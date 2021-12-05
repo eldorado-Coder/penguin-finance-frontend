@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useHistory } from 'react-router-dom'
 import { Text, Flex, Tag, Progress } from 'penguinfinance-uikit2'
 import useTheme from 'hooks/useTheme'
 import { usePriceAvaxUsdt } from 'state/hooks'
@@ -9,10 +10,15 @@ import Balance from 'components/Balance'
 
 const IDOCard = ({ idoData }) => {
   const { isDark } = useTheme()
+  const history = useHistory();
   const avaxPriceInUsd = usePriceAvaxUsdt().toNumber()
 
+  const handleViewIdo = () => {
+    history.push(idoData.link);
+  };
+
   return (
-    <FCard>
+    <FCard onClick={handleViewIdo}>
       <Flex justifyContent="space-between" alignItems="center" mb="16px">
         <IdoLogo
           src={
@@ -42,7 +48,7 @@ const IDOCard = ({ idoData }) => {
               fontWeight="600"
               prefix="$"
               decimals={0}
-              value={(Number(idoData.totalRaised) * Number(idoData.saleProgress)) / 100}
+              value={Number(idoData.totalRaised)}
             />
             <Balance
               fontSize="24px"
@@ -147,6 +153,7 @@ const IDOCard = ({ idoData }) => {
 
 const FCard = styled.div`
   align-self: baseline;
+  cursor: pointer;
   background: ${(props) => props.theme.card.background};
   border-radius: 16px;
   box-shadow: 4px 4px 32px rgba(165, 165, 165, 0.25);

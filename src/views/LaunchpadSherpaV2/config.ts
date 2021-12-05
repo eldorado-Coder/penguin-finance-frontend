@@ -19,8 +19,8 @@ const upcomingIDOs = [
 const completedIDOs = [
   {
     tokenSymbol: 'BOOFI',
-    whiteLogo: 'boofi_logo_white.png',
-    darkLogo: 'boofi_logo_dark.png',
+    whiteLogo: 'boofi_logo.png',
+    darkLogo: 'boofi_logo.png',
     isCompleted: true,
     totalRaised: 250000,
     returnToATH: 15,
@@ -31,12 +31,14 @@ const completedIDOs = [
     distributedTokenAmount: '2M',
     saleProgress: '98',
     status: 'Launched',
-    link: '/launchpad-boofi'
+    siteLink: 'https://www.boofinance.io/',
+    whitepaperLink: 'https://boofinance.gitbook.io/boo-finance/',
+    siteLabel: 'www.boofinance.io'
   },
   {
     tokenSymbol: 'SHERPA',
-    whiteLogo: 'sherpa_logo_white.png',
-    darkLogo: 'sherpa_logo_dark.png',
+    whiteLogo: 'sherpa_logo.png',
+    darkLogo: 'sherpa_logo.png',
     isCompleted: true,
     totalRaised: 91500,
     participants: 595,
@@ -47,7 +49,9 @@ const completedIDOs = [
     distributedTokenAmount: '600K',
     saleProgress: '88',
     status: 'Launched',
-    link: '/launchpad-sherpa'
+    siteLink: 'https://sherpa.cash/',
+    whitepaperLink: 'https://docs.sherpa.cash/',
+    siteLabel: 'www.sherpa.cash'
   },
 ]
 

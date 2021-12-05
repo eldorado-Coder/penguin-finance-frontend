@@ -5,6 +5,8 @@ import VersoCard from './verso/VersoCard'
 import SherpaCard from './sherpa/SherpaCard'
 import VersoStakeCard from './verso/VersoStakeCard/StakeCard'
 import SherpaStakeCard from './sherpa/SherpaStakeCard/StakeCard'
+import BoofiCard from './boofi/BoofiCard'
+import BoofiStakeCard from './boofi/BoofiStakeCard/StakeCard'
 
 const PreviousIcebergs = () => {
   return (
@@ -12,6 +14,12 @@ const PreviousIcebergs = () => {
       <Label fontSize="24px" mt="32px" mb="16px" fontWeight={600}>
         Previous Icebergs
       </Label>
+      <Flex justifyContent="space-between" flexWrap="wrap">
+        <BoofiCard />
+        <CardWrapper>
+          <BoofiStakeCard />
+        </CardWrapper>
+      </Flex>
       <Flex justifyContent="space-between" flexWrap="wrap">
         <VersoCard />
         <CardWrapper>
