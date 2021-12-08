@@ -92,6 +92,10 @@ export const config: MenuEntry[] = [
         label: 'French',
         href: 'https://penguin-finance.gitbook.io/penguin-finance-francais-1/',
       },
+      {
+        label: '中文',
+        href: 'https://penguin-finance.gitbook.io/penguin-finance-zhong-wen/',
+      },
     ],
   },
   {
