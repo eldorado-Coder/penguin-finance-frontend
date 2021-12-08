@@ -183,7 +183,8 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
           <PendingRewardsContent>
             <Flex alignItems="center" justifyContent="space-around" mr="16px">
               {pendingTokens &&
-                pendingTokens.map((pendingToken) => {
+                pendingTokens.map((pendingToken, index) => {
+                  const key = index
                   const rewardTokenInfo = userPendingTokens.find((row) => row.address === pendingToken)
                   let amount = rewardTokenInfo ? Number(rewardTokenInfo.amount) : 0
                   let amountInUsd = getTokenPrice(pendingToken) * amount
@@ -197,9 +198,10 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
                     amount = 0
                     amountInUsd = 0
                   }
-                  // hide avax token when avax reward is zero
+                  // hide avax token when joe rush is finished
                   if (
                     farm.isJoeRushFinished &&
+                    !farm.isPenguinRush &&
                     rewardTokenInfo &&
                     rewardTokenInfo.address.toLowerCase() === getAvaxAddress().toLowerCase() &&
                     Number(rewardTokenInfo.amount) === 0
@@ -230,7 +232,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
                   }
 
                   return (
-                    <Flex flexDirection="column" alignItems="center" mr="4px" ml="4px" key={pendingToken}>
+                    <Flex flexDirection="column" alignItems="center" mr="4px" ml="4px" key={`${pendingToken}-${key}`}>
                       <RewardImage src={getTokenLogo(pendingToken)} alt="penguin" size={50} borderRadius="50%" />
                       <BalanceWrapper>
                         <StyledBalance

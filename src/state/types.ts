@@ -97,8 +97,12 @@ export interface V2Farm extends FarmConfig {
   isBenqi?: boolean
   isMINW?: boolean
   isMINWFinished?: true
+  // joe rush
   isJoeRush?: boolean
   isJoeRushFinished?: boolean
+  // penguin rush
+  isPenguinRush?: boolean
+  isPenguinRushFinished?: boolean
   // minw
   minwRewardToken?: string
   minwRewardPerSec?: string

@@ -32,6 +32,7 @@ const Farm: React.FunctionComponent<FarmCardProps> = ({ farm }) => {
           {farm.isBenqi && <LpTag type="Benqi">BenQi</LpTag>}
           {farm.isMINW && <LpTag type="MINW">MINW</LpTag>}
           {farm.isJoeRush && !farm.isJoeRushFinished && <LpTag type="Joe Rush">JOE Rush</LpTag>}
+          {farm.isPenguinRush && !farm.isPenguinRushFinished && <LpTag type="Penguin Rush">Penguin Rush</LpTag>}
         </TagContainer>
       </FarmLabelWrapper>
     </Container>
@@ -95,6 +96,7 @@ const LpTag = styled(Tag)<{ type?: string }>`
   background-color: ${({ type }) => type === 'Benqi' && '#3AB0E7'};
   background-color: ${({ type }) => type === 'MINW' && '#165DC4'};
   background-color: ${({ type }) => type === 'Joe Rush' && '#F44E4A'};
+  background-color: ${({ type }) => type === 'Penguin Rush' && '#EC3B40'};
 
   border-color: ${({ type }) => type === 'Pangolin' && '#f97316'};
   border-color: ${({ type }) => type === 'Penguin' && '#FF4100'};
@@ -104,6 +106,7 @@ const LpTag = styled(Tag)<{ type?: string }>`
   border-color: ${({ type }) => type === 'Benqi' && '#3AB0E7'};
   border-color: ${({ type }) => type === 'MINW' && '#165DC4'};
   border-color: ${({ type }) => type === 'Joe Rush' && '#F44E4A'};
+  background-color: ${({ type }) => type === 'Penguin Rush' && '#EC3B40'};
 
   color: white;
   font-size: 12px;

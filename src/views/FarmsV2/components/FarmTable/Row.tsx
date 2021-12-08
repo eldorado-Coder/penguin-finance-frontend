@@ -52,7 +52,15 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
         (row) => row.address.toLowerCase() !== getAddress(joeToken.address).toLowerCase(),
       )
     }
+    if (farm.isPenguinRushFinished) {
+      return _pendingTokensWithLogo.filter(
+        (row) => row.address.toLowerCase() !== getAddress(avaxToken.address).toLowerCase(),
+      )
+    }
     if (farm.isJoeRushFinished) {
+      if (farm.isPenguinRush && !farm.isPenguinRushFinished) {
+        return _pendingTokensWithLogo
+      }
       _pendingTokensWithLogo = _pendingTokensWithLogo.filter(
         (row) => row.address.toLowerCase() !== getAddress(avaxToken.address).toLowerCase(),
       )
@@ -261,9 +269,10 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
                       <CellLayout label="Rewards" alignItems="center">
                         <TokensWrapper>
                           {pendingTokensWithLogo &&
-                            pendingTokensWithLogo.map((row) => {
+                            pendingTokensWithLogo.map((row, _idx) => {
+                              const idx = _idx
                               return (
-                                <div key={`farm-${farm.pid}-reward-token-${row.address}`}>
+                                <div key={`farm-${farm.pid}-reward-token-${row.address}-${idx}`}>
                                   {row.logo && <PendingTokenLogo src={row.logo} alt="logo" />}
                                 </div>
                               )

@@ -40,6 +40,9 @@ const v2Farms: V2FarmConfig[] = [
     // pangolin v2
     isPangolinV2: true,
     pangolinV2PoolId: 23,
+    // penguin rush
+    isPenguinRush: true,
+    isPenguinRushFinished: false,
   },
   {
     pid: 1,
@@ -479,6 +482,8 @@ const v2Farms: V2FarmConfig[] = [
     isMINWFinished: true,
     isJoeRush: true,
     isJoeRushFinished: true,
+    isPenguinRush: true,
+    isPenguinRushFinished: false,
     isHot: true,
     hotRank: 4,
   },
