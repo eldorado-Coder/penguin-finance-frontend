@@ -85,11 +85,11 @@ export const config: MenuEntry[] = [
         href: 'https://docs.penguinfinance.io/',
       },
       {
-        label: 'Turkish',
+        label: 'Türkçe',
         href: 'https://penguin-finance.gitbook.io/penguin-finance-tuerkce/',
       },
       {
-        label: 'French',
+        label: 'Français',
         href: 'https://penguin-finance.gitbook.io/penguin-finance-francais-1/',
       },
       {
