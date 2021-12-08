@@ -94,6 +94,11 @@ const Farms: React.FC = () => {
     const minwApr = 0
     let { stakingApr, swapFeeApr } = farm
     let joeRushRewardApr = 0
+    let penguinRushRewardApr = 0
+
+    if (farm.isPenguinRush) {
+      penguinRushRewardApr = 0.1
+    }
 
     if (farm.type === 'Lydia') {
       const lydiaFarm = lydiaFarms.find((row) => row.lpSymbol === farm.lpSymbol)
@@ -135,7 +140,7 @@ const Farms: React.FC = () => {
       stakingApr = avaxStakingApr + qiStakingApr
     }
 
-    const totalApr = stakingApr + swapFeeApr + pefiApr + minwApr + joeRushRewardApr
+    const totalApr = stakingApr + swapFeeApr + pefiApr + minwApr + joeRushRewardApr + penguinRushRewardApr
 
     // apy calculation
     const pefiApy = getApy(pefiApr / DAYS_PER_YEAR)
@@ -143,6 +148,7 @@ const Farms: React.FC = () => {
     const swapFeeApy = getApy(swapFeeApr / DAYS_PER_YEAR)
     const minwApy = getApy(minwApr / DAYS_PER_YEAR)
     const joeRushRewardApy = getApy(joeRushRewardApr / DAYS_PER_YEAR)
+    const penguinRushRewardApy = getApy(penguinRushRewardApr / DAYS_PER_YEAR)
     const totalApy = getApy(totalApr / DAYS_PER_YEAR)
 
     return {
@@ -158,6 +164,8 @@ const Farms: React.FC = () => {
       minwApy,
       joeRushRewardApr,
       joeRushRewardApy,
+      penguinRushRewardApr,
+      penguinRushRewardApy,
       apr: totalApr,
       apy: totalApy,
     }

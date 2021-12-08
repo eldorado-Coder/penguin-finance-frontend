@@ -186,7 +186,13 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
                 pendingTokens.map((pendingToken, index) => {
                   const key = index
                   const rewardTokenInfo = userPendingTokens.find((row) => row.address === pendingToken)
-                  let amount = rewardTokenInfo ? Number(rewardTokenInfo.amount) : 0
+                  // TODO: for "Joe pefi-avx" - "Joe Rush" & "Penguin Rush"
+                  const rewardTokenInfos = userPendingTokens.filter((row) => row.address === pendingToken)
+                  let amount = 0
+                  rewardTokenInfos.map((row) => {
+                    amount += Number(row.amount)
+                    return row
+                  })
                   let amountInUsd = getTokenPrice(pendingToken) * amount
 
                   if (
@@ -198,10 +204,20 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
                     amount = 0
                     amountInUsd = 0
                   }
+
+                  // hide last avax token from pefi rush farm
+                  if (
+                    farm.isPenguinRush &&
+                    pendingToken === '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE' &&
+                    index === pendingTokens.length - 1
+                  ) {
+                    return null
+                  }
+
                   // hide avax token when joe rush is finished
                   if (
                     farm.isJoeRushFinished &&
-                    !farm.isPenguinRush &&
+                    // !farm.isPenguinRush &&
                     rewardTokenInfo &&
                     rewardTokenInfo.address.toLowerCase() === getAvaxAddress().toLowerCase() &&
                     Number(rewardTokenInfo.amount) === 0

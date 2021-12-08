@@ -106,7 +106,7 @@ const LpTag = styled(Tag)<{ type?: string }>`
   border-color: ${({ type }) => type === 'Benqi' && '#3AB0E7'};
   border-color: ${({ type }) => type === 'MINW' && '#165DC4'};
   border-color: ${({ type }) => type === 'Joe Rush' && '#F44E4A'};
-  background-color: ${({ type }) => type === 'Penguin Rush' && '#EC3B40'};
+  border-color: ${({ type }) => type === 'Penguin Rush' && '#EC3B40'};
 
   color: white;
   font-size: 12px;
