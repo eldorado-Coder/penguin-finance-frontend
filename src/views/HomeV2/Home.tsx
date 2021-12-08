@@ -15,6 +15,7 @@ import PefiStats from 'views/HomeV2/components/PefiStats'
 import ComingSoonCard from 'views/HomeV2/components/ComingSoonCard'
 //
 import ArenaCard from 'views/HomeV2/components/ArenaCard'
+import EnterRushCard from 'views/HomeV2/components/EnterRushCard'
 import GetSmartCard from 'views/HomeV2/components/GetSmartCard'
 import LearnMorePefiCard from 'views/HomeV2/components/LearnMorePefiCard'
 
@@ -50,7 +51,7 @@ const Home: React.FC = () => {
             </FarmStakingCardWrapper>
             <PefiStatsCardWrapper>
               {/* <IglooCard /> */}
-              <ArenaCard />
+              <EnterRushCard />
               <SpacingWrapper />
               {/* <EarnAPYCard apy={iPefiPool.apy} /> */}
               <LearnMorePefiCard />
