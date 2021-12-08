@@ -97,7 +97,7 @@ const Farms: React.FC = () => {
     let penguinRushRewardApr = 0
 
     if (farm.isPenguinRush) {
-      penguinRushRewardApr = 0.1
+      penguinRushRewardApr = getFarmApr(avaxPriceUsd, farm.totalLiquidityInUsd, farm.penguinRushRewardPerSec)
     }
 
     if (farm.type === 'Lydia') {

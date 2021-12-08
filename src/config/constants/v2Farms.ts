@@ -15,7 +15,8 @@ const v2Farms: V2FarmConfig[] = [
     },
     rewarderAddresses: {
       43113: '',
-      43114: '0x21c6F72424Ad5785C1803fFbE9F7475cBabcb001',
+      // 43114: '0x21c6F72424Ad5785C1803fFbE9F7475cBabcb001',
+      43114: '0xb49a3DC181D0e2f220676Ea9926bF151306B5f35',
     },
     tokenSymbol: 'PEFI',
     tokenAddresses: {
@@ -460,7 +461,8 @@ const v2Farms: V2FarmConfig[] = [
     },
     rewarderAddresses: {
       43113: '',
-      43114: '0xB59FB3F79174D25f2cAB8394C35D1f2161497ca6',
+      // 43114: '0xB59FB3F79174D25f2cAB8394C35D1f2161497ca6',
+      43114: '0x3Bb1c0a956bE583AF497518F86d14f659aF39fdA',
     },
     tokenSymbol: 'PEFI',
     tokenAddresses: {

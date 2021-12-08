@@ -105,6 +105,8 @@ export interface V2Farm extends FarmConfig {
   // penguin rush
   isPenguinRush?: boolean
   isPenguinRushFinished?: boolean
+  penguinRushRewardToken?: string
+  penguinRushRewardPerSec?: string
   // minw
   minwRewardToken?: string
   minwRewardPerSec?: string
