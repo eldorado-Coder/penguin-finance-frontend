@@ -193,19 +193,19 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
                     amount += Number(row.amount)
                     return row
                   })
-                  let amountInUsd = getTokenPrice(pendingToken) * amount
+                  const amountInUsd = getTokenPrice(pendingToken) * amount
 
-                  if (
-                    farm.pid === 5 &&
-                    farm.userData &&
-                    !farm.userData.previousRewardsClaimed &&
-                    pendingToken === '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'
-                  ) {
-                    amount = 0
-                    amountInUsd = 0
-                  }
+                  // if (
+                  //   farm.pid === 5 &&
+                  //   farm.userData &&
+                  //   !farm.userData.previousRewardsClaimed &&
+                  //   pendingToken === '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'
+                  // ) {
+                  //   amount = 0
+                  //   amountInUsd = 0
+                  // }
 
-                  // hide last avax token from pefi rush farm
+                  // hide last avax reward token from pefi rush farm
                   if (
                     farm.isPenguinRush &&
                     pendingToken === '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE' &&
@@ -217,7 +217,7 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
                   // hide avax token when joe rush is finished
                   if (
                     farm.isJoeRushFinished &&
-                    // !farm.isPenguinRush &&
+                    !farm.isPenguinRush &&
                     rewardTokenInfo &&
                     rewardTokenInfo.address.toLowerCase() === getAvaxAddress().toLowerCase() &&
                     Number(rewardTokenInfo.amount) === 0
