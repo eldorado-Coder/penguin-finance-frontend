@@ -52,7 +52,25 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
         (row) => row.address.toLowerCase() !== getAddress(joeToken.address).toLowerCase(),
       )
     }
+    if (farm.isPenguinRush) {
+      if (farm.isPenguinRushFinished) {
+        return _pendingTokensWithLogo.filter(
+          (row) => row.address.toLowerCase() !== getAddress(avaxToken.address).toLowerCase(),
+        )
+      }
+
+      if (
+        _pendingTokensWithLogo.slice(-1)[0] &&
+        _pendingTokensWithLogo.slice(-1)[0].address.toLowerCase() === getAddress(avaxToken.address).toLowerCase()
+      ) {
+        return _pendingTokensWithLogo.slice(0, -1)
+      }
+    }
+
     if (farm.isJoeRushFinished) {
+      if (farm.isPenguinRush && !farm.isPenguinRushFinished) {
+        return _pendingTokensWithLogo
+      }
       _pendingTokensWithLogo = _pendingTokensWithLogo.filter(
         (row) => row.address.toLowerCase() !== getAddress(avaxToken.address).toLowerCase(),
       )
@@ -101,6 +119,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
     const additionalSwapFeeApr = 100 * (farm.swapFeeApr || 0)
     const minwApr = 100 * (farm.minwApr || 0)
     const joeRushRewardApr = 100 * (farm.joeRushRewardApr || 0)
+    const penguinRushRewardApr = 100 * (farm.penguinRushRewardApr || 0)
     const totalApr = 100 * (farm.apr || 0)
 
     const mainApy = 100 * (farm.pefiApy || 0)
@@ -108,6 +127,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
     const additionalSwapFeeApy = 100 * (farm.swapFeeApy || 0)
     const minwApy = 100 * (farm.minwApy || 0)
     const joeRushRewardApy = 100 * (farm.joeRushRewardApy || 0)
+    const penguinRushRewardApy = 100 * (farm.penguinRushRewardApy || 0)
     const totalApy = 100 * (farm.apy || 0)
 
     if (isIglooAprMode) {
@@ -127,6 +147,11 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
                 ? '<p>Joe Rush</p>'
                 : '<p style="line-height: 0px; height: 0px; margin-bottom: -30px !important;"></p>'
             }
+            ${
+              penguinRushRewardApr > 0
+                ? '<p>Penguin Rush</p>'
+                : '<p style="line-height: 0px; height: 0px; margin-bottom: -30px !important;"></p>'
+            }
             <p>Total APR</p>
           </div>
           <div style="margin-left: 5px; padding-right: 5px; ">
@@ -141,6 +166,11 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
             ${
               joeRushRewardApr > 0
                 ? `<p style="font-weight: 500">${joeRushRewardApr.toFixed(2)}% APR</p>`
+                : '<p style="line-height: 0px; height: 0px; margin-bottom: -30px !important;"></p>'
+            }
+            ${
+              penguinRushRewardApr > 0
+                ? `<p style="font-weight: 500">${penguinRushRewardApr.toFixed(2)}% APR</p>`
                 : '<p style="line-height: 0px; height: 0px; margin-bottom: -30px !important;"></p>'
             }
             <p style="color: ${theme.colors.red}; font-weight: 500">${totalApr.toFixed(2)}% APR</p>
@@ -165,6 +195,11 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
                 ? '<p>Joe Rush</p>'
                 : '<p style="line-height: 0px; height: 0px; margin-bottom: -30px !important;"></p>'
             }
+            ${
+              penguinRushRewardApy > 0
+                ? '<p>Penguin Rush</p>'
+                : '<p style="line-height: 0px; height: 0px; margin-bottom: -30px !important;"></p>'
+            }
             <p>Total APY</p>
           </div>
           <div style="margin-left: 5px; padding-right: 5px; ">
@@ -179,6 +214,11 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
             ${
               joeRushRewardApy > 0
                 ? `<p style="font-weight: 500">${joeRushRewardApy.toFixed(2)}% APY</p>`
+                : '<p style="line-height: 0px; height: 0px; margin-bottom: -30px !important;"></p>'
+            }
+            ${
+              penguinRushRewardApy > 0
+                ? `<p style="font-weight: 500">${penguinRushRewardApy.toFixed(2)}% APY</p>`
                 : '<p style="line-height: 0px; height: 0px; margin-bottom: -30px !important;"></p>'
             }
             <p style="color: ${theme.colors.red}; font-weight: 500">${totalApy.toFixed(2)}% APY</p>
@@ -261,9 +301,10 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
                       <CellLayout label="Rewards" alignItems="center">
                         <TokensWrapper>
                           {pendingTokensWithLogo &&
-                            pendingTokensWithLogo.map((row) => {
+                            pendingTokensWithLogo.map((row, _idx) => {
+                              const idx = _idx
                               return (
-                                <div key={`farm-${farm.pid}-reward-token-${row.address}`}>
+                                <div key={`farm-${farm.pid}-reward-token-${row.address}-${idx}`}>
                                   {row.logo && <PendingTokenLogo src={row.logo} alt="logo" />}
                                 </div>
                               )

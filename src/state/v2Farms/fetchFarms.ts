@@ -174,6 +174,27 @@ export const fetchFarms = async () => {
           minwRewardPerSec = getBalanceNumber(new BigNumber(_minwRewardTokenPerSecond[0]._hex))
         }
 
+        // penguin rush
+        let penguinRushRewardToken = '0x0000000000000000000000000000000000000000'
+        let penguinRushRewardPerSec = 0
+        if (
+          getAddress(farmConfig.rewarderAddresses) !== '0x0000000000000000000000000000000000000000' &&
+          farmConfig.isPenguinRush
+        ) {
+          const [_penguinRushRewardToken, _penguinRushRewardPerSec] = await multicall(v2IglooRewarderABI, [
+            {
+              address: getAddress(farmConfig.rewarderAddresses),
+              name: 'rewardToken',
+            },
+            {
+              address: getAddress(farmConfig.rewarderAddresses),
+              name: 'tokensPerSecond',
+            },
+          ])
+          penguinRushRewardToken = _penguinRushRewardToken[0]
+          penguinRushRewardPerSec = getBalanceNumber(new BigNumber(_penguinRushRewardPerSec[0]._hex))
+        }
+
         return {
           ...farmConfig,
           tokenAmount: tokenAmount.toJSON(),
@@ -196,6 +217,9 @@ export const fetchFarms = async () => {
           // minw
           minwRewardToken,
           minwRewardPerSec,
+          // penguin rush
+          penguinRushRewardToken,
+          penguinRushRewardPerSec,
         }
       } catch (error) {
         return {

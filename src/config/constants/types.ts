@@ -113,8 +113,13 @@ export interface V2FarmConfig {
   isBenqi?: boolean
   isMINW?: boolean
   isMINWFinished?: true
+  // joe rush
   isJoeRush?: boolean
   isJoeRushFinished?: boolean
+  // penguin rush
+  isPenguinRush?: boolean
+  isPenguinRushFinished?: boolean
+  // hot rank
   isHot?: boolean
   hotRank?: number
   // pangolin v2
