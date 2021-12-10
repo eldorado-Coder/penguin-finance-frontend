@@ -1,6 +1,6 @@
 const upcomingIDOs = [
   {
-    tokenSymbol: 'BOOFI',
+    tokenSymbol: 'PEFI',
     whiteLogo: 'penguin_logo_white.svg',
     darkLogo: 'penguin_logo_dark.svg',
     isCompleted: false,
@@ -31,7 +31,7 @@ const completedIDOs = [
     distributedTokenAmount: '2M',
     saleProgress: '98',
     status: 'Launched',
-    link: '/launchpad-boofi'
+    link: '/launchpad-boofi',
   },
   {
     tokenSymbol: 'SHERPA',
@@ -47,7 +47,7 @@ const completedIDOs = [
     distributedTokenAmount: '600K',
     saleProgress: '88',
     status: 'Launched',
-    link: '/launchpad-sherpa'
+    link: '/launchpad-sherpa',
   },
 ]
 
