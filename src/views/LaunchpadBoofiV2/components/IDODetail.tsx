@@ -1,8 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Text, Flex, Tag, Progress, useMatchBreakpoints } from 'penguinfinance-uikit2'
+import { Text, Flex, Tag, Progress, useMatchBreakpoints, Button } from 'penguinfinance-uikit2'
 import useTheme from 'hooks/useTheme'
 import { usePriceAvaxUsdt } from 'state/hooks'
+import { addTokenToMetamask } from 'utils/token';
+import { getBoofiAddress } from 'utils/addressHelpers'
 import SvgIcon from 'components/SvgIcon'
 import Balance from 'components/Balance'
 
@@ -46,9 +48,9 @@ const IDODetail = ({ idoData }) => {
   const { isXs, isSm } = useMatchBreakpoints()
   const isMobile = isXs || isSm;
 
-  const handleViewSite = link => () => {
-    window.open(link, '_blank');
-  };
+  const handleAddToken = async () => {
+    await addTokenToMetamask(getBoofiAddress(), 'BOOFI', 18)
+  }
 
   return (
     <Container justifyContent='space-between'>
@@ -81,22 +83,23 @@ const IDODetail = ({ idoData }) => {
           Boo! BooFinance is bringing innovative DeFi tools to users on the Avalanche network. 
         </Description>
         <Description fontSize="16px" lineHeight="21px" color="white" mt='20px'>
-          Our main products are The Cauldron, Deflationary NFTs, and the Boo Council (DAO)
+        Their main dApps are The Cauldron, Well of Souls, Deflationary NFTs, and the Boo Council (DAO).
         </Description>
         <TokenLinks mt='40px' alignItems='center'>
-          <Flex mr='16px'>
-            <SiteLinkTag href={idoData.siteLink} target='_blank'>
-              <img src={`${process.env.PUBLIC_URL}/images/ido/website.svg`} alt='sitelabel' />
-              Website
-            </SiteLinkTag>
-          </Flex>
-          <Divider />
-          <Flex ml='16px'>
-            <SiteLinkTag href={idoData.whitepaperLink} target='_blank'>
-              <img src={`${process.env.PUBLIC_URL}/images/ido/document.svg`} alt='whitepaper' />
-              Docs
-            </SiteLinkTag>
-          </Flex>
+          <RegisterButton onClick={handleAddToken}>Register</RegisterButton>
+          <SocialsContainer justifyContent='flex-end' flexDirection='column' alignItems='flex-end'>
+            <Flex justifyContent="space-around" alignItems="center">
+              {SocialLinks[0].map((item) => {
+                return (
+                  <Flex className='social-item' key={`social-${item.key}`}>
+                    <a href={item.url} target="_blank" rel="noreferrer">
+                      <img src={item.imageUrl} alt={item.key} />
+                    </a>
+                  </Flex>
+                )
+              })}
+            </Flex>
+          </SocialsContainer>
         </TokenLinks>
       </IdoDescription>
       <IdoDetailContainer>
@@ -199,20 +202,6 @@ const IDODetail = ({ idoData }) => {
             </Flex>
           </Flex>
         </IdoDetailCard>
-        <Socials justifyContent='flex-end' flexDirection='column' alignItems='flex-end'>
-          <Flex justifyContent="space-around" alignItems="center">
-            {SocialLinks[0].map((item) => {
-              return (
-                <Flex className='social-item' key={`social-${item.key}`}>
-                  <a href={item.url} target="_blank" rel="noreferrer">
-                    <img src={item.imageUrl} alt={item.key} />
-                    {/* <SvgIcon src={item.imageUrl} width='24px' height='24px' /> */}
-                  </a>
-                </Flex>
-              )
-            })}
-          </Flex>
-        </Socials>
       </IdoDetailContainer>
     </Container>
   )
@@ -254,29 +243,6 @@ const IdoTag = styled(Tag)<{ completed?: boolean }>`
   border: none;
   height: 22px;
 `
-
-const SiteLinkTag = styled.a<{ completed?: boolean }>`
-  display: flex;
-  align-items: center;
-  font-size: 16px;
-  line-height: 24px;
-  font-weight: normal;
-  color: #EBE6F0;
-  border: none;
-  height: 28px;
-  cursor: pointer;
-
-  img {
-    width: 20px;
-    height: 20px;
-    margin-right: 6px;
-  }
-`
-
-const Divider = styled.div`
-  height: 16px;
-  border-right: 1px solid #9A70D3;
-`;
 
 const TotalRaisedTag = styled(Tag)<{ completed?: boolean }>`
   border-radius: 4px;
@@ -348,37 +314,6 @@ const ProgressWrapper = styled.div`
   }
 `
 
-const Socials = styled(Flex)`
-  align-items: flex-start;
-  margin-top: 32px;
-  @media (min-width: 1080px) {
-    align-items: flex-end;
-  }
-
-  .social-label {
-    margin-top: 32px;
-    @media (min-width: 1080px) {
-      margin-top: 48px;
-    }
-  }
-  .social-item {
-    margin-right: 32px;
-
-    img {
-      width: 24px;
-    }
-
-    @media (min-width: 1080px) {
-      margin-left: 32px;
-      margin-right: 0;
-    }
-
-    &:last-child {
-      margin-right: 0;
-    }
-  }
-`;
-
 const ProgressText = styled(Text)<{ percentage: number }>`
   position: absolute;
   right: ${({ percentage}) => 100-percentage}%;
@@ -407,7 +342,7 @@ const IdoDescription = styled.div`
   }
 
   @media (min-width: 1080px) {
-    margin-right: 80px;
+    margin-right: 60px;
     max-width: 560px;
   }
 `;
@@ -463,8 +398,13 @@ const IdoDetailCard = styled.div`
 
 const TokenLinks = styled(Flex)`
   justify-content: center;
+  flex-direction: column;
 
-  @media (min-width: 968px) {
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
+
+  @media (min-width: 1080px) {
     justify-content: flex-start;
   }
 `;
@@ -474,6 +414,46 @@ const TotalRaisedContainer = styled(Flex)`
 
   @media (min-width: 968px) {
     justify-content: flex-end;
+  }
+`;
+
+const RegisterButton = styled(Button)`
+  background: white;
+  box-shadow: 0px 121px 174px rgba(33, 6, 49, 0.1), 0px 61.2562px 75.8531px rgba(33, 6, 49, 0.0675), 0px 24.2px 28.275px rgba(33, 6, 49, 0.05), 0px 5.29375px 10.0594px rgba(33, 6, 49, 0.0325);
+  border-radius: 6px;
+  height: 48px;
+  color: #620AA8;
+  font-size: 18px;
+  font-weight: 500;
+  width: 200px;
+`;
+
+const SocialsContainer = styled(Flex)`
+  align-items: flex-start;
+  margin-top: 24px;
+
+  @media (min-width: 768px) {
+    margin-top: 0;
+  }
+
+  @media (min-width: 1080px) {
+    align-items: flex-end;
+  }
+
+  .social-item {
+    margin-left: 30px;
+
+    &:first-child {
+      margin-left: 0;
+
+      @media (min-width: 768px) {
+        margin-left: 30px;
+      }
+    }
+
+    img {
+      width: 30px;
+    }
   }
 `;
 

@@ -9,25 +9,25 @@ const TIMELINES = [
   {
     label: 'Registration Opens',
     date: 'Sep 24th 2021 00:00',
-    completed: true,
+    status: 'passed',
     imageUrl: 'registration_opens.svg'
   },
   {
     label: 'Registration Closes',
     date: 'Sep 29th 2021 23:59',
-    completed: true,
+    status: 'passed',
     imageUrl: 'registration_closes.svg'
   },
   {
     label: 'Distribution Starts',
     date: 'Sep 30th 2021 20:00',
-    completed: true,
+    status: 'passed',
     imageUrl: 'distribution_starts.svg'
   },
   {
     label: 'Distribution Ends',
     date: 'Oct 7th 2021 20:00',
-    completed: false,
+    status: 'passed',
     imageUrl: 'distribution_ends.svg'
   },
 ];
@@ -47,29 +47,56 @@ const LaunchpadTimeline = () => {
             <HistoryText fontSize='14px' ml='4px'>View Launchpad History</HistoryText>
           </Flex>
         </Flex>
-        <Flex justifyContent='space-between' mt='40px' flexDirection={windowSize.width < 900 ? 'column' : 'row'} alignItems='center'>
-          {TIMELINES.map((timeline, index) => {
-            return (
-              <Timeline key={timeline.label} completed={timeline.completed} width={windowSize.width} >
-                {index !== 0 && <div className='previous-link' />}
-                <TimelineItem completed={timeline.completed}>
-                  <Flex flexDirection='column' alignItems='center'>
-                    <StepWrapper justifyContent='center' alignItems='center' completed={timeline.completed}>
-                      <StepInner justifyContent='center' alignItems='center' completed={timeline.completed}>
-                        <img src={`${process.env.PUBLIC_URL}/images/ido/timeline/${timeline.imageUrl}`} alt={timeline.label} />
-                      </StepInner>
-                    </StepWrapper>
-                    <TimelineLabel mt='8px' mb='8px' completed={timeline.completed} fontWeight={500} fontSize='17px' color='#292929'>{timeline.label}</TimelineLabel>
-                    <TimelineDate completed={timeline.completed} fontSize='14px' color='#7f7f7f'>{timeline.date}</TimelineDate>
-                  </Flex>
-                </TimelineItem>
-                {index < TIMELINES.length-1 && 
-                  <div className='after-link' />
-                }
-              </Timeline>
-            )
-          })}
-        </Flex>
+        {windowSize.width < 900 ?
+          <Flex mt='40px' flexDirection='column'>
+            {TIMELINES.map((timeline, index) => {
+              return (
+                <MobileTimeline key={timeline.label} width={windowSize.width} >
+                  {index !== 0 && <div className='previous-link' />}
+                  <TimelineItem status={timeline.status}>
+                    <Flex >
+                      <StepWrapper justifyContent='center' alignItems='center' status={timeline.status}>
+                        <StepInner justifyContent='center' alignItems='center' status={timeline.status}>
+                          <SvgIcon src={`${process.env.PUBLIC_URL}/images/ido/timeline/${timeline.imageUrl}`} width='20px' height='20px' />
+                        </StepInner>
+                      </StepWrapper>
+                      <Flex flexDirection='column' ml='20px'>
+                        <TimelineLabel status={timeline.status} fontWeight={500} fontSize='20px' color='#292929'>{timeline.label}</TimelineLabel>
+                        <TimelineDate status={timeline.status} fontSize='16px' color='#7f7f7f'>{timeline.date}</TimelineDate>
+                      </Flex>
+                    </Flex>
+                  </TimelineItem>
+                  {index < TIMELINES.length-1 && 
+                    <div className='after-link' />
+                  }
+                </MobileTimeline>
+              )
+            })}
+          </Flex>
+          : <Flex justifyContent='space-between' mt='40px' flexDirection={windowSize.width < 900 ? 'column' : 'row'} alignItems='center'>
+            {TIMELINES.map((timeline, index) => {
+              return (
+                <Timeline key={timeline.label} width={windowSize.width} >
+                  {index !== 0 && <div className='previous-link' />}
+                  <TimelineItem status={timeline.status}>
+                    <Flex flexDirection='column' alignItems='center'>
+                      <StepWrapper justifyContent='center' alignItems='center' status={timeline.status}>
+                        <StepInner justifyContent='center' alignItems='center' status={timeline.status}>
+                          <SvgIcon src={`${process.env.PUBLIC_URL}/images/ido/timeline/${timeline.imageUrl}`} width='20px' height='20px' />
+                        </StepInner>
+                      </StepWrapper>
+                      <TimelineLabel mt='8px' mb='8px' status={timeline.status} fontWeight={500} fontSize='17px' color='#292929'>{timeline.label}</TimelineLabel>
+                      <TimelineDate status={timeline.status} fontSize='14px' color='#7f7f7f'>{timeline.date}</TimelineDate>
+                    </Flex>
+                  </TimelineItem>
+                  {index < TIMELINES.length-1 && 
+                    <div className='after-link' />
+                  }
+                </Timeline>
+              )
+            })}
+          </Flex>
+        }
         <SignUpContainer>
           <SignUpImage src={`${process.env.PUBLIC_URL}/images/ido/signup_banner.png`} />
           <SignUpDetails justifyContent='space-around' alignItems='center'>
@@ -107,24 +134,22 @@ const LaunchpadPage = styled(Page)`
   min-height: unset;
 `;
 
-const TimelineItem = styled.div<{ completed?: boolean }>`
-  border: ${({ completed }) => !completed ? '1px solid #5E4AAF' : '1px solid #DCDCDC'};
-  background: ${({ completed }) => !completed ? '#CBC5E4' : '#E8E6F2'};
-  border-radius: 10px;
-  padding: 16px;
-  width: 184px;
+const TimelineItem = styled.div<{ status?: string }>`
+  opacity: ${({ status }) => status === 'not-started' && '0.6'};
   margin-bottom: 40px;
+
   @media (min-width: 900px) {
     margin-bottom: 0;
+    width: 184px;
   }
 `;
 
-const TimelineLabel = styled(Text)<{ completed?: boolean }>`
-  color: ${({ completed}) => !completed ? '#5E4AAF' : '#292929'};
+const TimelineLabel = styled(Text)<{ status?: string }>`
+  color: ${({ status }) => status === 'active' ? '#5E4AAF' : '#292929'};
 `;
 
-const TimelineDate = styled(Text)<{ completed?: boolean }>`
-  color: ${({ completed}) => !completed ? '#7F6FBF' : '#7f7f7f'};
+const TimelineDate = styled(Text)<{ status?: string }>`
+  color: ${({ status }) => status === 'active' ? '#7F6FBF' : '#7f7f7f'};
   font-family: 'Fira Code';
   text-align: center;
 `;
@@ -212,30 +237,51 @@ const HistoryText = styled(Text)`
   color: ${({ theme }) => theme.isDark ? 'white' : '#1D5AD1'};
 `;
 
-const Timeline = styled.div<{ completed?: boolean, width: number }>`
+const MobileTimeline = styled.div<{ width: number }>`
+  position: relative;
+  .after-link {
+    border: 1px solid #DCDCDC;
+    position: absolute;
+    height: 20px;
+    left: 27px;
+    top: 54px;
+  };
+  .previous-link {
+    border: 1px solid #DCDCDC;
+    height: 20px;
+    left: 27px;
+    width: 1px;
+    position: absolute;
+    top: -20px;
+  }
+`;
+
+const Timeline = styled.div<{ width: number }>`
   display: flex;
   align-items: center;
   position: relative;
   .after-link {
-    border: 1px solid ${({ completed }) => completed ? '#DCDCDC' : '#5E4AAF'};
+    border: 1px solid #DCDCDC;
     position: absolute;
     height: 21px;
     left: 92px;
     top: 153px;
 
     @media (min-width: 900px) {
-      width: ${({ width }) => (width - 784)/6}px;
-      left: 184px;
+      width: ${({ width }) => (width - 346)/6}px;
+      left: 119px;
       height: 0px;
-      top: unset;
+      top: 27px;
     }
 
     @media (min-width: 1200px) {
-      width: 70px;
+      width: 135px;
+      left: 119px;
+      top: 27px;
     }
   };
   .previous-link {
-    border: 1px solid ${({ completed }) => completed ? '#DCDCDC' : '#5E4AAF'};
+    border: 1px solid #DCDCDC;
     height: 21px;
     left: 92px;
     width: 1px;
@@ -243,32 +289,42 @@ const Timeline = styled.div<{ completed?: boolean, width: number }>`
     top: -20px;
 
     @media (min-width: 900px) {
-      width: ${({ width }) => (width - 784)/6}px;
-      left: -${({ width }) => (width - 784)/6}px;
+      width: ${({ width }) => (width - 346)/6}px;
+      left: -${({ width }) => (width - 346)/6 - 65}px;
       height: 0px;
-      top: unset;
+      top: 27px;
     }
 
     @media (min-width: 1200px) {
-      width: 70px;
+      width: 135px;
       left: -70px;
       height: 0px;
+      top: 27px;
     }
   }
 `;
 
-const StepWrapper = styled(Flex)<{ completed ?: boolean }>`
-  background: ${({ completed }) => completed ? 'rgba(94, 74, 175, 0.21)' : 'rgba(94, 74, 175, 0.7)'};
+const StepWrapper = styled(Flex)<{ status ?: string }>`
+  background: ${({ status }) => status === 'not-started' ? '#EBEBEB' :  'rgba(94, 74, 175, 0.21)'};
+  background: ${({ status }) => status === 'active' && 'rgba(94, 74, 175, 0.41)'};
   border-radius: 50%;
-  width: 36px;
-  height: 36px;
+  width: 54px;
+  height: 54px;
 `;
 
-const StepInner = styled(Flex)<{ completed ?: boolean }>`
-  background: ${({ completed }) => completed ? 'rgba(94, 74, 175, 0.18)' : 'rgba(94, 74, 175, 1)'};
+const StepInner = styled(Flex)<{ status ?: string }>`
+  background: ${({ status }) => status === 'not-started' ? '#EBEBEB' :  'rgba(94, 74, 175, 0.18)'};
+  background: ${({ status }) => status === 'active' && 'rgba(94, 74, 175, 1)'};
   border-radius: 50%;
-  width: 28px;
-  height: 28px;
+  width: 40px;
+  height: 40px;
+
+  svg {
+    .step {
+      fill: ${({ status }) => status === 'active' ? 'white' : '#5E4AAF'};
+    }
+  }
 `;
 
 export default LaunchpadTimeline
+

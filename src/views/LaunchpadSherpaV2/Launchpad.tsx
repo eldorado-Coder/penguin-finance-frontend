@@ -45,7 +45,7 @@ const BannerImage = styled.img`
   min-height: 820px;
 
   @media (min-width: 1080px) {
-    min-height: 480px;
+    min-height: 500px;
   }
 `
 
