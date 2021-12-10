@@ -10,6 +10,7 @@ import Page from 'components/layout/Page'
 import useUserSetting from 'hooks/useUserSetting'
 import EmperorBlock from './components/EmperorBlock'
 import YourScoreBlock from './components/YourScoreBlock'
+import EmperorNotLiveBlock from './components/EmperorNotLiveBlock'
 import TopPenguinsBlock from './components/TopPenguinsBlock'
 
 const JACKPOTS = {
@@ -61,6 +62,11 @@ const Emperor: React.FC = () => {
     setShowJackpot(true)
   }
 
+  const emperorEnded = true
+  const emperorDefaultVideo = 'https://res.cloudinary.com/dbyunrpzq/video/upload/v1624544908/penguin_emperor_ldeorc.mp4'
+  // to change the video of emperor winner page background video, please change this video path
+  const emperorWinnerVideo = '/videos/penguin_emperor_winner.mp4'
+
   const renderEmperorStatsPage = () => {
     return (
       <>
@@ -99,11 +105,16 @@ const Emperor: React.FC = () => {
           </>
         ) : (
           <>
-            <Grid align="center" marginTop={{ xs: 80, sm: 100 }}>
-              <GridItem>
-                <EmperorBlock />
-              </GridItem>
-            </Grid>
+            {emperorEnded && !account && 
+              <EmperorNotLiveBlock />
+            }
+            {(!emperorEnded || (emperorEnded && account)) &&
+              <Grid align="center" marginTop={{ xs: 80, sm: 100 }}>
+                <GridItem>
+                  <EmperorBlock />
+                </GridItem>
+              </Grid>
+            }
             {account && (
               <PGGRid align="between" marginTop={{ xs: -40, sm: -100, md: -200, lg: -200 }}>
                 <GridItem>
@@ -133,11 +144,6 @@ const Emperor: React.FC = () => {
     )
   }
 
-  const emperorEnded = false
-  const emperorDefaultVideo = 'https://res.cloudinary.com/dbyunrpzq/video/upload/v1624544908/penguin_emperor_ldeorc.mp4'
-  // to change the video of emperor winner page background video, please change this video path
-  const emperorWinnerVideo = '/videos/penguin_emperor_winner.mp4'
-
   return (
     <EmperorPage>
       <Sound
@@ -151,25 +157,30 @@ const Emperor: React.FC = () => {
         playStatus={jackpotOpenSound ? Sound.status.PLAYING : Sound.status.STOPPED}
         volume={isMusic ? 100 : 0}
       />
-
       {/* background video on large screen and background image on small screen */}
-      <EmperorWrapper isSm={isSm}>
-        {isSm ? (
+      <EmperorWrapper isSm={isMobile}>
+        {isMobile ? (
           <EmperorSmWrapper>
             <ThroneSmBgContainer>
               <EmperorSmBgImage src="/images/emperor/emperor-bg-sm.png" alt="emperor background" />
             </ThroneSmBgContainer>
-            <Flex flexDirection="column" alignItems="center" padding="40px 32px">
-              <EmperorBlock />
-            </Flex>
+            {(!emperorEnded || account) && 
+              <Flex flexDirection="column" alignItems="center" padding="40px 32px">
+                <EmperorBlock />
+              </Flex>
+            }
+            {emperorEnded && !account && 
+              <EmperorNotLiveBlock />
+            }
           </EmperorSmWrapper>
         ) : (
           <EmperorBgContainer width="100%" height="100%" autoPlay loop muted>
-            <source src={emperorEnded ? emperorWinnerVideo : emperorDefaultVideo} />
+            <source src={emperorDefaultVideo} />
+            {/* <source src={emperorEnded ? emperorWinnerVideo : emperorDefaultVideo} /> */}
           </EmperorBgContainer>
         )}
-
-        {!emperorEnded ? <>{renderEmperorStatsPage()}</> : <>{renderEmperorEndPage()}</>}
+        {renderEmperorStatsPage()}
+        {/* {!emperorEnded ? <>{renderEmperorStatsPage()}</> : <>{renderEmperorEndPage()}</>} */}
       </EmperorWrapper>
     </EmperorPage>
   )

@@ -71,9 +71,9 @@ const CardBlockContent = styled.div<{ account?: string }>`
   margin-left: auto;
   margin-right: auto;
 
-  &:hover {
-    z-index: 15;
-  }
+  // &:hover {
+  //   z-index: 15;
+  // }
 
   @media (min-width: 640px) {
     width: 100%;
