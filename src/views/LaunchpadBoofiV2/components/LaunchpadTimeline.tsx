@@ -7,24 +7,28 @@ import useWindowSize from 'hooks/useWindowSize';
 
 const TIMELINES = [
   {
-    label: 'Staking Opens',
+    label: 'Registration Opens',
     date: 'Sep 24th 2021 00:00',
-    completed: true
+    completed: true,
+    imageUrl: 'registration_opens.svg'
   },
   {
-    label: 'Staking Closes',
+    label: 'Registration Closes',
     date: 'Sep 29th 2021 23:59',
-    completed: true
+    completed: true,
+    imageUrl: 'registration_closes.svg'
   },
   {
-    label: 'Distribution Opens',
+    label: 'Distribution Starts',
     date: 'Sep 30th 2021 20:00',
-    completed: true
+    completed: true,
+    imageUrl: 'distribution_starts.svg'
   },
   {
     label: 'Distribution Ends',
     date: 'Oct 7th 2021 20:00',
-    completed: true
+    completed: false,
+    imageUrl: 'distribution_ends.svg'
   },
 ];
 
@@ -35,7 +39,7 @@ const LaunchpadTimeline = () => {
     <Container>
       <LaunchpadPage>
         <Flex justifyContent='space-between' alignItems='center' flexWrap='wrap'>
-          <Label fontSize="40px" lineHeight="60px" fontWeight={500}>
+          <Label fontSize="27px" lineHeight="40px" fontWeight={500}>
             Launchpad Timeline
           </Label>
           <Flex alignItems='center'>
@@ -50,7 +54,11 @@ const LaunchpadTimeline = () => {
                 {index !== 0 && <div className='previous-link' />}
                 <TimelineItem completed={timeline.completed}>
                   <Flex flexDirection='column' alignItems='center'>
-                    <img src={`${process.env.PUBLIC_URL}/images/ido/${timeline.completed ? 'completed' : 'inprogress'}.png`} alt={timeline.label} />
+                    <StepWrapper justifyContent='center' alignItems='center' completed={timeline.completed}>
+                      <StepInner justifyContent='center' alignItems='center' completed={timeline.completed}>
+                        <img src={`${process.env.PUBLIC_URL}/images/ido/timeline/${timeline.imageUrl}`} alt={timeline.label} />
+                      </StepInner>
+                    </StepWrapper>
                     <TimelineLabel mt='8px' mb='8px' completed={timeline.completed} fontWeight={500} fontSize='17px' color='#292929'>{timeline.label}</TimelineLabel>
                     <TimelineDate completed={timeline.completed} fontSize='14px' color='#7f7f7f'>{timeline.date}</TimelineDate>
                   </Flex>
@@ -66,7 +74,7 @@ const LaunchpadTimeline = () => {
           <SignUpImage src={`${process.env.PUBLIC_URL}/images/ido/signup_banner.png`} />
           <SignUpDetails justifyContent='space-around' alignItems='center'>
             <div>
-              <SignUpLabel color='white' fontSize='32px' fontWeight={800}>Get Alerts For New Pools</SignUpLabel>
+              <SignUpLabel color='white' fontSize='31px' fontWeight={800}>Get Alerts For New Pools</SignUpLabel>
               <FiraText color='white' fontSize='14px'>You are not authorized yet</FiraText>
               <StyledButton mt='20px'>Sign Up</StyledButton>
             </div>
@@ -132,7 +140,7 @@ const SignUpContainer = styled.div`
 
 const SignUpImage = styled.img`
   width: 100%;
-  background: linear-gradient(180deg, #7361BE 0%, #3A258F 100%);
+  background: linear-gradient(180deg, rgba(114, 36, 36, 0) 0%, #722B92 100%);
   border-radius: 10px;
   min-height: 200px;
   object-fit: cover;
@@ -177,7 +185,7 @@ const SignUpLabel = styled(Text)`
   font-size: 24px;
 
   @media (min-width: 768px) {
-    font-size: 34px;
+    font-size: 31px;
   }
 `;
 
@@ -194,8 +202,8 @@ const StyledButton = styled(Button)`
 
 const Label = styled(Text)`
   color: ${({ theme }) => theme.isDark ? 'white' : 'black'};
-  font-size: 24px;
-  line-height: 36px;
+  font-size: 27px;
+  line-height: 40px;
   font-weight: 800;
 `
 
@@ -247,6 +255,20 @@ const Timeline = styled.div<{ completed?: boolean, width: number }>`
       height: 0px;
     }
   }
+`;
+
+const StepWrapper = styled(Flex)<{ completed ?: boolean }>`
+  background: ${({ completed }) => completed ? 'rgba(94, 74, 175, 0.21)' : 'rgba(94, 74, 175, 0.7)'};
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+`;
+
+const StepInner = styled(Flex)<{ completed ?: boolean }>`
+  background: ${({ completed }) => completed ? 'rgba(94, 74, 175, 0.18)' : 'rgba(94, 74, 175, 1)'};
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
 `;
 
 export default LaunchpadTimeline
