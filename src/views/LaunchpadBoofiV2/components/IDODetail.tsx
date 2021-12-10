@@ -307,7 +307,6 @@ const HeaderTitle = styled(Text)`
   line-height: 26px;
   text-align: center;
   max-width: 1040px;
-  text-shadow: 1px 1px #858585;
 
   @media (min-width: 968px) {
     font-size: 36px;
