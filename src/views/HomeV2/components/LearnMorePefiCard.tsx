@@ -19,7 +19,7 @@ const StyledCard = styled(Card)`
   width: 100%;
   background-size: cover;
   background-position: left center;
-  background-image: url('/images/home-v2/learn_more_pefi.png');
+  background-image: url('/images/home-v2/learn_more_new.png');
   border-radius: 26px;
   box-shadow: 0px 1px 8px rgb(0 0 0 / 24%);
   min-height: 110px;
