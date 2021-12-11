@@ -28,6 +28,7 @@ const Emperor: React.FC = () => {
   const jackpotRef = useRef(jackpot)
   const { isMusic } = useUserSetting()
   const { isSm, isXs } = useMatchBreakpoints()
+  const [showLastRound, setShowLastRound] = useState(false);
   const isMobile = isSm || isXs
 
   jackpotRef.current = jackpot
@@ -45,6 +46,12 @@ const Emperor: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, account])
 
+  useEffect(() => {
+    if (!account) {
+      setShowLastRound(false);
+    }
+  }, [account]);
+
   const handleOpenJackpot = () => {
     if (jackpotRef.current === JACKPOTS.LOCK) {
       setJackpotOpenSound(true)
@@ -56,6 +63,10 @@ const Emperor: React.FC = () => {
     } else if (jackpotRef.current === JACKPOTS.UNLOCK) {
       setJackpot(JACKPOTS.LOCK)
     }
+  }
+
+  const handleShowLastRound = () => {
+    setShowLastRound(true)
   }
 
   const onJackpotLoaded = () => {
@@ -70,7 +81,7 @@ const Emperor: React.FC = () => {
   const renderEmperorStatsPage = () => {
     return (
       <>
-        {account && (
+        {account && (!emperorEnded || showLastRound) && (
           <Wrapper isMobile={isMobile}>
             <ChestWrapper isMobile={isMobile} jackpot={jackpot} onClick={handleOpenJackpot}>
               <PaperWrapper isOpen={jackpot === JACKPOTS.UNLOCK}>
@@ -95,7 +106,7 @@ const Emperor: React.FC = () => {
         {isMobile ? (
           <>
             <Flex flexDirection="column" alignItems="center" padding="40px 32px">
-              {account && (
+              {account && (!emperorEnded || showLastRound) && (
                 <Flex width="100%" flexDirection="column" px="10px">
                   <YourScoreBlock />
                   <TopPenguinsBlock />
@@ -105,17 +116,17 @@ const Emperor: React.FC = () => {
           </>
         ) : (
           <>
-            {emperorEnded && !account && 
-              <EmperorNotLiveBlock />
+            {emperorEnded && !showLastRound &&
+              <EmperorNotLiveBlock onShowLastRound={handleShowLastRound} />
             }
-            {(!emperorEnded || (emperorEnded && account)) &&
+            {(!emperorEnded || (emperorEnded && account && showLastRound)) &&
               <Grid align="center" marginTop={{ xs: 80, sm: 100 }}>
                 <GridItem>
                   <EmperorBlock />
                 </GridItem>
               </Grid>
             }
-            {account && (
+            {account && (!emperorEnded || showLastRound) && (
               <PGGRid align="between" marginTop={{ xs: -40, sm: -100, md: -200, lg: -200 }}>
                 <GridItem>
                   <TopPenguinsBlock />
@@ -164,13 +175,13 @@ const Emperor: React.FC = () => {
             <ThroneSmBgContainer>
               <EmperorSmBgImage src="/images/emperor/emperor-bg-sm.png" alt="emperor background" />
             </ThroneSmBgContainer>
-            {(!emperorEnded || account) && 
+            {(!emperorEnded || (emperorEnded && account && showLastRound)) && 
               <Flex flexDirection="column" alignItems="center" padding="40px 32px">
                 <EmperorBlock />
               </Flex>
             }
-            {emperorEnded && !account && 
-              <EmperorNotLiveBlock />
+            {emperorEnded && !showLastRound &&
+              <EmperorNotLiveBlock onShowLastRound={handleShowLastRound} />
             }
           </EmperorSmWrapper>
         ) : (

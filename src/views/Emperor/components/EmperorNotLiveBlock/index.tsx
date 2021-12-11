@@ -80,6 +80,36 @@ const StarterButton = styled(Button)`
   }
 `;
 
+const LastRoundButton = styled(Button)`
+  background: linear-gradient(0deg, #FF7648 -36.22%, #FFE129 156.82%);
+  border-radius: 8px;
+  font-size: 16px;
+  width: 160px;
+  height: 40px;
+  font-weight: 500;
+  padding-left: 0;
+  padding-right: 0;
+
+  @media (min-width: 640px) {
+    margin-left: 16px;
+    font-size: 20px;
+    width: 180px;
+    height: 48px;
+  }
+
+  @media (min-width: 768px) {
+    font-size: 22px;
+    width: 190px;
+    height: 48px;
+  }
+
+  @media (min-width: 1200px) {
+    font-size: 25px;
+    width: 212px;
+    height: 60px;
+  }
+`;
+
 const StyledUnlockButton = styled(UnlockButton)`
   background: linear-gradient(0deg, #FF7648 -36.22%, #FFE129 156.82%);
   border-radius: 8px;
@@ -151,10 +181,10 @@ const Actions = styled(Flex)`
   }
 `;
 
-const EmperorNotLiveBlock: React.FC = () => {
-  const { account } = useWeb3React()
+const EmperorNotLiveBlock = ({ onShowLastRound }) => {
   const { currentEmperor } = useEmperor()
   const { isSm, isXs } = useMatchBreakpoints()
+  const { account } = useWeb3React()
   const isMobile = isSm || isXs
 
   const handleViewStarterGuide = () => {
@@ -188,7 +218,12 @@ const EmperorNotLiveBlock: React.FC = () => {
               <StarterButton className="starter-button" onClick={handleViewStarterGuide}>
                 Starter Guide
               </StarterButton>
-              <StyledUnlockButton />
+              {account ?
+                <LastRoundButton onClick={onShowLastRound}>
+                  Last Round
+                </LastRoundButton>
+                : <StyledUnlockButton />
+              }
             </Actions>
           </WalletContainer>
         </CardBlockContent>
