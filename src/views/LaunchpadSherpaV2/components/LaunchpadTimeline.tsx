@@ -38,15 +38,9 @@ const LaunchpadTimeline = () => {
   return (
     <Container>
       <LaunchpadPage>
-        <Flex justifyContent='space-between' alignItems='center' flexWrap='wrap'>
-          <Label fontSize="27px" lineHeight="40px" fontWeight={500}>
-            Launchpad Timeline
-          </Label>
-          <Flex alignItems='center'>
-            <SvgIcon src={`${process.env.PUBLIC_URL}/images/ido/exclude.svg`} width="18px" height="18px" />
-            <HistoryText fontSize='14px' ml='4px'>View Launchpad History</HistoryText>
-          </Flex>
-        </Flex>
+        <Label fontSize="27px" lineHeight="40px" fontWeight={500}>
+          Launchpad Timeline
+        </Label>
         {windowSize.width < 900 ?
           <Flex mt='40px' flexDirection='column'>
             {TIMELINES.map((timeline, index) => {
@@ -231,11 +225,6 @@ const Label = styled(Text)`
   line-height: 40px;
   font-weight: 800;
 `
-
-const HistoryText = styled(Text)`
-  font-family: 'Fira Code';
-  color: ${({ theme }) => theme.isDark ? 'white' : '#1D5AD1'};
-`;
 
 const MobileTimeline = styled.div<{ width: number }>`
   position: relative;

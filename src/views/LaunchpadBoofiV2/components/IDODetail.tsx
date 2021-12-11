@@ -11,13 +11,13 @@ import Balance from 'components/Balance'
 const SocialLinks = [
   // first row : FooterIconLinks[0]
   [
-    // {
-    //   name: 'TelegramIcon',
-    //   url: 'https://twitter.com/Boo_Finance',
-    //   imageUrl: 'images/ido/telegram.svg',
-    //   key: 'telegram',
-    //   label: 't.me/BooFinance'
-    // },
+    {
+      name: 'TelegramIcon',
+      url: 'https://t.me/BooFinance',
+      imageUrl: 'images/ido/social_icons/telegram.png',
+      key: 'telegram',
+      label: 't.me/BooFinance'
+    },
     {
       name: 'DiscordIcon',
       url: 'https://discord.com/invite/A3KbWpsZfE',
@@ -86,7 +86,7 @@ const IDODetail = ({ idoData }) => {
         Their main dApps are The Cauldron, Well of Souls, Deflationary NFTs, and the Boo Council (DAO).
         </Description>
         <TokenLinks mt='40px' alignItems='center'>
-          <RegisterButton onClick={handleAddToken}>Register</RegisterButton>
+          <RegisterButton onClick={handleAddToken}>Add BOOFI to Metamask</RegisterButton>
           <SocialsContainer justifyContent='flex-end' flexDirection='column' alignItems='flex-end'>
             <Flex justifyContent="space-around" alignItems="center">
               {SocialLinks[0].map((item) => {
@@ -425,7 +425,9 @@ const RegisterButton = styled(Button)`
   color: #620AA8;
   font-size: 18px;
   font-weight: 500;
-  width: 200px;
+  width: 234px;
+  white-space: nowrap;
+  letter-spacing: 0.1px;
 `;
 
 const SocialsContainer = styled(Flex)`
@@ -441,18 +443,18 @@ const SocialsContainer = styled(Flex)`
   }
 
   .social-item {
-    margin-left: 30px;
+    margin-left: 24px;
 
     &:first-child {
       margin-left: 0;
 
       @media (min-width: 768px) {
-        margin-left: 30px;
+        margin-left: 24px;
       }
     }
 
     img {
-      width: 30px;
+      width: 38px;
     }
   }
 `;
