@@ -10,6 +10,7 @@ import Page from 'components/layout/Page'
 import useUserSetting from 'hooks/useUserSetting'
 import EmperorBlock from './components/EmperorBlock'
 import YourScoreBlock from './components/YourScoreBlock'
+import EmperorNotLiveBlock from './components/EmperorNotLiveBlock'
 import TopPenguinsBlock from './components/TopPenguinsBlock'
 
 const JACKPOTS = {
@@ -27,6 +28,7 @@ const Emperor: React.FC = () => {
   const jackpotRef = useRef(jackpot)
   const { isMusic } = useUserSetting()
   const { isSm, isXs } = useMatchBreakpoints()
+  const [showLastRound, setShowLastRound] = useState(false);
   const isMobile = isSm || isXs
 
   jackpotRef.current = jackpot
@@ -44,6 +46,12 @@ const Emperor: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, account])
 
+  useEffect(() => {
+    if (!account) {
+      setShowLastRound(false);
+    }
+  }, [account]);
+
   const handleOpenJackpot = () => {
     if (jackpotRef.current === JACKPOTS.LOCK) {
       setJackpotOpenSound(true)
@@ -57,14 +65,23 @@ const Emperor: React.FC = () => {
     }
   }
 
+  const handleShowLastRound = () => {
+    setShowLastRound(true)
+  }
+
   const onJackpotLoaded = () => {
     setShowJackpot(true)
   }
 
+  const emperorEnded = true
+  const emperorDefaultVideo = 'https://res.cloudinary.com/dbyunrpzq/video/upload/v1624544908/penguin_emperor_ldeorc.mp4'
+  // to change the video of emperor winner page background video, please change this video path
+  const emperorWinnerVideo = '/videos/penguin_emperor_winner.mp4'
+
   const renderEmperorStatsPage = () => {
     return (
       <>
-        {account && (
+        {account && (!emperorEnded || showLastRound) && (
           <Wrapper isMobile={isMobile}>
             <ChestWrapper isMobile={isMobile} jackpot={jackpot} onClick={handleOpenJackpot}>
               <PaperWrapper isOpen={jackpot === JACKPOTS.UNLOCK}>
@@ -89,7 +106,7 @@ const Emperor: React.FC = () => {
         {isMobile ? (
           <>
             <Flex flexDirection="column" alignItems="center" padding="40px 32px">
-              {account && (
+              {account && (!emperorEnded || showLastRound) && (
                 <Flex width="100%" flexDirection="column" px="10px">
                   <YourScoreBlock />
                   <TopPenguinsBlock />
@@ -99,12 +116,17 @@ const Emperor: React.FC = () => {
           </>
         ) : (
           <>
-            <Grid align="center" marginTop={{ xs: 80, sm: 100 }}>
-              <GridItem>
-                <EmperorBlock />
-              </GridItem>
-            </Grid>
-            {account && (
+            {emperorEnded && !showLastRound &&
+              <EmperorNotLiveBlock onShowLastRound={handleShowLastRound} />
+            }
+            {(!emperorEnded || (emperorEnded && account && showLastRound)) &&
+              <Grid align="center" marginTop={{ xs: 80, sm: 100 }}>
+                <GridItem>
+                  <EmperorBlock />
+                </GridItem>
+              </Grid>
+            }
+            {account && (!emperorEnded || showLastRound) && (
               <PGGRid align="between" marginTop={{ xs: -40, sm: -100, md: -200, lg: -200 }}>
                 <GridItem>
                   <TopPenguinsBlock />
@@ -133,11 +155,6 @@ const Emperor: React.FC = () => {
     )
   }
 
-  const emperorEnded = false
-  const emperorDefaultVideo = 'https://res.cloudinary.com/dbyunrpzq/video/upload/v1624544908/penguin_emperor_ldeorc.mp4'
-  // to change the video of emperor winner page background video, please change this video path
-  const emperorWinnerVideo = '/videos/penguin_emperor_winner.mp4'
-
   return (
     <EmperorPage>
       <Sound
@@ -151,25 +168,30 @@ const Emperor: React.FC = () => {
         playStatus={jackpotOpenSound ? Sound.status.PLAYING : Sound.status.STOPPED}
         volume={isMusic ? 100 : 0}
       />
-
       {/* background video on large screen and background image on small screen */}
-      <EmperorWrapper isSm={isSm}>
-        {isSm ? (
+      <EmperorWrapper isSm={isMobile}>
+        {isMobile ? (
           <EmperorSmWrapper>
             <ThroneSmBgContainer>
               <EmperorSmBgImage src="/images/emperor/emperor-bg-sm.png" alt="emperor background" />
             </ThroneSmBgContainer>
-            <Flex flexDirection="column" alignItems="center" padding="40px 32px">
-              <EmperorBlock />
-            </Flex>
+            {(!emperorEnded || (emperorEnded && account && showLastRound)) && 
+              <Flex flexDirection="column" alignItems="center" padding="40px 32px">
+                <EmperorBlock />
+              </Flex>
+            }
+            {emperorEnded && !showLastRound &&
+              <EmperorNotLiveBlock onShowLastRound={handleShowLastRound} />
+            }
           </EmperorSmWrapper>
         ) : (
           <EmperorBgContainer width="100%" height="100%" autoPlay loop muted>
-            <source src={emperorEnded ? emperorWinnerVideo : emperorDefaultVideo} />
+            <source src={emperorDefaultVideo} />
+            {/* <source src={emperorEnded ? emperorWinnerVideo : emperorDefaultVideo} /> */}
           </EmperorBgContainer>
         )}
-
-        {!emperorEnded ? <>{renderEmperorStatsPage()}</> : <>{renderEmperorEndPage()}</>}
+        {renderEmperorStatsPage()}
+        {/* {!emperorEnded ? <>{renderEmperorStatsPage()}</> : <>{renderEmperorEndPage()}</>} */}
       </EmperorWrapper>
     </EmperorPage>
   )
