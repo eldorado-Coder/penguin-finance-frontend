@@ -83,7 +83,7 @@ const IDODetail = ({ idoData }) => {
           Sherpa Cash is the first fully decentralized protocol for private transactions on Avalanche. The SHERPA token is the governance token for Sherpa Cash.
         </Description>
         <TokenLinks mt='40px' alignItems='center'>
-          <RegisterButton onClick={handleAddToken}>Register</RegisterButton>
+          <RegisterButton onClick={handleAddToken}>Add SHERPA to Metamask</RegisterButton>
           <SocialsContainer justifyContent='flex-end' flexDirection='column' alignItems='flex-end'>
             <Flex justifyContent="space-around" alignItems="center">
               {SocialLinks[0].map((item) => {
@@ -435,7 +435,9 @@ const RegisterButton = styled(Button)`
   color: #620AA8;
   font-size: 18px;
   font-weight: 500;
-  width: 200px;
+  width: 238px;
+  white-space: nowrap;
+  letter-spacing: 0.1px;
 `;
 
 const SocialsContainer = styled(Flex)`
@@ -451,18 +453,18 @@ const SocialsContainer = styled(Flex)`
   }
 
   .social-item {
-    margin-left: 30px;
+    margin-left: 24px;
 
     &:first-child {
       margin-left: 0;
 
       @media (min-width: 768px) {
-        margin-left: 30px;
+        margin-left: 24px;
       }
     }
 
     img {
-      width: 30px;
+      width: 38px;
     }
   }
 `;
