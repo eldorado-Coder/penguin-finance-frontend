@@ -407,9 +407,9 @@ const Farms: React.FC = () => {
 
 const FarmPage = styled(Page)`
   max-width: 1400px;
-  @media (min-width: 2000px) {
+  /* @media (min-width: 2000px) {
     max-width: 3700px;
-  }
+  } */
 `
 
 // bg
