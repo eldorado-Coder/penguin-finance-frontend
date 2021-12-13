@@ -22,7 +22,7 @@ const StyledCard = styled(Card)`
   width: 100%;
   background-size: cover;
   background-position: left center;
-  background-image: url('/images/home-v2/rush.jpg');
+  background-image: url('/images/home-v2/penguin_rush_new.png');
   border-radius: 26px;
   box-shadow: 0px 1px 8px rgb(0 0 0 / 24%);
   min-height: 110px;

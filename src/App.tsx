@@ -50,7 +50,7 @@ const ScrollToTop = () => {
   const { pathname } = useLocation()
 
   useEffect(() => {
-    document.getElementById('root').scrollTo(0, 0)
+    window.scrollTo(0, 0);
   }, [pathname])
 
   return null
@@ -117,12 +117,12 @@ const App: React.FC = () => {
             <Route path="/launchpad-v2">
               <LaunchpadV2 />
             </Route>
-            <Route path="/launchpad-boofi">
+            {/* <Route path="/launchpad-boofi">
               <LaunchpadBoofiV2 />
             </Route>
             <Route path="/launchpad-sherpa">
               <LaunchpadSherpaV2 />
-            </Route>
+            </Route> */}
             <Route path="/boofi-launchpad">
               <LaunchpadBoofi />
             </Route>

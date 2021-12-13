@@ -29,51 +29,67 @@ const ProjectDescription = () => {
   return (
     <Container>
       <MaskBgContainer />
+      <MaskBgImageContainer />
       <LaunchpadPage>
-        <HeaderTitle fontSize='34px' color='white' fontWeight={800}>About the Sherpa Project</HeaderTitle>
-        <IntroductionImage src={`${process.env.PUBLIC_URL}/images/ido/introduction_sherpa.png`} />
-        <Description fontSize='12px' lineHeight='16px' color='#b6b6b6' mt='52px'>
-          Sherpa Cash is the first fully decentralized protocol for private transactions on Avalanche. The SHERPA token is the governance token for Sherpa Cash.
-        </Description>
-        {/* <Description fontSize='12px' lineHeight='16px' color='#b6b6b6' mt='24px'>
-          Crabada, being an idle game means that you’ll be able to play it anytime and anywhere with minimal disruption to your everyday life. Additionally, Crabada provides its players with not only entertainment value, but financial value as well. Crabada is bringing forth a new revolution in play-and-earn games with its unique PvP (Player Versus Player)-infused idle gameplay.
-        </Description> */}
-        <Text fontSize='24px' color='white' fontWeight={800} mt='32px'>Token Sale and Economics</Text>
-        <TokenSalesEconomics>
-          {TOKEN_SALES_ECONOMICS.map((tokenEconomic, index) => {
-            return (
-              <TokenEconomic index={index} key={tokenEconomic.label}>
-                <Text color='#A2A2A2' fontSize='15px' lineHeight='30px'>{tokenEconomic.label}</Text>
-                <Text color='white' fontSize='15px' lineHeight='30px'>{tokenEconomic.value}</Text>
-              </TokenEconomic>
-            )
-          })}
-        </TokenSalesEconomics>
+        <IntroductionContainer>
+          <IntroductionImage src={`${process.env.PUBLIC_URL}/images/ido/introduction_sherpa.png`} />
+          <IdoDetails>
+            <HeaderTitle fontSize='34px' color='#313131' fontWeight={800}>About the Sherpa Project</HeaderTitle>
+            <Description fontSize='12px' lineHeight='16px' color='#7F7F7F' mt='32px'>
+              Sherpa Cash is the first fully decentralized protocol for private transactions on Avalanche. The SHERPA token is the governance token for Sherpa Cash.
+            </Description>
+            {/* <Description fontSize='12px' lineHeight='16px' color='#b6b6b6' mt='24px'>
+              Crabada, being an idle game means that you’ll be able to play it anytime and anywhere with minimal disruption to your everyday life. Additionally, Crabada provides its players with not only entertainment value, but financial value as well. Crabada is bringing forth a new revolution in play-and-earn games with its unique PvP (Player Versus Player)-infused idle gameplay.
+            </Description> */}
+            <Text fontSize='24px' color='#292929' fontWeight={800} mt='32px'>Token Sale and Economics</Text>
+            <TokenSalesEconomics>
+              {TOKEN_SALES_ECONOMICS.map((tokenEconomic, index) => {
+                return (
+                  <TokenEconomic index={index} key={tokenEconomic.label}>
+                    <Text color='#9A70D3' fontSize='14px' lineHeight='30px' fontWeight={600}>{tokenEconomic.label}</Text>
+                    <Text color='#292929' fontSize='14px' lineHeight='30px' fontWeight={600}>{tokenEconomic.value}</Text>
+                  </TokenEconomic>
+                )
+              })}
+            </TokenSalesEconomics>
+          </IdoDetails>
+        </IntroductionContainer>
       </LaunchpadPage>
     </Container>
   )
 }
 
 const TokenEconomic = styled(Flex)<{ index: number }>`
-  background: ${({ index }) => index % 2 === 0 ? '#412B5D' : '#28273C'};
-  
+  border-bottom: 1px solid #DCDCDC;
+  text-transform: uppercase;
+  padding-top: 8px;
+  padding-bottom: 8px;
+
   div {
     width: 50%;
-    padding-left: 16px;
+    padding-left: 0;
+    line-height: 14px;
+    line-height: 16px;
+
+    &:last-child {
+      padding-left: 16px;
+    }
+
+    @media (min-width: 640px) {
+      padding-left: 16px;
+    }
   }
 `;
 
 const TokenSalesEconomics = styled.div`
-  border: 1px solid #412B5D;
-  max-width: 480px;
+  max-width: 600px;
   border-radius: 6px;
-  margin-top: 32px;
+  margin-top: 20px;
 `;
 
 const IntroductionImage = styled.img`
   width: 100%;
-  border-radius: 6px;
-  margin-top: 52px;
+  border-radius: 16px 16px 0 0;
 `;
 
 const Description = styled(Text)`
@@ -83,6 +99,7 @@ const Description = styled(Text)`
 const Container = styled.div`
   position: relative;
   padding-bottom: 60px;
+  max-height: 1040px;
 `;
 
 const HeaderTitle = styled(Text)`
@@ -108,6 +125,17 @@ const LaunchpadPage = styled(Page)`
 `;
 
 const MaskBgContainer = styled.div`
+  background-size: cover;
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  right: 0px;
+  left: 0px;
+  z-index: -1;
+  background: linear-gradient(204.54deg, #2A2844 39.75%, #1F2426 139.73%);
+`;
+
+const MaskBgImageContainer = styled.div`
   background-image: url('/images/ido/mask.png');
   background-size: cover;
   position: absolute;
@@ -116,8 +144,23 @@ const MaskBgContainer = styled.div`
   right: 0px;
   left: 0px;
   z-index: -1;
-  background-color: ${({ theme }) => (theme.isDark ? '#2e2152' : '#483692')};
 `;
 
+const IntroductionContainer = styled.div`
+  background: white;
+  box-shadow: 0px 121px 174px rgba(33, 6, 49, 0.1), 0px 61.2562px 75.8531px rgba(33, 6, 49, 0.0675), 0px 24.2px 28.275px rgba(33, 6, 49, 0.05), 0px 5.29375px 10.0594px rgba(33, 6, 49, 0.0325);
+  border-radius: 20px;
+`;
+
+const IdoDetails = styled.div`
+  padding: 20px;
+
+  @media (min-width: 768px) {
+    padding: 32px;
+  }
+  @media (min-width: 968px) {
+    padding: 50px;
+  }
+`;
 
 export default ProjectDescription
