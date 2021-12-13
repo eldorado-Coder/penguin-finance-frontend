@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { useMatchBreakpoints, Flex } from 'penguinfinance-uikit2'
+import { useMatchBreakpoints, Flex, Text } from 'penguinfinance-uikit2'
 import ReactTooltip from 'react-tooltip'
 import { useV2FarmUser } from 'state/hooks'
 import useDelayedUnmount from 'hooks/useDelayedUnmount'
@@ -260,14 +260,36 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
                       <CellLayout label={isIglooAprMode ? 'APR' : 'APY'}>
                         <CustomToolTipOrigin data-for={`apr-tooltip-${index}`} data-tip={getAPRTooltip()}>
                           <AprBalanceWrapper>
-                            <Balance
+                            {/* <Balance
                               fontSize="16px"
                               fontWeight="600"
                               color={isDark ? '#C74F51' : 'red'}
                               suffix="%"
                               decimals={2}
                               value={isIglooAprMode ? Number(farmApr) : Number(farmApy)}
-                            />
+                            /> */}
+                            <Text fontSize="16px" fontWeight="600" color={isDark ? '#C74F51' : 'red'}>
+                              {isIglooAprMode && (
+                                <Amount isPenguinRush={farm.isPenguinRush && !farm.isPenguinRushFinished}>{`${
+                                  farm.isPenguinRush && !farm.isPenguinRushFinished
+                                    ? `${(
+                                        (Number(farm.apr || 0) - Number(farm.penguinRushRewardApr || 0)) *
+                                        100
+                                      ).toFixed(2)}% + ${(Number(farm.penguinRushRewardApr || 0) * 100).toFixed(2)}` ||
+                                      '--'
+                                    : Number(farmApr) || '--'
+                                }%`}</Amount>
+                              )}
+                              {!isIglooAprMode && (
+                                <Amount isPenguinRush={farm.isPenguinRush && !farm.isPenguinRushFinished}>{`${
+                                  farm.isPenguinRush && !farm.isPenguinRushFinished
+                                    ? `${(100 * (Number(farm.apy) - Number(farm.penguinRushRewardApy))).toFixed(
+                                        2,
+                                      )} + ${(100 * Number(farm.penguinRushRewardApy)).toFixed(2)}` || '--'
+                                    : farmApy || '--'
+                                }%`}</Amount>
+                              )}
+                            </Text>
                           </AprBalanceWrapper>
                         </CustomToolTipOrigin>
                       </CellLayout>
@@ -353,7 +375,24 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
               </EarnedMobileCell>
               <AprMobileCell>
                 <CellLayout label={isIglooAprMode ? 'APR' : 'APY'}>
-                  <Amount>{`${isIglooAprMode ? farmApr || '--' : farmApy || '--'}%`}</Amount>
+                  {isIglooAprMode && (
+                    <Amount isPenguinRush={farm.isPenguinRush && !farm.isPenguinRushFinished}>{`${
+                      farm.isPenguinRush && !farm.isPenguinRushFinished
+                        ? `${((Number(farm.apr || 0) - Number(farm.penguinRushRewardApr || 0)) * 100).toFixed(2)}% + ${(
+                            Number(farm.penguinRushRewardApr || 0) * 100
+                          ).toFixed(2)}` || '--'
+                        : Number(farmApr) || '--'
+                    }%`}</Amount>
+                  )}
+                  {!isIglooAprMode && (
+                    <Amount isPenguinRush={farm.isPenguinRush && !farm.isPenguinRushFinished}>{`${
+                      farm.isPenguinRush && !farm.isPenguinRushFinished
+                        ? `${(100 * (Number(farm.apy) - Number(farm.penguinRushRewardApy))).toFixed(2)} + ${(
+                            100 * Number(farm.penguinRushRewardApy)
+                          ).toFixed(2)}` || '--'
+                        : farmApy || '--'
+                    }%`}</Amount>
+                  )}
                 </CellLayout>
               </AprMobileCell>
             </Flex>
@@ -444,8 +483,10 @@ const FarmMobileCell = styled.td`
   padding-top: 24px;
 `
 
-const Amount = styled.span`
+const Amount = styled.span<{ isPenguinRush?: boolean }>`
   color: ${({ theme }) => theme.colors.textSubtle};
+  color: ${({ theme, isPenguinRush }) => isPenguinRush && theme.isDark && '#da4b48'};
+  color: ${({ theme, isPenguinRush }) => isPenguinRush && !theme.isDark && theme.colors.red};
   display: flex;
   align-items: center;
 `

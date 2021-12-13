@@ -373,6 +373,10 @@ const Farms: React.FC = () => {
           value={Number(tvl)}
         />
       </TvlContainer>
+      <PenguinRushContainer>
+        <MainSentence>{`#PENGUINRUSH is live. Earn AVAX incentives on select farms. `}</MainSentence>
+        <DescriptionSentence>{`Our PEFI-AVAX farms (Trader Joe & Pangolin LP) now provide AVAX incentives! Additional yield is displayed separately. `}</DescriptionSentence>
+      </PenguinRushContainer>
       {isMobile ? (
         <FilterWrapper justifyContent="space-between" alignItems="center" flexWrap="wrap">
           <Flex mt="8px" justifyContent="center" mb="8px" flexWrap="wrap">
@@ -403,9 +407,9 @@ const Farms: React.FC = () => {
 
 const FarmPage = styled(Page)`
   max-width: 1400px;
-  @media (min-width: 2000px) {
+  /* @media (min-width: 2000px) {
     max-width: 3700px;
-  }
+  } */
 `
 
 // bg
@@ -451,10 +455,32 @@ const TvlContainer = styled(Flex)`
   align-items: center;
   flex-wrap: wrap;
   justify-content: center;
+  // TODO: for penguin rush
+  margin-bottom: 20px;
 
   ${({ theme }) => theme.mediaQueries.md} {
     justify-content: flex-start;
   }
+`
+
+// penguin rush container
+const PenguinRushContainer = styled(Flex)`
+  flex-direction: column;
+  margin-bottom: 50px;
+`
+const MainSentence = styled(Text)`
+  font-family: 'Kanit';
+  font-weight: 600;
+  color: ${({ theme }) => (!theme.isDark ? theme.colors.red : '#da4b48')};
+  font-size: 28px;
+  line-height: 30px;
+  margin-bottom: 10px;
+  white-space: break-spaces;
+`
+const DescriptionSentence = styled(Text)`
+  font-family: 'Kanit';
+  font-weight: 400;
+  color: ${({ theme }) => (theme.isDark ? '#bba6dd' : '#372871')};
 `
 
 // apr/apy slider
