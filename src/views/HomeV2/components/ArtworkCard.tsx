@@ -6,17 +6,14 @@ const ArtworkCard = () => {
   const { isXl } = useMatchBreakpoints()
   const isMobile = !isXl
   const onClickArtworkV2Card = () => {
-    window.open(
-      'https://penguin-finance.medium.com/the-penguin-launchpad-is-back-avalanches-first-fairest-fundraising-protocol-e03e18857d83',
-      '_blank',
-    )
+    window.open('https://docs.penguinfinance.io/', '_blank')
   }
 
   return (
     <StyledArtworkCard isMobile={isMobile}>
       <ArtworkImg
         onClick={onClickArtworkV2Card}
-        src={`${process.env.PUBLIC_URL}/images/home-v2/launchpad.png`}
+        src={`${process.env.PUBLIC_URL}/images/home-v2/welcome_pefi.png`}
         loading="lazy"
         alt="hero"
       />
