@@ -480,7 +480,7 @@ const MainSentence = styled(Text)`
 const DescriptionSentence = styled(Text)`
   font-family: 'Kanit';
   font-weight: 400;
-  color: #372871;
+  color: ${({ theme }) => (theme.isDark ? '#bba6dd' : '#372871')};
 `
 
 // apr/apy slider
