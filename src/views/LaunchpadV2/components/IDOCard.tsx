@@ -10,12 +10,13 @@ import Balance from 'components/Balance'
 
 const IDOCard = ({ idoData }) => {
   const { isDark } = useTheme()
-  const history = useHistory();
+  const history = useHistory()
   const avaxPriceInUsd = usePriceAvaxUsdt().toNumber()
 
   const handleViewIdo = () => {
-    history.push(idoData.link);
-  };
+    return
+    history.push(idoData.link)
+  }
 
   return (
     <FCard onClick={handleViewIdo}>
