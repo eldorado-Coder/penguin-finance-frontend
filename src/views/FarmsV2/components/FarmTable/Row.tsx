@@ -485,7 +485,8 @@ const FarmMobileCell = styled.td`
 
 const Amount = styled.span<{ isPenguinRush?: boolean }>`
   color: ${({ theme }) => theme.colors.textSubtle};
-  color: ${({ isPenguinRush }) => isPenguinRush && '#da4b48'};
+  color: ${({ theme, isPenguinRush }) => isPenguinRush && theme.isDark && '#da4b48'};
+  color: ${({ theme, isPenguinRush }) => isPenguinRush && !theme.isDark && theme.colors.red};
   display: flex;
   align-items: center;
 `

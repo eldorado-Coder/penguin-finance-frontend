@@ -471,7 +471,7 @@ const PenguinRushContainer = styled(Flex)`
 const MainSentence = styled(Text)`
   font-family: 'Kanit';
   font-weight: 600;
-  color: #da4b48;
+  color: ${({ theme }) => (!theme.isDark ? theme.colors.red : '#da4b48')};
   font-size: 28px;
   line-height: 30px;
   margin-bottom: 10px;
