@@ -473,6 +473,8 @@ const MainSentence = styled(Text)`
   font-weight: 600;
   color: #da4b48;
   font-size: 28px;
+  line-height: 30px;
+  margin-bottom: 10px;
   white-space: break-spaces;
 `
 const DescriptionSentence = styled(Text)`
