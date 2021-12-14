@@ -48,6 +48,9 @@ const IDODetail = ({ idoData }) => {
   const { isXs, isSm } = useMatchBreakpoints()
   const isMobile = isXs || isSm;
 
+  const launchDate = new Date(`${idoData.startDate} GMT`).getTime();
+  const currentDate = new Date().getTime();
+
   const handleAddToken = async () => {
     // await addTokenToMetamask(getBoofiAddress(), 'BOOFI', 18)
   }
@@ -60,7 +63,7 @@ const IDODetail = ({ idoData }) => {
             src={
               isDark
                 ? `/images/ido/${idoData.darkLogo}`
-                : `/images/ido/${idoData.whiteLogo}`
+                : `/images/ido/${idoData.darkLogo}`
             }
             alt='kitty'
             height={36}
@@ -86,7 +89,7 @@ const IDODetail = ({ idoData }) => {
           Offering a unique reward structure and awesome user interface, this project will be the leading betting platform on the network.
         </Description>
         <TokenLinks mt='40px' alignItems='center'>
-          <RegisterButton onClick={handleAddToken}>Register</RegisterButton>
+          <RegisterButton onClick={handleAddToken}>Coming Soon</RegisterButton>
           <SocialsContainer justifyContent='flex-end' flexDirection='column' alignItems='flex-end'>
             <Flex justifyContent="space-around" alignItems="center">
               {SocialLinks[0].map((item) => {
@@ -128,16 +131,26 @@ const IDODetail = ({ idoData }) => {
                 />
               </Flex>
             ) : (
-              <Text ml='16px' fontSize="20px" color="#682298" fontWeight={600}>
-                ??? / ???
-              </Text>
+              <Flex ml='16px'>
+                <Balance
+                  fontSize="20px"
+                  color="#682298"
+                  fontWeight="600"
+                  lineHeight='20px'
+                  prefix="$0 / "
+                  decimals={0}
+                  value={Number(idoData.totalRaised)}
+                />
+              </Flex>
             )}
             {!isMobile && 
               <>
                 <HeaderDivider />
                 <Flex alignItems='center'>
                   <SvgIcon src={`${process.env.PUBLIC_URL}/images/ido/icons/time-circle.svg`} width="18px" height="18px" />
-                  <Text color='#682298' fontSize="16px" ml='8px'>Launched</Text>
+                  <Text color='#682298' fontSize="16px" ml='8px'>
+                    {launchDate >= currentDate ? `${Math.ceil((launchDate - currentDate) / 86400000)} days` : 'Launched'}
+                  </Text>
                 </Flex>
               </>
             }

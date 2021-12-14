@@ -18,6 +18,9 @@ const IDOCard = ({ idoData }) => {
     history.push(idoData.link)
   }
 
+  const launchDate = new Date(`${idoData.startDate} GMT`).getTime();
+  const currentDate = new Date().getTime();
+
   return (
     <FCard onClick={handleViewIdo}>
       <Flex justifyContent="space-between" alignItems="center" mb="16px">
@@ -61,9 +64,14 @@ const IDOCard = ({ idoData }) => {
             />
           </Flex>
         ) : (
-          <Text fontSize="20px" color="#C0378C" fontWeight={600}>
-            ??? / ???
-          </Text>
+          <Balance
+            fontSize="24px"
+            color="#C0378C"
+            fontWeight="600"
+            prefix="$0 / "
+            decimals={0}
+            value={Number(idoData.totalRaised)}
+          />
         )}
       </Flex>
       <Flex justifyContent="space-between" flexWrap="wrap" mb="18px">
@@ -115,7 +123,7 @@ const IDOCard = ({ idoData }) => {
           <Flex flexDirection="column" alignItems="flex-start" ml="2px" mt="2px">
             <DetailText fontSize="11px">Time Until Launch</DetailText>
             <Text fontSize="11px" color="#C0378C">
-              {idoData.status}
+              {launchDate >= currentDate ? `${Math.ceil((launchDate - currentDate) / 86400000)} days` : 'Launched'}
             </Text>
           </Flex>
         </Flex>

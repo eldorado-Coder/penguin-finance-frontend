@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Text, Flex, Button } from 'penguinfinance-uikit2'
-import SvgIcon from 'components/SvgIcon'
 import Page from 'components/layout/Page'
 import useWindowSize from 'hooks/useWindowSize';
 
@@ -10,25 +9,25 @@ const TIMELINES = [
     label: 'Registration Opens',
     date: 'Dec 16th 2021 17:00',
     status: 'not-started',
-    imageUrl: 'registration_opens.svg'
+    imageUrl: 'registration_opens'
   },
   {
     label: 'Registration Closes',
     date: 'Dec 19th 2021 23:59',
     status: 'not-started',
-    imageUrl: 'registration_closes.svg'
+    imageUrl: 'registration_closes'
   },
   {
     label: 'Distribution Starts',
     date: 'Dec 20th 2021 17:00',
     status: 'not-started',
-    imageUrl: 'distribution_starts.svg'
+    imageUrl: 'distribution_starts'
   },
   {
     label: 'Distribution Ends',
     date: 'Dec 23th 2021 23:59',
     status: 'not-started',
-    imageUrl: 'distribution_ends.svg'
+    imageUrl: 'distribution_ends'
   },
 ];
 
@@ -55,7 +54,7 @@ const LaunchpadTimeline = () => {
                     <Flex >
                       <StepWrapper justifyContent='center' alignItems='center' status={timeline.status}>
                         <StepInner justifyContent='center' alignItems='center' status={timeline.status}>
-                          <SvgIcon src={`${process.env.PUBLIC_URL}/images/ido/timeline/${timeline.imageUrl}`} width='20px' height='20px' />
+                          <img src={`${process.env.PUBLIC_URL}/images/ido/timeline/${timeline.imageUrl}_${timeline.status === 'active' ? 'active' : 'passed'}.svg`} alt={timeline.label} />                          
                         </StepInner>
                       </StepWrapper>
                       <Flex flexDirection='column' ml='20px'>
@@ -80,7 +79,7 @@ const LaunchpadTimeline = () => {
                     <Flex flexDirection='column' alignItems='center'>
                       <StepWrapper justifyContent='center' alignItems='center' status={timeline.status}>
                         <StepInner justifyContent='center' alignItems='center' status={timeline.status}>
-                          <SvgIcon src={`${process.env.PUBLIC_URL}/images/ido/timeline/${timeline.imageUrl}`} width='20px' height='20px' />
+                          <img src={`${process.env.PUBLIC_URL}/images/ido/timeline/${timeline.imageUrl}_${timeline.status === 'active' ? 'active' : 'passed'}.svg`} alt={timeline.label} />
                         </StepInner>
                       </StepWrapper>
                       <TimelineLabel mt='8px' mb='8px' status={timeline.status} fontWeight={500} fontSize='16px'>{timeline.label}</TimelineLabel>
@@ -306,12 +305,11 @@ const StepInner = styled(Flex)<{ status ?: string }>`
   width: 40px;
   height: 40px;
 
-  svg {
-    .step {
-      fill: ${({ status }) => status === 'active' ? 'white' : '#5E4AAF'};
-    }
+  img {
+    width: 20px;
+    height: 20px;
   }
 `;
 
-export default LaunchpadTimeline
+export default LaunchpadTimeline;
 
