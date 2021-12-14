@@ -16,13 +16,12 @@ import Page from 'components/layout/Page'
 // ];
 
 const TOKEN_SALES_ECONOMICS = [
-  { label: 'Hard Cap', value: '10,000,000' },
-  { label: 'Farming & Staking Rewards', value: '5,100,000' },
-  { label: 'Initial Token Sale', value: '2,000,000' },
-  { label: 'Strategic Partnerships & Advisors', value: '500,000' },
-  { label: 'Development & Bug Bounties', value: '500,000' },
-  { label: 'Marketing & Community Growth', value: '500,000' },
-  { label: 'Foundation ', value: '1,400,000' }
+  { label: 'Hard Cap', value: '100,000,000' },
+  { label: 'Launchpad', value: '12,500,000' },
+  { label: 'Team', value: '7,500,000' },
+  { label: 'Seed/Strategic Sale', value: '5,000,000' },
+  { label: 'Private Sale', value: '5,000,000' },
+  { label: 'Community Pool', value: '70,000,000' },
 ];
 
 const ProjectDescription = () => {
@@ -36,13 +35,16 @@ const ProjectDescription = () => {
           <IdoDetails>
             <HeaderTitle fontSize='34px' color='#313131' fontWeight={800} mb='8px'>About the BinaryCat Project</HeaderTitle>
             <Description fontSize='12px' lineHeight='16px' color='#7F7F7F' mt='24px'>
-              Binary Cat is a decentralized platform powered by Avalanche where users can bet on the price of crypto-assets and the relationship between them. 
+              Binary Cat is a decentralized prediction market protocol running on Avalanche that allows users to make bets on the price of crypto assets and the relationship between them. The platform is transparent, fully decentralized, and has fair reward distribution mechanisms in place.
             </Description>
             <Description fontSize='12px' lineHeight='16px' color='#7F7F7F' mt='24px'>
-              &quot;Ghosts&quot; use the Cauldron and the Stake to maximize their zBOOFI over time, competing for the highest score on the Well of Souls leaderboard. By staking a lot of zBOOFI for a long period of time, you&apos;ll earn additional BOOFI rewards. Ghosts who harvest the most rewards ascend their way to the top of the leaderboard and gain the title of Top Necromancers! Not only do Top Necromancers get fame, glory, and BOOFI rewards, they also get unique additional rewards. Airdrops, bonus tokens, and NFTs are just a few things possible for the most dedicated users!
+              Users receive rewards in KITTY tokens (the native token of BinaryCat) as an incentive for betting, even if the user bet for the wrong outcome. The amount of KITTY they receive is proportional to the size of their bet in relation to the entire group of bets. Bets occur in 5 minutes cycles; in each cycle, bets on the next time window are open while the results of the last window are being resolved.
             </Description>
             <Description fontSize='12px' lineHeight='16px' color='#7F7F7F' mt='24px'>
-              Just like Penguin Finance, Boo Finance is a community-oriented protocol, with no venture capital, pre-mine, or private sales. Boo Finance aims to maximize its impact on Avalanche through a fun and innovative wealth-generation machine.
+              The platform was built with focus on user experience. It&apos;s really easy to bet directly from your Metamask wallet, and the dApp can be accessed from both a web browser or mobile! 
+            </Description>
+            <Description fontSize='12px' lineHeight='16px' color='#7F7F7F' mt='24px'>
+              As a decentralized platform, Binary Cat has the ultimate goal of empowering users by holding their KITTY tokens. KITTY holders receive all the revenue generated from the platform and will be able to vote on betting parameters and which new assets to add.
             </Description>
             <Text fontSize='24px' color='#292929' fontWeight={800} mt='32px'>Token Sale and Economics</Text>
             <TokenSalesEconomics>

@@ -27,13 +27,17 @@ const TIMELINES = [
   {
     label: 'Distribution Ends',
     date: 'Oct 7th 2021 20:00',
-    status: 'passed',
+    status: 'active',
     imageUrl: 'distribution_ends.svg'
   },
 ];
 
 const LaunchpadTimeline = () => {
   const windowSize = useWindowSize();
+
+  const handleSignUp = () => {
+    window.open('https://t.me/pefi_announcements', '_blank');
+  };
 
   return (
     <Container>
@@ -55,7 +59,7 @@ const LaunchpadTimeline = () => {
                         </StepInner>
                       </StepWrapper>
                       <Flex flexDirection='column' ml='20px'>
-                        <TimelineLabel status={timeline.status} fontWeight={500} fontSize='20px' color='#292929'>{timeline.label}</TimelineLabel>
+                        <TimelineLabel status={timeline.status} fontWeight={500} fontSize='20px'>{timeline.label}</TimelineLabel>
                         <TimelineDate status={timeline.status} fontSize='16px' color='#7f7f7f'>{timeline.date}</TimelineDate>
                       </Flex>
                     </Flex>
@@ -79,7 +83,7 @@ const LaunchpadTimeline = () => {
                           <SvgIcon src={`${process.env.PUBLIC_URL}/images/ido/timeline/${timeline.imageUrl}`} width='20px' height='20px' />
                         </StepInner>
                       </StepWrapper>
-                      <TimelineLabel mt='8px' mb='8px' status={timeline.status} fontWeight={500} fontSize='17px' color='#292929'>{timeline.label}</TimelineLabel>
+                      <TimelineLabel mt='8px' mb='8px' status={timeline.status} fontWeight={500} fontSize='16px'>{timeline.label}</TimelineLabel>
                       <TimelineDate status={timeline.status} fontSize='14px' color='#7f7f7f'>{timeline.date}</TimelineDate>
                     </Flex>
                   </TimelineItem>
@@ -96,7 +100,7 @@ const LaunchpadTimeline = () => {
           <SignUpDetails justifyContent='space-around' alignItems='center'>
             <div className='signup-button'>
               <SignUpLabel color='white' fontSize='31px' fontWeight={800}>Get Alerts For New Launches</SignUpLabel>
-              <StyledButton mt='20px'>Sign Up</StyledButton>
+              <StyledButton onClick={handleSignUp} mt='20px'>Sign Up</StyledButton>
             </div>
           </SignUpDetails>
         </SignUpContainer>
@@ -135,7 +139,7 @@ const TimelineItem = styled.div<{ status?: string }>`
 `;
 
 const TimelineLabel = styled(Text)<{ status?: string }>`
-  color: ${({ status }) => status === 'active' ? '#5E4AAF' : '#292929'};
+  color: ${({ status }) => status === 'active' ? '#000000' : '#4D4D4D'};
 `;
 
 const TimelineDate = styled(Text)<{ status?: string }>`
@@ -205,6 +209,10 @@ const StyledButton = styled(Button)`
     font-size: 24px;
     width: 240px;
     height: 54px;
+  }
+
+  &:hover:not(:disabled):not(.penguin-button--disabled):not(.penguin-button--disabled):not(:active) {
+    opacity: 1;
   }
 `
 
@@ -288,6 +296,7 @@ const StepWrapper = styled(Flex)<{ status ?: string }>`
   border-radius: 50%;
   width: 54px;
   height: 54px;
+  filter: ${({ status }) => status === 'active' && 'drop-shadow(0px 89px 80px rgba(130, 121, 206, 0.55)) drop-shadow(0px 34.2815px 25.4815px rgba(130, 121, 206, 0.334074)) drop-shadow(0px 7.25185px 6.51852px rgba(130, 121, 206, 0.215926))'};
 `;
 
 const StepInner = styled(Flex)<{ status ?: string }>`

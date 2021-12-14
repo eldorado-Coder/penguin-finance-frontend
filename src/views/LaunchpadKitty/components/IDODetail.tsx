@@ -11,13 +11,13 @@ import Balance from 'components/Balance'
 const SocialLinks = [
   // first row : FooterIconLinks[0]
   [
-    // {
-    //   name: 'TelegramIcon',
-    //   url: 'https://t.me/BooFinance',
-    //   imageUrl: 'images/ido/social_icons/telegram.png',
-    //   key: 'telegram',
-    //   label: 't.me/BooFinance'
-    // },
+    {
+      name: 'TelegramIcon',
+      url: 'https://t.me/BinaryCatChat',
+      imageUrl: 'images/ido/social_icons/telegram.png',
+      key: 'telegram',
+      label: 't.me/BinaryCatChat'
+    },
     {
       name: 'TwitterIcon',
       url: 'https://twitter.com/BinaryCatApp',
@@ -86,7 +86,7 @@ const IDODetail = ({ idoData }) => {
           Offering a unique reward structure and awesome user interface, this project will be the leading betting platform on the network.
         </Description>
         <TokenLinks mt='40px' alignItems='center'>
-          <RegisterButton onClick={handleAddToken}>Add KITTY to Metamask</RegisterButton>
+          <RegisterButton onClick={handleAddToken}>Register</RegisterButton>
           <SocialsContainer justifyContent='flex-end' flexDirection='column' alignItems='flex-end'>
             <Flex justifyContent="space-around" alignItems="center">
               {SocialLinks[0].map((item) => {
