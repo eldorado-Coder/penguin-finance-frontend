@@ -11,26 +11,26 @@ import Balance from 'components/Balance'
 const SocialLinks = [
   // first row : FooterIconLinks[0]
   [
+    // {
+    //   name: 'TelegramIcon',
+    //   url: 'https://t.me/BooFinance',
+    //   imageUrl: 'images/ido/social_icons/telegram.png',
+    //   key: 'telegram',
+    //   label: 't.me/BooFinance'
+    // },
     {
-      name: 'TelegramIcon',
-      url: 'https://t.me/BooFinance',
-      imageUrl: 'images/ido/social_icons/telegram.png',
-      key: 'telegram',
-      label: 't.me/BooFinance'
-    },
-    {
-      name: 'DiscordIcon',
-      url: 'https://discord.com/invite/A3KbWpsZfE',
-      imageUrl: 'images/ido/social_icons/discord.png',
-      key: 'discord',
-      label: 'discord.com/Boo_Finance'
-    },
-    {
-      name: 'TwittweIcon',
-      url: 'https://twitter.com/Boo_Finance',
+      name: 'TwitterIcon',
+      url: 'https://twitter.com/BinaryCatApp',
       imageUrl: 'images/ido/social_icons/twitter.png',
       key: 'twitter',
-      label: 'twitter.com/Boo_Finance'
+      label: 'twitter.com/BinaryCatApp'
+    },
+    {
+      name: 'MIcon',
+      url: 'https://medium.com/@BinaryCat',
+      imageUrl: 'images/ido/social_icons/medium.png',
+      key: 'medium',
+      label: 'medium.com/binary-cat'
     },
     // {
     //   name: 'MIcon',
@@ -49,7 +49,7 @@ const IDODetail = ({ idoData }) => {
   const isMobile = isXs || isSm;
 
   const handleAddToken = async () => {
-    await addTokenToMetamask(getBoofiAddress(), 'BOOFI', 18)
+    // await addTokenToMetamask(getBoofiAddress(), 'BOOFI', 18)
   }
 
   return (
@@ -60,9 +60,9 @@ const IDODetail = ({ idoData }) => {
             src={
               isDark
                 ? `/images/ido/${idoData.darkLogo}`
-                : `/images/ido/${idoData.darkLogo}`
+                : `/images/ido/${idoData.whiteLogo}`
             }
-            alt='boofi'
+            alt='kitty'
             height={36}
           />
           <Flex ml='24px'>
@@ -77,16 +77,16 @@ const IDODetail = ({ idoData }) => {
           </PriceText>
         )}
         <HeaderTitle fontSize="40px" fontWeight={800} color="white" mt="40px">
-          An exciting DeFi project building on Avalanche.
+          Revolutionizing the world of decentralized betting
         </HeaderTitle>
         <Description fontSize="16px" lineHeight="21px" color="white" mt='20px'>
-          Boo! BooFinance is bringing innovative DeFi tools to users on the Avalanche network. 
+          Binary Cat is a decentralized platform powered by Avalanche where users can bet on the price of crypto-assets and the relationship between them. 
         </Description>
         <Description fontSize="16px" lineHeight="21px" color="white" mt='20px'>
-        Their main dApps are The Cauldron, Well of Souls, Deflationary NFTs, and the Boo Council (DAO).
+          Offering a unique reward structure and awesome user interface, this project will be the leading betting platform on the network.
         </Description>
         <TokenLinks mt='40px' alignItems='center'>
-          <RegisterButton onClick={handleAddToken}>Add BOOFI to Metamask</RegisterButton>
+          <RegisterButton onClick={handleAddToken}>Add KITTY to Metamask</RegisterButton>
           <SocialsContainer justifyContent='flex-end' flexDirection='column' alignItems='flex-end'>
             <Flex justifyContent="space-around" alignItems="center">
               {SocialLinks[0].map((item) => {

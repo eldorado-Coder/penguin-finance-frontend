@@ -14,15 +14,15 @@ import Page from 'components/layout/Page'
 //   { label: 'Token Type', value: 'Token Type' },
 //   { label: 'Token Distribution', value: 'Token Distribution' },
 // ];
+
 const TOKEN_SALES_ECONOMICS = [
   { label: 'Hard Cap', value: '10,000,000' },
-  { label: 'Anonymity Mining', value: '3,700,000' },
-  { label: 'DAO Treasury', value: '1,500,000' },
-  { label: 'zkDAO', value: '1,600,000' },
+  { label: 'Farming & Staking Rewards', value: '5,100,000' },
   { label: 'Initial Token Sale', value: '2,000,000' },
-  { label: 'Airdrops', value: '600,000' },
-  { label: 'Bounties', value: '500,000' },
-  { label: 'Airdrop to Tornado Cash', value: '100,000' }
+  { label: 'Strategic Partnerships & Advisors', value: '500,000' },
+  { label: 'Development & Bug Bounties', value: '500,000' },
+  { label: 'Marketing & Community Growth', value: '500,000' },
+  { label: 'Foundation ', value: '1,400,000' }
 ];
 
 const ProjectDescription = () => {
@@ -32,22 +32,25 @@ const ProjectDescription = () => {
       <MaskBgImageContainer />
       <LaunchpadPage>
         <IntroductionContainer>
-          <IntroductionImage src={`${process.env.PUBLIC_URL}/images/ido/introduction_sherpa.png`} />
+          <IntroductionImage src={`${process.env.PUBLIC_URL}/images/ido/introduction_kitty.jpg`} />
           <IdoDetails>
-            <HeaderTitle fontSize='34px' color='#313131' fontWeight={800} mb='8px'>About the Sherpa Project</HeaderTitle>
+            <HeaderTitle fontSize='34px' color='#313131' fontWeight={800} mb='8px'>About the BinaryCat Project</HeaderTitle>
             <Description fontSize='12px' lineHeight='16px' color='#7F7F7F' mt='24px'>
-              Sherpa Cash is the first fully decentralized protocol for private transactions on Avalanche. Sherpa Cash improves transaction privacy by breaking the on-chain link between source and destination addresses. It uses a smart contract that accepts AVAX deposits that can be withdrawn by a different address. To preserve privacy, a relayer can be used to withdraw to an address with no AVAX balance. Whenever AVAX is withdrawn by the new address, there is no way to link the withdrawal to the deposit, ensuring complete privacy.
+              Binary Cat is a decentralized platform powered by Avalanche where users can bet on the price of crypto-assets and the relationship between them. 
             </Description>
             <Description fontSize='12px' lineHeight='16px' color='#7F7F7F' mt='24px'>
-              Sherpa is developing every day,  leveraging on one of the most critical aspects of blockchain technology that is often overlooked today: privacy.
+              &quot;Ghosts&quot; use the Cauldron and the Stake to maximize their zBOOFI over time, competing for the highest score on the Well of Souls leaderboard. By staking a lot of zBOOFI for a long period of time, you&apos;ll earn additional BOOFI rewards. Ghosts who harvest the most rewards ascend their way to the top of the leaderboard and gain the title of Top Necromancers! Not only do Top Necromancers get fame, glory, and BOOFI rewards, they also get unique additional rewards. Airdrops, bonus tokens, and NFTs are just a few things possible for the most dedicated users!
+            </Description>
+            <Description fontSize='12px' lineHeight='16px' color='#7F7F7F' mt='24px'>
+              Just like Penguin Finance, Boo Finance is a community-oriented protocol, with no venture capital, pre-mine, or private sales. Boo Finance aims to maximize its impact on Avalanche through a fun and innovative wealth-generation machine.
             </Description>
             <Text fontSize='24px' color='#292929' fontWeight={800} mt='32px'>Token Sale and Economics</Text>
             <TokenSalesEconomics>
               {TOKEN_SALES_ECONOMICS.map((tokenEconomic, index) => {
                 return (
                   <TokenEconomic index={index} key={tokenEconomic.label}>
-                    <Text color='#9A70D3' fontSize='14px' lineHeight='30px' fontWeight={600}>{tokenEconomic.label}</Text>
-                    <Text color='#292929' fontSize='14px' lineHeight='30px' fontWeight={600}>{tokenEconomic.value}</Text>
+                    <Text color='#9A70D3' fontSize='14px' lineHeight='32px' fontWeight={600}>{tokenEconomic.label}</Text>
+                    <Text color='#292929' fontSize='14px' lineHeight='32px' fontWeight={600}>{tokenEconomic.value}</Text>
                   </TokenEconomic>
                 )
               })}

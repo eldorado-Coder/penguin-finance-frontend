@@ -94,14 +94,10 @@ const LaunchpadTimeline = () => {
         <SignUpContainer>
           <SignUpImage src={`${process.env.PUBLIC_URL}/images/ido/signup_banner.png`} />
           <SignUpDetails justifyContent='space-around' alignItems='center'>
-            <div>
-              <SignUpLabel color='white' fontSize='31px' fontWeight={800}>Get Alerts For New Pools</SignUpLabel>
-              <FiraText color='white' fontSize='14px'>You are not authorized yet</FiraText>
+            <div className='signup-button'>
+              <SignUpLabel color='white' fontSize='31px' fontWeight={800}>Get Alerts For New Launches</SignUpLabel>
               <StyledButton mt='20px'>Sign Up</StyledButton>
             </div>
-            <PefiLogoContainer>
-              <img src={`${process.env.PUBLIC_URL}/images/penguin-finance-logo.svg`} alt='penguin-logo' />
-            </PefiLogoContainer>
           </SignUpDetails>
         </SignUpContainer>
       </LaunchpadPage>
@@ -159,40 +155,27 @@ const SignUpContainer = styled.div`
 
 const SignUpImage = styled.img`
   width: 100%;
-  background: linear-gradient(180deg, rgba(114, 36, 36, 0) 0%, #722B92 100%);
+  background: linear-gradient(180deg, #7361BE 0%, #3A258F 100%);
   border-radius: 10px;
   min-height: 200px;
   object-fit: cover;
 `;
 
-const PefiLogoContainer = styled.div`
-  background: white;
-  border-radius: 50%;
-  padding: 10px;
-  display: none;
-
-  @media (min-width: 640px) {  
-    display: block;
-  } 
-
-  @media (min-width: 768px) {  
-    margin-top: -36px;
-  }  
-
-  img {
-    width: 100px;
-
-    @media (min-width: 768px) {
-      width: 200px;
-    }
-  }
-`;
 
 const SignUpDetails = styled(Flex)`
   position: absolute;
   width: 100%;
   top: 50%;
   transform: translate(0, -50%);
+  min-height: 200px;
+
+  .signup-button {
+    width: 80%;
+
+    @media (min-width: 768px) {
+      width: 70%;
+    }
+  }
 
   @media (min-width: 768px) {
     top: 0;
@@ -208,15 +191,21 @@ const SignUpLabel = styled(Text)`
   }
 `;
 
-const FiraText = styled(Text)`
-  font-family: 'Fira Code';
-`;
-
 const StyledButton = styled(Button)`
   box-shadow: none;
   width: 180px;
-  height: 40px;
+  height: 48px;
   border-radius: 5px;
+  background: white;
+  color: #620AA8;
+  font-size: 20px;
+  font-weight: 500;
+
+  @media (min-width: 768px) {
+    font-size: 24px;
+    width: 240px;
+    height: 54px;
+  }
 `
 
 const Label = styled(Text)`

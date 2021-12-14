@@ -14,7 +14,7 @@ const IDOCard = ({ idoData }) => {
   const avaxPriceInUsd = usePriceAvaxUsdt().toNumber()
 
   const handleViewIdo = () => {
-    return
+    // return
     history.push(idoData.link)
   }
 
