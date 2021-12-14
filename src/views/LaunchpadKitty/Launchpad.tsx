@@ -42,7 +42,7 @@ const IgloosBannerContainer = styled(Flex)`
 const BannerImage = styled.img`
   z-index: 1;
   width: 100%;
-  min-height: 880px;
+  min-height: 920px;
 
   @media (min-width: 640px) {
     min-height: 840px;
