@@ -7,26 +7,26 @@ import useWindowSize from 'hooks/useWindowSize';
 const TIMELINES = [
   {
     label: 'Registration Opens',
-    date: 'Jul 19th 2021 00:00',
-    status: 'passed',
+    date: 'Dec 16th 2021 17:00',
+    status: 'not-started',
     imageUrl: 'registration_opens'
   },
   {
     label: 'Registration Closes',
-    date: 'Jul 27th 2021 23:30',
-    status: 'passed',
+    date: 'Dec 19th 2021 23:59',
+    status: 'not-started',
     imageUrl: 'registration_closes'
   },
   {
     label: 'Distribution Starts',
-    date: 'Jul 29th 2021 00:00',
-    status: 'passed',
+    date: 'Dec 20th 2021 17:00',
+    status: 'not-started',
     imageUrl: 'distribution_starts'
   },
   {
     label: 'Distribution Ends',
-    date: 'Aug 3rd 2021 19:00',
-    status: 'active',
+    date: 'Dec 23th 2021 23:59',
+    status: 'not-started',
     imageUrl: 'distribution_ends'
   },
 ];
@@ -312,3 +312,4 @@ const StepInner = styled(Flex)<{ status ?: string }>`
 `;
 
 export default LaunchpadTimeline;
+
