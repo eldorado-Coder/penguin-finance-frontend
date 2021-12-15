@@ -4,7 +4,7 @@ const CACHE_MUSIC_KEY = 'IS_MUSIC'
 const CACHE_VISIBLE_BLOCK_KEY = 'VISIBLE_BLOCK'
 const CACHE_REFRESH_RATE = 'REFRESH_RATE'
 const CACHE_VISIBLE_PLAYER = 'VISIBLE_PLAYER'
-const CACHE_IGLOO_APY_KEY = 'IS_IGLOO_APR_MODE'
+const CACHE_IGLOO_APR_KEY = 'IS_IGLOO_APY_MODE'
 
 const SettingContext = React.createContext({
   isMusic: null,
@@ -41,7 +41,8 @@ const SettingContextProvider = ({ children }) => {
   })
 
   const [isIglooAprMode, setIsIglooAprMode] = useState(() => {
-    const isIglooAprModeSetting = localStorage.getItem(CACHE_IGLOO_APY_KEY)
+    if (localStorage.getItem(CACHE_IGLOO_APR_KEY) === null) return true
+    const isIglooAprModeSetting = localStorage.getItem(CACHE_IGLOO_APR_KEY)
     return isIglooAprModeSetting ? JSON.parse(isIglooAprModeSetting) : false
   })
 
@@ -77,7 +78,7 @@ const SettingContextProvider = ({ children }) => {
     setIsIglooAprMode(mode)
 
     setIsIglooAprMode(() => {
-      localStorage.setItem(CACHE_IGLOO_APY_KEY, mode)
+      localStorage.setItem(CACHE_IGLOO_APR_KEY, mode)
       return mode
     })
   }
