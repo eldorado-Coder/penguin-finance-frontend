@@ -34,12 +34,15 @@ const ProjectDescription = () => {
         <IntroductionContainer>
           <IntroductionImage src={`${process.env.PUBLIC_URL}/images/ido/introduction_boofi.png`} />
           <IdoDetails>
-            <HeaderTitle fontSize='34px' color='#313131' fontWeight={800}>About the BooFinance Project</HeaderTitle>
-            <Description fontSize='12px' lineHeight='16px' color='#7F7F7F' mt='32px'>
-              Crabada is an exciting play-and-earn NFT game based in a world filled with fierce fighting Hermit-Crabs called Crabada (the NFTs). Players will rediscover the prosperous ancient Kingdom of Crabada and earn rewards through activities such as mining, looting, breeding, battling, exploring, crafting, and more.
+            <HeaderTitle fontSize='34px' color='#313131' fontWeight={800} mb='8px'>About the BooFinance Project</HeaderTitle>
+            <Description fontSize='12px' lineHeight='16px' color='#7F7F7F' mt='24px'>
+              Boo Finance is pioneering DeFi 3.0 with an exciting, gamified yield farming platform built for user competition. Users can enter the Haunted House of dApps through the Cauldron, where you earn zBOOFI rewards by staking your LP or single-asset, interest-bearing tokens. The Stake allows you to &quot;zombify&quot; your BOOFI on the spot for zBOOFI (single-asset staking)! zBOOFI is your ticket to adventure in the Haunted House, and it&apos;s always growing in value.
             </Description>
             <Description fontSize='12px' lineHeight='16px' color='#7F7F7F' mt='24px'>
-              Crabada, being an idle game means that you’ll be able to play it anytime and anywhere with minimal disruption to your everyday life. Additionally, Crabada provides its players with not only entertainment value, but financial value as well. Crabada is bringing forth a new revolution in play-and-earn games with its unique PvP (Player Versus Player)-infused idle gameplay.
+              &quot;Ghosts&quot; use the Cauldron and the Stake to maximize their zBOOFI over time, competing for the highest score on the Well of Souls leaderboard. By staking a lot of zBOOFI for a long period of time, you&apos;ll earn additional BOOFI rewards. Ghosts who harvest the most rewards ascend their way to the top of the leaderboard and gain the title of Top Necromancers! Not only do Top Necromancers get fame, glory, and BOOFI rewards, they also get unique additional rewards. Airdrops, bonus tokens, and NFTs are just a few things possible for the most dedicated users!
+            </Description>
+            <Description fontSize='12px' lineHeight='16px' color='#7F7F7F' mt='24px'>
+              Just like Penguin Finance, Boo Finance is a community-oriented protocol, with no venture capital, pre-mine, or private sales. Boo Finance aims to maximize its impact on Avalanche through a fun and innovative wealth-generation machine.
             </Description>
             <Text fontSize='24px' color='#292929' fontWeight={800} mt='32px'>Token Sale and Economics</Text>
             <TokenSalesEconomics>
@@ -99,7 +102,7 @@ const Description = styled(Text)`
 const Container = styled.div`
   position: relative;
   padding-bottom: 60px;
-  max-height: 1100px;
+  max-height: 1140px;
 `;
 
 const HeaderTitle = styled(Text)`

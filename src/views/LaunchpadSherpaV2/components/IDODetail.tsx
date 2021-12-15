@@ -326,7 +326,8 @@ const ProgressWrapper = styled.div`
 
 const ProgressText = styled(Text)<{ percentage: number }>`
   position: absolute;
-  right: ${({ percentage}) => 100-percentage}%;
+  right: ${({ percentage }) => percentage >= 50 && 100-percentage}%;
+  left: ${({ percentage }) => percentage < 50 && percentage}%;
   white-space: nowrap;
   top: 12px;
   font-family: 'Fira Code';

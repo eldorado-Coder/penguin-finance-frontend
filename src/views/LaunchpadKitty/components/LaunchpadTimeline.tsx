@@ -7,26 +7,26 @@ import useWindowSize from 'hooks/useWindowSize'
 const TIMELINES = [
   {
     label: 'Registration Opens',
-    date: 'Sep 24th 2021 00:00',
-    status: 'passed',
+    date: 'Dec 17th 2021 18:00',
+    status: 'not-started',
     imageUrl: 'registration_opens',
   },
   {
     label: 'Registration Closes',
-    date: 'Sep 29th 2021 23:59',
-    status: 'passed',
+    date: 'Dec 21st 2021 23:59',
+    status: 'not-started',
     imageUrl: 'registration_closes',
   },
   {
     label: 'Distribution Starts',
-    date: 'Sep 30th 2021 20:00',
-    status: 'passed',
+    date: 'Dec 22nd 2021 18:00',
+    status: 'not-started',
     imageUrl: 'distribution_starts',
   },
   {
     label: 'Distribution Ends',
-    date: 'Oct 7th 2021 20:00',
-    status: 'active',
+    date: 'Dec 27th 2021 23:59',
+    status: 'not-started',
     imageUrl: 'distribution_ends',
   },
 ]
@@ -164,7 +164,7 @@ const TimelineItem = styled.div<{ status?: string }>`
 const TimelineLabel = styled(Text)<{ status?: string }>`
   color: ${({ status, theme }) => !theme.isDark && status === 'active' && '#000000'};
   color: ${({ status, theme }) => !theme.isDark && status !== 'active' && '#4D4D4D'};
-  color: ${({ theme }) => theme.isDark && '#ffffff'};
+  color: ${({ theme }) => (theme.isDark ? '#cac2e4' : '#4D4D4D')};
 `
 
 const TimelineDate = styled(Text)<{ status?: string }>`
