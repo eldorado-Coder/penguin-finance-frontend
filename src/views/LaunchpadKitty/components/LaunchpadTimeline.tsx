@@ -162,7 +162,9 @@ const TimelineItem = styled.div<{ status?: string }>`
 `
 
 const TimelineLabel = styled(Text)<{ status?: string }>`
-  color: ${({ status }) => (status === 'active' ? '#000000' : '#4D4D4D')};
+  color: ${({ status, theme }) => !theme.isDark && status === 'active' && '#000000'};
+  color: ${({ status, theme }) => !theme.isDark && status !== 'active' && '#4D4D4D'};
+  color: ${({ theme }) => (theme.isDark ? '#cac2e4' : '#4D4D4D')};
 `
 
 const TimelineDate = styled(Text)<{ status?: string }>`
