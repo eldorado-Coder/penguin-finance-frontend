@@ -1,14 +1,13 @@
-
 const IDOData = {
   tokenSymbol: 'KITTY',
   whiteLogo: 'kitty_logo_white.svg',
   darkLogo: 'kitty_logo_dark.svg',
   isCompleted: false,
-  totalRaised: 500000,
+  totalRaised: 562500,
   returnToATH: 15,
   participants: 0,
   startDate: '12.17.2021',
-  tokenPrice: 0.04,
+  tokenPrice: 0.045,
   soldTokenAmount: '0',
   distributedTokenAmount: '12.5M',
   saleProgress: '0',
