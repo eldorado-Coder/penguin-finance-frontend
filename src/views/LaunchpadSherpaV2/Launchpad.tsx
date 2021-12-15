@@ -4,6 +4,7 @@ import { Flex } from 'penguinfinance-uikit2'
 import LaunchpadTimeline from './components/LaunchpadTimeline';
 import IDODetail from './components/IDODetail';
 import ProjectDescription from './components/ProjectDescription';
+import ProjectDetailsCard from './components/ProjectDetailsCard';
 import { completedIDOs } from './config'
 
 const Launchpad: React.FC = () => {
@@ -20,7 +21,8 @@ const Launchpad: React.FC = () => {
         </HeaderContainer>
       </IgloosBannerContainer>
       <LaunchpadTimeline />
-      <ProjectDescription />
+      <ProjectDetailsCard />
+      {/* <ProjectDescription /> */}
     </div>
   )
 }
