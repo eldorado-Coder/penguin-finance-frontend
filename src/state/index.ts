@@ -24,6 +24,9 @@ import boosterRocketReducer from './boosterRocket'
 import launchpadBoofiReducer from './launchpadBoofi'
 import boofiBoosterRocketReducer from './boofiBoosterRocket'
 
+// launchpad - Kitty
+import launchpadKittyReducer from './launchpadKitty'
+
 // v2
 import nestMigratorReducer from './nestMigrator'
 import v2PoolsReducer from './v2pools'
@@ -60,6 +63,10 @@ const store = configureStore({
     // launchpad - Boofi
     launchpadBoofi: launchpadBoofiReducer,
     boofiBoosterRocket: boofiBoosterRocketReducer,
+
+    // launchpad - Kitty
+    launchpadKitty: launchpadKittyReducer,
+
     // v2
     nestMigrator: nestMigratorReducer,
     v2Pools: v2PoolsReducer,

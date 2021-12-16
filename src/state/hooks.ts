@@ -21,14 +21,16 @@ import {
   fetchLpsPublicDataAsync,
   fetchPoolsPublicDataAsync,
   fetchPoolsUserDataAsync,
-
   // launchpad - sherpa
   fetchLaunchpadUserDataAsync,
   fetchBoosterRocketUserDataAsync,
-
   // launchpad - boofi
   fetchLaunchpadBoofiUserDataAsync,
   fetchBoofiBoosterRocketUserDataAsync,
+  // launchpad - kitty
+  fetchLaunchpadKittyUserDataAsync,
+  fetchLaunchpadKittyGlobalDataAsync,
+  // emperor
   fetchEmperor,
   updateLaunchpadTierHurdles,
   updateLaunchpadBoofiTierHurdles,
@@ -73,6 +75,7 @@ import {
   LaunchpadState,
   LaunchpadBoofiState,
   BoosterRocketState,
+  LaunchpadKittyState,
   // v2
   NestMigratorState,
   UserCollectiblesState,
@@ -306,6 +309,25 @@ export const useBoofiBoosterRocket = (account): BoosterRocketState => {
 
   const boosterRocket = useSelector((state: State) => state.boofiBoosterRocket)
   return boosterRocket
+}
+
+// launchpad - Kitty
+export const useKittyLaunchpad = (account): LaunchpadKittyState => {
+  const { fastRefresh } = useRefresh()
+  const dispatch = useDispatch()
+  useEffect(() => {
+    const fetchLaunchpadData = async () => {
+      dispatch(fetchLaunchpadKittyGlobalDataAsync())
+      dispatch(fetchLaunchpadKittyUserDataAsync(account))
+    }
+
+    if (account) {
+      fetchLaunchpadData()
+    }
+  }, [account, dispatch, fastRefresh])
+
+  const launchpad = useSelector((state: State) => state.launchpadKitty)
+  return launchpad
 }
 
 // collectibles

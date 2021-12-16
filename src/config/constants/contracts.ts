@@ -210,6 +210,28 @@ export default {
     43114: '0xB00F1ad977a949a3CCc389Ca1D1282A2946963b0',
   },
 
+  // launchpad - Kitty
+  launchPadKitty: {
+    43113: '',
+    43114: '0xc312ba2dA6bf972cEE8fC0d2e79b3468819E2c64',
+  },
+  kittyBoosterRocket: {
+    43113: '',
+    43114: '0x90D2652B7abB628fDf907ed4ECc4711EA8ffBAf9',
+  },
+  kittyBoosterRocketPayToken: {
+    43113: '',
+    43114: '0xe896CDeaAC9615145c0cA09C8Cd5C25bced6384c',
+  },
+  kittyBoosterRocketBuyToken: {
+    43113: '',
+    43114: '0xB00F1ad977a949a3CCc389Ca1D1282A2946963b0',
+  },
+  kitty: {
+    43113: '',
+    43114: '0xB00F1ad977a949a3CCc389Ca1D1282A2946963b0',
+  },
+
   // v2
   iPefi: {
     43113: '',
