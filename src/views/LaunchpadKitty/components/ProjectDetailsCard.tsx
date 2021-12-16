@@ -14,7 +14,7 @@ const TOKEN_INFO = [
   { label: 'INITIAL SUPPLY', value: '12,500,000' },
   { label: 'INITIAL MARKET CAP', value: '$562,500' },
   { label: 'TOKEN TYPE', value: 'Betting' },
-  { label: 'TOKEN ADDRESS ', value: 'N/A', type: 'string' },
+  { label: 'TOKEN ADDRESS ', value: '0xbca7f1998Dc9FFB70b086543a808960a460aBcA7', type: 'link' },
 ]
 
 const LAUNCHPAD_INFO = [
