@@ -6,14 +6,17 @@ const ArtworkCard = () => {
   const { isXl } = useMatchBreakpoints()
   const isMobile = !isXl
   const onClickArtworkV2Card = () => {
-    window.open('https://docs.penguinfinance.io/', '_blank')
+    window.open(
+      'https://penguin-finance.medium.com/penguin-launchpad-binarycat-ido-tiers-guidelines-dd4d90817f44',
+      '_blank',
+    )
   }
 
   return (
     <StyledArtworkCard isMobile={isMobile}>
       <ArtworkImg
         onClick={onClickArtworkV2Card}
-        src={`${process.env.PUBLIC_URL}/images/home-v2/welcome_pefi.png`}
+        src={`${process.env.PUBLIC_URL}/images/home-v2/binary-cat_intro.png`}
         loading="lazy"
         alt="hero"
       />
