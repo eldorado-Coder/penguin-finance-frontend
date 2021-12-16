@@ -164,11 +164,13 @@ const TimelineItem = styled.div<{ status?: string }>`
 const TimelineLabel = styled(Text)<{ status?: string }>`
   color: ${({ status, theme }) => !theme.isDark && status === 'active' && '#000000'};
   color: ${({ status, theme }) => !theme.isDark && status !== 'active' && '#4D4D4D'};
-  color: ${({ theme }) => theme.isDark && '#ffffff'};
+  color: ${({ status, theme }) => theme.isDark && status === 'active' && '#5E4AAF'};
+  color: ${({ status, theme }) => theme.isDark && status !== 'active' && '#ffffff'};
 `
 
 const TimelineDate = styled(Text)<{ status?: string }>`
   color: ${({ status }) => (status === 'active' ? '#7F6FBF' : '#7f7f7f')};
+  color: ${({ status, theme }) => theme.isDark && status === 'active' && '#ffffff'};
   font-family: 'Fira Code';
   text-align: center;
 `
