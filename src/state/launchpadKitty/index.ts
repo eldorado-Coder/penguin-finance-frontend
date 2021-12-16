@@ -23,6 +23,7 @@ const initialState: LaunchpadKittyState = {
   registrationStart: 0,
   registrationEnd: 0,
   registrationPeriodOngoing: false,
+  registeredPenguins: 0,
 }
 
 export const LaunchpadKittySlice = createSlice({
@@ -44,6 +45,7 @@ export const LaunchpadKittySlice = createSlice({
       state.registrationStart = action.payload.registrationStart
       state.registrationEnd = action.payload.registrationEnd
       state.registrationPeriodOngoing = action.payload.registrationPeriodOngoing
+      state.registeredPenguins = action.payload.registeredPenguins
     },
     setStakedValance: (state, action) => {
       state.stakedBalance = action.payload
@@ -96,9 +98,17 @@ export const fetchLaunchpadKittyUserDataAsync = (account: string) => async (disp
 }
 
 export const fetchLaunchpadKittyGlobalDataAsync = () => async (dispatch) => {
-  const { registrationStart, registrationEnd, registrationPeriodOngoing } = await fetchGlobalData()
+  const { registrationStart, registrationEnd, registrationPeriodOngoing, registeredPenguins } = await fetchGlobalData()
   const tierHurdles = await fetchTierHurdles()
-  dispatch(setLaunchpadGlobalData({ registrationStart, registrationEnd, registrationPeriodOngoing, tierHurdles }))
+  dispatch(
+    setLaunchpadGlobalData({
+      registrationStart,
+      registrationEnd,
+      registrationPeriodOngoing,
+      registeredPenguins,
+      tierHurdles,
+    }),
+  )
 }
 
 export const updateLaunchpadKittyAllowance = (account: string) => async (dispatch) => {

@@ -11,20 +11,20 @@ const TOKEN_INFO = [
   { label: 'Token NAME', value: 'Kitty' },
   { label: 'TOKEN SYMBOL', value: 'KITTY' },
   { label: 'TOTAL SUPPLY', value: '100,000,000' },
-  { label: 'INITIAL SUPPLY', value: '500,000' },
-  { label: 'INITIAL MARKET CAP', value: '500,000' },
-  { label: 'TOKEN TYPE', value: 'Farming' },
+  { label: 'INITIAL SUPPLY', value: '12,500,000' },
+  { label: 'INITIAL MARKET CAP', value: '562,500' },
+  { label: 'TOKEN TYPE', value: 'Betting' },
   { label: 'TOKEN ADDRESS ', value: '0xb00f1ad977a949a3ccc389ca1d1282a2946963b0', type: 'address' },
 ]
 
 const LAUNCHPAD_INFO = [
   { label: 'PROJECT NAME', value: 'BinaryCat' },
   { label: 'TOKEN SYMBOL', value: 'KITTY' },
-  { label: 'TOKENS OFFERED', value: '2,000,000' },
-  { label: 'VESTING PERIOD', value: '500,000' },
+  { label: 'TOKENS OFFERED', value: '12,500,000' },
+  { label: 'VESTING PERIOD', value: 'No Launchpad Vesting Period' },
   { label: 'PROJECT WEBSITE', value: 'https://www.binarycat.app', type: 'link' },
-  { label: 'NUMBER OF REGISTRATIONS', value: '500,000' },
-  { label: 'SALE CONTRACT ADDRESS ', value: '1,400,000' },
+  { label: 'NUMBER OF REGISTRATIONS', value: '0' },
+  { label: 'SALE CONTRACT ADDRESS ', value: 'N/A' },
 ]
 
 const TABS = [
@@ -76,7 +76,7 @@ const ProjectDetailsCard = () => {
   const [activeTab, setActiveTab] = useState('launchpad')
   const { account } = useWeb3React()
   const { isXs, isSm, isXl } = useMatchBreakpoints()
-  const { stakedBalance: staked, allocation, yourPenguinTier } = useKittyLaunchpad(account)
+  const { stakedBalance: staked, allocation, yourPenguinTier, registeredPenguins } = useKittyLaunchpad(account)
   const isMobile = isXs || isSm
   const launchpadStaked = getBalanceNumber(new BigNumber(staked))
   const hasTier = launchpadStaked >= 250
@@ -115,7 +115,7 @@ const ProjectDetailsCard = () => {
                   lineHeight="32px"
                   fontWeight={600}
                 >
-                  {tokenEconomic.value}
+                  {tokenEconomic.label === 'NUMBER OF REGISTRATIONS' ? registeredPenguins : tokenEconomic.value}
                 </TokenInfoValue>
               </TokenEconomic>
             )

@@ -17,7 +17,6 @@ const Launchpad: React.FC = () => {
       </IgloosBannerContainer>
       <LaunchpadTimeline />
       <ProjectDetailsCard />
-      {/* <ProjectDescription /> */}
     </div>
   )
 }

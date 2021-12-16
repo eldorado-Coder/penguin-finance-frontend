@@ -263,6 +263,7 @@ export interface LaunchpadKittyState {
   registrationEnd?: number
   registrationPeriodOngoing?: boolean
   isRegistered?: boolean
+  registeredPenguins?: number
 }
 
 export interface BoosterRocketState {

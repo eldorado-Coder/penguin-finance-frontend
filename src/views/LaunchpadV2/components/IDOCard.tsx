@@ -2,24 +2,30 @@ import React from 'react'
 import styled from 'styled-components'
 import { useHistory } from 'react-router-dom'
 import { Text, Flex, Tag, Progress } from 'penguinfinance-uikit2'
+import { useWeb3React } from '@web3-react/core'
 import useTheme from 'hooks/useTheme'
-import { usePriceAvaxUsdt } from 'state/hooks'
-
+import { usePriceAvaxUsdt, useKittyLaunchpad } from 'state/hooks'
 import SvgIcon from 'components/SvgIcon'
 import Balance from 'components/Balance'
 
 const IDOCard = ({ idoData }) => {
+  const { account } = useWeb3React()
   const { isDark } = useTheme()
   const history = useHistory()
   const avaxPriceInUsd = usePriceAvaxUsdt().toNumber()
+  const launchpadData = useKittyLaunchpad(account)
+
+  let { participants } = idoData
+  if (idoData.tokenSymbol === 'KITTY') {
+    participants = launchpadData.registeredPenguins
+  }
 
   const handleViewIdo = () => {
-    // return
     history.push(idoData.link)
   }
 
-  const launchDate = new Date(`${idoData.startDate} GMT`).getTime();
-  const currentDate = new Date().getTime();
+  const launchDate = new Date(`${idoData.startDate} GMT`).getTime()
+  const currentDate = new Date().getTime()
 
   return (
     <FCard onClick={handleViewIdo}>
@@ -80,7 +86,7 @@ const IDOCard = ({ idoData }) => {
           <Flex flexDirection="column" alignItems="flex-start" ml="2px">
             <DetailText fontSize="15px">Participants</DetailText>
             <Text fontSize="20px" color="#C0378C" fontWeight={600}>
-              {idoData.participants}
+              {participants}
             </Text>
           </Flex>
         </Flex>

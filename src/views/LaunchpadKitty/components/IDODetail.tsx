@@ -38,7 +38,7 @@ const SocialLinks = [
 const IDODetail = ({ idoData }) => {
   const [pendingTx, setPendingTx] = useState(false)
   const { account } = useWeb3React()
-  const { registrationPeriodOngoing, isRegistered } = useKittyLaunchpad(account)
+  const { registrationPeriodOngoing, isRegistered, registeredPenguins } = useKittyLaunchpad(account)
   const { onRegister } = useKittyLaunchpadRegister()
   const { isDark } = useTheme()
   const avaxPriceInUsd = usePriceAvaxUsdt().toNumber()
@@ -168,7 +168,7 @@ const IDODetail = ({ idoData }) => {
                 </DetailText>
               </Flex>
               <Text fontSize="18px" color="#131313" fontWeight={500}>
-                {idoData.participants}
+                {registeredPenguins}
               </Text>
             </Flex>
             <Flex ml={isMobile ? '8px' : '60px'} alignItems="flex-end" flexDirection="column">
