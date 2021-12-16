@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import styled from 'styled-components'
+import styled, { useTheme } from 'styled-components'
 import { Text, Flex, useMatchBreakpoints } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import BigNumber from 'bignumber.js'
@@ -75,6 +75,7 @@ const getEllipsisAddress = (address) => {
 const ProjectDetailsCard = () => {
   const [activeTab, setActiveTab] = useState('launchpad')
   const { account } = useWeb3React()
+  const { isDark } = useTheme()
   const { isXs, isSm, isXl } = useMatchBreakpoints()
   const { stakedBalance: staked, allocation, yourPenguinTier, registeredPenguins } = useKittyLaunchpad(account)
   const isMobile = isXs || isSm
@@ -104,7 +105,7 @@ const ProjectDetailsCard = () => {
           {LAUNCHPAD_INFO.map((tokenEconomic) => {
             return (
               <TokenEconomic key={tokenEconomic.label} justifyContent="space-between">
-                <Text color="#5E4BAF" fontSize="14px" lineHeight="32px" fontWeight={600}>
+                <Text color={isDark ? '#9A97C4' : '#5E4BAF'} fontSize="14px" lineHeight="32px" fontWeight={600}>
                   {tokenEconomic.label}
                 </Text>
                 <TokenInfoValue
@@ -135,7 +136,7 @@ const ProjectDetailsCard = () => {
           {TOKEN_INFO.map((tokenEconomic) => {
             return (
               <TokenEconomic key={tokenEconomic.label} justifyContent="space-between">
-                <Text color="#5E4BAF" fontSize="14px" lineHeight="32px" fontWeight={600}>
+                <Text color={isDark ? '#9A97C4' : '#5E4BAF'} fontSize="14px" lineHeight="32px" fontWeight={600}>
                   {tokenEconomic.label}
                 </Text>
                 <TokenInfoValue
@@ -167,31 +168,31 @@ const ProjectDetailsCard = () => {
           <AllocationInfo>
             <Flex>
               <img src={`${process.env.PUBLIC_URL}/images/ido/tier.svg`} alt="your-tier" />
-              <Text color="#292929" fontSize="34px" fontWeight={800} ml="10px">{`Your Tier : ${
+              <Text color={isDark ? '#ffffff' : '#292929'} fontSize="34px" fontWeight={800} ml="10px">{`Your Tier : ${
                 yourTier === 'none_tier' ? 'No Tier' : yourTier
               }`}</Text>
             </Flex>
             <TokenEconomic justifyContent="space-between">
-              <Text color="#5E4BAF" fontSize="14px" lineHeight="32px" fontWeight={600}>
+              <Text color={isDark ? '#9A97C4' : '#5E4BAF'} fontSize="14px" lineHeight="32px" fontWeight={600}>
                 YOUR ALLOCATION
               </Text>
-              <Text color="#292929" fontSize="16px" lineHeight="32px" fontWeight={600}>
+              <Text color={isDark ? '#ffffff' : '#292929'} fontSize="16px" lineHeight="32px" fontWeight={600}>
                 {`${allocation} AP`}
               </Text>
             </TokenEconomic>
             <TokenEconomic justifyContent="space-between">
-              <Text color="#5E4BAF" fontSize="14px" lineHeight="32px" fontWeight={600}>
+              <Text color={isDark ? '#9A97C4' : '#5E4BAF'} fontSize="14px" lineHeight="32px" fontWeight={600}>
                 YOUR STAKE
               </Text>
-              <Text color="#292929" fontSize="16px" lineHeight="32px" fontWeight={600}>
+              <Text color={isDark ? '#ffffff' : '#292929'} fontSize="16px" lineHeight="32px" fontWeight={600}>
                 {`${launchpadStaked} iPEFI`}
               </Text>
             </TokenEconomic>
             <TokenEconomic justifyContent="space-between">
-              <Text color="#5E4BAF" fontSize="14px" lineHeight="32px" fontWeight={600}>
+              <Text color={isDark ? '#9A97C4' : '#5E4BAF'} fontSize="14px" lineHeight="32px" fontWeight={600}>
                 PRICE PER KITTY
               </Text>
-              <Text color="#292929" fontSize="16px" lineHeight="32px" fontWeight={600}>
+              <Text color={isDark ? '#ffffff' : '#292929'} fontSize="16px" lineHeight="32px" fontWeight={600}>
                 {` $0.045`}
               </Text>
             </TokenEconomic>
@@ -230,22 +231,22 @@ const ProjectDetailsCard = () => {
         <HeaderTitle fontSize="34px" color="#313131" fontWeight={800} mt="50px" mb="8px">
           About the BinaryCat Project
         </HeaderTitle>
-        <Text fontSize="16px" lineHeight="24px" color="#7F7F7F" mt="24px">
+        <Text fontSize="16px" lineHeight="24px" color={isDark ? '#9A97C4' : '#7F7F7F'} mt="24px">
           Binary Cat is a decentralized prediction market protocol running on Avalanche that allows users to make bets
           on the price of crypto assets and the relationship between them. The platform is transparent, fully
           decentralized, and has fair reward distribution mechanisms in place.
         </Text>
-        <Text fontSize="16px" lineHeight="24px" color="#7F7F7F" mt="24px">
+        <Text fontSize="16px" lineHeight="24px" color={isDark ? '#9A97C4' : '#7F7F7F'} mt="24px">
           Users receive rewards in KITTY tokens (the native token of BinaryCat) as an incentive for betting, even if the
           user bet for the wrong outcome. The amount of KITTY they receive is proportional to the size of their bet in
           relation to the entire group of bets. Bets occur in 5 minutes cycles; in each cycle, bets on the next time
           window are open while the results of the last window are being resolved.
         </Text>
-        <Text fontSize="16px" lineHeight="24px" color="#7F7F7F" mt="24px">
+        <Text fontSize="16px" lineHeight="24px" color={isDark ? '#9A97C4' : '#7F7F7F'} mt="24px">
           The platform was built with focus on user experience. It&apos;s really easy to bet directly from your Metamask
           wallet, and the dApp can be accessed from both a web browser or mobile!
         </Text>
-        <Text fontSize="16px" lineHeight="24px" color="#7F7F7F" mt="24px">
+        <Text fontSize="16px" lineHeight="24px" color={isDark ? '#9A97C4' : '#7F7F7F'} mt="24px">
           As a decentralized platform, Binary Cat has the ultimate goal of empowering users by holding their KITTY
           tokens. KITTY holders receive all the revenue generated from the platform and will be able to vote on betting
           parameters and which new assets to add.
@@ -293,8 +294,14 @@ const ProjectDetailsCard = () => {
 }
 
 const TabHead = styled.div<{ active?: boolean }>`
-  background: ${({ active }) => (active ? '#FFFFFF' : '#CBC5E4')};
-  color: ${({ active }) => (active ? '#5E4BAF' : '#797293')};
+  background: ${({ active, theme }) => !theme.isDark && active && '#FFFFFF'};
+  background: ${({ active, theme }) => !theme.isDark && !active && '#CBC5E4'};
+  background: ${({ active, theme }) => theme.isDark && active && '#30264F'};
+  background: ${({ active, theme }) => theme.isDark && !active && '#1C163C'};
+  color: ${({ active, theme }) => !theme.isDark && active && '#5E4BAF'};
+  color: ${({ active, theme }) => !theme.isDark && !active && '#797293'};
+  color: ${({ active, theme }) => theme.isDark && active && '#ffffff'};
+  color: ${({ active, theme }) => theme.isDark && !active && '#676284'};
   font-size: 12px;
   // line-height: 24px;
   padding: 8px 8px;
@@ -315,6 +322,7 @@ const TabHead = styled.div<{ active?: boolean }>`
 
 const TokenEconomic = styled(Flex)`
   border-bottom: 1px solid #dcdcdc;
+  border-color: ${({ theme }) => (theme.isDark ? '#676184' : '#dcdcdc')};
   padding-top: 16px;
   padding-bottom: 16px;
 
@@ -357,6 +365,7 @@ const Container = styled.div`
 const HeaderTitle = styled(Text)`
   font-size: 26px;
   line-height: 1;
+  color: ${({ theme }) => theme.isDark && '#ffffff'};
   @media (min-width: 640px) {
     font-size: 34px;
     line-height: 1.5;
@@ -384,11 +393,22 @@ const MaskBgContainer = styled.div`
   right: 0px;
   left: 0px;
   z-index: -1;
-  background: linear-gradient(204.54deg, #2a2844 39.75%, #1f2426 139.73%);
+  background: ${({ theme }) => !theme.isDark && `linear-gradient(204.54deg, #2a2844 39.75%, #1f2426 139.73%)`};
+  background: ${({ theme }) =>
+    theme.isDark &&
+    `linear-gradient(
+    147.1deg,
+    rgba(196, 196, 196, 0.397614) -41.44%,
+    rgba(196, 196, 196, 0) -3.99%,
+    rgba(196, 196, 196, 0.4) 18.11%,
+    rgba(196, 196, 196, 0) 49.97%,
+    rgba(196, 196, 196, 0) 83.39%
+  )`};
 `
 
 const MaskBgImageContainer = styled.div`
-  background-image: url('/images/ido/mask.png');
+  background-image: ${({ theme }) => theme.isDark && `url('/images/ido/mask_dark.png')`};
+  background-image: ${({ theme }) => !theme.isDark && `url('/images/ido/mask_light.png')`};
   background-size: cover;
   position: absolute;
   top: 0px;
@@ -399,9 +419,13 @@ const MaskBgImageContainer = styled.div`
 `
 
 const IntroductionContainer = styled.div`
-  background: white;
-  box-shadow: 0px 121px 174px rgba(33, 6, 49, 0.1), 0px 61.2562px 75.8531px rgba(33, 6, 49, 0.0675),
-    0px 24.2px 28.275px rgba(33, 6, 49, 0.05), 0px 5.29375px 10.0594px rgba(33, 6, 49, 0.0325);
+  background: ${({ theme }) => (theme.isDark ? '#30264F' : '#ffffff')};
+  box-shadow: ${({ theme }) =>
+    theme.isDark
+      ? `0px 121px 174px rgba(33, 6, 49, 0.1), 0px 61.2562px 75.8531px rgba(33, 6, 49, 0.0675),
+    0px 24.2px 28.275px rgba(33, 6, 49, 0.05), 0px 5.29375px 10.0594px rgba(33, 6, 49, 0.0325)`
+      : `0px 121px 174px rgba(33, 6, 49, 0.1), 0px 61.2562px 75.8531px rgba(33, 6, 49, 0.0675),
+    0px 24.2px 28.275px rgba(33, 6, 49, 0.05), 0px 5.29375px 10.0594px rgba(33, 6, 49, 0.0325)`};
   border-radius: 0 20px 20px;
 `
 
@@ -513,6 +537,7 @@ const TierInfo = styled(Flex)`
 
 const TokenInfoValue = styled(Text)<{ clickable?: boolean }>`
   cursor: ${({ clickable }) => clickable && 'pointer'};
+  color: ${({ theme }) => theme.isDark && '#ffffff'};
 `
 
 export default ProjectDetailsCard
