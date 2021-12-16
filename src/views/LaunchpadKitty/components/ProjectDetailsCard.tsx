@@ -14,7 +14,7 @@ const TOKEN_INFO = [
   { label: 'INITIAL SUPPLY', value: '12,500,000' },
   { label: 'INITIAL MARKET CAP', value: '$562,500' },
   { label: 'TOKEN TYPE', value: 'Betting' },
-  { label: 'TOKEN ADDRESS ', value: '0xbca7f1998Dc9FFB70b086543a808960a460aBcA7', type: 'link' },
+  { label: 'TOKEN ADDRESS ', value: '0xbca7f1998Dc9FFB70b086543a808960a460aBcA7', type: 'address' },
 ]
 
 const LAUNCHPAD_INFO = [
@@ -140,8 +140,8 @@ const ProjectDetailsCard = () => {
                   {tokenEconomic.label}
                 </Text>
                 <TokenInfoValue
-                  onClick={tokenEconomic.type === 'link' && handleViewToken(tokenEconomic.value)}
-                  clickable={tokenEconomic.type === 'link'}
+                  onClick={tokenEconomic.type === 'address' && handleViewToken(tokenEconomic.value)}
+                  clickable={tokenEconomic.type === 'address'}
                   color="#292929"
                   fontSize="16px"
                   lineHeight="32px"
