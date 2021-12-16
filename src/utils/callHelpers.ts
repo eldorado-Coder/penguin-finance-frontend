@@ -354,6 +354,16 @@ export const boofiBoosterRocketPurchaseTokens = async (boosterRocketContract, am
     })
 }
 
+// launchpad - kitty
+export const kittyLaunchpadRegister = async (kittyLaunchpadContract, account) => {
+  return kittyLaunchpadContract.methods
+    .register()
+    .send({ from: account })
+    .on('transactionHash', (tx) => {
+      return tx.transactionHash
+    })
+}
+
 // nft collectibles
 export const nftDistributorClaim = async (distributorContract, account) => {
   return distributorContract.methods

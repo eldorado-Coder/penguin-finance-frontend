@@ -18,11 +18,14 @@ export const fetchUserData = async (account) => {
       name: 'allocations',
       params: [account],
     },
+    {
+      address: getKittyLaunchpadAddress(),
+      name: 'registered',
+      params: [account],
+    },
   ]
 
-  const [penguinTiers, allocations] = await multicall(launchpadKittyABI, calls)
-
-  // const stakedBalance = new BigNumber(amountStaked).toString()
+  const [penguinTiers, allocations, registered] = await multicall(launchpadKittyABI, calls)
   const stakedBalance = new BigNumber(0).toString()
   const penguinTier = new BigNumber(penguinTiers).toNumber()
   const allocation = new BigNumber(allocations).toNumber()
@@ -33,6 +36,7 @@ export const fetchUserData = async (account) => {
     allocation,
     canUnstake: false, // temp
     timeRemainingToUnstake: new BigNumber(0).toNumber(), // temp
+    isRegistered: registered[0],
   }
 }
 

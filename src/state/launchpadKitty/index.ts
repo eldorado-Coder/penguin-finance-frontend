@@ -37,6 +37,7 @@ export const LaunchpadKittySlice = createSlice({
       state.canUnstake = action.payload.canUnstake
       state.timeRemainingToUnstake = action.payload.timeRemainingToUnstake
       state.iPefi = action.payload.iPefi
+      state.isRegistered = action.payload.isRegistered
     },
     setLaunchpadGlobalData: (state, action) => {
       state.tierHurdles = [...action.payload.tierHurdles]
@@ -77,6 +78,7 @@ export const fetchLaunchpadKittyUserDataAsync = (account: string) => async (disp
     allocation,
     canUnstake,
     timeRemainingToUnstake,
+    isRegistered,
   } = await fetchUserData(account)
 
   dispatch(
@@ -88,6 +90,7 @@ export const fetchLaunchpadKittyUserDataAsync = (account: string) => async (disp
       canUnstake,
       timeRemainingToUnstake,
       iPefi,
+      isRegistered,
     }),
   )
 }
