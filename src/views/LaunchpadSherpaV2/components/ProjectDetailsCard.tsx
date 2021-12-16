@@ -3,34 +3,24 @@ import styled from 'styled-components'
 import { Text, Flex, useMatchBreakpoints } from 'penguinfinance-uikit2'
 import Page from 'components/layout/Page'
 
-// const TOKEN_SALES_ECONOMICS = [
-//   { label: 'Hard Cap', value: '10,000,000' },
-//   { label: 'Farming & Staking Rewards', value: '5,100,000' },
-//   { label: 'Initial Token Sale', value: '2,000,000' },
-//   { label: 'Strategic Partnerships & Advisors', value: '500,000' },
-//   { label: 'Development & Bug Bounties', value: '500,000' },
-//   { label: 'Marketing & Community Growth', value: '500,000' },
-//   { label: 'Foundation ', value: '1,400,000' }
-// ];
-
 const TOKEN_INFO = [
-  { label: 'TOKEN NAME', value: 'Sherpa Cash' },
+  { label: 'TOKEN NAME', value: 'Sherpa' },
   { label: 'TOKEN SYMBOL', value: 'SHERPA' },
   { label: 'TOTAL SUPPLY', value: '10,000,000' },
-  { label: 'INITIAL SUPPLY', value: '500,000' },
-  { label: 'INITIAL MARKET CAP', value: '500,000' },
-  { label: 'TOKEN TYPE', value: '500,000' },
-  { label: 'TOKEN ADDRESS ', value: '0xa5e59761ebd4436fa4d20e1a27cba29fb2471fc6' }
+  { label: 'INITIAL SUPPLY', value: '1,000,000' },
+  { label: 'INITIAL MARKET CAP', value: '$150,000' },
+  { label: 'TOKEN TYPE', value: 'Privacy' },
+  { label: 'TOKEN ADDRESS ', value: '0xa5e59761ebd4436fa4d20e1a27cba29fb2471fc6', type: 'address' }
 ];
 
 const LAUNCHPAD_INFO = [
-  { label: 'TOKEN NAME', value: 'Sherpa Cash' },
+  { label: 'PROJECT NAME', value: 'Sherpa Cash' },
   { label: 'TOKEN SYMBOL', value: 'SHERPA' },
-  { label: 'TOKENS OFFERED', value: '2,000,000' },
-  { label: 'VESTING PERIOD', value: '500,000' },
-  { label: 'PROJECT WEBSITE', value: 'https://www.sherpa.cash/' },
-  { label: 'NUMBER OF REGISTRATIONS', value: '500,000' },
-  { label: 'SALE CONTRACT ADDRESS ', value: '1,400,000' }
+  { label: 'TOKENS OFFERED', value: '600,000' },
+  { label: 'VESTING PERIOD', value: 'No Launchpad Vesting Period' },
+  { label: 'PROJECT WEBSITE', value: 'https://www.sherpa.cash', type: 'link' },
+  { label: 'NUMBER OF REGISTRATIONS', value: '595' },
+  { label: 'SALE CONTRACT ADDRESS ', value: '0x1c0fe0A000f6DF48B2DaBf86A19934dd6B6F9477', type: 'address' }
 ];
 
 const TABS = [
@@ -74,6 +64,10 @@ const TIERS = [
   }
 ]
 
+const getEllipsisAddress = address => {
+  return `${address.substring(0, 4)}...${address.substring(address.length - 4)}`
+};
+
 const ProjectDetailsCard = () => {
   const { isXs, isSm, isXl } = useMatchBreakpoints()
   const isMobile = isXs || isSm;
@@ -82,6 +76,18 @@ const ProjectDetailsCard = () => {
 
   const handleChangeActiveTab = tab => () => {
     setActiveTab(tab);
+  };
+
+  const handleViewToken = tokenAddress => () => {
+    window.open(`https://snowtrace.io/token/${tokenAddress}`, '_blank');
+  };
+
+  const handleViewSaleAddress = saleAddress => () => {
+    window.open(`https://snowtrace.io/address/${saleAddress}`, '_blank');
+  };
+
+  const handleViewWebsite = websiteLink => () => {
+    window.open(websiteLink, '_blank');
   };
 
   const renderLaunchpadInfo = () => {
@@ -93,7 +99,16 @@ const ProjectDetailsCard = () => {
             return (
               <TokenEconomic key={tokenEconomic.label} justifyContent='space-between'>
                 <Text color='#5E4BAF' fontSize='14px' lineHeight='32px' fontWeight={600}>{tokenEconomic.label}</Text>
-                <Text color='#292929' fontSize='16px' lineHeight='32px' fontWeight={600}>{tokenEconomic.value}</Text>
+                <TokenInfoValue 
+                  onClick={tokenEconomic.type === 'address' ? handleViewSaleAddress(tokenEconomic.value)
+                    : tokenEconomic.type === 'link' && handleViewWebsite(tokenEconomic.value)} 
+                  clickable={!!tokenEconomic.type}
+                  color='#292929' 
+                  fontSize='16px' 
+                  lineHeight='32px' 
+                  fontWeight={600}>
+                  {tokenEconomic.type === 'address' ? getEllipsisAddress(tokenEconomic.value) : tokenEconomic.value}
+                </TokenInfoValue>
               </TokenEconomic>
             )
           })}
@@ -111,7 +126,15 @@ const ProjectDetailsCard = () => {
             return (
               <TokenEconomic key={tokenEconomic.label} justifyContent='space-between'>
                 <Text color='#5E4BAF' fontSize='14px' lineHeight='32px' fontWeight={600}>{tokenEconomic.label}</Text>
-                <Text color='#292929' fontSize='16px' lineHeight='32px' fontWeight={600}>{tokenEconomic.value}</Text>
+                <TokenInfoValue 
+                  onClick={tokenEconomic.type && handleViewToken(tokenEconomic.value)} 
+                  clickable={!!tokenEconomic.type}
+                  color='#292929' 
+                  fontSize='16px' 
+                  lineHeight='32px' 
+                  fontWeight={600}>
+                  {tokenEconomic.type === 'address' ? getEllipsisAddress(tokenEconomic.value) : tokenEconomic.value}
+                </TokenInfoValue>
               </TokenEconomic>
             )
           })}
@@ -129,7 +152,7 @@ const ProjectDetailsCard = () => {
           <AllocationInfo>
             <Flex>
               <img src={`${process.env.PUBLIC_URL}/images/ido/tier.svg`} alt='your-tier' />
-              <Text color='#292929' fontSize='34px' fontWeight={800} ml='10px'>Your Tier</Text>
+              <Text color='#292929' fontSize='34px' fontWeight={800} ml='10px'>{`Your Tier : ${yourTier}`}</Text>
             </Flex>
             <TokenEconomic justifyContent='space-between'>
               <Text color='#5E4BAF' fontSize='14px' lineHeight='32px' fontWeight={600}>YOUR ALLOCATION</Text>
@@ -137,11 +160,11 @@ const ProjectDetailsCard = () => {
             </TokenEconomic>
             <TokenEconomic justifyContent='space-between'>
               <Text color='#5E4BAF' fontSize='14px' lineHeight='32px' fontWeight={600}>YOUR STAKE</Text>
-              <Text color='#292929' fontSize='16px' lineHeight='32px' fontWeight={600}>15000.00 iPEFI</Text>
+              <Text color='#292929' fontSize='16px' lineHeight='32px' fontWeight={600}>15000.00 xPEFI</Text>
             </TokenEconomic>
             <TokenEconomic justifyContent='space-between'>
-              <Text color='#5E4BAF' fontSize='14px' lineHeight='32px' fontWeight={600}>PRICE PER BOOFI</Text>
-              <Text color='#292929' fontSize='16px' lineHeight='32px' fontWeight={600}> $0.02</Text>
+              <Text color='#5E4BAF' fontSize='14px' lineHeight='32px' fontWeight={600}>PRICE PER SHERPA</Text>
+              <Text color='#292929' fontSize='16px' lineHeight='32px' fontWeight={600}> $0.15</Text>
             </TokenEconomic>
           </AllocationInfo>
         </TierInfo>
@@ -157,7 +180,7 @@ const ProjectDetailsCard = () => {
                     {tier.label}
                   </TierLabel>
                   <TierTag active={tier.label === yourTier}>
-                    {`+${tier.requiredIPEFI} iPEFI`}
+                    {`+${tier.requiredIPEFI} xPEFI`}
                   </TierTag>
                 </Flex>
                 {((index < (TIERS.length-1)) && isXl) &&
@@ -441,6 +464,10 @@ const TierInfo = styled(Flex)`
   @media (min-width: 968px) {
     flex-direction: row;
   }
+`;
+
+const TokenInfoValue = styled(Text)<{ clickable?: boolean }>`
+  cursor: ${({ clickable }) => clickable && 'pointer'};
 `;
 
 export default ProjectDetailsCard

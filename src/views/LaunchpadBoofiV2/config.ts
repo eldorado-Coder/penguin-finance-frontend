@@ -29,7 +29,7 @@ const completedIDOs = [
     tokenPrice: 0.125,
     soldTokenAmount: '1.96M',
     distributedTokenAmount: '2M',
-    saleProgress: '98',
+    saleProgress: '100',
     status: 'Launched',
     siteLink: 'https://www.boofinance.io/',
     whitepaperLink: 'https://boofinance.gitbook.io/boo-finance/',

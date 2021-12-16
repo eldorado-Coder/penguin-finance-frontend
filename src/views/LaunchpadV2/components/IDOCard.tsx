@@ -137,7 +137,7 @@ const IDOCard = ({ idoData }) => {
               </Text>
             </Flex>
             <Flex>
-              <DetailText fontSize="11px">Tokens Distribution:</DetailText>
+              <DetailText fontSize="11px">Token Distribution:</DetailText>
               <Text fontSize="11px" color="#C0378C" ml="2px">
                 {idoData.distributedTokenAmount}
               </Text>

@@ -47,7 +47,7 @@ const completedIDOs = [
     tokenPrice: 0.15,
     soldTokenAmount: '536K',
     distributedTokenAmount: '600K',
-    saleProgress: '88',
+    saleProgress: '100',
     status: 'Launched',
     siteLink: 'https://sherpa.cash/',
     whitepaperLink: 'https://docs.sherpa.cash/',

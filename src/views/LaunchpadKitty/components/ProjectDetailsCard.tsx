@@ -14,21 +14,21 @@ import Page from 'components/layout/Page'
 // ];
 
 const TOKEN_INFO = [
-  { label: 'TOKEN NAME', value: 'BinaryCat' },
+  { label: 'Token NAME', value: 'Kitty' },
   { label: 'TOKEN SYMBOL', value: 'KITTY' },
   { label: 'TOTAL SUPPLY', value: '100,000,000' },
   { label: 'INITIAL SUPPLY', value: '500,000' },
   { label: 'INITIAL MARKET CAP', value: '500,000' },
-  { label: 'TOKEN TYPE', value: '500,000' },
-  { label: 'TOKEN ADDRESS ', value: '1,400,000' }
+  { label: 'TOKEN TYPE', value: 'Farming' },
+  { label: 'TOKEN ADDRESS ', value: '0xb00f1ad977a949a3ccc389ca1d1282a2946963b0', type: 'address' }
 ];
 
 const LAUNCHPAD_INFO = [
-  { label: 'TOKEN NAME', value: 'BinaryCat' },
+  { label: 'PROJECT NAME', value: 'BinaryCat' },
   { label: 'TOKEN SYMBOL', value: 'KITTY' },
   { label: 'TOKENS OFFERED', value: '2,000,000' },
   { label: 'VESTING PERIOD', value: '500,000' },
-  { label: 'PROJECT WEBSITE', value: 'https://www.binarycat.app/' },
+  { label: 'PROJECT WEBSITE', value: 'https://www.binarycat.app', type: 'link' },
   { label: 'NUMBER OF REGISTRATIONS', value: '500,000' },
   { label: 'SALE CONTRACT ADDRESS ', value: '1,400,000' }
 ];
@@ -74,6 +74,10 @@ const TIERS = [
   }
 ]
 
+const getEllipsisAddress = address => {
+  return `${address.substring(0, 4)}...${address.substring(address.length - 4)}`
+};
+
 const ProjectDetailsCard = () => {
   const { isXs, isSm, isXl } = useMatchBreakpoints()
   const isMobile = isXs || isSm;
@@ -82,6 +86,14 @@ const ProjectDetailsCard = () => {
 
   const handleChangeActiveTab = tab => () => {
     setActiveTab(tab);
+  };
+
+  const handleViewToken = tokenAddress => () => {
+    window.open(`https://snowtrace.io/token/${tokenAddress}`, '_blank');
+  };
+
+  const handleViewWebsite = websiteLink => () => {
+    window.open(websiteLink, '_blank');
   };
 
   const renderLaunchpadInfo = () => {
@@ -93,7 +105,15 @@ const ProjectDetailsCard = () => {
             return (
               <TokenEconomic key={tokenEconomic.label} justifyContent='space-between'>
                 <Text color='#5E4BAF' fontSize='14px' lineHeight='32px' fontWeight={600}>{tokenEconomic.label}</Text>
-                <Text color='#292929' fontSize='16px' lineHeight='32px' fontWeight={600}>{tokenEconomic.value}</Text>
+                <TokenInfoValue 
+                  onClick={tokenEconomic.type && handleViewWebsite(tokenEconomic.value)} 
+                  clickable={!!tokenEconomic.type}
+                  color='#292929' 
+                  fontSize='16px' 
+                  lineHeight='32px' 
+                  fontWeight={600}>
+                  {tokenEconomic.value}
+                </TokenInfoValue>
               </TokenEconomic>
             )
           })}
@@ -111,7 +131,15 @@ const ProjectDetailsCard = () => {
             return (
               <TokenEconomic key={tokenEconomic.label} justifyContent='space-between'>
                 <Text color='#5E4BAF' fontSize='14px' lineHeight='32px' fontWeight={600}>{tokenEconomic.label}</Text>
-                <Text color='#292929' fontSize='16px' lineHeight='32px' fontWeight={600}>{tokenEconomic.value}</Text>
+                <TokenInfoValue 
+                  onClick={tokenEconomic.type && handleViewToken(tokenEconomic.value)} 
+                  clickable={!!tokenEconomic.type}
+                  color='#292929' 
+                  fontSize='16px' 
+                  lineHeight='32px' 
+                  fontWeight={600}>
+                  {tokenEconomic.type === 'address' ? getEllipsisAddress(tokenEconomic.value) : tokenEconomic.value}
+                </TokenInfoValue>
               </TokenEconomic>
             )
           })}
@@ -447,6 +475,10 @@ const TierInfo = styled(Flex)`
   @media (min-width: 968px) {
     flex-direction: row;
   }
+`;
+
+const TokenInfoValue = styled(Text)<{ clickable?: boolean }>`
+  cursor: ${({ clickable }) => clickable && 'pointer'};
 `;
 
 export default ProjectDetailsCard

@@ -14,23 +14,23 @@ import Page from 'components/layout/Page'
 // ];
 
 const TOKEN_INFO = [
-  { label: 'TOKEN NAME', value: 'BOOFINANCE' },
+  { label: 'TOKEN NAME', value: 'BooFinance' },
   { label: 'TOKEN SYMBOL', value: 'BOOFI' },
   { label: 'TOTAL SUPPLY', value: '10,000,000' },
-  { label: 'INITIAL SUPPLY', value: '500,000' },
-  { label: 'INITIAL MARKET CAP', value: '500,000' },
-  { label: 'TOKEN TYPE', value: '500,000' },
-  { label: 'TOKEN ADDRESS ', value: '0xb00f1ad977a949a3ccc389ca1d1282a2946963b0' }
+  { label: 'INITIAL SUPPLY', value: '2,000,000' },
+  { label: 'INITIAL MARKET CAP', value: '$250,000' },
+  { label: 'TOKEN TYPE', value: 'Farming' },
+  { label: 'TOKEN ADDRESS ', value: '0xb00f1ad977a949a3ccc389ca1d1282a2946963b0', type: 'address' }
 ];
 
 const LAUNCHPAD_INFO = [
-  { label: 'TOKEN NAME', value: 'BOOFINANCE' },
+  { label: 'PROJECT NAME', value: 'BooFinance' },
   { label: 'TOKEN SYMBOL', value: 'BOOFI' },
   { label: 'TOKENS OFFERED', value: '2,000,000' },
-  { label: 'VESTING PERIOD', value: '500,000' },
-  { label: 'PROJECT WEBSITE', value: 'https://www.boofinance.io/' },
-  { label: 'NUMBER OF REGISTRATIONS', value: '500,000' },
-  { label: 'SALE CONTRACT ADDRESS ', value: '1,400,000' }
+  { label: 'VESTING PERIOD', value: 'No Launchpad Vesting Period' },
+  { label: 'PROJECT WEBSITE', value: 'https://www.boofinance.io', type: 'link' },
+  { label: 'NUMBER OF REGISTRATIONS', value: '2256' },
+  { label: 'SALE CONTRACT ADDRESS ', value: '0xb1a3f09D7A5dFB45600931E18375501973772426', type: 'address' }
 ];
 
 const TABS = [
@@ -60,19 +60,23 @@ const TIERS = [
   { 
     label: 'Ghoul',
     imageUrl: 'Ghoul.svg',
-    requiredIPEFI: 300
+    requiredIPEFI: 500
   }, 
   { 
     label: 'Reaper',
     imageUrl: 'Reaper.svg',
-    requiredIPEFI: 1500
+    requiredIPEFI: 10000
   }, 
   { 
     label: 'Demonlord',
     imageUrl: 'Demonlord.svg',
-    requiredIPEFI: 15000
+    requiredIPEFI: 50000
   }
 ]
+
+const getEllipsisAddress = address => {
+  return `${address.substring(0, 4)}...${address.substring(address.length - 4)}`
+};
 
 const ProjectDetailsCard = () => {
   const { isXs, isSm, isXl } = useMatchBreakpoints()
@@ -84,6 +88,18 @@ const ProjectDetailsCard = () => {
     setActiveTab(tab);
   };
 
+  const handleViewToken = tokenAddress => () => {
+    window.open(`https://snowtrace.io/token/${tokenAddress}`, '_blank');
+  };
+
+  const handleViewSaleAddress = saleAddress => () => {
+    window.open(`https://snowtrace.io/address/${saleAddress}`, '_blank');
+  };
+
+  const handleViewWebsite = websiteLink => () => {
+    window.open(websiteLink, '_blank');
+  };
+
   const renderLaunchpadInfo = () => {
     return (
       <IdoDetailsContainer>
@@ -93,7 +109,16 @@ const ProjectDetailsCard = () => {
             return (
               <TokenEconomic key={tokenEconomic.label} justifyContent='space-between'>
                 <Text color='#5E4BAF' fontSize='14px' lineHeight='32px' fontWeight={600}>{tokenEconomic.label}</Text>
-                <Text color='#292929' fontSize='16px' lineHeight='32px' fontWeight={600}>{tokenEconomic.value}</Text>
+                <TokenInfoValue 
+                  onClick={tokenEconomic.type === 'address' ? handleViewSaleAddress(tokenEconomic.value)
+                    : tokenEconomic.type === 'link' && handleViewWebsite(tokenEconomic.value)} 
+                  clickable={!!tokenEconomic.type}
+                  color='#292929' 
+                  fontSize='16px' 
+                  lineHeight='32px' 
+                  fontWeight={600}>
+                  {tokenEconomic.type === 'address' ? getEllipsisAddress(tokenEconomic.value) : tokenEconomic.value}
+                </TokenInfoValue>
               </TokenEconomic>
             )
           })}
@@ -111,7 +136,15 @@ const ProjectDetailsCard = () => {
             return (
               <TokenEconomic key={tokenEconomic.label} justifyContent='space-between'>
                 <Text color='#5E4BAF' fontSize='14px' lineHeight='32px' fontWeight={600}>{tokenEconomic.label}</Text>
-                <Text color='#292929' fontSize='16px' lineHeight='32px' fontWeight={600}>{tokenEconomic.value}</Text>
+                <TokenInfoValue 
+                  onClick={tokenEconomic.type && handleViewToken(tokenEconomic.value)} 
+                  clickable={!!tokenEconomic.type}
+                  color='#292929' 
+                  fontSize='16px' 
+                  lineHeight='32px' 
+                  fontWeight={600}>
+                  {tokenEconomic.type === 'address' ? getEllipsisAddress(tokenEconomic.value) : tokenEconomic.value}
+                </TokenInfoValue>
               </TokenEconomic>
             )
           })}
@@ -129,7 +162,7 @@ const ProjectDetailsCard = () => {
           <AllocationInfo>
             <Flex>
               <img src={`${process.env.PUBLIC_URL}/images/ido/tier.svg`} alt='your-tier' />
-              <Text color='#292929' fontSize='34px' fontWeight={800} ml='10px'>Your Tier</Text>
+              <Text color='#292929' fontSize='34px' fontWeight={800} ml='10px'>{`Your Tier : ${yourTier}`}</Text>
             </Flex>
             <TokenEconomic justifyContent='space-between'>
               <Text color='#5E4BAF' fontSize='14px' lineHeight='32px' fontWeight={600}>YOUR ALLOCATION</Text>
@@ -141,7 +174,7 @@ const ProjectDetailsCard = () => {
             </TokenEconomic>
             <TokenEconomic justifyContent='space-between'>
               <Text color='#5E4BAF' fontSize='14px' lineHeight='32px' fontWeight={600}>PRICE PER BOOFI</Text>
-              <Text color='#292929' fontSize='16px' lineHeight='32px' fontWeight={600}> $0.02</Text>
+              <Text color='#292929' fontSize='16px' lineHeight='32px' fontWeight={600}> $0.125</Text>
             </TokenEconomic>
           </AllocationInfo>
         </TierInfo>
@@ -444,6 +477,10 @@ const TierInfo = styled(Flex)`
   @media (min-width: 968px) {
     flex-direction: row;
   }
+`;
+
+const TokenInfoValue = styled(Text)<{ clickable?: boolean }>`
+  cursor: ${({ clickable }) => clickable && 'pointer'};
 `;
 
 export default ProjectDetailsCard
