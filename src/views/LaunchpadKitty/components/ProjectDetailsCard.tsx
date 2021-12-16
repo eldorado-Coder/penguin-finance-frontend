@@ -58,19 +58,19 @@ const TABS = [
 
 const TIERS = [
   { 
-    label: 'Ghoul',
-    imageUrl: 'Ghoul.svg',
-    requiredIPEFI: 300
+    label: 'GrumpyCat',
+    imageUrl: 'GrumpyCat.svg',
+    requiredIPEFI: 250
   }, 
   { 
-    label: 'Reaper',
-    imageUrl: 'Reaper.svg',
-    requiredIPEFI: 1500
+    label: 'AstroCat',
+    imageUrl: 'AstroCat.svg',
+    requiredIPEFI: 6000
   }, 
   { 
-    label: 'Demonlord',
-    imageUrl: 'Demonlord.svg',
-    requiredIPEFI: 15000
+    label: 'NyanCat',
+    imageUrl: 'NyanCat.svg',
+    requiredIPEFI: 60000
   }
 ]
 
@@ -82,7 +82,7 @@ const ProjectDetailsCard = () => {
   const { isXs, isSm, isXl } = useMatchBreakpoints()
   const isMobile = isXs || isSm;
   const [activeTab, setActiveTab] = useState('launchpad');
-  const yourTier = 'Demonlord';
+  const yourTier = 'NyanCat';
 
   const handleChangeActiveTab = tab => () => {
     setActiveTab(tab);
@@ -157,7 +157,7 @@ const ProjectDetailsCard = () => {
           <AllocationInfo>
             <Flex>
               <img src={`${process.env.PUBLIC_URL}/images/ido/tier.svg`} alt='your-tier' />
-              <Text color='#292929' fontSize='34px' fontWeight={800} ml='10px'>Your Tier</Text>
+              <Text color='#292929' fontSize='34px' fontWeight={800} ml='10px'>{`Your Tier : ${yourTier}`}</Text>
             </Flex>
             <TokenEconomic justifyContent='space-between'>
               <Text color='#5E4BAF' fontSize='14px' lineHeight='32px' fontWeight={600}>YOUR ALLOCATION</Text>
@@ -165,11 +165,11 @@ const ProjectDetailsCard = () => {
             </TokenEconomic>
             <TokenEconomic justifyContent='space-between'>
               <Text color='#5E4BAF' fontSize='14px' lineHeight='32px' fontWeight={600}>YOUR STAKE</Text>
-              <Text color='#292929' fontSize='16px' lineHeight='32px' fontWeight={600}>15000.00 iPEFI</Text>
+              <Text color='#292929' fontSize='16px' lineHeight='32px' fontWeight={600}>60000.00 iPEFI</Text>
             </TokenEconomic>
             <TokenEconomic justifyContent='space-between'>
-              <Text color='#5E4BAF' fontSize='14px' lineHeight='32px' fontWeight={600}>PRICE PER BOOFI</Text>
-              <Text color='#292929' fontSize='16px' lineHeight='32px' fontWeight={600}> $0.02</Text>
+              <Text color='#5E4BAF' fontSize='14px' lineHeight='32px' fontWeight={600}>PRICE PER KITTY</Text>
+              <Text color='#292929' fontSize='16px' lineHeight='32px' fontWeight={600}>$0.045</Text>
             </TokenEconomic>
           </AllocationInfo>
         </TierInfo>

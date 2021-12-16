@@ -20,7 +20,12 @@ const LAUNCHPAD_INFO = [
   { label: 'VESTING PERIOD', value: 'No Launchpad Vesting Period' },
   { label: 'PROJECT WEBSITE', value: 'https://www.sherpa.cash', type: 'link' },
   { label: 'NUMBER OF REGISTRATIONS', value: '595' },
-  { label: 'SALE CONTRACT ADDRESS ', value: '0x1c0fe0A000f6DF48B2DaBf86A19934dd6B6F9477', type: 'address' }
+  { 
+    label: 'SALE CONTRACT ADDRESS ', 
+    value: '0x9035e72A23e379E505b787018b3b5aB3972D73D9',
+    // value: '0x1c0fe0A000f6DF48B2DaBf86A19934dd6B6F9477', 
+    type: 'address' 
+  }
 ];
 
 const TABS = [

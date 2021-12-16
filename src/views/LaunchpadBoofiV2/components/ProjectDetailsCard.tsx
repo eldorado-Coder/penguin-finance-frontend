@@ -30,7 +30,12 @@ const LAUNCHPAD_INFO = [
   { label: 'VESTING PERIOD', value: 'No Launchpad Vesting Period' },
   { label: 'PROJECT WEBSITE', value: 'https://www.boofinance.io', type: 'link' },
   { label: 'NUMBER OF REGISTRATIONS', value: '2256' },
-  { label: 'SALE CONTRACT ADDRESS ', value: '0xb1a3f09D7A5dFB45600931E18375501973772426', type: 'address' }
+  { 
+    label: 'SALE CONTRACT ADDRESS ', 
+    value: '0x90D2652B7abB628fDf907ed4ECc4711EA8ffBAf9',
+    // value: '0xb1a3f09D7A5dFB45600931E18375501973772426', 
+    type: 'address' 
+  }
 ];
 
 const TABS = [
