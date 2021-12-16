@@ -12,9 +12,9 @@ const TOKEN_INFO = [
   { label: 'TOKEN SYMBOL', value: 'KITTY' },
   { label: 'TOTAL SUPPLY', value: '100,000,000' },
   { label: 'INITIAL SUPPLY', value: '12,500,000' },
-  { label: 'INITIAL MARKET CAP', value: '562,500' },
+  { label: 'INITIAL MARKET CAP', value: '$562,500' },
   { label: 'TOKEN TYPE', value: 'Betting' },
-  { label: 'TOKEN ADDRESS ', value: '0xb00f1ad977a949a3ccc389ca1d1282a2946963b0', type: 'address' },
+  { label: 'TOKEN ADDRESS ', value: 'N/A', type: 'string' },
 ]
 
 const LAUNCHPAD_INFO = [
@@ -108,8 +108,8 @@ const ProjectDetailsCard = () => {
                   {tokenEconomic.label}
                 </Text>
                 <TokenInfoValue
-                  onClick={tokenEconomic.type && handleViewWebsite(tokenEconomic.value)}
-                  clickable={!!tokenEconomic.type}
+                  onClick={tokenEconomic.type === 'link' && handleViewWebsite(tokenEconomic.value)}
+                  clickable={tokenEconomic.type === 'link'}
                   color="#292929"
                   fontSize="16px"
                   lineHeight="32px"
@@ -139,8 +139,8 @@ const ProjectDetailsCard = () => {
                   {tokenEconomic.label}
                 </Text>
                 <TokenInfoValue
-                  onClick={tokenEconomic.type && handleViewToken(tokenEconomic.value)}
-                  clickable={!!tokenEconomic.type}
+                  onClick={tokenEconomic.type === 'link' && handleViewToken(tokenEconomic.value)}
+                  clickable={tokenEconomic.type === 'link'}
                   color="#292929"
                   fontSize="16px"
                   lineHeight="32px"
