@@ -286,6 +286,41 @@ const ProjectDetailsCard = () => {
           tokens. KITTY holders receive all the revenue generated from the platform and will be able to vote on betting
           parameters and which new assets to add.
         </Text>
+        {/* key features */}
+        <>
+          <Text bold fontSize="16px" lineHeight="24px" color={isDark ? '#9A97C4' : '#7F7F7F'} mt="24px">
+            Key Features
+          </Text>
+          <Text fontSize="16px" lineHeight="24px" color={isDark ? '#9A97C4' : '#7F7F7F'} mt="24px">
+            • Intuitive user interface.
+          </Text>
+          <Text fontSize="16px" lineHeight="24px" color={isDark ? '#9A97C4' : '#7F7F7F'} mt="24px">
+            • Fully decentralized.
+          </Text>
+          <Text fontSize="16px" lineHeight="24px" color={isDark ? '#9A97C4' : '#7F7F7F'} mt="24px">
+            • Fair and easy to understand reward structure
+          </Text>
+          <Text fontSize="16px" lineHeight="24px" color={isDark ? '#9A97C4' : '#7F7F7F'} mt="24px">
+            • Rewards for every bet (even if lost).
+          </Text>
+          <Text fontSize="16px" lineHeight="24px" color={isDark ? '#9A97C4' : '#7F7F7F'} mt="24px">
+            • Cyclical bets: bets are always open.
+          </Text>
+        </>
+        {/* key features */}
+        <>
+          <Text bold fontSize="16px" mb="24px" lineHeight="24px" color={isDark ? '#9A97C4' : '#7F7F7F'} mt="24px">
+            Tokenomics
+          </Text>
+          <img src={`${process.env.PUBLIC_URL}/images/ido/binaryCat/tokennomics.png`} alt="tokennomics" />
+        </>
+        {/* Roadmap */}
+        <>
+          <Text bold fontSize="16px" mb="24px" lineHeight="24px" color={isDark ? '#9A97C4' : '#7F7F7F'} mt="24px">
+            Roadmap
+          </Text>
+          <img src={`${process.env.PUBLIC_URL}/images/ido/binaryCat/roadmap.png`} alt="roadmap" />
+        </>
       </IdoDetails>
     )
   }
