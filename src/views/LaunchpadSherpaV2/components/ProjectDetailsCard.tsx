@@ -436,10 +436,13 @@ const IntroductionContainer = styled.div`
 const IdoDetails = styled.div`
   padding: 20px;
   padding-bottom: 32px;
+  overflow-y: auto;
+  max-height: 482px;
 
   @media (min-width: 768px) {
     padding: 32px;
     padding-bottom: 48px;
+    max-height: 589px;
   }
   @media (min-width: 968px) {
     padding: 35px;
