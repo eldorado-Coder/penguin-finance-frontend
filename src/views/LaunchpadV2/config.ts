@@ -32,6 +32,25 @@ const upcomingIDOs = [
   },
 ]
 
+const ongoingIDOs = [
+  {
+    tokenSymbol: 'KITTY',
+    whiteLogo: 'kitty_logo_white.svg',
+    darkLogo: 'kitty_logo_dark.svg',
+    isCompleted: false,
+    totalRaised: 562500,
+    returnToATH: 15,
+    participants: 0,
+    startDate: '12.17.2021',
+    tokenPrice: 0.045,
+    soldTokenAmount: '0',
+    distributedTokenAmount: '12.5M',
+    saleProgress: '0',
+    status: 'In Progress',
+    link: '/launchpad-kitty',
+  },
+]
+
 const completedIDOs = [
   {
     tokenSymbol: 'BOOFI',
@@ -45,7 +64,7 @@ const completedIDOs = [
     tokenPrice: 0.125,
     soldTokenAmount: '1.96M',
     distributedTokenAmount: '2M',
-    saleProgress: '98',
+    saleProgress: '100',
     status: 'Launched',
     link: '/launchpad-boofi',
   },
@@ -61,10 +80,10 @@ const completedIDOs = [
     tokenPrice: 0.15,
     soldTokenAmount: '536K',
     distributedTokenAmount: '600K',
-    saleProgress: '88',
+    saleProgress: '100',
     status: 'Launched',
     link: '/launchpad-sherpa',
   },
 ]
 
-export { upcomingIDOs, completedIDOs }
+export { upcomingIDOs, ongoingIDOs, completedIDOs }

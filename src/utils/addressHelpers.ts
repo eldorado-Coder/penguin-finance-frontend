@@ -138,6 +138,23 @@ export const getBoofiBoosterRocketBuyTokenAddress = () => {
   return getAddress(addresses.booFiBoosterRocketBuyToken)
 }
 
+// launchpad kitty
+export const getKittyLaunchpadAddress = () => {
+  return getAddress(addresses.launchPadKitty)
+}
+
+export const getKittyBoosterRocketAddress = () => {
+  return getAddress(addresses.kittyBoosterRocket)
+}
+
+export const getKittyBoosterRocketPayTokenAddress = () => {
+  return getAddress(addresses.kittyBoosterRocketPayToken)
+}
+
+export const getKittyBoosterRocketBuyTokenAddress = () => {
+  return getAddress(addresses.kittyBoosterRocketBuyToken)
+}
+
 // v2
 export const getNestMigratorAddress = () => {
   return getAddress(addresses.nestMigrator)

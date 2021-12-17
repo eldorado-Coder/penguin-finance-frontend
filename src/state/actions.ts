@@ -38,6 +38,9 @@ export { fetchUserCollectiblesDataAsync } from './collectibles'
 export { fetchLaunchpadBoofiUserDataAsync, updateLaunchpadBoofiTierHurdles } from './launchpadBoofi'
 export { fetchBoosterRocketUserDataAsync as fetchBoofiBoosterRocketUserDataAsync } from './boofiBoosterRocket'
 
+// launchpad - kitty
+export { fetchLaunchpadKittyUserDataAsync, fetchLaunchpadKittyGlobalDataAsync } from './launchpadKitty'
+
 // v2 migrator
 export { fetchNestMigratorUserDataAsync } from './nestMigrator'
 

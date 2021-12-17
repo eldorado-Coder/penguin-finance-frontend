@@ -11,7 +11,7 @@ const IDOData = {
   soldTokenAmount: '0',
   distributedTokenAmount: '12.5M',
   saleProgress: '0',
-  status: 'SOON',
+  status: 'In Progress',
   // siteLink: 'https://www.boofinance.io/',
   // whitepaperLink: 'https://boofinance.gitbook.io/boo-finance/',
   // siteLabel: 'www.boofinance.io'

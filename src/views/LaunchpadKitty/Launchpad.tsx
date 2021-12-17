@@ -1,26 +1,22 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Flex } from 'penguinfinance-uikit2'
-import LaunchpadTimeline from './components/LaunchpadTimeline';
-import IDODetail from './components/IDODetail';
-import ProjectDescription from './components/ProjectDescription';
+import IDODetail from './components/IDODetail'
+import LaunchpadTimeline from './components/LaunchpadTimeline'
+import ProjectDetailsCard from './components/ProjectDetailsCard'
 import IDOData from './config'
 
 const Launchpad: React.FC = () => {
-
   return (
     <div>
       <IgloosBannerContainer justifyContent="center">
-        <BannerImage
-          src={`${process.env.PUBLIC_URL}/images/ido/header_bg.png`}
-          alt="launchpad banner"
-        />
-        <HeaderContainer justifyContent='center'>
+        <BannerImage src={`${process.env.PUBLIC_URL}/images/ido/header_bg.png`} alt="launchpad banner" />
+        <HeaderContainer justifyContent="center">
           <IDODetail idoData={IDOData} />
         </HeaderContainer>
       </IgloosBannerContainer>
       <LaunchpadTimeline />
-      <ProjectDescription />
+      <ProjectDetailsCard />
     </div>
   )
 }

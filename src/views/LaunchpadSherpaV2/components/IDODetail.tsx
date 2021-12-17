@@ -191,7 +191,7 @@ const IDODetail = ({ idoData }) => {
                 </Text>
               </Flex>
               <Flex ml='30px'>
-                <DetailText fontSize="16px">{isMobile ? 'Distribution:' : 'Tokens Distribution:'}</DetailText>
+                <DetailText fontSize="16px">{isMobile ? 'Distribution:' : 'Token Distribution:'}</DetailText>
                 <Text fontSize="16px" color="#131313" ml='4px'>
                   {idoData.distributedTokenAmount}
                 </Text>
