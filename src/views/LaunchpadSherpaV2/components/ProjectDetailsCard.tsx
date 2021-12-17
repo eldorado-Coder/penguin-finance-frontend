@@ -408,7 +408,7 @@ const LaunchpadPage = styled(Page)`
   max-width: 1200px;
   padding-bottom: 0px !important;
   padding-top: 0px;
-  min-height: calc(100vh - 170px) !important;
+  min-height: auto !important;
 `
 
 const MaskBgContainer = styled.div`
