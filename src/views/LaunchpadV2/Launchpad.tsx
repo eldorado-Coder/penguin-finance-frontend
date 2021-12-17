@@ -4,39 +4,40 @@ import { Text, Flex } from 'penguinfinance-uikit2'
 import useTheme from 'hooks/useTheme'
 import Page from 'components/layout/Page'
 import SvgIcon from 'components/SvgIcon'
-import UpcomingIDOs from './components/UpcomingIDOs';
-import CompletedIDOs from './components/CompletedIDOs';
-import AcoomalatingSteps from './components/AcoomalatingSteps';
+// import UpcomingIDOs from './components/UpcomingIDOs'
+import OngoingIDOs from './components/OngoingIDOs'
+import CompletedIDOs from './components/CompletedIDOs'
+import AcoomalatingSteps from './components/AcoomalatingSteps'
 
 const TOP_TIER_PROJECTS = [
   {
     name: 'apply-project',
     label: 'Apply as a project',
-    link: 'https://docs.google.com/forms/u/2/d/e/1FAIpQLSdgM5oq-3shkNQeEhTGHP-JDiRY6Y3URaGnKCf6QVt4qSJVMA/viewform'
+    link: 'https://docs.google.com/forms/u/2/d/e/1FAIpQLSdgM5oq-3shkNQeEhTGHP-JDiRY6Y3URaGnKCf6QVt4qSJVMA/viewform',
   },
   {
     name: 'trader-joe',
     label: 'Buy on trader joe',
-    link: 'https://traderjoexyz.com/#/trade?outputCurrency=0xe896CDeaAC9615145c0cA09C8Cd5C25bced6384c'
+    link: 'https://traderjoexyz.com/#/trade?outputCurrency=0xe896CDeaAC9615145c0cA09C8Cd5C25bced6384c',
   },
   {
     name: 'pangolin',
     label: 'Buy on pangolin',
-    link: 'https://app.pangolin.exchange/#/swap?outputCurrency=0xe896CDeaAC9615145c0cA09C8Cd5C25bced6384c'
+    link: 'https://app.pangolin.exchange/#/swap?outputCurrency=0xe896CDeaAC9615145c0cA09C8Cd5C25bced6384c',
   },
   {
     name: 'lydia',
     label: 'Buy on lydia exchange',
-    link: 'https://exchange.lydia.finance/#/swap?inputCurrency=0xe896cdeaac9615145c0ca09c8cd5c25bced6384c'
-  }
+    link: 'https://exchange.lydia.finance/#/swap?inputCurrency=0xe896cdeaac9615145c0ca09c8cd5c25bced6384c',
+  },
 ]
 
 const Launchpad: React.FC = () => {
-  const { isDark } = useTheme();
+  const { isDark } = useTheme()
 
-  const handleLinkProject = projectLink => () => {
-    window.open(projectLink, '_blank');
-  };
+  const handleLinkProject = (projectLink) => () => {
+    window.open(projectLink, '_blank')
+  }
 
   const handleViewTelegramAnnouncements = () => {
     window.open('https://t.me/pefi_announcements', '_blank')
@@ -64,15 +65,22 @@ const Launchpad: React.FC = () => {
             No KYC required.
           </Description>
           <TopTierProjects mt="32px">
-            {TOP_TIER_PROJECTS.map(project => {
+            {TOP_TIER_PROJECTS.map((project) => {
               return (
-                <Project 
-                  justifyContent='center' 
-                  alignItems='center' 
-                  key={project.name} 
-                  onClick={handleLinkProject(project.link)}>
-                  <SvgIcon width='220px' height='64px' src={`${process.env.PUBLIC_URL}/images/launchpad-v2/button-frame.svg`} />
-                  <ProjectTitle color='white' fontSize='18px' textTransform='uppercase'>{project.label}</ProjectTitle>
+                <Project
+                  justifyContent="center"
+                  alignItems="center"
+                  key={project.name}
+                  onClick={handleLinkProject(project.link)}
+                >
+                  <SvgIcon
+                    width="220px"
+                    height="64px"
+                    src={`${process.env.PUBLIC_URL}/images/launchpad-v2/button-frame.svg`}
+                  />
+                  <ProjectTitle color="white" fontSize="18px" textTransform="uppercase">
+                    {project.label}
+                  </ProjectTitle>
                 </Project>
               )
             })}
@@ -82,7 +90,8 @@ const Launchpad: React.FC = () => {
       <LaunchpadPage>
         <LaunchpadBgContainer />
         <AcoomalatingSteps />
-        <UpcomingIDOs />
+        {/* <UpcomingIDOs /> */}
+        <OngoingIDOs />
         <CompletedIDOs />
         <Announcement mt="80px" mb="80px" justifyContent="center">
           <AnnouncementText color="white" fontSize="25px">
@@ -92,9 +101,11 @@ const Launchpad: React.FC = () => {
             </ViewChannel>
             {` to learn about new project launches as soon as possible.`}
           </AnnouncementText>
-          <TelegramImage 
-            onClick={handleViewTelegramAnnouncements} 
-            src={`${process.env.PUBLIC_URL}/images/launchpad-v2/telegram.png`} alt="telegram" />
+          <TelegramImage
+            onClick={handleViewTelegramAnnouncements}
+            src={`${process.env.PUBLIC_URL}/images/launchpad-v2/telegram.png`}
+            alt="telegram"
+          />
         </Announcement>
       </LaunchpadPage>
     </div>
@@ -294,7 +305,7 @@ const ProjectTitle = styled(Text)`
   @media (min-width: 1200px) {
     font-size: 18px;
   }
-`;
+`
 
 const Project = styled(Flex)`
   position: relative;
@@ -329,7 +340,7 @@ const Project = styled(Flex)`
         width: 165px !important;
         height: 48px;
       }
-  
+
       @media (min-width: 1200px) {
         width: 230px !important;
         height: 65px;
@@ -345,14 +356,14 @@ const Project = styled(Flex)`
         fill: white;
       }
     }
-    cursor: pointer; 
+    cursor: pointer;
 
     div {
       z-index: 1;
       color: black;
     }
   }
-`;
+`
 
 const Announcement = styled(Flex)`
   flex-direction: column;
@@ -361,6 +372,6 @@ const Announcement = styled(Flex)`
   @media (min-width: 640px) {
     flex-direction: row;
   }
-`;
+`
 
 export default Launchpad

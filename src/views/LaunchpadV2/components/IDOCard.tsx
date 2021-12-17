@@ -40,7 +40,7 @@ const IDOCard = ({ idoData }) => {
           height={36}
         />
         <IdoTag variant="primary" completed={idoData.isCompleted}>
-          {idoData.isCompleted ? 'Completed' : 'Coming Soon'}
+          {idoData.isCompleted ? 'Completed' : 'In Progress'}
         </IdoTag>
       </Flex>
       <Flex flexDirection="column" alignItems="flex-start" mb="12px">
