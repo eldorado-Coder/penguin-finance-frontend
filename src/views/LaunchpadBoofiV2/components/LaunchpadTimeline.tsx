@@ -7,25 +7,25 @@ import useWindowSize from 'hooks/useWindowSize'
 const TIMELINES = [
   {
     label: 'Registration Opens',
-    date: 'Sep 24th 2021 00:00',
+    date: 'Sep 24th 2021 00:00 UTC',
     status: 'passed',
     imageUrl: 'registration_opens',
   },
   {
     label: 'Registration Closes',
-    date: 'Sep 29th 2021 23:59',
+    date: 'Sep 29th 2021 23:59 UTC',
     status: 'passed',
     imageUrl: 'registration_closes',
   },
   {
     label: 'Distribution Starts',
-    date: 'Sep 30th 2021 20:00',
+    date: 'Sep 30th 2021 20:00 UTC',
     status: 'passed',
     imageUrl: 'distribution_starts',
   },
   {
     label: 'Distribution Ends',
-    date: 'Oct 7th 2021 20:00',
+    date: 'Oct 7th 2021 20:00 UTC',
     status: 'active',
     imageUrl: 'distribution_ends',
   },
