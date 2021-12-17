@@ -182,8 +182,8 @@ const ProjectDetailsCard = () => {
             <Flex>
               <img src={`${process.env.PUBLIC_URL}/images/ido/tier.svg`} alt="your-tier" />
               <Text color={isDark ? '#ffffff' : '#292929'} fontSize="34px" fontWeight={800} ml="10px">{`Your Tier : ${
-                yourTier === 'none_tier' ? 'No Tier' : yourTier
-              }`}</Text>{' '}
+                yourTier === 'none_tier' ? 'None' : yourTier
+              }`}</Text>
             </Flex>
             <TokenEconomic justifyContent="space-between">
               <Text color={isDark ? '#9A97C4' : '#5E4BAF'} fontSize="14px" lineHeight="32px" fontWeight={600}>
