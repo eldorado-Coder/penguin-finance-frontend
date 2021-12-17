@@ -42,14 +42,14 @@ const TABS = [
     smLabel: 'Launchpad',
   },
   {
-    label: 'Token Info',
-    value: 'token-info',
-    smLabel: 'Token',
-  },
-  {
     label: 'About the Project',
     value: 'about',
     smLabel: 'About',
+  },
+  {
+    label: 'Token Info',
+    value: 'token-info',
+    smLabel: 'Token',
   },
 ]
 
