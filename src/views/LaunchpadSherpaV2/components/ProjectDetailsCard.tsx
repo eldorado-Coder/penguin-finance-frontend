@@ -363,7 +363,6 @@ const IntroductionImage = styled.img`
 
 const Container = styled.div`
   position: relative;
-  padding-bottom: 60px;
 `
 
 const HeaderTitle = styled(Text)`
@@ -385,7 +384,7 @@ const LaunchpadPage = styled(Page)`
   }
 
   @media (min-width: 968px) {
-    padding-top: 100px;
+    padding-top: 80px;
   }
 `
 
