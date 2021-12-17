@@ -1,31 +1,31 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Text, Flex, Button } from 'penguinfinance-uikit2'
+import { Text, Flex } from 'penguinfinance-uikit2'
 import Page from 'components/layout/Page'
 import useWindowSize from 'hooks/useWindowSize'
 
 const TIMELINES = [
   {
     label: 'Registration Opens',
-    date: 'Dec 17th 2021 18:00',
+    date: 'Dec 17th 2021 18:00 UTC',
     status: 'not-started',
     imageUrl: 'registration_opens',
   },
   {
     label: 'Registration Closes',
-    date: 'Dec 21st 2021 23:59',
+    date: 'Dec 21st 2021 23:59 UTC',
     status: 'not-started',
     imageUrl: 'registration_closes',
   },
   {
     label: 'Distribution Starts',
-    date: 'Dec 22nd 2021 18:00',
+    date: 'Dec 22nd 2021 18:00 UTC',
     status: 'not-started',
     imageUrl: 'distribution_starts',
   },
   {
     label: 'Distribution Ends',
-    date: 'Dec 27th 2021 23:59',
+    date: 'Dec 27th 2021 23:59 UTC',
     status: 'not-started',
     imageUrl: 'distribution_ends',
   },
@@ -33,10 +33,6 @@ const TIMELINES = [
 
 const LaunchpadTimeline = () => {
   const windowSize = useWindowSize()
-
-  const handleSignUp = () => {
-    window.open('https://t.me/pefi_announcements', '_blank')
-  }
 
   return (
     <Container>
@@ -114,19 +110,6 @@ const LaunchpadTimeline = () => {
             })}
           </Flex>
         )}
-        <SignUpContainer>
-          <SignUpImage src={`${process.env.PUBLIC_URL}/images/ido/signup_banner.png`} />
-          <SignUpDetails justifyContent="space-around" alignItems="center">
-            <div className="signup-button">
-              <SignUpLabel color="white" fontSize="31px" fontWeight={800}>
-                Get Alerts For New Launches
-              </SignUpLabel>
-              <StyledButton onClick={handleSignUp} mt="20px">
-                Sign Up
-              </StyledButton>
-            </div>
-          </SignUpDetails>
-        </SignUpContainer>
       </LaunchpadPage>
     </Container>
   )
@@ -164,80 +147,15 @@ const TimelineItem = styled.div<{ status?: string }>`
 const TimelineLabel = styled(Text)<{ status?: string }>`
   color: ${({ status, theme }) => !theme.isDark && status === 'active' && '#000000'};
   color: ${({ status, theme }) => !theme.isDark && status !== 'active' && '#4D4D4D'};
-  color: ${({ theme }) => (theme.isDark ? '#cac2e4' : '#4D4D4D')};
+  color: ${({ status, theme }) => theme.isDark && status === 'active' && '#5E4AAF'};
+  color: ${({ status, theme }) => theme.isDark && status !== 'active' && '#ffffff'};
 `
 
 const TimelineDate = styled(Text)<{ status?: string }>`
   color: ${({ status }) => (status === 'active' ? '#7F6FBF' : '#7f7f7f')};
+  color: ${({ status, theme }) => theme.isDark && status === 'active' && '#ffffff'};
   font-family: 'Fira Code';
   text-align: center;
-`
-
-const SignUpContainer = styled.div`
-  position: relative;
-  margin-top: 20px;
-
-  @media (min-width: 900px) {
-    margin-top: 100px;
-  }
-`
-
-const SignUpImage = styled.img`
-  width: 100%;
-  background: linear-gradient(180deg, #7361be 0%, #3a258f 100%);
-  border-radius: 10px;
-  min-height: 200px;
-  object-fit: cover;
-`
-
-const SignUpDetails = styled(Flex)`
-  position: absolute;
-  width: 100%;
-  top: 50%;
-  transform: translate(0, -50%);
-  min-height: 200px;
-
-  .signup-button {
-    width: 80%;
-
-    @media (min-width: 768px) {
-      width: 70%;
-    }
-  }
-
-  @media (min-width: 768px) {
-    top: 0;
-    transform: unset;
-  }
-`
-
-const SignUpLabel = styled(Text)`
-  font-size: 24px;
-
-  @media (min-width: 768px) {
-    font-size: 31px;
-  }
-`
-
-const StyledButton = styled(Button)`
-  box-shadow: none;
-  width: 180px;
-  height: 48px;
-  border-radius: 5px;
-  background: white;
-  color: #620aa8;
-  font-size: 20px;
-  font-weight: 500;
-
-  @media (min-width: 768px) {
-    font-size: 24px;
-    width: 240px;
-    height: 54px;
-  }
-
-  &:hover:not(:disabled):not(.penguin-button--disabled):not(.penguin-button--disabled):not(:active) {
-    opacity: 1;
-  }
 `
 
 const Label = styled(Text)`
