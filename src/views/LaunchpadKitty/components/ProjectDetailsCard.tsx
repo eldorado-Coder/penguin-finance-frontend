@@ -4,6 +4,7 @@ import { Text, Flex, useMatchBreakpoints } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import BigNumber from 'bignumber.js'
 import Page from 'components/layout/Page'
+import UnlockButton from 'components/UnlockButton'
 import { useKittyLaunchpad, useClubPenguinFarms } from 'state/hooks'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { getIPefiAddress } from 'utils/addressHelpers'
@@ -191,30 +192,41 @@ const ProjectDetailsCard = () => {
                 yourTier === 'none_tier' ? 'None' : yourTier
               }`}</Text>
             </Flex>
-            <TokenEconomic justifyContent="space-between">
-              <Text color={isDark ? '#9A97C4' : '#5E4BAF'} fontSize="14px" lineHeight="32px" fontWeight={600}>
-                YOUR ALLOCATION
-              </Text>
-              <Text color={isDark ? '#ffffff' : '#292929'} fontSize="16px" lineHeight="32px" fontWeight={600}>
-                {`${allocation} AP`}
-              </Text>
-            </TokenEconomic>
-            <TokenEconomic justifyContent="space-between">
-              <Text color={isDark ? '#9A97C4' : '#5E4BAF'} fontSize="14px" lineHeight="32px" fontWeight={600}>
-                YOUR STAKE
-              </Text>
-              <Text color={isDark ? '#ffffff' : '#292929'} fontSize="16px" lineHeight="32px" fontWeight={600}>
-                {`${launchpadStaked.toFixed(3)} iPEFI`}
-              </Text>
-            </TokenEconomic>
-            <TokenEconomic justifyContent="space-between">
-              <Text color={isDark ? '#9A97C4' : '#5E4BAF'} fontSize="14px" lineHeight="32px" fontWeight={600}>
-                PRICE PER KITTY
-              </Text>
-              <Text color={isDark ? '#ffffff' : '#292929'} fontSize="16px" lineHeight="32px" fontWeight={600}>
-                {` $0.045`}
-              </Text>
-            </TokenEconomic>
+            {account ? (
+              <>
+                <TokenEconomic justifyContent="space-between">
+                  <Text color={isDark ? '#9A97C4' : '#5E4BAF'} fontSize="14px" lineHeight="32px" fontWeight={600}>
+                    YOUR ALLOCATION
+                  </Text>
+                  <Text color={isDark ? '#ffffff' : '#292929'} fontSize="16px" lineHeight="32px" fontWeight={600}>
+                    {`${allocation} AP`}
+                  </Text>
+                </TokenEconomic>
+                <TokenEconomic justifyContent="space-between">
+                  <Text color={isDark ? '#9A97C4' : '#5E4BAF'} fontSize="14px" lineHeight="32px" fontWeight={600}>
+                    YOUR STAKE
+                  </Text>
+                  <Text color={isDark ? '#ffffff' : '#292929'} fontSize="16px" lineHeight="32px" fontWeight={600}>
+                    {`${launchpadStaked.toFixed(3)} iPEFI`}
+                  </Text>
+                </TokenEconomic>
+                <TokenEconomic justifyContent="space-between">
+                  <Text color={isDark ? '#9A97C4' : '#5E4BAF'} fontSize="14px" lineHeight="32px" fontWeight={600}>
+                    PRICE PER KITTY
+                  </Text>
+                  <Text color={isDark ? '#ffffff' : '#292929'} fontSize="16px" lineHeight="32px" fontWeight={600}>
+                    {` $0.045`}
+                  </Text>
+                </TokenEconomic>
+              </>
+            ) : (
+              <>
+                <WalletConnectContainer>
+                  <img src={`${process.env.PUBLIC_URL}/images/ido/pefi_white_logo.svg`} alt="pefi locked" />
+                  <StyledUnlockButton />
+                </WalletConnectContainer>
+              </>
+            )}
           </AllocationInfo>
         </TierInfo>
         <AllocationsFooter justifyContent="space-around">
@@ -496,6 +508,38 @@ const Allocation = styled.img`
 const AllocationInfo = styled.div`
   max-width: 570px;
   width: 100%;
+`
+const WalletConnectContainer = styled(Flex)`
+  flex-direction: column;
+  background: ${({ theme }) => (theme.isDark ? '#3C3061' : '#f2f2f2')};
+  border-radius: 10px;
+  height: 218px;
+  padding: 35px;
+  margin-top: 35px;
+  background: ${({ theme }) => (theme.isDark ? '#3C3061' : '#f2f2f2')};
+
+  img {
+    width: 64px;
+    margin: 0px auto;
+    opacity: 0.3;
+  }
+`
+
+const StyledUnlockButton = styled(UnlockButton)`
+  width: 100%;
+  border-radius: 8px;
+  max-width: 225px;
+  margin: auto;
+  margin-top: 26px;
+  font-family: 'Kanit';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 36px;
+  border-radius: 10px;
+  background: ${({ theme }) => theme.isDark && '#ffffff'};
+  color: ${({ theme }) => theme.isDark && '#3C3061'};
+  box-shadow: none;
 `
 
 const AllocationsFooter = styled(Flex)`
