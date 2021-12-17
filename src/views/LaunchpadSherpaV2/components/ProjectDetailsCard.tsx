@@ -295,7 +295,7 @@ const ProjectDetailsCard = () => {
       <MaskBgContainer />
       <MaskBgImageContainer />
       <LaunchpadPage>
-        <Text mb="64px" fontSize="41px" fontWeight={800} color="#fff">
+        <Text pb="36px" pt="36px" fontSize="41px" fontWeight={800} color="#fff">
           Project Details
         </Text>
         <Flex>
@@ -406,15 +406,9 @@ const HeaderTitle = styled(Text)`
 
 const LaunchpadPage = styled(Page)`
   max-width: 1200px;
-  padding-top: 40px;
-
-  @media (min-width: 640px) {
-    padding-top: 60px;
-  }
-
-  @media (min-width: 968px) {
-    padding-top: 80px;
-  }
+  padding-bottom: 0px !important;
+  padding-top: 0px;
+  min-height: calc(100vh - 170px) !important;
 `
 
 const MaskBgContainer = styled.div`
@@ -617,8 +611,9 @@ const SignUpContainer = styled(Page)`
   min-height: auto;
 
   @media (min-width: 900px) {
-    /* margin-top: 38px; */
     margin-top: 0px;
+    padding-top: 41px;
+    padding-bottom: 41px;
   }
 `
 
@@ -647,6 +642,7 @@ const SignUpDetails = styled(Flex)`
 
   @media (min-width: 768px) {
     top: 0;
+    bottom: 0;
     transform: unset;
   }
 `
