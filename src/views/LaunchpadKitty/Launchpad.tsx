@@ -4,7 +4,6 @@ import { Flex } from 'penguinfinance-uikit2'
 import IDODetail from './components/IDODetail'
 import LaunchpadTimeline from './components/LaunchpadTimeline'
 import ProjectDetailsCard from './components/ProjectDetailsCard'
-import GetAlerts from './components/GetAlerts'
 import IDOData from './config'
 
 const Launchpad: React.FC = () => {
@@ -18,7 +17,6 @@ const Launchpad: React.FC = () => {
       </IgloosBannerContainer>
       <LaunchpadTimeline />
       <ProjectDetailsCard />
-      <GetAlerts />
     </div>
   )
 }
