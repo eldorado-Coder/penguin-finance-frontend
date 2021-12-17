@@ -4,8 +4,10 @@ import { Text, Flex, useMatchBreakpoints } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import BigNumber from 'bignumber.js'
 import Page from 'components/layout/Page'
-import { useKittyLaunchpad } from 'state/hooks'
+import { useKittyLaunchpad, useClubPenguinFarms } from 'state/hooks'
 import { getBalanceNumber } from 'utils/formatBalance'
+import { getIPefiAddress } from 'utils/addressHelpers'
+import useTokenBalance from 'hooks/useTokenBalance'
 
 const TOKEN_INFO = [
   { label: 'Token NAME', value: 'Kitty' },
@@ -77,7 +79,24 @@ const ProjectDetailsCard = () => {
   const { account } = useWeb3React()
   const { isDark } = useTheme()
   const { isXs, isSm, isXl } = useMatchBreakpoints()
-  const { stakedBalance: staked, allocation, yourPenguinTier, registeredPenguins } = useKittyLaunchpad(account)
+  const { allocation, yourPenguinTier, registeredPenguins } = useKittyLaunchpad(account)
+  // iPefi balance in wallet
+  const iPefiBalanceInWallet = useTokenBalance(getIPefiAddress())
+  // iPefi staked balance in clubs
+  const clubFarms = useClubPenguinFarms(account)
+  const getIPefiStakedBalanceInClubs = () => {
+    let _iPefiStakedBalanceInClubs = new BigNumber(0)
+    clubFarms.map((clubFarm) => {
+      const { userData } = clubFarm
+      if (userData) {
+        _iPefiStakedBalanceInClubs = _iPefiStakedBalanceInClubs.plus(new BigNumber(userData.stakedBalance))
+      }
+      return clubFarm
+    })
+    return _iPefiStakedBalanceInClubs
+  }
+
+  const staked = iPefiBalanceInWallet.plus(getIPefiStakedBalanceInClubs())
   const isMobile = isXs || isSm
   const launchpadStaked = getBalanceNumber(new BigNumber(staked))
   const hasTier = launchpadStaked >= 250
@@ -185,7 +204,7 @@ const ProjectDetailsCard = () => {
                 YOUR STAKE
               </Text>
               <Text color={isDark ? '#ffffff' : '#292929'} fontSize="16px" lineHeight="32px" fontWeight={600}>
-                {`${launchpadStaked} iPEFI`}
+                {`${launchpadStaked.toFixed(3)} iPEFI`}
               </Text>
             </TokenEconomic>
             <TokenEconomic justifyContent="space-between">
