@@ -29,6 +29,11 @@ const LAUNCHPAD_INFO = [
 
 const TABS = [
   {
+    label: 'Your Allocations & Tier',
+    value: 'allocations',
+    smLabel: 'Allocations & Tier',
+  },
+  {
     label: 'Launchpad',
     value: 'launchpad',
     smLabel: 'Launchpad',
@@ -42,11 +47,6 @@ const TABS = [
     label: 'About the Project',
     value: 'about',
     smLabel: 'About',
-  },
-  {
-    label: 'Your Allocations & Tier',
-    value: 'allocations',
-    smLabel: 'Allocations & Tier',
   },
 ]
 
@@ -73,7 +73,7 @@ const getEllipsisAddress = (address) => {
 }
 
 const ProjectDetailsCard = () => {
-  const [activeTab, setActiveTab] = useState('launchpad')
+  const [activeTab, setActiveTab] = useState('allocations')
   const { account } = useWeb3React()
   const { isDark } = useTheme()
   const { isXs, isSm, isXl } = useMatchBreakpoints()
