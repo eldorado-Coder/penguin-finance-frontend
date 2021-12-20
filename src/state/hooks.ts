@@ -321,9 +321,7 @@ export const useKittyLaunchpad = (account): LaunchpadKittyState => {
       dispatch(fetchLaunchpadKittyUserDataAsync(account))
     }
 
-    if (account) {
-      fetchLaunchpadData()
-    }
+    fetchLaunchpadData()
   }, [account, dispatch, fastRefresh])
 
   const launchpad = useSelector((state: State) => state.launchpadKitty)

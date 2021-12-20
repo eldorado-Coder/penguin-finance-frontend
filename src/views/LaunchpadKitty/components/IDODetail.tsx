@@ -3,9 +3,13 @@ import styled from 'styled-components'
 import { Text, Flex, Tag, Progress, useMatchBreakpoints, Button } from 'penguinfinance-uikit2'
 import useTheme from 'hooks/useTheme'
 import { useWeb3React } from '@web3-react/core'
-import { usePriceAvaxUsdt, useKittyLaunchpad } from 'state/hooks'
+import BigNumber from 'bignumber.js'
+import { usePriceAvaxUsdt, useKittyLaunchpad, useClubPenguinFarms } from 'state/hooks'
 import SvgIcon from 'components/SvgIcon'
 import Balance from 'components/Balance'
+import useTokenBalance from 'hooks/useTokenBalance'
+import { getIPefiAddress } from 'utils/addressHelpers'
+import { getBalanceNumber } from 'utils/formatBalance'
 import { useKittyLaunchpadRegister } from '../hooks'
 
 const SocialLinks = [
@@ -47,11 +51,32 @@ const IDODetail = ({ idoData }) => {
   const launchDate = new Date(`${idoData.startDate} GMT`).getTime()
   const currentDate = new Date().getTime()
 
+  // iPefi balance in wallet
+  const iPefiBalanceInWallet = useTokenBalance(getIPefiAddress())
+  // iPefi staked balance in clubs
+  const clubFarms = useClubPenguinFarms(account)
+  const getIPefiStakedBalanceInClubs = () => {
+    let _iPefiStakedBalanceInClubs = new BigNumber(0)
+    clubFarms.map((clubFarm) => {
+      const { userData } = clubFarm
+      if (userData) {
+        _iPefiStakedBalanceInClubs = _iPefiStakedBalanceInClubs.plus(new BigNumber(userData.stakedBalance))
+      }
+      return clubFarm
+    })
+    return _iPefiStakedBalanceInClubs
+  }
+  const staked = iPefiBalanceInWallet.plus(getIPefiStakedBalanceInClubs())
+  const launchpadStaked = getBalanceNumber(new BigNumber(staked))
+  const hasTier = launchpadStaked >= 250
+
   const handleRegister = async () => {
     setPendingTx(true)
     await onRegister()
     setPendingTx(false)
   }
+
+  const registerDisabled = !hasTier || !registrationPeriodOngoing || pendingTx || isRegistered
 
   return (
     <Container justifyContent="space-between">
@@ -85,8 +110,14 @@ const IDODetail = ({ idoData }) => {
           platform on the network.
         </Description>
         <TokenLinks mt="40px" alignItems="center">
-          <RegisterButton disabled={!registrationPeriodOngoing || pendingTx || isRegistered} onClick={handleRegister}>
-            {pendingTx ? 'Registering...' : 'Register'}
+          <RegisterButton
+            disabled={registerDisabled}
+            isRegistered={!pendingTx && isRegistered}
+            onClick={handleRegister}
+          >
+            {pendingTx && 'Registering...'}
+            {!pendingTx && !isRegistered && 'Register'}
+            {!pendingTx && isRegistered && 'Registered'}
           </RegisterButton>
           <SocialsContainer justifyContent="flex-end" flexDirection="column" alignItems="flex-end">
             <Flex justifyContent="space-around" alignItems="center">
@@ -443,8 +474,11 @@ const TotalRaisedContainer = styled(Flex)`
   }
 `
 
-const RegisterButton = styled(Button)`
+const RegisterButton = styled(Button)<{ isRegistered?: boolean }>`
   background: white;
+  background: ${({ isRegistered }) => isRegistered && '#37DB92 !important'};
+  color: ${({ isRegistered }) => isRegistered && '#ffffff !important'};
+
   box-shadow: 0px 121px 174px rgba(33, 6, 49, 0.1), 0px 61.2562px 75.8531px rgba(33, 6, 49, 0.0675),
     0px 24.2px 28.275px rgba(33, 6, 49, 0.05), 0px 5.29375px 10.0594px rgba(33, 6, 49, 0.0325);
   border-radius: 6px;
