@@ -4,28 +4,32 @@ import { Text, Flex } from 'penguinfinance-uikit2'
 import Page from 'components/layout/Page'
 import useWindowSize from 'hooks/useWindowSize'
 
-const TIMELINES = [
+const DEFAULT_TIMELINES = [
   {
     label: 'Registration Opens',
     date: 'Dec 17th 2021 18:00 UTC',
+    timestamp: 1639764000,
     status: 'not-started',
     imageUrl: 'registration_opens',
   },
   {
     label: 'Registration Closes',
     date: 'Dec 21st 2021 23:59 UTC',
+    timestamp: 1640131140,
     status: 'not-started',
     imageUrl: 'registration_closes',
   },
   {
     label: 'Distribution Starts',
     date: 'Dec 22nd 2021 18:00 UTC',
+    timestamp: 1640196000,
     status: 'not-started',
     imageUrl: 'distribution_starts',
   },
   {
     label: 'Distribution Ends',
     date: 'Dec 27th 2021 23:59 UTC',
+    timestamp: 1640649540,
     status: 'not-started',
     imageUrl: 'distribution_ends',
   },
@@ -33,6 +37,27 @@ const TIMELINES = [
 
 const LaunchpadTimeline = () => {
   const windowSize = useWindowSize()
+
+  const getTimelinesWithStatus = () => {
+    const currentTime = Math.floor(Date.now() / 1000)
+    const _timelines = DEFAULT_TIMELINES
+    DEFAULT_TIMELINES.map((row, index) => {
+      let status = 'not-started'
+      if (row.timestamp < currentTime) {
+        status = 'active'
+        if (_timelines[index - 1] && _timelines[index - 1].status === 'active') {
+          _timelines[index - 1].status = 'passed'
+        }
+      }
+      _timelines[index].status = status
+      return {
+        ...row,
+      }
+    })
+    return _timelines
+  }
+
+  const timelines = getTimelinesWithStatus()
 
   return (
     <Container>
@@ -42,7 +67,7 @@ const LaunchpadTimeline = () => {
         </Label>
         {windowSize.width < 900 ? (
           <Flex mt="40px" flexDirection="column">
-            {TIMELINES.map((timeline, index) => {
+            {timelines.map((timeline, index) => {
               return (
                 <MobileTimeline key={timeline.label} width={windowSize.width}>
                   {index !== 0 && <div className="previous-link" />}
@@ -68,7 +93,7 @@ const LaunchpadTimeline = () => {
                       </Flex>
                     </Flex>
                   </TimelineItem>
-                  {index < TIMELINES.length - 1 && <div className="after-link" />}
+                  {index < timelines.length - 1 && <div className="after-link" />}
                 </MobileTimeline>
               )
             })}
@@ -80,7 +105,7 @@ const LaunchpadTimeline = () => {
             flexDirection={windowSize.width < 900 ? 'column' : 'row'}
             alignItems="center"
           >
-            {TIMELINES.map((timeline, index) => {
+            {timelines.map((timeline, index) => {
               return (
                 <Timeline key={timeline.label} width={windowSize.width}>
                   {index !== 0 && <div className="previous-link" />}
@@ -104,7 +129,7 @@ const LaunchpadTimeline = () => {
                       </TimelineDate>
                     </Flex>
                   </TimelineItem>
-                  {index < TIMELINES.length - 1 && <div className="after-link" />}
+                  {index < timelines.length - 1 && <div className="after-link" />}
                 </Timeline>
               )
             })}
