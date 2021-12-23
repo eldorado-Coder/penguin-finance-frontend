@@ -71,6 +71,14 @@ const TokenValueWrapper = styled(Flex)`
 const TokenValue = styled.div`
   font-size: 18px;
   color: ${({ theme }) => (theme.isDark ? 'white' : '#372871')};
+  max-width: calc(100% - 150px);
+  overflow: hidden;
+  @media (min-width: 576px) {
+    max-width: calc(100% - 140px);
+  }
+  @media (min-width: 968px) {
+    max-width: calc(100% - 130px);
+  }
 `
 
 const StyledTokenInput = styled.div<{ disabled?: boolean }>`
@@ -81,12 +89,25 @@ const StyledTokenInput = styled.div<{ disabled?: boolean }>`
     border-radius: 8px;
     background: ${({ theme }) => (theme.isDark ? '#604E84' : '#ffffff')};
     pointer-events: ${({ disabled }) => disabled && 'none'};
+    padding: 0px 8px;
+    @media (min-width: 576px) {
+      padding: 0px 8px;
+    }
+    @media (min-width: 968px) {
+      padding: 0px 16px;
+    }
 
     .tokenInput {
       caret-color: ${({ theme }) => (theme.isDark ? 'white' : '#372871')};
       color: transparent;
       z-index: 1;
-      margin-right: 80px;
+      margin-right: 150px;
+      @media (min-width: 576px) {
+        margin-right: 130px;
+      }
+      @media (min-width: 968px) {
+        margin-right: 130px;
+      }
 
       ::placeholder {
         color: ${({ theme }) => (theme.isDark ? 'white' : '#372871')};
