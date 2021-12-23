@@ -75,7 +75,7 @@ const getEllipsisAddress = (address) => {
   return `${address.substring(0, 4)}...${address.substring(address.length - 4)}`
 }
 
-const ProjectDetailsCard = () => {
+const ProjectDetailsCardRegistration = () => {
   const [activeTab, setActiveTab] = useState('allocations')
   const { account } = useWeb3React()
   const { isDark } = useTheme()
@@ -100,9 +100,9 @@ const ProjectDetailsCard = () => {
   const staked = iPefiBalanceInWallet.plus(getIPefiStakedBalanceInClubs())
   const isMobile = isXs || isSm
   const launchpadStaked = getBalanceNumber(new BigNumber(staked))
+  const allocationValue = getBalanceNumber(new BigNumber(allocation))
   const hasTier = launchpadStaked >= 250
-  const yourTier = hasTier ? TIERS[yourPenguinTier].label : 'none_tier'
-
+  const yourTier = (hasTier && yourPenguinTier >= 1) ? TIERS[yourPenguinTier-1].label : 'none_tier'  
   const handleChangeActiveTab = (tab) => () => {
     setActiveTab(tab)
   }
@@ -200,10 +200,10 @@ const ProjectDetailsCard = () => {
               <>
                 <TokenEconomic justifyContent="space-between">
                   <Text color={isDark ? '#9A97C4' : '#5E4BAF'} fontSize="14px" lineHeight="32px" fontWeight={600}>
-                    YOUR ALLOCATION
+                    YOUR ESTIMATED ALLOCATION
                   </Text>
                   <Text color={isDark ? '#ffffff' : '#292929'} fontSize="16px" lineHeight="32px" fontWeight={600}>
-                    {`${allocation} AP`}
+                    {`${allocationValue.toFixed(2)} AP`}
                   </Text>
                 </TokenEconomic>
                 <TokenEconomic justifyContent="space-between">
@@ -725,4 +725,4 @@ const StyledButton = styled(Button)`
   }
 `
 
-export default ProjectDetailsCard
+export default ProjectDetailsCardRegistration

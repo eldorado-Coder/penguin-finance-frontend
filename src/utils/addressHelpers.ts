@@ -51,6 +51,9 @@ export const getEvrtAddress = () => {
 export const getBoofiAddress = () => {
   return getAddress(addresses.boofi)
 }
+export const getKittyAddress = () => {
+  return getAddress(addresses.kitty)
+}
 export const getTestXPefiAddress = () => {
   return getAddress(addresses.testXPefi)
 }

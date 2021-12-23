@@ -40,6 +40,7 @@ export { fetchBoosterRocketUserDataAsync as fetchBoofiBoosterRocketUserDataAsync
 
 // launchpad - kitty
 export { fetchLaunchpadKittyUserDataAsync, fetchLaunchpadKittyGlobalDataAsync } from './launchpadKitty'
+export { fetchBoosterRocketUserDataAsync as fetchKittyBoosterRocketUserDataAsync } from './kittyBoosterRocket'
 
 // v2 migrator
 export { fetchNestMigratorUserDataAsync } from './nestMigrator'
