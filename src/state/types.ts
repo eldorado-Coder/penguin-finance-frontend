@@ -406,6 +406,7 @@ export interface State {
 
   // launchpad - kitty
   launchpadKitty: LaunchpadKittyState
+  kittyBoosterRocket: BoosterRocketState
 
   // nest
   nestMigrator: NestMigratorState

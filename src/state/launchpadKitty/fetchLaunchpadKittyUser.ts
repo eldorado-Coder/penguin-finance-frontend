@@ -10,12 +10,14 @@ export const fetchUserData = async (account) => {
   const calls = [
     {
       address: getKittyLaunchpadAddress(),
-      name: 'getTier',
+      // name: 'getTier',
+      name: 'penguinTiers',
       params: [account],
     },
     {
       address: getKittyLaunchpadAddress(),
-      name: 'getAllocations',
+      // name: 'getAllocations',
+      name: 'allocations',
       params: [account],
     },
     {

@@ -30,6 +30,7 @@ import {
   // launchpad - kitty
   fetchLaunchpadKittyUserDataAsync,
   fetchLaunchpadKittyGlobalDataAsync,
+  fetchKittyBoosterRocketUserDataAsync,
   // emperor
   fetchEmperor,
   updateLaunchpadTierHurdles,
@@ -326,6 +327,21 @@ export const useKittyLaunchpad = (account): LaunchpadKittyState => {
 
   const launchpad = useSelector((state: State) => state.launchpadKitty)
   return launchpad
+}
+
+export const useKittyBoosterRocket = (account): BoosterRocketState => {
+  const { fastRefresh } = useRefresh()
+  const dispatch = useDispatch()
+  useEffect(() => {
+    const fetchBoosterRocketData = async () => {
+      dispatch(fetchKittyBoosterRocketUserDataAsync(account))
+    }
+
+    fetchBoosterRocketData()
+  }, [account, dispatch, fastRefresh])
+
+  const boosterRocket = useSelector((state: State) => state.kittyBoosterRocket)
+  return boosterRocket
 }
 
 // collectibles
