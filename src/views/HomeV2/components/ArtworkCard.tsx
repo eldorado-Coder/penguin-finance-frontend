@@ -1,22 +1,22 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Card, useMatchBreakpoints } from 'penguinfinance-uikit2'
+import { useHistory } from 'react-router-dom'
 
 const ArtworkCard = () => {
   const { isXl } = useMatchBreakpoints()
+  const history = useHistory()
   const isMobile = !isXl
+
   const onClickArtworkV2Card = () => {
-    window.open(
-      'https://penguin-finance.medium.com/penguin-launchpad-binarycat-ido-tiers-guidelines-dd4d90817f44',
-      '_blank',
-    )
+    history.push('/launchpad-kitty')
   }
 
   return (
     <StyledArtworkCard isMobile={isMobile}>
       <ArtworkImg
         onClick={onClickArtworkV2Card}
-        src={`${process.env.PUBLIC_URL}/images/home-v2/binary-cat_intro.png`}
+        src={`${process.env.PUBLIC_URL}/images/home-v2/binary-cat_live.png`}
         loading="lazy"
         alt="hero"
       />
