@@ -217,7 +217,7 @@ export default {
   },
   kittyBoosterRocket: {
     43113: '',
-    43114: '0x90D2652B7abB628fDf907ed4ECc4711EA8ffBAf9',
+    43114: '0x5BEC14cFBd58BFE67D477Ea32A5B2AAF2B96BF63',
   },
   kittyBoosterRocketPayToken: {
     43113: '',
@@ -225,11 +225,11 @@ export default {
   },
   kittyBoosterRocketBuyToken: {
     43113: '',
-    43114: '0xB00F1ad977a949a3CCc389Ca1D1282A2946963b0',
+    43114: '0xbca7f1998dc9ffb70b086543a808960a460abca7',
   },
   kitty: {
     43113: '',
-    43114: '0xB00F1ad977a949a3CCc389Ca1D1282A2946963b0',
+    43114: '0xbca7f1998dc9ffb70b086543a808960a460abca7',
   },
 
   // v2

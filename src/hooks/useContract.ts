@@ -30,6 +30,8 @@ import {
   getBoofiBoosterRocketPayTokenAddress,
   // launchpad - kitty
   getKittyLaunchpadAddress,
+  getKittyBoosterRocketAddress,
+  getKittyBoosterRocketPayTokenAddress,
   // v2
   getNestMigratorAddress,
   getV2NestAddress,
@@ -65,6 +67,7 @@ import launchpad from 'config/abi/launchpad.json'
 import boosterRocket from 'config/abi/boosterRocket.json'
 import boosterRocketPefi from 'config/abi/launchpad/pefi.json'
 import kittyLaunchpad from 'config/abi/launchpadKitty.json'
+import kittyBoosterRocket from 'config/abi/kittyBoosterRocket.json'
 // v2
 import nestMigratorAbi from 'config/abi/nest_migrate.json'
 import v2NestAbi from 'config/abi/v2_nest.json'
@@ -235,6 +238,16 @@ export const useBoofiBoosterRocketPayToken = () => {
 export const useKittyLaunchPad = () => {
   const abi = (kittyLaunchpad as unknown) as AbiItem
   return useContract(abi, getKittyLaunchpadAddress())
+}
+
+export const useKittyBoosterRocket = () => {
+  const abi = (kittyBoosterRocket as unknown) as AbiItem
+  return useContract(abi, getKittyBoosterRocketAddress())
+}
+
+export const useKittyBoosterRocketPayToken = () => {
+  const abi = (boosterRocketPefi as unknown) as AbiItem
+  return useContract(abi, getKittyBoosterRocketPayTokenAddress())
 }
 
 // v2

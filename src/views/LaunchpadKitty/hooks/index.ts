@@ -1,9 +1,9 @@
 import { useCallback } from 'react'
 import { useWeb3React } from '@web3-react/core'
 import { useDispatch } from 'react-redux'
-import { useKittyLaunchPad } from 'hooks/useContract'
-import { fetchLaunchpadKittyUserDataAsync } from 'state/actions'
-import { kittyLaunchpadRegister } from 'utils/callHelpers'
+import { useKittyLaunchPad, useKittyBoosterRocket } from 'hooks/useContract'
+import { fetchLaunchpadKittyUserDataAsync, fetchKittyBoosterRocketUserDataAsync } from 'state/actions'
+import { kittyLaunchpadRegister, kittyBoosterRocketPurchaseTokens } from 'utils/callHelpers'
 
 export const useKittyLaunchpadRegister = () => {
   const dispatch = useDispatch()
@@ -19,16 +19,19 @@ export const useKittyLaunchpadRegister = () => {
   return { onRegister: handleRegister }
 }
 
-export const useKittyLaunchpadRegister1 = () => {
+export const useKittyLaunchpadBoosterRocket = () => {
   const dispatch = useDispatch()
   const { account } = useWeb3React()
-  const kittyLaunchpadContract = useKittyLaunchPad()
+  const kittyBoosterRocketContract = useKittyBoosterRocket()
 
-  const handleRegister = useCallback(async () => {
-    const txHash = await kittyLaunchpadRegister(kittyLaunchpadContract, account)
-    dispatch(fetchLaunchpadKittyUserDataAsync(account))
-    console.info(txHash)
-  }, [account, dispatch, kittyLaunchpadContract])
+  const handlePurchase = useCallback(
+    async (amount) => {
+      const txHash = await kittyBoosterRocketPurchaseTokens(kittyBoosterRocketContract, amount, account)
+      dispatch(fetchKittyBoosterRocketUserDataAsync(account))
+      console.info(txHash)
+    },
+    [account, dispatch, kittyBoosterRocketContract],
+  )
 
-  return { onRegister: handleRegister }
+  return { onPurchase: handlePurchase }
 }

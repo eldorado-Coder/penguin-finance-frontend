@@ -75,7 +75,7 @@ const getEllipsisAddress = (address) => {
   return `${address.substring(0, 4)}...${address.substring(address.length - 4)}`
 }
 
-const ProjectDetailsCard = () => {
+const ProjectDetailsCardRegistration = () => {
   const [activeTab, setActiveTab] = useState('allocations')
   const { account } = useWeb3React()
   const { isDark } = useTheme()
@@ -725,4 +725,4 @@ const StyledButton = styled(Button)`
   }
 `
 
-export default ProjectDetailsCard
+export default ProjectDetailsCardRegistration
