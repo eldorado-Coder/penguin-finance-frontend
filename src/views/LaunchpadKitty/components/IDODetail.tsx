@@ -4,7 +4,12 @@ import { Text, Flex, Tag, Progress, useMatchBreakpoints, Button } from 'penguinf
 import useTheme from 'hooks/useTheme'
 import { useWeb3React } from '@web3-react/core'
 import BigNumber from 'bignumber.js'
-import { usePriceAvaxUsdt, useKittyLaunchpad, useClubPenguinFarms } from 'state/hooks'
+import {
+  usePriceAvaxUsdt,
+  useKittyLaunchpad,
+  useClubPenguinFarms,
+  useKittyBoosterRocket as useKittyBoosterRocketStore,
+} from 'state/hooks'
 import SvgIcon from 'components/SvgIcon'
 import Balance from 'components/Balance'
 import useTokenBalance from 'hooks/useTokenBalance'
@@ -43,6 +48,10 @@ const IDODetail = ({ idoData }) => {
   const [pendingTx, setPendingTx] = useState(false)
   const { account } = useWeb3React()
   const { registrationPeriodOngoing, isRegistered, registeredPenguins } = useKittyLaunchpad(account)
+  const { totalTokensSold } = useKittyBoosterRocketStore(account)
+  const totalTokensSoldInUsd = Number(totalTokensSold) * 0.045
+  const saleProgress = (100 * totalTokensSoldInUsd) / idoData.totalRaised
+
   const { onRegister } = useKittyLaunchpadRegister()
   const { isDark } = useTheme()
   const avaxPriceInUsd = usePriceAvaxUsdt().toNumber()
@@ -166,7 +175,16 @@ const IDODetail = ({ idoData }) => {
                   color="#682298"
                   fontWeight="600"
                   lineHeight="20px"
-                  prefix="$0 / "
+                  prefix="$"
+                  decimals={0}
+                  value={Number(totalTokensSoldInUsd)}
+                />
+                <Balance
+                  fontSize="20px"
+                  color="#682298"
+                  fontWeight="600"
+                  lineHeight="20px"
+                  prefix=" / $"
                   decimals={0}
                   value={Number(idoData.totalRaised)}
                 />
@@ -234,9 +252,9 @@ const IDODetail = ({ idoData }) => {
             <ProgressWrapper>
               <Progress primaryStep={idoData.saleProgress} />
             </ProgressWrapper>
-            <ProgressText fontWeight={500} color="#131313" percentage={idoData.saleProgress}>
-              {`${idoData.saleProgress}% `}
-              <span>{`(${100 - idoData.saleProgress}% left)`}</span>
+            <ProgressText fontWeight={500} color="#131313" percentage={saleProgress}>
+              {`${saleProgress.toFixed(2)}% `}
+              <span>{`(${(100 - saleProgress).toFixed(2)}% left)`}</span>
             </ProgressText>
           </ProgressContainer>
           <Flex mt="56px" justifyContent="flex-end" alignItems="center">
@@ -245,7 +263,8 @@ const IDODetail = ({ idoData }) => {
               <Flex>
                 <DetailText fontSize="16px">{isMobile ? 'Sold:' : 'Tokens Sold:'}</DetailText>
                 <Text fontSize="16px" color="#131313" ml="4px">
-                  {idoData.soldTokenAmount}
+                  {/* {idoData.soldTokenAmount} */}
+                  {`${(totalTokensSold / 1000000).toFixed(2)}M`}
                 </Text>
               </Flex>
               <Flex ml="30px">
