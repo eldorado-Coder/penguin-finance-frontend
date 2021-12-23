@@ -250,7 +250,7 @@ const IDODetail = ({ idoData }) => {
           </Flex>
           <ProgressContainer>
             <ProgressWrapper>
-              <Progress primaryStep={idoData.saleProgress} />
+              <Progress primaryStep={saleProgress} />
             </ProgressWrapper>
             <ProgressText fontWeight={500} color="#131313" percentage={saleProgress}>
               {`${saleProgress.toFixed(2)}% `}
