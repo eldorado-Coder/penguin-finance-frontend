@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom'
 import { Text, Flex, Tag, Progress } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import useTheme from 'hooks/useTheme'
-import { usePriceAvaxUsdt, useKittyLaunchpad } from 'state/hooks'
+import { usePriceAvaxUsdt, useKittyLaunchpad, useKittyBoosterRocket } from 'state/hooks'
 import SvgIcon from 'components/SvgIcon'
 import Balance from 'components/Balance'
 
@@ -14,10 +14,14 @@ const IDOCard = ({ idoData }) => {
   const history = useHistory()
   const avaxPriceInUsd = usePriceAvaxUsdt().toNumber()
   const launchpadData = useKittyLaunchpad(account)
+  const { totalTokensSold } = useKittyBoosterRocket(account)
+  const totalTokensSoldInUsd = Number(totalTokensSold) * idoData.tokenPrice
 
-  let { participants } = idoData
+  let { participants, saleProgress, soldTokenAmount } = idoData
   if (idoData.tokenSymbol === 'KITTY') {
     participants = launchpadData.registeredPenguins
+    saleProgress = ((100 * totalTokensSoldInUsd) / idoData.totalRaised).toFixed(2)
+    soldTokenAmount = `${(totalTokensSold / 1000000).toFixed(2)}M`
   }
 
   const handleViewIdo = () => {
@@ -70,14 +74,24 @@ const IDOCard = ({ idoData }) => {
             />
           </Flex>
         ) : (
-          <Balance
-            fontSize="24px"
-            color="#C0378C"
-            fontWeight="600"
-            prefix="$0 / "
-            decimals={0}
-            value={Number(idoData.totalRaised)}
-          />
+          <Flex>
+            <Balance
+              fontSize="24px"
+              color="#C0378C"
+              fontWeight="600"
+              prefix="$"
+              decimals={0}
+              value={Number(totalTokensSoldInUsd)}
+            />
+            <Balance
+              fontSize="24px"
+              color="#C0378C"
+              fontWeight="600"
+              prefix=" / $"
+              decimals={0}
+              value={Number(idoData.totalRaised)}
+            />
+          </Flex>
         )}
       </Flex>
       <Flex justifyContent="space-between" flexWrap="wrap" mb="18px">
@@ -117,7 +131,7 @@ const IDOCard = ({ idoData }) => {
         <DetailText fontSize="12px">Sale</DetailText>
       </Flex>
       <ProgressWrapper>
-        <Progress primaryStep={idoData.saleProgress} />
+        <Progress primaryStep={saleProgress} />
       </ProgressWrapper>
       <Flex justifyContent="space-between" mt="18px" flexWrap="wrap">
         <Flex>
@@ -139,7 +153,7 @@ const IDOCard = ({ idoData }) => {
             <Flex>
               <DetailText fontSize="11px">Tokens Sold:</DetailText>
               <Text fontSize="11px" color="#C0378C" ml="2px">
-                {idoData.soldTokenAmount}
+                {soldTokenAmount}
               </Text>
             </Flex>
             <Flex>
@@ -157,7 +171,7 @@ const IDOCard = ({ idoData }) => {
               Sales Progress:
             </DetailText>
             <Text fontSize="11px" color="#C0378C" ml="2px">
-              {`${idoData.saleProgress}%`}
+              {`${saleProgress}%`}
             </Text>
           </Flex>
         </Flex>
