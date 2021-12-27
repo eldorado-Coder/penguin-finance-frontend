@@ -3,9 +3,13 @@ import styled from 'styled-components'
 import { Text } from 'penguinfinance-uikit2'
 import FlexLayout from 'components/layout/Flex'
 import IDOCard from './IDOCard'
-import { completedIDOs } from '../config'
+import { getCompletedIDOs } from '../config'
 
 const CompletedIDOs = () => {
+  const completedIDOs = getCompletedIDOs()
+
+  if (completedIDOs.length === 0) return null
+
   return (
     <>
       <Label fontSize="40px" lineHeight="60px" mt="48px" mb="16px" fontWeight={500} color="white">

@@ -3,21 +3,25 @@ import styled from 'styled-components'
 import { Flex } from 'penguinfinance-uikit2'
 import IDODetail from './components/IDODetail'
 import LaunchpadTimeline from './components/LaunchpadTimeline'
-// import ProjectDetailsCard from './components/ProjectDetailsCardRegistration'
-import ProjectDetailsCard from './components/ProjectDetailsCardDistribution'
+import ProjectDetailsCardSummary from './components/ProjectDetailsCardRegistration'
+import ProjectDetailsCardDistribution from './components/ProjectDetailsCardDistribution'
 import IDOData from './config'
 
+const distributionEndTimeStamp = 1640649540
+
 const Launchpad: React.FC = () => {
+  const isEnded = Math.floor(Date.now() / 1000) > distributionEndTimeStamp
+
   return (
     <div>
       <IgloosBannerContainer justifyContent="center">
         <BannerImage src={`${process.env.PUBLIC_URL}/images/ido/header_bg.png`} alt="launchpad banner" />
         <HeaderContainer justifyContent="center">
-          <IDODetail idoData={IDOData} />
+          <IDODetail idoData={IDOData} isEnded={isEnded} />
         </HeaderContainer>
       </IgloosBannerContainer>
       <LaunchpadTimeline />
-      <ProjectDetailsCard />
+      {isEnded ? <ProjectDetailsCardSummary /> : <ProjectDetailsCardDistribution />}
     </div>
   )
 }

@@ -3,9 +3,13 @@ import styled from 'styled-components'
 import { Text } from 'penguinfinance-uikit2'
 import FlexLayout from 'components/layout/Flex'
 import IDOCard from './IDOCard'
-import { upcomingIDOs } from '../config'
+import { getUpcomingIDOs } from '../config'
 
 const UpcomingIDOs = () => {
+  const upcomingIDOs = getUpcomingIDOs()
+
+  if (upcomingIDOs.length === 0) return null
+
   return (
     <>
       <Label id="upcoming-idos" fontSize="40px" lineHeight="60px" mb="16px" fontWeight={500} color="white">

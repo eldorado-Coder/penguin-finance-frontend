@@ -4,7 +4,7 @@ import { Text, Flex } from 'penguinfinance-uikit2'
 import useTheme from 'hooks/useTheme'
 import Page from 'components/layout/Page'
 import SvgIcon from 'components/SvgIcon'
-// import UpcomingIDOs from './components/UpcomingIDOs'
+import UpcomingIDOs from './components/UpcomingIDOs'
 import OngoingIDOs from './components/OngoingIDOs'
 import CompletedIDOs from './components/CompletedIDOs'
 import AcoomalatingSteps from './components/AcoomalatingSteps'
@@ -90,7 +90,7 @@ const Launchpad: React.FC = () => {
       <LaunchpadPage>
         <LaunchpadBgContainer />
         <AcoomalatingSteps />
-        {/* <UpcomingIDOs /> */}
+        <UpcomingIDOs />
         <OngoingIDOs />
         <CompletedIDOs />
         <Announcement mt="80px" mb="80px" justifyContent="center">
