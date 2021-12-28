@@ -442,7 +442,7 @@ const v2Farms: V2FarmConfig[] = [
     hardApy: '0%',
     type: 'Pangolin',
     name: 'pendingPEFI',
-    displayedDecimals: 5,
+    displayedDecimals: 4,
   },
   // TODO: Joe pools
   {
@@ -1116,7 +1116,7 @@ const v2Farms: V2FarmConfig[] = [
     hardApy: '0%',
     type: 'Joe',
     name: 'pendingPEFI',
-    displayedDecimals: 7,
+    displayedDecimals: 4,
   },
   // benqi pangolin lp igloo
   {
