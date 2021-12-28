@@ -41,7 +41,7 @@ const v2Farms: V2FarmConfig[] = [
     // pangolin v2
     isPangolinV2: true,
     pangolinV2PoolId: 23,
-    // penguin rush
+    // penguin rush phase 2
     isPenguinRush: true,
     isPenguinRushFinished: false,
   },
@@ -217,6 +217,9 @@ const v2Farms: V2FarmConfig[] = [
     // pangolin v2
     isPangolinV2: true,
     pangolinV2PoolId: 0,
+    // penguin rush phase 2
+    isPenguinRush: true,
+    isPenguinRushFinished: false,
   },
   {
     pid: 12,
@@ -516,10 +519,11 @@ const v2Farms: V2FarmConfig[] = [
     isMINWFinished: true,
     isJoeRush: true,
     isJoeRushFinished: true,
-    isPenguinRush: true,
-    isPenguinRushFinished: false,
     isHot: true,
     hotRank: 4,
+    // penguin rush phase 2
+    isPenguinRush: true,
+    isPenguinRushFinished: false,
   },
   {
     pid: 7,
@@ -718,6 +722,9 @@ const v2Farms: V2FarmConfig[] = [
     isJoeRushFinished: true,
     isHot: true,
     hotRank: 1,
+    // penguin rush phase 2
+    isPenguinRush: true,
+    isPenguinRushFinished: false,
   },
   // sushi
   {
@@ -1117,6 +1124,9 @@ const v2Farms: V2FarmConfig[] = [
     type: 'Joe',
     name: 'pendingPEFI',
     displayedDecimals: 4,
+    // penguin rush phase 2
+    isPenguinRush: true,
+    isPenguinRushFinished: false,
   },
   // benqi pangolin lp igloo
   {
@@ -1153,6 +1163,9 @@ const v2Farms: V2FarmConfig[] = [
     isBenqi: true,
     isHot: true,
     hotRank: 2,
+    // penguin rush phase 2
+    isPenguinRush: true,
+    isPenguinRushFinished: false,
   },
 ]
 
