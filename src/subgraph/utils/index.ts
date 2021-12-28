@@ -35,7 +35,8 @@ export const getPairSwapDailyReward = async (address: string, type: string) => {
 
   let swapDailyReward = 0
   if (type === 'Pangolin') {
-    swapDailyReward = 0.003 * pairDailyVolume
+    // 0.25% for lp providers, 0.05% go to team wallet
+    swapDailyReward = 0.0025 * pairDailyVolume
   }
   if (type === 'Joe') {
     swapDailyReward = 0.0025 * pairDailyVolume
