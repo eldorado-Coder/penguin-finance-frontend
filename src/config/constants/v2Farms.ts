@@ -402,7 +402,8 @@ const v2Farms: V2FarmConfig[] = [
     },
     pangolinRewardPoolAddresses: {
       43113: '',
-      43114: '0x99918c92655D6f8537588210cD3Ddd52312CB36d',
+      // 43114: '0x99918c92655D6f8537588210cD3Ddd52312CB36d', // reward was ended
+      43114: '0x0000000000000000000000000000000000000000',
     },
     quoteTokenSymbol: QuoteToken.AVAX,
     quoteTokenAddresses: contracts.wavax,
@@ -412,7 +413,39 @@ const v2Farms: V2FarmConfig[] = [
     name: 'pendingPEFI',
     displayedDecimals: 5,
   },
-  // Joe pools
+  {
+    pid: 32,
+    lpSymbol: 'AVAX-KITTY LP',
+    lpAddresses: {
+      43113: '',
+      43114: '0x2fb27520bf5bc0869acb8f7820b2e1a8ad29dba1',
+    },
+    strategyAddresses: {
+      43113: '',
+      43114: '0x242b35c252da95a024dbe2e7116262048e9c7ccc',
+    },
+    rewarderAddresses: {
+      43113: '',
+      43114: '0x0000000000000000000000000000000000000000',
+    },
+    tokenSymbol: 'KITTY',
+    tokenAddresses: {
+      43113: '',
+      43114: '0xbca7f1998Dc9FFB70b086543a808960a460aBcA7',
+    },
+    pangolinRewardPoolAddresses: {
+      43113: '',
+      43114: '0x0000000000000000000000000000000000000000',
+    },
+    quoteTokenSymbol: QuoteToken.AVAX,
+    quoteTokenAddresses: contracts.wavax,
+    withdrawalFee: '0',
+    hardApy: '0%',
+    type: 'Pangolin',
+    name: 'pendingPEFI',
+    displayedDecimals: 4,
+  },
+  // TODO: Joe pools
   {
     pid: 4,
     lpSymbol: 'Joe ETH.e-AVAX LP',
@@ -822,7 +855,6 @@ const v2Farms: V2FarmConfig[] = [
     displayedDecimals: 2,
   },
 
-  // TODO: new igloos
   {
     pid: 23,
     lpSymbol: 'Joe AVAX-SHERPA LP',
@@ -1054,6 +1086,38 @@ const v2Farms: V2FarmConfig[] = [
     type: 'Joe',
     name: 'pendingPEFI',
     displayedDecimals: 7,
+  },
+  {
+    pid: 33,
+    lpSymbol: 'Joe AVAX-MIM LP',
+    lpAddresses: {
+      43113: '',
+      43114: '0x781655d802670bbA3c89aeBaaEa59D3182fD755D',
+    },
+    strategyAddresses: {
+      43113: '',
+      43114: '0x55b51320803ab5edbd00f87bf136b29d6c3b4d9e',
+    },
+    rewarderAddresses: {
+      43113: '',
+      43114: '0xdc460f30e02fdcf18989c9f959d4cb5aae1a1b20',
+    },
+    tokenSymbol: 'MIM',
+    tokenAddresses: {
+      43113: '',
+      43114: '0x130966628846BFd36ff31a822705796e8cb8C18D',
+    },
+    pangolinRewardPoolAddresses: {
+      43113: '',
+      43114: '0x0000000000000000000000000000000000000000',
+    },
+    quoteTokenSymbol: QuoteToken.AVAX,
+    quoteTokenAddresses: contracts.wavax,
+    withdrawalFee: '0',
+    hardApy: '0%',
+    type: 'Joe',
+    name: 'pendingPEFI',
+    displayedDecimals: 4,
   },
   // benqi pangolin lp igloo
   {
