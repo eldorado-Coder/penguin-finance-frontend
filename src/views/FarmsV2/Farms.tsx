@@ -374,8 +374,8 @@ const Farms: React.FC = () => {
         />
       </TvlContainer>
       <PenguinRushContainer>
-        <MainSentence>{`#PENGUINRUSH is live. Earn AVAX incentives on select farms. `}</MainSentence>
-        <DescriptionSentence>{`Our PEFI-AVAX farms (Trader Joe & Pangolin LP) now provide AVAX incentives! Additional yield is displayed separately. `}</DescriptionSentence>
+        <MainSentence>Phase 2 of Penguin Rush is LIVE. Earn AVAX incentives on a wide range of Igloos.</MainSentence>
+        <DescriptionSentence>MIM-AVAX, JOE-AVAX, PNG-AVAX, QI-AVAX and both PEFI-AVAX Igloos now provide juicy AVAX incentives! Additional yield is displayed separately.</DescriptionSentence>
       </PenguinRushContainer>
       {isMobile ? (
         <FilterWrapper justifyContent="space-between" alignItems="center" flexWrap="wrap">
