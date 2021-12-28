@@ -20,7 +20,7 @@ const IDOCard = ({ idoData }) => {
   let { participants, saleProgress, soldTokenAmount } = idoData
   if (idoData.tokenSymbol === 'KITTY') {
     participants = launchpadData.registeredPenguins
-    saleProgress = ((100 * totalTokensSoldInUsd) / idoData.totalRaised).toFixed(2)
+    saleProgress = idoData.isCompleted ? 100 : ((100 * totalTokensSoldInUsd) / idoData.totalRaised).toFixed(2)
     soldTokenAmount = `${(totalTokensSold / 1000000).toFixed(2)}M`
   }
 
@@ -44,7 +44,7 @@ const IDOCard = ({ idoData }) => {
           height={36}
         />
         <IdoTag variant="primary" completed={idoData.isCompleted}>
-          {idoData.isCompleted ? 'Completed' : 'In Progress'}
+          {idoData.status}
         </IdoTag>
       </Flex>
       <Flex flexDirection="column" alignItems="flex-start" mb="12px">

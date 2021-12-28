@@ -13,8 +13,9 @@ import {
 import SvgIcon from 'components/SvgIcon'
 import Balance from 'components/Balance'
 import useTokenBalance from 'hooks/useTokenBalance'
-import { getIPefiAddress } from 'utils/addressHelpers'
+import { getIPefiAddress, getKittyAddress } from 'utils/addressHelpers'
 import { getBalanceNumber } from 'utils/formatBalance'
+import { addTokenToMetamask } from 'utils/token'
 import { useKittyLaunchpadRegister } from '../hooks'
 
 const SocialLinks = [
@@ -44,13 +45,13 @@ const SocialLinks = [
   ],
 ]
 
-const IDODetail = ({ idoData }) => {
+const IDODetail = ({ idoData, isEnded }) => {
   const [pendingTx, setPendingTx] = useState(false)
   const { account } = useWeb3React()
   const { registrationPeriodOngoing, isRegistered, registeredPenguins } = useKittyLaunchpad(account)
   const { totalTokensSold } = useKittyBoosterRocketStore(account)
   const totalTokensSoldInUsd = Number(totalTokensSold) * 0.045
-  const saleProgress = (100 * totalTokensSoldInUsd) / idoData.totalRaised
+  const saleProgress = isEnded ? 100 : (100 * totalTokensSoldInUsd) / idoData.totalRaised
 
   const { onRegister } = useKittyLaunchpadRegister()
   const { isDark } = useTheme()
@@ -85,6 +86,10 @@ const IDODetail = ({ idoData }) => {
     setPendingTx(false)
   }
 
+  const handleAddToken = async () => {
+    await addTokenToMetamask(getKittyAddress(), 'KITTY', 18)
+  }
+
   const registerDisabled = !hasTier || !registrationPeriodOngoing || pendingTx || isRegistered
 
   return (
@@ -97,12 +102,12 @@ const IDODetail = ({ idoData }) => {
             height={36}
           />
           <Flex ml="24px">
-            <IdoTag variant="primary" completed={idoData.isCompleted}>
-              {idoData.isCompleted ? 'Completed' : 'In Progress'}
+            <IdoTag variant="primary" completed={isEnded}>
+              {isEnded ? 'Completed' : 'In Progress'}
             </IdoTag>
           </Flex>
         </Flex>
-        {idoData.isCompleted && (
+        {isEnded && (
           <PriceText fontSize="14px" mb="8px" lineHeight="18px" fontWeight="bold">
             1 {idoData.tokenSymbol} = {`${(idoData.tokenPrice / avaxPriceInUsd).toFixed(5)} AVAX`}
           </PriceText>
@@ -119,15 +124,20 @@ const IDODetail = ({ idoData }) => {
           platform on the network.
         </Description>
         <TokenLinks mt="40px" alignItems="center">
-          <RegisterButton
-            disabled={registerDisabled}
-            isRegistered={!pendingTx && isRegistered}
-            onClick={handleRegister}
-          >
-            {pendingTx && 'Registering...'}
-            {!pendingTx && !isRegistered && 'Register'}
-            {!pendingTx && isRegistered && 'Registered'}
-          </RegisterButton>
+          {isEnded ? (
+            <RegisterButton onClick={handleAddToken}>Add KITTY to Metamask</RegisterButton>
+          ) : (
+            <RegisterButton
+              disabled={registerDisabled}
+              isRegistered={!pendingTx && isRegistered}
+              onClick={handleRegister}
+            >
+              {pendingTx && 'Registering...'}
+              {!pendingTx && !isRegistered && 'Register'}
+              {!pendingTx && isRegistered && 'Registered'}
+            </RegisterButton>
+          )}
+
           <SocialsContainer justifyContent="flex-end" flexDirection="column" alignItems="flex-end">
             <Flex justifyContent="space-around" alignItems="center">
               {SocialLinks[0].map((item) => {
@@ -147,7 +157,7 @@ const IDODetail = ({ idoData }) => {
         <IdoDetailCard>
           <TotalRaisedContainer justifyContent="flex-end" alignItems="center" mb="28px">
             <TotalRaisedTag>Total Raised</TotalRaisedTag>
-            {idoData.isCompleted ? (
+            {isEnded ? (
               <Flex ml="16px">
                 <Balance
                   fontSize="20px"
@@ -263,7 +273,6 @@ const IDODetail = ({ idoData }) => {
               <Flex>
                 <DetailText fontSize="16px">{isMobile ? 'Sold:' : 'Tokens Sold:'}</DetailText>
                 <Text fontSize="16px" color="#131313" ml="4px">
-                  {/* {idoData.soldTokenAmount} */}
                   {`${(totalTokensSold / 1000000).toFixed(2)}M`}
                 </Text>
               </Flex>
