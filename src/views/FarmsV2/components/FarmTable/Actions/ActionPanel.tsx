@@ -205,15 +205,6 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
                   //   amountInUsd = 0
                   // }
 
-                  // hide last avax reward token from pefi rush farm
-                  if (
-                    farm.isPenguinRush &&
-                    pendingToken === '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE' &&
-                    index === pendingTokens.length - 1
-                  ) {
-                    return null
-                  }
-
                   // hide avax token when joe rush is finished
                   if (
                     farm.isJoeRushFinished &&
