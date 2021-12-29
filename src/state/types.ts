@@ -412,6 +412,7 @@ export interface State {
   nestMigrator: NestMigratorState
   v2Pools: PoolsState
   v2Farms: FarmsState
+  v2FarmsRush: FarmsState
 
   // collectibles
   userCollectibles: UserCollectiblesState

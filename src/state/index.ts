@@ -32,6 +32,7 @@ import kittyBoosterRocketReducer from './kittyBoosterRocket'
 import nestMigratorReducer from './nestMigrator'
 import v2PoolsReducer from './v2pools'
 import v2FarmsReducer from './v2Farms'
+import v2FarmsRushReducer from './v2FarmsRush'
 
 // collectibles
 import userCollectiblesReducer from './collectibles'
@@ -73,6 +74,7 @@ const store = configureStore({
     nestMigrator: nestMigratorReducer,
     v2Pools: v2PoolsReducer,
     v2Farms: v2FarmsReducer,
+    v2FarmsRush: v2FarmsRushReducer,
 
     // collectibles
     userCollectibles: userCollectiblesReducer,

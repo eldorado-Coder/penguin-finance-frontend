@@ -41,7 +41,7 @@ const v2Farms: V2FarmConfig[] = [
     // pangolin v2
     isPangolinV2: true,
     pangolinV2PoolId: 23,
-    // penguin rush
+    // penguin rush phase 2
     isPenguinRush: true,
     isPenguinRushFinished: false,
   },
@@ -194,7 +194,7 @@ const v2Farms: V2FarmConfig[] = [
     },
     rewarderAddresses: {
       43113: '',
-      43114: '0x3E331Ef83AE06f3b7666BA6Fa0B816A30d2565D9',
+      43114: '0xb9c6C4cC248243777e123F03198A61947dcDea2b',
     },
     tokenSymbol: 'PNG',
     tokenAddresses: {
@@ -217,6 +217,9 @@ const v2Farms: V2FarmConfig[] = [
     // pangolin v2
     isPangolinV2: true,
     pangolinV2PoolId: 0,
+    // penguin rush phase 2
+    isPenguinRush: true,
+    isPenguinRushFinished: false,
   },
   {
     pid: 12,
@@ -517,10 +520,11 @@ const v2Farms: V2FarmConfig[] = [
     isMINWFinished: true,
     isJoeRush: true,
     isJoeRushFinished: true,
-    isPenguinRush: true,
-    isPenguinRushFinished: false,
     isHot: true,
     hotRank: 4,
+    // penguin rush phase 2
+    isPenguinRush: true,
+    isPenguinRushFinished: false,
   },
   {
     pid: 7,
@@ -695,7 +699,7 @@ const v2Farms: V2FarmConfig[] = [
     },
     rewarderAddresses: {
       43113: '',
-      43114: '0x1B713054bDEB720De302E3Fce331925b10D75d23',
+      43114: '0x76B99E00799a7353d31b3ded7bD3404eE470D81A',
     },
     tokenSymbol: 'JOE',
     tokenAddresses: {
@@ -719,6 +723,9 @@ const v2Farms: V2FarmConfig[] = [
     isJoeRushFinished: true,
     isHot: true,
     hotRank: 1,
+    // penguin rush phase 2
+    isPenguinRush: true,
+    isPenguinRushFinished: false,
   },
   // sushi
   {
@@ -1100,7 +1107,7 @@ const v2Farms: V2FarmConfig[] = [
     },
     rewarderAddresses: {
       43113: '',
-      43114: '0xdc460f30e02fdcf18989c9f959d4cb5aae1a1b20',
+      43114: '0xDC460F30E02FDcF18989C9F959d4cb5AaE1a1b20',
     },
     tokenSymbol: 'MIM',
     tokenAddresses: {
@@ -1118,6 +1125,9 @@ const v2Farms: V2FarmConfig[] = [
     type: 'Joe',
     name: 'pendingPEFI',
     displayedDecimals: 4,
+    // penguin rush phase 2
+    isPenguinRush: true,
+    isPenguinRushFinished: false,
   },
   // benqi pangolin lp igloo
   {
@@ -1129,11 +1139,12 @@ const v2Farms: V2FarmConfig[] = [
     },
     strategyAddresses: {
       43113: '',
-      43114: '0x5a4e32c25f7b128a7ef3da78881de8c10a6cbd84',
+      // 43114: '0x5a4e32c25f7b128a7ef3da78881de8c10a6cbd84',
+      43114: '0x3D93fc9D5363754e1B892C910d0AcD1927e015F7',
     },
     rewarderAddresses: {
       43113: '',
-      43114: '0x0000000000000000000000000000000000000000',
+      43114: '0x6524Ac4bB362A46f2d85AE15e89bf44003EC147a',
     },
     tokenSymbol: 'QI',
     tokenAddresses: {
@@ -1154,6 +1165,9 @@ const v2Farms: V2FarmConfig[] = [
     isBenqi: true,
     isHot: true,
     hotRank: 2,
+    // penguin rush phase 2
+    isPenguinRush: true,
+    isPenguinRushFinished: false,
   },
 ]
 
