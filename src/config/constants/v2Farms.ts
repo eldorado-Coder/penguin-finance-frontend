@@ -194,7 +194,7 @@ const v2Farms: V2FarmConfig[] = [
     },
     rewarderAddresses: {
       43113: '',
-      43114: '0x3E331Ef83AE06f3b7666BA6Fa0B816A30d2565D9',
+      43114: '0xb9c6C4cC248243777e123F03198A61947dcDea2b',
     },
     tokenSymbol: 'PNG',
     tokenAddresses: {
@@ -699,7 +699,7 @@ const v2Farms: V2FarmConfig[] = [
     },
     rewarderAddresses: {
       43113: '',
-      43114: '0x1B713054bDEB720De302E3Fce331925b10D75d23',
+      43114: '0x76B99E00799a7353d31b3ded7bD3404eE470D81A',
     },
     tokenSymbol: 'JOE',
     tokenAddresses: {
@@ -1107,7 +1107,7 @@ const v2Farms: V2FarmConfig[] = [
     },
     rewarderAddresses: {
       43113: '',
-      43114: '0xdc460f30e02fdcf18989c9f959d4cb5aae1a1b20',
+      43114: '0xDC460F30E02FDcF18989C9F959d4cb5AaE1a1b20',
     },
     tokenSymbol: 'MIM',
     tokenAddresses: {
@@ -1143,7 +1143,7 @@ const v2Farms: V2FarmConfig[] = [
     },
     rewarderAddresses: {
       43113: '',
-      43114: '0x0000000000000000000000000000000000000000',
+      43114: '0x6524Ac4bB362A46f2d85AE15e89bf44003EC147a',
     },
     tokenSymbol: 'QI',
     tokenAddresses: {
