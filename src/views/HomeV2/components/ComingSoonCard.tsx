@@ -27,7 +27,7 @@ const ComingSoonCard: React.FC = () => {
         </Row>
         <Row>
           <StyledText color="white">
-            <a href="https://twitter.com/CryptoPuffies/status/1438176283935092736" target="_blank" rel="noreferrer">
+            <a href="https://twitter.com/CryptoPuffies" target="_blank" rel="noreferrer">
               CryptoPuffies
             </a>
           </StyledText>
