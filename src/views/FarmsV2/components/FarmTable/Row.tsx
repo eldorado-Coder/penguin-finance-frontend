@@ -42,6 +42,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
           return { address: pendingTokenAddress, logo: getTokenLogo(pendingTokenAddress) }
         })
       : []
+
     if (farm.type === 'Joe') {
       _pendingTokensWithLogo = _pendingTokensWithLogo.filter(
         (row) => row.address.toLowerCase() !== getAddress(pngToken.address).toLowerCase(),
@@ -59,12 +60,12 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
         )
       }
 
-      if (
-        _pendingTokensWithLogo.slice(-1)[0] &&
-        _pendingTokensWithLogo.slice(-1)[0].address.toLowerCase() === getAddress(avaxToken.address).toLowerCase()
-      ) {
-        return _pendingTokensWithLogo.slice(0, -1)
-      }
+      // if (
+      //   _pendingTokensWithLogo.slice(-1)[0] &&
+      //   _pendingTokensWithLogo.slice(-1)[0].address.toLowerCase() === getAddress(avaxToken.address).toLowerCase()
+      // ) {
+      //   return _pendingTokensWithLogo.slice(0, -1)
+      // }
     }
 
     if (farm.isJoeRushFinished) {
