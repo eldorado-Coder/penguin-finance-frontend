@@ -42,6 +42,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
           return { address: pendingTokenAddress, logo: getTokenLogo(pendingTokenAddress) }
         })
       : []
+
     if (farm.type === 'Joe') {
       _pendingTokensWithLogo = _pendingTokensWithLogo.filter(
         (row) => row.address.toLowerCase() !== getAddress(pngToken.address).toLowerCase(),
@@ -59,12 +60,12 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
         )
       }
 
-      if (
-        _pendingTokensWithLogo.slice(-1)[0] &&
-        _pendingTokensWithLogo.slice(-1)[0].address.toLowerCase() === getAddress(avaxToken.address).toLowerCase()
-      ) {
-        return _pendingTokensWithLogo.slice(0, -1)
-      }
+      // if (
+      //   _pendingTokensWithLogo.slice(-1)[0] &&
+      //   _pendingTokensWithLogo.slice(-1)[0].address.toLowerCase() === getAddress(avaxToken.address).toLowerCase()
+      // ) {
+      //   return _pendingTokensWithLogo.slice(0, -1)
+      // }
     }
 
     if (farm.isJoeRushFinished) {
@@ -148,7 +149,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
                 : '<p style="line-height: 0px; height: 0px; margin-bottom: -30px !important;"></p>'
             }
             ${
-              penguinRushRewardApr > 0
+              farm.isPenguinRush && !farm.isPenguinRushFinished
                 ? '<p>Penguin Rush</p>'
                 : '<p style="line-height: 0px; height: 0px; margin-bottom: -30px !important;"></p>'
             }
@@ -169,7 +170,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
                 : '<p style="line-height: 0px; height: 0px; margin-bottom: -30px !important;"></p>'
             }
             ${
-              penguinRushRewardApr > 0
+              farm.isPenguinRush && !farm.isPenguinRushFinished
                 ? `<p style="font-weight: 500">${penguinRushRewardApr.toFixed(2)}% APR</p>`
                 : '<p style="line-height: 0px; height: 0px; margin-bottom: -30px !important;"></p>'
             }
@@ -196,7 +197,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
                 : '<p style="line-height: 0px; height: 0px; margin-bottom: -30px !important;"></p>'
             }
             ${
-              penguinRushRewardApy > 0
+              farm.isPenguinRush && !farm.isPenguinRushFinished
                 ? '<p>Penguin Rush</p>'
                 : '<p style="line-height: 0px; height: 0px; margin-bottom: -30px !important;"></p>'
             }
@@ -217,7 +218,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
                 : '<p style="line-height: 0px; height: 0px; margin-bottom: -30px !important;"></p>'
             }
             ${
-              penguinRushRewardApy > 0
+              farm.isPenguinRush && !farm.isPenguinRushFinished
                 ? `<p style="font-weight: 500">${penguinRushRewardApy.toFixed(2)}% APY</p>`
                 : '<p style="line-height: 0px; height: 0px; margin-bottom: -30px !important;"></p>'
             }

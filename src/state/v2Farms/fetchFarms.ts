@@ -148,10 +148,15 @@ export const fetchFarms = async () => {
         }
 
         let _pendingTokens = pendingTokens[0]
-        if (farmConfig.isBenqi) {
-          _pendingTokens =
-            pendingTokens[0] && pendingTokens[0].filter((row) => row.toLowerCase() !== getAvaxAddress().toLowerCase())
-        }
+        _pendingTokens = _pendingTokens.reduce((a, b) => {
+          if (a.indexOf(b) < 0) a.push(b)
+          return a
+        }, [])
+
+        // if (farmConfig.isBenqi) {
+        //   _pendingTokens =
+        //     pendingTokens[0] && pendingTokens[0].filter((row) => row.toLowerCase() !== getAvaxAddress().toLowerCase())
+        // }
 
         // rewarder contract call
         let minwRewardToken = '0x0000000000000000000000000000000000000000'
@@ -172,27 +177,6 @@ export const fetchFarms = async () => {
           ])
           minwRewardToken = _minwRewardToken[0]
           minwRewardPerSec = getBalanceNumber(new BigNumber(_minwRewardTokenPerSecond[0]._hex))
-        }
-
-        // penguin rush
-        let penguinRushRewardToken = '0x0000000000000000000000000000000000000000'
-        let penguinRushRewardPerSec = 0
-        if (
-          getAddress(farmConfig.rewarderAddresses) !== '0x0000000000000000000000000000000000000000' &&
-          farmConfig.isPenguinRush
-        ) {
-          const [_penguinRushRewardToken, _penguinRushRewardPerSec] = await multicall(v2IglooRewarderABI, [
-            {
-              address: getAddress(farmConfig.rewarderAddresses),
-              name: 'rewardToken',
-            },
-            {
-              address: getAddress(farmConfig.rewarderAddresses),
-              name: 'tokensPerSecond',
-            },
-          ])
-          penguinRushRewardToken = _penguinRushRewardToken[0]
-          penguinRushRewardPerSec = getBalanceNumber(new BigNumber(_penguinRushRewardPerSec[0]._hex))
         }
 
         return {
@@ -217,9 +201,6 @@ export const fetchFarms = async () => {
           // minw
           minwRewardToken,
           minwRewardPerSec,
-          // penguin rush
-          penguinRushRewardToken,
-          penguinRushRewardPerSec,
         }
       } catch (error) {
         return {

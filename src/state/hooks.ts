@@ -57,6 +57,8 @@ import {
   // pools
   fetchV2MasterChefPefiPerBlock,
   fetchV2FarmsPublicDataAsync,
+  // rush
+  fetchV2FarmsRushPublicDataAsync,
   // club penguin
   fetchClubPenguinFarmsPublicDataAsync,
   fetchClubPenguinFarmUserDataAsync,
@@ -98,6 +100,7 @@ export const useFetchPublicData = () => {
     dispatch(fetchV2PoolsPublicDataAsync())
     dispatch(fetchV2MasterChefPefiPerBlock())
     dispatch(fetchV2FarmsPublicDataAsync())
+    dispatch(fetchV2FarmsRushPublicDataAsync())
     // v1
     dispatch(fetchMasterChefPefiPerBlock())
     dispatch(fetchFarmsPublicDataAsync())
@@ -651,6 +654,11 @@ export const useV2FarmUser = (pid, type) => {
     stakedBalance: farm.userData ? new BigNumber(farm.userData.stakedBalance) : new BigNumber(0),
     earnings: farm.userData ? new BigNumber(farm.userData.earnings) : new BigNumber(0),
   }
+}
+
+export const useV2FarmsRush = (): V2Farm[] => {
+  const farmsRush = useSelector((state: State) => state.v2FarmsRush.data)
+  return farmsRush
 }
 
 // Farms
