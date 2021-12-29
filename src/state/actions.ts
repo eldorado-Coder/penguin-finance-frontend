@@ -62,6 +62,9 @@ export {
   fetchFarmUserDataAsync as fetchV2FarmUserDataAsync,
 } from './v2Farms'
 
+// v2 rush igloos
+export { fetchFarmsPublicDataAsync as fetchV2FarmsRushPublicDataAsync } from './v2FarmsRush'
+
 // club penguins
 export {
   fetchFarmsPublicDataAsync as fetchClubPenguinFarmsPublicDataAsync,

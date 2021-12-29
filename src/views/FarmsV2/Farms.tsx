@@ -9,6 +9,7 @@ import Select from 'components/Select/Select'
 import Balance from 'components/Balance'
 import {
   useV2Farms,
+  useV2FarmsRush,
   useLydiaFarms,
   useLydiaFarmRewardRate,
   useJoeFarmsGlobalData,
@@ -52,6 +53,7 @@ const Farms: React.FC = () => {
   const { account } = useWeb3React()
   const { isIglooAprMode, toggleIglooAprMode } = useUserSetting()
   const v2Farms = useV2Farms()
+  const v2FarmsRush = useV2FarmsRush()
   const lydiaFarms = useLydiaFarms()
   const joeV3Farms = useJoeV3Farms()
   const { isXl, isSm } = useMatchBreakpoints()
@@ -97,7 +99,9 @@ const Farms: React.FC = () => {
     let penguinRushRewardApr = 0
 
     if (farm.isPenguinRush) {
-      penguinRushRewardApr = getFarmApr(avaxPriceUsd, farm.totalLiquidityInUsd, farm.penguinRushRewardPerSec)
+      const v2FarmRush = v2FarmsRush.find((row) => row.pid === farm.pid)
+      const penguinRushRewardPerSec = v2FarmRush ? v2FarmRush.penguinRushRewardPerSec : 0
+      penguinRushRewardApr = getFarmApr(avaxPriceUsd, farm.totalLiquidityInUsd, penguinRushRewardPerSec)
     }
 
     if (farm.type === 'Lydia') {
