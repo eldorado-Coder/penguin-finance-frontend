@@ -1,22 +1,23 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Card, useMatchBreakpoints } from 'penguinfinance-uikit2'
-import { useHistory } from 'react-router-dom'
+// import { useHistory } from 'react-router-dom'
 
 const ArtworkCard = () => {
   const { isXl } = useMatchBreakpoints()
-  const history = useHistory()
+  // const history = useHistory()
   const isMobile = !isXl
 
   const onClickArtworkV2Card = () => {
-    history.push('/launchpad-kitty')
+    // history.push('/launchpad-kitty')
+    window.open('https://docs.penguinfinance.io/', '_blank')
   }
 
   return (
     <StyledArtworkCard isMobile={isMobile}>
       <ArtworkImg
         onClick={onClickArtworkV2Card}
-        src={`${process.env.PUBLIC_URL}/images/home-v2/binary-cat_live.png`}
+        src={`${process.env.PUBLIC_URL}/images/home-v2/welcome_pefi.png`}
         loading="lazy"
         alt="hero"
       />
@@ -50,7 +51,7 @@ const ArtworkImg = styled.img`
   width: 100%;
   background-size: cover;
   background-position: left center;
-  background-image: url('/images/home-v2/launchpad.png');
+  /* background-image: url('/images/home-v2/launchpad.png'); */
   cursor: pointer;
   ${({ theme }) => theme.mediaQueries.sm} {
     height: 100%;
