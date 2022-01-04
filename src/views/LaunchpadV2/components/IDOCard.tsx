@@ -194,8 +194,6 @@ const FCard = styled.div`
   position: relative;
   text-align: center;
   width: 100%;
-  margin-right: 12px;
-  margin-left: 40px;
   svg {
     path {
       stroke: ${({ theme }) => (theme.isDark ? '#B8A7D9' : '#313131')};
