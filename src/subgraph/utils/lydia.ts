@@ -1,5 +1,5 @@
 import { lydiaClient } from '../client'
-import { PAIRS_SEARCH, TOKENS_SEARCH, PAIR_DAY_DATA_SEARCH } from '../queries'
+import { PAIRS_SEARCH, TOKENS_SEARCH, PAIR_DAY_DATA_SEARCH1 } from '../queries'
 
 export const getPair = async (address: string) => {
   if (!address) return null
@@ -15,7 +15,7 @@ export const getToken = async (address: string, symbol: string) => {
 export const getPairDayData = async (address: string, dateAfter: number) => {
   if (!address) return null
   const { pairHourDatas } = await lydiaClient.request(
-    PAIR_DAY_DATA_SEARCH({ address: address.toLowerCase(), dateAfter }),
+    PAIR_DAY_DATA_SEARCH1({ address: address.toLowerCase(), dateAfter }),
   )
   return pairHourDatas
 }
