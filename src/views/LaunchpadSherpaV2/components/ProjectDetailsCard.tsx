@@ -210,10 +210,10 @@ const ProjectDetailsCard = () => {
                 </TokenEconomic>
                 <TokenEconomic justifyContent="space-between">
                   <Text color={isDark ? '#9A97C4' : '#5E4BAF'} fontSize="14px" lineHeight="32px" fontWeight={600}>
-                    PRICE PER KITTY
+                    PRICE PER SHERPA
                   </Text>
                   <Text color={isDark ? '#ffffff' : '#292929'} fontSize="16px" lineHeight="32px" fontWeight={600}>
-                    {` $0.045`}
+                    {` $0.15`}
                   </Text>
                 </TokenEconomic>
               </>

@@ -10,14 +10,14 @@ const ArtworkCard = () => {
 
   const onClickArtworkV2Card = () => {
     // history.push('/launchpad-kitty')
-    window.open('https://docs.penguinfinance.io/', '_blank')
+    window.open('https://twitter.com/penguin_defi/status/1478794990960664579', '_blank')
   }
 
   return (
     <StyledArtworkCard isMobile={isMobile}>
       <ArtworkImg
         onClick={onClickArtworkV2Card}
-        src={`${process.env.PUBLIC_URL}/images/home-v2/welcome_pefi.png`}
+        src={`${process.env.PUBLIC_URL}/images/home-v2/kassandra_dao.png`}
         loading="lazy"
         alt="hero"
       />

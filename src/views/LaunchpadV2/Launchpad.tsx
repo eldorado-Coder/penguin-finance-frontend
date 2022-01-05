@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Text, Flex } from 'penguinfinance-uikit2'
+import { Text, Flex, Button } from 'penguinfinance-uikit2'
 import useTheme from 'hooks/useTheme'
 import Page from 'components/layout/Page'
 import SvgIcon from 'components/SvgIcon'
@@ -39,7 +39,7 @@ const Launchpad: React.FC = () => {
     window.open(projectLink, '_blank')
   }
 
-  const handleViewTelegramAnnouncements = () => {
+  const handleSignUp = () => {
     window.open('https://t.me/pefi_announcements', '_blank')
   }
 
@@ -90,27 +90,33 @@ const Launchpad: React.FC = () => {
       <LaunchpadPage>
         <LaunchpadBgContainer />
         <AcoomalatingSteps />
-        <UpcomingIDOs />
-        <OngoingIDOs />
-        <CompletedIDOs />
-        <Announcement mt="80px" mb="80px" justifyContent="center">
-          <AnnouncementText color="white" fontSize="25px">
-            {`Subscribe to our `}
-            <ViewChannel fontSize="25px" color="white" onClick={handleViewTelegramAnnouncements}>
-              Telegram announcements channel
-            </ViewChannel>
-            {` to learn about new project launches as soon as possible.`}
-          </AnnouncementText>
-          <TelegramImage
-            onClick={handleViewTelegramAnnouncements}
-            src={`${process.env.PUBLIC_URL}/images/launchpad-v2/telegram.png`}
-            alt="telegram"
-          />
-        </Announcement>
+        <IDOsContainer>
+          <UpcomingIDOs />
+          <OngoingIDOs />
+          <CompletedIDOs />
+        </IDOsContainer>
+        <SignUpContainer>
+          <SignUpImage src={`${process.env.PUBLIC_URL}/images/ido/signup_banner.png`} />
+          <SignUpDetails justifyContent="space-around" alignItems="center">
+            <div className="signup-button">
+              <SignUpLabel color="white" fontSize="31px" fontWeight={800}>
+                Get Alerts For New Launches
+              </SignUpLabel>
+              <StyledButton onClick={handleSignUp} mt="20px">
+                Sign Up
+              </StyledButton>
+            </div>
+          </SignUpDetails>
+        </SignUpContainer>
       </LaunchpadPage>
     </div>
   )
 }
+
+
+const IDOsContainer = styled.div`
+  margin-top: -72px;
+`;
 
 const LaunchpadPage = styled(Page)`
   max-width: 1200px;
@@ -136,7 +142,7 @@ const IgloosBannerContainer = styled(Flex)`
   justify-content: flex-start;
 
   @media (min-width: 1200px) {
-    margin-bottom: 60px;
+    margin-bottom: 0px;
   }
 
   @media (min-width: 1400px) {
@@ -258,39 +264,6 @@ const TopTierProjects = styled(Flex)`
   }
 `
 
-const AnnouncementText = styled(Text)`
-  max-width: 750px;
-  text-align: center;
-  font-size: 18px;
-
-  @media (min-width: 640px) {
-    font-size: 25px;
-  }
-`
-
-const ViewChannel = styled(Text)`
-  text-decoration: underline;
-  cursor: pointer;
-  display: inline;
-  font-size: 18px;
-
-  @media (min-width: 640px) {
-    font-size: 25px;
-  }
-`
-
-const TelegramImage = styled.img`
-  width: 48px;
-  height: 48px;
-  margin-top: 8px;
-  cursor: pointer;
-
-  @media (min-width: 640px) {
-    margin-top: 0;
-    margin-left: 8px;
-  }
-`
-
 const ProjectTitle = styled(Text)`
   font-size: 10px;
 
@@ -365,12 +338,81 @@ const Project = styled(Flex)`
   }
 `
 
-const Announcement = styled(Flex)`
-  flex-direction: column;
-  align-items: center;
+// sign up container
+const SignUpContainer = styled(Page)`
+  max-width: 1200px;
+  position: relative;
+  margin-top: 20px;
+  margin: auto;
+  min-height: auto;
+  padding-left: 0;
+  padding-right: 0;
 
-  @media (min-width: 640px) {
-    flex-direction: row;
+  @media (min-width: 900px) {
+    margin-top: 0px;
+    padding-top: 41px;
+    padding-bottom: 41px;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+`
+
+const SignUpImage = styled.img`
+  width: 100%;
+  background: linear-gradient(180deg, #7361be 0%, #3a258f 100%);
+  border-radius: 10px;
+  min-height: 200px;
+  object-fit: cover;
+`
+
+const SignUpDetails = styled(Flex)`
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  transform: translate(0, -50%);
+  min-height: 200px;
+
+  .signup-button {
+    width: 80%;
+
+    @media (min-width: 768px) {
+      width: 70%;
+    }
+  }
+
+  @media (min-width: 768px) {
+    top: 0;
+    bottom: 0;
+    transform: unset;
+  }
+`
+
+const SignUpLabel = styled(Text)`
+  font-size: 24px;
+
+  @media (min-width: 768px) {
+    font-size: 31px;
+  }
+`
+
+const StyledButton = styled(Button)`
+  box-shadow: none;
+  width: 180px;
+  height: 48px;
+  border-radius: 5px;
+  background: white;
+  color: #620aa8;
+  font-size: 20px;
+  font-weight: 500;
+
+  @media (min-width: 768px) {
+    font-size: 24px;
+    width: 240px;
+    height: 54px;
+  }
+
+  &:hover:not(:disabled):not(.penguin-button--disabled):not(.penguin-button--disabled):not(:active) {
+    opacity: 1;
   }
 `
 
