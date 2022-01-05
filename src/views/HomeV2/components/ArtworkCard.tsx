@@ -10,7 +10,7 @@ const ArtworkCard = () => {
 
   const onClickArtworkV2Card = () => {
     // history.push('/launchpad-kitty')
-    // window.open('https://docs.penguinfinance.io/', '_blank')
+    window.open('https://twitter.com/penguin_defi/status/1478794990960664579', '_blank')
   }
 
   return (
