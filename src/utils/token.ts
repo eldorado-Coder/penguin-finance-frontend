@@ -35,7 +35,7 @@ export const addTokenToMetamask = async (tokenAddress: string, tokenSymbol: stri
         },
       })
     } catch (error) {
-      console.log('Error => addMetamask')
+      // console.log('Error => addMetamask')
     }
   }
 }

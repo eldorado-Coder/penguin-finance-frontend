@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card, CardBody, Heading, Text, Flex, useMatchBreakpoints } from 'penguinfinance-uikit2'
 import styled from 'styled-components'
-import { NavLink } from 'react-router-dom'
+// import { NavLink } from 'react-router-dom'
 import SvgIcon from 'components/SvgIcon'
 
 const ComingSoonCard: React.FC = () => {

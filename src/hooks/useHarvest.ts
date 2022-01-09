@@ -46,7 +46,8 @@ export const useSousHarvest = (sousId, isUsingBnb = false) => {
     } else if (isUsingBnb) {
       await soushHarvestBnb(sousChefContract, account)
     } else {
-      await soushHarvest(sousChefContract, account)
+      await soushHarvest(sousChefContract)
+      // await soushHarvest(sousChefContract, account)
     }
     dispatch(updateUserPendingReward(sousId, account))
     dispatch(updateUserBalance(sousId, account))

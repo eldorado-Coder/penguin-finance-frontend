@@ -1,17 +1,17 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { Flex, ButtonMenu, ButtonMenuItem, Text } from 'penguinfinance-uikit2'
+import { Flex, Text } from 'penguinfinance-uikit2'
 import useTheme from 'hooks/useTheme'
 import Page from 'components/layout/Page'
 import NestV1 from './V1'
 import NestV2 from './V2'
 
 const Nest: React.FC = () => {
-  const [activeTab, setActiveTab] = useState(0) // 0: v2, 1: v1
+  const [activeTab] = useState(0) // 0: v2, 1: v1
 
-  const handleSwitchTab = (tab) => {
-    setActiveTab(tab)
-  }
+  // const handleSwitchTab = (tab) => {
+  //   setActiveTab(tab)
+  // }
 
   const { isDark } = useTheme()
 
@@ -141,19 +141,19 @@ const NestDescription = styled(Text)`
 `
 
 // slider
-const TabWrapper = styled.div`
-  div {
-    border: 2px solid ${({ theme }) => (theme.isDark ? '#221b38' : '#b2b2ce')};
-    background-color: ${({ theme }) => (theme.isDark ? '#332654' : '#e8e4ef')};
-    border-radius: 18px;
-  }
-`
-const OptionItem = styled(ButtonMenuItem)<{ active: boolean }>`
-  min-width: 70px;
-  background-color: ${({ active, theme }) => active && theme.colors.red};
-  color: ${({ active }) => (active ? 'white' : '#b2b2ce')};
-  margin: 0px !important;
-`
+// const TabWrapper = styled.div`
+//   div {
+//     border: 2px solid ${({ theme }) => (theme.isDark ? '#221b38' : '#b2b2ce')};
+//     background-color: ${({ theme }) => (theme.isDark ? '#332654' : '#e8e4ef')};
+//     border-radius: 18px;
+//   }
+// `
+// const OptionItem = styled(ButtonMenuItem)<{ active: boolean }>`
+//   min-width: 70px;
+//   background-color: ${({ active, theme }) => active && theme.colors.red};
+//   color: ${({ active }) => (active ? 'white' : '#b2b2ce')};
+//   margin: 0px !important;
+// `
 
 const Description = styled(Text)`
   color: ${({ theme }) => (theme.isDark ? '#DDD7ff' : theme.colors.secondary)};

@@ -31,14 +31,14 @@ const Menu = (props) => {
   const iPefiToPefiRatio = v2Nest.currentExchangeRate || 1
 
   // add badge to "emperor" and "launchpad" menu
-  const isEmperorLive = false // event status
-  const isLaunchpadLive = false // event status
-  const isCollectiblesNew = true // event status
+  // const isEmperorLive = false // event status
+  // const isLaunchpadLive = false // event status
+  // const isCollectiblesNew = true // event status
 
   const links = [...config]
-  const emperorIndex = links.findIndex((link) => link.label === 'Emperor')
-  const launchpadIndex = links.findIndex((link) => link.label === 'Launchpad')
-  const collectiblesIndex = links.findIndex((link) => link.label === 'Collectibles')
+  // const emperorIndex = links.findIndex((link) => link.label === 'Emperor')
+  // const launchpadIndex = links.findIndex((link) => link.label === 'Launchpad')
+  // const collectiblesIndex = links.findIndex((link) => link.label === 'Collectibles')
   const clubIndex = links.findIndex((link) => link.label === 'The Club')
 
   // links[collectiblesIndex] = {

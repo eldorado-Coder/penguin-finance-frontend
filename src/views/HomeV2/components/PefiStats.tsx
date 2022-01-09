@@ -21,7 +21,7 @@ import {
 import { Pool } from 'state/types'
 import { QuoteToken } from 'config/constants/types'
 import { PEFI_MAX_SUPPLY } from 'config'
-import useTheme from 'hooks/useTheme'
+// import useTheme from 'hooks/useTheme'
 import CardValue from './CardValue'
 
 const StyledPefiStats = styled(Card)`
@@ -107,7 +107,7 @@ const PefiStats: React.FC<HarvestProps> = ({ v1Pool, v2Pool }) => {
   const pngPriceUsd = usePricePngUsdt()
   const linkPriceUsd = usePriceLinkUsdt()
   const lydPriceUsd = usePriceLydUsdt()
-  const { isDark } = useTheme()
+  // const { isDark } = useTheme()
   const iPefiToPefiRatio = v2Pool.currentExchangeRate || 1
 
   const getXPefiToPefiRatio = () => {

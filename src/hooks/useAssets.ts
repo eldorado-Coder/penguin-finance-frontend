@@ -12,8 +12,8 @@ const useAssets = () => {
           setAssets(res.data.tokens)
         }
       })
-      .catch((err) => {
-        console.log('error--->', err)
+      .catch(() => {
+        // console.log('error--->', err)
       })
   }
 

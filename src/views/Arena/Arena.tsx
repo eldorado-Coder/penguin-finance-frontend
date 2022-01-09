@@ -1,16 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
 import Page from 'components/layout/Page'
-import { isLiteralExpression } from 'typescript'
-import { useMatchBreakpoints } from 'penguinfinance-uikit2'
+// import { isLiteralExpression } from 'typescript'
+// import { useMatchBreakpoints } from 'penguinfinance-uikit2'
 
 const arenaBgVideoUrl =
   'https://res.cloudinary.com/dbyunrpzq/video/upload/v1632206011/The_Journey_to_the_Arena_Part_01_uvqzti.mp4'
 
 const Arena: React.FC = () => {
-  const { isLg, isXl } = useMatchBreakpoints()
-  const isStacked = !isLg && !isXl
-  const isMobile = !isXl;
+  // const { isLg, isXl } = useMatchBreakpoints()
+  // const isStacked = !isLg && !isXl
+  // const isMobile = !isXl;
 
   return (
     <ArenaPage>

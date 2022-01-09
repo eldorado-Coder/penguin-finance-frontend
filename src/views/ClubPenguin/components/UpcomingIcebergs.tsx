@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Text, Flex, Image, Tag, VerifiedIcon, Button } from 'penguinfinance-uikit2'
+import { Text, Flex, Image, Tag, Button } from 'penguinfinance-uikit2'
 import FlexLayout from 'components/layout/Flex'
 import { upcomingIcebergs } from '../config'
 

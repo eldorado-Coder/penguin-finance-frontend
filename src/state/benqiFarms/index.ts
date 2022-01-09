@@ -19,8 +19,8 @@ export const farmsSlice = createSlice({
       state.benqiPerSec = benqiPerSec
       state.totalSupply = totalSupply
     },
-    setFarmsPublicData: (state, action) => {
-      console.log('123')
+    setFarmsPublicData: () => {
+      // console.log('123')
     },
   },
 })

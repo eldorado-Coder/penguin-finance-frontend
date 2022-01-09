@@ -2,7 +2,7 @@ import React, { useMemo, useCallback, useState } from 'react'
 import ReactTooltip from 'react-tooltip'
 import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
-import { Flex, Text, Image, Button, useModal, Tag } from 'penguinfinance-uikit2'
+import { Flex, Text, Image, Button } from 'penguinfinance-uikit2'
 import { Farm } from 'state/types'
 import useI18n from 'hooks/useI18n'
 import { useCompounderFarmFromSymbol, useCompounderFarmUser, useCompoundApy } from 'state/hooks'
@@ -11,21 +11,21 @@ import useWeb3 from 'hooks/useWeb3'
 import { getAddress } from 'utils/addressHelpers'
 import { getContract } from 'utils/erc20'
 import {
-  BASE_ADD_LIQUIDITY_URL,
+  // BASE_ADD_LIQUIDITY_URL,
   MAX_COMPOUND_APY,
-  BASE_LYDIA_LIQUIDITY_URL,
-  BASE_GONDOLA_LIQUIDITY_POOL_URL,
+  // BASE_LYDIA_LIQUIDITY_URL,
+  // BASE_GONDOLA_LIQUIDITY_POOL_URL,
   ASSET_CONTENT_URL,
 } from 'config'
-import getLiquidityUrlPathParts from 'utils/getLiquidityUrlPathParts'
-import useCompounderStake from 'hooks/useCompounderStake'
+// import getLiquidityUrlPathParts from 'utils/getLiquidityUrlPathParts'
+// import useCompounderStake from 'hooks/useCompounderStake'
 import useCompounderUnstake from 'hooks/useCompounderUnstake'
 import useCompounderClaimXPefi from 'hooks/useCompounderClaimXPefi'
 import { getBalanceNumber, getFullDisplayBalance } from 'utils/formatBalance'
 // import { getCompoundApy } from 'utils/apyHelpers'
 import UnlockButton from 'components/UnlockButton'
-import DepositModal from '../DepositModal'
-import WithdrawModal from '../WithdrawModal'
+// import DepositModal from '../DepositModal'
+// import WithdrawModal from '../WithdrawModal'
 
 export interface FarmWithStakedValue extends Farm {
   apy?: BigNumber
@@ -205,21 +205,21 @@ const FarmDetails = styled(Flex)`
   }
 `
 
-const getNoFeesTagColor = (index, theme) => {
-  if (index % 2) {
-    return theme.isDark ? '#322C59!important' : '#322C59!important'
-  }
-  return theme.isDark ? '#ce022d !important' : '#ce022d !important'
-}
+// const getNoFeesTagColor = (index, theme) => {
+//   if (index % 2) {
+//     return theme.isDark ? '#322C59!important' : '#322C59!important'
+//   }
+//   return theme.isDark ? '#ce022d !important' : '#ce022d !important'
+// }
 
-const NoFeesTag = styled(Tag)<{ index?: number }>`
-  color: ${({ theme }) => (theme.isDark ? '#a893ca!important' : '#ffffff!important')};
-  border-color: ${({ index, theme }) => (theme.isDark ? '#ffffff!important' : getNoFeesTagColor(index, theme))};
-  font-family: 'Poppins' !important;
-  font-size: 14px !important;
-  font-weight: 600;
-  line-height: 1;
-`
+// const NoFeesTag = styled(Tag)<{ index?: number }>`
+//   color: ${({ theme }) => (theme.isDark ? '#a893ca!important' : '#ffffff!important')};
+//   border-color: ${({ index, theme }) => (theme.isDark ? '#ffffff!important' : getNoFeesTagColor(index, theme))};
+//   font-family: 'Poppins' !important;
+//   font-size: 14px !important;
+//   font-weight: 600;
+//   line-height: 1;
+// `
 
 const getToolTipBackground = (index, theme) => {
   if (index % 2) {
@@ -302,8 +302,8 @@ interface FarmCardProps {
 const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
   const TranslateString = useI18n()
   const { lpAddresses, type } = useCompounderFarmFromSymbol(farm.lpSymbol, farm.type)
-  const { allowance, tokenBalance, stakedReceiptBalance, pendingXPefi } = useCompounderFarmUser(farm.lpSymbol, type)
-  const lpName = farm.lpSymbol.toUpperCase()
+  const { allowance, stakedReceiptBalance, pendingXPefi } = useCompounderFarmUser(farm.lpSymbol, type)
+  // const lpName = farm.lpSymbol.toUpperCase()
   const web3 = useWeb3()
   const lpAddress = getAddress(lpAddresses)
   const isApproved = account && allowance && allowance.isGreaterThan(0)
@@ -318,7 +318,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
       : parseFloat(getFullDisplayBalance(stakedReceiptBalance)).toFixed(3)
 
   const pendingXPefiValue = getBalanceNumber(pendingXPefi)
-  const { quoteTokenAddresses, quoteTokenSymbol, tokenAddresses } = farm
+  // const { quoteTokenAddresses, quoteTokenSymbol, tokenAddresses } = farm
 
   const lpContract = useMemo(() => {
     return getContract(web3, lpAddress)
@@ -326,7 +326,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
 
   const { onApprove } = useStrategyApprove(lpContract, farm.lpSymbol, farm.type)
   const { onClaimXPefi } = useCompounderClaimXPefi(farm.lpSymbol, farm.type)
-  const { onStake } = useCompounderStake(farm.lpSymbol, type)
+  // const { onStake } = useCompounderStake(farm.lpSymbol, type)
   const { onUnstake } = useCompounderUnstake(farm.lpSymbol, type)
 
   const handleApprove = useCallback(async () => {
@@ -340,33 +340,33 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
     }
   }, [onApprove])
 
-  const handleStake = useCallback(
-    async (amount) => {
-      setRequestedAction(true)
-      try {
-        await onStake(amount)
-        setRequestedAction(false)
-      } catch (e) {
-        setRequestedAction(false)
-        console.error(e)
-      }
-    },
-    [onStake],
-  )
+  // const handleStake = useCallback(
+  //   async (amount) => {
+  //     setRequestedAction(true)
+  //     try {
+  //       await onStake(amount)
+  //       setRequestedAction(false)
+  //     } catch (e) {
+  //       setRequestedAction(false)
+  //       console.error(e)
+  //     }
+  //   },
+  //   [onStake],
+  // )
 
-  const handleUnstake = useCallback(
-    async (amount) => {
-      setRequestedAction(true)
-      try {
-        await onUnstake(amount)
-        setRequestedAction(false)
-      } catch (e) {
-        setRequestedAction(false)
-        console.error(e)
-      }
-    },
-    [onUnstake],
-  )
+  // const handleUnstake = useCallback(
+  //   async (amount) => {
+  //     setRequestedAction(true)
+  //     try {
+  //       await onUnstake(amount)
+  //       setRequestedAction(false)
+  //     } catch (e) {
+  //       setRequestedAction(false)
+  //       console.error(e)
+  //     }
+  //   },
+  //   [onUnstake],
+  // )
 
   const handleClaimXPefi = useCallback(async () => {
     setRequestedAction(true)
@@ -379,34 +379,34 @@ const FarmCard: React.FC<FarmCardProps> = ({ index, farm, account }) => {
     }
   }, [onClaimXPefi])
 
-  const getLiquidityUrl = () => {
-    if (type === 'Penguin' || type === 'Pangolin') {
-      const liquidityUrlPathParts = getLiquidityUrlPathParts({ quoteTokenAddresses, quoteTokenSymbol, tokenAddresses })
-      return `${BASE_ADD_LIQUIDITY_URL}/${liquidityUrlPathParts}`
-    }
-    if (type === 'Lydia') {
-      const liquidityUrlPathParts = getLiquidityUrlPathParts({ quoteTokenAddresses, quoteTokenSymbol, tokenAddresses })
-      return `${BASE_LYDIA_LIQUIDITY_URL}/${liquidityUrlPathParts}`
-    }
-    if (type === 'Gondola') {
-      return `${BASE_GONDOLA_LIQUIDITY_POOL_URL}/${quoteTokenSymbol}`
-    }
-    return ''
-  }
+  // const getLiquidityUrl = () => {
+  //   if (type === 'Penguin' || type === 'Pangolin') {
+  //     const liquidityUrlPathParts = getLiquidityUrlPathParts({ quoteTokenAddresses, quoteTokenSymbol, tokenAddresses })
+  //     return `${BASE_ADD_LIQUIDITY_URL}/${liquidityUrlPathParts}`
+  //   }
+  //   if (type === 'Lydia') {
+  //     const liquidityUrlPathParts = getLiquidityUrlPathParts({ quoteTokenAddresses, quoteTokenSymbol, tokenAddresses })
+  //     return `${BASE_LYDIA_LIQUIDITY_URL}/${liquidityUrlPathParts}`
+  //   }
+  //   if (type === 'Gondola') {
+  //     return `${BASE_GONDOLA_LIQUIDITY_POOL_URL}/${quoteTokenSymbol}`
+  //   }
+  //   return ''
+  // }
 
-  const [onPresentDeposit] = useModal(
-    <DepositModal
-      tokenName={lpName}
-      max={tokenBalance}
-      addLiquidityUrl={getLiquidityUrl()}
-      farm={farm}
-      onConfirm={handleStake}
-      onApprove={handleApprove}
-    />,
-  )
-  const [onPresentWithdraw] = useModal(
-    <WithdrawModal tokenName={lpName} max={tokenBalance} farm={farm} onConfirm={handleUnstake} />,
-  )
+  // const [onPresentDeposit] = useModal(
+  //   <DepositModal
+  //     tokenName={lpName}
+  //     max={tokenBalance}
+  //     addLiquidityUrl={getLiquidityUrl()}
+  //     farm={farm}
+  //     onConfirm={handleStake}
+  //     onApprove={handleApprove}
+  //   />,
+  // )
+  // const [onPresentWithdraw] = useModal(
+  //   <WithdrawModal tokenName={lpName} max={tokenBalance} farm={farm} onConfirm={handleUnstake} />,
+  // )
 
   let lpTokenPrice = new BigNumber(farm.totalValue).div(getBalanceNumber(new BigNumber(farm.totalSupply)))
   if (farm.type === 'Penguin' && farm.lpSymbol === 'ETH-AVAX LP') {

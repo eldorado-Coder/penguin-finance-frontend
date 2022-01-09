@@ -4,7 +4,7 @@ import v2MasterchefABI from 'config/abi/v2Masterchef.json'
 import v2IglooRewarderABI from 'config/abi/v2Farms/rewarder.json'
 import multicall from 'utils/multicall'
 import v2FarmsConfig from 'config/constants/v2Farms'
-import { getAddress, getV2MasterChefAddress, getAvaxAddress } from 'utils/addressHelpers'
+import { getAddress, getV2MasterChefAddress } from 'utils/addressHelpers'
 import getV2FarmMasterChefAbi from 'utils/getV2FarmMasterChefAbi'
 import getV2FarmMasterChefAddress from 'utils/getV2FarmMasterChefAddress'
 import { getSushiLpPrice, getLydiaLpPrice } from 'utils/price'
@@ -118,7 +118,9 @@ export const fetchFarms = async () => {
           const res = farmConfig.isPangolinV2
             ? await getPangolinRewardV2PoolApr(farmConfig.pangolinV2PoolId)
             : await getPangolinRewardPoolApr(getAddress(farmConfig.pangolinRewardPoolAddresses))
+          // eslint-disable-next-line prefer-destructuring
           stakingApr = res.stakingApr
+          // eslint-disable-next-line prefer-destructuring
           swapFeeApr = res.swapFeeApr
           if (swapFeeApr === 0) {
             if (pairInfo.reserveUSD > 0) {
