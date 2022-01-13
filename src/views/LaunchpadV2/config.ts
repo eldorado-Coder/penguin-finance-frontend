@@ -53,6 +53,24 @@ const launchpadIDOs = [
     status: 'Launched',
     link: '/launchpad-sherpa',
   },
+  {
+    tokenSymbol: 'KACY',
+    whiteLogo: 'kitty_logo_white.svg',
+    darkLogo: 'kitty_logo_dark.svg',
+    isCompleted: false,
+    totalRaised: 350000,
+    returnToATH: 15,
+    participants: 0,
+    startDate: '01.17.2022',
+    startTimestamp: 1642442400,
+    endTimestamp: 1643068800,
+    tokenPrice: 0.7,
+    soldTokenAmount: '0',
+    distributedTokenAmount: '500K',
+    saleProgress: '0',
+    status: 'In Progress',
+    link: '/launchpad-kassandra',
+  },
 ]
 
 export const getUpcomingIDOs = () => {
