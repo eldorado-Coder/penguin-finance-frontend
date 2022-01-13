@@ -10,14 +10,14 @@ const ArtworkCard = () => {
 
   const onClickArtworkV2Card = () => {
     // history.push('/launchpad-kitty')
-    window.open('https://twitter.com/penguin_defi/status/1478794990960664579', '_blank')
+    window.open('https://penguin-finance.medium.com/penguin-launchpad-kassandra-ido-tiers-guidelines-6cc741f11385', '_blank')
   }
 
   return (
     <StyledArtworkCard isMobile={isMobile}>
       <ArtworkImg
         onClick={onClickArtworkV2Card}
-        src={`${process.env.PUBLIC_URL}/images/home-v2/kassandra_dao.png`}
+        src={`${process.env.PUBLIC_URL}/images/home-v2/kassandra.png`}
         loading="lazy"
         alt="hero"
       />
