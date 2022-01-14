@@ -33,7 +33,7 @@ const TokenInput: React.FC<TokenInputProps> = ({
             <Flex alignItems="center" ml="8px">
               <TokenLogoWrapper>
                 <TokenLogo
-                  src={`${process.env.PUBLIC_URL}/images/launchpad-v2/kitty/${tokenSymbol.toLowerCase()}.png`}
+                  src={`${process.env.PUBLIC_URL}/images/launchpad-v2/kassandra/${tokenSymbol.toLowerCase()}.png`}
                   alt={`${tokenSymbol}-logo`}
                 />
               </TokenLogoWrapper>
@@ -132,6 +132,7 @@ const TokenLogoWrapper = styled(Flex)`
 const TokenLogo = styled.img`
   width: 20px;
   height: 20px;
+  border-radius: 50%;
 `
 
 const TokenSymbol = styled(Flex)`

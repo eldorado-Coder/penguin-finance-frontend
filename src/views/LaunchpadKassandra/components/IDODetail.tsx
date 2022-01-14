@@ -98,7 +98,7 @@ const IDODetail = ({ idoData, isEnded }) => {
       <IdoDescription>
         <Flex alignItems="center" mb="8px">
           <IdoLogo
-            src={isDark ? `/images/ido/${idoData.darkLogo}` : `/images/ido/${idoData.darkLogo}`}
+            src={isDark ? `/images/ido/${idoData.whiteLogo}` : `/images/ido/${idoData.whiteLogo}`}
             alt="kassandra"
             height={36}
           />
@@ -119,9 +119,9 @@ const IDODetail = ({ idoData, isEnded }) => {
         <Description fontSize="16px" lineHeight="21px" color="white" mt="20px">
           Kassandra is an audacious project to delegate money management in a decentralized, efficient, and customizable way, working as a marketplace for tokenized and data-driven investment strategies. 
         </Description>
-        <Description fontSize="16px" lineHeight="21px" color="white" mt="20px">
+        {/* <Description fontSize="16px" lineHeight="21px" color="white" mt="20px">
           With Kassandra, retail investors will be able to delegate money management to professionals without hassle.
-        </Description>
+        </Description> */}
         <TokenLinks mt="40px" alignItems="center">
           {isEnded ? (
             <RegisterButton onClick={handleAddToken}>Add KASS to Metamask</RegisterButton>

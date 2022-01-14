@@ -144,7 +144,7 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({ tokenName = 'KITTY' }) => {
       <Flex flexDirection="column">
         <TokenInput
           value={buyTokenAmount}
-          tokenSymbol="KITTY"
+          tokenSymbol="KACY"
           onSelectMax={handleSelectMax}
           onChange={handleChangeBuyTokenAmount}
         />

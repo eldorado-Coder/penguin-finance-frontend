@@ -55,8 +55,8 @@ const launchpadIDOs = [
   },
   {
     tokenSymbol: 'KACY',
-    whiteLogo: 'kitty_logo_white.svg',
-    darkLogo: 'kitty_logo_dark.svg',
+    whiteLogo: 'kassandra_logo_white.png',
+    darkLogo: 'kassandra_logo_dark.png',
     isCompleted: false,
     totalRaised: 350000,
     returnToATH: 15,
