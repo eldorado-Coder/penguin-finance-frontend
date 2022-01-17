@@ -1,11 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useMatchBreakpoints } from 'penguinfinance-uikit2'
-import { useHistory } from 'react-router-dom'
+// import { useHistory } from 'react-router-dom'
 import Card from '../Card'
 
 const ArtworkCard = () => {
-  const history = useHistory()
+  // const history = useHistory()
   const { isXl } = useMatchBreakpoints()
   const isMobile = !isXl
 

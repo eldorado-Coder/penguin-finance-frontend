@@ -6,8 +6,8 @@ import UnlockButton from 'components/UnlockButton'
 import roundDown from 'utils/roundDown'
 import escapeRegExp from 'utils/escapeRegExp'
 import { getFullDisplayBalance } from 'utils/formatBalance'
-import { addTokenToMetamask } from 'utils/token'
-import { getBoofiAddress } from 'utils/addressHelpers'
+// import { addTokenToMetamask } from 'utils/token'
+// import { getBoofiAddress } from 'utils/addressHelpers'
 import TokenInput from './TokenInput'
 
 const inputRegex = RegExp(`^\\d*(?:\\\\[.])?\\d*$`)
@@ -25,8 +25,8 @@ const UnstakeForm: React.FC<UnStakeFormProps> = ({
   max,
   tokenName = '',
   account,
-  cutdownType,
-  cutdownDate,
+  // cutdownType,
+  // cutdownDate,
   onConfirm,
 }) => {
   const [val, setVal] = useState('')

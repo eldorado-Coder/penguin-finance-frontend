@@ -76,7 +76,7 @@ const Emperor: React.FC = () => {
   const emperorEnded = true
   const emperorDefaultVideo = 'https://res.cloudinary.com/dbyunrpzq/video/upload/v1624544908/penguin_emperor_ldeorc.mp4'
   // to change the video of emperor winner page background video, please change this video path
-  const emperorWinnerVideo = '/videos/penguin_emperor_winner.mp4'
+  // const emperorWinnerVideo = '/videos/penguin_emperor_winner.mp4'
 
   const renderEmperorStatsPage = () => {
     return (
@@ -142,18 +142,18 @@ const Emperor: React.FC = () => {
     )
   }
 
-  const renderEmperorEndPage = () => {
-    return (
-      <>
-        <EmperorEndBgContainer>
-          <BlitzImage
-            src={isSm ? '/images/emperor/blitz_end2_mobile.png' : '/images/emperor/blitz_end2.png'}
-            alt="blitz-img"
-          />
-        </EmperorEndBgContainer>
-      </>
-    )
-  }
+  // const renderEmperorEndPage = () => {
+  //   return (
+  //     <>
+  //       <EmperorEndBgContainer>
+  //         <BlitzImage
+  //           src={isSm ? '/images/emperor/blitz_end2_mobile.png' : '/images/emperor/blitz_end2.png'}
+  //           alt="blitz-img"
+  //         />
+  //       </EmperorEndBgContainer>
+  //     </>
+  //   )
+  // }
 
   return (
     <EmperorPage>
@@ -388,13 +388,13 @@ const EmperorBgContainer = styled.video<{ isMobile?: boolean }>`
   min-height: ${({ isMobile }) => isMobile && '440px'};
 `
 // emperor end
-const EmperorEndBgContainer = styled.div``
+// const EmperorEndBgContainer = styled.div``
 
-const BlitzImage = styled.img`
-  width: 100%;
-  height: 100%;
-  position: absolute;
-`
+// const BlitzImage = styled.img`
+//   width: 100%;
+//   height: 100%;
+//   position: absolute;
+// `
 
 const EmperorWrapper = styled.div<{ isSm: boolean }>`
   background: ${({ isSm }) => (isSm ? '#231631' : 'transparent')};
@@ -414,11 +414,11 @@ const ThroneSmBgContainer = styled.div`
   top: 0px;
   left: 0px;
 `
-const EmperorBlockWrapper = styled.div`
-  margin-top: 100px;
-  width: 180px;
-  z-index: 1;
-`
+// const EmperorBlockWrapper = styled.div`
+//   margin-top: 100px;
+//   width: 180px;
+//   z-index: 1;
+// `
 
 const EmperorSmBgImage = styled.img`
   width: 100%;

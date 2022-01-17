@@ -227,6 +227,10 @@ const ActionPanel: React.FunctionComponent<FarmCardProps> = ({ farm, lpPrice, ex
                     return null
                   }
 
+                  if (farm.lpSymbol === 'Joe AVAX-TIME LP' && pendingToken.toLowerCase() === getJoeTokenAddress().toLocaleLowerCase()) {
+                    return null
+                  } 
+
                   // hide joe token from pangolin pools that minw is expired when joe reward is zero
                   if (
                     farm.isMINWFinished &&

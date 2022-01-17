@@ -29,7 +29,7 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({ tokenName = '', account, on
 
   const payTokenContract = useBoofiBoosterRocketPayToken()
   const boosterRocketContract = useBoofiBoosterRocketContract()
-  const { payTokenBalance, tokensLeftToDistribute, eventOngoing, canPurchaseAmount } = useBoofiBoosterRocketStore(
+  const { payTokenBalance, tokensLeftToDistribute, canPurchaseAmount } = useBoofiBoosterRocketStore(
     account,
   )
   const purchaseTokenMaxBalance = String(canPurchaseAmount)

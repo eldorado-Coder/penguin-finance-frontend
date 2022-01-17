@@ -157,11 +157,11 @@ const PefiStats: React.FC<HarvestProps> = ({ v1Pool, v2Pool }) => {
 
   const tvl = getFarmsTVL() + getV2FarmsTVL() + getCompounderFarmsTVL() + getV1NestTVL() + getV2NestTVL()
   const pefiMarketcap = getPefiMarketcap()
-  const totalStakedBalanceInV1 = new BigNumber(v1Pool.totalStaked) || new BigNumber(0)
-  const totalStakedBalanceInV2 = new BigNumber(v2Pool.totalStaked) || new BigNumber(0)
-  const totalStakedBalance = totalStakedBalanceInV1.plus(totalStakedBalanceInV2)
+  // const totalStakedBalanceInV1 = new BigNumber(v1Pool.totalStaked) || new BigNumber(0)
+  // const totalStakedBalanceInV2 = new BigNumber(v2Pool.totalStaked) || new BigNumber(0)
+  // const totalStakedBalance = totalStakedBalanceInV1.plus(totalStakedBalanceInV2)
   const burnedBalanceRatio = (100 * getBalanceNumber(burnedBalance)) / getBalanceNumber(totalSupply)
-  const totalStakedBalanceRatio = (100 * getBalanceNumber(totalStakedBalance)) / getBalanceNumber(totalSupply)
+  // const totalStakedBalanceRatio = (100 * getBalanceNumber(totalStakedBalance)) / getBalanceNumber(totalSupply)
 
   return (
     <StyledPefiStats>

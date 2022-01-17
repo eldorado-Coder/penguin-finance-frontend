@@ -24,6 +24,10 @@ const IDOCard = ({ idoData }) => {
     soldTokenAmount = `${(totalTokensSold / 1000000).toFixed(2)}M`
   }
 
+  if (idoData.tokenSymbol === 'KACY') {
+    soldTokenAmount = '0'
+  }
+
   const handleViewIdo = () => {
     history.push(idoData.link)
   }
@@ -81,7 +85,7 @@ const IDOCard = ({ idoData }) => {
               fontWeight="600"
               prefix="$"
               decimals={0}
-              value={Number(totalTokensSoldInUsd)}
+              value={idoData.tokenSymbol === 'KACY' ? 0 : Number(totalTokensSoldInUsd)}
             />
             <Balance
               fontSize="24px"

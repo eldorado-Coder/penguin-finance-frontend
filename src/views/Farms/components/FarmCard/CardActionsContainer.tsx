@@ -1,20 +1,20 @@
-import React, { useMemo, useState, useCallback } from 'react'
+import React, { useState } from 'react'
 import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
-import ReactTooltip from 'react-tooltip';
-import { getContract } from 'utils/erc20'
-import { getAddress } from 'utils/addressHelpers'
+// import ReactTooltip from 'react-tooltip';
+// import { getContract } from 'utils/erc20'
+// import { getAddress } from 'utils/addressHelpers'
 import { Button, Flex, Text, Heading } from 'penguinfinance-uikit2'
 import { Farm } from 'state/types'
 import { useFarmFromSymbol, useFarmUser } from 'state/hooks'
 import useI18n from 'hooks/useI18n'
 import UnlockButton from 'components/UnlockButton'
-import { useApprove } from 'hooks/useApprove'
-import useWeb3 from 'hooks/useWeb3'
+// import { useApprove } from 'hooks/useApprove'
+// import useWeb3 from 'hooks/useWeb3'
 import { getBalanceNumber, getFullDisplayBalance } from 'utils/formatBalance';
 import { useHarvest } from 'hooks/useHarvest'
 import useUnstake from 'hooks/useUnstake'
-import StakeAction from './StakeAction'
+// import StakeAction from './StakeAction'
 import HarvestAction from './HarvestAction'
 
 const Action = styled.div`
@@ -35,34 +35,34 @@ interface FarmCardActionsProps {
   addLiquidityUrl?: string
 }
 
-const CardActions: React.FC<FarmCardActionsProps> = ({ farm, account, addLiquidityUrl }) => {
+const CardActions: React.FC<FarmCardActionsProps> = ({ farm, account }) => {
   const TranslateString = useI18n()
-  const [requestedApproval, setRequestedApproval] = useState(false)
-  const { pid, lpAddresses, type } = useFarmFromSymbol(farm.lpSymbol)
-  const { allowance, tokenBalance, stakedBalance, earnings } = useFarmUser(pid, type)
-  const web3 = useWeb3()
+  // const [requestedApproval, setRequestedApproval] = useState(false)
+  const { pid, type } = useFarmFromSymbol(farm.lpSymbol)
+  const { allowance, stakedBalance, earnings } = useFarmUser(pid, type)
+  // const web3 = useWeb3()
   const { onReward } = useHarvest(pid)
   const { onUnstake } = useUnstake(pid)
   const [pendingTx, setPendingTx] = useState(false);
-  const lpAddress = getAddress(lpAddresses)
+  // const lpAddress = getAddress(lpAddresses)
   const lpName = farm.lpSymbol.toUpperCase()
   const isApproved = account && allowance && allowance.isGreaterThan(0)
 
-  const lpContract = useMemo(() => {
-    return getContract(web3, lpAddress)
-  }, [web3, lpAddress])
+  // const lpContract = useMemo(() => {
+  //   return getContract(web3, lpAddress)
+  // }, [web3, lpAddress])
 
-  const { onApprove } = useApprove(lpContract)
+  // const { onApprove } = useApprove(lpContract)
 
-  const handleApprove = useCallback(async () => {
-    try {
-      setRequestedApproval(true)
-      await onApprove()
-      setRequestedApproval(false)
-    } catch (e) {
-      console.error(e)
-    }
-  }, [onApprove])
+  // const handleApprove = useCallback(async () => {
+  //   try {
+  //     setRequestedApproval(true)
+  //     await onApprove()
+  //     setRequestedApproval(false)
+  //   } catch (e) {
+  //     console.error(e)
+  //   }
+  // }, [onApprove])
 
   // const getMigrationTooltip = () => {
   //   return `
@@ -156,34 +156,34 @@ const CardActions: React.FC<FarmCardActionsProps> = ({ farm, account, addLiquidi
   )
 }
 
-const CustomToolTip = styled(ReactTooltip)`
-  width: 100% !important;
-  max-width: 316px !important;
-  background: ${({ theme }) => (theme.isDark ? '#383466!important' : '#fff!important')};
-  box-shadow: ${(props) => `${props.theme.card.boxShadow}!important`};
-  color: ${({ theme }) => (theme.isDark ? '#fff!important' : '#2D2159!important')};
-  opacity: 1 !important;
-  padding: 12px 16px !important;
-  font-size: 12px !important;
-  border: 1px solid #D3464E !important;
-  border-radius: 48px !important;
-  margin-top: 0px !important;
-  line-height: 16px !important;
-  letter-spacing: 0.2px;
-  > div {
-    width: 100%;
-    white-space: pre-wrap !important;
-  }
-  &:before {
-    border-top-color: #D3464E !important;
-    border-bottom-color: #D3464E !important;
-  }
-  &:after {
-    border-top-color: ${({ theme }) =>
-      theme.isDark ? '#383466!important' : '#fff!important'};
-    border-bottom-color: ${({ theme }) =>
-      theme.isDark ? '#383466!important' : '#fff!important'};
-  }
-`
+// const CustomToolTip = styled(ReactTooltip)`
+//   width: 100% !important;
+//   max-width: 316px !important;
+//   background: ${({ theme }) => (theme.isDark ? '#383466!important' : '#fff!important')};
+//   box-shadow: ${(props) => `${props.theme.card.boxShadow}!important`};
+//   color: ${({ theme }) => (theme.isDark ? '#fff!important' : '#2D2159!important')};
+//   opacity: 1 !important;
+//   padding: 12px 16px !important;
+//   font-size: 12px !important;
+//   border: 1px solid #D3464E !important;
+//   border-radius: 48px !important;
+//   margin-top: 0px !important;
+//   line-height: 16px !important;
+//   letter-spacing: 0.2px;
+//   > div {
+//     width: 100%;
+//     white-space: pre-wrap !important;
+//   }
+//   &:before {
+//     border-top-color: #D3464E !important;
+//     border-bottom-color: #D3464E !important;
+//   }
+//   &:after {
+//     border-top-color: ${({ theme }) =>
+//       theme.isDark ? '#383466!important' : '#fff!important'};
+//     border-bottom-color: ${({ theme }) =>
+//       theme.isDark ? '#383466!important' : '#fff!important'};
+//   }
+// `
 
 export default CardActions

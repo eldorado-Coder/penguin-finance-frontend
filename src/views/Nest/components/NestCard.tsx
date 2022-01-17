@@ -7,11 +7,11 @@ import { useERC20 } from 'hooks/useContract'
 import { useV2SousApprove } from 'hooks/useApprove'
 import { useV2SousStake } from 'hooks/useStake'
 import { useV2SousUnstake } from 'hooks/useUnstake'
-import useBlock from 'hooks/useBlock'
+// import useBlock from 'hooks/useBlock'
 import { PoolCategory } from 'config/constants/types'
 import { Pool } from 'state/types'
 import Card from './Card'
-import CardFooter from './CardFooter'
+// import CardFooter from './CardFooter'
 import StakeForm from './forms/StakeForm'
 import UnstakeForm from './forms/UnstakeForm'
 
@@ -59,13 +59,13 @@ const NestCard: React.FC<HarvestProps> = ({ pool }) => {
     sousId,
     stakingTokenName,
     stakingTokenAddress,
-    penguinNestsGuideLink,
+    // penguinNestsGuideLink,
     tokenDecimals,
     poolCategory,
-    totalStaked,
-    totalSupply,
-    startBlock,
-    endBlock,
+    // totalStaked,
+    // totalSupply,
+    // startBlock,
+    // endBlock,
     isFinished,
     userData,
     stakingLimit,
@@ -78,7 +78,7 @@ const NestCard: React.FC<HarvestProps> = ({ pool }) => {
   const isBnbPool = poolCategory === PoolCategory.BINANCE
   const stakingTokenContract = useERC20(stakingTokenAddress)
   const { account } = useWeb3React()
-  const block = useBlock()
+  // const block = useBlock()
   const { onApprove } = useV2SousApprove(stakingTokenContract, sousId)
   const { onStake } = useV2SousStake(sousId, isBnbPool)
   const { onUnstake } = useV2SousUnstake(sousId)
@@ -87,8 +87,8 @@ const NestCard: React.FC<HarvestProps> = ({ pool }) => {
   const stakingTokenBalance = new BigNumber(userData?.stakingTokenBalance || 0)
   const stakedBalance = new BigNumber(userData?.stakedBalance || 0)
 
-  const blocksUntilStart = Math.max(startBlock - block, 0)
-  const blocksRemaining = Math.max(endBlock - block, 0)
+  // const blocksUntilStart = Math.max(startBlock - block, 0)
+  // const blocksRemaining = Math.max(endBlock - block, 0)
   const accountHasStakedBalance = stakedBalance?.toNumber() > 0
   const needsApproval = !allowance.toNumber() && !isBnbPool
   const isCardActive = isFinished && accountHasStakedBalance

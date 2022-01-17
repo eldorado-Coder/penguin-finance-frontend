@@ -86,11 +86,11 @@ const V2PoolCard: React.FC<Props> = ({ pool }) => {
     history.push('/nest-v2')
   }
 
-  const handleMigrationGuide = () => {
-    const nestMigrationUrl =
-      'https://docs.penguinfinance.io/summary/penguin-nests-staking-and-fee-collection/ipefi-migration-guide'
-    window.open(nestMigrationUrl, '_blank')
-  }
+  // const handleMigrationGuide = () => {
+  //   const nestMigrationUrl =
+  //     'https://docs.penguinfinance.io/summary/penguin-nests-staking-and-fee-collection/ipefi-migration-guide'
+  //   window.open(nestMigrationUrl, '_blank')
+  // }
 
   const handleViewNestsGitbook = () => {
     window.open(

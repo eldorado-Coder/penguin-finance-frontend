@@ -11,7 +11,7 @@ import CurrentBlockWrapper from 'components/CurrentBlockWrapper'
 import Footer from 'components/Footer/Footer'
 import usePersistConnect from 'hooks/usePersistConnect'
 import history from './routerHistory'
-import LaunchpadVideo from './views/LaunchpadVideo'
+// import LaunchpadVideo from './views/LaunchpadVideo'
 
 // Route-based code splitting
 // Only pool is included in the main bundle because of it's the most visited page'
@@ -20,14 +20,15 @@ const HomeV2 = lazy(() => import('./views/HomeV2'))
 const Farms = lazy(() => import('./views/Farms'))
 const FarmsV2 = lazy(() => import('./views/FarmsV2'))
 const Arena = lazy(() => import('./views/Arena'))
-const Launchpad = lazy(() => import('./views/Launchpad'))
-const LaunchpadWithVideo = lazy(() => import('./views/LaunchpadVideo'))
+// const Launchpad = lazy(() => import('./views/Launchpad'))
+// const LaunchpadWithVideo = lazy(() => import('./views/LaunchpadVideo'))
 const LaunchpadDistribution = lazy(() => import('./views/LaunchpadDistribution'))
 const LaunchpadBoofi = lazy(() => import('./views/LaunchpadBoofi'))
 const LaunchpadV2 = lazy(() => import('./views/LaunchpadV2'))
 const LaunchpadBoofiV2 = lazy(() => import('./views/LaunchpadBoofiV2'))
 const LaunchpadSherpaV2 = lazy(() => import('./views/LaunchpadSherpaV2'))
 const LaunchpadKitty = lazy(() => import('./views/LaunchpadKitty'))
+const LaunchpadKassandra = lazy(() => import('./views/LaunchpadKassandra'))
 const Emperor = lazy(() => import('./views/Emperor'))
 const EmperorV2 = lazy(() => import('./views/EmperorV2'))
 const Club = lazy(() => import('./views/Club'))
@@ -126,6 +127,9 @@ const App: React.FC = () => {
             </Route>
             <Route path="/launchpad-kitty">
               <LaunchpadKitty />
+            </Route>
+            <Route path="/launchpad-kassandra">
+              <LaunchpadKassandra />
             </Route>
             <Route path="/boofi-launchpad">
               <LaunchpadBoofi />

@@ -2,7 +2,7 @@ import launchpadABI from 'config/abi/launchpad.json'
 import { AbiItem } from 'web3-utils'
 import xPefiAbi from 'config/abi/xPefi.json'
 import multicall from 'utils/multicall'
-import { getLaunchpadAddress, getXPefiAddress, getTestXPefiAddress } from 'utils/addressHelpers'
+import { getLaunchpadAddress, getTestXPefiAddress } from 'utils/addressHelpers'
 import BigNumber from 'bignumber.js'
 import { getWeb3 } from 'utils/web3'
 

@@ -1,7 +1,7 @@
 import Axios from 'axios'
-import BigNumber from 'bignumber.js'
+// import BigNumber from 'bignumber.js'
 import { NEST_APR_PER_DAY, SECONDS_PER_YEAR, DAYS_PER_YEAR, PANGOLIN_REWARD_POOL_API } from 'config'
-import { getPairDailyVolume } from 'subgraph/utils'
+// import { getPairDailyVolume } from 'subgraph/utils'
 
 const roundToTwoDp = (number) => Math.round(number * 100) / 100
 

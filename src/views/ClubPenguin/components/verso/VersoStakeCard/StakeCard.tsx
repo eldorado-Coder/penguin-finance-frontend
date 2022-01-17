@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
 import { Text, Flex, Button } from 'penguinfinance-uikit2'
@@ -15,7 +15,7 @@ const StakeCard = () => {
   const clubFarms = useClubPenguinFarms(account)
   const activeFarm = clubFarms[1]
   const { userData, rewardStartTimestamp, rewardEndTimestamp } = activeFarm
-  const iPEFIBalance = userData ? new BigNumber(userData.tokenBalance) : new BigNumber(0)
+  // const iPEFIBalance = userData ? new BigNumber(userData.tokenBalance) : new BigNumber(0)
   const stakedBalance = userData ? new BigNumber(userData.stakedBalance) : new BigNumber(0)
 
   const currentTimestamp = Date.now()
