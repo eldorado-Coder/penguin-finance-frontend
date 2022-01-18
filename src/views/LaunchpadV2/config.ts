@@ -63,7 +63,7 @@ const launchpadIDOs = [
     participants: 0,
     startDate: '01.18.2022',
     startTimestamp: 1642536000,
-    endTimestamp: 1643068800,
+    endTimestamp: 1643155200,
     tokenPrice: 0.7,
     soldTokenAmount: '0',
     distributedTokenAmount: '500K',

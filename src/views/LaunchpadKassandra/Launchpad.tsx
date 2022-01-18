@@ -7,7 +7,7 @@ import ProjectDetailsCardSummary from './components/ProjectDetailsCardRegistrati
 import ProjectDetailsCardDistribution from './components/ProjectDetailsCardDistribution'
 import IDOData from './config'
 
-const distributionEndTimeStamp = 1643068800
+const distributionEndTimeStamp = 1643155200
 
 const Launchpad: React.FC = () => {
   const isEnded = Math.floor(Date.now() / 1000) > distributionEndTimeStamp

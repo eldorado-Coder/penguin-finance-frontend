@@ -17,7 +17,7 @@ const TOKEN_INFO = [
   { label: 'INITIAL SUPPLY', value: '500,000' },
   { label: 'INITIAL MARKET CAP', value: '$350,000' },
   { label: 'TOKEN TYPE', value: 'ETF and Fund Management' },
-  { label: 'TOKEN ADDRESS ', value: '0xbca7f1998Dc9FFB70b086543a808960a460aBcA7', type: 'address' },
+  // { label: 'TOKEN ADDRESS ', value: '0xbca7f1998Dc9FFB70b086543a808960a460aBcA7', type: 'address' },
 ]
 
 const LAUNCHPAD_INFO = [
@@ -164,14 +164,15 @@ const ProjectDetailsCardDistribution = () => {
                   {tokenEconomic.label}
                 </Text>
                 <TokenInfoValue
-                  onClick={tokenEconomic.type === 'address' && handleViewToken(tokenEconomic.value)}
-                  clickable={tokenEconomic.type === 'address'}
+                  // onClick={tokenEconomic.type === 'address' && handleViewToken(tokenEconomic.value)}
+                  // clickable={tokenEconomic.type === 'address'}
                   color="#292929"
                   fontSize="16px"
                   lineHeight="32px"
                   fontWeight={600}
-                >
-                  {tokenEconomic.type === 'address' ? getEllipsisAddress(tokenEconomic.value) : tokenEconomic.value}
+                > 
+                  {tokenEconomic.value}
+                  {/* {tokenEconomic.type === 'address' ? getEllipsisAddress(tokenEconomic.value) : tokenEconomic.value} */}
                 </TokenInfoValue>
               </TokenEconomic>
             )
