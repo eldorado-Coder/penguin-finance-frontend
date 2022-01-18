@@ -16,7 +16,7 @@ const TOKEN_INFO = [
   { label: 'TOTAL SUPPLY', value: '10,000,000' },
   { label: 'INITIAL SUPPLY', value: '500,000' },
   { label: 'INITIAL MARKET CAP', value: '$350,000' },
-  { label: 'TOKEN TYPE', value: 'Betting' },
+  { label: 'TOKEN TYPE', value: 'ETF and Fund Management' },
   { label: 'TOKEN ADDRESS ', value: '0xbca7f1998Dc9FFB70b086543a808960a460aBcA7', type: 'address' },
 ]
 
@@ -198,7 +198,7 @@ const ProjectDetailsCardRegistration = () => {
           <AllocationInfo>
             <Flex>
               <img src={`${process.env.PUBLIC_URL}/images/ido/tier.svg`} alt="your-tier" />
-              <Text color={isDark ? '#ffffff' : '#292929'} fontSize="34px" fontWeight={800} ml="10px">{`Your Tier : ${
+              <Text color={isDark ? '#ffffff' : '#292929'} fontSize="34px" fontWeight={800} ml="10px">{`Your Estimated Tier : ${
                 yourTier === 'none_tier' ? 'None' : yourTier
               }`}</Text>
             </Flex>

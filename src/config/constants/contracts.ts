@@ -235,7 +235,8 @@ export default {
   // launchpad - Kassandra
   launchPadKassandra: {
     43113: '',
-    43114: '0xcfd439c293dbd672b595ea584fe4a8d7904a2201',
+    43114: '0x1ee646289dd3fa285d23fe82871c3459ad752ca1', 
+    // '0xcfd439c293dbd672b595ea584fe4a8d7904a2201',
   },
   kassandraBoosterRocket: {
     43113: '',

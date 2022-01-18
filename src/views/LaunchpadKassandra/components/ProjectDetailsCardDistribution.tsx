@@ -16,7 +16,7 @@ const TOKEN_INFO = [
   { label: 'TOTAL SUPPLY', value: '500,000' },
   { label: 'INITIAL SUPPLY', value: '500,000' },
   { label: 'INITIAL MARKET CAP', value: '$350,000' },
-  { label: 'TOKEN TYPE', value: 'Betting' },
+  { label: 'TOKEN TYPE', value: 'ETF and Fund Management' },
   { label: 'TOKEN ADDRESS ', value: '0xbca7f1998Dc9FFB70b086543a808960a460aBcA7', type: 'address' },
 ]
 
@@ -190,7 +190,7 @@ const ProjectDetailsCardDistribution = () => {
               Allocations & Tier
             </HeaderTitle>
             <TierText color={isDark ? '#ffffff' : '#292929'} fontSize="34px" fontWeight={800}>
-              <span>{`Your Tier : `}</span>
+              <span>{`Your Estimated Tier : `}</span>
               <TierName>{`${yourTier === 'none_tier' ? 'None' : yourTier}`}</TierName>
             </TierText>
             <AllocationLogo src={`${process.env.PUBLIC_URL}/images/ido/tiers/${yourTier}.svg`} alt="allocation" />
