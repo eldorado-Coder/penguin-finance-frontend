@@ -92,7 +92,7 @@ const IDODetail = ({ idoData, isEnded }) => {
   }
   const staked = iPefiBalanceInWallet.plus(getIPefiStakedBalanceInClubs())
   const launchpadStaked = getBalanceNumber(new BigNumber(staked))
-  const hasTier = launchpadStaked >= 250
+  const hasTier = launchpadStaked >= 500
 
   const handleRegister = async () => {
     setPendingTx(true)
@@ -128,7 +128,8 @@ const IDODetail = ({ idoData, isEnded }) => {
           </PriceText>
         )}
         <HeaderTitle fontSize="40px" fontWeight={800} color="white" mt="40px">
-          Revolutionizing the world of decentralized betting
+          {/* Revolutionizing the world of decentralized betting */}
+          Tokenized data-driven investment funds
         </HeaderTitle>
         <Description fontSize="16px" lineHeight="21px" color="white" mt="20px">
           Kassandra is an audacious project to delegate money management in a decentralized, efficient, and customizable way, working as a marketplace for tokenized and data-driven investment strategies. 
@@ -138,7 +139,7 @@ const IDODetail = ({ idoData, isEnded }) => {
         </Description> */}
         <TokenLinks mt="40px" alignItems="center">
           {isEnded ? (
-            <RegisterButton onClick={handleAddToken}>Add KASS to Metamask</RegisterButton>
+            <RegisterButton onClick={handleAddToken}>Add KACY to Metamask</RegisterButton>
           ) : (
             <RegisterButton
               disabled={registerDisabled}

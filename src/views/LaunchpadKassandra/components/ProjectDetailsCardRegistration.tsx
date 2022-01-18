@@ -13,7 +13,7 @@ import useTokenBalance from 'hooks/useTokenBalance'
 const TOKEN_INFO = [
   { label: 'Token NAME', value: 'Kassandra' },
   { label: 'TOKEN SYMBOL', value: 'KACY' },
-  { label: 'TOTAL SUPPLY', value: '500,000' },
+  { label: 'TOTAL SUPPLY', value: '10,000,000' },
   { label: 'INITIAL SUPPLY', value: '500,000' },
   { label: 'INITIAL MARKET CAP', value: '$350,000' },
   { label: 'TOKEN TYPE', value: 'Betting' },
