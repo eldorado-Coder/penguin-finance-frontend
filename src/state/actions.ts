@@ -42,6 +42,10 @@ export { fetchBoosterRocketUserDataAsync as fetchBoofiBoosterRocketUserDataAsync
 export { fetchLaunchpadKittyUserDataAsync, fetchLaunchpadKittyGlobalDataAsync } from './launchpadKitty'
 export { fetchBoosterRocketUserDataAsync as fetchKittyBoosterRocketUserDataAsync } from './kittyBoosterRocket'
 
+// launchpad - kassandra
+export { fetchLaunchpadKassandraUserDataAsync, fetchLaunchpadKassandraGlobalDataAsync } from './launchpadKassandra'
+export { fetchBoosterRocketUserDataAsync as fetchKassandraBoosterRocketUserDataAsync } from './kassandraBoosterRocket'
+
 // v2 migrator
 export { fetchNestMigratorUserDataAsync } from './nestMigrator'
 

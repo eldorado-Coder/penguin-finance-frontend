@@ -32,6 +32,10 @@ import {
   getKittyLaunchpadAddress,
   getKittyBoosterRocketAddress,
   getKittyBoosterRocketPayTokenAddress,
+  // launchpad - kassandra
+  getKassandraLaunchpadAddress,
+  getKassandraBoosterRocketAddress,
+  getKassandraBoosterRocketPayTokenAddress,
   // v2
   getNestMigratorAddress,
   getV2NestAddress,
@@ -68,6 +72,8 @@ import boosterRocket from 'config/abi/boosterRocket.json'
 import boosterRocketPefi from 'config/abi/launchpad/pefi.json'
 import kittyLaunchpad from 'config/abi/launchpadKitty.json'
 import kittyBoosterRocket from 'config/abi/kittyBoosterRocket.json'
+import kassandraLaunchpad from 'config/abi/launchpadKassandra.json'
+import kassandraBoosterRocket from 'config/abi/kassandraBoosterRocket.json'
 // v2
 import nestMigratorAbi from 'config/abi/nest_migrate.json'
 import v2NestAbi from 'config/abi/v2_nest.json'
@@ -248,6 +254,22 @@ export const useKittyBoosterRocket = () => {
 export const useKittyBoosterRocketPayToken = () => {
   const abi = (boosterRocketPefi as unknown) as AbiItem
   return useContract(abi, getKittyBoosterRocketPayTokenAddress())
+}
+
+// launchpad - kassandra
+export const useKassandraLaunchPad = () => {
+  const abi = (kassandraLaunchpad as unknown) as AbiItem
+  return useContract(abi, getKassandraLaunchpadAddress())
+}
+
+export const useKassandraBoosterRocket = () => {
+  const abi = (kassandraBoosterRocket as unknown) as AbiItem
+  return useContract(abi, getKassandraBoosterRocketAddress())
+}
+
+export const useKassandraBoosterRocketPayToken = () => {
+  const abi = (boosterRocketPefi as unknown) as AbiItem
+  return useContract(abi, getKassandraBoosterRocketPayTokenAddress())
 }
 
 // v2

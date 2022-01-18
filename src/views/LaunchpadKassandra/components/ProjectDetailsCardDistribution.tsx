@@ -4,7 +4,7 @@ import { Text, Flex, Button, useMatchBreakpoints } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import BigNumber from 'bignumber.js'
 import Page from 'components/layout/Page'
-import { useKittyLaunchpad, useClubPenguinFarms } from 'state/hooks'
+import { useKassandraLaunchpad, useClubPenguinFarms } from 'state/hooks'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { getIPefiAddress } from 'utils/addressHelpers'
 import useTokenBalance from 'hooks/useTokenBalance'
@@ -16,8 +16,8 @@ const TOKEN_INFO = [
   { label: 'TOTAL SUPPLY', value: '500,000' },
   { label: 'INITIAL SUPPLY', value: '500,000' },
   { label: 'INITIAL MARKET CAP', value: '$350,000' },
-  { label: 'TOKEN TYPE', value: 'Betting' },
-  { label: 'TOKEN ADDRESS ', value: '0xbca7f1998Dc9FFB70b086543a808960a460aBcA7', type: 'address' },
+  { label: 'TOKEN TYPE', value: 'ETF and Fund Management' },
+  // { label: 'TOKEN ADDRESS ', value: '0xbca7f1998Dc9FFB70b086543a808960a460aBcA7', type: 'address' },
 ]
 
 const LAUNCHPAD_INFO = [
@@ -55,19 +55,19 @@ const TABS = [
 
 const TIERS = [
   {
-    label: 'GrumpyCat',
-    imageUrl: 'GrumpyCat.svg',
-    requiredIPEFI: 250,
+    label: 'Poseidon',
+    imageUrl: 'Poseidon.svg',
+    requiredIPEFI: 500,
   },
   {
-    label: 'AstroCat',
-    imageUrl: 'AstroCat.svg',
-    requiredIPEFI: 6000,
+    label: 'Hades',
+    imageUrl: 'Hades.svg',
+    requiredIPEFI: 10000,
   },
   {
-    label: 'NyanCat',
-    imageUrl: 'NyanCat.svg',
-    requiredIPEFI: 60000,
+    label: 'Zeus',
+    imageUrl: 'Zeus.svg',
+    requiredIPEFI: 100000,
   },
 ]
 
@@ -80,7 +80,7 @@ const ProjectDetailsCardDistribution = () => {
   const { account } = useWeb3React()
   const { isDark } = useTheme()
   const { isXs, isSm, isXl } = useMatchBreakpoints()
-  const { allocation, yourPenguinTier, registeredPenguins } = useKittyLaunchpad(account)
+  const { allocation, yourPenguinTier, registeredPenguins } = useKassandraLaunchpad(account)
   // iPefi balance in wallet
   const iPefiBalanceInWallet = useTokenBalance(getIPefiAddress())
   // iPefi staked balance in clubs
@@ -164,14 +164,15 @@ const ProjectDetailsCardDistribution = () => {
                   {tokenEconomic.label}
                 </Text>
                 <TokenInfoValue
-                  onClick={tokenEconomic.type === 'address' && handleViewToken(tokenEconomic.value)}
-                  clickable={tokenEconomic.type === 'address'}
+                  // onClick={tokenEconomic.type === 'address' && handleViewToken(tokenEconomic.value)}
+                  // clickable={tokenEconomic.type === 'address'}
                   color="#292929"
                   fontSize="16px"
                   lineHeight="32px"
                   fontWeight={600}
-                >
-                  {tokenEconomic.type === 'address' ? getEllipsisAddress(tokenEconomic.value) : tokenEconomic.value}
+                > 
+                  {tokenEconomic.value}
+                  {/* {tokenEconomic.type === 'address' ? getEllipsisAddress(tokenEconomic.value) : tokenEconomic.value} */}
                 </TokenInfoValue>
               </TokenEconomic>
             )
@@ -190,7 +191,7 @@ const ProjectDetailsCardDistribution = () => {
               Allocations & Tier
             </HeaderTitle>
             <TierText color={isDark ? '#ffffff' : '#292929'} fontSize="34px" fontWeight={800}>
-              <span>{`Your Tier : `}</span>
+              <span>{`Your Estimated Tier : `}</span>
               <TierName>{`${yourTier === 'none_tier' ? 'None' : yourTier}`}</TierName>
             </TierText>
             <AllocationLogo src={`${process.env.PUBLIC_URL}/images/ido/tiers/${yourTier}.svg`} alt="allocation" />

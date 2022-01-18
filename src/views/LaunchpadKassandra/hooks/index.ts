@@ -1,36 +1,36 @@
 import { useCallback } from 'react'
 import { useWeb3React } from '@web3-react/core'
 import { useDispatch } from 'react-redux'
-import { useKittyLaunchPad, useKittyBoosterRocket } from 'hooks/useContract'
-import { fetchLaunchpadKittyUserDataAsync, fetchKittyBoosterRocketUserDataAsync } from 'state/actions'
-import { kittyLaunchpadRegister, kittyBoosterRocketPurchaseTokens } from 'utils/callHelpers'
+import { useKassandraLaunchPad, useKassandraBoosterRocket } from 'hooks/useContract'
+import { fetchLaunchpadKassandraUserDataAsync, fetchKassandraBoosterRocketUserDataAsync } from 'state/actions'
+import { kassandraLaunchpadRegister, kassandraBoosterRocketPurchaseTokens } from 'utils/callHelpers'
 
-export const useKittyLaunchpadRegister = () => {
+export const useKassandraLaunchpadRegister = () => {
   const dispatch = useDispatch()
   const { account } = useWeb3React()
-  const kittyLaunchpadContract = useKittyLaunchPad()
+  const kassandraLaunchpadContract = useKassandraLaunchPad()
 
   const handleRegister = useCallback(async () => {
-    const txHash = await kittyLaunchpadRegister(kittyLaunchpadContract, account)
-    dispatch(fetchLaunchpadKittyUserDataAsync(account))
+    const txHash = await kassandraLaunchpadRegister(kassandraLaunchpadContract, account)
+    dispatch(fetchLaunchpadKassandraUserDataAsync(account))
     console.info(txHash)
-  }, [account, dispatch, kittyLaunchpadContract])
+  }, [account, dispatch, kassandraLaunchpadContract])
 
   return { onRegister: handleRegister }
 }
 
-export const useKittyLaunchpadBoosterRocket = () => {
+export const useKassandraLaunchpadBoosterRocket = () => {
   const dispatch = useDispatch()
   const { account } = useWeb3React()
-  const kittyBoosterRocketContract = useKittyBoosterRocket()
+  const kassandraBoosterRocketContract = useKassandraBoosterRocket()
 
   const handlePurchase = useCallback(
     async (amount) => {
-      const txHash = await kittyBoosterRocketPurchaseTokens(kittyBoosterRocketContract, amount, account)
-      dispatch(fetchKittyBoosterRocketUserDataAsync(account))
+      const txHash = await kassandraBoosterRocketPurchaseTokens(kassandraBoosterRocketContract, amount, account)
+      dispatch(fetchKassandraBoosterRocketUserDataAsync(account))
       console.info(txHash)
     },
-    [account, dispatch, kittyBoosterRocketContract],
+    [account, dispatch, kassandraBoosterRocketContract],
   )
 
   return { onPurchase: handlePurchase }
