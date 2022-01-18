@@ -30,7 +30,11 @@ import {
   // launchpad - kitty
   fetchLaunchpadKittyUserDataAsync,
   fetchLaunchpadKittyGlobalDataAsync,
-  fetchKittyBoosterRocketUserDataAsync,
+  fetchKittyBoosterRocketUserDataAsync,  
+  // launchpad - kassandra
+  fetchLaunchpadKassandraUserDataAsync,
+  fetchLaunchpadKassandraGlobalDataAsync,
+  fetchKassandraBoosterRocketUserDataAsync,
   // emperor
   fetchEmperor,
   updateLaunchpadTierHurdles,
@@ -79,6 +83,7 @@ import {
   LaunchpadBoofiState,
   BoosterRocketState,
   LaunchpadKittyState,
+  LaunchpadKassandraState,
   // v2
   NestMigratorState,
   UserCollectiblesState,
@@ -344,6 +349,38 @@ export const useKittyBoosterRocket = (account): BoosterRocketState => {
   }, [account, dispatch, fastRefresh])
 
   const boosterRocket = useSelector((state: State) => state.kittyBoosterRocket)
+  return boosterRocket
+}
+
+// launchpad - Kassandra
+export const useKassandraLaunchpad = (account): LaunchpadKassandraState => {
+  const { fastRefresh } = useRefresh()
+  const dispatch = useDispatch()
+  useEffect(() => {
+    const fetchLaunchpadData = async () => {
+      dispatch(fetchLaunchpadKassandraGlobalDataAsync())
+      dispatch(fetchLaunchpadKassandraUserDataAsync(account))
+    }
+
+    fetchLaunchpadData()
+  }, [account, dispatch, fastRefresh])
+
+  const launchpad = useSelector((state: State) => state.launchpadKassandra)
+  return launchpad
+}
+
+export const useKassandraBoosterRocket = (account): BoosterRocketState => {
+  const { fastRefresh } = useRefresh()
+  const dispatch = useDispatch()
+  useEffect(() => {
+    const fetchBoosterRocketData = async () => {
+      dispatch(fetchKassandraBoosterRocketUserDataAsync(account))
+    }
+
+    fetchBoosterRocketData()
+  }, [account, dispatch, fastRefresh])
+
+  const boosterRocket = useSelector((state: State) => state.kassandraBoosterRocket)
   return boosterRocket
 }
 

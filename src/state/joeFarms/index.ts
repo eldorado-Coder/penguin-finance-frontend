@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
 import farmsConfig from 'config/constants/lydiaFarms'
-import { fetchGlobalData, fetchFarms } from './fetchFarms'
+import { fetchGlobalData } from './fetchFarms'
 import { JoeFarmsState, Farm } from '../types'
 
 const initialState: JoeFarmsState = {

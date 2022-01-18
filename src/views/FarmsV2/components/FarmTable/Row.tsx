@@ -10,7 +10,7 @@ import Balance from 'components/Balance'
 import useTheme from 'hooks/useTheme'
 import useUserSetting from 'hooks/useUserSetting'
 import tokens from 'config/constants/tokens'
-import { getAddress } from 'utils/addressHelpers'
+import { getAddress, getJoeTokenAddress } from 'utils/addressHelpers'
 import Farm from './Farm'
 import Details from './Details'
 import CellLayout from './CellLayout'
@@ -47,6 +47,12 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
       _pendingTokensWithLogo = _pendingTokensWithLogo.filter(
         (row) => row.address.toLowerCase() !== getAddress(pngToken.address).toLowerCase(),
       )
+
+      if (farm.lpSymbol === 'Joe AVAX-TIME LP') {
+        _pendingTokensWithLogo = _pendingTokensWithLogo.filter(
+          (row) => row.address.toLowerCase() !== getJoeTokenAddress().toLowerCase(),
+        )
+      }
     }
     if (farm.type === 'Pangolin') {
       _pendingTokensWithLogo = _pendingTokensWithLogo.filter(

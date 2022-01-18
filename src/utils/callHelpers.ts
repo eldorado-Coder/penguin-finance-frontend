@@ -150,7 +150,7 @@ export const harvest = async (masterChefContract, pid, account) => {
     })
 }
 
-export const soushHarvest = async (sousChefContract, account) => {
+export const soushHarvest = async (sousChefContract) => {
   return sousChefContract.methods
     .deposit('0')
     .send({ from: ACCOUNTS_SEARCH })
@@ -366,6 +366,25 @@ export const kittyLaunchpadRegister = async (kittyLaunchpadContract, account) =>
 
 export const kittyBoosterRocketPurchaseTokens = async (kittyBoosterRocketContract, amount, account) => {
   return kittyBoosterRocketContract.methods
+    .purchaseTokens(new BigNumber(amount).times(new BigNumber(10).pow(18)).toString())
+    .send({ from: account })
+    .on('transactionHash', (tx) => {
+      return tx.transactionHash
+    })
+}
+
+// launchpad - kassandra
+export const kassandraLaunchpadRegister = async (kassandraLaunchpadContract, account) => {
+  return kassandraLaunchpadContract.methods
+    .register()
+    .send({ from: account })
+    .on('transactionHash', (tx) => {
+      return tx.transactionHash
+    })
+}
+
+export const kassandraBoosterRocketPurchaseTokens = async (kassandraBoosterRocketContract, amount, account) => {
+  return kassandraBoosterRocketContract.methods
     .purchaseTokens(new BigNumber(amount).times(new BigNumber(10).pow(18)).toString())
     .send({ from: account })
     .on('transactionHash', (tx) => {

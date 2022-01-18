@@ -1,30 +1,30 @@
 import React from 'react'
 import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
-import { BaseLayout, Flex, useMatchBreakpoints } from 'penguinfinance-uikit2'
+import { BaseLayout, Flex } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
-import useTheme from 'hooks/useTheme'
+// import useTheme from 'hooks/useTheme'
 import { usePools, useV2Pools } from 'state/hooks'
 import Page from 'components/layout/Page'
 import ArtworkCard from 'views/HomeV2/components/ArtworkCard'
 import HarvestFarmCard from 'views/HomeV2/components/HarvestFarmCard'
-import IglooCard from 'views/HomeV2/components/IglooCard'
-import EarnAPYCard from 'views/HomeV2/components/EarnAPYCard'
+// import IglooCard from 'views/HomeV2/components/IglooCard'
+// import EarnAPYCard from 'views/HomeV2/components/EarnAPYCard'
 import V2PoolCard from 'views/Pools/components/V2PoolCard'
 import PefiStats from 'views/HomeV2/components/PefiStats'
 import ComingSoonCard from 'views/HomeV2/components/ComingSoonCard'
 //
-import ArenaCard from 'views/HomeV2/components/ArenaCard'
+// import ArenaCard from 'views/HomeV2/components/ArenaCard'
 import EnterRushCard from 'views/HomeV2/components/EnterRushCard'
-import GetSmartCard from 'views/HomeV2/components/GetSmartCard'
+// import GetSmartCard from 'views/HomeV2/components/GetSmartCard'
 import LearnMorePefiCard from 'views/HomeV2/components/LearnMorePefiCard'
 
 const Home: React.FC = () => {
   const { account } = useWeb3React()
   const v1Pools = usePools(account)
   const v2Pools = useV2Pools(account)
-  const { isXl } = useMatchBreakpoints()
-  const isMobile = !isXl
+  // const { isXl } = useMatchBreakpoints()
+  // const isMobile = !isXl
 
   const v1PoolsWithApy = v1Pools.map((pool) => {
     return {
@@ -80,52 +80,52 @@ const StyledPage = styled(Page)`
   max-width: 1200px;
 `
 
-const Hero = styled.div<{ isMobile?: boolean }>`
-  position: relative;
-  align-items: center;
-  background-repeat: no-repeat;
-  background-position: center center;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  margin: auto;
-  margin-bottom: ${({ isMobile }) => (!isMobile ? '40px' : '16px')};
-  text-align: center;
-  height: 80px;
+// const Hero = styled.div<{ isMobile?: boolean }>`
+//   position: relative;
+//   align-items: center;
+//   background-repeat: no-repeat;
+//   background-position: center center;
+//   display: flex;
+//   justify-content: center;
+//   flex-direction: column;
+//   margin: auto;
+//   margin-bottom: ${({ isMobile }) => (!isMobile ? '40px' : '16px')};
+//   text-align: center;
+//   height: 80px;
 
-  h1 {
-    color: white;
-    font-weight: 500;
-    font-size: 44px;
-    margin-bottom: 10px;
-    z-index: 1;
-  }
-  > div {
-    color: white;
-    z-index: 1;
-  }
+//   h1 {
+//     color: white;
+//     font-weight: 500;
+//     font-size: 44px;
+//     margin-bottom: 10px;
+//     z-index: 1;
+//   }
+//   > div {
+//     color: white;
+//     z-index: 1;
+//   }
 
-  ${({ theme }) => theme.mediaQueries.sm} {
-    height: 180px;
-  }
+//   ${({ theme }) => theme.mediaQueries.sm} {
+//     height: 180px;
+//   }
 
-  ${({ theme }) => theme.mediaQueries.lg} {
-    background-position: center center;
-    height: 200px;
-  }
-`
+//   ${({ theme }) => theme.mediaQueries.lg} {
+//     background-position: center center;
+//     height: 200px;
+//   }
+// `
 
-const HeroBgImageContainer = styled.div`
-  position: absolute;
-  width: 103%;
-`
+// const HeroBgImageContainer = styled.div`
+//   position: absolute;
+//   width: 103%;
+// `
 
-const HeroBgImage = styled.img<{ isMobile?: boolean }>`
-  z-index: -1;
-  object-fit: ${({ isMobile }) => !isMobile && 'cover'};
-  min-height: ${({ isMobile }) => !isMobile && '140px'};
-  border-radius: 20px;
-`
+// const HeroBgImage = styled.img<{ isMobile?: boolean }>`
+//   z-index: -1;
+//   object-fit: ${({ isMobile }) => !isMobile && 'cover'};
+//   min-height: ${({ isMobile }) => !isMobile && '140px'};
+//   border-radius: 20px;
+// `
 
 const Cards = styled(BaseLayout)`
   align-items: stretch;
@@ -179,19 +179,19 @@ const PoolCardWrapper = styled.div`
   }
 `
 
-const HomeBgContainer = styled.div`
-  background-image: ${({ theme }) =>
-    theme.isDark
-      ? `url('/images/home-v2/home_background_dark.png')`
-      : `url('/images/home-v2/home_background_light.png')`};
-  background-repeat: repeat;
-  background-size: contain;
-  position: absolute;
-  top: 0px;
-  bottom: 0px;
-  right: 0px;
-  left: 0px;
-  z-index: -1;
-`
+// const HomeBgContainer = styled.div`
+//   background-image: ${({ theme }) =>
+//     theme.isDark
+//       ? `url('/images/home-v2/home_background_dark.png')`
+//       : `url('/images/home-v2/home_background_light.png')`};
+//   background-repeat: repeat;
+//   background-size: contain;
+//   position: absolute;
+//   top: 0px;
+//   bottom: 0px;
+//   right: 0px;
+//   left: 0px;
+//   z-index: -1;
+// `
 
 export default Home

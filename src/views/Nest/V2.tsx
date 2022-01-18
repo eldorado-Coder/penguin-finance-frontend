@@ -13,7 +13,7 @@ import { useV2Pools, usePricePefiUsdt } from 'state/hooks'
 import { getPefiAddress } from 'utils/addressHelpers'
 import roundDown from 'utils/roundDown'
 import CardValue from 'components/CardValue'
-import SvgIcon from 'components/SvgIcon'
+// import SvgIcon from 'components/SvgIcon'
 import LineChart from 'components/LineChart'
 import { getPenguinFirstStakeTime } from 'subgraph/utils'
 import NestCard from './components/NestCard'
@@ -53,8 +53,8 @@ const NestV2: React.FC = () => {
       }))) ||
     []
   const totalProfitAmount = account ? roundDown(getBalanceNumber(new BigNumber(userData?.profitAmount || 0)), 2) : 0
-  const totalDepositAmount = account ? roundDown(getBalanceNumber(new BigNumber(userData?.depositAmount || 0)), 2) : 0
-  const totalWithdrawAmount = account ? roundDown(getBalanceNumber(new BigNumber(userData?.withdrawAmount || 0)), 2) : 0
+  // const totalDepositAmount = account ? roundDown(getBalanceNumber(new BigNumber(userData?.depositAmount || 0)), 2) : 0
+  // const totalWithdrawAmount = account ? roundDown(getBalanceNumber(new BigNumber(userData?.withdrawAmount || 0)), 2) : 0
   const stakedPefiRatioInNest = nestTotalSupply > 0 ? (100 * getBalanceNumber(stakedBalance)) / nestTotalSupply : 0
 
   const handleLearnMore = () => {
@@ -72,9 +72,9 @@ const NestV2: React.FC = () => {
     fetchStakedPefiBalance()
   }, [account, fetchStakedPefiBalance])
 
-  const onClickAdCard = () => {
-    window.open('https://twitter.com/penguin_defi/status/1431640280063750155', '_blank')
-  }
+  // const onClickAdCard = () => {
+  //   window.open('https://twitter.com/penguin_defi/status/1431640280063750155', '_blank')
+  // }
 
   const now = dayjs().unix()
   const diffDays = firstStakedTime > 0 ? Math.round((now - firstStakedTime) / 86400) : 0
@@ -371,23 +371,23 @@ const APYCard = styled(Card)`
   }
 `
 
-const AdCard = styled(Card)`
-  background: ${({ theme }) => (theme.isDark ? '#30264F' : theme.colors.secondary)};
-  border-radius: 8px;
-  margin-top: 16px;
-  background-size: cover;
-  background-position: center center;
-  background-image: url('/images/pools/boo_finance_intro.png');
-  min-height: 180px;
-  cursor: pointer;
-  ${({ theme }) => theme.mediaQueries.sm} {
-    min-height: 300px;
-  }
-  ${({ theme }) => theme.mediaQueries.md} {
-    max-width: 460px;
-    min-height: 224px;
-  }
-`
+// const AdCard = styled(Card)`
+//   background: ${({ theme }) => (theme.isDark ? '#30264F' : theme.colors.secondary)};
+//   border-radius: 8px;
+//   margin-top: 16px;
+//   background-size: cover;
+//   background-position: center center;
+//   background-image: url('/images/pools/boo_finance_intro.png');
+//   min-height: 180px;
+//   cursor: pointer;
+//   ${({ theme }) => theme.mediaQueries.sm} {
+//     min-height: 300px;
+//   }
+//   ${({ theme }) => theme.mediaQueries.md} {
+//     max-width: 460px;
+//     min-height: 224px;
+//   }
+// `
 
 const RatioCard = styled(Card)`
   background: ${({ theme }) => theme.colors.red};
@@ -490,14 +490,14 @@ const BalanceTextSmall = styled.div`
   }
 `
 
-const InfoIconWrapper = styled.div`
-  svg {
-    cursor: pointer;
-    path {
-      fill: white;
-    }
-  }
-`
+// const InfoIconWrapper = styled.div`
+//   svg {
+//     cursor: pointer;
+//     path {
+//       fill: white;
+//     }
+//   }
+// `
 
 const StyledCard = styled(Card)`
   border-radius: 8px;

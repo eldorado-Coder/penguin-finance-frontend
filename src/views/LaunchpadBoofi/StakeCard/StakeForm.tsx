@@ -74,7 +74,7 @@ const StakeForm: React.FC<StakeFormProps> = ({ max, onConfirm, tokenName = '', a
     window.open(PANGOLIN_PEFI_LINK, '_blank')
   }
 
-  const canStake = !pendingTx && Number(val) > 0
+  // const canStake = !pendingTx && Number(val) > 0
 
   return (
     <>

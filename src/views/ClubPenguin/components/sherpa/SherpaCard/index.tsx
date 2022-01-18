@@ -3,50 +3,52 @@ import styled from 'styled-components'
 import { Text, Flex, Button, useMatchBreakpoints } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import BigNumber from 'bignumber.js'
-import { useClubPenguinFarms, usePricePefiUsdt, useV2Pools } from 'state/hooks'
+import { useClubPenguinFarms } from 'state/hooks'
+// import { useClubPenguinFarms, usePricePefiUsdt, useV2Pools } from 'state/hooks'
 import SvgIcon from 'components/SvgIcon'
 import CardValue from 'components/CardValue'
 import Balance from 'components/Balance'
 import { getBalanceNumber } from 'utils/formatBalance'
-import { getApr } from 'utils/apyHelpers'
+// import { getApr } from 'utils/apyHelpers'
 import useTheme from 'hooks/useTheme'
-import { SECONDS_PER_DAY } from 'config'
+// import { SECONDS_PER_DAY } from 'config'
 import Card from '../../Card'
-import CountDown from '../../CountDown'
-import { getCutdownType } from '../../../utils'
+// import CountDown from '../../CountDown'
+// import { getCutdownType } from '../../../utils'
 import { useClubPenguinHarvest, usePriceSherpa } from '../../../hooks'
 
 const SherpaCard = () => {
   const [pendingTx, setPendingTx] = useState(false)
-  const [timerEnded, setTimerEnded] = useState(false)
+  // const [timerEnded, setTimerEnded] = useState(false)
   const { isXl } = useMatchBreakpoints()
   const { account } = useWeb3React()
   const { onHarvest } = useClubPenguinHarvest(0)
-  const pefiPriceUsd = usePricePefiUsdt().toNumber()
-  const v2Pools = useV2Pools(account)
+  // const pefiPriceUsd = usePricePefiUsdt().toNumber()
+  // const v2Pools = useV2Pools(account)
   const { isDark } = useTheme()
-  const iPefiPool = v2Pools.length > 0 ? v2Pools[0] : null
-  const iPefiToPefiRatio = iPefiPool.currentExchangeRate || 1
-  const iPefiPriceUsd = iPefiToPefiRatio * pefiPriceUsd
+  // const iPefiPool = v2Pools.length > 0 ? v2Pools[0] : null
+  // const iPefiToPefiRatio = iPefiPool.currentExchangeRate || 1
+  // const iPefiPriceUsd = iPefiToPefiRatio * pefiPriceUsd
 
   const clubFarms = useClubPenguinFarms(account)
   const activeFarm = clubFarms[0]
-  const { userData, rewardStartTimestamp, rewardEndTimestamp, tokensPerSecond, totalIPEFIInPool } = activeFarm
+  const { userData } = activeFarm
+  // const { userData, rewardStartTimestamp, rewardEndTimestamp, tokensPerSecond, totalIPEFIInPool } = activeFarm
 
   const sherpaPrice = usePriceSherpa()
   const earningBalance = userData ? getBalanceNumber(new BigNumber(userData.earnings)) : 0
   const earningBalanceInUsd = sherpaPrice * earningBalance
-  const currentTimestamp = Date.now()
-  const rewardStartTime = rewardStartTimestamp ? 1000 * rewardStartTimestamp : 0
-  const cutdownType = getCutdownType(currentTimestamp, rewardStartTime)
-  const cutdownDate = cutdownType === 'start' ? rewardStartTime : rewardEndTimestamp
+  // const currentTimestamp = Date.now()
+  // const rewardStartTime = rewardStartTimestamp ? 1000 * rewardStartTimestamp : 0
+  // const cutdownType = getCutdownType(currentTimestamp, rewardStartTime)
+  // const cutdownDate = cutdownType === 'start' ? rewardStartTime : rewardEndTimestamp
 
   // apr
-  const totalLiquidityInUsd = iPefiPriceUsd * getBalanceNumber(new BigNumber(totalIPEFIInPool))
-  const rewardPerSec = getBalanceNumber(new BigNumber(tokensPerSecond))
-  const rewardPerSecInUsd = sherpaPrice * rewardPerSec
-  const sherpaDailyApr = (SECONDS_PER_DAY * rewardPerSecInUsd) / totalLiquidityInUsd
-  const sherpaApr = 100 * getApr(sherpaDailyApr)
+  // const totalLiquidityInUsd = iPefiPriceUsd * getBalanceNumber(new BigNumber(totalIPEFIInPool))
+  // const rewardPerSec = getBalanceNumber(new BigNumber(tokensPerSecond))
+  // const rewardPerSecInUsd = sherpaPrice * rewardPerSec
+  // const sherpaDailyApr = (SECONDS_PER_DAY * rewardPerSecInUsd) / totalLiquidityInUsd
+  // const sherpaApr = 100 * getApr(sherpaDailyApr)
 
   const isMobile = !isXl
   const canHarvest = account && earningBalance > 0 && !pendingTx
@@ -61,9 +63,9 @@ const SherpaCard = () => {
     }
   }
 
-  const handleTimerCompleted = async () => {
-    setTimerEnded(true)
-  }
+  // const handleTimerCompleted = async () => {
+  //   setTimerEnded(true)
+  // }
 
   const handleViewWebsite = () => {
     window.open('https://app.sherpa.cash/', '_blank')

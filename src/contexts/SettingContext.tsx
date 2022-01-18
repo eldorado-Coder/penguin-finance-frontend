@@ -12,10 +12,12 @@ const SettingContext = React.createContext({
   visibleBlock: null,
   toggleVisibleBlock: () => null,
   refreshRate: 3000,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   updateRefreshRate: (refreshRate: any) => null,
   visiblePlayer: null,
   toggleVisiblePlayer: () => null,
   isIglooAprMode: false,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   toggleIglooAprMode: (mode: boolean) => null,
 })
 

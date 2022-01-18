@@ -143,16 +143,6 @@ const TokenSymbol = styled(Flex)`
   margin-left: 6px;
 `
 
-const ArrowDownImgWrapper = styled(Flex)`
-  margin-top: -4px;
-  margin-left: 6px;
-  svg {
-    path {
-      stroke: ${({ theme }) => (theme.isDark ? 'white' : '#292929')};
-    }
-  }
-`
-
 const StyledButton = styled(Button)`
   height: 36px;
   font-weight: normal;

@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Text, Flex, Button, Progress, useMatchBreakpoints } from 'penguinfinance-uikit2'
-import useTheme from 'hooks/useTheme'
 import SvgIcon from 'components/SvgIcon'
 
 const marks = [1, 2, 3, 4]

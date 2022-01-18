@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import { getAvaxPrice } from 'utils/price'
+// import { getAvaxPrice } from 'utils/price'
 import { HOURS_PER_DAY, SECONDS_PER_HOUR } from 'config'
 import { getPairDailyVolume as getPangolinPairDailyVolume, getPair as getPangolinPair } from './pangolin'
 import { getPairDailyVolume as getJoePairDailyVolume, getPair as getJoePair } from './joe'

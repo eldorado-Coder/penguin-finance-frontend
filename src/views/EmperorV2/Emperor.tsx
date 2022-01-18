@@ -392,11 +392,11 @@ const ThroneSmBgContainer = styled.div`
   top: 0px;
   left: 0px;
 `
-const EmperorBlockWrapper = styled.div`
-  margin-top: 100px;
-  width: 180px;
-  z-index: 1;
-`
+// const EmperorBlockWrapper = styled.div`
+//   margin-top: 100px;
+//   width: 180px;
+//   z-index: 1;
+// `
 
 const EmperorSmBgImage = styled.img`
   width: 100%;

@@ -54,6 +54,9 @@ export const getBoofiAddress = () => {
 export const getKittyAddress = () => {
   return getAddress(addresses.kitty)
 }
+export const getKassandraAddress = () => {
+  return getAddress(addresses.kassandra) 
+}
 export const getTestXPefiAddress = () => {
   return getAddress(addresses.testXPefi)
 }
@@ -156,6 +159,23 @@ export const getKittyBoosterRocketPayTokenAddress = () => {
 
 export const getKittyBoosterRocketBuyTokenAddress = () => {
   return getAddress(addresses.kittyBoosterRocketBuyToken)
+}
+
+// launchpad kassandra
+export const getKassandraLaunchpadAddress = () => {
+  return getAddress(addresses.launchPadKassandra)
+}
+
+export const getKassandraBoosterRocketAddress = () => {
+  return getAddress(addresses.kassandraBoosterRocket)
+}
+
+export const getKassandraBoosterRocketPayTokenAddress = () => {
+  return getAddress(addresses.kassandraBoosterRocketPayToken)
+}
+
+export const getKassandraBoosterRocketBuyTokenAddress = () => {
+  return getAddress(addresses.kassandraBoosterRocketBuyToken)
 }
 
 // v2

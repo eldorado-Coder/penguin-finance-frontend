@@ -8,7 +8,7 @@ const Footer: React.FC<FooterProps> = () => {
   const theme = useTheme()
   const { isLg, isXl } = useMatchBreakpoints()
   const isStacked = !isLg && !isXl
-  const isMobile = !isXl
+  // const isMobile = !isXl
 
   return (
     <>
@@ -122,7 +122,7 @@ const FooterWrapper = styled.div`
   background-color: ${(props) => (!props.theme.isDark ? '#2A2844' : '#121020')};
 `
 
-const CustomLink = styled(Link).attrs((props) => ({
+const CustomLink = styled(Link).attrs(() => ({
   small: true,
   color: '#B7B5DE',
   fontSize: '0.7rem',

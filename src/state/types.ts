@@ -266,6 +266,22 @@ export interface LaunchpadKittyState {
   registeredPenguins?: number
 }
 
+export interface LaunchpadKassandraState {
+  allowance: number
+  stakedBalance: string
+  yourPenguinTier: number
+  allocation: number
+  canUnstake: boolean
+  timeRemainingToUnstake: number
+  iPefi: number
+  tierHurdles: number[]
+  registrationStart?: number
+  registrationEnd?: number
+  registrationPeriodOngoing?: boolean
+  isRegistered?: boolean
+  registeredPenguins?: number
+}
+
 export interface BoosterRocketState {
   // user
   hasTheUserAgreed: boolean
@@ -407,6 +423,10 @@ export interface State {
   // launchpad - kitty
   launchpadKitty: LaunchpadKittyState
   kittyBoosterRocket: BoosterRocketState
+
+  // launchpad - kassandra
+  launchpadKassandra: LaunchpadKassandraState
+  kassandraBoosterRocket: BoosterRocketState
 
   // nest
   nestMigrator: NestMigratorState

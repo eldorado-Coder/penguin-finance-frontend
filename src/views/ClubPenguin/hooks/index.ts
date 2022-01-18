@@ -44,7 +44,7 @@ export const useClubPenguinUnstake = (pid: number) => {
 
 export const useClubPenguinHarvest = (pid: number) => {
   const dispatch = useDispatch()
-  const { fastRefresh } = useRefresh()
+  // const { fastRefresh } = useRefresh()
   const { account } = useWeb3React()
   const clubPenguinMasterChefContract = useClubPenguinMasterChef()
 
@@ -70,7 +70,7 @@ export const usePriceSherpa = (): number => {
         const sherpaPrice = (avaxPrice.toNumber() * Number(sherpaAvaxPair.reserve1)) / Number(sherpaAvaxPair.reserve0)
         setPrice(sherpaPrice)
       } catch (error) {
-        console.log('sherpa price fetch issue')
+        // console.log('sherpa price fetch issue')
       }
     }
 
