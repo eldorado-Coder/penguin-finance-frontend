@@ -4,40 +4,40 @@ import React, { useCallback, useState } from 'react'
 import { Button, Flex, Text } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import {
-  useKittyBoosterRocketPayToken,
-  useKittyBoosterRocket as useKittyBoosterRocketContract,
+  useKassandraBoosterRocketPayToken,
+  useKassandraBoosterRocket as useKassandraBoosterRocketContract,
 } from 'hooks/useContract'
 import { getBalanceNumber } from 'utils/formatBalance'
 import roundDown from 'utils/roundDown'
-import { getKittyBoosterRocketAddress, getKittyAddress } from 'utils/addressHelpers'
+import { getKassandraBoosterRocketAddress, getKassandraAddress } from 'utils/addressHelpers'
 import { addTokenToMetamask } from 'utils/token'
-import { useKittyBoosterRocket as useKittyBoosterRocketStore } from 'state/hooks'
+import { useKassandraBoosterRocket as useKassandraBoosterRocketStore } from 'state/hooks'
 import SvgIcon from 'components/SvgIcon'
 import UnlockButton from 'components/UnlockButton'
 import { PANGOLIN_PEFI_LINK } from 'config'
 import TokenInput from './TokenInput'
-import { useKittyLaunchpadBoosterRocket } from '../../hooks'
+import { useKassandraLaunchpadBoosterRocket } from '../../hooks'
 
 interface PurchaseFormProps {
   tokenName?: string
   onConfirm?: (amount: string) => void
 }
 
-const PurchaseForm: React.FC<PurchaseFormProps> = ({ tokenName = 'KITTY' }) => {
+const PurchaseForm: React.FC<PurchaseFormProps> = ({ tokenName = 'KACY' }) => {
   const [pendingTx, setPendingTx] = useState(false)
   const [payTokenCost, setPayTokenCost] = useState(0)
   const [buyTokenAmount, setBuyTokenAmount] = useState('')
   const { account } = useWeb3React()
-  const payTokenContract = useKittyBoosterRocketPayToken()
-  const boosterRocketContract = useKittyBoosterRocketContract()
+  const payTokenContract = useKassandraBoosterRocketPayToken()
+  const boosterRocketContract = useKassandraBoosterRocketContract()
   const {
     payTokenBalance,
     buyTokenBalance,
     tokensLeftToDistribute,
     eventOngoing,
     canPurchaseAmount,
-  } = useKittyBoosterRocketStore(account)
-  const { onPurchase } = useKittyLaunchpadBoosterRocket()
+  } = useKassandraBoosterRocketStore(account)
+  const { onPurchase } = useKassandraLaunchpadBoosterRocket()
 
   const purchaseTokenMaxBalance = String(canPurchaseAmount)
   const canPurchase =
@@ -86,11 +86,11 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({ tokenName = 'KITTY' }) => {
     setPendingTx(true)
     try {
       const allowanceBalance =
-        (await payTokenContract.methods.allowance(account, getKittyBoosterRocketAddress()).call()) / 1e18
+        (await payTokenContract.methods.allowance(account, getKassandraBoosterRocketAddress()).call()) / 1e18
       if (allowanceBalance === 0) {
         // call approve function
         const approveAmount = '1000000000000000000000000000'
-        await payTokenContract.methods.approve(getKittyBoosterRocketAddress(), approveAmount).send({ from: account })
+        await payTokenContract.methods.approve(getKassandraBoosterRocketAddress(), approveAmount).send({ from: account })
       }
 
       await onPurchase(buyTokenAmount)
@@ -114,7 +114,7 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({ tokenName = 'KITTY' }) => {
   }
 
   const handleAddKittyToken = async () => {
-    await addTokenToMetamask(getKittyAddress(), 'KACY', 18)
+    await addTokenToMetamask(getKassandraAddress(), 'KACY', 18)
   }
 
   return (

@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom'
 import { Text, Flex, Tag, Progress } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import useTheme from 'hooks/useTheme'
-import { usePriceAvaxUsdt, useKittyLaunchpad, useKittyBoosterRocket } from 'state/hooks'
+import { usePriceAvaxUsdt, useKittyLaunchpad, useKittyBoosterRocket, useKassandraLaunchpad, useKassandraBoosterRocket } from 'state/hooks'
 import SvgIcon from 'components/SvgIcon'
 import Balance from 'components/Balance'
 
@@ -16,16 +16,21 @@ const IDOCard = ({ idoData }) => {
   const launchpadData = useKittyLaunchpad(account)
   const { totalTokensSold } = useKittyBoosterRocket(account)
   const totalTokensSoldInUsd = Number(totalTokensSold) * idoData.tokenPrice
+  const kassandraLaunchpadData = useKassandraLaunchpad(account)
+  const { totalTokensSold: kassandraTotalTokensSold } = useKassandraBoosterRocket(account)
+  const kassandraTotalTokensSoldInUsd = Number(kassandraTotalTokensSold) * idoData.tokenPrice
 
   let { participants, saleProgress, soldTokenAmount } = idoData
   if (idoData.tokenSymbol === 'KITTY') {
     participants = launchpadData.registeredPenguins
     saleProgress = idoData.isCompleted ? 100 : ((100 * totalTokensSoldInUsd) / idoData.totalRaised).toFixed(2)
     soldTokenAmount = `${(totalTokensSold / 1000000).toFixed(2)}M`
-  }
+  } 
 
   if (idoData.tokenSymbol === 'KACY') {
-    soldTokenAmount = '0'
+    participants = kassandraLaunchpadData.registeredPenguins
+    saleProgress = idoData.isCompleted ? 100 : ((100 * kassandraTotalTokensSoldInUsd) / idoData.totalRaised).toFixed(2)
+    soldTokenAmount = `${(kassandraTotalTokensSold / 1000000).toFixed(2)}M`
   }
 
   const handleViewIdo = () => {
@@ -34,6 +39,11 @@ const IDOCard = ({ idoData }) => {
 
   const launchDate = new Date(`${idoData.startDate} GMT`).getTime()
   const currentDate = new Date().getTime()
+
+  let launchStatus = launchDate >= currentDate ? `${Math.ceil((launchDate - currentDate) / 86400000)} days` : 'Launched'
+  if (idoData.tokenSymbol === 'KACY') {
+    launchStatus = 'Soon'
+  }
 
   return (
     <FCard onClick={handleViewIdo}>
@@ -85,7 +95,7 @@ const IDOCard = ({ idoData }) => {
               fontWeight="600"
               prefix="$"
               decimals={0}
-              value={idoData.tokenSymbol === 'KACY' ? 0 : Number(totalTokensSoldInUsd)}
+              value={idoData.tokenSymbol === 'KACY' ? Number(kassandraTotalTokensSoldInUsd) : Number(totalTokensSoldInUsd)}
             />
             <Balance
               fontSize="24px"
@@ -147,7 +157,7 @@ const IDOCard = ({ idoData }) => {
           <Flex flexDirection="column" alignItems="flex-start" ml="2px" mt="2px">
             <DetailText fontSize="11px">Time Until Launch</DetailText>
             <Text fontSize="11px" color="#C0378C">
-              {launchDate >= currentDate ? `${Math.ceil((launchDate - currentDate) / 86400000)} days` : 'Launched'}
+              {launchStatus}
             </Text>
           </Flex>
         </Flex>

@@ -7,8 +7,8 @@ import useWindowSize from 'hooks/useWindowSize'
 const DEFAULT_TIMELINES = [
   {
     label: 'Registration Opens',
-    date: 'Jan 17th 2022 18:00 UTC',
-    timestamp: 1642442400,
+    date: 'Jan 18th 2022 20:00 UTC',
+    timestamp: 1642536000,
     status: 'not-started',
     imageUrl: 'registration_opens',
   },

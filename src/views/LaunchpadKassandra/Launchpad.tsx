@@ -21,7 +21,8 @@ const Launchpad: React.FC = () => {
         </HeaderContainer>
       </IgloosBannerContainer>
       <LaunchpadTimeline />
-      {isEnded ? <ProjectDetailsCardSummary /> : <ProjectDetailsCardDistribution />}
+      <ProjectDetailsCardSummary />
+      {/* {isEnded ? <ProjectDetailsCardSummary /> : <ProjectDetailsCardDistribution />} */}
     </div>
   )
 }

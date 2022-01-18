@@ -5,27 +5,27 @@ import { useWeb3React } from '@web3-react/core'
 import BigNumber from 'bignumber.js'
 import Page from 'components/layout/Page'
 import UnlockButton from 'components/UnlockButton'
-import { useKittyLaunchpad, useClubPenguinFarms } from 'state/hooks'
+import { useKassandraLaunchpad, useClubPenguinFarms } from 'state/hooks'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { getIPefiAddress } from 'utils/addressHelpers'
 import useTokenBalance from 'hooks/useTokenBalance'
 
 const TOKEN_INFO = [
-  { label: 'Token NAME', value: 'Kitty' },
-  { label: 'TOKEN SYMBOL', value: 'KITTY' },
-  { label: 'TOTAL SUPPLY', value: '100,000,000' },
-  { label: 'INITIAL SUPPLY', value: '12,500,000' },
-  { label: 'INITIAL MARKET CAP', value: '$562,500' },
+  { label: 'Token NAME', value: 'Kassandra' },
+  { label: 'TOKEN SYMBOL', value: 'KACY' },
+  { label: 'TOTAL SUPPLY', value: '500,000' },
+  { label: 'INITIAL SUPPLY', value: '500,000' },
+  { label: 'INITIAL MARKET CAP', value: '$350,000' },
   { label: 'TOKEN TYPE', value: 'Betting' },
   { label: 'TOKEN ADDRESS ', value: '0xbca7f1998Dc9FFB70b086543a808960a460aBcA7', type: 'address' },
 ]
 
 const LAUNCHPAD_INFO = [
-  { label: 'PROJECT NAME', value: 'BinaryCat' },
-  { label: 'TOKEN SYMBOL', value: 'KITTY' },
-  { label: 'TOKENS OFFERED', value: '12,500,000' },
+  { label: 'PROJECT NAME', value: 'Kassandra' },
+  { label: 'TOKEN SYMBOL', value: 'KACY' },
+  { label: 'TOKENS OFFERED', value: '500,000' },
   { label: 'VESTING PERIOD', value: 'No Launchpad Vesting Period' },
-  { label: 'PROJECT WEBSITE', value: 'https://www.binarycat.app', type: 'link' },
+  { label: 'PROJECT WEBSITE', value: 'https://kassandra.finance/', type: 'link' },
   { label: 'NUMBER OF REGISTRATIONS', value: '0' },
   { label: 'SALE CONTRACT ADDRESS ', value: 'N/A' },
 ]
@@ -55,19 +55,24 @@ const TABS = [
 
 const TIERS = [
   {
-    label: 'GrumpyCat',
-    imageUrl: 'GrumpyCat.svg',
-    requiredIPEFI: 250,
+    label: 'Poseidon',
+    imageUrl: 'Poseidon.svg',
+    requiredIPEFI: 500,
   },
   {
-    label: 'AstroCat',
-    imageUrl: 'AstroCat.svg',
-    requiredIPEFI: 6000,
+    label: 'Hades',
+    imageUrl: 'Hades.svg',
+    requiredIPEFI: 10000,
   },
   {
-    label: 'NyanCat',
-    imageUrl: 'NyanCat.svg',
-    requiredIPEFI: 60000,
+    label: 'Zeus',
+    imageUrl: 'Zeus.svg',
+    requiredIPEFI: 100000,
+  },
+  {
+    label: 'Kronos',
+    imageUrl: 'Kronos.svg',
+    requiredIPEFI: 100000,
   },
 ]
 
@@ -80,7 +85,7 @@ const ProjectDetailsCardRegistration = () => {
   const { account } = useWeb3React()
   const { isDark } = useTheme()
   const { isXs, isSm, isXl } = useMatchBreakpoints()
-  const { allocation, yourPenguinTier, registeredPenguins } = useKittyLaunchpad(account)
+  const { allocation, yourPenguinTier, registeredPenguins } = useKassandraLaunchpad(account)
   // iPefi balance in wallet
   const iPefiBalanceInWallet = useTokenBalance(getIPefiAddress())
   // iPefi staked balance in clubs
@@ -101,8 +106,8 @@ const ProjectDetailsCardRegistration = () => {
   const isMobile = isXs || isSm
   const launchpadStaked = getBalanceNumber(new BigNumber(staked))
   const allocationValue = getBalanceNumber(new BigNumber(allocation))
-  // const hasTier = launchpadStaked >= 250
-  const hasTier = true
+  // const hasTier = launchpadStaked >= 500
+  const hasTier = true;
   const yourTier = hasTier && yourPenguinTier >= 1 ? TIERS[yourPenguinTier - 1].label : 'none_tier'
   const handleChangeActiveTab = (tab) => () => {
     setActiveTab(tab)
@@ -217,10 +222,10 @@ const ProjectDetailsCardRegistration = () => {
                 </TokenEconomic>
                 <TokenEconomic justifyContent="space-between">
                   <Text color={isDark ? '#9A97C4' : '#5E4BAF'} fontSize="14px" lineHeight="32px" fontWeight={600}>
-                    PRICE PER KITTY
+                    PRICE PER KACY
                   </Text>
                   <Text color={isDark ? '#ffffff' : '#292929'} fontSize="16px" lineHeight="32px" fontWeight={600}>
-                    {` $0.045`}
+                    {` $0.7`}
                   </Text>
                 </TokenEconomic>
               </>
@@ -235,7 +240,7 @@ const ProjectDetailsCardRegistration = () => {
           </AllocationInfo>
         </TierInfo>
         <AllocationsFooter justifyContent="space-around">
-          {TIERS.map((tier, index) => {
+          {TIERS.filter(tier => tier.label !== 'Kronos').map((tier, index) => {
             return (
               <React.Fragment key={tier.label}>
                 <Flex alignItems="center" className="allocation">
@@ -245,7 +250,7 @@ const ProjectDetailsCardRegistration = () => {
                   <TierLabel active={tier.label === yourTier}>{tier.label}</TierLabel>
                   <TierTag active={tier.label === yourTier}>{`+${tier.requiredIPEFI} iPEFI`}</TierTag>
                 </Flex>
-                {index < TIERS.length - 1 && isXl && (
+                {index < TIERS.length - 2 && isXl && (
                   <Connector alignItems="center">
                     <div className="prev-connector" />
                     <div className="connect-line" />
@@ -263,29 +268,21 @@ const ProjectDetailsCardRegistration = () => {
   const renderAbout = () => {
     return (
       <IdoDetails>
-        <IntroductionImage src={`${process.env.PUBLIC_URL}/images/ido/introduction_kitty.jpg`} />
+        <IntroductionImage src={`${process.env.PUBLIC_URL}/images/ido/kassandra/introduction.png`} />
         <HeaderTitle fontSize="34px" color="#313131" fontWeight={800} mt="50px" mb="8px">
-          About the BinaryCat Project
+          About the Kassandra Project
         </HeaderTitle>
         <Text fontSize="16px" lineHeight="24px" color={isDark ? '#9A97C4' : '#7F7F7F'} mt="24px">
-          Binary Cat is a decentralized prediction market protocol running on Avalanche that allows users to make bets
-          on the price of crypto assets and the relationship between them. The platform is transparent, fully
-          decentralized, and has fair reward distribution mechanisms in place.
+          Kassandra is an audacious project to delegate money management in a decentralized, efficient, and customizable way, working as a marketplace for tokenized and data-driven investment strategies.
         </Text>
         <Text fontSize="16px" lineHeight="24px" color={isDark ? '#9A97C4' : '#7F7F7F'} mt="24px">
-          Users receive rewards in KITTY tokens (the native token of BinaryCat) as an incentive for betting, even if the
-          user bet for the wrong outcome. The amount of KITTY they receive is proportional to the size of their bet in
-          relation to the entire group of bets. Bets occur in 5 minutes cycles; in each cycle, bets on the next time
-          window are open while the results of the last window are being resolved.
+          For managers, Kassandra is a plug-and-earn solution to port complex money management strategies to decentralized ecosystems, saving time and costs when compared to the traditional market, helping managers to raise funds without the need for complex infrastructure.
         </Text>
         <Text fontSize="16px" lineHeight="24px" color={isDark ? '#9A97C4' : '#7F7F7F'} mt="24px">
-          The platform was built with focus on user experience. It&apos;s really easy to bet directly from your Metamask
-          wallet, and the dApp can be accessed from both a web browser or mobile!
+          With Kassandra, retail investors will be able to delegate money management to professionals without hassle.
         </Text>
         <Text fontSize="16px" lineHeight="24px" color={isDark ? '#9A97C4' : '#7F7F7F'} mt="24px">
-          As a decentralized platform, Binary Cat has the ultimate goal of empowering users by holding their KITTY
-          tokens. KITTY holders receive all the revenue generated from the platform and will be able to vote on betting
-          parameters and which new assets to add.
+          The first curated tokenized investment fund to be launched by Kassandra will be the Avalanche Social Index, an investment strategy that would automagically invest in the most solid and engaged communities by using social data in partnership with the social data company https://heimdall.land
         </Text>
         {/* key features */}
         <>
@@ -293,19 +290,22 @@ const ProjectDetailsCardRegistration = () => {
             Key Features
           </Text>
           <Text fontSize="16px" lineHeight="24px" color={isDark ? '#9A97C4' : '#7F7F7F'} mt="24px">
-            • Intuitive user interface.
+            • Tokenized investment funds
           </Text>
           <Text fontSize="16px" lineHeight="24px" color={isDark ? '#9A97C4' : '#7F7F7F'} mt="24px">
-            • Fully decentralized.
+            • Non-custodial and permissionless
           </Text>
           <Text fontSize="16px" lineHeight="24px" color={isDark ? '#9A97C4' : '#7F7F7F'} mt="24px">
-            • Fair and easy to understand reward structure
+            • Any real-world APIs feeding decentralized strategies
           </Text>
           <Text fontSize="16px" lineHeight="24px" color={isDark ? '#9A97C4' : '#7F7F7F'} mt="24px">
-            • Rewards for every bet (even if lost).
+            • Delegate your money management to professionals or data models
           </Text>
           <Text fontSize="16px" lineHeight="24px" color={isDark ? '#9A97C4' : '#7F7F7F'} mt="24px">
-            • Cyclical bets: bets are always open.
+            • Earn governance token rewards while investing in smart strategies
+          </Text>
+          <Text fontSize="16px" lineHeight="24px" color={isDark ? '#9A97C4' : '#7F7F7F'} mt="24px">
+            • Completely original and user-focused UI/UX  
           </Text>
         </>
         {/* key features */}
@@ -313,14 +313,14 @@ const ProjectDetailsCardRegistration = () => {
           <Text bold fontSize="16px" mb="24px" lineHeight="24px" color={isDark ? '#9A97C4' : '#7F7F7F'} mt="24px">
             Tokenomics
           </Text>
-          <img src={`${process.env.PUBLIC_URL}/images/ido/binaryCat/tokennomics.png`} alt="tokennomics" />
+          <img src={`${process.env.PUBLIC_URL}/images/ido/kassandra/tokenomics.png`} alt="tokennomics" width='100%' />
         </>
         {/* Roadmap */}
         <>
           <Text bold fontSize="16px" mb="24px" lineHeight="24px" color={isDark ? '#9A97C4' : '#7F7F7F'} mt="24px">
             Roadmap
           </Text>
-          <img src={`${process.env.PUBLIC_URL}/images/ido/binaryCat/roadmap.png`} alt="roadmap" />
+          <img src={`${process.env.PUBLIC_URL}/images/ido/kassandra/roadmap.png`} alt="roadmap" width='100%' />
         </>
       </IdoDetails>
     )

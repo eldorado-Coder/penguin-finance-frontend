@@ -232,6 +232,28 @@ export default {
     43114: '0xbca7f1998dc9ffb70b086543a808960a460abca7',
   },
 
+  // launchpad - Kassandra
+  launchPadKassandra: {
+    43113: '',
+    43114: '0xcfd439c293dbd672b595ea584fe4a8d7904a2201',
+  },
+  kassandraBoosterRocket: {
+    43113: '',
+    43114: '0x5788c1ac02ebb4c131ad67910262a155127e972b',
+  },
+  kassandraBoosterRocketPayToken: {
+    43113: '',
+    43114: '0xe896CDeaAC9615145c0cA09C8Cd5C25bced6384c',
+  },
+  kassandraBoosterRocketBuyToken: {
+    43113: '',
+    43114: '0xbca7f1998dc9ffb70b086543a808960a460abca7',
+  },
+  kassandra: {
+    43113: '',
+    43114: '0xbca7f1998dc9ffb70b086543a808960a460abca7',
+  },
+
   // v2
   iPefi: {
     43113: '',

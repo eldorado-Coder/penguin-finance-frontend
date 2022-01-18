@@ -6,38 +6,45 @@ import { useWeb3React } from '@web3-react/core'
 import BigNumber from 'bignumber.js'
 import {
   usePriceAvaxUsdt,
-  useKittyLaunchpad,
+  useKassandraLaunchpad,
   useClubPenguinFarms,
   // useKittyBoosterRocket as useKittyBoosterRocketStore,
 } from 'state/hooks'
 import SvgIcon from 'components/SvgIcon'
 import Balance from 'components/Balance'
 import useTokenBalance from 'hooks/useTokenBalance'
-import { getIPefiAddress, getKittyAddress } from 'utils/addressHelpers'
+import { getIPefiAddress, getKassandraAddress } from 'utils/addressHelpers'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { addTokenToMetamask } from 'utils/token'
-import { useKittyLaunchpadRegister } from '../hooks'
+import { useKassandraLaunchpadRegister } from '../hooks'
 
 const SocialLinks = [
   // first row : FooterIconLinks[0]
   [
     {
       name: 'TelegramIcon',
-      url: 'https://t.me/BinaryCatChat',
+      url: 'https://t.me/KassandraDAO',
       imageUrl: 'images/ido/social_icons/telegram.png',
       key: 'telegram',
       label: 't.me/BinaryCatChat',
     },
     {
+      name: 'DiscordIcon',
+      url: 'https://discord.com/invite/fAqpbP6tFw',
+      imageUrl: 'images/ido/social_icons/discord.png',
+      key: 'discord',
+      label: 'discord.com/Kassandra'
+    },
+    {
       name: 'TwitterIcon',
-      url: 'https://twitter.com/BinaryCatApp',
+      url: 'https://twitter.com/dao_kassandra',
       imageUrl: 'images/ido/social_icons/twitter.png',
       key: 'twitter',
       label: 'twitter.com/BinaryCatApp',
     },
     {
       name: 'MIcon',
-      url: 'https://medium.com/@BinaryCat',
+      url: 'https://kassandrafoundation.medium.com/',
       imageUrl: 'images/ido/social_icons/medium.png',
       key: 'medium',
       label: 'medium.com/binary-cat',
@@ -48,19 +55,25 @@ const SocialLinks = [
 const IDODetail = ({ idoData, isEnded }) => {
   const [pendingTx, setPendingTx] = useState(false)
   const { account } = useWeb3React()
-  const { registrationPeriodOngoing, isRegistered, registeredPenguins } = useKittyLaunchpad(account)
+  const { registrationPeriodOngoing, isRegistered, registeredPenguins } = useKassandraLaunchpad(account)
   // const { totalTokensSold } = useKittyBoosterRocketStore(account)
   // const totalTokensSoldInUsd = Number(totalTokensSold) * 0.7
   // const saleProgress = isEnded ? 100 : (100 * totalTokensSoldInUsd) / idoData.totalRaised
   const saleProgress = 0;
 
-  const { onRegister } = useKittyLaunchpadRegister()
+  const { onRegister } = useKassandraLaunchpadRegister()
   const { isDark } = useTheme()
   const avaxPriceInUsd = usePriceAvaxUsdt().toNumber()
   const { isXs, isSm } = useMatchBreakpoints()
   const isMobile = isXs || isSm
   const launchDate = new Date(`${idoData.startDate} GMT`).getTime()
   const currentDate = new Date().getTime()
+
+  let launchStatus = launchDate >= currentDate ? `${Math.ceil((launchDate - currentDate) / 86400000)} days` : 'Launched'
+  // if (idoData.tokenSymbol === 'KACY') {
+  //   launchStatus = 'Soon'
+  // }
+  launchStatus = 'Soon'
 
   // iPefi balance in wallet
   const iPefiBalanceInWallet = useTokenBalance(getIPefiAddress())
@@ -88,7 +101,7 @@ const IDODetail = ({ idoData, isEnded }) => {
   }
 
   const handleAddToken = async () => {
-    await addTokenToMetamask(getKittyAddress(), 'KITTY', 18)
+    await addTokenToMetamask(getKassandraAddress(), 'KACY', 18)
   }
 
   const registerDisabled = !hasTier || !registrationPeriodOngoing || pendingTx || isRegistered
@@ -104,7 +117,8 @@ const IDODetail = ({ idoData, isEnded }) => {
           />
           <Flex ml="24px">
             <IdoTag variant="primary" completed={isEnded}>
-              {isEnded ? 'Completed' : 'In Progress'}
+              {/* {isEnded ? 'Completed' : 'In Progress'} */}
+              {launchStatus}
             </IdoTag>
           </Flex>
         </Flex>
@@ -210,9 +224,10 @@ const IDODetail = ({ idoData, isEnded }) => {
                     height="18px"
                   />
                   <Text color="#682298" fontSize="16px" ml="8px">
-                    {launchDate >= currentDate
+                    {/* {launchDate >= currentDate
                       ? `${Math.ceil((launchDate - currentDate) / 86400000)} days`
-                      : 'Launched'}
+                      : 'Launched'} */}
+                    {launchStatus}
                   </Text>
                 </Flex>
               </>

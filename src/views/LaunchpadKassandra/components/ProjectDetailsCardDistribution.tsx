@@ -4,7 +4,7 @@ import { Text, Flex, Button, useMatchBreakpoints } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import BigNumber from 'bignumber.js'
 import Page from 'components/layout/Page'
-import { useKittyLaunchpad, useClubPenguinFarms } from 'state/hooks'
+import { useKassandraLaunchpad, useClubPenguinFarms } from 'state/hooks'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { getIPefiAddress } from 'utils/addressHelpers'
 import useTokenBalance from 'hooks/useTokenBalance'
@@ -55,19 +55,19 @@ const TABS = [
 
 const TIERS = [
   {
-    label: 'GrumpyCat',
-    imageUrl: 'GrumpyCat.svg',
-    requiredIPEFI: 250,
+    label: 'Poseidon',
+    imageUrl: 'Poseidon.svg',
+    requiredIPEFI: 500,
   },
   {
-    label: 'AstroCat',
-    imageUrl: 'AstroCat.svg',
-    requiredIPEFI: 6000,
+    label: 'Hades',
+    imageUrl: 'Hades.svg',
+    requiredIPEFI: 10000,
   },
   {
-    label: 'NyanCat',
-    imageUrl: 'NyanCat.svg',
-    requiredIPEFI: 60000,
+    label: 'Zeus',
+    imageUrl: 'Zeus.svg',
+    requiredIPEFI: 100000,
   },
 ]
 
@@ -80,7 +80,7 @@ const ProjectDetailsCardDistribution = () => {
   const { account } = useWeb3React()
   const { isDark } = useTheme()
   const { isXs, isSm, isXl } = useMatchBreakpoints()
-  const { allocation, yourPenguinTier, registeredPenguins } = useKittyLaunchpad(account)
+  const { allocation, yourPenguinTier, registeredPenguins } = useKassandraLaunchpad(account)
   // iPefi balance in wallet
   const iPefiBalanceInWallet = useTokenBalance(getIPefiAddress())
   // iPefi staked balance in clubs

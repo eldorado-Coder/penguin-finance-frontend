@@ -6,7 +6,7 @@ const IDOData = {
   totalRaised: 350000,
   returnToATH: 15,
   participants: 0,
-  startDate: '01.17.2022',
+  startDate: '01.18.2022',
   tokenPrice: 0.7,
   soldTokenAmount: '0',
   distributedTokenAmount: '500K',

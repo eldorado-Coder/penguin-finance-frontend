@@ -373,6 +373,25 @@ export const kittyBoosterRocketPurchaseTokens = async (kittyBoosterRocketContrac
     })
 }
 
+// launchpad - kassandra
+export const kassandraLaunchpadRegister = async (kassandraLaunchpadContract, account) => {
+  return kassandraLaunchpadContract.methods
+    .register()
+    .send({ from: account })
+    .on('transactionHash', (tx) => {
+      return tx.transactionHash
+    })
+}
+
+export const kassandraBoosterRocketPurchaseTokens = async (kassandraBoosterRocketContract, amount, account) => {
+  return kassandraBoosterRocketContract.methods
+    .purchaseTokens(new BigNumber(amount).times(new BigNumber(10).pow(18)).toString())
+    .send({ from: account })
+    .on('transactionHash', (tx) => {
+      return tx.transactionHash
+    })
+}
+
 // nft collectibles
 export const nftDistributorClaim = async (distributorContract, account) => {
   return distributorContract.methods

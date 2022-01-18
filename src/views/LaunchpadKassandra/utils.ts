@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js'
 
-export const PENGUIN_TIERS = ['Astronaut', 'Penguineer', 'Spacelord']
+export const PENGUIN_TIERS = ['Poseidon', 'Hades', 'Zeus']
 export const PRICE_PER_SHERPA = [0.15, 0.135, 0.1275]
 
 export const getUnstakeTooltip = (timeLeftForUnstaking) =>
