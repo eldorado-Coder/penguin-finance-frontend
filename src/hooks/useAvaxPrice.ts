@@ -37,7 +37,7 @@ const useAvaxPrice = () => {
     }, 10000)
   }, [])
 
-  return { price }
+  return price
 }
 
 export default useAvaxPrice
