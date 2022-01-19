@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { useWeb3React } from '@web3-react/core'
 import { useAllV2FarmHarvest } from 'hooks/useHarvest'
+import useAvaxPrice from 'hooks/useAvaxPrice';
 import useRefresh from 'hooks/useRefresh'
 import { useV2Farms, useV2Pools, usePricePefiUsdt, usePricePngUsdt } from 'state/hooks'
 import { fetchV2FarmUserDataAsync } from 'state/actions'
@@ -31,6 +32,7 @@ const HarvestFarmCard = () => {
   const iPefiPriceUsd = iPefiToPefiRatio * pefiPriceUsd
   const pngPriceUsd = usePricePngUsdt().toNumber()
   const joePriceUsd = useJoePrice()
+  const avaxPriceUsd = useAvaxPrice();
   const { lydPrice: lydPriceUsd, sushiPrice: sushiPriceUsd, qiPrice: qiPriceUsd } = useTokenPrice()
   const v2FarmsWithRewards = v2Farms.filter((row) => row.userData && Number(row.userData.stakedBalance) > 0)
   const { isXl } = useMatchBreakpoints()
@@ -68,6 +70,7 @@ const HarvestFarmCard = () => {
     if (rewardToken && rewardToken.symbol === 'LYD') return lydPriceUsd
     if (rewardToken && rewardToken.symbol === 'QI') return qiPriceUsd
     if (rewardToken && rewardToken.symbol === 'Sushi.e') return sushiPriceUsd
+    if (rewardToken && rewardToken.symbol === 'AVAX') return avaxPriceUsd
     return 1
   }
 
