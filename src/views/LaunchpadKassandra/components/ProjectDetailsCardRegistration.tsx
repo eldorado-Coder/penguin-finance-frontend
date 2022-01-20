@@ -197,7 +197,7 @@ const ProjectDetailsCardRegistration = () => {
         <TierInfo justifyContent="space-between" alignItems="center">
           <Allocation src={`${process.env.PUBLIC_URL}/images/ido/tiers/${yourTier}.svg`} alt="allocation" />
           <AllocationInfo>
-            {!isRegistered && (
+            {!isRegistered && account && (
               <Flex justifyContent="center" mb="16px" mt="18px">
                 <LowAvaxBalance>
                   <Flex alignItems="flex-start">
