@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled, { useTheme } from 'styled-components'
-import { Text, Flex, Button, useMatchBreakpoints } from 'penguinfinance-uikit2'
+import { Text, Flex, Button, useMatchBreakpoints, WarningIcon } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import BigNumber from 'bignumber.js'
 import Page from 'components/layout/Page'
@@ -198,13 +198,22 @@ const ProjectDetailsCardRegistration = () => {
           <Allocation src={`${process.env.PUBLIC_URL}/images/ido/tiers/${yourTier}.svg`} alt="allocation" />
           <AllocationInfo>
             {!isRegistered && (
-              <>
-                <WarningTitle>You aren&apos;t Registered for this IDO.</WarningTitle>
-                <Text fontSize="16px" lineHeight="24px" color={isDark ? '#9A97C4' : '#7F7F7F'} my="16px">
-                  Please register at the top of this page, if you don&apos;t do so within the Registration period you
-                  won&apos;t be able to participate.
-                </Text>
-              </>
+              <Flex justifyContent="center" mb="16px" mt="18px">
+                <LowAvaxBalance>
+                  <Flex alignItems="flex-start">
+                    <Warning mr="8px" />
+                    <div>
+                      <Label fontSize="14px" bold>
+                        You aren&apos;t Registered for this IDO.
+                      </Label>
+                      <Label fontSize="14px">
+                        Please register at the top of this page, if you don&apos;t do so within the Registration period
+                        you won&apos;t be able to participate.
+                      </Label>
+                    </div>
+                  </Flex>
+                </LowAvaxBalance>
+              </Flex>
             )}
             <Flex>
               <img src={`${process.env.PUBLIC_URL}/images/ido/tier.svg`} alt="your-tier" />
@@ -748,6 +757,21 @@ const StyledButton = styled(Button)`
   &:hover:not(:disabled):not(.penguin-button--disabled):not(.penguin-button--disabled):not(:active) {
     opacity: 1;
   }
+`
+
+const Label = styled(Text)`
+  color: ${({ theme }) => (theme.isDark ? '#fff' : theme.colors.secondary)};
+`
+
+const LowAvaxBalance = styled.div`
+  background: ${({ theme }) => (theme.isDark ? '#463b66' : '#fff7eb')};
+  border: 1px solid #ffb237;
+  padding: 16px 12px;
+  border-radius: 16px;
+`
+
+const Warning = styled(WarningIcon)`
+  fill: #ffb237;
 `
 
 export default ProjectDetailsCardRegistration
