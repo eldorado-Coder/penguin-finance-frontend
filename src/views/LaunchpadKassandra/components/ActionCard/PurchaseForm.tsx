@@ -14,7 +14,7 @@ import { addTokenToMetamask } from 'utils/token'
 import { useKassandraBoosterRocket as useKassandraBoosterRocketStore } from 'state/hooks'
 import SvgIcon from 'components/SvgIcon'
 import UnlockButton from 'components/UnlockButton'
-import { PANGOLIN_PEFI_LINK } from 'config'
+import { PANGOLIN_USDC_LINK } from 'config'
 import TokenInput from './TokenInput'
 import { useKassandraLaunchpadBoosterRocket } from '../../hooks'
 
@@ -109,8 +109,8 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({ tokenName = 'KACY' }) => {
     return 'Enter Amount'
   }
 
-  const handleGetPefi = () => {
-    window.open(PANGOLIN_PEFI_LINK, '_blank')
+  const handleGetUsdc = () => {
+    window.open(PANGOLIN_USDC_LINK, '_blank')
   }
 
   const handleAddKittyToken = async () => {
@@ -163,7 +163,7 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({ tokenName = 'KACY' }) => {
                 {renderText()}
               </StyledButton>
             ) : (
-              <StyledButton scale="md" disabled={pendingTx} onClick={handleGetPefi}>
+              <StyledButton scale="md" disabled={pendingTx} onClick={handleGetUsdc}>
                 {renderText()}
               </StyledButton>
             )}
