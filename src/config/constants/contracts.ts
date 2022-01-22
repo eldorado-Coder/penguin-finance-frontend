@@ -240,7 +240,8 @@ export default {
   },
   kassandraBoosterRocket: {
     43113: '',
-    43114: '0x09deec99ad781a9729daeb78df3c4c3b505b185f',
+    43114: '0x2d2f49109ca13a9471d63a040929ceaec9a51971'
+    // '0x09deec99ad781a9729daeb78df3c4c3b505b185f',
   },
   kassandraBoosterRocketPayToken: {
     43113: '',

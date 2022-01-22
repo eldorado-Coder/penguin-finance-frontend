@@ -106,8 +106,8 @@ const ProjectDetailsCardDistribution = () => {
   const isMobile = isXs || isSm
   const launchpadStaked = getBalanceNumber(new BigNumber(staked))
   const allocationValue = getBalanceNumber(new BigNumber(allocation))
-  // const hasTier = launchpadStaked >= 500
-  const hasTier = true;
+  const hasTier = launchpadStaked >= 500
+  // const hasTier = true;
   const yourTier = hasTier && yourPenguinTier >= 1 ? TIERS[yourPenguinTier - 1].label : 'none_tier'
   const handleChangeActiveTab = (tab) => () => {
     setActiveTab(tab)

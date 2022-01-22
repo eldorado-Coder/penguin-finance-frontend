@@ -8,12 +8,12 @@ import ProjectDetailsCardDistribution from './components/ProjectDetailsCardDistr
 import IDOData from './config'
 
 const distributionEndTimeStamp = 1643155200
-const registrationStartTimeStamp = 1642536000; 
+const distributionStartTimeStamp = 1642874400; 
 // 1642874400
 
 const Launchpad: React.FC = () => {
-  // const isEnded = Math.floor(Date.now() / 1000) > distributionEndTimeStamp
-  const isDistribution = Math.floor(Date.now() / 1000) < distributionEndTimeStamp && Math.floor(Date.now() / 1000) >= registrationStartTimeStamp;
+  const isEnded = Math.floor(Date.now() / 1000) > distributionEndTimeStamp
+  // const isDistribution = Math.floor(Date.now() / 1000) < distributionEndTimeStamp && Math.floor(Date.now() / 1000) >= distributionStartTimeStamp;
 
   // console.log('ant : Math.floor(Date.now() / 1000) => ', Math.floor(Date.now() / 1000), distributionEndTimeStamp);
 
@@ -22,13 +22,14 @@ const Launchpad: React.FC = () => {
       <IgloosBannerContainer justifyContent="center">
         <BannerImage src={`${process.env.PUBLIC_URL}/images/ido/header_bg.png`} alt="launchpad banner" />
         <HeaderContainer justifyContent="center">
-          <IDODetail idoData={IDOData} isEnded={!isDistribution} />
+          {/* <IDODetail idoData={IDOData} isEnded={!isDistribution} /> */}
+          <IDODetail idoData={IDOData} isEnded={isEnded} />
         </HeaderContainer>
       </IgloosBannerContainer>
       <LaunchpadTimeline />
       {/* <ProjectDetailsCardSummary /> */}
-      {isDistribution ? <ProjectDetailsCardDistribution /> : <ProjectDetailsCardSummary />}
-      {/* {isEnded ? <ProjectDetailsCardSummary /> : <ProjectDetailsCardDistribution />} */}
+      {/* {isDistribution ? <ProjectDetailsCardDistribution /> : <ProjectDetailsCardSummary />} */}
+      {isEnded ? <ProjectDetailsCardSummary /> : <ProjectDetailsCardDistribution />}
     </div>
   )
 }
