@@ -70,6 +70,7 @@ import iPefi from 'config/abi/iPefi.json'
 import launchpad from 'config/abi/launchpad.json'
 import boosterRocket from 'config/abi/boosterRocket.json'
 import boosterRocketPefi from 'config/abi/launchpad/pefi.json'
+import boosterRocketUsdc from 'config/abi/launchpad/usdc.json'
 import kittyLaunchpad from 'config/abi/launchpadKitty.json'
 import kittyBoosterRocket from 'config/abi/kittyBoosterRocket.json'
 import kassandraLaunchpad from 'config/abi/launchpadKassandra.json'
@@ -268,7 +269,7 @@ export const useKassandraBoosterRocket = () => {
 }
 
 export const useKassandraBoosterRocketPayToken = () => {
-  const abi = (boosterRocketPefi as unknown) as AbiItem
+  const abi = (boosterRocketUsdc as unknown) as AbiItem
   return useContract(abi, getKassandraBoosterRocketPayTokenAddress())
 }
 

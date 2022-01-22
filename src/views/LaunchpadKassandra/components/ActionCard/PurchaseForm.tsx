@@ -52,7 +52,7 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({ tokenName = 'KACY' }) => {
     if (Number(value) > 0) {
       const amount = new BigNumber(value).times(new BigNumber(10).pow(18)).toString()
       const findAmountToPay = await boosterRocketContract.methods.findAmountToPay(amount, account).call()
-      setPayTokenCost(getBalanceNumber(new BigNumber(findAmountToPay)))
+      setPayTokenCost(getBalanceNumber(new BigNumber(findAmountToPay), 6))
     } else {
       setPayTokenCost(0)
     }
@@ -86,7 +86,7 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({ tokenName = 'KACY' }) => {
     setPendingTx(true)
     try {
       const allowanceBalance =
-        (await payTokenContract.methods.allowance(account, getKassandraBoosterRocketAddress()).call()) / 1e18
+        (await payTokenContract.methods.allowance(account, getKassandraBoosterRocketAddress()).call()) / 1e06
       if (allowanceBalance === 0) {
         // call approve function
         const approveAmount = '1000000000000000000000000000'
@@ -104,7 +104,7 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({ tokenName = 'KACY' }) => {
 
   const renderText = () => {
     if (pendingTx) return 'Pending Confirmation'
-    if (Number(payTokenBalance) < Number(payTokenCost)) return 'GET PEFI'
+    if (Number(payTokenBalance) < Number(payTokenCost)) return 'GET USDC.e'
     if (payTokenCost) return 'GET KACY'
     return 'Enter Amount'
   }
@@ -124,12 +124,12 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({ tokenName = 'KACY' }) => {
           disabled
           value={roundDown(payTokenCost, 2)}
           hasMaxBtn={false}
-          tokenSymbol="PEFI"
+          tokenSymbol="USDC.e"
           onChange={handleChangePayTokenAmount}
         />
         <Flex justifyContent="space-between">
           <InfoText> </InfoText>
-          <InfoText>{`Balance: ${payTokenBalance.toFixed(2)} PEFI `}</InfoText>
+          <InfoText>{`Balance: ${payTokenBalance.toFixed(2)} USDC.e `}</InfoText>
         </Flex>
       </Flex>
       <Flex justifyContent="center" alignItems="center">
@@ -176,7 +176,7 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({ tokenName = 'KACY' }) => {
         </StyledButton>
       </Flex>
       <Flex>
-        <NoteText>{`NOTE: You can only acquire KACY if you have PEFI `}</NoteText>
+        <NoteText>{`NOTE: You can only acquire KACY if you have USDC.e `}</NoteText>
       </Flex>
     </>
   )

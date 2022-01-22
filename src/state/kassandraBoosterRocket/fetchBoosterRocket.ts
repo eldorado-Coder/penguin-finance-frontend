@@ -95,7 +95,7 @@ export const fetchUserPayTokenBalance = async (account) => {
   ]
 
   const [pefiBalance] = await multicall(erc20Abi, calls)
-  return getBalanceNumber(new BigNumber(pefiBalance))
+  return getBalanceNumber(new BigNumber(pefiBalance), 6)
 }
 
 export const fetchUserBuyTokenBalance = async (account) => {

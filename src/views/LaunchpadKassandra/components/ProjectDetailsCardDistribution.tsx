@@ -13,7 +13,7 @@ import ActionCard from './ActionCard/ActionCard'
 const TOKEN_INFO = [
   { label: 'Token NAME', value: 'Kassandra' },
   { label: 'TOKEN SYMBOL', value: 'KACY' },
-  { label: 'TOTAL SUPPLY', value: '500,000' },
+  { label: 'TOTAL SUPPLY', value: '10,000,000' },
   { label: 'INITIAL SUPPLY', value: '500,000' },
   { label: 'INITIAL MARKET CAP', value: '$350,000' },
   { label: 'TOKEN TYPE', value: 'ETF and Fund Management' },
@@ -69,6 +69,11 @@ const TIERS = [
     imageUrl: 'Zeus.svg',
     requiredIPEFI: 100000,
   },
+  {
+    label: 'Kronos',
+    imageUrl: 'Kronos.svg',
+    requiredIPEFI: 100000,
+  },
 ]
 
 const getEllipsisAddress = (address) => {
@@ -101,7 +106,8 @@ const ProjectDetailsCardDistribution = () => {
   const isMobile = isXs || isSm
   const launchpadStaked = getBalanceNumber(new BigNumber(staked))
   const allocationValue = getBalanceNumber(new BigNumber(allocation))
-  const hasTier = launchpadStaked >= 250
+  // const hasTier = launchpadStaked >= 500
+  const hasTier = true;
   const yourTier = hasTier && yourPenguinTier >= 1 ? TIERS[yourPenguinTier - 1].label : 'none_tier'
   const handleChangeActiveTab = (tab) => () => {
     setActiveTab(tab)
@@ -232,7 +238,7 @@ const ProjectDetailsCardDistribution = () => {
           </AllocationContent>
         </TierInfo>
         <AllocationsFooter justifyContent="space-around">
-          {TIERS.map((tier, index) => {
+          {TIERS.filter(tier => tier.label !== 'Kronos').map((tier, index) => {
             return (
               <React.Fragment key={tier.label}>
                 <Flex alignItems="center" className="allocation">
@@ -242,7 +248,7 @@ const ProjectDetailsCardDistribution = () => {
                   <TierLabel active={tier.label === yourTier}>{tier.label}</TierLabel>
                   <TierTag active={tier.label === yourTier}>{`+${tier.requiredIPEFI} iPEFI`}</TierTag>
                 </Flex>
-                {index < TIERS.length - 1 && isXl && (
+                {index < TIERS.length - 2 && isXl && (
                   <Connector alignItems="center">
                     <div className="prev-connector" />
                     <div className="connect-line" />

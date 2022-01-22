@@ -8,20 +8,26 @@ import ProjectDetailsCardDistribution from './components/ProjectDetailsCardDistr
 import IDOData from './config'
 
 const distributionEndTimeStamp = 1643155200
+const registrationStartTimeStamp = 1642536000; 
+// 1642874400
 
 const Launchpad: React.FC = () => {
-  const isEnded = Math.floor(Date.now() / 1000) > distributionEndTimeStamp
+  // const isEnded = Math.floor(Date.now() / 1000) > distributionEndTimeStamp
+  const isDistribution = Math.floor(Date.now() / 1000) < distributionEndTimeStamp && Math.floor(Date.now() / 1000) >= registrationStartTimeStamp;
+
+  // console.log('ant : Math.floor(Date.now() / 1000) => ', Math.floor(Date.now() / 1000), distributionEndTimeStamp);
 
   return (
     <div>
       <IgloosBannerContainer justifyContent="center">
         <BannerImage src={`${process.env.PUBLIC_URL}/images/ido/header_bg.png`} alt="launchpad banner" />
         <HeaderContainer justifyContent="center">
-          <IDODetail idoData={IDOData} isEnded={isEnded} />
+          <IDODetail idoData={IDOData} isEnded={!isDistribution} />
         </HeaderContainer>
       </IgloosBannerContainer>
       <LaunchpadTimeline />
-      <ProjectDetailsCardSummary />
+      {/* <ProjectDetailsCardSummary /> */}
+      {isDistribution ? <ProjectDetailsCardDistribution /> : <ProjectDetailsCardSummary />}
       {/* {isEnded ? <ProjectDetailsCardSummary /> : <ProjectDetailsCardDistribution />} */}
     </div>
   )
