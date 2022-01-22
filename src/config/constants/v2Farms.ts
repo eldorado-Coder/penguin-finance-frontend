@@ -1135,6 +1135,38 @@ const v2Farms: V2FarmConfig[] = [
     isPenguinRush: true,
     isPenguinRushFinished: false,
   },
+  {
+    pid: 34,
+    lpSymbol: 'KACY-AVAX LP',
+    lpAddresses: {
+      43113: '',
+      43114: '0x1938cE0E14dD71caab96F52dF3F49b1D1DAF8861',
+    },
+    strategyAddresses: {
+      43113: '',
+      43114: '0xC5cD12f77aafDdF90cCF508F8d78F38016206A64',
+    },
+    rewarderAddresses: {
+      43113: '',
+      43114: '0x0000000000000000000000000000000000000000',
+    },
+    tokenSymbol: 'KACY',
+    tokenAddresses: {
+      43113: '',
+      43114: '0xf32398dae246C5f672B52A54e9B413dFFcAe1A44',
+    },
+    pangolinRewardPoolAddresses: {
+      43113: '',
+      43114: '0x0000000000000000000000000000000000000000',
+    },
+    quoteTokenSymbol: QuoteToken.AVAX,
+    quoteTokenAddresses: contracts.wavax,
+    withdrawalFee: '0',
+    hardApy: '0%',
+    type: 'Pangolin',
+    name: 'pendingPEFI',
+    displayedDecimals: 4,
+  },
   // benqi pangolin lp igloo
   {
     pid: 29,
