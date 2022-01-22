@@ -14,14 +14,14 @@ const DEFAULT_TIMELINES = [
   },
   {
     label: 'Registration Closes',
-    date: 'Jan 21th 2022 23:59 UTC',
+    date: 'Jan 21st 2022 23:59 UTC',
     timestamp: 1642809600,
     status: 'not-started',
     imageUrl: 'registration_closes',
   },
   {
     label: 'Distribution Starts',
-    date: 'Jan 22th 2022 18:00 UTC',
+    date: 'Jan 22nd 2022 18:00 UTC',
     timestamp: 1642874400,
     status: 'not-started',
     imageUrl: 'distribution_starts',

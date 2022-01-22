@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled, { useTheme } from 'styled-components'
-import { Text, Flex, Button, useMatchBreakpoints } from 'penguinfinance-uikit2'
+import { Text, Flex, Button, useMatchBreakpoints, WarningIcon } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import BigNumber from 'bignumber.js'
 import Page from 'components/layout/Page'
@@ -85,7 +85,7 @@ const ProjectDetailsCardRegistration = () => {
   const { account } = useWeb3React()
   const { isDark } = useTheme()
   const { isXs, isSm, isXl } = useMatchBreakpoints()
-  const { allocation, yourPenguinTier, registeredPenguins } = useKassandraLaunchpad(account)
+  const { allocation, yourPenguinTier, registeredPenguins, isRegistered } = useKassandraLaunchpad(account)
   // iPefi balance in wallet
   const iPefiBalanceInWallet = useTokenBalance(getIPefiAddress())
   // iPefi staked balance in clubs
@@ -107,7 +107,7 @@ const ProjectDetailsCardRegistration = () => {
   const launchpadStaked = getBalanceNumber(new BigNumber(staked))
   const allocationValue = getBalanceNumber(new BigNumber(allocation))
   // const hasTier = launchpadStaked >= 500
-  const hasTier = true;
+  const hasTier = true
   const yourTier = hasTier && yourPenguinTier >= 1 ? TIERS[yourPenguinTier - 1].label : 'none_tier'
   const handleChangeActiveTab = (tab) => () => {
     setActiveTab(tab)
@@ -176,7 +176,7 @@ const ProjectDetailsCardRegistration = () => {
                   fontSize="16px"
                   lineHeight="32px"
                   fontWeight={600}
-                > 
+                >
                   {tokenEconomic.value}
                   {/* {tokenEconomic.type === 'address' ? getEllipsisAddress(tokenEconomic.value) : tokenEconomic.value} */}
                 </TokenInfoValue>
@@ -197,11 +197,32 @@ const ProjectDetailsCardRegistration = () => {
         <TierInfo justifyContent="space-between" alignItems="center">
           <Allocation src={`${process.env.PUBLIC_URL}/images/ido/tiers/${yourTier}.svg`} alt="allocation" />
           <AllocationInfo>
+            {!isRegistered && account && (
+              <Flex justifyContent="center" mb="16px" mt="18px">
+                <LowAvaxBalance>
+                  <Flex alignItems="flex-start">
+                    <Warning mr="8px" />
+                    <div>
+                      <Label fontSize="14px" bold>
+                        You aren&apos;t Registered for this IDO.
+                      </Label>
+                      <Label fontSize="14px">
+                        Please register at the top of this page, if you don&apos;t do so within the Registration period
+                        you won&apos;t be able to participate.
+                      </Label>
+                    </div>
+                  </Flex>
+                </LowAvaxBalance>
+              </Flex>
+            )}
             <Flex>
               <img src={`${process.env.PUBLIC_URL}/images/ido/tier.svg`} alt="your-tier" />
-              <Text color={isDark ? '#ffffff' : '#292929'} fontSize="34px" fontWeight={800} ml="10px">{`Your Estimated Tier : ${
-                yourTier === 'none_tier' ? 'None' : yourTier
-              }`}</Text>
+              <Text
+                color={isDark ? '#ffffff' : '#292929'}
+                fontSize="34px"
+                fontWeight={800}
+                ml="10px"
+              >{`Your Estimated Tier : ${yourTier === 'none_tier' ? 'None' : yourTier}`}</Text>
             </Flex>
             {account ? (
               <>
@@ -241,7 +262,7 @@ const ProjectDetailsCardRegistration = () => {
           </AllocationInfo>
         </TierInfo>
         <AllocationsFooter justifyContent="space-around">
-          {TIERS.filter(tier => tier.label !== 'Kronos').map((tier, index) => {
+          {TIERS.filter((tier) => tier.label !== 'Kronos').map((tier, index) => {
             return (
               <React.Fragment key={tier.label}>
                 <Flex alignItems="center" className="allocation">
@@ -274,16 +295,21 @@ const ProjectDetailsCardRegistration = () => {
           About the Kassandra Project
         </HeaderTitle>
         <Text fontSize="16px" lineHeight="24px" color={isDark ? '#9A97C4' : '#7F7F7F'} mt="24px">
-          Kassandra is an audacious project to delegate money management in a decentralized, efficient, and customizable way, working as a marketplace for tokenized and data-driven investment strategies.
+          Kassandra is an audacious project to delegate money management in a decentralized, efficient, and customizable
+          way, working as a marketplace for tokenized and data-driven investment strategies.
         </Text>
         <Text fontSize="16px" lineHeight="24px" color={isDark ? '#9A97C4' : '#7F7F7F'} mt="24px">
-          For managers, Kassandra is a plug-and-earn solution to port complex money management strategies to decentralized ecosystems, saving time and costs when compared to the traditional market, helping managers to raise funds without the need for complex infrastructure.
+          For managers, Kassandra is a plug-and-earn solution to port complex money management strategies to
+          decentralized ecosystems, saving time and costs when compared to the traditional market, helping managers to
+          raise funds without the need for complex infrastructure.
         </Text>
         <Text fontSize="16px" lineHeight="24px" color={isDark ? '#9A97C4' : '#7F7F7F'} mt="24px">
           With Kassandra, retail investors will be able to delegate money management to professionals without hassle.
         </Text>
         <Text fontSize="16px" lineHeight="24px" color={isDark ? '#9A97C4' : '#7F7F7F'} mt="24px">
-          The first curated tokenized investment fund to be launched by Kassandra will be the Avalanche Social Index, an investment strategy that would automagically invest in the most solid and engaged communities by using social data in partnership with the social data company https://heimdall.land
+          The first curated tokenized investment fund to be launched by Kassandra will be the Avalanche Social Index, an
+          investment strategy that would automagically invest in the most solid and engaged communities by using social
+          data in partnership with the social data company https://heimdall.land
         </Text>
         {/* key features */}
         <>
@@ -306,7 +332,7 @@ const ProjectDetailsCardRegistration = () => {
             • Earn governance token rewards while investing in smart strategies
           </Text>
           <Text fontSize="16px" lineHeight="24px" color={isDark ? '#9A97C4' : '#7F7F7F'} mt="24px">
-            • Completely original and user-focused UI/UX  
+            • Completely original and user-focused UI/UX
           </Text>
         </>
         {/* key features */}
@@ -314,14 +340,14 @@ const ProjectDetailsCardRegistration = () => {
           <Text bold fontSize="16px" mb="24px" lineHeight="24px" color={isDark ? '#9A97C4' : '#7F7F7F'} mt="24px">
             Tokenomics
           </Text>
-          <img src={`${process.env.PUBLIC_URL}/images/ido/kassandra/tokenomics.png`} alt="tokennomics" width='100%' />
+          <img src={`${process.env.PUBLIC_URL}/images/ido/kassandra/tokenomics.png`} alt="tokennomics" width="100%" />
         </>
         {/* Roadmap */}
         <>
           <Text bold fontSize="16px" mb="24px" lineHeight="24px" color={isDark ? '#9A97C4' : '#7F7F7F'} mt="24px">
             Roadmap
           </Text>
-          <img src={`${process.env.PUBLIC_URL}/images/ido/kassandra/roadmap.png`} alt="roadmap" width='100%' />
+          <img src={`${process.env.PUBLIC_URL}/images/ido/kassandra/roadmap.png`} alt="roadmap" width="100%" />
         </>
       </IdoDetails>
     )
@@ -557,6 +583,12 @@ const AllocationInfo = styled.div`
   max-width: 570px;
   width: 100%;
 `
+
+const WarningTitle = styled.div`
+  font-size: 24px;
+  font-weight: 600;
+`
+
 const WalletConnectContainer = styled(Flex)`
   flex-direction: column;
   background: ${({ theme }) => (theme.isDark ? '#3C3061' : '#f2f2f2')};
@@ -725,6 +757,21 @@ const StyledButton = styled(Button)`
   &:hover:not(:disabled):not(.penguin-button--disabled):not(.penguin-button--disabled):not(:active) {
     opacity: 1;
   }
+`
+
+const Label = styled(Text)`
+  color: ${({ theme }) => (theme.isDark ? '#fff' : theme.colors.secondary)};
+`
+
+const LowAvaxBalance = styled.div`
+  background: ${({ theme }) => (theme.isDark ? '#463b66' : '#fff7eb')};
+  border: 1px solid #ffb237;
+  padding: 16px 12px;
+  border-radius: 16px;
+`
+
+const Warning = styled(WarningIcon)`
+  fill: #ffb237;
 `
 
 export default ProjectDetailsCardRegistration

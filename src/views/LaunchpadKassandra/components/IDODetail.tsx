@@ -8,7 +8,7 @@ import {
   usePriceAvaxUsdt,
   useKassandraLaunchpad,
   useClubPenguinFarms,
-  // useKittyBoosterRocket as useKittyBoosterRocketStore,
+  useKassandraBoosterRocket as useKassandraBoosterRocketStore,
 } from 'state/hooks'
 import SvgIcon from 'components/SvgIcon'
 import Balance from 'components/Balance'
@@ -56,10 +56,10 @@ const IDODetail = ({ idoData, isEnded }) => {
   const [pendingTx, setPendingTx] = useState(false)
   const { account } = useWeb3React()
   const { registrationPeriodOngoing, isRegistered, registeredPenguins } = useKassandraLaunchpad(account)
-  // const { totalTokensSold } = useKittyBoosterRocketStore(account)
-  // const totalTokensSoldInUsd = Number(totalTokensSold) * 0.7
-  // const saleProgress = isEnded ? 100 : (100 * totalTokensSoldInUsd) / idoData.totalRaised
-  const saleProgress = 0;
+  const { totalTokensSold } = useKassandraBoosterRocketStore(account)
+  const totalTokensSoldInUsd = Number(totalTokensSold) * 0.7
+  const saleProgress = isEnded ? 100 : (100 * totalTokensSoldInUsd) / idoData.totalRaised
+  // const saleProgress = 0;
 
   const { onRegister } = useKassandraLaunchpadRegister()
   const { isDark } = useTheme()
@@ -69,11 +69,11 @@ const IDODetail = ({ idoData, isEnded }) => {
   const launchDate = new Date(`${idoData.startDate} GMT`).getTime()
   const currentDate = new Date().getTime()
 
-  let launchStatus = launchDate >= currentDate ? `${Math.ceil((launchDate - currentDate) / 86400000)} days` : 'Launched'
+  // let launchStatus = launchDate >= currentDate ? `${Math.ceil((launchDate - currentDate) / 86400000)} days` : 'Launched'
   // if (idoData.tokenSymbol === 'KACY') {
   //   launchStatus = 'Soon'
   // }
-  launchStatus = 'Soon'
+  // launchStatus = 'Soon'
 
   // iPefi balance in wallet
   const iPefiBalanceInWallet = useTokenBalance(getIPefiAddress())
@@ -117,8 +117,8 @@ const IDODetail = ({ idoData, isEnded }) => {
           />
           <Flex ml="24px">
             <IdoTag variant="primary" completed={isEnded}>
-              {/* {isEnded ? 'Completed' : 'In Progress'} */}
-              {launchStatus}
+              {isEnded ? 'Completed' : 'In Progress'}
+              {/* {launchStatus} */}
             </IdoTag>
           </Flex>
         </Flex>
@@ -201,8 +201,7 @@ const IDODetail = ({ idoData, isEnded }) => {
                   lineHeight="20px"
                   prefix="$"
                   decimals={0}
-                  // value={Number(totalTokensSoldInUsd)}
-                  value={0}
+                  value={Number(totalTokensSoldInUsd)}
                 />
                 <Balance
                   fontSize="20px"
@@ -225,10 +224,10 @@ const IDODetail = ({ idoData, isEnded }) => {
                     height="18px"
                   />
                   <Text color="#682298" fontSize="16px" ml="8px">
-                    {/* {launchDate >= currentDate
+                    {launchDate >= currentDate
                       ? `${Math.ceil((launchDate - currentDate) / 86400000)} days`
-                      : 'Launched'} */}
-                    {launchStatus}
+                      : 'Launched'}
+                    {/* {launchStatus} */}
                   </Text>
                 </Flex>
               </>
@@ -289,8 +288,8 @@ const IDODetail = ({ idoData, isEnded }) => {
               <Flex>
                 <DetailText fontSize="16px">{isMobile ? 'Sold:' : 'Tokens Sold:'}</DetailText>
                 <Text fontSize="16px" color="#131313" ml="4px">
-                  {/* {`${(totalTokensSold / 1000000).toFixed(2)}M`} */}
-                  0
+                  {`${(totalTokensSold / 1000000).toFixed(2)}M`}
+                  {/* 0 */}
                 </Text>
               </Flex>
               <Flex ml="30px">
