@@ -110,7 +110,7 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({ tokenName = 'KACY' }) => {
   }
 
   const handleGetUsdc = () => {
-    window.open(PANGOLIN_USDC_LINK, '_blank')
+    window.open('https://app.platypus.finance/swap', '_blank')
   }
 
   const handleAddKittyToken = async () => {
