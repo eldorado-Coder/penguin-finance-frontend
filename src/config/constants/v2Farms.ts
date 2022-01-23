@@ -1165,7 +1165,7 @@ const v2Farms: V2FarmConfig[] = [
     hardApy: '0%',
     type: 'Pangolin',
     name: 'pendingPEFI',
-    displayedDecimals: 4,
+    displayedDecimals: 2
   },
   // benqi pangolin lp igloo
   {
