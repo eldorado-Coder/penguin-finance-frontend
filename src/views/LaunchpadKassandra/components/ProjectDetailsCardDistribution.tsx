@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled, { useTheme } from 'styled-components'
-import { Text, Flex, Button, useMatchBreakpoints } from 'penguinfinance-uikit2'
+import { Text, Flex, Button, useMatchBreakpoints, WarningIcon } from 'penguinfinance-uikit2'
 import { useWeb3React } from '@web3-react/core'
 import BigNumber from 'bignumber.js'
 import Page from 'components/layout/Page'
@@ -85,7 +85,7 @@ const ProjectDetailsCardDistribution = () => {
   const { account } = useWeb3React()
   const { isDark } = useTheme()
   const { isXs, isSm, isXl } = useMatchBreakpoints()
-  const { allocation, yourPenguinTier, registeredPenguins } = useKassandraLaunchpad(account)
+  const { allocation, yourPenguinTier, registeredPenguins, isRegistered } = useKassandraLaunchpad(account)
   // iPefi balance in wallet
   const iPefiBalanceInWallet = useTokenBalance(getIPefiAddress())
   // iPefi staked balance in clubs
@@ -176,7 +176,7 @@ const ProjectDetailsCardDistribution = () => {
                   fontSize="16px"
                   lineHeight="32px"
                   fontWeight={600}
-                > 
+                >
                   {tokenEconomic.value}
                   {/* {tokenEconomic.type === 'address' ? getEllipsisAddress(tokenEconomic.value) : tokenEconomic.value} */}
                 </TokenInfoValue>
@@ -231,6 +231,24 @@ const ProjectDetailsCardDistribution = () => {
             </AllocationInfoContainer>
             <AllocationActionContainer>
               <ActionContainerTitle>GET KACY</ActionContainerTitle>
+              {!isRegistered && account && (
+                <Flex justifyContent="center" mb="16px">
+                  <LowAvaxBalance>
+                    <Flex alignItems="flex-start">
+                      <Warning mr="8px" />
+                      <div>
+                        <Label fontSize="14px" bold>
+                          You aren&apos;t Registered for this IDO.
+                        </Label>
+                        <Label fontSize="14px">
+                          Please register at the top of this page, if you don&apos;t do so within the Registration period
+                          you won&apos;t be able to participate.
+                        </Label>
+                      </div>
+                    </Flex>
+                  </LowAvaxBalance>
+                </Flex>
+              )}
               <ActionContainerContent>
                 <ActionCard />
               </ActionContainerContent>
@@ -303,7 +321,7 @@ const ProjectDetailsCardDistribution = () => {
             • Earn governance token rewards while investing in smart strategies
           </Text>
           <Text fontSize="16px" lineHeight="24px" color={isDark ? '#9A97C4' : '#7F7F7F'} mt="24px">
-            • Completely original and user-focused UI/UX  
+            • Completely original and user-focused UI/UX
           </Text>
         </>
         {/* key features */}
@@ -627,7 +645,7 @@ const AllocationsFooter = styled(Flex)`
   }
 `
 
-const TierLabel = styled(Text)<{ active?: boolean }>`
+const TierLabel = styled(Text) <{ active?: boolean }>`
   color: ${({ active }) => (!active ? '#BDBDBD' : '#7405AA')};
   font-weight: ${({ active }) => (active ? 'bold' : 500)};
   margin-left: ${({ active }) => active && '8px'};
@@ -667,7 +685,7 @@ const TierInfo = styled.div`
   }
 `
 
-const TokenInfoValue = styled(Text)<{ clickable?: boolean }>`
+const TokenInfoValue = styled(Text) <{ clickable?: boolean }>`
   cursor: ${({ clickable }) => clickable && 'pointer'};
   color: ${({ theme }) => theme.isDark && '#ffffff'};
 `
@@ -744,6 +762,21 @@ const StyledButton = styled(Button)`
   &:hover:not(:disabled):not(.penguin-button--disabled):not(.penguin-button--disabled):not(:active) {
     opacity: 1;
   }
+`
+
+const LowAvaxBalance = styled.div`
+  background: ${({ theme }) => (theme.isDark ? '#463b66' : '#fff7eb')};
+  border: 1px solid #ffb237;
+  padding: 16px 12px;
+  border-radius: 16px;
+`
+
+const Warning = styled(WarningIcon)`
+  fill: #ffb237;
+`
+
+const Label = styled(Text)`
+  color: ${({ theme }) => (theme.isDark ? '#fff' : theme.colors.secondary)};
 `
 
 export default ProjectDetailsCardDistribution

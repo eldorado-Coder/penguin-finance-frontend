@@ -10,14 +10,14 @@ export const fetchUserData = async (account) => {
   const calls = [
     {
       address: getKassandraLaunchpadAddress(),
-      name: 'getTier',
-      // name: 'penguinTiers',
+      // name: 'getTier',
+      name: 'penguinTiers',
       params: [account],
     },
     {
       address: getKassandraLaunchpadAddress(),
-      name: 'getAllocations',
-      // name: 'allocations',
+      // name: 'getAllocations',
+      name: 'allocations',
       params: [account],
     },
     {
