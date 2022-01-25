@@ -82,7 +82,7 @@ export const config: MenuEntry[] = [
     items: [
       {
         label: 'English',
-        href: 'https://docs.penguinfinance.io/',
+        href: 'https://penguinfinance.gitbook.io/',
       },
       {
         label: 'Türkçe',
