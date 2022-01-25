@@ -37,7 +37,7 @@ const v2Farms: V2FarmConfig[] = [
     isMINW: false,
     isMINWFinished: true,
     isHot: true,
-    hotRank: 6,
+    hotRank: 7,
     // pangolin v2
     isPangolinV2: true,
     pangolinV2PoolId: 23,
@@ -525,7 +525,7 @@ const v2Farms: V2FarmConfig[] = [
     isJoeRush: true,
     isJoeRushFinished: true,
     isHot: true,
-    hotRank: 7,
+    hotRank: 8,
     // penguin rush phase 2
     isPenguinRush: true,
     isPenguinRushFinished: false,
@@ -1134,6 +1134,40 @@ const v2Farms: V2FarmConfig[] = [
     // penguin rush phase 2
     isPenguinRush: true,
     isPenguinRushFinished: false,
+  },
+  {
+    pid: 34,
+    lpSymbol: 'KACY-AVAX LP',
+    lpAddresses: {
+      43113: '',
+      43114: '0x1938cE0E14dD71caab96F52dF3F49b1D1DAF8861',
+    },
+    strategyAddresses: {
+      43113: '',
+      43114: '0xC5cD12f77aafDdF90cCF508F8d78F38016206A64',
+    },
+    rewarderAddresses: {
+      43113: '',
+      43114: '0x0000000000000000000000000000000000000000',
+    },
+    tokenSymbol: 'KACY',
+    tokenAddresses: {
+      43113: '',
+      43114: '0xf32398dae246C5f672B52A54e9B413dFFcAe1A44',
+    },
+    pangolinRewardPoolAddresses: {
+      43113: '',
+      43114: '0x0000000000000000000000000000000000000000',
+    },
+    quoteTokenSymbol: QuoteToken.AVAX,
+    quoteTokenAddresses: contracts.wavax,
+    withdrawalFee: '0',
+    hardApy: '0%',
+    isHot: true,
+    hotRank: 6,
+    type: 'Pangolin',
+    name: 'pendingPEFI',
+    displayedDecimals: 2
   },
   // benqi pangolin lp igloo
   {
