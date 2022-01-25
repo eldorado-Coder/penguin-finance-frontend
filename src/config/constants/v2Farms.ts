@@ -37,7 +37,7 @@ const v2Farms: V2FarmConfig[] = [
     isMINW: false,
     isMINWFinished: true,
     isHot: true,
-    hotRank: 6,
+    hotRank: 7,
     // pangolin v2
     isPangolinV2: true,
     pangolinV2PoolId: 23,
@@ -525,7 +525,7 @@ const v2Farms: V2FarmConfig[] = [
     isJoeRush: true,
     isJoeRushFinished: true,
     isHot: true,
-    hotRank: 7,
+    hotRank: 8,
     // penguin rush phase 2
     isPenguinRush: true,
     isPenguinRushFinished: false,
@@ -1163,6 +1163,8 @@ const v2Farms: V2FarmConfig[] = [
     quoteTokenAddresses: contracts.wavax,
     withdrawalFee: '0',
     hardApy: '0%',
+    isHot: true,
+    hotRank: 6,
     type: 'Pangolin',
     name: 'pendingPEFI',
     displayedDecimals: 2
