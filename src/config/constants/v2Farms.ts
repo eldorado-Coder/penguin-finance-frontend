@@ -1148,7 +1148,8 @@ const v2Farms: V2FarmConfig[] = [
     },
     rewarderAddresses: {
       43113: '',
-      43114: '0x0000000000000000000000000000000000000000',
+      43114: '0x67e6f0c6a2b185be33dc2ed59d7b94345c874068',
+      // 43114: '0x0000000000000000000000000000000000000000',
     },
     tokenSymbol: 'KACY',
     tokenAddresses: {
@@ -1167,7 +1168,9 @@ const v2Farms: V2FarmConfig[] = [
     hotRank: 6,
     type: 'Pangolin',
     name: 'pendingPEFI',
-    displayedDecimals: 2
+    displayedDecimals: 2,
+    isPenguinRush: true,
+    isPenguinRushFinished: false,
   },
   // benqi pangolin lp igloo
   {
