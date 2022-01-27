@@ -279,10 +279,7 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
                               {isIglooAprMode && (
                                 <Amount isPenguinRush={farm.isPenguinRush && !farm.isPenguinRushFinished}>{`${
                                   farm.isPenguinRush && !farm.isPenguinRushFinished
-                                    ? `${(
-                                        (Number(farm.apr || 0) - Number(farm.penguinRushRewardApr || 0)) *
-                                        100
-                                      ).toFixed(2)}% + ${(Number(farm.penguinRushRewardApr || 0) * 100).toFixed(2)}` ||
+                                    ? `${((Number(farm.apr || 0) - Number(farm.penguinRushRewardApr || 0)) * 100 + Number(farm.penguinRushRewardApr || 0) * 100).toFixed(2)}` ||
                                       '--'
                                     : Number(farmApr) || '--'
                                 }%`}</Amount>
@@ -290,9 +287,9 @@ const Row: React.FunctionComponent<RowProps> = (props) => {
                               {!isIglooAprMode && (
                                 <Amount isPenguinRush={farm.isPenguinRush && !farm.isPenguinRushFinished}>{`${
                                   farm.isPenguinRush && !farm.isPenguinRushFinished
-                                    ? `${(100 * (Number(farm.apy) - Number(farm.penguinRushRewardApy))).toFixed(
+                                    ? `${(100 * (Number(farm.apy) - Number(farm.penguinRushRewardApy)) + 100 * Number(farm.penguinRushRewardApy)).toFixed(
                                         2,
-                                      )} + ${(100 * Number(farm.penguinRushRewardApy)).toFixed(2)}` || '--'
+                                      )}` || '--'
                                     : farmApy || '--'
                                 }%`}</Amount>
                               )}
