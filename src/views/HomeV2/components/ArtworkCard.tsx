@@ -9,15 +9,16 @@ const ArtworkCard = () => {
   const isMobile = !isXl
 
   const onClickArtworkV2Card = () => {
-    // history.push('/launchpad-kitty')
-    window.open('https://penguin-finance.medium.com/penguin-launchpad-kassandra-ido-tiers-guidelines-6cc741f11385', '_blank')
+    // // history.push('/launchpad-kitty')
+    window.open('https://penguinfinance.gitbook.io/', '_blank')
+    // window.open('https://penguin-finance.medium.com/penguin-launchpad-kassandra-ido-tiers-guidelines-6cc741f11385', '_blank')
   }
 
   return (
     <StyledArtworkCard isMobile={isMobile}>
       <ArtworkImg
         onClick={onClickArtworkV2Card}
-        src={`${process.env.PUBLIC_URL}/images/home-v2/kassandra.png`}
+        src={`${process.env.PUBLIC_URL}/images/home-v2/welcome_pefi.png`}
         loading="lazy"
         alt="hero"
       />

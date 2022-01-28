@@ -377,13 +377,13 @@ const Farms: React.FC = () => {
           value={Number(tvl)}
         />
       </TvlContainer>
-      <PenguinRushContainer>
+      {/* <PenguinRushContainer>
         <MainSentence>{`Phase 2 of Penguin Rush is LIVE. Earn AVAX incentives on a wide range of Igloos. `}</MainSentence>
         <DescriptionSentence>
           {`MIM-AVAX, JOE-AVAX, PNG-AVAX, QI-AVAX and both PEFI-AVAX Igloos now provide juicy AVAX incentives! Additional
           yield is displayed separately.`}
         </DescriptionSentence>
-      </PenguinRushContainer>
+      </PenguinRushContainer> */}
       {isMobile ? (
         <FilterWrapper justifyContent="space-between" alignItems="center" flexWrap="wrap">
           <Flex mt="8px" justifyContent="center" mb="8px" flexWrap="wrap">
@@ -552,13 +552,13 @@ const FilterWrapper = styled(Flex)`
   margin-top: -16px;
 
   ${({ theme }) => theme.mediaQueries.sm} {
-    margin-top: -40px;
+    margin-top: -16px;
   }
 
   ${({ theme }) => theme.mediaQueries.lg} {
     flex-direction: row;
     padding: 8px 8px 0;
-    margin-top: -64px;
+    margin-top: -32px;
   }
 `
 
